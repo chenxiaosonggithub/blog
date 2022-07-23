@@ -1,5 +1,9 @@
 [toc]
 
+# TODO: ftrace
+
+# TODO: crash
+
 # tracepoint & kprobe
 
 ```shell
@@ -9,6 +13,7 @@ cat /sys/kernel/debug/tracing/available_filter_functions
 echo 1 > /sys/kernel/debug/tracing/events/nfs/nfs_getattr_enter/enable
 
 # wb_bytes 在 nfs_page 结构体中的偏移为 56， x32代表32位（4字节）
+# 注意x86_64第四个参数的寄存器和系统调用不一样（普通函数为 cx，系统调用为 r10），使用 man syscall 查看系统调用参数寄存器, 注意 rdi 寄存器要写成 di
 echo 'p:p_nfs_end_page_writeback nfs_end_page_writeback wb_bytes=+56(%di):x32' >> /sys/kernel/debug/tracing/kprobe_events
 echo 1 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enable
 echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
