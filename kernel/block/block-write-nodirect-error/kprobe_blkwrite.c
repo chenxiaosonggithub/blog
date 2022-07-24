@@ -91,6 +91,7 @@ static bool scsi_is_write(struct scsi_cmnd *cmd)
 	       (cmd->cmnd[0] == WRITE_12) || (cmd->cmnd[0] == WRITE_16);
 }
 
+/* Just copy from scsi_dispatch_cmd() */
 static bool check_cmd(struct scsi_cmnd *cmd)
 {
 	struct Scsi_Host *host = cmd->device->host;
@@ -201,7 +202,8 @@ static int __init kprobe_init(void)
 	file = filp_open(EXPECT_FILE_NAME, O_RDONLY, 0644);
 
 	if (IS_ERR(file)) {
-		printk("error occured while opening file %s, exiting...\n", EXPECT_FILE_NAME);
+		printk("error occured while opening file %s, exiting...\n",
+		       EXPECT_FILE_NAME);
 		file = NULL;
 		return 0;
 	}
