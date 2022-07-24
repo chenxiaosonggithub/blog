@@ -10,6 +10,22 @@
  * whenever kernel_clone() is invoked to create a new process.
  */
 
+#define SEC_SZ			(512)
+#define DEV_NAME		"sda"
+#define FILE_NAME "/root/chenxiaosong/blkwrite-error/file"
+#define EXPECT_FILE_SZ		(40*1024*1024)
+#define SCSI_BUF_SZ		(1280*1024)
+// 一个sector 512B
+#define BLK_SEC_RANGE_MIN0	(0)
+#define BLK_SEC_RANGE_MAX0	(0)
+#define BLK_SEC_RANGE_MIN1	(0)
+#define BLK_SEC_RANGE_MAX1	(0)
+
+#define DECLARE_SEC_RANGE_ARR \
+	static struct blk_sec_range sec_range_arr[] = {\
+		{0, 0}\
+	};
+
 #define pr_fmt(fmt) "%s: " fmt, __func__
 
 #include <linux/kernel.h>
@@ -49,11 +65,14 @@
 #include <../drivers/scsi/scsi_priv.h>
 #include <../drivers/scsi/scsi_logging.h>
 
-#define FILE_NAME "/root/chenxiaosong/blkwrite-error/file"
-#define EXPECT_FILE_SZ		(40*1024*1024)
+struct blk_sec_range {
+	sector_t min;
+	sector_t max;
+};
 
 static char symbol[KSYM_NAME_LEN] = "scsi_dispatch_cmd";
 module_param_string(symbol, symbol, KSYM_NAME_LEN, 0644);
+DECLARE_SEC_RANGE_ARR
 
 /* For each probe you need to allocate a kprobe structure */
 static struct kprobe kp = {
@@ -61,15 +80,96 @@ static struct kprobe kp = {
 };
 
 static char expect_buf[EXPECT_FILE_SZ];
+static char scsi_buf[SCSI_BUF_SZ];
 static struct file *file = NULL;
+
+static bool scsi_is_write(struct scsi_cmnd *cmd)
+{
+	return (cmd->cmnd[0] == WRITE_6) || (cmd->cmnd[0] == WRITE_10) ||
+	       (cmd->cmnd[0] == WRITE_12) || (cmd->cmnd[0] == WRITE_16);
+}
+
+static bool check_cmd(struct scsi_cmnd *cmd)
+{
+	struct Scsi_Host *host = cmd->device->host;
+
+	/* check if the device is still usable */
+	if (unlikely(cmd->device->sdev_state == SDEV_DEL)) {
+		return false;
+	}
+	/* Check to see if the scsi lld made this device blocked. */
+	if (unlikely(scsi_device_blocked(cmd->device))) {
+		return false;
+	}
+	/*
+	 * Before we queue this command, check if the command
+	 * length exceeds what the host adapter can handle.
+	 */
+	if (cmd->cmd_len > cmd->device->host->max_cmd_len) {
+		return false;
+	}
+	if (unlikely(host->shost_state == SHOST_DEL)) {
+		return false;
+	}
+	return true;
+}
+
+static void check_blk_data(struct scsi_cmnd *cmd)
+{
+	int i = 0;
+	bool condition;
+	int range_cnt = sizeof(sec_range_arr) / sizeof(struct blk_sec_range);
+	bool is_write = scsi_is_write(cmd);
+	sector_t sec = cmd->request->__sector;
+	unsigned int len = cmd->request->__data_len;
+	long expect_offset;
+
+	condition = (is_write && cmd->request->rq_disk != NULL &&
+	             !strncmp(cmd->request->rq_disk->disk_name, DEV_NAME, 3));
+	if (!condition) {
+		return;
+	}
+
+	condition = false;
+	expect_offset = 0;
+	for (i = 0; i < range_cnt; i++) {
+		struct blk_sec_range range = sec_range_arr[i];
+		if (sec >= range.min && sec <= range.max) {
+			condition = true;
+			expect_offset += (sec-range.min) * SEC_SZ;
+			break;
+		}
+		expect_offset += (range.max-range.min+1) * SEC_SZ;
+	}
+	if (!condition) {
+		return;
+	}
+
+	sg_copy_to_buffer(cmd->sdb.table.sgl, cmd->sdb.table.nents,
+			   scsi_buf, len);
+	if (memcmp(expect_buf+expect_offset, scsi_buf, len) != 0) {
+		printk("scsi check data error, sector:%ld, len:%d, "
+		       "expect offset:%ld\n", sec, len, expect_offset);
+	}
+}
 
 /* kprobe pre_handler: called just before the probed instruction is executed */
 static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
+	struct scsi_cmnd *cmd;
 #ifdef CONFIG_X86
+	cmd = (struct scsi_cmnd *)regs->di;
 #endif
 #ifdef CONFIG_ARM64
+	cmd = (struct scsi_cmnd *)regs->x0;
 #endif
+
+	if (!check_cmd(cmd)) {
+		return 0;
+	}
+
+	check_blk_data(cmd);
+
 	/* A dump_stack() here will give a stack backtrace */
 	return 0;
 }
