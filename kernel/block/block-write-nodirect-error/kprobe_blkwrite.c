@@ -184,10 +184,36 @@ static void __kprobes handler_post(struct kprobe *p, struct pt_regs *regs,
 {
 }
 
-static int __init kprobe_init(void)
+static bool read_expect_data(void)
 {
 	loff_t pos;
 	long res;
+
+	file = filp_open(EXPECT_FILE_NAME, O_RDONLY, 0644);
+
+	if (IS_ERR(file)) {
+		printk("error occured while opening file %s, exiting...\n",
+		       EXPECT_FILE_NAME);
+		file = NULL;
+		return false;
+	}
+
+	pos = 0;
+	res = kernel_read(file, expect_buf, EXPECT_FILE_SZ, &pos);
+
+	if (res > 0) {
+		printk("kernel_read success, res: %ld\n", res);
+	} else {
+		printk("read data fail, res: %ld\n", res);
+		filp_close(file, NULL);  
+		file = NULL;
+		return false;
+	}
+	return true;
+}
+
+static int __init kprobe_init(void)
+{
 	int ret;
 
 	kp.pre_handler = handler_pre;
@@ -200,25 +226,8 @@ static int __init kprobe_init(void)
 	}
 	pr_info("Planted kprobe at %p\n", kp.addr);
 
-	file = filp_open(EXPECT_FILE_NAME, O_RDONLY, 0644);
-
-	if (IS_ERR(file)) {
-		printk("error occured while opening file %s, exiting...\n",
-		       EXPECT_FILE_NAME);
-		file = NULL;
-		return 0;
-	}
-
-	pos = 0;
-	res = kernel_read(file, expect_buf, EXPECT_FILE_SZ, &pos);
-
-	if (res > 0) {
-		printk("kernel_read success, res: %ld\n", res);
-	} else {
-		printk("read data fail, res: %ld\n", res);
-		filp_close(file, NULL);  
-		file = NULL;
-	}
+	if (!read_expect_data())
+		return -1;
 
 	return 0;
 }
