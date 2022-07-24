@@ -17,7 +17,7 @@
 #define BLK_SEC_RANGE_MAX1	(0*EXT4_BS/SECTOR_SZ + PART_OFFSET_SEC + EXT4_BS/SECTOR_SZ - 1)
 
 #define DECLARE_SEC_RANGE_ARR \
-	static struct blk_sec_range sec_range_arr[] = {\
+	static struct disk_sec_range sec_range_arr[] = {\
 		{BLK_SEC_RANGE_MIN0, BLK_SEC_RANGE_MAX0}\
 	};
 
@@ -60,7 +60,7 @@
 #include <../drivers/scsi/scsi_priv.h>
 #include <../drivers/scsi/scsi_logging.h>
 
-struct blk_sec_range {
+struct disk_sec_range {
 	sector_t min;
 	sector_t max;
 };
@@ -110,11 +110,11 @@ static bool check_cmd(struct scsi_cmnd *cmd)
 	return true;
 }
 
-static void check_blk_data(struct scsi_cmnd *cmd)
+static void check_scsi_data(struct scsi_cmnd *cmd)
 {
 	int i = 0;
 	bool condition;
-	int range_cnt = sizeof(sec_range_arr) / sizeof(struct blk_sec_range);
+	int range_cnt = sizeof(sec_range_arr) / sizeof(struct disk_sec_range);
 	bool is_write = scsi_is_write(cmd);
 	sector_t sec = cmd->request->__sector;
 	unsigned int len = cmd->request->__data_len;
@@ -129,7 +129,7 @@ static void check_blk_data(struct scsi_cmnd *cmd)
 	condition = false;
 	expect_offset = 0;
 	for (i = 0; i < range_cnt; i++) {
-		struct blk_sec_range range = sec_range_arr[i];
+		struct disk_sec_range range = sec_range_arr[i];
 		if (sec >= range.min && sec <= range.max) {
 			condition = true;
 			expect_offset += (sec-range.min) * SECTOR_SZ;
@@ -164,7 +164,7 @@ static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
 		return 0;
 	}
 
-	check_blk_data(cmd);
+	check_scsi_data(cmd);
 
 	/* A dump_stack() here will give a stack backtrace */
 	return 0;
