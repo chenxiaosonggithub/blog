@@ -93,7 +93,12 @@ static bool scsi_is_write(struct scsi_cmnd *cmd)
 /* Just copy from scsi_dispatch_cmd() */
 static bool check_cmd(struct scsi_cmnd *cmd)
 {
-	struct Scsi_Host *host = cmd->device->host;
+	struct Scsi_Host *host;
+
+	if (!cmd || !cmd->device || !cmd->device->host)
+		return false;
+
+	host = cmd->device->host;
 
 	/* check if the device is still usable */
 	if (unlikely(cmd->device->sdev_state == SDEV_DEL)) {
