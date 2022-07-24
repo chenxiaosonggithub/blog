@@ -10,18 +10,18 @@
  * whenever kernel_clone() is invoked to create a new process.
  */
 
-#define SEC_SZ			(512)
+#define SECTOR_SZ		(512)
 #define EXT4_BS			(4096)
-#define PART_OFFSET_SEC		(10485760) // Unit: @SEC_SZ
+#define PART_OFFSET_SEC		(10485760) // Unit: @SECTOR_SZ
 #define DEV_NAME		"sda"
 #define EXPECT_FILE_NAME 	"/mnt/file2"
 #define EXPECT_FILE_SZ		(40*1024*1024)
 #define SCSI_BUF_SZ		(1280*1024)
-// Unit: @SEC_SZ
-#define BLK_SEC_RANGE_MIN0	(75776*EXT4_BS/SEC_SZ + PART_OFFSET_SEC)
-#define BLK_SEC_RANGE_MAX0	(86015*EXT4_BS/SEC_SZ + PART_OFFSET_SEC + EXT4_BS/SEC_SZ - 1)
-#define BLK_SEC_RANGE_MIN1	(0*EXT4_BS/SEC_SZ + PART_OFFSET_SEC)
-#define BLK_SEC_RANGE_MAX1	(0*EXT4_BS/SEC_SZ + PART_OFFSET_SEC + EXT4_BS/SEC_SZ - 1)
+// Unit: @SECTOR_SZ
+#define BLK_SEC_RANGE_MIN0	(75776*EXT4_BS/SECTOR_SZ + PART_OFFSET_SEC)
+#define BLK_SEC_RANGE_MAX0	(86015*EXT4_BS/SECTOR_SZ + PART_OFFSET_SEC + EXT4_BS/SECTOR_SZ - 1)
+#define BLK_SEC_RANGE_MIN1	(0*EXT4_BS/SECTOR_SZ + PART_OFFSET_SEC)
+#define BLK_SEC_RANGE_MAX1	(0*EXT4_BS/SECTOR_SZ + PART_OFFSET_SEC + EXT4_BS/SECTOR_SZ - 1)
 
 #define DECLARE_SEC_RANGE_ARR \
 	static struct blk_sec_range sec_range_arr[] = {\
@@ -138,10 +138,10 @@ static void check_blk_data(struct scsi_cmnd *cmd)
 		struct blk_sec_range range = sec_range_arr[i];
 		if (sec >= range.min && sec <= range.max) {
 			condition = true;
-			expect_offset += (sec-range.min) * SEC_SZ;
+			expect_offset += (sec-range.min) * SECTOR_SZ;
 			break;
 		}
-		expect_offset += (range.max-range.min+1) * SEC_SZ;
+		expect_offset += (range.max-range.min+1) * SECTOR_SZ;
 	}
 	if (!condition) {
 		return;
@@ -206,7 +206,7 @@ static int __init kprobe_init(void)
 		return 0;
 	}
 
-	pos =0;
+	pos = 0;
 	res = kernel_read(file, expect_buf, EXPECT_FILE_SZ, &pos);
 
 	if (res > 0) {
