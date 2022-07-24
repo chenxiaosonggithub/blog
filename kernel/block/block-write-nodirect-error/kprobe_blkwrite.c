@@ -11,19 +11,21 @@
  */
 
 #define SEC_SZ			(512)
+#define EXT4_BS			(4096)
+#define PART_OFFSET_SEC		(10485760) // Unit: @SEC_SZ
 #define DEV_NAME		"sda"
-#define FILE_NAME "/root/chenxiaosong/blkwrite-error/file"
+#define EXPECT_FILE_NAME 	"/mnt/file2"
 #define EXPECT_FILE_SZ		(40*1024*1024)
 #define SCSI_BUF_SZ		(1280*1024)
-// 一个sector 512B
-#define BLK_SEC_RANGE_MIN0	(0)
-#define BLK_SEC_RANGE_MAX0	(0)
-#define BLK_SEC_RANGE_MIN1	(0)
-#define BLK_SEC_RANGE_MAX1	(0)
+// Unit: @SEC_SZ
+#define BLK_SEC_RANGE_MIN0	(75776*EXT4_BS/SEC_SZ + PART_OFFSET_SEC)
+#define BLK_SEC_RANGE_MAX0	(86015*EXT4_BS/SEC_SZ + PART_OFFSET_SEC + EXT4_BS/SEC_SZ - 1)
+#define BLK_SEC_RANGE_MIN1	(0*EXT4_BS/SEC_SZ + PART_OFFSET_SEC)
+#define BLK_SEC_RANGE_MAX1	(0*EXT4_BS/SEC_SZ + PART_OFFSET_SEC + EXT4_BS/SEC_SZ - 1)
 
 #define DECLARE_SEC_RANGE_ARR \
 	static struct blk_sec_range sec_range_arr[] = {\
-		{0, 0}\
+		{BLK_SEC_RANGE_MIN0, BLK_SEC_RANGE_MAX0}\
 	};
 
 #define pr_fmt(fmt) "%s: " fmt, __func__
@@ -196,10 +198,10 @@ static int __init kprobe_init(void)
 	}
 	pr_info("Planted kprobe at %p\n", kp.addr);
 
-	file = filp_open(FILE_NAME, O_RDONLY, 0644);
+	file = filp_open(EXPECT_FILE_NAME, O_RDONLY, 0644);
 
 	if (IS_ERR(file)) {
-		printk("error occured while opening file %s, exiting...\n", FILE_NAME);
+		printk("error occured while opening file %s, exiting...\n", EXPECT_FILE_NAME);
 		file = NULL;
 		return 0;
 	}
