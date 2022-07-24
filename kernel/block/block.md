@@ -33,3 +33,9 @@ kthread
                   blk_mq_init_allocated_queue
                     blk_queue_make_request
 ```
+
+# max_sectors_kb
+
+```shell
+cat /sys/block/sda/queue/max_sectors_kb
+```
