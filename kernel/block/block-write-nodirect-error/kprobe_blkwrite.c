@@ -13,7 +13,7 @@
 #define SCSI_SEC_UNIT		(512)
 #define SECTOR_FACTOR		(SECTOR_SZ/SCSI_SEC_UNIT)
 
-// Unit: @SECTOR_SZ
+// Unit: @SCSI_SEC_UNIT
 #define FIRST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SCSI_SEC_UNIT + \
 					 PART_OFFSET_SEC*SECTOR_FACTOR)
 #define  LAST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SCSI_SEC_UNIT + \
@@ -158,10 +158,10 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 		struct disk_sec_range range = sec_range_arr[i];
 		if (sec >= range.min && sec <= range.max) {
 			condition = true;
-			expect_offset += (sec-range.min) * SECTOR_SZ;
+			expect_offset += (sec-range.min) * SCSI_SEC_UNIT;
 			break;
 		}
-		expect_offset += (range.max-range.min+1) * SECTOR_SZ;
+		expect_offset += (range.max-range.min+1) * SCSI_SEC_UNIT;
 	}
 	if (!condition) {
 		return;
