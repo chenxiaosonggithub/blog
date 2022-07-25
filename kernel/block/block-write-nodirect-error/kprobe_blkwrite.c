@@ -3,25 +3,28 @@
  * Copyright (C) 2022 ChenXiaoSong
  */
 
-#define SECTOR_SZ		(512)
-#define EXT4_BS			(4096)
-#define PART_OFFSET_SEC		(10485760) // Unit: @SECTOR_SZ
 #define DEV_NAME		"sda"
+#define PART_OFFSET_SEC		(1310720) // Unit: @SECTOR_SZ
+#define SECTOR_SZ		(4096)
+#define EXT4_BS			(4096)
 #define EXPECT_FILE_NAME 	"/mnt/file-expect"
 #define EXPECT_FILE_SZ		(40*1024*1024)
 #define SCSI_BUF_SZ		(1280*1024)
+#define SCSI_SEC_UNIT		(512)
+#define SECTOR_FACTOR		(SECTOR_SZ/SCSI_SEC_UNIT)
 
 // Unit: @SECTOR_SZ
-#define FIRST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SECTOR_SZ + \
-					  PART_OFFSET_SEC)
-#define  LAST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SECTOR_SZ + \
-					  PART_OFFSET_SEC + EXT4_BS/SECTOR_SZ-1)
+#define FIRST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SCSI_SEC_UNIT + \
+					 PART_OFFSET_SEC*SECTOR_FACTOR)
+#define  LAST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SCSI_SEC_UNIT + \
+					 PART_OFFSET_SEC*SECTOR_FACTOR + \
+					 EXT4_BS/SCSI_SEC_UNIT-1)
 
 #define DECLARE_SEC_RANGE_ARR \
 	static struct disk_sec_range sec_range_arr[] = {\
-		{FIRST_SEC_OF_RANGE(75776), LAST_SEC_OF_RANGE(75776)}, \
-		{FIRST_SEC_OF_RANGE(75777), LAST_SEC_OF_RANGE(75777)}, \
-		{FIRST_SEC_OF_RANGE(75778), LAST_SEC_OF_RANGE(86015)}, \
+		{FIRST_SEC_OF_RANGE(45056), LAST_SEC_OF_RANGE(45056)}, \
+		{FIRST_SEC_OF_RANGE(45057), LAST_SEC_OF_RANGE(45057)}, \
+		{FIRST_SEC_OF_RANGE(45058), LAST_SEC_OF_RANGE(55295)}, \
 	};
 
 #define pr_fmt(fmt) "%s: " fmt, __func__
@@ -68,13 +71,15 @@ struct disk_sec_range {
 	sector_t max;
 };
 
-static char symbol[KSYM_NAME_LEN] = "scsi_dispatch_cmd";
-module_param_string(symbol, symbol, KSYM_NAME_LEN, 0644);
+static char write_symbol[KSYM_NAME_LEN] = "scsi_dispatch_cmd";
+static char  read_symbol[KSYM_NAME_LEN] = "scsi_finish_command";
 DECLARE_SEC_RANGE_ARR
 
-/* For each probe you need to allocate a kprobe structure */
-static struct kprobe kp = {
-	.symbol_name	= symbol,
+static struct kprobe write_kp = {
+	.symbol_name	= write_symbol,
+};
+static struct kprobe read_kp = {
+	.symbol_name	= read_symbol,
 };
 
 static char expect_buf[EXPECT_FILE_SZ];
@@ -84,7 +89,15 @@ static struct file *file = NULL;
 static bool scsi_is_write(struct scsi_cmnd *cmd)
 {
 	return (cmd->cmnd[0] == WRITE_6) || (cmd->cmnd[0] == WRITE_10) ||
-	       (cmd->cmnd[0] == WRITE_12) || (cmd->cmnd[0] == WRITE_16);
+	       (cmd->cmnd[0] == WRITE_12) || (cmd->cmnd[0] == WRITE_16) ||
+	       (cmd->cmnd[0] == WRITE_32);
+}
+
+static bool scsi_is_read(struct scsi_cmnd *cmd)
+{
+	return (cmd->cmnd[0] == READ_6) || (cmd->cmnd[0] == READ_10) ||
+	       (cmd->cmnd[0] == READ_12) || (cmd->cmnd[0] == READ_16) ||
+	       (cmd->cmnd[0] == READ_32);
 }
 
 /* Just copy from scsi_dispatch_cmd() */
@@ -118,17 +131,22 @@ static bool check_cmd(struct scsi_cmnd *cmd)
 	return true;
 }
 
-static void check_scsi_data(struct scsi_cmnd *cmd)
+static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 {
 	int i = 0;
 	bool condition;
 	int range_cnt = sizeof(sec_range_arr) / sizeof(struct disk_sec_range);
 	bool is_write = scsi_is_write(cmd);
+	bool is_read = scsi_is_read(cmd);
 	sector_t sec = cmd->request->__sector;
 	unsigned int len = cmd->request->__data_len;
 	long expect_offset;
 
-	condition = (is_write && cmd->request->rq_disk != NULL &&
+	condition = (is_write && !is_read) || (!is_write && is_read);
+	if (!condition)
+		return;
+
+	condition = (cmd->request->rq_disk != NULL &&
 	             !strncmp(cmd->request->rq_disk->disk_name, DEV_NAME, 3));
 	if (!condition) {
 		return;
@@ -152,13 +170,13 @@ static void check_scsi_data(struct scsi_cmnd *cmd)
 	sg_copy_to_buffer(cmd->sdb.table.sgl, cmd->sdb.table.nents,
 			   scsi_buf, len);
 	if (memcmp(expect_buf+expect_offset, scsi_buf, len) != 0) {
-		printk("scsi check data error, sector:%ld, len:%d, "
-		       "expect offset:%ld\n", sec, len, expect_offset);
+		printk("%s, %s, scsi check data error, sector:%ld, len:%d, "
+		       "expect offset:%ld\n",
+		       p->symbol_name, (is_write ? "write" : "read"), sec, len, expect_offset);
 	}
 }
 
-/* kprobe pre_handler: called just before the probed instruction is executed */
-static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
+static int __kprobes write_handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
 	struct scsi_cmnd *cmd;
 #ifdef CONFIG_X86
@@ -172,16 +190,26 @@ static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
 		return 0;
 	}
 
-	check_scsi_data(cmd);
+	check_scsi_data(cmd, p);
 
 	/* A dump_stack() here will give a stack backtrace */
 	return 0;
 }
 
-/* kprobe post_handler: called after the probed instruction is executed */
-static void __kprobes handler_post(struct kprobe *p, struct pt_regs *regs,
-				unsigned long flags)
+static int __kprobes read_handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
+	struct scsi_cmnd *cmd;
+#ifdef CONFIG_X86
+	cmd = (struct scsi_cmnd *)regs->di;
+#endif
+#ifdef CONFIG_ARM64
+	cmd = (struct scsi_cmnd *)regs->x0;
+#endif
+
+	check_scsi_data(cmd, p);
+
+	/* A dump_stack() here will give a stack backtrace */
+	return 0;
 }
 
 static bool read_expect_data(void)
@@ -216,26 +244,36 @@ static int __init kprobe_init(void)
 {
 	int ret;
 
-	kp.pre_handler = handler_pre;
-	kp.post_handler = handler_post;
+	if (!read_expect_data())
+		return -1;
 
-	ret = register_kprobe(&kp);
+	write_kp.pre_handler = write_handler_pre;
+	ret = register_kprobe(&write_kp);
 	if (ret < 0) {
 		pr_err("register_kprobe failed, returned %d\n", ret);
 		return ret;
 	}
-	pr_info("Planted kprobe at %p\n", kp.addr);
+	pr_info("Planted kprobe at %p\n", write_kp.addr);
 
-	if (!read_expect_data())
-		return -1;
+	read_kp.pre_handler = read_handler_pre;
+	ret = register_kprobe(&read_kp);
+	if (ret < 0) {
+		pr_err("register_kprobe failed, returned %d\n", ret);
+		return ret;
+	}
+	pr_info("Planted kprobe at %p\n", read_kp.addr);
 
 	return 0;
 }
 
 static void __exit kprobe_exit(void)
 {
-	unregister_kprobe(&kp);
-	pr_info("kprobe at %p unregistered\n", kp.addr);
+	unregister_kprobe(&write_kp);
+	pr_info("kprobe at %p unregistered\n", write_kp.addr);
+
+	unregister_kprobe(&read_kp);
+	pr_info("kprobe at %p unregistered\n", read_kp.addr);
+
 	if(file) {
 		filp_close(file, NULL);
 	}
