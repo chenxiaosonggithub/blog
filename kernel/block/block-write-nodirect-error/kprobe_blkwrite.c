@@ -172,7 +172,8 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 	if (memcmp(expect_buf+expect_offset, scsi_buf, len) != 0) {
 		printk("%s, %s, scsi check data error, sector:%ld, len:%d, "
 		       "expect offset:%ld\n",
-		       p->symbol_name, (is_write ? "write" : "read"), sec, len, expect_offset);
+		       p->symbol_name, (is_write ? "write" : "read"), sec, len,
+		       expect_offset);
 	}
 }
 
