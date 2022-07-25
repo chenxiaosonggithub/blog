@@ -180,12 +180,16 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 static int __kprobes write_handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
 	struct scsi_cmnd *cmd;
+	bool is_write;;
 #ifdef CONFIG_X86
 	cmd = (struct scsi_cmnd *)regs->di;
 #endif
 #ifdef CONFIG_ARM64
 	cmd = (struct scsi_cmnd *)regs->x0;
 #endif
+	is_write = scsi_is_write(cmd);
+	if (!is_write)
+		return 0;
 
 	if (!check_cmd(cmd)) {
 		return 0;
@@ -200,12 +204,16 @@ static int __kprobes write_handler_pre(struct kprobe *p, struct pt_regs *regs)
 static int __kprobes read_handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
 	struct scsi_cmnd *cmd;
+	bool is_read;
 #ifdef CONFIG_X86
 	cmd = (struct scsi_cmnd *)regs->di;
 #endif
 #ifdef CONFIG_ARM64
 	cmd = (struct scsi_cmnd *)regs->x0;
 #endif
+	is_read = scsi_is_read(cmd);
+	if (!is_read)
+		return 0;
 
 	check_scsi_data(cmd, p);
 
