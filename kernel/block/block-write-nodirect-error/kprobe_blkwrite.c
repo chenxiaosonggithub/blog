@@ -140,8 +140,7 @@ static void print_err_data(char *expect_arr, char *data_arr,
 		char data = data_arr[i];
 		if (data != expect) {
 			printk("pos:%lx, data:%02x, expect:%02x\n",
-			       expect_offset+i, data_arr[i],
-			       expect_arr[i]&0xff);
+			       expect_offset+i, data, expect&0xff);
 		}
 	}
 }
