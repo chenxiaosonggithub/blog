@@ -101,7 +101,7 @@ static bool scsi_is_read(struct scsi_cmnd *cmd)
 }
 
 /* Just copy from scsi_dispatch_cmd() */
-static bool check_cmd(struct scsi_cmnd *cmd)
+static bool scsi_dispatch_cmd_check(struct scsi_cmnd *cmd)
 {
 	struct Scsi_Host *host;
 
@@ -129,6 +129,21 @@ static bool check_cmd(struct scsi_cmnd *cmd)
 		return false;
 	}
 	return true;
+}
+
+static void print_err_data(char *expect_arr, char *data_arr,
+			     unsigned int len, long expect_offset)
+{
+	long i;
+	for (i = 0; i < len; i++) {
+		char expect = expect_arr[i];
+		char data = data_arr[i];
+		if (data != expect) {
+			printk("pos:%lx, data:%02x, expect:%02x\n",
+			       expect_offset+i, data_arr[i],
+			       expect_arr[i]&0xff);
+		}
+	}
 }
 
 static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
@@ -174,6 +189,7 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 		       "expect offset:%ld\n",
 		       p->symbol_name, (is_write ? "write" : "read"), sec, len,
 		       expect_offset);
+		print_err_data(expect_buf+expect_offset, scsi_buf, len, expect_offset);
 	}
 }
 
@@ -189,7 +205,7 @@ static int __kprobes write_handler_pre(struct kprobe *p, struct pt_regs *regs)
 	if (cmd->sc_data_direction != DMA_TO_DEVICE)
 		return 0;
 
-	if (!check_cmd(cmd)) {
+	if (!scsi_dispatch_cmd_check(cmd)) {
 		return 0;
 	}
 
