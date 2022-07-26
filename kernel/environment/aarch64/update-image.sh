@@ -15,4 +15,4 @@ qemu-system-aarch64 \
 -drive file=aarch64-bullseye.qcow2.updating,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device virtio-blk,drive=root,id=d_root \
 -append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on" \
--nographic
+-nographic \
