@@ -199,7 +199,7 @@ static int __kprobes write_handler_pre(struct kprobe *p, struct pt_regs *regs)
 	cmd = (struct scsi_cmnd *)regs->di;
 #endif
 #ifdef CONFIG_ARM64
-	cmd = (struct scsi_cmnd *)regs->x0;
+	cmd = (struct scsi_cmnd *)regs->regs[0];
 #endif
 	if (cmd->sc_data_direction != DMA_TO_DEVICE)
 		return 0;
@@ -221,7 +221,7 @@ static int __kprobes read_handler_pre(struct kprobe *p, struct pt_regs *regs)
 	cmd = (struct scsi_cmnd *)regs->di;
 #endif
 #ifdef CONFIG_ARM64
-	cmd = (struct scsi_cmnd *)regs->x0;
+	cmd = (struct scsi_cmnd *)regs->regs[0];
 #endif
 	if (cmd->sc_data_direction != DMA_FROM_DEVICE)
 		return 0;
