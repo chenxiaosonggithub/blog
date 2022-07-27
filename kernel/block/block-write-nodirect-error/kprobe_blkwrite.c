@@ -9,7 +9,6 @@
 #define EXT4_BS			(4096UL)
 #define EXPECT_FILE_NAME 	"/mnt/file-expect"
 #define EXPECT_FILE_SZ		(40UL*1024UL*1024UL)
-#define SCSI_BUF_SZ		(1280UL*1024UL)
 #define SCSI_SEC_UNIT		(512UL)
 #define SECTOR_FACTOR		(SECTOR_SZ/SCSI_SEC_UNIT)
 
@@ -181,7 +180,7 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 		return;
 	}
 
-	scsi_buf = kmalloc(SCSI_BUF_SZ, GFP_KERNEL);
+	scsi_buf = kmalloc(len, GFP_KERNEL);
 	if (!scsi_buf)
 		return;
 	sg_copy_to_buffer(cmd->sdb.table.sgl, cmd->sdb.table.nents,
