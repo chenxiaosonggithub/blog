@@ -194,7 +194,6 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 		print_err_data(expect_buf+expect_offset, scsi_buf, len, expect_offset);
 	}
 
-free:
 	kfree(scsi_buf);
 }
 
