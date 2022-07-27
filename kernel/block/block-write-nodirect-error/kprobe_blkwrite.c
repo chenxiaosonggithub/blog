@@ -83,7 +83,6 @@ static struct kprobe read_kp = {
 };
 
 static char expect_buf[EXPECT_FILE_SZ];
-static char scsi_buf[SCSI_BUF_SZ];
 static struct file *file = NULL;
 
 static bool scsi_is_write(struct scsi_cmnd *cmd)
@@ -147,6 +146,7 @@ static void print_err_data(char *expect_arr, char *data_arr,
 
 static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 {
+	char *scsi_buf;
 	unsigned long i = 0;
 	bool condition;
 	unsigned long range_cnt = sizeof(sec_range_arr) / sizeof(struct disk_sec_range);
@@ -181,6 +181,9 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 		return;
 	}
 
+	scsi_buf = kmalloc(SCSI_BUF_SZ, GFP_KERNEL);
+	if (!scsi_buf)
+		return;
 	sg_copy_to_buffer(cmd->sdb.table.sgl, cmd->sdb.table.nents,
 			   scsi_buf, len);
 	if (memcmp(expect_buf+expect_offset, scsi_buf, len) != 0) {
@@ -190,6 +193,9 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 		       expect_offset);
 		print_err_data(expect_buf+expect_offset, scsi_buf, len, expect_offset);
 	}
+
+free:
+	kfree(scsi_buf);
 }
 
 static int __kprobes write_handler_pre(struct kprobe *p, struct pt_regs *regs)
