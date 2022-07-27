@@ -4,13 +4,13 @@
  */
 
 #define DEV_NAME		"sda"
-#define PART_OFFSET_SEC		(1310720) // Unit: @SECTOR_SZ
-#define SECTOR_SZ		(4096)
-#define EXT4_BS			(4096)
+#define PART_OFFSET_SEC		(6291712UL) // Unit: @SECTOR_SZ
+#define SECTOR_SZ		(4096UL)
+#define EXT4_BS			(4096UL)
 #define EXPECT_FILE_NAME 	"/mnt/file-expect"
-#define EXPECT_FILE_SZ		(40*1024*1024)
-#define SCSI_BUF_SZ		(1280*1024)
-#define SCSI_SEC_UNIT		(512)
+#define EXPECT_FILE_SZ		(40UL*1024UL*1024UL)
+#define SCSI_BUF_SZ		(1280UL*1024UL)
+#define SCSI_SEC_UNIT		(512UL)
 #define SECTOR_FACTOR		(SECTOR_SZ/SCSI_SEC_UNIT)
 
 // Unit: @SCSI_SEC_UNIT
@@ -18,13 +18,13 @@
 					 PART_OFFSET_SEC*SECTOR_FACTOR)
 #define  LAST_SEC_OF_RANGE(ext4_blknum)	((ext4_blknum)*EXT4_BS/SCSI_SEC_UNIT + \
 					 PART_OFFSET_SEC*SECTOR_FACTOR + \
-					 EXT4_BS/SCSI_SEC_UNIT-1)
+					 EXT4_BS/SCSI_SEC_UNIT-1UL)
 
 #define DECLARE_SEC_RANGE_ARR \
 	static struct disk_sec_range sec_range_arr[] = {\
-		{FIRST_SEC_OF_RANGE(45056), LAST_SEC_OF_RANGE(45056)}, \
-		{FIRST_SEC_OF_RANGE(45057), LAST_SEC_OF_RANGE(45057)}, \
-		{FIRST_SEC_OF_RANGE(45058), LAST_SEC_OF_RANGE(55295)}, \
+		{FIRST_SEC_OF_RANGE(663552UL), LAST_SEC_OF_RANGE(663552UL)}, \
+		{FIRST_SEC_OF_RANGE(663553UL), LAST_SEC_OF_RANGE(663553UL)}, \
+		{FIRST_SEC_OF_RANGE(663554UL), LAST_SEC_OF_RANGE(673791UL)}, \
 	};
 
 #define pr_fmt(fmt) "%s: " fmt, __func__
@@ -132,9 +132,9 @@ static bool scsi_dispatch_cmd_check(struct scsi_cmnd *cmd)
 }
 
 static void print_err_data(char *expect_arr, char *data_arr,
-			     unsigned int len, long expect_offset)
+			   unsigned long len, unsigned long expect_offset)
 {
-	long i;
+	unsigned long i;
 	for (i = 0; i < len; i++) {
 		char expect = expect_arr[i];
 		char data = data_arr[i];
@@ -147,14 +147,14 @@ static void print_err_data(char *expect_arr, char *data_arr,
 
 static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 {
-	int i = 0;
+	unsigned long i = 0;
 	bool condition;
-	int range_cnt = sizeof(sec_range_arr) / sizeof(struct disk_sec_range);
+	unsigned long range_cnt = sizeof(sec_range_arr) / sizeof(struct disk_sec_range);
 	bool is_write = scsi_is_write(cmd);
 	bool is_read = scsi_is_read(cmd);
 	sector_t sec = cmd->request->__sector;
-	unsigned int len = cmd->request->__data_len;
-	long expect_offset;
+	unsigned long len = cmd->request->__data_len;
+	unsigned long expect_offset;
 
 	condition = (is_write && !is_read) || (!is_write && is_read);
 	if (!condition)
@@ -184,7 +184,7 @@ static void check_scsi_data(struct scsi_cmnd *cmd, struct kprobe *p)
 	sg_copy_to_buffer(cmd->sdb.table.sgl, cmd->sdb.table.nents,
 			   scsi_buf, len);
 	if (memcmp(expect_buf+expect_offset, scsi_buf, len) != 0) {
-		printk("%s, %s, scsi check data error, sector:%ld, len:%d, "
+		printk("%s, %s, scsi check data error, sector:%ld, len:%ld, "
 		       "expect offset:%ld\n",
 		       p->symbol_name, (is_write ? "write" : "read"), sec, len,
 		       expect_offset);
