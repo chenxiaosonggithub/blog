@@ -2,7 +2,7 @@
 # ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make modules_install INSTALL_MOD_PATH=mod
 kernel_version=aarch64-linux
 
-qemu-system-aarch64-latest \
+qemu-system-aarch64 \
 -smp 8 \
 -m 2048 \
 -machine virt \
@@ -15,4 +15,4 @@ qemu-system-aarch64-latest \
 -drive file=aarch64-bullseye.qcow2.updating,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device virtio-blk,drive=root,id=d_root \
 -append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on" \
--nographic
+-nographic \

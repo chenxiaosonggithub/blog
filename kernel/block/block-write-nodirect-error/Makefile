@@ -4,9 +4,7 @@
 
 obj-m += kprobe_blkwrite.o
 
-CROSS_COMPILE=''
-
-KDIR := /home/sonvhi/chenxiaosong/code/4.19
+KDIR := /home/sonvhi/chenxiaosong/code/aarch64-4.19
 
 all:
 	make -C ${KDIR} M=`pwd`
