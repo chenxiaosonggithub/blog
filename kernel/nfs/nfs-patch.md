@@ -638,4 +638,15 @@ kthread
 
 # ce292d8faf41 NFS: Don't skip directory entries when doing uncached readdir
 
+```c
+getdents64
+  iterate_dir
+    nfs_readdir
+      readdir_search_pagecache
+        find_and_lock_cache_page
+          nfs_readdir_search_array
+            nfs_readdir_search_for_pos
+      uncached_readdir
+```
+
 # 64c4a37ac04e cifs: potential buffer overflow in handling symlinks
