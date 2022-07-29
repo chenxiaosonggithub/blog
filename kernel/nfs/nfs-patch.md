@@ -635,3 +635,7 @@ kthread
                 nfs4_alloc_slot
                 rpc_sleep_on_priority_timeout // 在特权队列上等待
 ```
+
+# ce292d8faf41 NFS: Don't skip directory entries when doing uncached readdir
+
+# 64c4a37ac04e cifs: potential buffer overflow in handling symlinks
