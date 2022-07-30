@@ -654,6 +654,9 @@ getdents64
             nfs_readdir_search_for_pos
             nfs_readdir_search_for_cookie // desc->dir_cookie != 0 条件怎么满足？
       uncached_readdir // if (res == -EBADCOOKIE)
+        nfs_readdir_xdr_to_array
+          nfs_readdir_xdr_filler
+            error = NFS_PROTO(inode)->readdir // 重新读取目录项
       nfs_do_filldir
         // 执行 uncached_readdir 时如果没有把 cache_entry_index 置0，前面的目录项将不会被遍历到
         for (i = desc->cache_entry_index
