@@ -640,13 +640,25 @@ kthread
 
 ```c
 getdents64
+  .ctx.actor = filldir64
   iterate_dir
     nfs_readdir
+      desc = kzalloc(sizeof(*desc), GFP_KERNEL)
       readdir_search_pagecache
         find_and_lock_cache_page
+          nfs_readdir_xdr_to_array
+            nfs_readdir_page_filler // echo 3 > /proc/sys/vm/drop_caches 后才会走到
+              nfs_readdir_entry_decode
+              desc->page_index_max++;
           nfs_readdir_search_array
             nfs_readdir_search_for_pos
-      uncached_readdir
+            nfs_readdir_search_for_cookie // desc->dir_cookie != 0 条件怎么满足？
+      uncached_readdir // if (res == -EBADCOOKIE)
+      nfs_do_filldir
+        // 执行 uncached_readdir 时如果没有把 cache_entry_index 置0，前面的目录项将不会被遍历到
+        for (i = desc->cache_entry_index
+        dir_emit
+          filldir64 // ctx->actor
+
 ```
 
-# 64c4a37ac04e cifs: potential buffer overflow in handling symlinks
