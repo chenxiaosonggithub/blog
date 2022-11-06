@@ -1,0 +1,92 @@
+From 5c62ad981b9cc3e3c9e7c95a634d342160bb156e Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+Date: Sat, 14 May 2022 18:23:13 +0800
+Subject: [PATCH] riscv: debug
+
+gcc build with -O1.
+
+It cannot start up if build with -Og.
+
+Signed-off-by: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+---
+ Makefile                            | 8 ++------
+ include/linux/compiler_attributes.h | 2 +-
+ include/linux/compiler_types.h      | 4 ++--
+ mm/shmem.c                          | 7 +++++++
+ 4 files changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index f09673b6c11d..dc9e71616bca 100644
+--- a/Makefile
++++ b/Makefile
+@@ -526,7 +526,7 @@ KBUILD_AFLAGS   := -D__ASSEMBLY__ -fno-PIE
+ KBUILD_CFLAGS   := -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs \
+ 		   -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE \
+ 		   -Werror=implicit-function-declaration -Werror=implicit-int \
+-		   -Werror=return-type -Wno-format-security \
++		   -Wno-format-security \
+ 		   -std=gnu11
+ KBUILD_CPPFLAGS := -D__KERNEL__
+ KBUILD_AFLAGS_KERNEL :=
+@@ -756,11 +756,7 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
+ 
+-ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+-KBUILD_CFLAGS += -O2
+-else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+-KBUILD_CFLAGS += -Os
+-endif
++KBUILD_CFLAGS += -O1
+ 
+ # Tell gcc to never replace conditional load with a non-conditional one
+ ifdef CONFIG_CC_IS_GCC
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index 445e80517cab..2725f7fc8e09 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -143,7 +143,7 @@
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
+  */
+ #if __has_attribute(__error__)
+-# define __compiletime_error(msg)       __attribute__((__error__(msg)))
++# define __compiletime_error(msg) //       __attribute__((__error__(msg)))
+ #else
+ # define __compiletime_error(msg)
+ #endif
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index 4f2a819fd60a..55157b67b98c 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -350,8 +350,8 @@ struct ftrace_likely_data {
+  * supplied condition is *false*, emitting the supplied error message if the
+  * compiler has support to do so.
+  */
+-#define compiletime_assert(condition, msg) \
+-	_compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
++#define compiletime_assert(condition, msg)
++// 	_compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+ 
+ #define compiletime_assert_atomic_type(t)				\
+ 	compiletime_assert(__native_word(t),				\
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 5783f11351bb..c25dc8cb7e95 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1818,6 +1818,13 @@ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
+ 	return error;
+ }
+ 
++#ifndef CONFIG_TRANSPARENT_HUGEPAGE
++gfp_t vma_thp_gfp_mask(struct vm_area_struct *vma)
++{
++	return NULL;
++}
++#endif
++
+ /*
+  * shmem_getpage_gfp - find page in cache, or get from swap, or allocate
+  *
+-- 
+2.34.1
+

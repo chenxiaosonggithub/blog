@@ -1,0 +1,38 @@
+From e407b12cfa67ec0ab3de58eebc8ab404df01bee4 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+Date: Wed, 27 Jul 2022 15:57:02 +0800
+Subject: [PATCH] kernel reproduce
+
+Signed-off-by: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+---
+ fs/xfs/xfs_bmap_util.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
+index 74f96e1aa5cd..b073dff14c46 100644
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -28,6 +28,7 @@
+ #include "xfs_icache.h"
+ #include "xfs_iomap.h"
+ #include "xfs_reflink.h"
++#include "linux/delay.h"
+ 
+ /* Kernel only BMAP related definitions and functions */
+ 
+@@ -441,6 +442,12 @@ xfs_getbmap(
+ 		whichfork = XFS_DATA_FORK;
+ 	ifp = xfs_ifork_ptr(ip, whichfork);
+ 
++	if (strcmp(current->comm, "ioctl") == 0) {
++		printk("%s:%d, begin delay, ifp:%px\n", __func__, __LINE__, ifp);
++		mdelay(4000);
++		printk("%s:%d, end delay, ifp:%px\n", __func__, __LINE__, ifp);
++	}
++
+ 	xfs_ilock(ip, XFS_IOLOCK_SHARED);
+ 	switch (whichfork) {
+ 	case XFS_ATTR_FORK:
+-- 
+2.34.1
+

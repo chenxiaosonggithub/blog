@@ -1,0 +1,12 @@
+[user]
+	email = chenxiaosongemail@foxmail.com
+	name = ChenXiaoSong
+[core]
+	editor = vim
+	quotepath = false
+[sendemail]
+	from = chenxiaosongemail@foxmail.com
+	smtpserver = smtp.qq.com
+	smtpuser = chenxiaosongemail@foxmail.com
+	smtpencryption = ssl
+	smtppass = 此处填写qq邮箱的授权密码

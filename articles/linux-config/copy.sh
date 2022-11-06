@@ -1,0 +1,2 @@
+cmd="cp"
+. common.sh

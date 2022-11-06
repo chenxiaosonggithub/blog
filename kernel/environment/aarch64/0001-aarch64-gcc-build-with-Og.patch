@@ -1,0 +1,62 @@
+From 63d1abb5986e2c4045fbf2d64de1e900773e8aa0 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+Date: Fri, 1 Apr 2022 21:46:37 +0800
+Subject: [PATCH] aarch64: gcc build with -Og
+
+Signed-off-by: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+---
+ Makefile                            | 8 +-------
+ include/linux/build_bug.h           | 4 ++--
+ include/linux/compiler_attributes.h | 2 +-
+ 3 files changed, 4 insertions(+), 10 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 18ecb49f1af6..03c768687095 100644
+--- a/Makefile
++++ b/Makefile
+@@ -752,13 +752,7 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
+ 
+-ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+-KBUILD_CFLAGS += -O2
+-else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+-KBUILD_CFLAGS += -O3
+-else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+-KBUILD_CFLAGS += -Os
+-endif
++KBUILD_CFLAGS += -Og
+ 
+ # Tell gcc to never replace conditional load with a non-conditional one
+ ifdef CONFIG_CC_IS_GCC
+diff --git a/include/linux/build_bug.h b/include/linux/build_bug.h
+index e3a0be2c90ad..09907aeca7b3 100644
+--- a/include/linux/build_bug.h
++++ b/include/linux/build_bug.h
+@@ -46,8 +46,8 @@
+  * some other compile-time-evaluated condition, you should use BUILD_BUG_ON to
+  * detect if someone changes it.
+  */
+-#define BUILD_BUG_ON(condition) \
+-	BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
++#define BUILD_BUG_ON(condition)
++	// BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
+ 
+ /**
+  * BUILD_BUG - break compile if used.
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index 445e80517cab..2725f7fc8e09 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -143,7 +143,7 @@
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
+  */
+ #if __has_attribute(__error__)
+-# define __compiletime_error(msg)       __attribute__((__error__(msg)))
++# define __compiletime_error(msg) //       __attribute__((__error__(msg)))
+ #else
+ # define __compiletime_error(msg)
+ #endif
+-- 
+2.25.1
+
