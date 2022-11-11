@@ -197,3 +197,12 @@ apt install nginx -y
 vim /etc/nginx/sites-enabled/default # 在 root /var/www/html 后添加 autoindex on;
 systemctl restart nginx
 ```
+
+# strace build from source
+
+```shell
+./bootstrap
+mkdir build && cd build
+../configure --enable-mpers=no
+make
+```
