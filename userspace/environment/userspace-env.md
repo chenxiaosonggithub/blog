@@ -95,7 +95,7 @@ sudo apt install ibus*wubi* -y # 要重启
 sudo apt install flex bison -y
 sudo apt-get install fuse -y # V2Ray-Desktop-v2.4.0-linux-x86_64.AppImage 无法运行
 sudo apt install tmux -y
-sudo apt-get install libelf-dev libssl-dev -y # 内核源码编译信赖的库
+sudo apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 sudo apt install libncurses-dev -y # make menuconfig
 
 sudo useradd -s /bin/bash -d /home/test -m test
