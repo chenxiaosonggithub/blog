@@ -921,8 +921,106 @@ kthread
 
 # b0c6108ecf64 nfs_instantiate(): prevent multiple aliases for directory inode
 
+测试程序 `open_by_handle_at.c`:
 ```c
+#define _GNU_SOURCE
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
 
+#define errExit(msg)	do { perror(msg); exit(EXIT_FAILURE); \
+						} while (0)
+
+#define MNT_POINT	"/mnt"
+#define TARGET_DIR	"/mnt/dir"
+
+int
+main(int argc, char *argv[])
+{
+	struct file_handle *fhp;
+	int mount_id, fhsize, flags, dirfd;
+	char *pathname = TARGET_DIR;
+	int fd, mount_fd;
+
+	/* Allocate file_handle structure */
+
+	fhsize = sizeof(*fhp);
+	fhp = malloc(fhsize);
+	if (fhp == NULL)
+		errExit("malloc");
+
+	/* Make an initial call to name_to_handle_at() to discover
+	   the size required for file handle */
+
+	dirfd = AT_FDCWD;		   /* For name_to_handle_at() calls */
+	flags = 0;				  /* For name_to_handle_at() calls */
+	fhp->handle_bytes = 0;
+	if (name_to_handle_at(dirfd, pathname, fhp,
+				&mount_id, flags) != -1 || errno != EOVERFLOW) {
+		fprintf(stderr, "Unexpected result from name_to_handle_at()\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Reallocate file_handle structure with correct size */
+
+	fhsize = sizeof(*fhp) + fhp->handle_bytes;
+	fhp = realloc(fhp, fhsize);		 /* Copies fhp->handle_bytes */
+	if (fhp == NULL)
+		errExit("realloc");
+
+	/* Get file handle from pathname supplied on command line */
+
+	if (name_to_handle_at(dirfd, pathname, fhp, &mount_id, flags) == -1)
+		errExit("name_to_handle_at");
+
+	/* Write mount ID, file handle size, and file handle to stdout,
+	   for later reuse by t_open_by_handle_at.c */
+
+	printf("mount_id: %d\n", mount_id);
+	printf("handle_bytes: %u, handle_type: %d, f_handle:", fhp->handle_bytes, fhp->handle_type);
+	for (int j = 0; j < fhp->handle_bytes; j++)
+		printf(" %02x", fhp->f_handle[j]);
+	printf("\n");
+
+	/* Obtain file descriptor for mount point, either by opening
+	   the pathname specified on the command line, or by scanning
+	   /proc/self/mounts to find a mount that matches the 'mount_id'
+	   that we received from stdin. */
+
+	mount_fd = open(MNT_POINT, O_RDONLY);
+	if (mount_fd == -1)
+		errExit("opening mount fd");
+
+	/* Open file using handle and mount point */
+
+	fd = open_by_handle_at(mount_fd, fhp, O_RDONLY);
+	if (fd == -1)
+		errExit("open_by_handle_at");
+
+	printf("fd: %d\n", fd);
+
+	exit(EXIT_SUCCESS);
+}
+```
+
+测试程序 `mkdir.c`:
+```c
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdio.h>
+
+int
+main(int argc, char *argv[])
+{
+	int res = mkdir("/mnt/dir", 0755);
+	printf("res: %d\n", res);
+	return 0;
+}
 ```
 
 # b2b1ff3da6b2 NFS: Allow optimisation of lseek(fd, SEEK_CUR, 0) on directories
