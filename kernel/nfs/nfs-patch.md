@@ -1023,6 +1023,44 @@ main(int argc, char *argv[])
 }
 ```
 
+```c
+name_to_handle_at
+  user_path_at_empty
+    filename_lookup
+      path_lookupat
+        walk_component
+          lookup_slow
+            __lookup_slow
+              nfs_lookup
+                d_splice_alias
+                  __d_add // dentry与inode建立关联
+
+open_by_handle_at
+  do_handle_open
+    handle_to_path
+      do_handle_to_path
+        exportfs_decode_fh
+          exportfs_decode_fh_raw
+            nfs_fh_to_dentry
+              d_obtain_alias
+                // d_find_any_alias必须要找不到dentryt才会往下走
+                // name_to_handle_at执行完后，执行命令 echo 3 > /proc/sys/vm/drop_caches
+                d_find_any_alias
+                __d_instantiate_anon
+                hlist_add_head // dentry与inode建立关联
+
+mkdir
+  do_mkdirat
+    vfs_mkdir
+      nfs_mkdir
+        nfs4_proc_mkdir
+          _nfs4_proc_mkdir
+            nfs4_do_create
+              nfs_instantiate
+                nfs_add_or_obtain
+                  d_add // dentry与inode建立关联
+```
+
 # b2b1ff3da6b2 NFS: Allow optimisation of lseek(fd, SEEK_CUR, 0) on directories
 
 reading the file offset, only return it, do not need grab the inode lock, because do not operate the inode data.
