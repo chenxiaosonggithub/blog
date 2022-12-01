@@ -371,6 +371,12 @@ dup2
                 filemap_fdatawrite_wbc
                   do_writepages
                     nfs_writepages
+                      write_cache_pages
+                        nfs_writepages_callback// (*writepage)()
+                          nfs_do_writepage
+                            nfs_page_async_flush
+                              nfs_set_page_writeback
+                                test_set_page_writeback
                       nfs_pageio_complete
                         nfs_pageio_complete_mirror
                           nfs_pageio_doio
@@ -378,6 +384,20 @@ dup2
                               nfs_initiate_pgio
                                 rpc_run_task
                                   rpc_execute
+              __filemap_fdatawait_range
+                wait_on_page_writeback
+                  folio_wait_writeback
+                    folio_wait_bit(PG_writeback)
+
+kthread
+  worker_thread
+    process_one_work
+      rpc_async_release
+        rpc_free_task
+          rpc_release_calldata
+            nfs_pgio_release
+              nfs_write_completion
+                nfs_end_page_writeback
 ```
 
 # open
