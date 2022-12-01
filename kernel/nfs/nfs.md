@@ -899,3 +899,32 @@ getxattr
                           rpc_wait_bit_killable
               while (exception.retry)
 ```
+
+# server重启，client状态恢复
+
+```c
+// 异步rpc请求（如写请求）进入睡眠
+ret_from_fork
+  kthread
+    worker_thread
+      process_one_work
+        rpc_async_schedule
+          __rpc_execute
+            rpc_exit_task
+              nfs_pgio_result
+                nfs_writeback_done
+                  nfs_write_done
+                    nfs4_write_done_cb
+                      nfs4_async_handle_exception
+                        rpc_sleep_on
+
+ret_from_fork
+  kthread
+    nfs4_run_state_manager
+      nfs4_state_manager
+        test_and_clear_bit(NFS4CLNT_SESSION_RESET)
+        nfs4_reset_session // 这里可能进入睡眠
+        // 如果在这里加mdelay，则所有的rpc请求都将处于排队中
+        nfs4_clear_state_manager_bit
+          rpc_wake_up // 唤醒队列
+```
