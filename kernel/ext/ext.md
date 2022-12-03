@@ -1,6 +1,75 @@
 [toc]
 
-# 2.6.11 ext3
+# 2.6.11
+
+## ext2
+
+```c
+ext2_fill_super
+  sb->s_fs_info = sbi // ext2_sb_info
+  bh = sb_bread
+    __bread
+  sbi->s_sbh = bh
+  sbi->s_group_desc = kmalloc
+  sbi->s_debts = kmalloc
+  sbi->s_group_desc[i] = sb_bread
+  root = iget(sb, EXT2_ROOT_INO)
+  sb->s_root = d_alloc_root
+
+ext2_new_inode
+  inode = new_inode(dir->i_sb)
+    list_add(&inode->i_list, &inode_in_use)
+    list_add(&inode->i_sb_list, &sb->s_inodes)
+  find_group_orlov / find_group_other
+  bitmap_bh = read_inode_bitmap
+  mark_buffer_dirty
+  sync_dirty_buffer // MS_SYNCHRONOUS
+  gdp->bg_free_inodes_count--
+  gdp->bg_used_dirs_count++ // directory
+  sbi->s_debts[group]--
+  sb->s_dirt = 1
+  mark_buffer_dirty(bh2)
+  // 给 inode ei 赋值
+  insert_inode_hash
+  ext2_init_acl
+  mark_inode_dirty
+  ext2_preread_inode
+
+ext2_free_inode
+  clear_inode
+    invalidate_inode_buffers
+    wait_on_inode
+    inode->i_sb->s_op->clear_inode // ext2 do not have
+    bd_forget
+    inode->i_state = I_CLEAR
+  block_group = (ino - 1) / EXT2_INODES_PER_GROUP(sb)
+  bitmap_bh = read_inode_bitmap
+  ext2_release_inode
+    desc->bg_free_inodes_count++
+    desc->bg_used_dirs_count--
+    sb->s_dirt = 1
+    mark_buffer_dirty
+  mark_buffer_dirty(bitmap_bh)
+  sync_dirty_buffer // MS_SYNCHRONOUS
+
+ext2_get_block
+  ext2_alloc_branch
+    ext2_alloc_block
+      ext2_new_block
+
+ext2_truncate
+  ext2_free_data
+    ext2_free_blocks
+      bitmap_bh = read_block_bitmap
+      ext2_clear_bit_atomic
+      group_release_blocks
+        desc->bg_free_blocks_count = cpu_to_le16(free_blocks + count
+        sb->s_dirt = 1
+        mark_buffer_dirty(bh)
+      sync_dirty_buffer // MS_SYNCHRONOUS
+```
+
+## ext3
 
 ```c
 // .write
@@ -86,21 +155,29 @@ _SYSCALL(_NR_mount, sys_mount)
                           journal_commit_transaction
 ```
 
-# ext4
+# mainline
 
 ## 磁盘数据结构
 
-| boot block | block group 0 | block group 0     | block group 0     | block group 0 | block group 0 | block group 0 | block group 1  |
-| -          | -             | -                 | -                 | -             | -             | -             | -              |
+```
++-------------------------------------------------------------------------------------------------------------------------------------+
+| boot block |                                         block group 0                                                 | block group 1  |
++-------------------------------------------------------------------------------------------------------------------------------------+
 |            | super block   | group descriptors | data block bitmap | inode bitmap  | inode table   | data blocks   | ......         |
++-------------------------------------------------------------------------------------------------------------------------------------+
 |            | 1 block       | n blocks          | 1 block           | 1 block       | n blocks      | n blocks      | ......         |
-
++-------------------------------------------------------------------------------------------------------------------------------------+
+```
 
 ## 日志布局
 
+```
++--------------------------------------------------------------------------------------+
 | super block | revoke block | description block | data block  | commit block | ...... |
-| ----------- | ------------ | ----------------- | ----------  | ------------ | ------ |
++--------------------------------------------------------------------------------------+
 |             | transaction  | transaction       | transaction | transaction  |        |
++--------------------------------------------------------------------------------------+
+```
 
 ## 日志恢复流程
 
