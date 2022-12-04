@@ -29,7 +29,7 @@ ext2_new_inode
   sbi->s_debts[group]--
   sb->s_dirt = 1
   mark_buffer_dirty(bh2)
-  // 给 inode ei 赋值
+  // 给 inode 和 ei 赋值
   insert_inode_hash
   ext2_init_acl
   mark_inode_dirty
@@ -85,7 +85,7 @@ do_sync_write
               ext3_journal_start_sb
                 journal_start
                   new_handle // 第一次创建
-                  current->jouranl_info = handle
+                  current->journal_info = handle
             block_prepare_write // 准备文件页的缓冲区和缓冲区首部
               __block_prepare_write
                 // get_block

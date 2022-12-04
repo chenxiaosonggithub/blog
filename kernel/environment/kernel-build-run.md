@@ -256,7 +256,7 @@ ln -s ${target} ${link_name}
 ```shell
 docker image ls
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp centos-7.5-kernel:latest make
-docker run -0-rm it -v $PWD:/usr/src/myapp -w /usr/src/myapp centos-7.5-kernel:latest bash # 进入docker bash
+docker run --rm it -v $PWD:/usr/src/myapp -w /usr/src/myapp centos-7.5-kernel:latest bash # 进入docker bash
 ```
 
 # riscv ubuntu2204 rootfs
