@@ -928,3 +928,72 @@ ret_from_fork
         nfs4_clear_state_manager_bit
           rpc_wake_up // 唤醒队列
 ```
+
+# create file
+
+```c
+openat
+  do_sys_open
+    do_sys_openat2
+      do_filp_open
+        path_openat
+          open_last_lookups
+            lookup_open
+              atomic_open
+                nfs_atomic_open
+                  nfs4_atomic_open
+                    nfs4_do_open
+                      _nfs4_do_open
+                        _nfs4_open_and_get_state
+                          _nfs4_opendata_to_nfs4_state
+                            nfs4_opendata_find_nfs4_state
+                              nfs4_opendata_get_inode
+                                nfs_fhget
+                                  set_nlink // NFS_ATTR_FATTR_NLINK
+```
+
+# create hard link
+
+```c
+linkat
+  do_linkat
+    vfs_link
+      nfs_link
+        nfs4_proc_link
+          _nfs4_proc_link
+            nfs4_inc_nlink
+              nfs4_inc_nlink_locked
+```
+
+# delete file
+
+```c
+unlinkat
+  do_unlinkat
+    vfs_unlink
+      nfs_unlink
+        nfs_safe_remove
+          nfs_drop_nlink
+    iput
+      iput_final
+        nfs_drop_inode // op->drop_inode
+          generic_drop_inode
+            // 硬链接数为0，才从链表摘除
+            if (!inode->i_nlink) // !inode->i_nlink ||
+            inode_unhashed
+        evict
+          nfs4_evict_inode
+          destroy_inode
+            call_rcu(..., i_callback)
+
+sysvec_apic_timer_interrupt
+  irq_exit_rcu
+    __irq_exit_rcu
+      invoke_softirq
+        __do_softirq
+          rcu_core_si
+            rcu_core
+              rcu_do_batch
+                i_callback
+                  nfs_free_inode
+```

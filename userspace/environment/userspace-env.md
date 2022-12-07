@@ -206,3 +206,40 @@ mkdir build && cd build
 ../configure --enable-mpers=no
 make
 ```
+
+# docker
+
+https://docs.docker.com/engine/install/ubuntu/
+https://repo.huaweicloud.com/docker-ce/linux/ubuntu/gpg
+
+```shell
+sudo apt-get remove docker docker-engine docker.io containerd runc -y
+sudo apt-get update -y
+sudo apt-get install ca-certificates curl gnupg lsb-release -y
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://repo.huaweicloud.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://repo.huaweicloud.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+sudo cat /etc/group | grep docker # 如果没有则创建 sudo groupadd docker
+sudo gpasswd -a sonvhi docker # 或者使用usermod ？添加完后要重启（可能有办法不用重启）
+
+sudo docker pull ubuntu:18.04
+sudo docker image ls # 查看镜像
+sudo docker image rm ubuntu:18.04
+sudo docker ps -a # 查看容器
+
+sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
+# apt install build-essential -y
+# apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
+# apt install flex -y
+# apt install bison -y
+# strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_
+sudo docker export 25c2e986e912 > ubuntu-kernel:18.04.tar # 导出
+cat ubuntu-kernel\:18.04.tar | sudo docker import - ubuntu-kernel:18.04 # 导入到镜像
+sudo docker container prune # 删除容器
+
+sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 gcc -v
+sudo docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 bash
+```
+
