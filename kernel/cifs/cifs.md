@@ -11,11 +11,12 @@ SMB 3.0 (前称 SMB 2.2)在Windows 8 和 Windows Server 2012 中引入。
 # debian 发行版
 apt-get install samba -y
 apt install cifs-utils -y # 安装 cifs 客户端, 否则无法挂载
-systemctl restart smbd # 和 redhat 发行版不一样
+apt install smbclient -y # 查询服务器共享了哪些目录
 
 pdbedit -L # 查看cifs用户
 smbpasswd -a root # 添加用户
 smbpasswd -x root # 删除用户
+smbpasswd -s # 修改密码
 ```
 
 `/etc/samba/smb.conf`配置文件：
