@@ -48,6 +48,19 @@ mount -t ubifs /dev/ubi0_0 /mnt/
 ```
 
 ```shell
+modprobe nandsim id_bytes="0x20,0xa5,0x00,0x26"
+flash_erase /dev/mtd0 0 0
+nandwrite /dev/mtd0 image.bin
+modprobe ubi
+ubiattach -m 0 -O 4096
+for each in $(ls /sys/kernel/debug/ubifs)
+do
+  echo 1 > /sys/kernel/debug/ubifs/${each}
+done
+mount -t ubifs /dev/ubi0_0 /mnt
+```
+
+```shell
 cat /sys/class/ubi/ubi0/mtd_num
 mtd_debug read /dev/mtd0 0x0 64 /tmp/flash_test # 前64个字节copy到文件
 flash_erase /dev/mtd0 0 0 # 擦除整个设备
