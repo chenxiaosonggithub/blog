@@ -19,8 +19,6 @@ exec "$@" # 用 $@ 进程替换当前shell进程，并且保持PID不变, 注意
 cat /sys/kernel/debug/tracing/trace > ftrace_output
 ```
 
-# TODO: crash
-
 # tracepoint & kprobe
 
 ```shell
@@ -51,15 +49,6 @@ echo 0 > /sys/kernel/debug/tracing/trace # 清除trace信息
 cat /sys/kernel/debug/tracing/trace_pipe
 
 /sys/kernel/debug/tracing/trace_options # 这个文件是干嘛的？
-```
-
-# sunrpc 调试开关
-
-```shell
-echo 0x0008 > /proc/sys/sunrpc/nfs_debug # NFSDBG_PAGECACHE        0x0008
-echo 0x0002 > /proc/sys/sunrpc/rpc_debug # RPCDBG_CALL             0x0002
-echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # NFSDBG_ALL              0xFFFF
-echo 0x7fff > /proc/sys/sunrpc/rpc_debug # RPCDBG_ALL              0x7fff
 ```
 
 # qemu gdb 调试
