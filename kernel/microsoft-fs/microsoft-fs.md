@@ -31,7 +31,6 @@ openat
 
 ```shell
 mkfs.ntfs /dev/sda1
-# 文件的权限固定为 653(777-124)
 mount -t ntfs3 -o umask=124,uid=1000,gid=1000 /dev/sda1 /mnt
 ```
 

@@ -90,11 +90,12 @@ hb func_name # 硬件断点，有些函数普通断点不会停下, 如: nfs4_at
 
 使用内核提供的[GDB辅助调试功能](https://www.kernel.org/doc/Documentation/dev-tools/gdb-kernel-debugging.rst)：
 ```shell
-echo "source /home/sonvhi/.gdb-linux/vmlinux-gdb.py" > ~/.gdbinit
+echo "set auto-load safe-path /" > ~/.gdbinit
+echo "source /home/sonvhi/.gdb-linux/vmlinux-gdb.py" >> ~/.gdbinit
 mkdir ~/.gdb-linux/
 make scripts_gdb # 在 linux 仓库下执行
 cp scripts/gdb/* ~/.gdb-linux/ -rf
-vim ~/.gdb-linux/vmlinux-gdb.py # sys.path.insert(0, "/home/sonvhi/.gdb-linux")
+sed -i "s/os.path.dirname(os.path.abspath(__file__)) + \"\/scripts\/gdb\"/\"home\/sonvhi\/.gdb-linux\"/g" ~/.gdb-linux/vmlinux-gdb.py
 
 (gdb) apropos lx
 (gdb) p $lx_current().pid
