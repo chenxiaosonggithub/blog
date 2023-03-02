@@ -81,3 +81,12 @@ __process_request
     dentry_open
       vfs_open
 ```
+
+# getinfo
+
+```c
+__process_request
+  smb2_query_info
+    smb2_get_info_file
+      get_file_all_info // 文件已经存在时，要先打开文件获取信息，再关闭
+```
