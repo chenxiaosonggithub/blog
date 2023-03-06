@@ -88,5 +88,5 @@ __process_request
 __process_request
   smb2_query_info
     smb2_get_info_file
-      get_file_all_info // 文件已经存在时，要先打开文件获取信息，再关闭
+      get_file_all_info // 打开一个已经存在的文件前，要先打开文件获取信息，再关闭, 然后再打开
 ```
