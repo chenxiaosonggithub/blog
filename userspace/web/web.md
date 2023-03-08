@@ -8,11 +8,14 @@
 
 [教程](https://juejin.cn/post/6844903476661583880)
 
+建议通过直接下载[二进制](https://nodejs.org/en/download/)安装nodejs，以下是通过包管理器安装，不建议：
 ```shell
 # ubuntu22.04安装nodejs, 参考: https://github.com/nodesource/distributions/blob/master/README.md
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt-get install -y nodejs
+```
 
+```shell
 # 参考: https://github.com/PanJiaChen/vue-admin-template/blob/master/README-zh.md
 git clone https://github.com/PanJiaChen/vue-admin-template.git
 cd vue-admin-template
