@@ -10,7 +10,7 @@
                 "ip": [
                     "geoip:private"
                 ],
-                "outboundTag": "block"
+                "outboundTag": "direct"
             }
         ]
     },
@@ -22,7 +22,7 @@
             "settings": {
                 "clients": [
                     {
-                        "id": "todo"
+			"id": "todo"
                     }
                 ]
             },
@@ -65,8 +65,55 @@
     ],
     "outbounds": [
         {
-            "protocol": "freedom",
-            "tag": "direct"
+            "protocol": "vmess",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "todo",
+                        "port": todo,
+                        "users": [
+                            {
+				"id": "todo"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": [
+                                "/"
+                            ],
+                            "headers": {
+                                "Host": [
+                                    "www.bing.com",
+                                    "www.cloudflare.com",
+                                    "www.amazon.com"
+                                ],
+                                "User-Agent": [
+                                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36 Edg/84.0.522.49",
+                                    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/84.0.4147.71 Mobile/15E148 Safari/604.1"
+                                ],
+                                "Accept-Encoding": [
+                                    "gzip, deflate"
+                                ],
+                                "Connection": [
+                                    "keep-alive"
+                                ],
+                                "Pragma": "no-cache"
+                            }
+                        }
+                    }
+                },
+                "security": "none"
+            },
+            "tag": "proxy"
         }
     ]
 }
