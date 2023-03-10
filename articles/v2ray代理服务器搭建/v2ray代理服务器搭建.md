@@ -6,7 +6,7 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 
 安装说明请参考[install.md](https://github.com/v2fly/manual/blob/master/zh_cn/chapter_00/install.md)。
 
-配置文件参考[VMess-HTTP](https://github.com/v2fly/v2ray-examples/tree/master/VMess-HTTP)。
+配置文件参考[VMess-Websocket](https://github.com/v2fly/v2ray-examples/tree/master/VMess-Websocket)。
 
 # v2ray服务器安装与配置
 
@@ -18,14 +18,14 @@ bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/ins
 
 或下载编译好的安装包[v2ray-linux-64.zip](https://github.com/v2fly/v2ray-core/releases/download/v4.36.2/v2ray-linux-64.zip)。
 
-将`/usr/local/etc/config.json`的内容替换成[server_config.json](./server_config.json)中的内容，并修改以下内容
+将`/usr/local/etc/config.json`的内容替换成[config_server.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_server.json)中的内容，并修改以下内容
 
 ```json
 ...
-3 "port": 55555,	// 可修改端口
+ "port": 55555,	// 可修改端口
 ...
-8 "id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",		// 可自定义id
-10 "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
+ "id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",		// 可自定义id
+ "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
 ...
 ```
 
@@ -45,14 +45,14 @@ bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/ins
 
 或下载编译好的安装包[v2ray-linux-64.zip](https://github.com/v2fly/v2ray-core/releases/download/v4.36.2/v2ray-linux-64.zip)。
 
-将`/usr/local/etc/config.json`的内容替换成[client_config.json](./client_config.json)中的内容，并修改以下内容：
+将`/usr/local/etc/config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
 
 ```json
 ...
-51        "address": "请填写服务器ip", // 服务器地址，请修改为你自己的服务器 ip 或域名
-52        "port": 55555,  // 服务器端口
-53        "users": [{ 
-54			"id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",	// 与服务器id一样
+        "address": "请填写服务器ip", // 服务器地址，请修改为你自己的服务器 ip 或域名
+        "port": 55555,  // 服务器端口
+        "users": [{ 
+			"id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",	// 与服务器id一样
 ...
 ```
 
