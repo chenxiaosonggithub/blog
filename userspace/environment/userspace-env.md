@@ -50,7 +50,7 @@ vim /etc/ssh/sshd_config # GatewayPorts yes
 systemctl restart sshd # 重启ssh
 ```
 
-在`/etc/bashrc`或`/etc/bash.bashrc`(通过`/etc/profile`查看到底是哪个文件)中添加：
+内网电脑 B, 在`/etc/bashrc`或`/etc/bash.bashrc`(通过`/etc/profile`查看到底是哪个文件)中添加：
 ```shell
 AUTOSSH_POLL=60
 ```
