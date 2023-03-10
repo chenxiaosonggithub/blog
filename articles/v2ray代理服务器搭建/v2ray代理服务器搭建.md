@@ -22,7 +22,7 @@ bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/ins
 
 ```json
 ...
- "port": 55555,	// 可修改端口
+ "port": 55555,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
 ...
  "id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",		// 可自定义id
  "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
