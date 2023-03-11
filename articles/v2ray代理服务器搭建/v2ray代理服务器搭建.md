@@ -31,8 +31,16 @@ bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/ins
 
 修改完配置文件后，需要重启v2ray服务：
 
-```json
+```shell
 sudo systemctl restart v2ray
+```
+
+如果启动v2ray服务时报错，检查 `v2ray.service`文件：
+
+```shell
+[Service]
+User=sonvhi # 修改成当前用户名
+...
 ```
 
 # linux系统客户端安装与配置
