@@ -21,7 +21,7 @@ Linux一直坚持采用对称多处理器模型，内核不会对某个cpu有任
 
 > 这个图是从pdf书上截图的
 
-![](http://47.97.36.184/pictures/3example-sched-domain-hierarchies.png)
+![](http://8.222.150.121/pictures/3example-sched-domain-hierarchies.png)
 
 所有物理cpu调度域描述符存放在每cpu变量中：
 

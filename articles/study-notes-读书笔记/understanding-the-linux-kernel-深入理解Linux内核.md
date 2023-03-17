@@ -8,7 +8,7 @@
 
 p733
 
-<img src="http://47.97.36.184/pictures/ext2-blk-grp.png" width="66%" />
+<img src="http://8.222.150.121/pictures/ext2-blk-grp.png" width="66%" />
 
 块位图中有 `8*b` 个位，所以每组中也有 `8*b` 个块，其中 `b` 是块大小（单位Byte）。
 
@@ -28,7 +28,7 @@ p733
 
 p733
 
-<img src="http://47.97.36.184/pictures/ext2-blk-grp.png" width="66%" />
+<img src="http://8.222.150.121/pictures/ext2-blk-grp.png" width="66%" />
 
 ```c
 // include/linux/ext2_fs.h 
@@ -61,7 +61,7 @@ struct ext2_super_block {
 
 p735
 
-<img src="http://47.97.36.184/pictures/ext2-blk-grp.png" width="66%" />
+<img src="http://8.222.150.121/pictures/ext2-blk-grp.png" width="66%" />
 
 ```c
 // include/linux/ext2_fs.h

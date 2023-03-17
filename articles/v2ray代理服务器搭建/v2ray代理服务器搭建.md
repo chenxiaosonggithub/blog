@@ -72,7 +72,7 @@ sudo systemctl restart v2ray
 
 我用的操作系统是Fedora，配置如下图所示（其他Linux发行版也大同小异）：
 
-![fedora v2ray客户端配置](http://47.97.36.184/pictures/v2ray-fedora-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
+![fedora v2ray客户端配置](http://8.222.150.121/pictures/v2ray-fedora-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
 
 # macOS系统客户端安装与配置
 
@@ -80,7 +80,7 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 
 安装完成后的配置如下图：
 
-![在这里插入图片描述](http://47.97.36.184/pictures/v2ray-macos-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](http://8.222.150.121/pictures/v2ray-macos-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
 
 # Windows系统客户端安装与配置
 
