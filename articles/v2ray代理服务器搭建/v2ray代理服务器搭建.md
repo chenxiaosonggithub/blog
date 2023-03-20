@@ -82,6 +82,10 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 
 ![在这里插入图片描述](http://8.222.150.121/pictures/v2ray-macos-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
 
+# 案桌客户端安装与配置
+
+下载v2ray的[案桌安装包](https://github.com/2dust/v2rayNG/releases)，并新建与服务器对应的配置。
+
 # Windows系统客户端安装与配置
 
 下载v2ray的[windows安装包](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-windows-64.zip)
