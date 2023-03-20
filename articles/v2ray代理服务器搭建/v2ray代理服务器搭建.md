@@ -16,7 +16,7 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 ```
 
-或下载编译好的安装包[v2ray-linux-64.zip](https://github.com/v2fly/v2ray-core/releases/download/v4.36.2/v2ray-linux-64.zip)。
+或下载编译好的安装包[v2ray-linux-64.zip](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
 
 将`/usr/local/etc/config.json`的内容替换成[config_server.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_server.json)中的内容，并修改以下内容
 
@@ -84,4 +84,20 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 
 # Windows系统客户端安装与配置
 
-sorry，我不用Windows系统。
+下载v2ray的[windows安装包](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-windows-64.zip)
+
+将`config.json` 的内容替换成[config_server.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_server.json)中的内容，并修改以下内容
+```json
+...
+ "port": 55555,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
+...
+ "id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",		// 可自定义id
+ "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
+...
+```
+
+修改完配置文件后，打开windows的`cmd`程序，在解压的文件夹下执行以下命令：
+
+```shell
+.\v2ray run
+```
