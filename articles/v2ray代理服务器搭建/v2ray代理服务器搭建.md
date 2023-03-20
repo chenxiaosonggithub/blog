@@ -105,3 +105,5 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 ```shell
 .\v2ray run
 ```
+
+然后配置网络的http代理 `http://localhost:1081`。
