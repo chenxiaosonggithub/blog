@@ -44,6 +44,15 @@
 (global-set-key (kbd "C-c s u") 'cscope-pop-mark)
 (global-set-key (kbd "C-c s j") 'cscope-select-entry-other-window)
 
+;; gtags
+(global-set-key (kbd "C-c g t") 'gtags-find-tag)
+(global-set-key (kbd "C-c g s") 'gtags-find-symbol)
+(global-set-key (kbd "C-c g r") 'gtags-find-rtag)
+(global-set-key (kbd "C-c g f") 'gtags-find-file)
+(global-set-key (kbd "C-c g p") 'gtags-pop-stack)
+(global-set-key (kbd "C-c g a") 'gtags-find-with-grep)
+(global-set-key (kbd "C-c g o") 'gtags-select-tag-other-window)
+
 (global-set-key (kbd "C-c e t") 'evil-mode) ;; toggle
 (global-set-key (kbd "C-c e z c") 'evil-close-fold)
 (global-set-key (kbd "C-c e z m") 'evil-close-folds)
