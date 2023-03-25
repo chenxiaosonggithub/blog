@@ -150,14 +150,6 @@ ctrl+v	块选择可视范围
 
 使用`cscope -Rqbk`（当需要包含`/usr/include`头文件时，不使用`-k`选项）编译代码生成`cscope.out`文件，在`cscope.out`文件所在目录打开`vim`即可加载`cscope.out`文件
 
-# leaderf
-
-TODO
-
-# spacevim
-
-TODO
-
 # 浏览器插件vimium
 
 我是自由软件狂热者，平时工作环境基本都是字符界面，在图形界面下也是用键盘代替鼠标，键盘使用的是自定义的HHKB（可用键盘移动鼠标光标）。在浏览器中搜索资料时，移动鼠标光标效率太低，可以使用浏览器插件vimium。

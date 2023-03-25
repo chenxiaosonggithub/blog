@@ -45,6 +45,8 @@
 (global-set-key (kbd "C-c s j") 'cscope-select-entry-other-window)
 
 ;; gtags
+;; sudo apt install global -y
+;; emacs -nw 未打开文件时，要先 M-x gtags-mode
 (global-set-key (kbd "C-c g t") 'gtags-find-tag)
 (global-set-key (kbd "C-c g s") 'gtags-find-symbol)
 (global-set-key (kbd "C-c g r") 'gtags-find-rtag)
