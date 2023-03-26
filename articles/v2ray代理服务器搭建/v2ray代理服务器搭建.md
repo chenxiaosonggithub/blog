@@ -90,7 +90,7 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 
 下载v2ray的[windows安装包](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-windows-64.zip)
 
-将`config.json` 的内容替换成[config_server.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_server.json)中的内容，并修改以下内容
+将`/usr/local/etc/config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
 ```json
 ...
  "port": 55555,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
@@ -105,5 +105,9 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 ```shell
 .\v2ray run
 ```
+![](http://8.222.150.121/pictures/windows-open-cmd.jpg)
+![](http://8.222.150.121/pictures/windows-cmd-run-v2ray.jpg)
 
 然后配置网络的http代理 `http://localhost:1081`。
+
+![](http://8.222.150.121/pictures/windows-set-proxy.jpg)
