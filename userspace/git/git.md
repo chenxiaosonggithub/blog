@@ -6,7 +6,7 @@
 git log -L :function:file
 ```
 
-# github添加另一个ssh key
+# github给另一个账户添加另一个ssh key
 
 ```shell
 ssh-keygen -t ed25519-sk -C "YOUR_EMAIL"
