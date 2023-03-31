@@ -94,6 +94,8 @@ sudo systemctl restart v2ray
 ./v2ray run
 ```
 
+配置所连接网络的代理`http://localhost:1081`。
+
 ![](http://8.222.150.121/pictures/v2ray-macos-wifi-proxy.png)
 
 # 安卓客户端安装与配置
