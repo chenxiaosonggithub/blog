@@ -16,15 +16,15 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 ```
 
-或下载编译好的安装包[v2ray-linux-64.zip](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
+在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Linux的安装包, 如[v2ray-linux-64.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
 
 将`/usr/local/etc/config.json`的内容替换成[config_server.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_server.json)中的内容，并修改以下内容
 
 ```json
 ...
- "port": 55555,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
+ "port": 12345,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
 ...
- "id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",		// 可自定义id
+ "id": "12345678-1234-1234-1234-123456789012",		// 可自定义id
  "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
 ...
 ```
@@ -51,16 +51,16 @@ User=sonvhi # 修改成当前用户名
 bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 ```
 
-或下载编译好的安装包[v2ray-linux-64.zip](https://github.com/v2fly/v2ray-core/releases/download/v4.36.2/v2ray-linux-64.zip)。
+在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Linux的安装包, 如[v2ray-linux-64.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
 
 将`/usr/local/etc/config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
 
 ```json
 ...
         "address": "请填写服务器ip", // 服务器地址，请修改为你自己的服务器 ip 或域名
-        "port": 55555,  // 服务器端口
+        "port": 12345,  // 服务器端口
         "users": [{ 
-			"id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",	// 与服务器id一样
+			"id": "12345678-1234-1234-1234-123456789012",	// 与服务器id一样
 ...
 ```
 
@@ -76,26 +76,43 @@ sudo systemctl restart v2ray
 
 # macOS系统客户端安装与配置
 
-macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.com/Cenmrev/V2RayX)，安装包为[V2RayX.app.zip](https://github.com/Cenmrev/V2RayX/releases/download/v1.5.1/V2RayX.app.zip)。
+在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载macOS的安装包, 如[v2ray-macos-arm64-v8a.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-macos-arm64-v8a.zip)。
 
-安装完成后的配置如下图：
+解压后将`config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
+```json
+...
+ "port": 12345,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
+...
+ "id": "12345678-1234-1234-1234-123456789012",		// 可自定义id
+ "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
+...
+```
 
-![在这里插入图片描述](http://8.222.150.121/pictures/v2ray-macos-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
+修改完配置文件后，打开terminal，在解压的文件夹下执行以下命令：
+
+```shell
+./v2ray run
+```
+
+![](http://8.222.150.121/pictures/v2ray-macos-wifi-proxy.png)
 
 # 安卓客户端安装与配置
 
 下载v2ray的[安卓安装包](https://github.com/2dust/v2rayNG/releases)，并新建与服务器对应的配置。
 
+![](http://8.222.150.121/pictures/v2ray-android.jpeg)
+
 # Windows系统客户端安装与配置
 
-下载v2ray的[windows安装包](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-windows-64.zip)
+在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Windows的安装包, 如[v2ray-windows-64-v8a.zip-v5.4.1]
+(https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-windows-64.zip)
 
-将`/usr/local/etc/config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
+解压后将`config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
 ```json
 ...
- "port": 55555,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
+ "port": 12345,	// 如果出现突然无法访问或不稳定，可以尝试修改端口
 ...
- "id": "e04ff980-2736-4a2c-853a-43e21bbd6dea",		// 可自定义id
+ "id": "12345678-1234-1234-1234-123456789012",		// 可自定义id
  "alterId": 64 // 客户端的值 <= 服务端的值, 两端都为64时无法使用(原因待分析)
 ...
 ```
@@ -105,7 +122,7 @@ macOS系统的v2ray客户端的github项目为[Cenmrev/V2RayX](https://github.co
 ```shell
 .\v2ray run
 ```
-![](http://8.222.150.121/pictures/windows-open-cmd.jpg)
+
 ![](http://8.222.150.121/pictures/windows-cmd-run-v2ray.jpg)
 
 然后配置网络的http代理 `http://localhost:1081`。
