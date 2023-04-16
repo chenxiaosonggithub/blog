@@ -10,6 +10,7 @@ LWin::return
 RControl::return
 
 #If, GetKeyState("LWin", "P") or GetKeyState("RControl", "P")
+Backspace::Delete
 j::Enter
 n::Down
 p::Up
