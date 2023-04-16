@@ -4,8 +4,9 @@ Enter::Insert
 `::Esc
 CapsLock::LControl
 '::RControl
-
 LControl::LWin
+RAlt::LAlt ; MobaXterm不能使用RAlt
+
 LWin::return
 RControl::return
 
