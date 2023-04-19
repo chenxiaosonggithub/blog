@@ -4,14 +4,29 @@
 
 ```shell
 mkdir -p /mnt/dst
-mkdir -p /mnt/cache_dir
+mkdir -p /mnt/cache_dir/dentry_cache/cloud
+setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_2f # '/'对应的dentryfile
 mkdir -p /mnt/src
 mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir /mnt/src /mnt/dst
 ```
 
 ```c
+mount
+  do_mount
+    path_mount
+      do_new_mount
+        vfs_get_tree
+          legacy_get_tree
+            hmdfs_mount
+              mount_nodev
+                hmdfs_fill_super
+                  hmdfs_cfn_load
+                    hmdfs_do_load
+```
+
+```c
 hmdfs_root_lookup // hmdfs_root_ops.lookup
-  hmdfs_lookup_merge
+  hmdfs_lookup_cloud_merge
 
 hmdfs_device_lookup // hmdfs_device_ops.lookup
   init_hmdfs_dentry_info
@@ -69,6 +84,16 @@ struct inode_operations hmdfs_file_iops_cloud_merge
 struct inode_operations hmdfs_dir_iops_cloud_merge
 ```
 
+name hash 处理流程：
+```c
+hmdfs_dentry_hash
+
+cache_file_persistent
+  cache_file_name_generate
+```
+
 # dentryfiletool
+
+https://gitee.com/chenxiaosonggitee/dentryfiletool
 
 
