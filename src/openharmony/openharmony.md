@@ -25,12 +25,9 @@ mount
                 hmdfs_fill_super
                   hmdfs_cfn_load
                     hmdfs_do_load
-
-struct hmdfs_sb_info *sbi
-
-getdents64
-  iterate_dir
-    hmdfs_iterate_cloud
+                      store_one
+                        load_cfn
+                          __find_cfn
 
 openat(mode=0, flags=<optimized out>, filename=0x563e18a6a260 "/mnt/dst/device_view/cloud/", dfd=-100)
   do_sys_open
@@ -40,10 +37,14 @@ openat(mode=0, flags=<optimized out>, filename=0x563e18a6a260 "/mnt/dst/device_v
           do_open
             vfs_open
               do_dentry_open
-                hmdfs_dir_open_cloud
+                hmdfs_dir_open_cloud // error = open(inode, f);
                   get_cloud_cache_file
                     find_cfn
                       __find_cfn
+
+getdents64
+  iterate_dir
+    hmdfs_iterate_cloud
 
 statx (buffer=0x7ffd70865710, mask=606, flags=256, filename=0x7ffd70865840 "/mnt/dst/device_view/cloud/file", dfd=-100)
   do_statx
