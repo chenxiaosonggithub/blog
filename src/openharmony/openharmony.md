@@ -5,8 +5,8 @@
 ```shell
 mkdir -p /mnt/dst
 mkdir -p /mnt/cache_dir/dentry_cache/cloud
-setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_2f # '/'对应的dentryfile
-setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
+setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
+# setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
 mkdir -p /mnt/src
 mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir /mnt/src /mnt/dst
 
@@ -27,7 +27,10 @@ mount
                     hmdfs_do_load
                       store_one
                         load_cfn
-                          __find_cfn
+                          cfn = create_cfn
+                          cfn1 = __find_cfn
+                            refcount_inc
+                          list_add_tail(&cfn->list, head) // 找不到cfn1，将cfn加到链表中
 
 openat(mode=0, flags=<optimized out>, filename=0x563e18a6a260 "/mnt/dst/device_view/cloud/", dfd=-100)
   do_sys_open
@@ -41,10 +44,13 @@ openat(mode=0, flags=<optimized out>, filename=0x563e18a6a260 "/mnt/dst/device_v
                   get_cloud_cache_file
                     find_cfn
                       __find_cfn
+                        refcount_inc
+                  hmdfs_add_cache_list
 
-getdents64
+getdents64(3, [{d_ino=9223512774353131136, d_off=9223512774343131136, d_reclen=32, d_type=DT_REG, d_name="file1"}, {d_ino=9223512774353131137, d_off=18446744073709551615, d_reclen=32, d_type=DT_REG, d_name="file2"}], 32768) = 64
   iterate_dir
     hmdfs_iterate_cloud
+      analysis_dentry_file_from_con(sbi=file->f_inode->i_sb->s_fs_info, handler=file->private_data)
 
 statx (buffer=0x7ffd70865710, mask=606, flags=256, filename=0x7ffd70865840 "/mnt/dst/device_view/cloud/file", dfd=-100)
   do_statx
