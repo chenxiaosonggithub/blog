@@ -9,8 +9,6 @@ setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_0000
 # setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
 mkdir -p /mnt/src
 mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir /mnt/src /mnt/dst
-
-
 ```
 
 ```c
@@ -45,7 +43,11 @@ openat(mode=0, flags=<optimized out>, filename=0x563e18a6a260 "/mnt/dst/device_v
                     find_cfn
                       __find_cfn
                         refcount_inc
-                  hmdfs_add_cache_list
+                    hmdfs_add_cache_list(CLOUD_DEVICE, dentry, filp) // dentry: /mnt/dst/device_view/cloud/, filp: cloud_000000000000002f
+                  cache_item = hmdfs_find_cache_item
+                    list_for_each_entry
+                    if (dev_id == item->dev_id)
+                  file->private_data = cache_item->filp
 
 getdents64(3, [{d_ino=9223512774353131136, d_off=9223512774343131136, d_reclen=32, d_type=DT_REG, d_name="file1"}, {d_ino=9223512774353131137, d_off=18446744073709551615, d_reclen=32, d_type=DT_REG, d_name="file2"}], 32768) = 64
   iterate_dir
@@ -95,6 +97,15 @@ hmdfs_dentry_hash
 cache_file_persistent
   cache_file_name_generate
     path_hash
+```
+
+端端流程：
+
+```c
+get_remote_dentry_file
+  hmdfs_find_cache_item
+
+hmdfs_dev_d_release
 ```
 
 ```c
