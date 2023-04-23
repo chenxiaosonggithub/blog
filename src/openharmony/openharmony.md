@@ -5,10 +5,16 @@
 ```shell
 mkdir -p /mnt/dst
 mkdir -p /mnt/cache_dir/dentry_cache/cloud
+mkdir -p /mnt/hmdfs/100/cloud # 临时调试的云端目录
+echo 123456789 > /mnt/hmdfs/100/cloud/file1
 setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
 # setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
 mkdir -p /mnt/src
+
 mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir /mnt/src /mnt/dst
+
+ls /mnt/dst/device_view/cloud/
+cat /mnt/dst/device_view/cloud/file1
 ```
 
 ```c
@@ -23,7 +29,7 @@ mount
                 hmdfs_fill_super
                   hmdfs_cfn_load
                     hmdfs_do_load
-                      store_one
+                      store_one // 端云场景不走这里
                         load_cfn
                           cfn = create_cfn
                           cfn1 = __find_cfn
@@ -40,54 +46,45 @@ openat(mode=0, flags=<optimized out>, filename=0x563e18a6a260 "/mnt/dst/device_v
               do_dentry_open
                 hmdfs_dir_open_cloud // error = open(inode, f);
                   get_cloud_cache_file
-                    find_cfn
-                      __find_cfn
-                        refcount_inc
+                    filp_open // 在 __alloc_file 中引用计数初始化为1
                     hmdfs_add_cache_list(CLOUD_DEVICE, dentry, filp) // dentry: /mnt/dst/device_view/cloud/, filp: cloud_000000000000002f
+                      get_file // 引用计数为2
                   cache_item = hmdfs_find_cache_item
                     list_for_each_entry
                     if (dev_id == item->dev_id)
                   file->private_data = cache_item->filp
+                  get_file // 引用计数为3
 
 getdents64(3, [{d_ino=9223512774353131136, d_off=9223512774343131136, d_reclen=32, d_type=DT_REG, d_name="file1"}, {d_ino=9223512774353131137, d_off=18446744073709551615, d_reclen=32, d_type=DT_REG, d_name="file2"}], 32768) = 64
   iterate_dir
     hmdfs_iterate_cloud
       analysis_dentry_file_from_con(sbi=file->f_inode->i_sb->s_fs_info, handler=file->private_data)
 
-statx (buffer=0x7ffd70865710, mask=606, flags=256, filename=0x7ffd70865840 "/mnt/dst/device_view/cloud/file", dfd=-100)
+statx(buffer=0x7ffe292ddaa0, mask=2, flags=0, filename=0x7ffe292dfe78 "/mnt/dst/device_view/cloud/", dfd=-100)
   do_statx
-    vfs_statx
-      user_path_at
-        user_path_at_empty
-          filename_lookup
-            lookup_last
-              walk_component
-                lookup_slow
-                  __lookup_slow
-                    hmdfs_lookup_cloud
-                      hmdfs_lookup_cloud_dentry
-                        hmdfs_lookup_by_cloud
-                          lookup_cloud_dentry
-                            get_cloud_cache_file
-                              find_cfn
-                                __find_cfn
-
-getxattr (size=0, value=0x0 <fixed_percpu_data>, name=0x561f9f54cff3 "system.posix_acl_access", pathname=0x7ffebe802930 "/mnt/dst/device_view/cloud/file")
-  path_getxattr
     user_path_at
       user_path_at_empty
         filename_lookup
-          lookup_last
-            walk_component
-              lookup_slow
-                __lookup_slow
-                  hmdfs_lookup_cloud
-                    hmdfs_lookup_cloud_dentry
-                      hmdfs_lookup_by_cloud
-                        lookup_cloud_dentry
-                          get_cloud_cache_file
-                            find_cfn
-                              __find_cfn
+          path_lookupat
+            lookup_last
+              walk_component
+                lookup_fast
+                  d_revalidate(flags=71, dentry=0xffff888007eb3800)
+                    hmdfs_dev_d_revalidate
+                  dput(dentry=dentry@entry=0xffff888007eb3800)
+                    dentry_kill
+                      __dentry_kill
+                        hmdfs_dev_d_release
+                          hmdfs_clear_cache_dents
+                            kref_put
+                              release_cache_item
+
+read
+  ksys_read
+    vfs_read
+      new_sync_read
+        call_read_iter
+          hmdfs_file_read_iter_cloud
 ```
 
 name hash 处理流程：
