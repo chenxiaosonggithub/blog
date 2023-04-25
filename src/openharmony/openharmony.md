@@ -2,22 +2,40 @@
 
 # 环境
 
-[获取源码](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-sourcecode.md)
-
 [大禹系列｜HH-SCDAYU200开发套件](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
 
 ## 编译
 
 [HiHope_DAYU200 搭建开发环境](https://gitee.com/hihope_iot/docs/blob/master/HiHope_DAYU200/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%BC%96%E8%AF%91%E6%8C%87%E5%8D%97.md)。
 
+还可以参考openharmony[获取源码](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-sourcecode.md)
+
 ```shell
 sudo apt-get update && sudo apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
 sudo apt-get install default-jdk -y # 如果报错: javac: command not found
 sudo apt install libelf-dev -y # error: Cannot resolve BTF IDs for CONFIG_DEBUG_INFO_BTF
 sudo apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'openssl/bio.h' file not found
+sudo apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
+sudo apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
+
+git config --global credential.helper store
+
+curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > ~/.local/bin/repo
+chmod a+x ~/.local/bin/repo
+vim ~/.bashrc               # 编辑环境变量
+export PATH=~/.local/bin:$PATH     # 在环境变量的最后添加一行repo路径信息
+source ~/.bashrc            # 应用环境变量
+pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
 
 ulimit -n 10240 # 不确定是否必需
 
+sudo ln -s /usr/bin/python3 /usr/bin/python
+repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify
+repo sync -c
+repo forall -c 'git lfs pull'
+
+bash build/prebuilts_download.sh
+# 镜像输出在out/rk3568/packages/phone/images 目录下
 ./build.sh --product-name rk3568 --ccache
 ./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
 ```
