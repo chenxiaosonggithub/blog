@@ -19,6 +19,7 @@ sudo apt install libelf-dev -y # error: Cannot resolve BTF IDs for CONFIG_DEBUG_
 sudo apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'openssl/bio.h' file not found
 sudo apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
 sudo apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
+# sudo apt-get install dwarves -y # 不需要
 
 git config --global credential.helper store
 
@@ -188,4 +189,21 @@ read
 
 https://gitee.com/chenxiaosonggitee/dentryfiletool
 
+# 读云端文件
 
+[foundation/filemanagement/dfs_service](https://gitee.com/openharmony/filemanagement_dfs_service)
+```c
+MountArgument::OptionsToString
+
+struct fuse_lowlevel_ops fakeOps
+```
+
+[third_party/libfuse](https://gitee.com/openharmony/third_party_libfuse)
+```c
+struct fuse_lowlevel_ops
+```
+
+[foundation/filemanagement/storage_service](https://gitee.com/openharmony/filemanagement_storage_service)
+```c
+MountArgument::GetFullCloud
+```
