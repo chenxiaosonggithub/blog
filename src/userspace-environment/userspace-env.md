@@ -230,6 +230,8 @@ sudo docker image rm ubuntu:18.04
 sudo docker ps -a # 查看容器
 
 sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
+# 以下注释的命令在容器中执行
+# apt update -y
 # apt install build-essential -y
 # apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 # apt install flex -y

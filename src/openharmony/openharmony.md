@@ -42,6 +42,32 @@ bash build/prebuilts_download.sh
 ./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
 ```
 
+### docker
+
+在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译
+```shell
+sudo docker ps -a # 查看容器
+sudo docker image ls # 查看镜像
+
+sudo docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash
+apt-get update && apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
+apt install file -y
+apt-get install default-jdk -y # 如果报错: javac: command not found
+apt install libelf-dev -y # error: Cannot resolve BTF IDs for CONFIG_DEBUG_INFO_BTF
+apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'openssl/bio.h' file not found
+apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
+apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
+apt-get install cpio -y
+
+sudo docker image rm ubuntu-openharmony:22.04
+sudo docker export 25c2e986e912 > ubuntu-openharmony:22.04.tar # 导出
+sudo docker image rm ubuntu-openharmony:22.04 # 先删除镜像
+cat ubuntu-openharmony:22.04.tar | sudo docker import - ubuntu-openharmony:22.04 # 导入到镜像
+sudo docker container prune # 删除容器
+
+sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache
+```
+
 ## 烧写
 
 [烧写工具及指南](https://gitee.com/hihope_iot/docs/tree/master/HiHope_DAYU200/%E7%83%A7%E5%86%99%E5%B7%A5%E5%85%B7%E5%8F%8A%E6%8C%87%E5%8D%97)。
