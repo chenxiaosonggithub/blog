@@ -10,3 +10,7 @@
 	smtpuser = chenxiaosongemail@foxmail.com
 	smtpencryption = ssl
 	smtppass = 此处填写qq邮箱的授权密码
+[credential]
+	helper = store
+[color]
+	ui = auto
