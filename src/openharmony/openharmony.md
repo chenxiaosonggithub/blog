@@ -60,11 +60,10 @@ apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
 apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
 apt-get install cpio -y
 
-sudo docker image rm ubuntu-openharmony:22.04
 sudo docker export 25c2e986e912 > ubuntu-openharmony:22.04.tar # 导出
+sudo docker container prune # 删除容器
 sudo docker image rm ubuntu-openharmony:22.04 # 先删除镜像
 cat ubuntu-openharmony:22.04.tar | sudo docker import - ubuntu-openharmony:22.04 # 导入到镜像
-sudo docker container prune # 删除容器
 
 sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache
 ```

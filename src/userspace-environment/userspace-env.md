@@ -231,13 +231,16 @@ sudo docker ps -a # 查看容器
 
 sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
 # 以下注释的命令在容器中执行
+# cp /etc/apt/sources.list /etc/apt/sources.list.bak
+# cp sources.list /etc/apt/sources.list # 修改镜像源
 # apt update -y
 # apt install build-essential -y
 # apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 # apt install flex -y
 # apt install bison -y
 # strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_
-sudo docker export 25c2e986e912 > ubuntu-kernel:18.04.tar # 导出
+sudo docker export xxxxxxxxx > ubuntu-xxxx:18.04.tar # 导出容器
+sudo docker save xxxxxxxxxx > ubuntu-xxxx:22.04.tar # 保存镜像
 cat ubuntu-kernel\:18.04.tar | sudo docker import - ubuntu-kernel:18.04 # 导入到镜像
 sudo docker container prune # 删除容器
 
