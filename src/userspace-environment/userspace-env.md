@@ -222,7 +222,10 @@ echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docke
 sudo apt-get update -y
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 sudo cat /etc/group | grep docker # 如果没有则创建 sudo groupadd docker
-sudo gpasswd -a sonvhi docker # 或者使用usermod ？添加完后要重启（可能有办法不用重启）
+groups | grep docker
+# sudo gpasswd -a sonvhi docker # 或者使用usermod
+sudo usermod -aG docker $USER
+su - $USER # 或退出shell重新登录, 但在tmux中不起作用
 
 sudo docker pull ubuntu:18.04
 sudo docker image ls # 查看镜像

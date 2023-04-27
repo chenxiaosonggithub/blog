@@ -4,7 +4,7 @@
 
 [大禹系列｜HH-SCDAYU200开发套件](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
 
-## 编译
+## 获取代码
 
 以ubuntu22.04为例，说明编译环境的搭建。
 
@@ -13,7 +13,8 @@
 还可以参考openharmony[获取源码](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-sourcecode.md)
 
 ```shell
-sudo apt-get update && sudo apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
+sudo apt-get update && sudo apt-get install python3 python3-pip -y
+sudo apt-get install git git-lfs -y
 sudo apt-get install default-jdk -y # 如果报错: javac: command not found
 sudo apt install libelf-dev -y # error: Cannot resolve BTF IDs for CONFIG_DEBUG_INFO_BTF
 sudo apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'openssl/bio.h' file not found
@@ -23,6 +24,7 @@ sudo apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command no
 
 git config --global credential.helper store
 
+mkdir ~/.local/bin/
 curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > ~/.local/bin/repo
 chmod a+x ~/.local/bin/repo
 vim ~/.bashrc               # 编辑环境变量
@@ -30,26 +32,18 @@ export PATH=~/.local/bin:$PATH     # 在环境变量的最后添加一行repo路
 source ~/.bashrc            # 应用环境变量
 pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
 
-ulimit -n 10240 # 不确定是否必需
-
 sudo ln -s /usr/bin/python3 /usr/bin/python
 repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify
 repo sync -c
 repo forall -c 'git lfs pull'
 
 bash build/prebuilts_download.sh
-# 镜像输出在out/rk3568/packages/phone/images 目录下
-./build.sh --product-name rk3568 --ccache
-./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
 ```
 
-### docker
+## docker编译
 
 在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译
 ```shell
-sudo docker ps -a # 查看容器
-sudo docker image ls # 查看镜像
-
 sudo docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash
 apt-get update && apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
 apt install file -y
@@ -60,12 +54,17 @@ apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
 apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
 apt-get install cpio -y
 
-sudo docker export 25c2e986e912 > ubuntu-openharmony:22.04.tar # 导出
+rm ubuntu-openharmony:22.04.tar
+sudo docker ps -a # 查看容器
+sudo docker export xxxxxxxxx > ubuntu-openharmony:22.04.tar # 导出
 sudo docker container prune # 删除容器
 sudo docker image rm ubuntu-openharmony:22.04 # 先删除镜像
 cat ubuntu-openharmony:22.04.tar | sudo docker import - ubuntu-openharmony:22.04 # 导入到镜像
+sudo docker image ls # 查看镜像
 
-sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache
+# 镜像输出在 out/rk3568/packages/phone/images 目录下
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
 ```
 
 ## 烧写
