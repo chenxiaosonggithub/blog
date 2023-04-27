@@ -15,14 +15,6 @@
 ```shell
 sudo apt-get update && sudo apt-get install python3 python3-pip -y
 sudo apt-get install git git-lfs -y
-sudo apt-get install default-jdk -y # 如果报错: javac: command not found
-sudo apt install libelf-dev -y # error: Cannot resolve BTF IDs for CONFIG_DEBUG_INFO_BTF
-sudo apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'openssl/bio.h' file not found
-sudo apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
-sudo apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
-# sudo apt-get install dwarves -y # 不需要
-
-git config --global credential.helper store
 
 mkdir ~/.local/bin/
 curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > ~/.local/bin/repo
@@ -44,7 +36,8 @@ bash build/prebuilts_download.sh
 
 在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译
 ```shell
-sudo docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash
+sudo docker pull ubuntu:22.04
+sudo docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
 apt-get update && apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
 apt install file -y
 apt-get install default-jdk -y # 如果报错: javac: command not found
@@ -53,6 +46,7 @@ apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'open
 apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
 apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
 apt-get install cpio -y
+exit
 
 rm ubuntu-openharmony:22.04.tar
 sudo docker ps -a # 查看容器
@@ -96,6 +90,17 @@ winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset
 
 `hdc`工具从[每日构建](http://ci.openharmony.cn/workbench/cicd/dailybuild/dailylist)中搜索`ohos-sdk`。
 
+```shell
+# 从开发板上获取数据库文件
+hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db .
+hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db-wal .
+hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db-shm .
+# 向开发板发送数据库文件
+hdc file send .\media_library.db /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
+hdc file send .\media_library.db-wal /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
+hdc file send .\media_library.db-shm /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
+```
+
 # 内核
 
 ```shell
@@ -103,6 +108,7 @@ mkdir -p /mnt/dst
 mkdir -p /mnt/cache_dir/dentry_cache/cloud
 mkdir -p /mnt/cloud_dir
 echo 123456789 > /mnt/cloud_dir/file1
+# 注意复制到其他系统，xattr要重新设置
 setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
 # setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
 mkdir -p /mnt/src
@@ -191,7 +197,7 @@ https://gitee.com/chenxiaosonggitee/dentryfiletool
 
 [foundation/filemanagement/dfs_service](https://gitee.com/openharmony/filemanagement_dfs_service)
 ```c
-MountArgument::OptionsToString
+MountArgument::OptionsToString // 端云场景没执行到
 
 struct fuse_lowlevel_ops fakeOps
 ```
@@ -199,9 +205,42 @@ struct fuse_lowlevel_ops fakeOps
 [third_party/libfuse](https://gitee.com/openharmony/third_party_libfuse)
 ```c
 struct fuse_lowlevel_ops
+
+// third_party/libfuse/example/passthrough_ll.c
+lo_read
 ```
 
 [foundation/filemanagement/storage_service](https://gitee.com/openharmony/filemanagement_storage_service)
 ```c
+MountArgument::OptionsToString
+
 MountArgument::GetFullCloud
+```
+
+```shell
+# mount | grep hmdfs
+/data/service/el2/100/hmdfs/account on /mnt/hmdfs/100/account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
+/data/service/el2/100/hmdfs/account on /storage/media/100 type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
+/data/service/el2/100/hmdfs/non_account on /mnt/hmdfs/100/non_account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/non_account_cache/,real_dst=/mnt/hmdfs/100/non_account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
+/dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
+
+mkdir -p /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud
+hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud
+setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
+ls /mnt/hmdfs/100/non_account/device_view/cloud/
+
+mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
+
+hilog -p off # -p <on/off>, --privacy <on/off>
+
+ls /mnt/hmdfs/100/account/device_view/cloud/
+cat /mnt/hmdfs/100/account/device_view/cloud/file4
+```
+
+```shell
+08-06 00:39:29.353   486  1360 I C01600/CloudFileDaemon: [fuse_manager.cpp:145->FakeLookup] lookup
+08-06 00:39:29.361   486  1362 I C01600/CloudFileDaemon: [fuse_manager.cpp:201->FakeOpen] open /data/service/el2/100/hmdfs/non_account/fake_cloud/file4
+08-06 00:39:29.364   486  1364 F C01600/CloudFileDaemon: [fuse_manager.cpp:247->FakeRead] FakeRead
 ```
