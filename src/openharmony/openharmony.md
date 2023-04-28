@@ -65,6 +65,8 @@ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22
 
 [烧写工具及指南](https://gitee.com/hihope_iot/docs/tree/master/HiHope_DAYU200/%E7%83%A7%E5%86%99%E5%B7%A5%E5%85%B7%E5%8F%8A%E6%8C%87%E5%8D%97)。
 
+特别需要注意的是：软件路径中不要含有中文，尤其是对英文版的windows系统。
+
 windows安装`DriverAssitant_v5.1.1\DriverInstall.exe`后，打开`RKDevTool.exe`， 配置以下路径：
 ```
 0x00000000 Loader MiniLoaderAll.bin
@@ -82,6 +84,8 @@ windows安装`DriverAssitant_v5.1.1\DriverInstall.exe`后，打开`RKDevTool.exe
 0x00677000 Userdata userdata.img
 ```
 
+配置重新导出为文件`config.cfg`。
+
 winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset`键，再长按`vol+/recovery`键，进入loader模式，点击`RKDevTool`工具上的`执行`按钮。可以只烧录`System`和`Userdata`（包含数据库）。
 
 ## 调试
@@ -89,6 +93,8 @@ winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset
 [hdc使用指导](https://docs.openharmony.cn/pages/v3.2/zh-cn/device-dev/subsystems/subsys-toolchain-hdc-guide.md/), [hdc_std使用指导](https://docs.openharmony.cn/pages/v3.1/zh-cn/device-dev/subsystems/subsys-toolchain-hdc-guide.md/)。
 
 `hdc`工具从[每日构建](http://ci.openharmony.cn/workbench/cicd/dailybuild/dailylist)中搜索`ohos-sdk`。
+
+`hdc shell` usb线连接rk3568板子上的`usb3.0 OTG`，**注意不是`DEBUG`串口**。
 
 ```shell
 # 从开发板上获取数据库文件
@@ -215,9 +221,18 @@ lo_read
 MountArgument::OptionsToString
 
 MountArgument::GetFullCloud
+
+MetaFile::DoLookup
+
+DKAssetReadSession
 ```
 
 ```shell
+mkdir -p /data/service/el2/100/hmdfs/non_account/fake_cloud/
+echo 123456789 > /data/service/el2/100/hmdfs/non_account/fake_cloud/file4
+reboot
+hilog -p off # -p <on/off>, --privacy <on/off>
+
 # mount | grep hmdfs
 /data/service/el2/100/hmdfs/account on /mnt/hmdfs/100/account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
 /data/service/el2/100/hmdfs/account on /storage/media/100 type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
@@ -225,16 +240,13 @@ MountArgument::GetFullCloud
 /dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
 
 mkdir -p /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud
-hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud
+hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud # windows cmd
 setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
 ls /mnt/hmdfs/100/non_account/device_view/cloud/
 
 mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud # windows cmd
 setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
-
-hilog -p off # -p <on/off>, --privacy <on/off>
-
 ls /mnt/hmdfs/100/account/device_view/cloud/
 cat /mnt/hmdfs/100/account/device_view/cloud/file4
 ```
