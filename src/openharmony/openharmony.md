@@ -96,6 +96,8 @@ winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset
 
 `hdc shell` usb线连接rk3568板子上的`usb3.0 OTG`，**注意不是`DEBUG`串口**。
 
+如果始终无法连接，`cmd+r`，找到注册表 `计算机\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{88bae032-5a81-49f0-bc3d-a4ff138216d6}`，确认是否有`Upperfilters`和`Lowerfilters`，删除后重新插拔。
+
 ```shell
 # 从开发板上获取数据库文件
 hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db .
