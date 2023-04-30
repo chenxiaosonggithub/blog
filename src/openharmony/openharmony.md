@@ -127,23 +127,72 @@ hdc file send .\media_library.db-wal /data/app/el2/100/database/com.ohos.mediali
 hdc file send .\media_library.db-shm /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
 ```
 
-# 内核
+# dentryfiletool
+
+https://gitee.com/chenxiaosonggitee/dentryfiletool
+
+# 读云端文件
+
+[foundation/filemanagement/dfs_service](https://gitee.com/openharmony/filemanagement_dfs_service)
+```c
+MountArgument::OptionsToString // 端云场景没执行到
+
+struct fuse_lowlevel_ops fakeOps
+
+MetaFile::DoLookup
+
+DKAssetReadSession
+
+MetaFile::MetaFile
+  GetParentMetaFile
+    MetaFileMgr::GetMetaFile
+      mFile = std::make_shared<MetaFile>(userId, path)
+```
+
+[third_party/libfuse](https://gitee.com/openharmony/third_party_libfuse)
+```c
+struct fuse_lowlevel_ops
+
+// third_party/libfuse/example/passthrough_ll.c
+lo_read
+```
+
+[foundation/filemanagement/storage_service](https://gitee.com/openharmony/filemanagement_storage_service)
+```c
+MountArgument::OptionsToString
+
+MountArgument::GetFullCloud
+```
+
+[kernel/linux/linux-5.10](https://gitee.com/openharmony/kernel_linux_5.10)
+```c
+fuse_getattr
+  fuse_is_bad
+```
 
 ```shell
-mkdir -p /mnt/dst
-mkdir -p /mnt/cache_dir/dentry_cache/cloud
-mkdir -p /mnt/cloud_dir
-echo 123456789 > /mnt/cloud_dir/file1
-# 注意复制到其他系统，xattr要重新设置
-setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
-# setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
-mkdir -p /mnt/src
+hilog -p off # -p <on/off>, --privacy <on/off>
 
-mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir,cloud_dir=/mnt/cloud_dir /mnt/src /mnt/dst
+# mount | grep hmdfs
+/data/service/el2/100/hmdfs/account on /mnt/hmdfs/100/account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
+/data/service/el2/100/hmdfs/account on /storage/media/100 type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
+/data/service/el2/100/hmdfs/non_account on /mnt/hmdfs/100/non_account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/non_account_cache/,real_dst=/mnt/hmdfs/100/non_account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
+/dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
 
-ls /mnt/dst/device_view/cloud/
-cat /mnt/dst/device_view/cloud/file1
+mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud # windows cmd
+setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
+ls /mnt/hmdfs/100/account/device_view/cloud/
+cat /mnt/hmdfs/100/account/device_view/cloud/file4
 ```
+
+```shell
+08-06 00:39:29.353   486  1360 I C01600/CloudFileDaemon: [fuse_manager.cpp:145->FakeLookup] lookup
+08-06 00:39:29.361   486  1362 I C01600/CloudFileDaemon: [fuse_manager.cpp:201->FakeOpen] open /data/service/el2/100/hmdfs/non_account/fake_cloud/file4
+08-06 00:39:29.364   486  1364 F C01600/CloudFileDaemon: [fuse_manager.cpp:247->FakeRead] read
+```
+
+# 内核代码
 
 ```c
 mount
@@ -215,71 +264,6 @@ read
           hmdfs_file_read_iter_cloud
 ```
 
-# dentryfiletool
-
-https://gitee.com/chenxiaosonggitee/dentryfiletool
-
-# 读云端文件
-
-[foundation/filemanagement/dfs_service](https://gitee.com/openharmony/filemanagement_dfs_service)
-```c
-MountArgument::OptionsToString // 端云场景没执行到
-
-struct fuse_lowlevel_ops fakeOps
-
-MetaFile::DoLookup
-
-DKAssetReadSession
-
-MetaFile::MetaFile
-  GetParentMetaFile
-    MetaFileMgr::GetMetaFile
-      mFile = std::make_shared<MetaFile>(userId, path)
-```
-
-[third_party/libfuse](https://gitee.com/openharmony/third_party_libfuse)
-```c
-struct fuse_lowlevel_ops
-
-// third_party/libfuse/example/passthrough_ll.c
-lo_read
-```
-
-[foundation/filemanagement/storage_service](https://gitee.com/openharmony/filemanagement_storage_service)
-```c
-MountArgument::OptionsToString
-
-MountArgument::GetFullCloud
-```
-
-[kernel/linux/linux-5.10](https://gitee.com/openharmony/kernel_linux_5.10)
-```c
-fuse_getattr
-  fuse_is_bad
-```
-
-```shell
-hilog -p off # -p <on/off>, --privacy <on/off>
-
-# mount | grep hmdfs
-/data/service/el2/100/hmdfs/account on /mnt/hmdfs/100/account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
-/data/service/el2/100/hmdfs/account on /storage/media/100 type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
-/data/service/el2/100/hmdfs/non_account on /mnt/hmdfs/100/non_account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/non_account_cache/,real_dst=/mnt/hmdfs/100/non_account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
-/dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
-
-mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud # windows cmd
-setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
-ls /mnt/hmdfs/100/account/device_view/cloud/
-cat /mnt/hmdfs/100/account/device_view/cloud/file4
-```
-
-```shell
-08-06 00:39:29.353   486  1360 I C01600/CloudFileDaemon: [fuse_manager.cpp:145->FakeLookup] lookup
-08-06 00:39:29.361   486  1362 I C01600/CloudFileDaemon: [fuse_manager.cpp:201->FakeOpen] open /data/service/el2/100/hmdfs/non_account/fake_cloud/file4
-08-06 00:39:29.364   486  1364 F C01600/CloudFileDaemon: [fuse_manager.cpp:247->FakeRead] read
-```
-
 # libfuse
 
 [third_party/libfuse](https://gitee.com/chenxiaosonggitee/third_party_libfuse)
@@ -304,5 +288,25 @@ gdb ./example/passthrough_ll
 (gdb) r
 
 ./example/passthrough_ll -o source=/tmp /mnt/cloud_dir -d
+```
+
+# qemu调试
+
+```shell
+mkdir -p /mnt/dst
+mkdir -p /mnt/cache_dir/dentry_cache/cloud
+mkdir -p /mnt/cloud_dir
+echo 123456789 > /mnt/cloud_dir/file1
+# 注意复制到其他系统，xattr要重新设置
+setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
+# setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
+mkdir -p /mnt/src
+
+mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir,cloud_dir=/mnt/cloud_dir /mnt/src /mnt/dst
+
+ls /mnt/dst/device_view/cloud/
+cat /mnt/dst/device_view/cloud/file1
+
+# libfuse
 ./example/hello_ll /mnt/cloud_dir -d
 ```
