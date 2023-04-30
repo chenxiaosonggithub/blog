@@ -170,6 +170,7 @@ fuse_getattr
   fuse_is_bad
 ```
 
+rk3568调试：
 ```shell
 hilog -p off # -p <on/off>, --privacy <on/off>
 
