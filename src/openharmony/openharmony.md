@@ -35,6 +35,9 @@ bash build/prebuilts_download.sh
 ## docker编译
 
 在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译
+
+[`hb`工具安装](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-install-tool.md)
+
 ```shell
 sudo docker pull ubuntu:22.04
 sudo docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
@@ -228,9 +231,6 @@ DKAssetReadSession
 ```
 
 ```shell
-mkdir -p /data/service/el2/100/hmdfs/non_account/fake_cloud/
-echo 123456789 > /data/service/el2/100/hmdfs/non_account/fake_cloud/file4
-reboot
 hilog -p off # -p <on/off>, --privacy <on/off>
 
 # mount | grep hmdfs
@@ -238,11 +238,6 @@ hilog -p off # -p <on/off>, --privacy <on/off>
 /data/service/el2/100/hmdfs/account on /storage/media/100 type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
 /data/service/el2/100/hmdfs/non_account on /mnt/hmdfs/100/non_account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/non_account_cache/,real_dst=/mnt/hmdfs/100/non_account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
 /dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
-
-mkdir -p /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud
-hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud # windows cmd
-setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/non_account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
-ls /mnt/hmdfs/100/non_account/device_view/cloud/
 
 mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
 hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud # windows cmd
@@ -254,5 +249,32 @@ cat /mnt/hmdfs/100/account/device_view/cloud/file4
 ```shell
 08-06 00:39:29.353   486  1360 I C01600/CloudFileDaemon: [fuse_manager.cpp:145->FakeLookup] lookup
 08-06 00:39:29.361   486  1362 I C01600/CloudFileDaemon: [fuse_manager.cpp:201->FakeOpen] open /data/service/el2/100/hmdfs/non_account/fake_cloud/file4
-08-06 00:39:29.364   486  1364 F C01600/CloudFileDaemon: [fuse_manager.cpp:247->FakeRead] FakeRead
+08-06 00:39:29.364   486  1364 F C01600/CloudFileDaemon: [fuse_manager.cpp:247->FakeRead] read
+```
+
+# libfuse
+
+[third_party/libfuse](https://gitee.com/chenxiaosonggitee/third_party_libfuse)
+```shell
+apt install meson -y
+apt install cmake -y
+apt-get install pkg-config -y
+apt install udev -y
+
+git clone https://github.com/libfuse/libfuse.git
+cd libfuse
+mkdir build; cd build
+meson setup ..
+meson configure -D buildtype=debug
+ninja
+ninja install # 运行 example 可以不安装
+
+mkdir mnt
+gdb ./example/passthrough_ll
+(gdb) set args -o source=/tmp /mnt/cloud_dir -d
+(gdb) b lo_lookup
+(gdb) r
+
+./example/passthrough_ll -o source=/tmp /mnt/cloud_dir -d
+./example/hello_ll /mnt/cloud_dir -d
 ```
