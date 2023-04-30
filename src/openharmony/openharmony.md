@@ -2,7 +2,7 @@
 
 # 环境
 
-[大禹系列｜HH-SCDAYU200开发套件](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
+[大禹系列｜HH-SCDAYU200开发套件（Quad-core Cortex-A55 up to 2.0GHz）](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
 
 ## 获取代码
 
@@ -25,6 +25,7 @@ source ~/.bashrc            # 应用环境变量
 pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
 
 sudo ln -s /usr/bin/python3 /usr/bin/python
+
 repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify
 repo sync -c
 repo forall -c 'git lfs pull'
@@ -36,8 +37,8 @@ bash build/prebuilts_download.sh
 
 在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译
 ```shell
-sudo docker pull ubuntu:22.04
-sudo docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
+docker pull ubuntu:22.04
+docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
 apt-get update && apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
 apt install file -y
 apt-get install default-jdk -y # 如果报错: javac: command not found
@@ -49,16 +50,30 @@ apt-get install cpio -y
 exit
 
 rm ubuntu-openharmony:22.04.tar
-sudo docker ps -a # 查看容器
-sudo docker export xxxxxxxxx > ubuntu-openharmony:22.04.tar # 导出
-sudo docker container prune # 删除容器
-sudo docker image rm ubuntu-openharmony:22.04 # 先删除镜像
-cat ubuntu-openharmony:22.04.tar | sudo docker import - ubuntu-openharmony:22.04 # 导入到镜像
-sudo docker image ls # 查看镜像
+docker ps -a # 查看容器
+docker export xxxxxxxxx > ubuntu-openharmony:22.04.tar # 导出
+docker container prune # 删除容器
+docker image rm ubuntu-openharmony:22.04 # 先删除镜像
+ubuntu-openharmony:22.04.tar | docker import - ubuntu-openharmony:22.04 # 导入到镜像
+docker image ls # 查看镜像
 
 # 镜像输出在 out/rk3568/packages/phone/images 目录下
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --build-target dfs_service --fast-rebuild
+```
+
+## qemu 环境
+
+[device_qemu](https://gitee.com/openharmony/device_qemu#https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_mps3_an547/README_zh.md)
+
+[QEMU教程 for arm - linux](https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_virt/linux/README_zh.md)
+
+```shell
+# 编译qemu-arm-linux-headless失败: https://gitee.com/openharmony/device_qemu/issues/I6AH7L?from=project-issue
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-headless --ccache --jobs 64
+
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-min --ccache --jobs 64
 ```
 
 ## 烧写
@@ -96,7 +111,7 @@ winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset
 
 `hdc shell` usb线连接rk3568板子上的`usb3.0 OTG`，**注意不是`DEBUG`串口**。
 
-如果始终无法连接，`cmd+r`，找到注册表 `计算机\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{88bae032-5a81-49f0-bc3d-a4ff138216d6}`，确认是否有`Upperfilters`和`Lowerfilters`，删除后重新插拔。
+如果始终无法连接，`win+r`，输入`regedit`回车，找到注册表 `计算机\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{88bae032-5a81-49f0-bc3d-a4ff138216d6}`，确认是否有`Upperfilters`和`Lowerfilters`，删除后重新插拔。
 
 ```shell
 # 从开发板上获取数据库文件
@@ -208,6 +223,15 @@ https://gitee.com/chenxiaosonggitee/dentryfiletool
 MountArgument::OptionsToString // 端云场景没执行到
 
 struct fuse_lowlevel_ops fakeOps
+
+MetaFile::DoLookup
+
+DKAssetReadSession
+
+MetaFile::MetaFile
+  GetParentMetaFile
+    MetaFileMgr::GetMetaFile
+      mFile = std::make_shared<MetaFile>(userId, path)
 ```
 
 [third_party/libfuse](https://gitee.com/openharmony/third_party_libfuse)
@@ -223,10 +247,12 @@ lo_read
 MountArgument::OptionsToString
 
 MountArgument::GetFullCloud
+```
 
-MetaFile::DoLookup
-
-DKAssetReadSession
+[kernel/linux/linux-5.10](https://gitee.com/openharmony/kernel_linux_5.10)
+```c
+fuse_getattr
+  fuse_is_bad
 ```
 
 ```shell
