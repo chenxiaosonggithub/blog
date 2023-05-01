@@ -297,11 +297,19 @@ gdb ./example/passthrough_ll
 mkdir -p /mnt/dst
 mkdir -p /mnt/cache_dir/dentry_cache/cloud
 mkdir -p /mnt/cloud_dir
-echo 123456789 > /mnt/cloud_dir/file1
-# 注意复制到其他系统，xattr要重新设置
-setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
-# setfattr -n user.hmdfs_cache -v "/dir/" /mnt/cache_dir/dentry_cache/cloud/cloud_16e1fe # '/dir/'对应的dentryfile
 mkdir -p /mnt/src
+echo 123456789 > /mnt/cloud_dir/file1
+
+# 注意复制到其他系统，xattr要重新设置
+setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f
+setfattr -n user.hmdfs_cache -v "/o" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000000000620
+setfattr -n user.hmdfs_cache -v "/o/p" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000000170441
+setfattr -n user.hmdfs_cache -v "/o/p/q" /mnt/cache_dir/dentry_cache/cloud/cloud_000000005666fe23
+setfattr -n user.hmdfs_cache -v "/o/p/q/r" /mnt/cache_dir/dentry_cache/cloud/cloud_0000014458a00786
+setfattr -n user.hmdfs_cache -v "/o/p/q/r/s" /mnt/cache_dir/dentry_cache/cloud/cloud_0004c190b0bc442a
+setfattr -n user.hmdfs_cache -v "/o/p/q/r/s/t" /mnt/cache_dir/dentry_cache/cloud/cloud_11daa02772bbe7cf
+setfattr -n user.hmdfs_cache -v "/a" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000000000612
+setfattr -n user.hmdfs_cache -v "/a/b" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000016cfa5
 
 mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir,cloud_dir=/mnt/cloud_dir /mnt/src /mnt/dst
 
