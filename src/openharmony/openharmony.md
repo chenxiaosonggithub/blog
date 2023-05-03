@@ -173,6 +173,8 @@ fuse_getattr
 rk3568调试：
 ```shell
 hilog -p off # -p <on/off>, --privacy <on/off>
+hilog --baselevel=DEBUG
+hilog | grep "CloudFileDaemon\|CLOUDSYNC_SA"
 
 # mount | grep hmdfs
 /data/service/el2/100/hmdfs/account on /mnt/hmdfs/100/account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
@@ -181,8 +183,23 @@ hilog -p off # -p <on/off>, --privacy <on/off>
 /dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
 
 mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-hdc file send cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud # windows cmd
-setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f # '/'对应的dentryfile
+mkdir -p /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
+
+# windows cmd
+hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000000002f /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
+hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_0000000000000612 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_0000000000000612 /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
+hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000016cfa5 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
+hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000016cfa5 /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
+
+setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f
+setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/cloud_000000000000002f
+setfattr -n user.hmdfs_cache -v "/a" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_0000000000000612
+setfattr -n user.hmdfs_cache -v "/a" /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/cloud_0000000000000612
+setfattr -n user.hmdfs_cache -v "/a/b" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000016cfa5
+setfattr -n user.hmdfs_cache -v "/a/b" /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/cloud_000000000016cfa5
+chmod -R 777 /data/service/el2/100/
 ls /mnt/hmdfs/100/account/device_view/cloud/
 cat /mnt/hmdfs/100/account/device_view/cloud/file4
 ```
