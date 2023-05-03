@@ -1,5 +1,9 @@
 [toc]
 
+# 重装系统
+
+https://www.laomaotao.net/help/2020/0806/8620.html
+
 # wsl
 
 应用商店中安装wsl，打开`Turn Windows features on or off` 中的wsl
