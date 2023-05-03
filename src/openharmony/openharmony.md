@@ -16,7 +16,7 @@
 sudo apt-get update && sudo apt-get install python3 python3-pip -y
 sudo apt-get install git git-lfs -y
 
-mkdir ~/.local/bin/
+mkdir -p ~/.local/bin/
 curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > ~/.local/bin/repo
 chmod a+x ~/.local/bin/repo
 vim ~/.bashrc               # 编辑环境变量
