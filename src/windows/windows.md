@@ -2,7 +2,7 @@
 
 # wsl
 
-应用商店中安装wsl，打开`Turn Windows features on or off` 中的wsl
+应用商店中安装wsl（不需要翻墙），打开`Turn Windows features on or off` 中的wsl
 
 ```shell
 # 将WSL 2设置为默认版本

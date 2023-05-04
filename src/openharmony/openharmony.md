@@ -147,6 +147,12 @@ MetaFile::MetaFile
   GetParentMetaFile
     MetaFileMgr::GetMetaFile
       mFile = std::make_shared<MetaFile>(userId, path)
+
+DataSyncer::DataSyncer
+  sdkHelper_(userId, bundleName)
+
+// foundation/filemanagement/dfs_service/adapter/cloud_adapter_example/include/dk_error.h
+class DKError
 ```
 
 [third_party/libfuse](https://gitee.com/openharmony/third_party_libfuse)
