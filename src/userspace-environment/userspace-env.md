@@ -251,3 +251,13 @@ sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18
 sudo docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 bash
 ```
 
+ubuntu中默认不能以root登录，作如下更改：
+```shell
+# 需要注意的是 macos 中要进行端口映射，因为没有像 linux 中的 docker0 网络
+docker run -it -p 2223:22 ubuntu:22.04 bash # 只有 macos 才需要，linux不需要，windows建议使用wsl2
+apt update -y
+apt install net-tools -y
+apt install openssh-server -y
+vim /etc/ssh/sshd_config # PermitRootLogin prohibit-password 改为 PermitRootLogin yes
+service ssh restart # docker 中不能使用 systemctl 启动 ssh
+```
