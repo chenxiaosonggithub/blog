@@ -121,6 +121,8 @@ winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset
 hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db .
 hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db-wal .
 hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db-shm .
+# 整个文件夹
+hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/. .
 # 向开发板发送数据库文件
 hdc file send .\media_library.db /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
 hdc file send .\media_library.db-wal /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
@@ -189,25 +191,19 @@ hilog | grep "CloudFileDaemon\|CLOUDSYNC_SA"
 /dev/fuse on /mnt/hmdfs/100/cloud type fuse (rw,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,default_permissions,allow_other)
 
 mkdir -p /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-mkdir -p /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
 
 # windows cmd
 hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000000002f /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000000002f /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
 hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_0000000000000612 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_0000000000000612 /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
 hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000016cfa5 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud
-hdc file send D:\chenxiaosong\workspace\dentryfile\cloud_000000000016cfa5 /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/
 
 setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000000002f
-setfattr -n user.hmdfs_cache -v "/" /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/cloud_000000000000002f
 setfattr -n user.hmdfs_cache -v "/a" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_0000000000000612
-setfattr -n user.hmdfs_cache -v "/a" /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/cloud_0000000000000612
 setfattr -n user.hmdfs_cache -v "/a/b" /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/cloud_000000000016cfa5
-setfattr -n user.hmdfs_cache -v "/a/b" /data/service/el2/100/hmdfs/cache/cloud_cache/dentry_cache/cloud/cloud_000000000016cfa5
-chmod -R 777 /data/service/el2/100/
+# chmod -R 777 /data/service/el2/100/
+chown -R dfs:dfs /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache
 ls /mnt/hmdfs/100/account/device_view/cloud/
-cat /mnt/hmdfs/100/account/device_view/cloud/file4
+cat /mnt/hmdfs/100/account/device_view/cloud/a/b/file3
 ```
 
 ```shell
@@ -342,3 +338,64 @@ cat /mnt/dst/device_view/cloud/file1
 # libfuse
 ./example/hello_ll /mnt/cloud_dir -d
 ```
+
+# tdd
+
+生成 dentryfile 代码：
+```c
+// foundation/filemanagement/dfs_service/test/unittests/cloudsync_sa/dentry/dentry_meta_file_test.cpp
+HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
+{
+    std::string cacheDir =
+        "/data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/";
+    ForceRemoveDirectory(cacheDir);
+
+    auto mFileRoot = MetaFileMgr::GetInstance().GetMetaFile(100, "/");
+    MetaBase mBaseReg1("file1", "fileid1");
+    mBaseReg1.size = 10;
+    mBaseReg1.mode = S_IFREG;
+    EXPECT_EQ(mFileRoot->DoCreate(mBaseReg1), 0);
+    MetaBase mBaseReg2("file2", "fileid2");
+    mBaseReg2.size = 20;
+    mBaseReg2.mode = S_IFREG;
+    EXPECT_EQ(mFileRoot->DoCreate(mBaseReg2), 0);
+    mFileRoot = nullptr;
+
+    auto mFileDir1 = MetaFileMgr::GetInstance().GetMetaFile(100, "/dir1");
+    MetaBase mBaseReg3("file3", "fileid3");
+    mBaseReg3.size = 30;
+    mBaseReg3.mode = S_IFREG;
+    EXPECT_EQ(mFileDir1->DoCreate(mBaseReg3), 0);
+    mFileDir1 = nullptr;
+
+    auto mFileDir2 = MetaFileMgr::GetInstance().GetMetaFile(100, "/dir1/dir2");
+    MetaBase mBaseReg4("file4", "fileid4");
+    mBaseReg4.size = 40;
+    mBaseReg4.mode = S_IFREG;
+    EXPECT_EQ(mFileDir2.DoCreate(mBaseReg4), 0);
+    mFileDir2 = nullptr;
+
+    MetaFileMgr::GetInstance().ClearAll();
+}
+```
+
+```shell
+# 编译结果：
+# out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
+# out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
+./build.sh --product-name rk3568 --ccache --build-target dentry_meta_file_test --fast-rebuild
+# 从windows复制到 rk3568 板子上
+hdc file send .\dentry_meta_file_test /data
+chmod a+x dentry_meta_file_test
+./dentry_meta_file_test --gtest_list_tests
+./dentry_meta_file_test --gtest_filter=DentryMetaFileTest.MetaFileCreate
+
+rm -rf /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/*
+ls /mnt/hmdfs/100/account/device_view/cloud/
+```
+
+# xts
+
+https://gitee.com/openharmony/xts_acts
+
+https://gitee.com/openharmony/testfwk_xdevice
