@@ -55,6 +55,16 @@ systemctl restart sshd # 重启ssh
 AUTOSSH_POLL=60
 ```
 
+# 内网穿透
+
+ssh反向隧道还可以用于内网穿透，比如把内网linux的mysql端口暴露到公网上：
+```shell
+# ssh -R <公网服务器IP>:<公网端口>:localhost:<MySQL端口> <公网服务器用户名>@<公网服务器IP>
+ssh -R hk.chenxiaosong.com:22222:localhost:3306 root@hk.chenxiaosong.com
+```
+
+通过访问`hk.chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
+
 # efi grub 选择系统
 
 ```shell
