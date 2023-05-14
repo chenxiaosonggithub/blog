@@ -204,6 +204,8 @@ setfattr -n user.hmdfs_cache -v "/a/b" /data/service/el2/100/hmdfs/cache/account
 chown -R dfs:dfs /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache
 ls /mnt/hmdfs/100/account/device_view/cloud/
 cat /mnt/hmdfs/100/account/device_view/cloud/a/b/file3
+
+echo 3 > /proc/sys/vm/drop_caches
 ```
 
 ```shell
@@ -372,7 +374,7 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
     MetaBase mBaseReg4("file4", "fileid4");
     mBaseReg4.size = 40;
     mBaseReg4.mode = S_IFREG;
-    EXPECT_EQ(mFileDir2.DoCreate(mBaseReg4), 0);
+    EXPECT_EQ(mFileDir2->DoCreate(mBaseReg4), 0);
     mFileDir2 = nullptr;
 
     MetaFileMgr::GetInstance().ClearAll();
@@ -385,13 +387,15 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
 # out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
 ./build.sh --product-name rk3568 --ccache --build-target dentry_meta_file_test --fast-rebuild
 # 从windows复制到 rk3568 板子上
+hdc shell rm /data/dentry_meta_file_test -rf
 hdc file send .\dentry_meta_file_test /data
-chmod a+x dentry_meta_file_test
-./dentry_meta_file_test --gtest_list_tests
-./dentry_meta_file_test --gtest_filter=DentryMetaFileTest.MetaFileCreate
+chmod a+x /data/dentry_meta_file_test
+/data/dentry_meta_file_test --gtest_list_tests
+/data/dentry_meta_file_test --gtest_filter=DentryMetaFileTest.MetaFileCreate
 
-rm -rf /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/*
-ls /mnt/hmdfs/100/account/device_view/cloud/
+chmod -R 777 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/
+ls -lh /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/
+ls -lh /mnt/hmdfs/100/account/device_view/cloud/
 ```
 
 # xts
@@ -399,3 +403,7 @@ ls /mnt/hmdfs/100/account/device_view/cloud/
 https://gitee.com/openharmony/xts_acts
 
 https://gitee.com/openharmony/testfwk_xdevice
+
+# 编程规范
+
+https://gitee.com/openharmony/docs/tree/master/zh-cn/contribute
