@@ -4,13 +4,13 @@
 
 https://cloud.tencent.com/developer/article/1722055
 
-autossh:
+内网电脑 A 通过公网 server 登录到另一个内网电脑 B
+
+内网电脑B autossh:
 ```shell
 # https://www.harding.motd.ca/autossh/ # centos9源码安装
 sudo apt install autossh -y # ubuntu2204
 ```
-
-内网电脑 A 通过公网 server 登录到另一个内网电脑 B
 
 ```shell
 ssh -NfR 55555:localhost:22 root@chenxiaosong.com # 在内网电脑 B 上执行, chenxiaosong.com 为公网 server
@@ -227,12 +227,12 @@ groups | grep docker
 sudo usermod -aG docker $USER
 su - $USER # 或退出shell重新登录, 但在tmux中不起作用
 
-sudo docker pull ubuntu:18.04
-sudo docker image ls # 查看镜像
-sudo docker image rm ubuntu:18.04
-sudo docker ps -a # 查看容器
+docker pull ubuntu:18.04
+docker image ls # 查看镜像
+docker image rm ubuntu:18.04
+docker ps -a # 查看容器
 
-sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
+docker run -it ubuntu:18.04 bash # 根据镜像启动容器, -i: 交互式操作, -t: 终端, -d: 后台运行
 # 以下注释的命令在容器中执行
 # cp /etc/apt/sources.list /etc/apt/sources.list.bak
 # cp sources.list /etc/apt/sources.list # 修改镜像源
@@ -242,13 +242,17 @@ sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
 # apt install flex -y
 # apt install bison -y
 # strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_
-sudo docker export xxxxxxxxx > ubuntu-xxxx:18.04.tar # 导出容器
-sudo docker save xxxxxxxxxx > ubuntu-xxxx:22.04.tar # 保存镜像
-cat ubuntu-kernel\:18.04.tar | sudo docker import - ubuntu-kernel:18.04 # 导入到镜像
-sudo docker container prune # 删除容器
+docker export xxxxxxxxx > ubuntu-xxxx:18.04.tar # 导出容器
+docker save xxxxxxxxxx > ubuntu-xxxx:22.04.tar # 保存镜像
+cat ubuntu-kernel\:18.04.tar | docker import - ubuntu-kernel:18.04 # 导入到镜像
+docker container prune # 删除容器
 
-sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 gcc -v
-sudo docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 bash
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 gcc -v
+docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 bash
+
+docker restart xxxxxxx
+docker attach xxxxxxxx # 退出后会导致容器停止
+docker exec -it xxxxxxxx /bin/bash # 退出后不会导致容器停止
 ```
 
 ubuntu中默认不能以root登录，作如下更改：
