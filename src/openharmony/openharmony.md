@@ -372,7 +372,7 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
 
     auto mFileDir2 = MetaFileMgr::GetInstance().GetMetaFile(100, "/dir1/dir2");
     MetaBase mBaseReg4("file4", "fileid4");
-    mBaseReg4.size = 40;
+    mBaseReg4.size = 100*1024;
     mBaseReg4.mode = S_IFREG;
     EXPECT_EQ(mFileDir2->DoCreate(mBaseReg4), 0);
     mFileDir2 = nullptr;
