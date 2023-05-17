@@ -389,7 +389,9 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
 # 从windows复制到 rk3568 板子上
 hdc shell rm /data/dentry_meta_file_test -rf
 hdc file send .\dentry_meta_file_test /data
+hdc shell
 chmod a+x /data/dentry_meta_file_test
+cd /data/
 /data/dentry_meta_file_test --gtest_list_tests
 /data/dentry_meta_file_test --gtest_filter=DentryMetaFileTest.MetaFileCreate
 

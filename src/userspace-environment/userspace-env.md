@@ -245,7 +245,7 @@ docker image ls # 查看镜像
 docker image rm ubuntu:18.04
 docker ps -a # 查看容器
 
-docker run -it ubuntu:18.04 bash # 根据镜像启动容器, -i: 交互式操作, -t: 终端, -d: 后台运行
+docker run -it --name my-name ubuntu:18.04 bash # 根据镜像启动容器, -i: 交互式操作, -t: 终端, -d: 后台运行
 # 以下注释的命令在容器中执行
 # cp /etc/apt/sources.list /etc/apt/sources.list.bak
 # cp sources.list /etc/apt/sources.list # 修改镜像源
