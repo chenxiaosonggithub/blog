@@ -129,6 +129,15 @@ hdc file send .\media_library.db-wal /data/app/el2/100/database/com.ohos.mediali
 hdc file send .\media_library.db-shm /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
 ```
 
+## 日志
+
+```shell
+# -w 开启日志落盘任务，start表示开始，stop表示停止
+# -f 设置日志文件名
+# -l 单个日志文件大小
+hilog -w start -f cxsTest -l 1M -n 5 -m zlib -j 11
+```
+
 ## crash调试
 
 当程序crash时，可以把相关日志文件导出来分析：
@@ -434,6 +443,10 @@ chmod -R 777 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/
 ls -lh /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/
 ls -lh /mnt/hmdfs/100/account/device_view/cloud/
 cat /mnt/hmdfs/100/account/device_view/cloud/dir1/dir2/file4
+```
+
+```shell
+./build.sh --product-name rk3568 --cacch --build-target storage_daemon_unit_test --build-target storage_manager_unit_test
 ```
 
 # xts
