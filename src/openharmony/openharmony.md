@@ -61,9 +61,9 @@ ubuntu-openharmony:22.04.tar | docker import - ubuntu-openharmony:22.04 # 导入
 docker image ls # 查看镜像
 
 # 镜像输出在 out/rk3568/packages/phone/images 目录下
-docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache
-docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
-docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --build-target dfs_service --fast-rebuild
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --target-cpu arm64
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --fast-rebuild # 增量编译时跳过一些已经完成的步骤
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dfs_service --fast-rebuild
 ```
 
 ## qemu 环境
@@ -80,6 +80,11 @@ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22
 ```
 
 ## 烧写
+
+linux上压缩：
+```shell
+zip -jr images.zip out/rk3568/packages/phone/images/
+```
 
 [烧写工具及指南](https://gitee.com/hihope_iot/docs/tree/master/HiHope_DAYU200/%E7%83%A7%E5%86%99%E5%B7%A5%E5%85%B7%E5%8F%8A%E6%8C%87%E5%8D%97)。
 
@@ -105,6 +110,31 @@ windows安装`DriverAssitant_v5.1.1\DriverInstall.exe`后，打开`RKDevTool.exe
 配置重新导出为文件`config.cfg`。
 
 winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset`键，再长按`vol+/recovery`键，进入loader模式，点击`RKDevTool`工具上的`执行`按钮。可以只烧录`System`和`Userdata`（包含数据库）。
+
+`scp_dfs_service_so.bat`:
+```shell
+scp -r -P 55555 sonvhi@chenxiaosong.com:/home/sonvhi/chenxiaosong/code/openharmony/openharmony/out/rk3568/filemanagement/dfs_service/ .
+@pause
+```
+
+`push_dfs_service_so.bat`:
+```shell
+hdc shell mount -o rw,remount /
+
+hdc file send .\dfs_service\libcloud_adapter.z.so               /system/lib64/
+hdc file send .\dfs_service\libcloud_daemon_kit_inner.z.so      /system/lib64/
+hdc file send .\dfs_service\libcloudfiledaemon.z.so             /system/lib64/
+hdc file send .\dfs_service\libcloudsync.z.so                   /system/lib64/module/file/
+hdc file send .\dfs_service\libcloudsync_kit_inner.z.so         /system/lib64/
+hdc file send .\dfs_service\libcloudsync_sa.z.so                /system/lib64/
+hdc file send .\dfs_service\libcloudsyncmanager.z.so            /system/lib64/module/file/
+hdc file send .\dfs_service\libdistributedfiledaemon.z.so       /system/lib64/
+hdc file send .\dfs_service\libdistributedfileutils.z.so        /system/lib64/
+
+hdc shell sync
+hdc shell reboot
+@pause
+```
 
 ## 调试
 
@@ -429,7 +459,7 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
 # 编译结果：
 # out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
 # out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
-./build.sh --product-name rk3568 --ccache --build-target dentry_meta_file_test --fast-rebuild
+./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dentry_meta_file_test --fast-rebuild
 # 从windows复制到 rk3568 板子上
 hdc shell rm /data/dentry_meta_file_test -rf
 hdc file send .\dentry_meta_file_test /data
@@ -446,7 +476,7 @@ cat /mnt/hmdfs/100/account/device_view/cloud/dir1/dir2/file4
 ```
 
 ```shell
-./build.sh --product-name rk3568 --cacch --build-target storage_daemon_unit_test --build-target storage_manager_unit_test
+./build.sh --product-name rk3568 --cacch --target-cpu arm64 --build-target storage_daemon_unit_test --build-target storage_manager_unit_test
 ```
 
 # xts
@@ -458,3 +488,7 @@ https://gitee.com/openharmony/testfwk_xdevice
 # 编程规范
 
 https://gitee.com/openharmony/docs/tree/master/zh-cn/contribute
+
+# android
+
+https://cs.android.com/android/platform/superproject/+/master:packages/providers/MediaProvider/jni/FuseDaemon.cpp
