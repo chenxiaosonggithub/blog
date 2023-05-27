@@ -199,13 +199,19 @@ find out -name "libcloudfiledaemon*"
 
 找出 `0000d2b8` 对应的代码行:
 ```shell
-prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a 0000d2b8 # 或使用 prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line
+prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a 0000d2b8 # 32位
+prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a xxxxxxxx # 64位
 # foundation/filemanagement/dfs_service/services/cloudfiledaemon/src/fuse_manager/fuse_manager.cpp:353
 ```
 
-# dentryfiletool
+## selinux
 
-https://gitee.com/chenxiaosonggitee/dentryfiletool
+有些功能可能会被selinux阻止，可以关闭selinux测试:
+```shell
+mount -o rw,remount /
+echo "SELINUX=permissive" > /etc/selinux/config # 默认是 SELINUX=enforcing
+reboot
+```
 
 # 读云端文件
 
