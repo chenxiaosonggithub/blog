@@ -4,13 +4,13 @@
 
 https://cloud.tencent.com/developer/article/1722055
 
-autossh:
+内网电脑 A 通过公网 server 登录到另一个内网电脑 B
+
+内网电脑B autossh:
 ```shell
 # https://www.harding.motd.ca/autossh/ # centos9源码安装
 sudo apt install autossh -y # ubuntu2204
 ```
-
-内网电脑 A 通过公网 server 登录到另一个内网电脑 B
 
 ```shell
 ssh -NfR 55555:localhost:22 root@chenxiaosong.com # 在内网电脑 B 上执行, chenxiaosong.com 为公网 server
@@ -54,6 +54,19 @@ systemctl restart sshd # 重启ssh
 ```shell
 AUTOSSH_POLL=60
 ```
+
+# 内网穿透
+
+ssh反向隧道还可以用于内网穿透，比如把内网linux的mysql端口暴露到公网上：
+```shell
+# ssh -R <公网服务器IP>:<公网端口>:localhost:<MySQL端口> <公网服务器用户名>@<公网服务器IP>
+ssh -R hk.chenxiaosong.com:22222:localhost:3306 root@hk.chenxiaosong.com
+ssh -N -R 22222:localhost:3306 root@hk.chenxiaosong.com # -M：启用控制台功能, -N：不执行远程命令
+# ssh -N -R 远程端口1:目标主机1:目标端口1 -R 远程端口2:目标主机2:目标端口2 用户名@远程主机
+ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5002:localhost:5002 root@hk.chenxiaosong.com # 多个映射
+```
+
+通过访问`hk.chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
 
 # efi grub 选择系统
 
@@ -222,14 +235,17 @@ echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docke
 sudo apt-get update -y
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 sudo cat /etc/group | grep docker # 如果没有则创建 sudo groupadd docker
-sudo gpasswd -a sonvhi docker # 或者使用usermod ？添加完后要重启（可能有办法不用重启）
+groups | grep docker
+# sudo gpasswd -a sonvhi docker # 或者使用usermod
+sudo usermod -aG docker $USER
+su - $USER # 或退出shell重新登录, 但在tmux中不起作用
 
-sudo docker pull ubuntu:18.04
-sudo docker image ls # 查看镜像
-sudo docker image rm ubuntu:18.04
-sudo docker ps -a # 查看容器
+docker pull ubuntu:18.04
+docker image ls # 查看镜像
+docker image rm ubuntu:18.04
+docker ps -a # 查看容器
 
-sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
+docker run -it --name my-name ubuntu:18.04 bash # 根据镜像启动容器, -i: 交互式操作, -t: 终端, -d: 后台运行
 # 以下注释的命令在容器中执行
 # cp /etc/apt/sources.list /etc/apt/sources.list.bak
 # cp sources.list /etc/apt/sources.list # 修改镜像源
@@ -239,12 +255,26 @@ sudo docker run -it ubuntu:18.04 bash # 根据镜像启动容器
 # apt install flex -y
 # apt install bison -y
 # strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_
-sudo docker export xxxxxxxxx > ubuntu-xxxx:18.04.tar # 导出容器
-sudo docker save xxxxxxxxxx > ubuntu-xxxx:22.04.tar # 保存镜像
-cat ubuntu-kernel\:18.04.tar | sudo docker import - ubuntu-kernel:18.04 # 导入到镜像
-sudo docker container prune # 删除容器
+docker export xxxxxxxxx > ubuntu-xxxx:18.04.tar # 导出容器
+docker save xxxxxxxxxx > ubuntu-xxxx:22.04.tar # 保存镜像
+cat ubuntu-kernel\:18.04.tar | docker import - ubuntu-kernel:18.04 # 导入到镜像
+docker container prune # 删除容器
 
-sudo docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 gcc -v
-sudo docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 bash
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 gcc -v
+docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-kernel:18.04 bash
+
+docker restart xxxxxxx
+docker attach xxxxxxxx # 退出后会导致容器停止
+docker exec -it xxxxxxxx /bin/bash # 退出后不会导致容器停止
 ```
 
+ubuntu中默认不能以root登录，作如下更改：
+```shell
+# 需要注意的是 macos 中要进行端口映射，因为没有像 linux 中的 docker0 网络
+docker run -it -p 2223:22 ubuntu:22.04 bash # 只有 macos 才需要，linux不需要，windows建议使用wsl2
+apt update -y
+apt install net-tools -y
+apt install openssh-server -y
+vim /etc/ssh/sshd_config # PermitRootLogin prohibit-password 改为 PermitRootLogin yes
+service ssh restart # docker 中不能使用 systemctl 启动 ssh
+```

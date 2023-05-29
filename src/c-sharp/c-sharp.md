@@ -2,6 +2,6 @@
 
 # 环境
 
-参考 [Blogifier](https://github.com/blogifierdotnet/Blogifier)。
+[dotnet](https://dotnet.microsoft.com/en-us/download/dotnet)下载。
 
-下载 [dotnet](https://dotnet.microsoft.com/en-us/download/dotnet)，对于 Blogifier 选择.NET 6.0版本。
+[YiShaAdmin](https://github.com/liukuo362573/YiShaAdmin/tree/YiShaAdmin-Net6) 项目。
