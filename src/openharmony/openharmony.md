@@ -66,7 +66,7 @@ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dfs_service --fast-rebuild
 ```
 
-## qemu 环境
+## qemu 运行调试环境
 
 [device_qemu](https://gitee.com/openharmony/device_qemu#https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_mps3_an547/README_zh.md)
 
@@ -210,6 +210,7 @@ prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line -e out/rk3568/l
 ```shell
 mount -o rw,remount /
 echo "SELINUX=permissive" > /etc/selinux/config # 默认是 SELINUX=enforcing
+sync
 reboot
 ```
 
@@ -392,7 +393,7 @@ gdb ./example/passthrough_ll
 ./example/passthrough_ll -o source=/tmp /mnt/cloud_dir -d
 ```
 
-# qemu调试
+# hmdfs和libfuse qemu虚拟机调试
 
 ```shell
 mkdir -p /mnt/dst
@@ -403,14 +404,8 @@ echo 123456789 > /mnt/cloud_dir/file1
 
 # 注意复制到其他系统，xattr要重新设置
 setfattr -n user.hmdfs_cache -v "/" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000000002f
-setfattr -n user.hmdfs_cache -v "/o" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000000000620
-setfattr -n user.hmdfs_cache -v "/o/p" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000000170441
-setfattr -n user.hmdfs_cache -v "/o/p/q" /mnt/cache_dir/dentry_cache/cloud/cloud_000000005666fe23
-setfattr -n user.hmdfs_cache -v "/o/p/q/r" /mnt/cache_dir/dentry_cache/cloud/cloud_0000014458a00786
-setfattr -n user.hmdfs_cache -v "/o/p/q/r/s" /mnt/cache_dir/dentry_cache/cloud/cloud_0004c190b0bc442a
-setfattr -n user.hmdfs_cache -v "/o/p/q/r/s/t" /mnt/cache_dir/dentry_cache/cloud/cloud_11daa02772bbe7cf
-setfattr -n user.hmdfs_cache -v "/a" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000000000612
-setfattr -n user.hmdfs_cache -v "/a/b" /mnt/cache_dir/dentry_cache/cloud/cloud_000000000016cfa5
+setfattr -n user.hmdfs_cache -v "/dir1" /mnt/cache_dir/dentry_cache/cloud/cloud_0000000002c55df3
+setfattr -n user.hmdfs_cache -v "/dir1/dir2" /mnt/cache_dir/dentry_cache/cloud/cloud_0004ba7c447bbfe1
 
 mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir,cloud_dir=/mnt/cloud_dir /mnt/src /mnt/dst
 
@@ -498,3 +493,15 @@ https://gitee.com/openharmony/docs/tree/master/zh-cn/contribute
 # android
 
 https://cs.android.com/android/platform/superproject/+/master:packages/providers/MediaProvider/jni/FuseDaemon.cpp
+
+# 多用户
+
+```c
+MountManager::CloudMount
+  CloudDaemonManagerImpl::StartFuse
+    CloudDaemonServiceProxy::StartFuse
+      // remote->SendRequest // opToInterfaceMap_[CLOUD_DAEMON_CMD_START_FUSE]
+      CloudDaemonStub::HandleStartFuseInner
+        CloudDaemon::StartFuse
+          FuseManager::GetInstance().StartFuse
+```
