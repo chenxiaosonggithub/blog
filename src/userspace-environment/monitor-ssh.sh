@@ -5,10 +5,11 @@ do
 	ssh -p 55555 -o ConnectTimeout=1 -q sonvhi@hk.chenxiaosong.com exit
 	if [ $? != 0 ]
 	then
-		echo "ssh fail"
-		echo `date`
+		echo `date` >> /home/sonvhi/chenxiaosong/tmpfs/ssh-monitor-fail.log
 		systemctl restart ssh-reverse.service
+	else
+		echo `date` >> /home/sonvhi/chenxiaosong/tmpfs/ssh-monitor-success.log
 	fi
 
-	sleep 15
+	sleep 30
 done
