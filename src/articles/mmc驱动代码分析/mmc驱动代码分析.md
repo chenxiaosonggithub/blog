@@ -18,7 +18,7 @@
 
 MMC/SD存储卡的驱动位于内核源码的目录drivers/mmc下，下面又分为card、core、host3个子目录。card层实际上跟Linux的块设备子系统对接，实现块设备驱动以及完成请求，但是具体的协议经过core层的接口，最终通过host完成传输，因此整个**MMC子系统的框架**如下图所示。card目录除实现标准的MMC/SD存储卡以外，还包含一些SDIO外设和驱动。core目录除了给card提供接口外，也定义好了host驱动的框架。
 
-<img src="http://8.222.150.121/pictures/mmc-subsystem.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="20%"/>
+<img src="http://chenxiaosong.com/pictures/mmc-subsystem.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="20%"/>
 
 > 上图**MMC子系统的框架**是通过Fedora33系统的LibreOffice Draw软件画的，谁说Linux只有字符界面，画图，视频，什么都行。
 

@@ -1,6 +1,6 @@
 [toc]
 
-[rb-tree.odg](http://8.222.150.121/pictures/rb-tree.odg)
+[rb-tree.odg](http://chenxiaosong.com/pictures/rb-tree.odg)
 
 # insert
 
