@@ -215,13 +215,21 @@ autoindex on; # 在 root /var/www/html 后添加
 
 # 网页重定向
 location /code-server {
-    rewrite ^/code-server$ http://chenxiaosong.com:8888;
+    # permanent（永久） 或 redirect（临时）, 默认 redirect
+    rewrite ^/code-server$ http://chenxiaosong.com:8888 redirect;
 }
 ```
 
 ```shell
 systemctl restart nginx
-sudo chown -R www-data:www-data /var/www/
+```
+
+# pandoc
+
+将markdown转换成html:
+```shell
+apt-get install pandoc -y
+pandoc input.md -o index.html --from markdown --to html --standalone --metadata encoding=gbk --metadata title="陈孝松" --toc
 ```
 
 # strace build from source
