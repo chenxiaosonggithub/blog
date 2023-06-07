@@ -72,7 +72,7 @@ sudo systemctl restart v2ray
 
 我用的操作系统是Fedora，配置如下图所示（其他Linux发行版也大同小异）：
 
-![fedora v2ray客户端配置](http://8.222.150.121/pictures/v2ray-fedora-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
+![fedora v2ray客户端配置](http://chenxiaosong.com/pictures/v2ray-fedora-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
 
 # macOS系统客户端安装与配置
 
@@ -96,13 +96,13 @@ sudo systemctl restart v2ray
 
 配置所连接网络的代理`http://localhost:1081`。
 
-![](http://8.222.150.121/pictures/v2ray-macos-wifi-proxy.png)
+![](http://chenxiaosong.com/pictures/v2ray-macos-wifi-proxy.png)
 
 # 安卓客户端安装与配置
 
 下载v2ray的[安卓安装包](https://github.com/2dust/v2rayNG/releases)，并新建与服务器对应的配置。
 
-![](http://8.222.150.121/pictures/v2ray-android.jpeg)
+![](http://chenxiaosong.com/pictures/v2ray-android.jpeg)
 
 # Windows系统客户端安装与配置
 
@@ -125,8 +125,8 @@ sudo systemctl restart v2ray
 .\v2ray run
 ```
 
-![](http://8.222.150.121/pictures/windows-cmd-run-v2ray.jpg)
+![](http://chenxiaosong.com/pictures/windows-cmd-run-v2ray.jpg)
 
 然后配置网络的http代理 `http://localhost:1081`。
 
-![](http://8.222.150.121/pictures/windows-set-proxy.jpg)
+![](http://chenxiaosong.com/pictures/windows-set-proxy.jpg)

@@ -26,7 +26,7 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=forking
-ExecStart=autossh -M 55556 -NfR 55555:localhost:22 root@chenxiaosong.com
+ExecStart=autossh -M 55556 -Nf -R 55555:localhost:22 -R 8888:localhost:8888 root@chenxiaosong.com
 Restart=always
 RestartSec=1
 

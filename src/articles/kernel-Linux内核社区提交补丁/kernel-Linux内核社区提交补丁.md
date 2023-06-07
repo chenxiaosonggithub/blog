@@ -61,7 +61,7 @@ vim 0000-cover-letter.patch
 
 在[网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除），如下图所示：
 
-![163邮箱配置](http://8.222.150.121/pictures/163-mail-config.png)
+![163邮箱配置](http://chenxiaosong.com/pictures/163-mail-config.png)
 
 
 # git发送邮件
