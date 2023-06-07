@@ -207,8 +207,21 @@ mkdir build && cd build
 
 ```shell
 apt install nginx -y
-vim /etc/nginx/sites-enabled/default # 在 root /var/www/html 后添加 autoindex on;
+```
+
+`vim /etc/nginx/sites-enabled/default`:
+```shell
+autoindex on; # 在 root /var/www/html 后添加
+
+# 网页重定向
+location /code-server {
+    rewrite ^/code-server$ http://chenxiaosong.com:8888;
+}
+```
+
+```shell
 systemctl restart nginx
+sudo chown -R www-data:www-data /var/www/
 ```
 
 # strace build from source
