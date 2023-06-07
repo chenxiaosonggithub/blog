@@ -130,6 +130,7 @@ hdc file send .\dfs_service\libcloudsync_sa.z.so                /system/lib64/
 hdc file send .\dfs_service\libcloudsyncmanager.z.so            /system/lib64/module/file/
 hdc file send .\dfs_service\libdistributedfiledaemon.z.so       /system/lib64/
 hdc file send .\dfs_service\libdistributedfileutils.z.so        /system/lib64/
+hdc file send .\dfs_service\libdistributedfiledentry.z.so        /system/lib64/
 
 hdc shell sync
 hdc shell reboot
@@ -504,4 +505,14 @@ MountManager::CloudMount
       CloudDaemonStub::HandleStartFuseInner
         CloudDaemon::StartFuse
           FuseManager::GetInstance().StartFuse
+```
+
+# clean
+
+```cpp
+CloudSyncService::Clean
+  DataSyncManager::CleanCloudFile
+    GalleryDataSyncer::Clean // DataSyncer::Clean
+      DataSyncer::CleanInner
+        FileDataHandler::Clean
 ```
