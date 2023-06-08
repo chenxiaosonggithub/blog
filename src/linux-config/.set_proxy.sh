@@ -1,8 +1,8 @@
 if [[ $1 == 1 ]]
 then
 	echo "set proxy"
-	export http_proxy=http://192.168.122.1:1081
-	export https_proxy=http://192.168.122.1:1081
+	export http_proxy=http://localhost:1081
+	export https_proxy=http://localhost:1081
 elif [[ $1 == 0 ]]
 then
 	echo "unset proxy"
