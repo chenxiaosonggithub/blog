@@ -47,8 +47,8 @@ docker exec -it xxxxxxxx bash # 退出后不会导致容器停止
 
 # 根据镜像启动容器, -i: 交互式操作, -t: 终端, -d: 后台运行
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp workspace-ubuntu:22.04 /bin/gcc -v # 执行命令后立刻删除容器
-docker run --name workspace -itd -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong workspace-ubuntu:22.04 bash # 停止后不删除容器
-docker run --name rm-workspace --rm -itd -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong workspace-ubuntu:22.04 bash # 停止后删除容器
+docker run --name workspace --hostname workspace -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong workspace-ubuntu:22.04 bash # 前台运行，停止后不删除容器
+docker run --name rm-workspace --hostname rm-workspace --rm -itd -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong workspace-ubuntu:22.04 bash # 后台运行，停止后删除容器
 docker exec -it workspace bash
 docker exec -it rm-workspace bash
 
