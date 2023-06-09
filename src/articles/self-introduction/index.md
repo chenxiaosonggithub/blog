@@ -18,7 +18,7 @@
 
 [Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)（在浏览器中打开）
 
-[Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（在浏览器中打开）
+[Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（需要一丢丢时间哈，在浏览器中打开）
 
 Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
 

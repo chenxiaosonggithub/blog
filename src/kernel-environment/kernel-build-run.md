@@ -109,9 +109,9 @@ ssh-keygen
 ssh-copy-id root@192.168.122.87
 ```
 
-# 源码安装 qemu
+# qemu
 
-源码安装 qemu：
+## 源码安装 qemu：
 ```shell
 # ubuntu 22.04
 sudo apt-get install libattr1-dev libcap-ng-dev -y
@@ -146,12 +146,18 @@ git submodule update --recursive
 mkdir build
 cd build/
 ../configure --enable-kvm --enable-virtfs --prefix=/home/sonvhi/chenxiaosong/sw/qemu/
+```
 
+## 配置
+
+```shell
 # 非root用户没有权限的解决办法
+# 如果是apt安装的，文件位置 /usr/lib/qemu/qemu-bridge-helper
 sudo chown root libexec/qemu-bridge-helper
 sudo chmod u+s libexec/qemu-bridge-helper
-sudo usermod -a -G kvm sonvhi # 访问 /dev/kvm, 好像无效
-sudo chmod 666 /dev/kvm
+groups | grep kvm
+sudo usermod -aG kvm $USER
+su - $USER # 或退出shell重新登录, 但在tmux中不起作用
 
 mkdir etc/qemu -p
 vim etc/qemu/bridge.conf # 添加　allow virbr0

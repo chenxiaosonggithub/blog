@@ -64,6 +64,10 @@ server {
 		rewrite ^/kernel/gitlog$ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong;
 	}
 
+	location /blog {
+		rewrite ^/blog$ https://github.com/chenxiaosonggithub/blog;
+	}
+
 	location /code-server/ { # 注意code-server后面有斜杠
 		# 端口后面也要有斜杠
 		proxy_pass http://127.0.0.1:8888/;

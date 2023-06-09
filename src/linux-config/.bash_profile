@@ -4,7 +4,7 @@ if [ -f ~/.bashrc ]; then
 fi
 
 sw_path=/home/sonvhi/chenxiaosong/sw/
-cscope_path=/home/sonvhi/chenxiaosong/sw/cscope/bin/
+cscope_path=/home/sonvhi/chenxiaosong/code/cscope/contrib/xcscope/
 re2c_path=/home/sonvhi/chenxiaosong/sw/re2c/bin/
 qemu_path=/home/sonvhi/chenxiaosong/sw/qemu/bin/
 autossh_path=/home/sonvhi/chenxiaosong/sw/autossh/bin/

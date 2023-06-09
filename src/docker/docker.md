@@ -1,6 +1,6 @@
 [toc]
 
-# 安装
+# 安装docker
 
 https://docs.docker.com/engine/install/ubuntu/
 https://repo.huaweicloud.com/docker-ce/linux/ubuntu/gpg
@@ -20,7 +20,11 @@ groups | grep docker
 # sudo gpasswd -a sonvhi docker # 或者使用usermod
 sudo usermod -aG docker $USER
 su - $USER # 或退出shell重新登录, 但在tmux中不起作用
+```
 
+# 镜像和容器
+
+```shell
 cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cp sources.list /etc/apt/sources.list # 替换镜像源
 apt update -y
@@ -28,12 +32,9 @@ apt install build-essential -y
 apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 apt install flex -y
 apt install bison -y
-strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_
-```
+apt install libncurses-dev -y # make menuconfig
+# strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_
 
-# 镜像和容器
-
-```shell
 docker pull ubuntu:22.04 # 下载镜像
 docker image rm ubuntu:22.04 # 删除镜像
 docker image ls # 查看镜像
@@ -51,11 +52,15 @@ docker run --name rm-workspace --rm -itd -v /home/sonvhi/chenxiaosong:/home/sonv
 docker exec -it workspace bash
 docker exec -it rm-workspace bash
 
-docker rm workspace # 删除容器
+docker ps -a # 查看容器
+docker stop workspace # 停止容器
 rm workspace-ubuntu\:22.04.tar
 docker export workspace > workspace-ubuntu:22.04.tar # 导出容器
+docker rm workspace # 删除容器
+docker ps -a # 查看容器
 docker image rm workspace-ubuntu:22.04 # 删除镜像
-cat workspace-ubuntu\:22.04.tar  | docker import - workspace-ubuntu\:22.04 # 导入镜像
+docker image ls # 查看镜像
+cat workspace-ubuntu\:22.04.tar | docker import - workspace-ubuntu\:22.04 # 导入镜像
 ```
 
 支持中文：
@@ -72,7 +77,7 @@ source ~/.bashrc
 ubuntu中默认不能以root登录，作如下更改：
 ```shell
 # 需要注意的是 macos 中要进行端口映射，因为没有像 linux 中的 docker0 网络
-docker run -it -p 2223:22 ubuntu:22.04 bash # 只有 macos 才需要，linux不需要，windows建议使用wsl2
+docker run -it -p 2223:22 ubuntu:22.04 bash # 只有 macos 才需要端口映射，linux不需要
 apt update -y
 apt install net-tools -y
 apt install openssh-server -y

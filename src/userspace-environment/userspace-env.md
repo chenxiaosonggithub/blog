@@ -80,36 +80,24 @@ grub2-mkconfig -o /boot/grub2/grub.cfg # centos9
 grub-mkconfig -o /boot/grub/grub.cfg # ubuntu2204
 ```
 
-# ubuntu 20.04
-
-```shell
-sudo apt install openssh-server -y
-sudo apt install build-essential -y
-sudo apt-get install qemu qemu-kvm virt-manager bridge-utils qemu-system -y # 可能需要重启才能以非root用户启动virt-manager
-sudo apt install ibus*wubi* -y
-sudo apt install flex bison -y
-
-sudo apt install samba -y
-sudo systemctl restart smbd.service
-
-# https://launchpad.net/~wireshark-dev/+archive/ubuntu/stable
-sudo add-apt-repository ppa:wireshark-dev/stable
-sudo apt update
-sudo apt install wireshark -y
-```
-
 # ubuntu 22.04
 
 ```shell
 sudo apt install openssh-server -y
 sudo apt install build-essential -y
-sudo apt-get install qemu qemu-kvm virt-manager bridge-utils qemu-system -y # 可能需要重启才能以非root用户启动virt-manager
-sudo apt install ibus*wubi* -y # 要重启
+sudo apt-get install qemu qemu-kvm virt-manager qemu-system -y # 可能需要重启才能以非root用户启动virt-manager
 sudo apt install flex bison -y
-sudo apt-get install fuse -y # V2Ray-Desktop-v2.4.0-linux-x86_64.AppImage 无法运行
-sudo apt install tmux -y
 sudo apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 sudo apt install libncurses-dev -y # make menuconfig
+apt-get install bc -y # 内核编译报错/bin/sh: 1: bc: not found
+    
+sudo apt install ibus*wubi* -y # 要重启
+sudo apt install bridge-utils -y # 不确定是否虚拟机需要的
+sudo apt-get install fuse -y # V2Ray-Desktop-v2.4.0-linux-x86_64.AppImage 无法运行
+sudo apt install tmux -y
+
+sudo apt install samba -y
+sudo systemctl restart smbd.service
 
 sudo useradd -s /bin/bash -d /home/test -m test
 # sudo userdel -r test # 删除用户
@@ -123,6 +111,11 @@ sudo apt install gcc-arm-linux-gnueabi gcc-arm-linux-gnueabihf -y
 sudo apt install gcc-riscv64-linux-gnu -y
 
 sudo apt install exfat-utils -y
+
+# https://launchpad.net/~wireshark-dev/+archive/ubuntu/stable
+sudo add-apt-repository ppa:wireshark-dev/stable
+sudo apt update
+sudo apt install wireshark -y
 ```
 
 # centos 9

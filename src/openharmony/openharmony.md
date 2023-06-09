@@ -23,7 +23,7 @@ sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # 编译环境
 docker pull ubuntu:22.04
-docker run -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
+docker run --name openharmony -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
 apt-get update && apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
 apt install file -y
 apt-get install default-jdk -y # 如果报错: javac: command not found
@@ -37,14 +37,14 @@ exit
 # 镜像和容器处理
 rm ubuntu-openharmony:22.04.tar
 docker ps -a # 查看容器
-docker export xxxxxxxxx > ubuntu-openharmony:22.04.tar # 导出
+docker export openharmony > ubuntu-openharmony:22.04.tar # 导出
 docker container prune # 删除容器
 docker image rm ubuntu-openharmony:22.04 # 先删除镜像
 cat ubuntu-openharmony:22.04.tar | docker import - ubuntu-openharmony:22.04 # 导入到镜像
 docker image ls # 查看镜像
 
 # 进入docker，--rm: 退出后删除容器
-docker run --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash
+docker run --name rm-openharmony --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash
 ```
 
 [`hb`工具安装](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-install-tool.md)
