@@ -81,6 +81,22 @@ server {
 		proxy_set_header Host $host; # 如果是vue用npm run serve启动的服务，$host要替换成ip
 	}
 
+	location /guarantee/ {
+		proxy_pass http://127.0.0.1:8080/;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+		proxy_set_header Host 8.217.113.83; # 如果是vue用npm run serve启动的服务，$host要替换成ip
+	}
+
+	location /guarantee-api/ {
+		proxy_pass http://127.0.0.1:5001/;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+		proxy_set_header Host $host;
+	}
+
 	# pass PHP scripts to FastCGI server
 	#
 	#location ~ \.php$ {

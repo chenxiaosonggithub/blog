@@ -1,14 +1,14 @@
 # Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
-fi
+# if [ -f ~/.bashrc ]; then
+#         . ~/.bashrc
+# fi
 
 sw_path=/home/sonvhi/chenxiaosong/sw/
 cscope_path=/home/sonvhi/chenxiaosong/code/cscope/contrib/xcscope/
 re2c_path=/home/sonvhi/chenxiaosong/sw/re2c/bin/
 qemu_path=/home/sonvhi/chenxiaosong/sw/qemu/bin/
 autossh_path=/home/sonvhi/chenxiaosong/sw/autossh/bin/
-nodejs_path=/usr/local/node-v18.15.0-linux-x64/bin/
+nodejs_path=/home/sonvhi/chenxiaosong/sw/nodejs/bin/
 dotnet_path=/home/sonvhi/chenxiaosong/sw/dotnet
 # gcc_path=/home/sonvhi/chenxiaosong/sw/gcc/bin/
 export GOROOT=/home/sonvhi/chenxiaosong/sw/go1.18.3.linux-amd64

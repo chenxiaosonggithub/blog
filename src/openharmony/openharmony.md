@@ -44,8 +44,8 @@ cat ubuntu-openharmony:22.04.tar | docker import - ubuntu-openharmony:22.04 # �
 docker image ls # 查看镜像
 
 # 进入docker
-docker run --name rm-openharmony --hostname rm-workspace --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash # --rm: 退出后删除容器
-docker run --name rm-openharmony --hostname rm-workspace -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash # 退出后不删除容器
+docker run --name rm-openharmony --hostname rm-openharmony --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash # --rm: 退出后删除容器
+docker run --name openharmony --hostname openharmony -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash # 退出后不删除容器
 ```
 
 [`hb`工具安装](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-install-tool.md)
