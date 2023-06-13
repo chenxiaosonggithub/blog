@@ -34,18 +34,26 @@ apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not fou
 apt-get install cpio -y
 exit
 
+# 头文件找不到解决方法
+apt install apt-file -y
+apt-file search X11/Xcursor/Xcursor.h # libxcursor-dev: /usr/include/X11/Xcursor/Xcursor.h
+apt-file search X11/extensions/Xrandr.h # libxrandr-dev: /usr/include/X11/extensions/Xrandr.h
+apt-file search X11/extensions/Xinerama.h # libxinerama-dev: /usr/include/X11/extensions/Xinerama.h
+apt install libxcursor-dev libxrandr-dev libxinerama-dev -y
+
+
 # 镜像和容器处理
-rm ubuntu-openharmony:22.04.tar
+rm openharmony-ubuntu:22.04.tar
 docker ps -a # 查看容器
-docker export openharmony > ubuntu-openharmony:22.04.tar # 导出
+docker export openharmony > openharmony-ubuntu:22.04.tar # 导出
 docker rm openharmony # 删除容器
-docker image rm ubuntu-openharmony:22.04 # 先删除镜像
-cat ubuntu-openharmony:22.04.tar | docker import - ubuntu-openharmony:22.04 # 导入到镜像
+docker image rm openharmony-ubuntu:22.04 # 先删除镜像
+cat openharmony-ubuntu:22.04.tar | docker import - openharmony-ubuntu:22.04 # 导入到镜像
 docker image ls # 查看镜像
 
 # 进入docker
-docker run --name rm-openharmony --hostname rm-openharmony --rm -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash # --rm: 退出后删除容器
-docker run --name openharmony --hostname openharmony -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 bash # 退出后不删除容器
+docker run --name rm-openharmony --hostname rm-openharmony --rm -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong openharmony-ubuntu:22.04 bash # --rm: 退出后删除容器
+docker run --name openharmony --hostname openharmony -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong openharmony-ubuntu:22.04 bash # 退出后不删除容器
 ```
 
 [`hb`工具安装](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-install-tool.md)
@@ -505,7 +513,7 @@ https://cs.android.com/android/platform/superproject/+/master:packages/providers
 # 多用户
 
 ```c
-MountManager::CloudMount
+MountManager::CloudMount // filemanagement_storage_service
   CloudDaemonManagerImpl::StartFuse
     CloudDaemonServiceProxy::StartFuse
       // remote->SendRequest // opToInterfaceMap_[CLOUD_DAEMON_CMD_START_FUSE]
@@ -522,4 +530,12 @@ CloudSyncService::Clean
     GalleryDataSyncer::Clean // DataSyncer::Clean
       DataSyncer::CleanInner
         FileDataHandler::Clean
+```
+
+# 缩略图/LCD图
+
+```shell
+FileDataHandler::OnFetchRecords
+  AppendToDownload
+    GetThumbPath
 ```

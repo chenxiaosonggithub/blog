@@ -1,5 +1,5 @@
 
-Gitee网站无法一次搜索出我的贡献，所以只能一个个的列出来了。
+OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 
 注意Gitee网站查看具体代码要先注册登录（这点我也吐槽Gitee）。
 
@@ -7,7 +7,7 @@ Gitee网站无法一次搜索出我的贡献，所以只能一个个的列出来
 
 [https://gitee.com/openharmony/kernel_linux_5.10/pulls/791/commits](https://gitee.com/openharmony/kernel_linux_5.10/pulls/791/commits)
 
-[https://gitee.com/openharmony/kernel_linux_5.10/pulls/885/commits](https://gitee.com/openharmony/kernel_linux_5.10/pulls/885/commits)
+[https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)
 
 [https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits](https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits)
 
