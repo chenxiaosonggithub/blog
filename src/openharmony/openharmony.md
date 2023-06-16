@@ -140,12 +140,13 @@ hdc file send .\dfs_service\libcloud_adapter.z.so               /system/lib64/
 hdc file send .\dfs_service\libcloud_daemon_kit_inner.z.so      /system/lib64/
 hdc file send .\dfs_service\libcloudfiledaemon.z.so             /system/lib64/
 hdc file send .\dfs_service\libcloudsync.z.so                   /system/lib64/module/file/
+hdc file send .\dfs_service\libcloudsync_asset_kit_inner.z.so   /system/lib64/platformsdk/
 hdc file send .\dfs_service\libcloudsync_kit_inner.z.so         /system/lib64/
 hdc file send .\dfs_service\libcloudsync_sa.z.so                /system/lib64/
 hdc file send .\dfs_service\libcloudsyncmanager.z.so            /system/lib64/module/file/
 hdc file send .\dfs_service\libdistributedfiledaemon.z.so       /system/lib64/
+hdc file send .\dfs_service\libdistributedfiledentry.z.so       /system/lib64/
 hdc file send .\dfs_service\libdistributedfileutils.z.so        /system/lib64/
-hdc file send .\dfs_service\libdistributedfiledentry.z.so        /system/lib64/
 
 hdc shell sync
 hdc shell reboot
@@ -279,7 +280,7 @@ rk3568调试：
 ```shell
 hilog -p off # -p <on/off>, --privacy <on/off>
 hilog --baselevel=DEBUG
-hilog | grep "CloudFileDaemon\|CLOUDSYNC_SA"
+hilog | grep "CloudFileDaemon\|CLOUDSYNC_SA\|StorageDaemon"
 
 # mount | grep hmdfs
 /data/service/el2/100/hmdfs/account on /mnt/hmdfs/100/account type hmdfs (rw,nodev,relatime,insensitive,merge_enable,ra_pages=128,user_id=100,cache_dir=/data/service/el2/100/hmdfs/cache/account_cache/,real_dst=/mnt/hmdfs/100/account,cloud_dir=/mnt/hmdfs/100/cloud,offline_stash,dentry_cache)
@@ -520,6 +521,15 @@ MountManager::CloudMount // filemanagement_storage_service
       CloudDaemonStub::HandleStartFuseInner
         CloudDaemon::StartFuse
           FuseManager::GetInstance().StartFuse
+```
+
+# fuse可靠性
+
+```c
+StorageDaemon::SystemAbilityStatusChangeListener::OnRemoveSystemAbility
+  MountManager::UMountCloudForUsers
+    MountManager::HmdfsUMount
+      UMount2
 ```
 
 # clean
