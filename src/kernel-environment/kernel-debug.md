@@ -94,8 +94,8 @@ echo "set auto-load safe-path /" > ~/.gdbinit
 echo "source /home/sonvhi/.gdb-linux/vmlinux-gdb.py" >> ~/.gdbinit
 mkdir ~/.gdb-linux/
 make scripts_gdb # 在 linux 仓库下执行
-cp scripts/gdb/* ~/.gdb-linux/ -rf
-sed -i "s/os.path.dirname(os.path.abspath(__file__)) + \"\/scripts\/gdb\"/\"home\/sonvhi\/.gdb-linux\"/g" ~/.gdb-linux/vmlinux-gdb.py
+cp scripts/gdb/* /home/sonvhi/.gdb-linux/ -rf
+sed -i "s/os.path.dirname(os.path.abspath(__file__)) + \"\/scripts\/gdb\"/\"\/home\/sonvhi\/.gdb-linux\"/g" ~/.gdb-linux/vmlinux-gdb.py
 
 (gdb) apropos lx
 (gdb) p $lx_current().pid
@@ -123,8 +123,16 @@ add-symbol-file <ko文件> <text段地址> -s .data <data段地址> -s .bss <bss
 # 源码安装 gdb
 
 ```shell
-sudo apt install python-dev -y
-sudo apt install python3-dev -y
+apt update -y
+apt install python-dev -y # is not available
+apt install python3-dev -y
+apt install libgmp-dev libmpfr-dev -y
+apt install texinfo -y
+
+git clone https://sourceware.org/git/binutils-gdb.git
+mkdir build && cd build
 ../configure --with-python=/usr/bin/ --prefix=/home/sonvhi/chenxiaosong/sw/gdb
+make -j128
+make install
 ```
 
