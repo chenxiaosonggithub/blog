@@ -186,7 +186,17 @@ Edit -> Preferences -> Enable XML editing 开启 xml 编辑
 sudo mount -t tmpfs -o size=64G syzkaller tmpfs/
 ```
 
-# 源码编译 emacs
+# 免密ssh
+
+```shell
+# 在物理机中
+ssh-keygen
+ssh-copy-id root@192.168.122.87
+```
+
+# 源码安装软件
+
+## 源码编译 emacs
 
 https://github.com/emacs-mirror/emacs/blob/master/INSTALL
 
@@ -196,7 +206,7 @@ mkdir build && cd build
 ../configure --prefix=xxx --with-xxx=no
 ```
 
-# strace build from source
+## 源码安装 strace
 
 ```shell
 ./bootstrap
@@ -205,3 +215,44 @@ mkdir build && cd build
 make
 ```
 
+## 源码安装 gdb
+
+```shell
+apt update -y
+apt install python-dev -y # is not available
+apt install python3-dev -y
+apt install libgmp-dev libmpfr-dev -y
+apt install texinfo -y
+
+git clone https://sourceware.org/git/binutils-gdb.git
+mkdir build && cd build
+../configure --with-python=/usr/bin/ --prefix=/home/sonvhi/chenxiaosong/sw/gdb
+make -j128
+make install
+```
+
+## 源码安装 gcc
+
+下载gcc：https://ftp.gnu.org/gnu/gcc/
+
+下载依赖(gmp-6.2.1.tar.bz2  mpc-1.2.1.tar.gz  mpfr-4.1.0.tar.bz2)： https://gcc.gnu.org/pub/gcc/infrastructure/
+
+```shell
+yum install texinfo gmp-devel mpfr-devel -y # centos6
+sudo apt install libmpfr-dev libgmp-dev libmpc-dev libzstd-dev -y # ubuntu22.04
+
+# 源码安装依赖库
+../configure --prefix=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1
+../configure --prefix=/home/sonvhi/chenxiaosong/sw/mpfr-4.1.0 --with-gmp=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1
+../configure --prefix=/home/sonvhi/chenxiaosong/sw/mpc-1.2.1 --with-gmp=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1 --with-mpfr=/home/sonvhi/chenxiaosong/sw/mpfr-4.1.0/
+
+../configure --prefix=/home/sonvhi/chenxiaosong/sw/gcc --enable-languages=c,c++ --disable-multilib --with-gmp=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1 --with-mpfr=/home/sonvhi/chenxiaosong/sw/mpfr-4.1.0/ --with-mpc=/home/sonvhi/chenxiaosong/sw/mpc-1.2.1/ # --enable-threads=posix --with-system-zlib
+```
+
+## 源码安装 multipath-tools
+
+```shell
+yum install json-c-devel -y
+yum install userspace-rcu-devel -y
+git clone https://github.com/opensvc/multipath-tools.git
+```

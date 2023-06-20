@@ -119,20 +119,3 @@ cat .text .data .bss
 ```shell
 add-symbol-file <ko文件> <text段地址> -s .data <data段地址> -s .bss <bss段地址>
 ```
-
-# 源码安装 gdb
-
-```shell
-apt update -y
-apt install python-dev -y # is not available
-apt install python3-dev -y
-apt install libgmp-dev libmpfr-dev -y
-apt install texinfo -y
-
-git clone https://sourceware.org/git/binutils-gdb.git
-mkdir build && cd build
-../configure --with-python=/usr/bin/ --prefix=/home/sonvhi/chenxiaosong/sw/gdb
-make -j128
-make install
-```
-

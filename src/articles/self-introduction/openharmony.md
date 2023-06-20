@@ -9,6 +9,8 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)
 
+[hmdfs: implement 'mmap' interface of 'hmdfs_dev_file_fops_cloud'](https://gitee.com/openharmony/kernel_linux_5.10/pulls/900/commits)
+
 [hmdfs: fix compile warning in hmdfs_file_open_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits)
 
 # 2. 分布式文件系统仓库
@@ -29,6 +31,8 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [storagedaemon: add fuse umount](https://gitee.com/openharmony/filemanagement_storage_service/pulls/534/commits)
 
+[storagedaemon: pass user id to clouddaemon when mount fuse](https://gitee.com/openharmony/filemanagement_storage_service/pulls/551/commits)
+
 [storagedaemon: mount fuse when cloudfiledaemon is ready](https://gitee.com/openharmony/filemanagement_storage_service/pulls/558/commits)
 
 # 4. 媒体库仓库
@@ -36,3 +40,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 [Add 'position' column to medialibrary database](https://gitee.com/openharmony/multimedia_medialibrary_standard/pulls/1551/commits)
 
 [declare napi property 'enum PositionType'](https://gitee.com/openharmony/multimedia_medialibrary_standard/pulls/1623/commits)
+
+# 5. selinux仓库
+
+[Add storage_daemon umount fuse selinux policy](https://gitee.com/openharmony/security_selinux/pulls/2325/commits)

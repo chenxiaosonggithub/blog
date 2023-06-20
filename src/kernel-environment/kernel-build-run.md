@@ -101,14 +101,6 @@ yum install xfsprogs-devel -y
 yum install libacl-devel -y
 ```
 
-# 免密ssh
-
-```shell
-# 在物理机中
-ssh-keygen
-ssh-copy-id root@192.168.122.87
-```
-
 # qemu
 
 ## 源码安装 qemu：
@@ -148,7 +140,7 @@ cd build/
 ../configure --enable-kvm --enable-virtfs --prefix=/home/sonvhi/chenxiaosong/sw/qemu/
 ```
 
-## 配置
+## qemu配置
 
 ```shell
 # 非root用户没有权限的解决办法
@@ -161,32 +153,6 @@ su - $USER # 或退出shell重新登录, 但在tmux中不起作用
 
 mkdir etc/qemu -p
 vim etc/qemu/bridge.conf # 添加　allow virbr0
-```
-
-# 源码安装 gcc
-
-下载gcc：https://ftp.gnu.org/gnu/gcc/
-
-下载依赖(gmp-6.2.1.tar.bz2  mpc-1.2.1.tar.gz  mpfr-4.1.0.tar.bz2)： https://gcc.gnu.org/pub/gcc/infrastructure/
-
-```shell
-yum install texinfo gmp-devel mpfr-devel -y # centos6
-sudo apt install libmpfr-dev libgmp-dev libmpc-dev libzstd-dev -y # ubuntu22.04
-
-# 源码安装依赖库
-../configure --prefix=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1
-../configure --prefix=/home/sonvhi/chenxiaosong/sw/mpfr-4.1.0 --with-gmp=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1
-../configure --prefix=/home/sonvhi/chenxiaosong/sw/mpc-1.2.1 --with-gmp=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1 --with-mpfr=/home/sonvhi/chenxiaosong/sw/mpfr-4.1.0/
-
-../configure --prefix=/home/sonvhi/chenxiaosong/sw/gcc --enable-languages=c,c++ --disable-multilib --with-gmp=/home/sonvhi/chenxiaosong/sw/gmp-6.2.1 --with-mpfr=/home/sonvhi/chenxiaosong/sw/mpfr-4.1.0/ --with-mpc=/home/sonvhi/chenxiaosong/sw/mpc-1.2.1/ # --enable-threads=posix --with-system-zlib
-```
-
-# 源码安装 multipath-tools
-
-```shell
-yum install json-c-devel -y
-yum install userspace-rcu-devel -y
-git clone https://github.com/opensvc/multipath-tools.git
 ```
 
 # debian rootfs
@@ -255,14 +221,6 @@ target=${mnt_point}/code/$1/mod/lib/modules/${knl_vers}
 link_name=/lib/modules/${knl_vers}
 rm ${link_name} -rf
 ln -s ${target} ${link_name}
-```
-
-# docker
-
-```shell
-docker image ls
-docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp centos-7.5-kernel:latest make
-docker run --rm it -v $PWD:/usr/src/myapp -w /usr/src/myapp centos-7.5-kernel:latest bash # 进入docker bash
 ```
 
 # riscv ubuntu2204 rootfs
