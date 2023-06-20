@@ -10,16 +10,13 @@
 
 ```shell
 # 获取代码环境
-sudo apt-get update && sudo apt-get install python3 python3-pip -y
-sudo apt-get install git git-lfs -y
+apt-get update -y && apt-get install python3 python3-pip -y
+apt-get install git git-lfs -y
 mkdir -p ~/.local/bin/
-curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > ~/.local/bin/repo
+curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > /home/sonvhi/chenxiaosong/sw/repo
 chmod a+x ~/.local/bin/repo
-vim ~/.bashrc               # 编辑环境变量
-export PATH=~/.local/bin:$PATH     # 在环境变量的最后添加一行repo路径信息
-source ~/.bashrc            # 应用环境变量
 pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
-sudo ln -s /usr/bin/python3 /usr/bin/python
+ln -s /usr/bin/python3 /usr/bin/python
 
 # 编译环境
 docker pull ubuntu:22.04
@@ -32,7 +29,6 @@ apt-get install libssl-dev -y # scripts/extract-cert.c:21:10: fatal error: 'open
 apt install liblz4-tool -y # /bin/sh: 1: lz4c: not found
 apt-get install genext2fs -y # make-boot.sh: line 22: genext2fs: command not found
 apt-get install cpio -y
-exit
 
 # 头文件找不到解决方法
 apt install apt-file -y

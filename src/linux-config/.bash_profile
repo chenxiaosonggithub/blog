@@ -25,3 +25,4 @@ function title() {
 }
 
 stty -ixon # 搜索历史命令，ctrl + s不锁屏
+source /usr/share/bash-completion/completions/git # docker中要先安装 apt install bash-completion -y

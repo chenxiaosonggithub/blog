@@ -90,6 +90,7 @@ sudo apt install flex bison -y
 sudo apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 sudo apt install libncurses-dev -y # make menuconfig
 apt-get install bc -y # 内核编译报错/bin/sh: 1: bc: not found
+apt install bash-completion -y # docker 中git不会自动补全
     
 sudo apt install ibus*wubi* -y # 要重启
 sudo apt install bridge-utils -y # 不确定是否虚拟机需要的
