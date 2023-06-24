@@ -92,10 +92,10 @@ hb func_name # 硬件断点，有些函数普通断点不会停下, 如: nfs4_at
 ```shell
 echo "set auto-load safe-path /" > ~/.gdbinit
 echo "source /home/sonvhi/.gdb-linux/vmlinux-gdb.py" >> ~/.gdbinit
+make scripts_gdb # 在 linux 仓库下执行，注意最新的版本可能有问题，5.10版本肯定可以
 mkdir ~/.gdb-linux/
-make scripts_gdb # 在 linux 仓库下执行
 cp scripts/gdb/* /home/sonvhi/.gdb-linux/ -rf
-sed -i "s/os.path.dirname(os.path.abspath(__file__)) + \"\/scripts\/gdb\"/\"\/home\/sonvhi\/.gdb-linux\"/g" ~/.gdb-linux/vmlinux-gdb.py
+vim ~/.gdb-linux/vmlinux-gdb.py # 改成 sys.path.insert(0, "/home/sonvhi/.gdb-linux")
 
 (gdb) apropos lx
 (gdb) p $lx_current().pid

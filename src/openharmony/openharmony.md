@@ -548,42 +548,58 @@ FileDataHandler::OnFetchRecords
 
 # syzkaller crash
 
+```shell
+ls /mnt/dst/cloud_merge_view/
+```
+
 ```c
-// ls /mnt/dst/cloud_merge_view/
-statx
-  do_statx
+newfstatat
+  vfs_fstatat
     vfs_statx
-      user_path_at
-        user_path_at_empty
-          filename_lookup
-            path_lookupat
-              lookup_last
+      user_path_at_empty
+        filename_lookup
+          path_lookupat
+            lookup_last
+              link_path_walk
                 walk_component
                   lookup_slow
                     __lookup_slow
-                      hmdfs_root_lookup
-                        hmdfs_lookup_cloud_merge
-                          init_hmdfs_dentry_info_merge
-                            mdi = kmem_cache_zalloc(hmdfs_dentry_merge_cachep
-                            dentry->d_fsdata = mdi
-                          hmdfs_trace_merge
-                            mutex_lock(&dm->comrade_list_lock
+                      dentry = d_alloc_parallel
+                      hmdfs_lookup_cloud_merge
+                        init_hmdfs_dentry_info_merge
+                          mdi = kmem_cache_zalloc(hmdfs_dentry_merge_cachep
+                          dentry->d_fsdata = mdi
+                        hmdfs_trace_merge
+                          mutex_lock(&dm->comrade_list_lock
 
-newstat
-  vfs_stat
-    vfs_fstatat
-      vfs_statx
-        user_path_at
-          user_path_at_empty
-            filename_lookup
-              path_lookupat
-                lookup_last
-                  walk_component
-                    step_into
-                      handle_mounts
-                        dput
-                          dentry_kill
-                            __dentry_kill
-                              d_release_merge
-                                kmem_cache_free(hmdfs_dentry_merge_cachep, dentry->d_fsdata);
+newfstatat
+  vfs_fstatat
+    vfs_statx
+      user_path_at_empty
+        filename_lookup
+          path_lookupat
+            link_path_walk
+              walk_component
+                lookup_slow
+                  __lookup_slow
+                    hmdfs_lookup_cloud_merge
+                    dentry = d_alloc_parallel
+                    dput
+                      dentry_kill
+                        __dentry_kill
+                          d_release_merge
+                            kmem_cache_free(hmdfs_dentry_merge_cachep, dentry->d_fsdata);
+
+__lookup_slow
+  d_revalidate
+    d_revalidate_merge
+      // 永远都返回0，需要重新lookup
+```
+
+`47adcf18cec2 hmdfs: fix cloud_merge_view revalidate`合入后：
+```c
+__lookup_slow
+  d_revalidate
+    d_revalidate_merge
+      // 永远都返回1，只lookup一次
 ```
