@@ -598,8 +598,30 @@ __lookup_slow
 
 `47adcf18cec2 hmdfs: fix cloud_merge_view revalidate`合入后：
 ```c
-__lookup_slow
-  d_revalidate
-    d_revalidate_merge
-      // 永远都返回1，只lookup一次
+walk_component
+  dentry = lookup_fast() = NULL
+  __lookup_slow
+    d_revalidate
+      d_revalidate_merge
+        // 永远都返回1，只lookup一次
+
+walk_component
+  dentry = lookup_fast // 第二次不为NULL
+```
+
+# merge view mkdir 时间不对
+
+```c
+
+    hmdfs_lookup_cloud_merge
+      lookup_merge_normal
+        merge_lookup_async
+          merge_lookup_work_func // INIT_WORK(&ml_work->work
+            link_comrade
+        wait_event(mdi->wait_queue, is_merge_lookup_end
+      fill_inode_merge
+        alloc_comrade
+        link_comrade_unlocked
+          link_comrade
+        update_inode_attr
 ```

@@ -85,7 +85,26 @@ docker run -it -p 2223:22 ubuntu:22.04 bash # 只有 macos 才需要端口映射
 apt update -y
 apt install net-tools -y
 apt install iputils-ping -y
+apt install openssh-client -y
 apt install openssh-server -y
 vim /etc/ssh/sshd_config # PermitRootLogin prohibit-password 改为 PermitRootLogin yes
 service ssh restart # docker 中不能使用 systemctl 启动 ssh
+```
+
+# macos / windows
+
+```shell
+docker run -p 8888:8888 --name codeserver --hostname codeserver -it -v ${PWD}:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong codeserver-ubuntu:22.04 bash
+docker run -p 8888:8888 --name rm-codeserver --hostname rm-codeserver --rm -itd -v ${PWD}:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong codeserver-ubuntu:22.04 bash
+docker ps -a
+docker stop codeserver
+rm codeserver-ubuntu\:22.04.tar
+docker export codeserver > codeserver-ubuntu:22.04.tar
+docker rm codeserver
+docker ps -a
+docker image rm codeserver-ubuntu:22.04
+docker image ls
+cat codeserver-ubuntu\:22.04.tar | docker import - codeserver-ubuntu\:22.04
+
+docker exec -it rm-codeserver bash
 ```
