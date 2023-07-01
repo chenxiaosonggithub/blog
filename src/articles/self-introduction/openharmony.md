@@ -7,9 +7,13 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [动态加载端云场景的dentryfile，读云端文件](https://gitee.com/openharmony/kernel_linux_5.10/pulls/791/commits)
 
-[hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)
-
 [hmdfs: implement 'mmap' interface of 'hmdfs_dev_file_fops_cloud'](https://gitee.com/openharmony/kernel_linux_5.10/pulls/900/commits)
+
+[hmdfs: prohibit renaming cross-view for cloud merge](https://gitee.com/openharmony/kernel_linux_5.10/pulls/917/commits)
+
+[hmdfs: fix possible use-after-free in hmdfs lookup()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/910/commits )
+
+[hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（需要注册登录才能查看）
 
 [hmdfs: fix compile warning in hmdfs_file_open_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits)
 
@@ -43,4 +47,4 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # 5. selinux仓库
 
-[Add storage_daemon umount fuse selinux policy](https://gitee.com/openharmony/security_selinux/pulls/2325/commits)
+[Add storage_daemon umount fuse selinux policy](https://gitee.com/openharmony/security_selinux_adapter/pulls/2325/commits)

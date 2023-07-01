@@ -61,17 +61,17 @@ docker run --name openharmony --hostname openharmony -it -v /home/sonvhi/chenxia
 还可以参考openharmony[获取源码](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-sourcecode.md)
 
 ```shell
-repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify
-repo sync -c
-repo forall -c 'git lfs pull'
-
-bash build/prebuilts_download.sh
+repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify && repo sync -c && repo forall -c 'git lfs pull' && bash build/prebuilts_download.sh
 ```
 
 # 编译
 
 ```shell
 # 镜像输出在 out/rk3568/packages/phone/images 目录下
+./build.sh --product-name rk3568 --ccache
+./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
+./build.sh --product-name rk3568 --ccache --build-target dfs_service --fast-rebuild
+# 64位
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --fast-rebuild # 增量编译时跳过一些已经完成的步骤
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dfs_service --fast-rebuild
@@ -612,16 +612,17 @@ walk_component
 # merge view mkdir 时间不对
 
 ```c
+hmdfs_lookup_cloud_merge
+  lookup_merge_normal
+    merge_lookup_async
+      merge_lookup_work_func // INIT_WORK(&ml_work->work
+        link_comrade
+    wait_event(mdi->wait_queue, is_merge_lookup_end
+  fill_inode_merge
+    alloc_comrade
+    link_comrade_unlocked
+      link_comrade
+    update_inode_attr
 
-    hmdfs_lookup_cloud_merge
-      lookup_merge_normal
-        merge_lookup_async
-          merge_lookup_work_func // INIT_WORK(&ml_work->work
-            link_comrade
-        wait_event(mdi->wait_queue, is_merge_lookup_end
-      fill_inode_merge
-        alloc_comrade
-        link_comrade_unlocked
-          link_comrade
-        update_inode_attr
+
 ```
