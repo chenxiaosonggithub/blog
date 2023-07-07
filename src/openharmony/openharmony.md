@@ -132,17 +132,17 @@ scp -r -P 55555 sonvhi@chenxiaosong.com:/home/sonvhi/chenxiaosong/code/openharmo
 ```shell
 hdc shell mount -o rw,remount /
 
-hdc file send .\dfs_service\libcloud_adapter.z.so               /system/lib64/
-hdc file send .\dfs_service\libcloud_daemon_kit_inner.z.so      /system/lib64/
-hdc file send .\dfs_service\libcloudfiledaemon.z.so             /system/lib64/
-hdc file send .\dfs_service\libcloudsync.z.so                   /system/lib64/module/file/
-hdc file send .\dfs_service\libcloudsync_asset_kit_inner.z.so   /system/lib64/platformsdk/
-hdc file send .\dfs_service\libcloudsync_kit_inner.z.so         /system/lib64/
-hdc file send .\dfs_service\libcloudsync_sa.z.so                /system/lib64/
-hdc file send .\dfs_service\libcloudsyncmanager.z.so            /system/lib64/module/file/
-hdc file send .\dfs_service\libdistributedfiledaemon.z.so       /system/lib64/
-hdc file send .\dfs_service\libdistributedfiledentry.z.so       /system/lib64/
-hdc file send .\dfs_service\libdistributedfileutils.z.so        /system/lib64/
+hdc file send .\dfs_service\libcloud_adapter.z.so               /system/lib/
+hdc file send .\dfs_service\libcloud_daemon_kit_inner.z.so      /system/lib/
+hdc file send .\dfs_service\libcloudfiledaemon.z.so             /system/lib/
+hdc file send .\dfs_service\libcloudsync.z.so                   /system/lib/module/file/
+hdc file send .\dfs_service\libcloudsync_asset_kit_inner.z.so   /system/lib/platformsdk/
+hdc file send .\dfs_service\libcloudsync_kit_inner.z.so         /system/lib/
+hdc file send .\dfs_service\libcloudsync_sa.z.so                /system/lib/
+hdc file send .\dfs_service\libcloudsyncmanager.z.so            /system/lib/module/file/
+hdc file send .\dfs_service\libdistributedfiledaemon.z.so       /system/lib/
+hdc file send .\dfs_service\libdistributedfiledentry.z.so       /system/lib/
+hdc file send .\dfs_service\libdistributedfileutils.z.so        /system/lib/
 
 hdc shell sync
 hdc shell reboot
@@ -223,8 +223,9 @@ prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line -e out/rk3568/l
 ```shell
 mount -o rw,remount /
 echo "SELINUX=permissive" > /etc/selinux/config # 默认是 SELINUX=enforcing
+setenforce 0
 sync
-reboot
+# reboot
 ```
 
 # 读云端文件
@@ -455,6 +456,7 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
     MetaBase mBaseReg3("file3", "fileid3");
     mBaseReg3.size = 30;
     mBaseReg3.mode = S_IFREG;
+    mBaseReg3.fileType = FILE_TYPE_THUMBNAIL;
     EXPECT_EQ(mFileDir1->DoCreate(mBaseReg3), 0);
     mFileDir1 = nullptr;
 
@@ -462,6 +464,7 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
     MetaBase mBaseReg4("file4", "fileid4");
     mBaseReg4.size = 100*1024;
     mBaseReg4.mode = S_IFREG;
+    mBaseReg4.fileType = FILE_TYPE_LCD;
     EXPECT_EQ(mFileDir2->DoCreate(mBaseReg4), 0);
     mFileDir2 = nullptr;
 
@@ -473,7 +476,8 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
 # 编译结果：
 # out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
 # out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
-./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dentry_meta_file_test --fast-rebuild
+./build.sh --product-name rk3568 --ccache --build-target dentry_meta_file_test --fast-rebuild # 32位
+./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dentry_meta_file_test --fast-rebuild # 64位
 # 从windows复制到 rk3568 板子上
 hdc shell rm /data/dentry_meta_file_test -rf
 hdc file send .\dentry_meta_file_test /data
@@ -609,7 +613,7 @@ walk_component
   dentry = lookup_fast // 第二次不为NULL
 ```
 
-# merge view mkdir 时间不对
+# merge view mkdir 属性不对
 
 ```c
 hmdfs_lookup_cloud_merge
@@ -619,10 +623,11 @@ hmdfs_lookup_cloud_merge
         link_comrade
     wait_event(mdi->wait_queue, is_merge_lookup_end
   fill_inode_merge
-    alloc_comrade
-    link_comrade_unlocked
-      link_comrade
     update_inode_attr
 
-
+hmdfs_mkdir_cloud_merge
+  hmdfs_create_lower_cloud_dentry
+    hmdfs_do_ops_cloud_merge
+      do_mkdir_cloud_merge
+        fill_inode_merge
 ```

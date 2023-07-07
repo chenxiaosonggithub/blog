@@ -1,4 +1,3 @@
-
 OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 
 注意Gitee网站查看具体代码要先注册登录（这点我也吐槽Gitee）。
@@ -13,7 +12,11 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: fix possible use-after-free in hmdfs lookup()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/910/commits )
 
+[hmdfs: fix attribute error when mkdir in cloud_merge_view/merge_view](https://gitee.com/openharmony/kernel_linux_5.10/pulls/927/commits)
+
 [hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（需要注册登录才能查看）
+
+[hmdfs: fix braces coding style](https://gitee.com/openharmony/kernel_linux_5.10/pulls/940/commits)
 
 [hmdfs: fix compile warning in hmdfs_file_open_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits)
 
@@ -24,6 +27,10 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 [dfs: always read from dentryfile instead from cache when lookup](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/362/commits)
 
 [dfs: fix 'user_data_rw' user open fuse mountpoint fail](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/407/commits)
+
+[dfs: save thumbnail/lcd pictures locally after read done](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/480/commits)
+
+[dfs: fix failure to remove from dentryfile when thumbnail/lcd reading is done](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/486/commits)
 
 [dfs: clean up build warnings](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/220/commits)
 
