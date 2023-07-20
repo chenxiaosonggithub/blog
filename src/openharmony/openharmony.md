@@ -179,6 +179,13 @@ hdc file send .\media_library.db-shm /data/app/el2/100/database/com.ohos.mediali
 # -f 设置日志文件名
 # -l 单个日志文件大小
 hilog -w start -f cxsTest -l 1M -n 5 -m zlib -j 11
+
+hilog -Q pidoff
+hilog -Q domainoff
+hilog -p off
+hilog -r
+hilog -G 20M
+hilog -b D
 ```
 
 ## crash调试
