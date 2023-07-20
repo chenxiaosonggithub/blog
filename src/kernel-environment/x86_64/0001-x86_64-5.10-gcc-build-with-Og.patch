@@ -1,0 +1,66 @@
+From 4a7d5d9a2a49faf02cdf78f3ad61e917df02a918 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+Date: Sun, 1 May 2022 23:21:14 +0800
+Subject: [PATCH] x86_64: 5.10 gcc build with -Og
+
+make O=build olddefconfig -j && make O=build bzImage -j && make O=build modules -j && make O=build modules_install INSTALL_MOD_PATH=mod -j
+
+If dump_stack() is all ?, then revert "x86/unwind/orc: Don't skip the first frame for inactive tasks".
+
+Signed-off-by: ChenXiaoSong <chenxiaosongemail@foxmail.com>
+---
+ Makefile                            | 8 +-------
+ include/linux/compiler_attributes.h | 2 +-
+ include/linux/compiler_types.h      | 4 ++--
+ 3 files changed, 4 insertions(+), 10 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bb2be0ed9ff2..81705a43feb5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -755,13 +755,7 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
+ 
+-ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+-KBUILD_CFLAGS += -O2
+-else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+-KBUILD_CFLAGS += -O3
+-else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+-KBUILD_CFLAGS += -Os
+-endif
++KBUILD_CFLAGS += -Og
+ 
+ # Tell gcc to never replace conditional load with a non-conditional one
+ KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
+diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
+index 08eb06301791..fa3ed12b5051 100644
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -144,7 +144,7 @@
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
+  */
+ #if __has_attribute(__error__)
+-# define __compiletime_error(msg)       __attribute__((__error__(msg)))
++# define __compiletime_error(msg) //       __attribute__((__error__(msg)))
+ #else
+ # define __compiletime_error(msg)
+ #endif
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index eb2bda017ccb..27167ec45f8b 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -305,8 +305,8 @@ struct ftrace_likely_data {
+  * supplied condition is *false*, emitting the supplied error message if the
+  * compiler has support to do so.
+  */
+-#define compiletime_assert(condition, msg) \
+-	_compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
++#define compiletime_assert(condition, msg)
++// 	_compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+ 
+ #define compiletime_assert_atomic_type(t)				\
+ 	compiletime_assert(__native_word(t),				\
+-- 
+2.34.1
+
