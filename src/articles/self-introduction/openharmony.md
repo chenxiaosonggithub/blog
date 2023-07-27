@@ -14,6 +14,8 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: fix attribute error when mkdir in cloud_merge_view/merge_view](https://gitee.com/openharmony/kernel_linux_5.10/pulls/927/commits)
 
+[hmdfs: sync lookup cloud merge view](https://gitee.com/openharmony/kernel_linux_5.10/pulls/967/commits)
+
 [hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（需要注册登录才能查看）
 
 [hmdfs: fix braces coding style](https://gitee.com/openharmony/kernel_linux_5.10/pulls/940/commits)

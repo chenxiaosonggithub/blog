@@ -3,6 +3,8 @@ From: ChenXiaoSong <chenxiaosongemail@foxmail.com>
 Date: Sun, 1 May 2022 23:21:14 +0800
 Subject: [PATCH] x86_64: gcc build with -Og.
 
+make O=build olddefconfig -j64 && make O=build bzImage -j64 && make O=build modules -j64 && make O=build modules_install INSTALL_MOD_PATH=mod -j64
+
 If dump_stack() is all ?, then revert "x86/unwind/orc: Don't skip the first frame for inactive tasks".
 
 Signed-off-by: ChenXiaoSong <chenxiaosongemail@foxmail.com>
