@@ -68,6 +68,7 @@ repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-veri
 
 ```shell
 # 镜像输出在 out/rk3568/packages/phone/images 目录下
+# 32位
 ./build.sh --product-name rk3568 --ccache
 ./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
 ./build.sh --product-name rk3568 --ccache --build-target dfs_service --fast-rebuild
@@ -132,17 +133,18 @@ scp -r -P 55555 sonvhi@chenxiaosong.com:/home/sonvhi/chenxiaosong/code/openharmo
 ```shell
 hdc shell mount -o rw,remount /
 
-hdc file send .\dfs_service\libcloud_adapter.z.so               /system/lib/
-hdc file send .\dfs_service\libcloud_daemon_kit_inner.z.so      /system/lib/
-hdc file send .\dfs_service\libcloudfiledaemon.z.so             /system/lib/
-hdc file send .\dfs_service\libcloudsync.z.so                   /system/lib/module/file/
-hdc file send .\dfs_service\libcloudsync_asset_kit_inner.z.so   /system/lib/platformsdk/
-hdc file send .\dfs_service\libcloudsync_kit_inner.z.so         /system/lib/
-hdc file send .\dfs_service\libcloudsync_sa.z.so                /system/lib/
-hdc file send .\dfs_service\libcloudsyncmanager.z.so            /system/lib/module/file/
-hdc file send .\dfs_service\libdistributedfiledaemon.z.so       /system/lib/
-hdc file send .\dfs_service\libdistributedfiledentry.z.so       /system/lib/
-hdc file send .\dfs_service\libdistributedfileutils.z.so        /system/lib/
+hdc file send .\dfs_service\libcloud_adapter.z.so                           /system/lib/
+hdc file send .\dfs_service\libcloud_daemon_kit_inner.z.so                  /system/lib/
+hdc file send .\dfs_service\libcloudfiledaemon.z.so                         /system/lib/
+hdc file send .\dfs_service\libcloudsync_asset_kit_inner.z.so               /system/lib/platformsdk/
+hdc file send .\dfs_service\libcloudsync_kit_inner.z.so                     /system/lib/
+hdc file send .\dfs_service\libcloudsyncmanager.z.so                        /system/lib/module/file/
+hdc file send .\dfs_service\libcloudsync_sa.z.so                            /system/lib/
+hdc file send .\dfs_service\libcloudsync.z.so                               /system/lib/module/file/
+hdc file send .\dfs_service\libdistributed_file_daemon_kit_inner.z.so       /system/lib/
+hdc file send .\dfs_service\libdistributedfiledaemon.z.so                   /system/lib/
+hdc file send .\dfs_service\libdistributedfiledentry.z.so                   /system/lib/
+hdc file send .\dfs_service\libdistributedfileutils.z.so                    /system/lib/
 
 hdc shell sync
 hdc shell reboot
@@ -283,6 +285,11 @@ fuse_getattr
 rk3568调试：
 ```shell
 hilog -p off # -p <on/off>, --privacy <on/off>
+hilog -Q pidoff
+hilog -Q domainoff
+hilog -r
+hilog -G 20M
+hilog -b D
 hilog --baselevel=DEBUG
 hilog | grep "CloudFileDaemon\|CLOUDSYNC_SA\|StorageDaemon"
 
@@ -479,12 +486,14 @@ HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
 }
 ```
 
-```shell
-# 编译结果：
-# out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
-# out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
+```shel
+# 含调试信息的编译结果: out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
+# 不含调试信息的编译结果: out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
 ./build.sh --product-name rk3568 --ccache --build-target dentry_meta_file_test --fast-rebuild # 32位
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dentry_meta_file_test --fast-rebuild # 64位
+
+scp -r -P 55555 sonvhi@chenxiaosong.com:/home/sonvhi/chenxiaosong/code/openharmony/openharmony/out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test .
+
 # 从windows复制到 rk3568 板子上
 hdc shell rm /data/dentry_meta_file_test -rf
 hdc file send .\dentry_meta_file_test /data
@@ -492,14 +501,20 @@ hdc shell
 chmod a+x /data/dentry_meta_file_test
 cd /data/
 /data/dentry_meta_file_test --gtest_list_tests
+rm -rf /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/*
 /data/dentry_meta_file_test --gtest_filter=DentryMetaFileTest.MetaFileCreate
 
 chmod -R 777 /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/
 ls -lh /data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/
+
 ls -lh /mnt/hmdfs/100/account/device_view/cloud/
 cat /mnt/hmdfs/100/account/device_view/cloud/dir1/dir2/file4
+
+ls -lh /mnt/hmdfs/100/account/cloud_merge_view/
+cat /mnt/hmdfs/100/account/cloud_merge_view/dir1/dir2/file4
 ```
 
+storage_daemon 单元测试：
 ```shell
 ./build.sh --product-name rk3568 --cacch --target-cpu arm64 --build-target storage_daemon_unit_test --build-target storage_manager_unit_test
 ```
@@ -547,14 +562,6 @@ CloudSyncService::Clean
     GalleryDataSyncer::Clean // DataSyncer::Clean
       DataSyncer::CleanInner
         FileDataHandler::Clean
-```
-
-# 缩略图/LCD图
-
-```shell
-FileDataHandler::OnFetchRecords
-  AppendToDownload
-    GetThumbPath
 ```
 
 # syzkaller crash
@@ -637,4 +644,32 @@ hmdfs_mkdir_cloud_merge
     hmdfs_do_ops_cloud_merge
       do_mkdir_cloud_merge
         fill_inode_merge
+```
+
+# cloud merge view dentry 缓存失效问题
+
+```shell
+--- a/services/cloudfiledaemon/src/fuse_manager/fuse_manager.cpp
++++ b/services/cloudfiledaemon/src/fuse_manager/fuse_manager.cpp
+@@ -374,6 +374,9 @@ static void CloudRelease(fuse_req_t req, fuse_ino_t ino, struct fuse_file_info *
+         if (needRemain && res) {
+             GetCloudInode(data, cInode->parent)->mFile->DoRemove(*(cInode->mBase));
+             LOGD("remove from dentryfile");
++            res = fuse_lowlevel_notify_inval_entry(data->se, cInode->parent, cInode->mBase->name.c_str(),
++                                             strlen(cInode->mBase->name.c_str()));
++            LOGE("fuse_lowlevel_notify_inval_entry res: %d", res);
+         }
+         cInode->readSession = nullptr;
+         LOGD("readSession released");
+```
+
+以上补丁打上后，inode释放了，但dentry并未失效:
+```shell
+[fuse_manager.cpp:363->CloudRelease] /dir1/dir2/file4, sessionRefCount: 1
+[fuse_manager.cpp:376->CloudRelease] remove from dentryfile
+[fuse_manager.cpp:379->CloudRelease] fuse_lowlevel_notify_inval_entry res: 0
+[fuse_manager.cpp:382->CloudRelease] readSession released
+[fuse_manager.cpp:256->CloudForget] forget /dir1/dir2/file4, nlookup: 1
+[fuse_manager.cpp:242->PutNode] /dir1/dir2/file4, put num: 1,  current refCount: 0
+[fuse_manager.cpp:244->PutNode] node released: /dir1/dir2/file4
 ```

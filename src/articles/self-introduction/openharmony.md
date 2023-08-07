@@ -16,6 +16,8 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: sync lookup cloud merge view](https://gitee.com/openharmony/kernel_linux_5.10/pulls/967/commits)
 
+[hmdfs: implement 'unlink' interface for 'hmdfs_dev_dir_inode_ops_cloud'](https://gitee.com/openharmony/kernel_linux_5.10/pulls/991/commits)
+
 [hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（需要注册登录才能查看）
 
 [hmdfs: fix braces coding style](https://gitee.com/openharmony/kernel_linux_5.10/pulls/940/commits)
@@ -33,6 +35,10 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 [dfs: save thumbnail/lcd pictures locally after read done](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/480/commits)
 
 [dfs: fix failure to remove from dentryfile when thumbnail/lcd reading is done](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/486/commits)
+
+[dfs: fix use-after-free in CloudRelease()](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/529/commits)
+
+[cloudfiledaemon: delete file of cloud merge view to update kernel dentry cache](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/547/commits)
 
 [dfs: clean up build warnings](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/220/commits)
 
