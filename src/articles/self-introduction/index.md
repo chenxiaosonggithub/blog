@@ -1,18 +1,17 @@
-最好在浏览器中打开，微信上有很多网站打不开。
 
-# 1. 我的照片
+# 1. 查一下户口
 
-把照片直接贴在主页上不太好，毕竟我没那么帅（不过也没太丑哦）。
-
-没见过我的朋友可以[点击这里跳转后查看我的照片](http://chenxiaosong.com/self-introduction/photos.html)（在浏览器中打开）。
-
-# 2. 查一下户口
+[自由软件](https://github.com/chenxiaosonggithub/blog/blob/master/src/articles/free-sw-%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6/free-sw-%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6.md)的狂热者，能力一般的极客（顺便提一句，不用鼠标，五笔打字）。现从事**Linux内核**和**鸿蒙操作系统**开发，工作内容全世界都看得到（后面会详细介绍哈）。
 
 目前在浙江杭州，老家胡建，过年回沙县，没错，就是沙县大酒店的沙县。
 
-爱好：自行车骑行，台球，Linux操作系统。
-
 邮箱： chenxiaosongemail@foxmail.com，欢迎交流。
+
+手机号（微信同号）：18248638938。
+
+爱好：自行车骑行，篮球，台球，Linux操作系统。
+
+这里就不直接贴照片了哈，毕竟我没那么帅（不过也没太丑哦）。没见过我的朋友可以[点击这里跳转后查看我的照片](http://chenxiaosong.com/self-introduction/photos.html)。
 
 # 3. 平平无奇的经历
 
@@ -24,24 +23,28 @@
 
 2019年~2021年在海康威视从事LoRaWAN产品研发。
 
-2021年至今，在华为OS内核实验室从事 Linux内核 和 鸿蒙操作系统 开发。
+2021年至今，在华为OS内核实验室从事 **Linux内核** 和 **鸿蒙操作系统** 开发。
 
 # 4. Linux内核贡献
 
-[Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)（在浏览器中打开）
+[Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)
 
-[Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（加载需要一丢丢时间哈，在浏览器中打开）
+[Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（加载需要一丢丢时间哈）
 
 Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
 
-# 5. OpenHarmony贡献
+主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁，修复多个CVE（通用漏洞披露，Common Vulnerabilities and Exposures）。
 
-[http://chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)（在浏览器中打开）
+# 5. 鸿蒙操作系统贡献
+
+[http://chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)
 
 OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 
+主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 和 **fuse（用户态文件系统）** 开发。
+
 # 6. GitHub上的笔记
 
-[http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)（在浏览器中打开，有些网络可能无法访问GitHub，可以尝试换个网络）
+[http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)（有些网络可能无法访问GitHub，可以尝试换个网络）
 
-我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开，托管在GitHub上。
+我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开，托管在GitHub上。我的笔记没有什么高大上的内容，只是记录自己学到的一些知识点，当然如果能对其他热爱技术的朋友有所启发，我就更开心了。

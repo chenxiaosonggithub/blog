@@ -40,6 +40,12 @@ QEMU：[https://www.qemu.org/](https://www.qemu.org/)。
 
 [QEMU-KVM安装macOS系统](https://blog.csdn.net/lion544301/article/details/115422081)。
 
+# 编辑器：emacs
+
+[emacs](http://www.gnu.org/software/emacs/)是我用的最多的编辑器，尤其是浏览Linux内核源码时，配合gtags，简直完美。
+
+源码：[http://savannah.gnu.org/projects/emacs/](http://savannah.gnu.org/projects/emacs/)。
+
 # 编辑器：vim
 
 世上两大编辑器（[vim](https://www.vim.org/)和[emacs](http://www.gnu.org/software/emacs/)）之一。
@@ -61,8 +67,4 @@ LibreOffice Writer（文本）、LibreOffice Calc（表格）、LibreOffice Impr
 官网：[https://www.libreoffice.org/](https://www.libreoffice.org/)。
 
 源码地址：[https://github.com/LibreOffice/core](https://github.com/LibreOffice/core)。
-
-# 串口工具：Minicom
-
-源码地址：TODO
 
