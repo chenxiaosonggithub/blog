@@ -446,46 +446,6 @@ cat /mnt/dst/device_view/cloud/file1
 
 # tdd
 
-生成 dentryfile 代码：
-```c
-// foundation/filemanagement/dfs_service/test/unittests/cloudsync_sa/dentry/dentry_meta_file_test.cpp
-HWTEST_F(DentryMetaFileTest, MetaFileCreate, TestSize.Level1)
-{
-    std::string cacheDir =
-        "/data/service/el2/100/hmdfs/cache/account_cache/dentry_cache/cloud/";
-    ForceRemoveDirectory(cacheDir);
-
-    auto mFileRoot = MetaFileMgr::GetInstance().GetMetaFile(100, "/");
-    MetaBase mBaseReg1("file1", "fileid1");
-    mBaseReg1.size = 10;
-    mBaseReg1.mode = S_IFREG;
-    EXPECT_EQ(mFileRoot->DoCreate(mBaseReg1), 0);
-    MetaBase mBaseReg2("file2", "fileid2");
-    mBaseReg2.size = 20;
-    mBaseReg2.mode = S_IFREG;
-    EXPECT_EQ(mFileRoot->DoCreate(mBaseReg2), 0);
-    mFileRoot = nullptr;
-
-    auto mFileDir1 = MetaFileMgr::GetInstance().GetMetaFile(100, "/dir1");
-    MetaBase mBaseReg3("file3", "fileid3");
-    mBaseReg3.size = 30;
-    mBaseReg3.mode = S_IFREG;
-    mBaseReg3.fileType = FILE_TYPE_THUMBNAIL;
-    EXPECT_EQ(mFileDir1->DoCreate(mBaseReg3), 0);
-    mFileDir1 = nullptr;
-
-    auto mFileDir2 = MetaFileMgr::GetInstance().GetMetaFile(100, "/dir1/dir2");
-    MetaBase mBaseReg4("file4", "fileid4");
-    mBaseReg4.size = 100*1024;
-    mBaseReg4.mode = S_IFREG;
-    mBaseReg4.fileType = FILE_TYPE_LCD;
-    EXPECT_EQ(mFileDir2->DoCreate(mBaseReg4), 0);
-    mFileDir2 = nullptr;
-
-    MetaFileMgr::GetInstance().ClearAll();
-}
-```
-
 ```shel
 # 含调试信息的编译结果: out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
 # 不含调试信息的编译结果: out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
