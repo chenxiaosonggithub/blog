@@ -13,7 +13,7 @@
 
 这里就不直接贴照片了哈，毕竟我没那么帅（不过也没太丑哦）。没见过我的朋友可以[点击这里跳转后查看我的照片](http://chenxiaosong.com/self-introduction/photos.html)。
 
-# 3. 平平无奇的经历
+# 2. 平平无奇的经历
 
 本科毕业后做游戏开发一年多，期间**边工作边考研**。至于考研的原因嘛，是因为我从小就对游戏没兴趣，想着回到学校去重新选择自己喜欢的方向。
 
@@ -25,7 +25,7 @@
 
 2021年至今，在华为OS内核实验室从事 **Linux内核** 和 **鸿蒙操作系统** 开发。
 
-# 4. Linux内核贡献
+# 3. Linux内核贡献
 
 [Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)
 
@@ -35,7 +35,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁，修复多个CVE（通用漏洞披露，Common Vulnerabilities and Exposures）。
 
-# 5. 鸿蒙操作系统贡献
+# 4. 鸿蒙操作系统贡献
 
 [http://chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)
 
@@ -43,7 +43,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 和 **fuse（用户态文件系统）** 开发。
 
-# 6. GitHub上的笔记
+# 5. GitHub上的笔记
 
 [http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)（有些网络可能无法访问GitHub，可以尝试换个网络）
 

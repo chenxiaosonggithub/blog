@@ -1,6 +1,8 @@
 OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 
-注意Gitee网站查看具体代码要先注册登录（这点我也吐槽Gitee）。
+主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 和 **fuse（用户态文件系统）** 开发。
+
+注意Gitee网站查看具体代码可能要先注册登录（这点我也吐槽Gitee）。
 
 # 1. 内核仓库
 
@@ -20,7 +22,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: make hmdfs_unlink_cloud() always succeed](https://gitee.com/openharmony/kernel_linux_5.10/pulls/1012/commits)
 
-[hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（需要注册登录才能查看）
+[hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（可能需要注册登录才能查看）
 
 [hmdfs: fix braces coding style](https://gitee.com/openharmony/kernel_linux_5.10/pulls/940/commits)
 
