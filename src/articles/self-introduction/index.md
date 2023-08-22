@@ -1,6 +1,8 @@
 # 1. 查一下户口
 
-[自由软件](https://github.com/chenxiaosonggithub/blog/blob/master/src/articles/free-sw-%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6/free-sw-%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6.md)的狂热者，能力一般的极客。现在华为OS内核实验室从事**Linux内核**和**鸿蒙操作系统**开发，工作内容全世界都看得到（后面会详细介绍哈）。
+[自由软件](https://github.com/chenxiaosonggithub/blog/blob/master/src/articles/free-sw-%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6/free-sw-%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6.md)的狂热者，能力一般的极客。现在华为OS内核实验室从事**Linux内核**和**鸿蒙操作系统**开发，工作内容全世界都看得到（后面会详细介绍哈）。贡献过多个自由开源软件项目。
+
+另外，多年前还从事过**游戏开发**，**web开发**，**嵌入式开发**，但不敢说精通哈，只是现在还能用来做点小东西吧，比如弄个网页、用开发板做个小工具啥的。
 
 目前在浙江杭州，老家胡建，过年回沙县，没错，就是沙县大酒店的沙县。
 
@@ -8,9 +10,9 @@
 
 手机号（微信同号）：18248638938。
 
-爱好：自行车骑行，篮球，台球，Linux操作系统。顺便提一句，只用键盘不用鼠标，五笔打字，喜欢写技术文档。
+爱好：自行车骑行，Linux操作系统。顺便提一句，只用键盘不用鼠标，五笔打字，喜欢写技术文档。
 
-这里就不直接贴照片了哈，毕竟我没那么帅（不过也没太丑哦）。没见过我的朋友可以[点击这里跳转后查看我的照片](http://chenxiaosong.com/self-introduction/photos.html)。
+这里就不直接贴照片了哈，毕竟我没那么帅（不过也没太丑哦）。没见过我的朋友可以[**点击这里跳转后查看我的照片**](http://chenxiaosong.com/self-introduction/photos.html)。
 
 # 2. 平平无奇的经历
 
@@ -32,7 +34,7 @@
 
 Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
 
-主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁，修复多个CVE（通用漏洞披露，Common Vulnerabilities and Exposures）。
+主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁，修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
 
 # 4. 鸿蒙操作系统贡献
 
@@ -50,6 +52,6 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # 6. 自行车骑行
 
-[http://chenxiaosong.com/ride](http://chenxiaosong.com/ride)
+[http://chenxiaosong.com/ride](http://chenxiaosong.com/ride)（骑行活动都记录在strave上）
 
-我最喜欢的运动是自行车骑行，坚持每天至少骑行锻炼20公里。你肯定在想下雨下雪下冰雹还怎么骑行，当时就是**室内骑行台**。
+我最喜欢的运动是自行车骑行，坚持每天至少骑行锻炼20公里。有些朋友可能会问如果下雨下雪下冰雹还怎么骑行，当时就是[**室内骑行台（点击查看图片）**](http://chenxiaosong.com/pictures/self-introduction/qixingtai.jpg)。
