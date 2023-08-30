@@ -633,3 +633,24 @@ hmdfs_mkdir_cloud_merge
 [fuse_manager.cpp:242->PutNode] /dir1/dir2/file4, put num: 1,  current refCount: 0
 [fuse_manager.cpp:244->PutNode] node released: /dir1/dir2/file4
 ```
+
+# 取消下载
+
+```c
+DownloadInner
+  CloudDownloadCallbackManager::StartDonwload
+    downloads_[path].path = path
+  DataSyncer::DownloadAssets
+    SdkHelper::DownloadAssets
+      DKAssetsDownloader::DownLoadAssets
+
+DataSyncer::StopDownloadFile
+  CloudDownloadCallbackManager::StopDonwload
+```
+
+# medialibrary沙箱里fuse Socket not connected
+
+```shell
+ps -ef | grep media
+cd /proc/1059/root/mnt/hmdfs/100/ # 1059 是 com.ohos.medialibrary.medialibrarydata 的进程号
+```

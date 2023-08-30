@@ -8,6 +8,10 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [动态加载端云场景的dentryfile，读云端文件](https://gitee.com/openharmony/kernel_linux_5.10/pulls/791/commits)
 
+[hmdfs: fix compile warning in hmdfs_file_open_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits)
+
+[hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（可能需要注册登录才能查看）
+
 [hmdfs: implement 'mmap' interface of 'hmdfs_dev_file_fops_cloud'](https://gitee.com/openharmony/kernel_linux_5.10/pulls/900/commits)
 
 [hmdfs: prohibit renaming cross-view for cloud merge](https://gitee.com/openharmony/kernel_linux_5.10/pulls/917/commits)
@@ -16,17 +20,13 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: fix attribute error when mkdir in cloud_merge_view/merge_view](https://gitee.com/openharmony/kernel_linux_5.10/pulls/927/commits)
 
+[hmdfs: fix braces coding style](https://gitee.com/openharmony/kernel_linux_5.10/pulls/940/commits)
+
 [hmdfs: sync lookup cloud merge view](https://gitee.com/openharmony/kernel_linux_5.10/pulls/967/commits)
 
 [hmdfs: implement 'unlink' interface for 'hmdfs_dev_dir_inode_ops_cloud'](https://gitee.com/openharmony/kernel_linux_5.10/pulls/991/commits)
 
 [hmdfs: make hmdfs_unlink_cloud() always succeed](https://gitee.com/openharmony/kernel_linux_5.10/pulls/1012/commits)
-
-[hmdfs: use 'vfs_iter_read' instead of 'vfs_read' in 'hmdfs_file_read_iter_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/commit/75a864d47e45457de395456c593964b0129f0c5e)（可能需要注册登录才能查看）
-
-[hmdfs: fix braces coding style](https://gitee.com/openharmony/kernel_linux_5.10/pulls/940/commits)
-
-[hmdfs: fix compile warning in hmdfs_file_open_cloud()](https://gitee.com/openharmony/kernel_linux_5.10/pulls/775/commits)
 
 # 2. 分布式文件系统仓库
 
@@ -35,6 +35,8 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 [dfs: fuse read cloud file](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/258/commits)
 
 [dfs: always read from dentryfile instead from cache when lookup](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/362/commits)
+
+[dfs: clean up build warnings](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/220/commits)
 
 [dfs: fix 'user_data_rw' user open fuse mountpoint fail](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/407/commits)
 
@@ -48,7 +50,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [cloudfiledaemon/cloudsyncservice: rename from temp path to local path after downloading is complete](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/558/commits)
 
-[dfs: clean up build warnings](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/220/commits)
+[cloudsyncservice: implement stop download](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/608/commits)
 
 # 3. 存储管理部件仓库
 
