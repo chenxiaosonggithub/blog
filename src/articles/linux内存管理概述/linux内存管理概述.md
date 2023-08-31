@@ -11,6 +11,7 @@
 > 深入Linux内核-第3版 -- DANIEL P.BOVET & MARCO CESATI 著   陈莉君 张琼声  张宏伟 译
 
 操作系统 ----- 横跨软件和硬件的桥梁
+
 内存寻址 ----- 操作系统设计的硬件基础之一
 
 ![在这里插入图片描述](http://chenxiaosong.com/pictures/mm-logical-addr-translation.png#pic_center)
@@ -22,6 +23,7 @@
 # 硬件分段
 
 首先需要说明的是Linux系统是未利用段机制的。
+
 但X86的段机制还是值得学习的。
 
 <img src="http://chenxiaosong.com/pictures/mm-segment.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="60%"/>
@@ -42,9 +44,13 @@
 ```
 
 Linux更喜欢**分页**，但x86处理器无法绕过分段
+
 RISC体系结构（如ARM）分段支持有限
+
 Linux让x86所有的段都从0地址开始
+
 Linux逻辑地址 == 线性地址
+
 Linux的权限管理等都交由**分页机制**来完成
 
 # Linux分页
@@ -52,6 +58,7 @@ Linux的权限管理等都交由**分页机制**来完成
 <img src="http://chenxiaosong.com/pictures/mm-paging.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="67%" />
 
 不同体系结构对位数的划分不一样
+
 页目录和页表包含以下内容
 
 ```
@@ -68,6 +75,7 @@ Linux的权限管理等都交由**分页机制**来完成
 <img src="http://chenxiaosong.com/pictures/mm-cache.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="60%" />
 
 内存中的页表，访问速度慢
+
 页面高速缓存，90%命中高速缓存，10%需要访问内存
 
 # 进程地址空间
@@ -75,22 +83,30 @@ Linux的权限管理等都交由**分页机制**来完成
 <img src="http://chenxiaosong.com/pictures/mm-virt-addr-space.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="50%;" />
 
 每个运行的进程虚拟地址空间4G
+
 每个进程私有空间前3G，称为**用户空间**
+
 后1G空间所有进程共享，称为**内核空间**
 
 <img src="http://chenxiaosong.com/pictures/mm-layout.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="33%;" />
 
 **TEXT段**：程序代码段
+
 **DATA段**：静态初始化的数据，所以有初值的全局变量（不为0）和static变量在data区
+
 **BSS段**：Block Started by Symbol，通常是指用来存放程序中**未初始化或初始化为0**的全局变量的一块内存区域，在程序载入时由内核清0
 
 用户态的进程运行时，可能只有少量页装入物理内存
+
 当访问的虚拟内存页面未装入物理内存时，处理器会产生一个缺页异常
+
 缺页异常发生时，操作系统将从磁盘或交换文件（SWAP）中将要访问的页装入物理内存
+
 Linux总是**尽量延后**分配用户空间的内存
 
 # 伙伴算法
 
+```
 伙伴算法的目的是对内存中的空闲碎片回收，让内存的利用率达到最大
 把所有空闲页面分为12个块链表，每个链表中的块分别含有2，4，8 。。。个页面
 大小相同、物理地址连续的2个页块被称为伙伴
@@ -100,9 +116,11 @@ Linux总是**尽量延后**分配用户空间的内存
 先将32个页面对半等分，前一半分配使用，另一半插入块大小为16的链表
 继续将前一半大小为16的页块等分，一半分配，另一半插入大小为8的链表
 回收的过程与上述分配过程相反
+```
 
 # 回收页框
 
+```
 当系统负载较低时，内存中大部分由磁盘高速占用
 系统负载增加时，内存大部分由进程页占用，高速缓存缩小
 页框回收算法从用户态进程和内核高速缓存中回收页框
@@ -112,6 +130,7 @@ Linux总是**尽量延后**分配用户空间的内存
 Linux交换子系统在磁盘上建立swap area，专门用于存放没有磁盘映射的页（如动态分配的内存）
 而有磁盘映射的页（如程序段）则直接丢弃
 当需要访问该内存中不存在的页时，会触发缺页异常，相应的异常处理程序从磁盘换入RAM中缺失的页
+```
 
 # 模拟器与虚拟机
 
