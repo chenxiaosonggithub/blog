@@ -2,7 +2,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 、 **fuse（用户态文件系统）** 和 **媒体库** 等开发。
 
-# 1. 内核仓库
+# 1. 内核
 
 基于社区LTS 5.10版本，自研hmdfs（鸿蒙分布式文件系统）等特性。
 
@@ -28,7 +28,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [hmdfs: make hmdfs_unlink_cloud() always succeed](https://gitee.com/openharmony/kernel_linux_5.10/pulls/1012/commits)
 
-# 2. 分布式文件系统仓库
+# 2. 分布式文件系统
 
 分布式文件系统用户态服务，功能主要包括挂载/卸载hmdfs，在设备间已组网的前提下，通过分布式软总线建立通信链路，供内核hmdfs使用。
 
@@ -52,7 +52,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [cloudsyncservice: implement stop download](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/608/commits)
 
-# 3. 存储管理部件仓库
+# 3. 存储管理部件
 
 存储管理部件提供外置存储卡挂载管理、文件加解密、磁盘和卷的查询与管理、用户目录管理和空间统计等功能，为系统和应用提供基础的存储查询、管理能力。
 
@@ -66,7 +66,9 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [storagedaemon: mount fuse when cloudfiledaemon is ready](https://gitee.com/openharmony/filemanagement_storage_service/pulls/558/commits)
 
-# 4. 媒体库仓库
+[storage_daemon: change fuse mountpoint from '/mnt/hmdfs/{userid}/cloud' to '/mnt/data/{userid}/cloud'](https://gitee.com/openharmony/filemanagement_storage_service/pulls/613/commits)
+
+# 4. 媒体库
 
 数据库管理，文件管理，为提供用户态程序提供napi调用接口。
 
@@ -74,8 +76,12 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [declare napi property 'enum PositionType'](https://gitee.com/openharmony/multimedia_medialibrary_standard/pulls/1623/commits)
 
-# 5. selinux仓库
+# 5. selinux
 
 让设备更安全。
 
 [Add storage_daemon umount fuse selinux policy](https://gitee.com/openharmony/security_selinux_adapter/pulls/2325/commits)
+
+# 6. 应用孵化模块
+
+[appdata-sandbox.json: add medialibrary sandbox-path '/mnt/data/<currentUserId>'](https://gitee.com/openharmony/startup_appspawn/pulls/768/commits)

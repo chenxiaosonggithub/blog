@@ -24,13 +24,13 @@
 
 2019年~2021年在海康威视从事LoRaWAN（远距离广域网）产品研发。
 
-2021年至今，在华为OS内核实验室从事 **Linux内核** 和 **鸿蒙操作系统** 开发。
+2021年4月至今，在华为OS内核实验室从事 **Linux内核** 和 **鸿蒙操作系统** 开发。
 
 # 3. Linux内核贡献
 
-[Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)
+[点击查看Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)
 
-[Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（加载需要一丢丢时间哈）
+[点击查看Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（加载需要一丢丢时间哈）
 
 Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
 
@@ -38,7 +38,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 # 4. 鸿蒙操作系统贡献
 
-[http://chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)
+[点击查看具体的代码: http://chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)
 
 OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 
@@ -46,13 +46,13 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # 5. GitHub上的笔记
 
-[http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)（有些网络可能无法访问GitHub，可以尝试换个网络）
+[点击查看具体的代码: http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)（有些网络可能无法访问GitHub，可以尝试换个网络）
 
 我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开，托管在GitHub上。我的笔记没有什么高大上的内容，只是记录自己学到的一些知识点，当然如果能对其他热爱技术的朋友有所启发，我就更开心了。
 
 # 6. 自行车骑行
 
-[http://chenxiaosong.com/ride](http://chenxiaosong.com/ride)
+[点击查看strava上的骑行记录: http://chenxiaosong.com/ride](http://chenxiaosong.com/ride)
 
 骑行活动都记录在strava上，需要注册登录strava账号才能查看所有的活动，未登录只能查看一周的。
 
