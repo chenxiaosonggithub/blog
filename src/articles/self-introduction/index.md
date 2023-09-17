@@ -56,4 +56,4 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 骑行活动都记录在strava上，需要注册登录strava账号才能查看所有的活动，未登录只能查看一周的。
 
-我最喜欢的运动是自行车骑行，坚持每天至少骑行锻炼20公里。有些朋友可能会问如果下雨下雪下冰雹还怎么骑行，当时就是[**室内骑行台啦（点击查看图片）**](http://chenxiaosong.com/pictures/self-introduction/qixingtai.jpg)。
+我最喜欢的运动是自行车骑行，坚持每天至少骑行锻炼20公里。有些朋友可能会问如果下雨下雪下冰雹还怎么骑行，当然就是[**室内骑行台啦（点击查看图片）**](http://chenxiaosong.com/pictures/self-introduction/qixingtai.jpg)，还能边骑行边写代码。

@@ -33,4 +33,17 @@ TRIM操作：SSD需要进行TRIM操作以清除已删除数据的块。这也会
 
 通过以上方法，可以最小化文件系统写放大，提高SSD的性能，延长其寿命，并减少存储空间的浪费。
 
-# 
+# strace 故障注入
+
+```shell
+for i in `seq 1 100000`
+do
+    strace -f -o output.txt -e trace=mount -e inject=mount:when=1:fault=${i} mount -t nfs -o ... localhost:s_test /mnt # ${i}表示第几次内存分配注入故障
+    umount /mnt
+    echo "i = ${i}"
+    OUT=`grep -nr 'FAIL-NTH 0/' output.txt`
+    if [ -z "${OUT}" ]; then
+        bread;
+    fi
+done
+```

@@ -52,6 +52,8 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [cloudsyncservice: implement stop download](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/608/commits)
 
+[cloudsyncservice: fix stop download](https://gitee.com/openharmony/filemanagement_dfs_service/pulls/628/commits)
+
 # 3. 存储管理部件
 
 存储管理部件提供外置存储卡挂载管理、文件加解密、磁盘和卷的查询与管理、用户目录管理和空间统计等功能，为系统和应用提供基础的存储查询、管理能力。

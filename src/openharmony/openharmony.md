@@ -654,3 +654,16 @@ DataSyncer::StopDownloadFile
 ps -ef | grep media
 cd /proc/1059/root/mnt/hmdfs/100/ # 1059 是 com.ohos.medialibrary.medialibrarydata 的进程号
 ```
+
+# dentry_open
+
+```c
+hmdfs_file_open_merge
+  lo_p.dentry = hmdfs_get_fst_lo_d
+    hmdfs_dm
+      return dentry->d_fsdata
+  dentry_open
+
+hmdfs_file_open_cloud
+  file_open_root
+```
