@@ -1086,13 +1086,25 @@ nfsd_proc_open
 
 after `list_del_init`, ` struct mid_q_entry` have not been freed yet.
 
-# 22876f540bdf NFS: Don't call generic_error_remove_page() while holding locks
+# Fix up soft mounts for NFSv4.x
+
+https://lore.kernel.org/all/20190407175912.23528-1-trond.myklebust@hammerspace.com/
+
+## 22876f540bdf NFS: Don't call generic_error_remove_page() while holding locks
 
 ```c
+nfs_page_async_flush
+  nfs_lock_and_join_requests
+    nfs_lock_request
+  fs_write_error_remove_page
 
+nfs_write_error_remove_page
+  generic_error_remove_page # 未修复时
+    truncate_inode_page
+      delete_from_page_cache
 ```
 
-# 6fbda89b257f NFS: Replace custom error reporting mechanism with generic one
+## 6fbda89b257f NFS: Replace custom error reporting mechanism with generic one
 
 ```c
 

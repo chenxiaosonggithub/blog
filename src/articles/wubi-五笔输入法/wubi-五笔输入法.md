@@ -11,23 +11,28 @@
 
 # Linux五笔输入法安装与配置
 
-Fedora系统下安装五笔：
+安装五笔：
 
 ```shell
-$ sudo yum install ibus*wubi* -y
+# fedora
+sudo yum install ibus*wubi* -y
+
+# ubuntu
+sudo apt update -y
+sudo apt install ibus*wubi* -y
 ```
 
 会安装haifeng和jidian两个五笔输入法，注意，安装完后要**重启系统**（应该也有不重启系统就能用的办法，但我重启了）。
 
 然后，在Fedora系统配置中，**Region & Language -> Input sources** 选择五笔输入法。
 
-
+ubuntu系统配置中，**Keyboard -> Input sources**添加五笔输入法，**Keyboard shortcuts**更改切换输入法的快捷键。
 
 Linux下的极点五笔输入法，四码唯一不自动上屏，只需要修改为：Details -> Auto commit mode: **Normal**
 
 <img src="http://chenxiaosong.com/pictures/jidian-wubi-config.png" width="60%" />
 
-Fedora系统五笔输入法，如果按右shift键，会变成拼音输入法（当然，不是智能拼音）。
+Linux系统五笔输入法，如果按右shift键，会变成拼音输入法（当然，不是智能拼音）。
 
 > Android和iOS系统，我用的是**QQ五笔输入法**。
 
