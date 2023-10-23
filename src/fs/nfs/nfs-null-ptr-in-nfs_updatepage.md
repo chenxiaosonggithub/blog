@@ -1,5 +1,3 @@
-[toc]
-
 # 问题描述
 
 4.19.90-23.8.v2101内核在`nfs_updatepage`函数中发生空指针解引用。
@@ -83,8 +81,10 @@ nfs_setup_write_request
       spin_lock(&mapping->private_lock)
 ```
 
-## 补丁`14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors`
+## 回退的补丁
 
 补丁[`14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors`](https://lore.kernel.org/all/20190407175912.23528-20-trond.myklebust@hammerspace.com/)里描述的：不立刻上报回写错误，而是让`fsync`上报。
 
 要说明一下，maintainer自己都没想好这个机制有没问题，具体可以参考我去年发的[一组被maintainer剽窃的补丁](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)，以及[maintainer剽窃后却没解决问题的补丁](https://patchwork.kernel.org/project/linux-nfs/list/?series=631225&state=%2A&archive=both)，这里就不做过多展开。
+
+而且这是一个重构补丁集，根本就没必要在这里加一个“Fixes:”。
