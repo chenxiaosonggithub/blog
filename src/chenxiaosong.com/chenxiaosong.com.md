@@ -33,7 +33,7 @@ pandoc用于将markdown转换成html。
 apt-get install pandoc -y
 ```
 
-具体的命令可以参考[`src/self-introduction/create-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/self-introduction/create-html.sh)，脚本里写了详细的说明。
+具体的命令可以参考[`src/chenxiaosong.com/create-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/chenxiaosong.com/create-html.sh)，脚本里写了详细的说明。
 
 
 
