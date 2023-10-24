@@ -53,24 +53,6 @@ cat /sys/kernel/debug/tracing/trace_pipe
 
 # qemu gdb 调试
 
-## 内核编译
-
-```shell
-CONFIG_DEBUG_SECTION_MISMATCH=y # 防止内联
-CONFIG_DEBUG_INFO=y
-CONFIG_DEBUG_KERNEL=y
-CONFIG_FRAME_POINTER=y # Makefile 中选择GCC编译选项
-CONFIG_GDB_SCRIPTS=y # gdb python
-CONFIG_RANDOMIZE_BASE = n
-```
-
-`O1`优化等级可以编译通过。
-
-`O0`优化等级无法编译:
-尝试`CONFIG_JUMP_LABEL=n`还是不行
-
-`Og`优化等级经过修改可以编译通过
-
 ## qemu启动
 
 ```shell
