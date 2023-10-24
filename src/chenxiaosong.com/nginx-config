@@ -40,7 +40,7 @@ server {
 
 	# root /home/sonvhi/chenxiaosong/www/html;
 	root /var/www/html;
-	autoindex on;
+	autoindex on; # 打开目录浏览功能
 
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.nginx-debian.html;
@@ -53,7 +53,9 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
+	# 网页重定向
 	location /openharmony {
+		# permanent（永久） 或 redirect（临时）, 默认 redirect
 		rewrite ^/openharmony$ http://chenxiaosong.com/self-introduction/openharmony.html;
 	}
 
@@ -73,6 +75,7 @@ server {
 		rewrite ^/ride$ https://www.strava.com/athletes/chenxiaosong;
 	}
 
+	# 转发
 	location /code-server/ { # 注意code-server后面有斜杠
 		# 端口后面也要有斜杠
 		proxy_pass http://127.0.0.1:8888/;
