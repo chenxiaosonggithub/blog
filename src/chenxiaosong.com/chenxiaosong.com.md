@@ -6,6 +6,8 @@
 
 首先，得先申请个域名，比如《你的名字.com》，可以在阿里云、腾讯云等平台注册申请。然后还要有一台有公网ip的服务器，我用的是阿里云的服务器。再把这个域名对应到这个公网ip上。
 
+注意默认的80端口要放开。
+
 # nginx
 
 Nginx（发音同「engine X」）是异步框架的网页服务器，也可以用作反向代理、负载平衡器和HTTP缓存。
@@ -31,6 +33,7 @@ pandoc用于将markdown转换成html。
 apt-get install pandoc -y
 ```
 
-pandoc input.md -o index.html --from markdown --to html --standalone --metadata encoding=gbk --metadata title="陈孝松" --toc
-```
+具体的命令可以参考[`src/self-introduction/create-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/self-introduction/create-html.sh)，脚本里写了详细的说明。
+
+
 
