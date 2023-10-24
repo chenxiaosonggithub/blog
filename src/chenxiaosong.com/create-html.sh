@@ -11,6 +11,7 @@ mkdir -p /var/www/html/nfs
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/index.md -o /var/www/html/index.html --metadata title="陈孝松个人主页" --from markdown --to html --standalone --metadata encoding=gbk --toc
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/photos.md -o /var/www/html/self-introduction/photos.html --metadata title="陈孝松照片" --from markdown --to html --standalone --metadata encoding=gbk --toc
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/openharmony.md -o /var/www/html/self-introduction/openharmony.html --metadata title="陈孝松OpenHarmony贡献" --from markdown --to html --standalone --metadata encoding=gbk --toc
+pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/blog.md -o /var/www/html/self-introduction/blog.html --metadata title="如何快速搭建一个简陋的个人网站" --from markdown --to html --standalone --metadata encoding=gbk --toc
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/nfs/4.19-null-ptr-in-nfs_updatepage.md -o /var/www/html/nfs/4.19-null-ptr-in-nfs_updatepage.html --metadata title="4.19 nfs_updatepage空指针解引用问题" --from markdown --to html --standalone --metadata encoding=gbk --toc
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/chenxiaosong.com/chenxiaosong.com.md -o /var/www/html/chenxiaosong.com/chenxiaosong.com.html --metadata title="如何快速搭建一个简陋的个人网站" --from markdown --to html --standalone --metadata encoding=gbk --toc
 
