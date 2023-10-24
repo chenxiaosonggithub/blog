@@ -18,7 +18,7 @@ pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/blog.md -o /var
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/nfs/4.19-null-ptr-in-nfs_updatepage.md -o /var/www/html/nfs/4.19-null-ptr-in-nfs_updatepage.html --metadata title="4.19 nfs_updatepage空指针解引用问题" --from markdown --to html --standalone --metadata encoding=gbk --toc
 # 网站搭建
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/chenxiaosong.com/chenxiaosong.com.md -o /var/www/html/chenxiaosong.com/chenxiaosong.com.html --metadata title="如何快速搭建一个简陋的个人网站" --from markdown --to html --standalone --metadata encoding=gbk --toc
-# Linux常用工具
+# Linux
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/linux-config/linux-config.md -o /var/www/html/linux/linux-config.html --metadata title="Linux配置文件" --from markdown --to html --standalone --metadata encoding=gbk --toc
 
 # pictures是我的私有仓库
