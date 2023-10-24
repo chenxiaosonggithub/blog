@@ -1,4 +1,4 @@
-# 问题描述
+# 1. 问题描述
 
 4.19.90-23.8.v2101内核在`nfs_updatepage`函数中发生空指针解引用。
 
@@ -6,7 +6,7 @@
 
 相关补丁集: [Fix up soft mounts for NFSv4.x](https://lore.kernel.org/all/20190407175912.23528-1-trond.myklebust@hammerspace.com/)
 
-# 代码流程分析
+# 2. 代码流程分析
 
 因为合入了[`14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors`](https://lore.kernel.org/all/20190407175912.23528-20-trond.myklebust@hammerspace.com/)补丁，`nfs_page_async_flush`函数中在发生致命错误时`page->mapping`被设置为空，而`nfs_page_async_flush`函数这时不返回错误码，导致`nfs_setup_write_request`函数中执行到`nfs_inode_add_request`函数，发生了空指针解引用。
 ```c
@@ -44,13 +44,13 @@ write
 
 ```
 
-# 修复方案
+# 3. 修复方案
 
 回退补丁[`14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors`](https://lore.kernel.org/all/20190407175912.23528-20-trond.myklebust@hammerspace.com/)。
 
 回退补丁后，`nfs_page_async_flush`函数中在发生致命错误时返回错误码，`nfs_setup_write_request`函数中不会执行到`nfs_inode_add_request`函数，从而解决空指针解引用问题。
 
-# 补丁分析
+# 4. 补丁分析
 
 补丁[`14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors`](https://lore.kernel.org/all/20190407175912.23528-20-trond.myklebust@hammerspace.com/)所属的补丁集中还有以下几个相关的补丁：
 
@@ -58,7 +58,7 @@ write
 
 [`6fbda89b257f NFS: Replace custom error reporting mechanism with generic one`](https://lore.kernel.org/all/20190407175912.23528-23-trond.myklebust@hammerspace.com/)
 
-## 最新的代码分析
+## 4.1 最新的代码分析
 
 补丁集合入后，在最新的代码中, 当`nfs_page_async_flush`中产生致命错误时，因为`nfs_page_assign_folio`中赋值了新的`folio`，`nfs_inode_add_request`中的`mapping`不会为空，从而不会发生空指针引用的问题。
 
@@ -81,7 +81,7 @@ nfs_setup_write_request
       spin_lock(&mapping->private_lock)
 ```
 
-## 回退的补丁
+## 4.2 回退的补丁
 
 补丁[`14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors`](https://lore.kernel.org/all/20190407175912.23528-20-trond.myklebust@hammerspace.com/)里描述的：不立刻上报回写错误，而是让`fsync`上报。
 
