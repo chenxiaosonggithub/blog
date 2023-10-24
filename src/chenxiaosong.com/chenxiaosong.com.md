@@ -14,22 +14,23 @@ ubuntu安装nginx:
 ```shell
 apt install nginx -y
 ```
+执行脚本[`src/chenxiaosong.com/link.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/chenxiaosong.com/link.sh)将[`src/chenxiaosong.com/nginx-config`](https://github.com/chenxiaosonggithub/blog/blob/master/src/chenxiaosong.com/nginx-config)链接到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
 
-`vim /etc/nginx/sites-enabled/default`:
-```shell
-
-```
-
+重启nginx服务：
 ```shell
 service nginx restart # 在docker中
-systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 # pandoc
 
-将markdown转换成html:
+pandoc用于将markdown转换成html。
+
+安装：
 ```shell
 apt-get install pandoc -y
+```
+
 pandoc input.md -o index.html --from markdown --to html --standalone --metadata encoding=gbk --metadata title="陈孝松" --toc
 ```
 
