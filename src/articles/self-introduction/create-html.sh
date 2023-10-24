@@ -9,5 +9,5 @@ pandoc /home/sonvhi/chenxiaosong/code/blog/src/fs/nfs/nfs-null-ptr-in-nfs_update
 rm /var/www/html/pictures -rf
 cp /home/sonvhi/chenxiaosong/code/pictures/pictures/ /var/www/html/ -rf
 chown -R www-data:www-data /var/www/
-find /home/sonvhi/chenxiaosong/www -type f -exec chmod 400 {} +
-find /home/sonvhi/chenxiaosong/www -type d -exec chmod 500 {} +
+find /var/www -type f -exec chmod 400 {} +
+find /var/www -type d -exec chmod 500 {} +
