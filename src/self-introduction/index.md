@@ -38,7 +38,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁，修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
 
-# 4. 个人博客
+# 4. 博客
 
 [点击查看具体的文章: http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)
 
