@@ -38,8 +38,11 @@ write
                       if (req != NULL) // 条件不满足
                       // 如果不存在就新创建一个request
                       nfs_create_request
+                        req->wb_page    = page // page赋值到新创建的request
                       // 将request与inode关联起来
                       nfs_inode_add_request // 如果 nfs_page_async_flush 不返回0则不执行
+                        mapping = page_file_mapping(req->wb_page)
+                          return page->mapping
                         spin_lock(&mapping->private_lock) // mapping 为 NULL，发生空指针解引用
 
 ```
