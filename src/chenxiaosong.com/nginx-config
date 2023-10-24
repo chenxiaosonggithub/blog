@@ -59,16 +59,16 @@ server {
 		rewrite ^/openharmony$ http://chenxiaosong.com/self-introduction/openharmony.html;
 	}
 
+	location /blog {
+		rewrite ^/blog$ http://chenxiaosong.com/self-introduction/blog.html;
+	}
+
 	location /kernel/mailinglist {
 		rewrite ^/kernel/mailinglist$ https://lore.kernel.org/all/?q=chenxiaosong;
 	}
 
 	location /kernel/gitlog {
 		rewrite ^/kernel/gitlog$ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong;
-	}
-
-	location /blog {
-		rewrite ^/blog$ https://github.com/chenxiaosonggithub/blog;
 	}
 
 	location /ride {
