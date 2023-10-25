@@ -1,7 +1,7 @@
 
 这里介绍一组补丁，这组补丁补丁被nfs maintainer剽窃了，但他的版本的补丁却没有解决我提出的问题。
 
-[nfs: handle writeback errors correctly](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)。
+补丁集：[nfs: handle writeback errors correctly](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)。
 
 # 1. 问题描述
 
@@ -95,7 +95,7 @@ filp_close
 
 ## 3.1 第一个补丁：write返回更详细的错误
 
-https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-2-chenxiaosong2@huawei.com/
+[NFS: return more nuanced writeback errors in nfs_file_write()](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-2-chenxiaosong2@huawei.com/)
 
 回退 6c984083ec24 ("NFS: Use of mapping_set_error() results in spurious errors")，并且在 `write` 中返回更详细的错误：
 ```c
@@ -131,7 +131,7 @@ nfs_file_write
 
 ## 3.2 第二个补丁：flush返回正确的错误
 
-https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-3-chenxiaosong2@huawei.com/
+[NFS: nfs{,4}_file_flush() return correct writeback errors](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-3-chenxiaosong2@huawei.com/)
 
 只有在 `nfs_wb_all` 有新错误产生的情况下，才尝试返回更详细的错误：
 ```c
@@ -144,7 +144,7 @@ nfs_file_flush
 
 ## 3.3 第三个补丁：解决 async write 变成 sync write 的问题
 
-https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-4-chenxiaosong2@huawei.com/
+[Revert "nfs: nfs_file_write() should check for writeback errors"](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-4-chenxiaosong2@huawei.com/)
 
 回退问题补丁 "nfs: nfs_file_write() should check for writeback errors"
 问题补丁存在的问题：
@@ -169,11 +169,11 @@ write
 
 # 4. maintainer 的修改方案（未解决此问题）
 
-https://patchwork.kernel.org/project/linux-nfs/list/?series=631225&state=%2A&archive=both
+补丁集：[Ensure mapping errors are reported only once](https://patchwork.kernel.org/project/linux-nfs/list/?series=631225&state=%2A&archive=both)
 
 ## 4.1 想解决问题的补丁（实际没解决）
 
-https://patchwork.kernel.org/project/linux-nfs/patch/20220411213346.762302-4-trondmy@kernel.org/
+[NFS: Don't report ENOSPC write errors twice](https://patchwork.kernel.org/project/linux-nfs/patch/20220411213346.762302-4-trondmy@kernel.org/)
 
 存在的问题：
 ```
@@ -259,8 +259,10 @@ orangefs_flush
 
 # 6. 与 maintainer 的交流
 
-https://patchwork.kernel.org/project/linux-nfs/patch/20220411213346.762302-4-trondmy@kernel.org/
-https://patchwork.kernel.org/project/linux-nfs/patch/20220305124636.2002383-2-chenxiaosong2@huawei.com/
+[[v2,3/5] NFS: Don't report ENOSPC write errors twice](https://patchwork.kernel.org/project/linux-nfs/patch/20220411213346.762302-4-trondmy@kernel.org/)
+
+[[-next,1/2] nfs: nfs{,4}_file_flush should consume writeback error
+](https://patchwork.kernel.org/project/linux-nfs/patch/20220305124636.2002383-2-chenxiaosong2@huawei.com/)
 
 ## 6.1 maintainer 两个版本的补丁都无法解决问题
 
