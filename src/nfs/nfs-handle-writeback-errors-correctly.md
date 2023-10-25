@@ -1,5 +1,6 @@
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-这里介绍一组补丁，这组补丁补丁被nfs maintainer剽窃了，但他的版本的补丁却没有解决我提出的问题。
+这里介绍一组我发到社区的补丁集，这组补丁集被nfs maintainer剽窃了，但他修改后的版本却没有解决我提出的问题。
 
 补丁集：[nfs: handle writeback errors correctly](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)。
 
@@ -264,6 +265,8 @@ orangefs_flush
 [[-next,1/2] nfs: nfs{,4}_file_flush should consume writeback error
 ](https://patchwork.kernel.org/project/linux-nfs/patch/20220305124636.2002383-2-chenxiaosong2@huawei.com/)
 
+[[-next,v2] NFS: report and clear ENOSPC/EFBIG/EDQUOT writeback error on close() file](https://patchwork.kernel.org/project/linux-nfs/patch/20220614152817.271507-1-chenxiaosong2@huawei.com/)
+
 ## 6.1 maintainer 两个版本的补丁都无法解决问题
 
 和 maintainer 说了2次，他的回复没有正面回答这个问题。
@@ -312,3 +315,15 @@ As I keep repeating, that is _documented behaviour_!
 ```
 
 我和他说的明明是 `filemap_sample_wb_err/filemap_check_wb_err` 的用法错误，他却强调是文档规定
+
+## 6.3 maintainer 最后直接说是vfs的问题
+
+```
+If you want the rules to change, then you need to talk to the entire
+filesystem community and get them to accept that the VFS level
+implementation of error handling is incorrect.
+
+That's my final word on this subject.
+```
+
+vfs的处理机制明明是没有问题的，他到最后却直接说是vfs处理机制的问题，而且说不再讨论这个问题。
