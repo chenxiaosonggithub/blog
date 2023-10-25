@@ -98,7 +98,7 @@ filp_close
 
 [NFS: return more nuanced writeback errors in nfs_file_write()](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-2-chenxiaosong2@huawei.com/)
 
-回退 6c984083ec24 ("NFS: Use of mapping_set_error() results in spurious errors")，并且在 `write` 中返回更详细的错误：
+回退 [6c984083ec24 ("NFS: Use of mapping_set_error() results in spurious errors")](https://lore.kernel.org/all/20220215230518.24923-1-trondmy@kernel.org/)，并且在 `write` 中返回更详细的错误：
 ```c
 rpc_async_release
   rpc_free_task
