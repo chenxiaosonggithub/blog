@@ -2,7 +2,7 @@
 
 这里介绍一组我发到社区的补丁集，这组补丁集被nfs maintainer剽窃了，但他修改后的版本却没有解决我提出的问题。
 
-补丁集：[nfs: handle writeback errors correctly](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)。
+我的补丁集：[nfs: handle writeback errors correctly](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)。
 
 # 1. 问题描述
 
@@ -94,7 +94,7 @@ filp_close
 
 # 3. 我的修改方案
 
-## 3.1 第一个补丁：write返回更详细的错误
+## 3.1. 第一个补丁：write返回更详细的错误
 
 [NFS: return more nuanced writeback errors in nfs_file_write()](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-2-chenxiaosong2@huawei.com/)
 
@@ -130,7 +130,7 @@ nfs_file_write
     return -(file->f_mapping->wb_err & MAX_ERRNO) // 返回wb_err 中的错误
 ```
 
-## 3.2 第二个补丁：flush返回正确的错误
+## 3.2. 第二个补丁：flush返回正确的错误
 
 [NFS: nfs{,4}_file_flush() return correct writeback errors](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-3-chenxiaosong2@huawei.com/)
 
@@ -143,7 +143,7 @@ nfs_file_flush
     return -(file->f_mapping->wb_err & MAX_ERRNO) // 返回 wb_err 中的错误
 ```
 
-## 3.3 第三个补丁：解决 async write 变成 sync write 的问题
+## 3.3. 第三个补丁：解决 async write 变成 sync write 的问题
 
 [Revert "nfs: nfs_file_write() should check for writeback errors"](https://patchwork.kernel.org/project/linux-nfs/patch/20220401034409.256770-4-chenxiaosong2@huawei.com/)
 
@@ -172,7 +172,7 @@ write
 
 补丁集：[Ensure mapping errors are reported only once](https://patchwork.kernel.org/project/linux-nfs/list/?series=631225&state=%2A&archive=both)
 
-## 4.1 想解决问题的补丁（实际没解决）
+## 4.1. 想解决问题的补丁（实际没解决）
 
 [NFS: Don't report ENOSPC write errors twice](https://patchwork.kernel.org/project/linux-nfs/patch/20220411213346.762302-4-trondmy@kernel.org/)
 
@@ -201,7 +201,7 @@ nfs_file_write
   return error // -ENOSPC
 ```
 
-## 4.2 maintainer 的其他补丁
+## 4.2. maintainer 的其他补丁
 
 ```c
 [v2,1/5] NFS: Do not report EINTR/ERESTARTSYS as mapping errors
@@ -219,11 +219,11 @@ nfs_file_write
 
 # 5. 其他文件系统对 wb err 的处理
 
-## 5.1 调用 fsync 时清除 wb_err
+## 5.1. 调用 fsync 时清除 wb_err
 
 `btrfs, ceph, ext4, fuse` 调用 `file_check_and_advance_wb_err` 清除 `address_space wb_err`
 
-## 5.2 实现 flush 的文件系统
+## 5.2. 实现 flush 的文件系统
 
 `cifs` 通过 `address_space` 中的 `flags` 返回错误（只有 -EIO 或 -ENOSPC）:
 ```c
@@ -254,7 +254,7 @@ orangefs_flush
 
 `ecryptfs, overlayfs` 调用真实文件系统的 `flush` 函数
 
-## 5.3 async write
+## 5.3. async write
 
 其他文件系统异步写都不会清除 `address_space` 中的 `wb_err`, 因为只会被 `file_check_and_advance_wb_err` 清除
 
@@ -267,7 +267,7 @@ orangefs_flush
 
 [[-next,v2] NFS: report and clear ENOSPC/EFBIG/EDQUOT writeback error on close() file](https://patchwork.kernel.org/project/linux-nfs/patch/20220614152817.271507-1-chenxiaosong2@huawei.com/)
 
-## 6.1 maintainer 两个版本的补丁都无法解决问题
+## 6.1. maintainer 两个版本的补丁都无法解决问题
 
 和 maintainer 说了2次，他的回复没有正面回答这个问题。
 
@@ -293,7 +293,7 @@ that is documented in the manpages.
 
 回复中提到我的补丁空间释放后加 `(conv=fsync)` 执行 `dd` 时应该要报错，我回复说我的补丁符合他的预期，maintainer 不再回复。
 
-## 6.2 maintainer 不断强调是文档规定
+## 6.2. maintainer 不断强调是文档规定
 
 ```
 > And more importantly, we can not detect new error by using 
@@ -316,7 +316,7 @@ As I keep repeating, that is _documented behaviour_!
 
 我和他说的明明是 `filemap_sample_wb_err/filemap_check_wb_err` 的用法错误，他却强调是文档规定
 
-## 6.3 maintainer 最后直接说是vfs的问题
+## 6.3. maintainer 最后直接说是vfs的问题
 
 ```
 If you want the rules to change, then you need to talk to the entire
