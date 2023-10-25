@@ -1,4 +1,4 @@
-首先，欢迎各位朋友到[我的个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
 Linux下一切皆文件，所有的配置选项也都是文件。
 
