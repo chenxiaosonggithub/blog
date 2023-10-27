@@ -36,7 +36,7 @@ pandoc ${src_path}blog/src/free-software/free-software.md -o ${dst_path}html/fre
 pandoc ${src_path}blog/src/health/tooth-clean.md -o ${dst_path}html/health/tooth-clean.html --metadata title="牙齿护理" ${pandoc_common_options}
 
 # pictures是我的私有仓库
-cp ${src_path}pictures/pictures/ ${dst_path} -rf
+cp ${src_path}pictures/pictures/ ${dst_path}/html/ -rf
 
 chown -R www-data:www-data ${dst_path}
 
