@@ -9,6 +9,7 @@ mkdir -p ${dst_path}html/kernel
 mkdir -p ${dst_path}html/nfs
 mkdir -p ${dst_path}html/linux
 mkdir -p ${dst_path}html/free-software
+mkdir -p ${dst_path}html/health
 
 # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
 # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
@@ -31,6 +32,8 @@ pandoc ${src_path}blog/src/userspace-environment/userspace-environment.md -o ${d
 pandoc ${src_path}blog/src/linux-config/linux-config.md -o ${dst_path}html/linux/linux-config.html --metadata title="Linux配置文件" ${pandoc_common_options}
 # 自由软件
 pandoc ${src_path}blog/src/free-software/free-software.md -o ${dst_path}html/free-software/free-software.html --metadata title="自由软件介绍" ${pandoc_common_options}
+# 运动与健康
+pandoc ${src_path}blog/src/health/tooth-clean.md -o ${dst_path}html/health/tooth-clean.html --metadata title="牙齿护理"" ${pandoc_common_options}
 
 # pictures是我的私有仓库
 cp ${src_path}pictures/pictures/ ${dst_path} -rf
