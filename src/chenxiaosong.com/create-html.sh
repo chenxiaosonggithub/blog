@@ -15,7 +15,7 @@ pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/photos.md -o /v
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/openharmony.md -o /var/www/html/self-introduction/openharmony.html --metadata title="陈孝松OpenHarmony贡献" --from markdown --to html --standalone --metadata encoding=gbk --toc
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/self-introduction/blog.md -o /var/www/html/self-introduction/blog.html --metadata title="陈孝松博客" --from markdown --to html --standalone --metadata encoding=gbk --toc
 # nfs
-pandoc /home/sonvhi/chenxiaosong/code/blog/src/nfs/4.19-null-ptr-in-nfs_updatepage.md -o /var/www/html/nfs/4.19-null-ptr-in-nfs_updatepage.html --metadata title="4.19 nfs_updatepage空指针解引用问题" --from markdown --to html --standalone --metadata encoding=gbk --toc
+pandoc /home/sonvhi/chenxiaosong/code/blog/src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md -o /var/www/html/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html --metadata title="4.19 nfs_updatepage空指针解引用问题" --from markdown --to html --standalone --metadata encoding=gbk --toc
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/nfs/nfs-handle-writeback-errors-correctly.md -o /var/www/html/nfs/nfs-handle-writeback-errors-correctly.html --metadata title="nfs回写错误处理不正确的问题" --from markdown --to html --standalone --metadata encoding=gbk --toc
 # 网站搭建
 pandoc /home/sonvhi/chenxiaosong/code/blog/src/chenxiaosong.com/chenxiaosong.com.md -o /var/www/html/chenxiaosong.com/chenxiaosong.com.html --metadata title="如何快速搭建一个简陋的个人网站" --from markdown --to html --standalone --metadata encoding=gbk --toc

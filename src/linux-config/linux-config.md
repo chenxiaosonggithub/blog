@@ -69,6 +69,14 @@ xmodmap -pke # 除修饰键外的其他键
 
 # .tmux.conf
 
+Tmux（缩写自"Terminal Multiplexer"）是一个在命令行界面下运行的终端复用工具，我主要是用tmux的会话附加和分离功能，在一个Tmux会话中分离，然后重新附加，这意味着可以从一个终端窗口断开，然后在另一个终端窗口中继续工作，或者甚至在断开后重新连接。
+
+安装：
+```sh
+sudo apt update -y
+sudo apt install tmux -y
+```
+
 `set -g prefix none`表示将prefix键设置为空，因此您无需按下任何键即可执行tmux命令。这通常是为了防止键冲突或简化tmux的使用。
 
 `unbind C-b`将取消绑定 C-b 作为 prefix 键，从而使其不再触发 tmux 命令。

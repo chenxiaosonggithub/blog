@@ -6,7 +6,7 @@
 
 # nfs
 
-[4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-in-nfs_updatepage.html)
+[4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)
 
 [nfs回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-correctly.html)
 
