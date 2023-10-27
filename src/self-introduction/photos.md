@@ -4,9 +4,11 @@
 
 ![](http://chenxiaosong.com/pictures/self-introduction/banshen.jpg)
 
-![](http://chenxiaosong.com/pictures/self-introduction/bicycle_cemian.jpg)
+![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian1.jpg)
 
-![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian.jpg)
+![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian2.jpg)
+
+![](http://chenxiaosong.com/pictures/self-introduction/bicycle_cemian.jpg)
 
 # 下雨下雪下冰雹时，我就在室内骑行，还能边骑边写代码
 
