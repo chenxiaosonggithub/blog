@@ -26,9 +26,9 @@ GNU网站：[http://www.gnu.org/](http://www.gnu.org/)。
 
 Linux内核源码地址：[https://github.com/torvalds/linux](https://github.com/torvalds/linux)。
 
-我用的Linux发行版是[Fedora](https://getfedora.org/en/)，Fedora Commons源码：[https://github.com/fcrepo/fcrepo](https://github.com/fcrepo/fcrepo)。
+我用的Linux桌面发行版是[Ubuntu](https://ubuntu.com/), 基于[Debian](https://www.debian.org/), Ubuntu的源码：[https://code.launchpad.net/ubuntu](https://code.launchpad.net/ubuntu)。
 
-Fedora现在（2021年）使用的图形桌面环境是[GNOME](https://www.gnome.org/)。
+曾经也用过[Fedora](https://fedoraproject.org/)，Fedora Commons源码：[https://github.com/fcrepo/fcrepo](https://github.com/fcrepo/fcrepo)。Fedora 2021年使用的图形桌面环境是[GNOME](https://www.gnome.org/)。
 
 # 虚拟机：QEMU/KVM
 
@@ -42,7 +42,7 @@ QEMU：[https://www.qemu.org/](https://www.qemu.org/)。
 
 # 编辑器：emacs
 
-[emacs](http://www.gnu.org/software/emacs/)是我用的最多的编辑器，尤其是浏览Linux内核源码时，配合gtags，简直完美。
+[emacs](http://www.gnu.org/software/emacs/)是我用的最多的编辑器，尤其是浏览Linux内核源码时，配合[gtags](https://www.gnu.org/software/global/)（安装：`sudo apt install global -y`），简直完美。
 
 源码：[http://savannah.gnu.org/projects/emacs/](http://savannah.gnu.org/projects/emacs/)。
 
@@ -52,13 +52,19 @@ QEMU：[https://www.qemu.org/](https://www.qemu.org/)。
 
 github源码：[https://github.com/vim/vim](https://github.com/vim/vim)。
 
-我主要开发语言为C语言，使用的vim插件有[ctags](http://ctags.sourceforge.net/)和[cscope](http://cscope.sourceforge.net/)。
+我主要开发语言为C语言，使用的vim插件有[ctags](http://ctags.sourceforge.net/)和[cscope](http://cscope.sourceforge.net/)。当然，现在更多的是使用emacs和gtags浏览Linux内核代码。
 
 # 浏览器：Firefox
 
 [Firefox](https://www.mozilla.org/en-US/firefox/)是一个由[Mozilla](https://www.mozilla.org/en-US/)开发的自由及开放源代码的网页浏览器。
 
 源码地址（github上没有）：[https://hg.mozilla.org/mozilla-central/](https://hg.mozilla.org/mozilla-central/)。
+
+# 浏览器：Chromium
+
+按理说Firefox更加的“自由”，但Firefox现在真的做得不怎么好用，越来越多人用户转为选择使用Google Chrome或基于 Chromium 的浏览器（如Microsoft Edge、Opera、Brave、Vivaldi等）。
+
+Chromium源码：[https://chromium.googlesource.com/chromium/src.git](https://chromium.googlesource.com/chromium/src.git)。
 
 # Office办公软件：LibreOffice
 

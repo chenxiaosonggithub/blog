@@ -17,3 +17,7 @@
 # 网站搭建
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/chenxiaosong.com/chenxiaosong.com.html)
+
+# 自由软件
+
+[自由软件介绍](http://chenxiaosong.com/free-software/free-software.html)
