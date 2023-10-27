@@ -99,15 +99,7 @@ Socket(s):                       1
 
 # 编译内核
 
-```shell
-#fedora编译最新内核
-sudo dnf install ncurses-devel -y
-sudo yum install openssl -y
-sudo dnf install dwarves -y
-sudo yum install zstd -y
-
-# menuconfig错误时需要安装
-sudo yum install ncurses-devel -y
+```sh
 make oldconfig
 make bzImage
 make modules

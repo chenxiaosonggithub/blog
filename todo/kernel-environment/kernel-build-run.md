@@ -1,12 +1,5 @@
 [toc]
 
-# `dump_stack` 的输出都是问号的解决办法
-
-```shell
-# 回退这个补丁
-f1d9a2abff66 x86/unwind/orc: Don't skip the first frame for inactive tasks
-```
-
 # 根文件系统
 
 fedora server 安装时， 根文件系统一定不能使用 LVM

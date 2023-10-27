@@ -1,3 +1,5 @@
+# 
+
 # 编译
 
 ```shell
@@ -9,4 +11,4 @@ make O=build olddefconfig -j64 && make O=build bzImage -j64 && make O=build modu
 
 revert 补丁 `f1d9a2abff66 x86/unwind/orc: Don't skip the first frame for inactive tasks`。
 
-社区已有补丁做了 revert： `230db82413c0 x86/unwind/orc: Fix unreliable stack dump with gcov`。
+主线已经做了 revert： `230db82413c0 x86/unwind/orc: Fix unreliable stack dump with gcov`。
