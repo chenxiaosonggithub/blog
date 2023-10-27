@@ -12,6 +12,8 @@
 
 # Linux
 
+[Linux环境安装与配置](http://chenxiaosong.com/linux/userspace-environment.html)
+
 [Linux配置文件](http://chenxiaosong.com/linux/linux-config.html)
 
 # 网站搭建

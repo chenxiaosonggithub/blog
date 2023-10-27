@@ -1,4 +1,8 @@
-# ubuntu22.04环境
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+
+这篇文章记录一下各个常用Linux发行版的软件安装与配置，方便日后查阅。
+
+# ubuntu22.04
 
 我平时工作用的是ubuntu桌面系统。
 
