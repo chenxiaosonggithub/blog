@@ -4,9 +4,9 @@
 
 ![](http://chenxiaosong.com/pictures/self-introduction/banshen.jpg)
 
-![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian1.jpg)
+![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian1.jpeg)
 
-![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian2.jpg)
+![](http://chenxiaosong.com/pictures/self-introduction/bicycle_zhengmian2.jpeg)
 
 ![](http://chenxiaosong.com/pictures/self-introduction/bicycle_cemian.jpg)
 
