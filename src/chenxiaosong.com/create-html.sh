@@ -33,7 +33,7 @@ pandoc ${src_path}blog/src/linux-config/linux-config.md -o ${dst_path}html/linux
 # 自由软件
 pandoc ${src_path}blog/src/free-software/free-software.md -o ${dst_path}html/free-software/free-software.html --metadata title="自由软件介绍" ${pandoc_common_options}
 # 运动与健康
-pandoc ${src_path}blog/src/health/tooth-clean.md -o ${dst_path}html/health/tooth-clean.html --metadata title="牙齿护理"" ${pandoc_common_options}
+pandoc ${src_path}blog/src/health/tooth-clean.md -o ${dst_path}html/health/tooth-clean.html --metadata title="牙齿护理" ${pandoc_common_options}
 
 # pictures是我的私有仓库
 cp ${src_path}pictures/pictures/ ${dst_path} -rf
