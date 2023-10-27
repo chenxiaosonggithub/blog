@@ -4,6 +4,10 @@
 
 博客内容还在完善和整理中，更多的内容可以查看[我的博客的GitHub仓库](https://github.com/chenxiaosonggithub/blog)。
 
+# Linux内核
+
+[Linux内核编译与调试环境](http://chenxiaosong.com/kernel/kernel-environment.html)
+
 # nfs
 
 [4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)
