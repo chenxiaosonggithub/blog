@@ -7,6 +7,7 @@ mkdir -p ${dst_path}html/self-introduction/
 mkdir -p ${dst_path}html/chenxiaosong.com
 mkdir -p ${dst_path}html/nfs
 mkdir -p ${dst_path}html/linux
+mkdir -p ${dst_path}html/free-software
 
 # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
 # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
