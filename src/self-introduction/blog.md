@@ -28,6 +28,10 @@
 
 [自由软件介绍](http://chenxiaosong.com/free-software/free-software.html)
 
+# 不知道怎么分类
+
+[五笔输入法](http://chenxiaosong.com/others/wubi.html)
+
 # 运动与健康
 
 [牙齿护理](http://chenxiaosong.com/health/tooth-clean.html)
