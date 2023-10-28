@@ -23,6 +23,7 @@ pandoc ${src_path}blog/src/self-introduction/openharmony.md -o ${dst_path}html/s
 pandoc ${src_path}blog/src/self-introduction/blog.md -o ${dst_path}html/self-introduction/blog.html --metadata title="陈孝松博客" ${pandoc_common_options}
 # Linux内核
 pandoc ${src_path}blog/src/kernel-environment/kernel-environment.md -o ${dst_path}html/kernel/kernel-environment.html --metadata title="Linux内核编译与调试环境" ${pandoc_common_options}
+pandoc ${src_path}blog/src/kernel-mailinglist/kernel-mailinglist.md -o ${dst_path}html/kernel/kernel-mailinglist.html --metadata title="怎么贡献Linux内核社区" ${pandoc_common_options}
 # nfs
 pandoc ${src_path}blog/src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md -o ${dst_path}html/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html --metadata title="4.19 nfs_updatepage空指针解引用问题" ${pandoc_common_options}
 pandoc ${src_path}blog/src/nfs/nfs-handle-writeback-errors-correctly.md -o ${dst_path}html/nfs/nfs-handle-writeback-errors-correctly.html --metadata title="nfs回写错误处理不正确的问题" ${pandoc_common_options}

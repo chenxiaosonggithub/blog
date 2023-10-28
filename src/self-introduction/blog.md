@@ -8,6 +8,8 @@
 
 [Linux内核编译与调试环境](http://chenxiaosong.com/kernel/kernel-environment.html)
 
+[怎么贡献Linux内核社区](http://chenxiaosong.com/kernel/kernel-mailinglist.html)
+
 # nfs（网络文件系统）
 
 [4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)
