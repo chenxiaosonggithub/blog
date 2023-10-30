@@ -44,7 +44,7 @@ array=(
 )
 element_count="${#array[@]}"
 for ((index=0; index<${element_count}; index=$((index + 3)))); do
-    pandoc ${src_path}blog/${array[${index}]} -o ${dst_path}html/${array[${index}+1]} --metadata title=${array[${index}+2]} ${pandoc_common_options}
+    pandoc ${src_path}blog/${array[${index}]} -o ${dst_path}html/${array[${index}+1]} --metadata title="${array[${index}+2]}" ${pandoc_common_options}
 done
 
 # pictures是我的私有仓库
