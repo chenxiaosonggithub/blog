@@ -4,9 +4,9 @@
 
 可能很多人早就想贡献Linux内核了，但就是不知道怎么开始。
 
-# 内核社区
+# 1. 内核社区
 
-Linux内核社区主要以邮件交流为主。
+Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
 [社区主页](https://www.kernel.org/)
 
@@ -22,13 +22,13 @@ Linux内核社区主要以邮件交流为主。
 
 [Mainland China Mirror](https://kernel.source.codeaurora.cn/)
 
-# 修改内核代码
+# 2. 修改内核代码
 
-作为入门，这里只以简单的修复内核告警为例。
+你可以通过[syzkaller测试](https://syzkaller.appspot.com/upstream)发现内核bug，也可以通过阅读内核代码发现bug或进行重构。
 
-请参考[我提交的一个简单的修改](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20210611&id=5ca54404e68de8560ca15e8d0e6b625fd05ceeaf)。
+可以参考内核仓库中的补丁，或[我提交的补丁](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)。
 
-# 生成patch文件
+# 3. 生成patch文件
 
 以下命令会生成补丁文件：
 ```shell
@@ -53,9 +53,9 @@ git format-patch --subject-prefix="PATCH next,resend,v2" -3 commit号 --cover-le
 vim 0000-cover-letter.patch
 ```
 
-# 邮箱配置
+# 4. 邮箱配置
 
-## 163邮箱配置
+## 4.1. 163邮箱配置
 
 此处以163邮箱为例，说明邮箱的配置方法，其他邮箱类似。
 
@@ -65,12 +65,12 @@ vim 0000-cover-letter.patch
 
 ![163邮箱配置](http://chenxiaosong.com/pictures/163-mail-config.png)
 
-# foxmail邮箱（qq邮箱）配置
+# 4.2. foxmail邮箱（qq邮箱）配置
 
 在[pc端网页](https://mail.qq.com/)登录foxmail邮箱，点击"Settings -> Third-party Services -> IMAP/SMTP", 点击"Generate Authorization Code"生成在`.gitconfig`和[thunderbird](https://www.thunderbird.net)中登录的密码。
 
 
-# git发送邮件
+# 5. git发送邮件
 
 安装：
 ```shell
