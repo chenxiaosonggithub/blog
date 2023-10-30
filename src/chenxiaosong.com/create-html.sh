@@ -16,28 +16,36 @@ mkdir -p ${dst_path}html/others
 # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
 # --toc：这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
 pandoc_common_options="--from markdown --to html --standalone --metadata encoding=gbk --toc"
-# 自我介绍
-pandoc ${src_path}blog/src/self-introduction/index.md -o ${dst_path}html//index.html --metadata title="陈孝松个人主页" ${pandoc_common_options}
-pandoc ${src_path}blog/src/self-introduction/photos.md -o ${dst_path}html/self-introduction/photos.html --metadata title="陈孝松照片" ${pandoc_common_options}
-pandoc ${src_path}blog/src/self-introduction/openharmony.md -o ${dst_path}html/self-introduction/openharmony.html --metadata title="陈孝松OpenHarmony贡献" ${pandoc_common_options}
-pandoc ${src_path}blog/src/self-introduction/blog.md -o ${dst_path}html/self-introduction/blog.html --metadata title="陈孝松博客" ${pandoc_common_options}
-# Linux内核
-pandoc ${src_path}blog/src/kernel-environment/kernel-environment.md -o ${dst_path}html/kernel/kernel-environment.html --metadata title="Linux内核编译与调试环境" ${pandoc_common_options}
-pandoc ${src_path}blog/src/kernel-mailinglist/kernel-mailinglist.md -o ${dst_path}html/kernel/kernel-mailinglist.html --metadata title="怎么贡献Linux内核社区" ${pandoc_common_options}
-# nfs
-pandoc ${src_path}blog/src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md -o ${dst_path}html/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html --metadata title="4.19 nfs_updatepage空指针解引用问题" ${pandoc_common_options}
-pandoc ${src_path}blog/src/nfs/nfs-handle-writeback-errors-correctly.md -o ${dst_path}html/nfs/nfs-handle-writeback-errors-correctly.html --metadata title="nfs回写错误处理不正确的问题" ${pandoc_common_options}
-# 网站搭建
-pandoc ${src_path}blog/src/chenxiaosong.com/chenxiaosong.com.md -o ${dst_path}html/chenxiaosong.com/chenxiaosong.com.html --metadata title="如何快速搭建一个简陋的个人网站" ${pandoc_common_options}
-# Linux
-pandoc ${src_path}blog/src/userspace-environment/userspace-environment.md -o ${dst_path}html/linux/userspace-environment.html --metadata title="Linux环境安装与配置" ${pandoc_common_options}
-pandoc ${src_path}blog/src/linux-config/linux-config.md -o ${dst_path}html/linux/linux-config.html --metadata title="Linux配置文件" ${pandoc_common_options}
-# 自由软件
-pandoc ${src_path}blog/src/free-software/free-software.md -o ${dst_path}html/free-software/free-software.html --metadata title="自由软件介绍" ${pandoc_common_options}
-# 运动与健康
-pandoc ${src_path}blog/src/health/tooth-clean.md -o ${dst_path}html/health/tooth-clean.html --metadata title="牙齿护理" ${pandoc_common_options}
-# 其他
-pandoc ${src_path}blog/src/wubi/wubi.md -o ${dst_path}html/others/wubi.html --metadata title="五笔输入法" ${pandoc_common_options}
+
+# 每一行代表： markdown文件相对路径 html文件相对路径 网页标题
+array=(
+    # 自我介绍
+    src/self-introduction/index.md index.html '陈孝松个人主页'
+    src/self-introduction/photos.md self-introduction/photos.html '陈孝松照片'
+    src/self-introduction/openharmony.md self-introduction/openharmony.html "陈孝松OpenHarmony贡献"
+    src/self-introduction/blog.md self-introduction/blog.html "陈孝松博客"
+    # Linux内核
+    src/kernel-environment/kernel-environment.md kernel/kernel-environment.html "Linux内核编译与调试环境"
+    src/kernel-mailinglist/kernel-mailinglist.md kernel/kernel-mailinglist.html "怎么贡献Linux内核社区"
+    # nfs
+    src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md nfs/4.19-null-ptr-deref-in-nfs_updatepage.html "4.19 nfs_updatepage空指针解引用问题"
+    src/nfs/nfs-handle-writeback-errors-correctly.md nfs/nfs-handle-writeback-errors-correctly.html "nfs回写错误处理不正确的问题"
+    # 网站搭建
+    src/chenxiaosong.com/chenxiaosong.com.md chenxiaosong.com/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
+    # Linux
+    src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
+    src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
+    # 自由软件
+    src/free-software/free-software.md free-software/free-software.html "自由软件介绍"
+    # 运动与健康
+    src/health/tooth-clean.md health/tooth-clean.html "牙齿护理"
+    # 其他
+    src/wubi/wubi.md others/wubi.html "五笔输入法"
+)
+element_count="${#array[@]}"
+for ((index=0; index<${element_count}; index=$((index + 3)))); do
+    pandoc ${src_path}blog/${array[${index}]} -o ${dst_path}html/${array[${index}+1]} --metadata title=${array[${index}+2]} ${pandoc_common_options}
+done
 
 # pictures是我的私有仓库
 cp ${src_path}pictures/pictures/ ${dst_path}/html/ -rf
