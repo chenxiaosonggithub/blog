@@ -65,7 +65,7 @@ vim 0000-cover-letter.patch
 
 ![163邮箱配置](http://chenxiaosong.com/pictures/163-mail-config.png)
 
-# 4.2. foxmail邮箱（qq邮箱）配置
+## 4.2. foxmail邮箱（qq邮箱）配置
 
 在[pc端网页](https://mail.qq.com/)登录foxmail邮箱，点击"Settings -> Third-party Services -> IMAP/SMTP", 点击"Generate Authorization Code"生成在`.gitconfig`和[thunderbird](https://www.thunderbird.net)中登录的密码。
 
