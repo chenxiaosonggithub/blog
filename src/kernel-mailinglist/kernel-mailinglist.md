@@ -53,15 +53,21 @@ git format-patch --subject-prefix="PATCH next,resend,v2" -3 commit号 --cover-le
 vim 0000-cover-letter.patch
 ```
 
-# 163邮箱配置
+# 邮箱配置
+
+## 163邮箱配置
 
 此处以163邮箱为例，说明邮箱的配置方法，其他邮箱类似。
 
 默认情况下，163邮箱只能在网页和网易邮箱大师登录。如果要用git通过163邮箱发送邮件则需要对163邮箱进行配置。
 
-在[网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除），如下图所示：
+在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除），如下图所示：
 
 ![163邮箱配置](http://chenxiaosong.com/pictures/163-mail-config.png)
+
+# foxmail邮箱（qq邮箱）配置
+
+在[pc端网页](https://mail.qq.com/)登录foxmail邮箱，点击"Settings -> Third-party Services -> IMAP/SMTP", 点击"Generate Authorization Code"生成在`.gitconfig`和[thunderbird](https://www.thunderbird.net)中登录的密码。
 
 
 # git发送邮件

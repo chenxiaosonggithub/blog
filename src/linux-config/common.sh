@@ -1,5 +1,3 @@
-array=(origin_xmodmap.txt xmodmap.txt vimrc emacs bash_profile gitconfig tmux.conf set_proxy.sh)
-
 dst_dir=$1
 if [ -z "$dst_dir" ]
 then
