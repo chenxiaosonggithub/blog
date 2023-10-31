@@ -1,27 +1,25 @@
-From 3c602f6a3aca8455dcfa6d6b82f6a5d4f22a4914 Mon Sep 17 00:00:00 2001
+From fcd3891bba1e51ce0074629c3f5964b84c8e1881 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosongemail@foxmail.com>
 Date: Fri, 27 Oct 2023 03:03:12 +0000
 Subject: [PATCH] reproduce 4.19 null-ptr-deref in nfs_updatepage
 
 Signed-off-by: ChenXiaoSong <chenxiaosongemail@foxmail.com>
 ---
- fs/nfs/write.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfs/write.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index ec0fd6b3d185..74ab9ecaaf91 100644
+index ec0fd6b3d185..d5c820f2cf98 100644
 --- a/fs/nfs/write.c
 +++ b/fs/nfs/write.c
-@@ -638,7 +638,8 @@ static int nfs_page_async_flush(struct nfs_pageio_descriptor *pgio,
+@@ -637,6 +637,7 @@ static int nfs_page_async_flush(struct nfs_pageio_descriptor *pgio,
+ 	WARN_ON_ONCE(test_bit(PG_CLEAN, &req->wb_flags));
  
  	ret = req->wb_context->error;
++	ret = -EDQUOT;
  	/* If there is a fatal error that covers this write, just exit */
--	if (nfs_error_is_fatal_on_server(ret))
-+	// if (nfs_error_is_fatal_on_server(ret))
-+	if (1)
+ 	if (nfs_error_is_fatal_on_server(ret))
  		goto out_launder;
- 
- 	ret = 0;
 @@ -1122,7 +1123,9 @@ static struct nfs_page *nfs_try_to_update_request(struct inode *inode,
  	 * Note: nfs_flush_incompatible() will already
  	 * have flushed out requests having wrong owners.
