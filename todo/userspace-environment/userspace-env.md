@@ -68,18 +68,6 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 通过访问`hk.chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
 
-# efi grub 选择系统
-
-```shell
-cd /boot/efi/EFI/centos # centos为启动盘
-blkid # 打印 uuid
-vim grub.cfg # 更改 uuid, set prefix=($dev)/　后接正确的路径
-vim /etc/default/grub # GRUB_TIMEOUT=5
-
-grub2-mkconfig -o /boot/grub2/grub.cfg # centos9
-grub-mkconfig -o /boot/grub/grub.cfg # ubuntu2204
-```
-
 # centos6
 
 ```shell
