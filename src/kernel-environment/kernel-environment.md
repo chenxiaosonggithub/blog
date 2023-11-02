@@ -151,3 +151,54 @@ add-symbol-file <ko文件位置> <text段地址> -s .data <data段地址> -s .bs
 ```
 
 这时就能开心的对ko模块中的代码进行打断点之类的操作了。
+
+# 4. vmcore分析
+
+首先你需要有个发生panic时的vmcore，有些发行版默认发生oops时不会panic，需要修改配置（注意这样修改重启后会还原）：
+```sh
+echo 1 > /proc/sys/kernel/panic_on_oops # 注意不能用 vim 编辑
+cat /proc/sys/kernel/panic_on_oops # 确认是否生效
+```
+
+按`ctrl + a c`打开QEMU控制台，使用以下命令导出vmcore：
+```sh
+(qemu) dump-guest-memory /your_path/vmcore
+```
+
+以[4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)构造复现导出的vmcore为例，说明vmcore的分析过程。
+
+启动crash，查看崩溃在哪一行：
+```sh
+# 启动crash
+crash vmlinux vmcore
+
+# 查看内核日志，其中包含 RIP: 0010:_raw_spin_lock+0x1d/0x35 和 nfs_inode_add_request+0x1cc/0x5b8
+crash> dmesg | less
+
+# 在内核仓库目录下执行的shell命令，在docker环境中打印不出具体行号，原因暂时母鸡
+./scripts/faddr2line build/vmlinux nfs_inode_add_request+0x1cc/0x5b8
+nfs_inode_add_request+0x1cc/0x5b8:
+nfs_have_writebacks at include/linux/nfs_fs.h:548 (discriminator 3)
+(inlined by) nfs_inode_add_request at fs/nfs/write.c:774 (discriminator 3)
+
+# 查看崩溃的栈，输出的栈包含
+# [exception RIP: _raw_spin_lock+29] RIP: ffffffff836c0e4a
+# #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+# #9 [ffff8880b1ab7ab0] nfs_setup_write_request at ffffffff81c14312
+crash> bt
+
+# 反汇编指定地址的代码，以查看其汇编指令, -l 选项用于在反汇编时显示源代码行号（如果可用）
+crash> dis -l ffffffff81c0a939
+/home/sonvhi/chenxiaosong/code/4.19-stable/build/../include/linux/nfs_fs.h: 248
+0xffffffff81c0a939 <nfs_inode_add_request+460>: lea    -0xe0(%rbp),%r14
+
+# 查找指定地址的符号信息
+crash> sym ffffffff836c0e4a
+ffffffff836c0e4a (T) _raw_spin_lock+29 /home/sonvhi/chenxiaosong/code/4.19-stable/build/../arch/x86/include/asm/atomic.h: 194
+crash> sym ffffffff81c0a939
+ffffffff81c0a939 (t) nfs_inode_add_request+460 /home/sonvhi/chenxiaosong/code/4.19-stable/build/../include/linux/nfs_fs.h: 248
+```
+
+`faddr2line`脚本解析是的`nfs_inode_add_request`函数中的774行，也就是发生问题的`spin_lock(&mapping->private_lock)`之后的一行，看来解析还是有一点点的不准，不过不要紧，我们再看`dmesg`命令中的日志`RIP: 0010:_raw_spin_lock+0x1d/0x35`，就能确定确实是崩溃在773行`spin_lock(&mapping->private_lock)`。
+
+另外，由crash的`dis -l`和`sym`命令定位到`include/linux/nfs_fs.h: 248`的`NFS_I()`函数，这就不知道为什么了，麻烦知道的朋友联系我。

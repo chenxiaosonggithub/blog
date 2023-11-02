@@ -48,12 +48,6 @@ perf ftrace -a -G nfs_getattr > ftrace # 查看调用时间
 check_hung_task
 ```
 
-# panic 配置
-
-```shell
-/proc/sys/kernel/panic_on_oops
-```
-
 # statfs
 
 ```c
