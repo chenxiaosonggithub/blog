@@ -176,7 +176,7 @@ crash vmlinux vmcore
 crash> dmesg | less
 
 # 在内核仓库目录下执行的shell命令，在docker环境中打印不出具体行号，原因暂时母鸡
-./scripts/faddr2line build/vmlinux nfs_inode_add_request+0x1cc/0x5b8
+./scripts/faddr2line build/vmlinux nfs_inode_add_request+0x1cc/0x5b8 # 或者把vmlinux替换成ko文件
 nfs_inode_add_request+0x1cc/0x5b8:
 nfs_have_writebacks at include/linux/nfs_fs.h:548 (discriminator 3)
 (inlined by) nfs_inode_add_request at fs/nfs/write.c:774 (discriminator 3)
@@ -202,3 +202,10 @@ ffffffff81c0a939 (t) nfs_inode_add_request+460 /home/sonvhi/chenxiaosong/code/4.
 `faddr2line`脚本解析是的`nfs_inode_add_request`函数中的774行，也就是发生问题的`spin_lock(&mapping->private_lock)`之后的一行，看来解析还是有一点点的不准，不过不要紧，我们再看`dmesg`命令中的日志`RIP: 0010:_raw_spin_lock+0x1d/0x35`，就能确定确实是崩溃在773行`spin_lock(&mapping->private_lock)`。
 
 另外，由crash的`dis -l`和`sym`命令定位到`include/linux/nfs_fs.h: 248`的`NFS_I()`函数，这就不知道为什么了，麻烦知道的朋友联系我。
+
+如果crash要加载ko模块：
+```sh
+crash> help mod # 帮助命令
+crash> mod -s <module name> <ko path> # 加载
+crash> mod -d <module name> # 删除
+```
