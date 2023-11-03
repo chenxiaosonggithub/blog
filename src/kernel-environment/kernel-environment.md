@@ -209,3 +209,73 @@ crash> help mod # 帮助命令
 crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
 ```
+
+查看`nfs_inode_add_request`函数中的堆栈：
+```sh
+# -F[F]：类似于 -f，不同之处在于当适用时以符号方式显示堆栈数据；如果堆栈数据引用了 slab cache 对象，将在方括号内显示 slab cache 的名称；在 ia64 架构上，将以符号方式替代参数寄存器的内容。如果输入 -F 两次，并且堆栈数据引用了 slab cache 对象，将同时显示地址和 slab cache 的名称在方括号中。
+crash> bt -FF
+ #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+    ffff8880b1ab7a80: ffffea0002cd5900 [ffff8880b0cf0b00:nfs_page] 
+    ffff8880b1ab7a90: 0000000000000000 000000000000000f 
+    ffff8880b1ab7aa0: [ffff888107060a80:kmalloc-128] [ffff8880b6a43ec8:nfs_inode_cache(198:serial-getty@ttyS0.service)]
+
+crash> bt -F
+ #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+    ffff8880b1ab7a80: ffffea0002cd5900 [nfs_page]       
+    ffff8880b1ab7a90: 0000000000000000 000000000000000f 
+    ffff8880b1ab7aa0: [kmalloc-128]    [nfs_inode_cache(198:serial-getty@ttyS0.service)] 
+    ffff8880b1ab7ab0: nfs_setup_write_request+506
+
+# -f：显示堆栈帧中包含的所有数据；此选项可用于确定传递给每个函数的参数；在 ia64 架构上，将显示参数寄存器的内容。
+crash> bt -f
+ #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+    ffff8880b1ab7a80: ffffea0002cd5900 ffff8880b0cf0b00 
+    ffff8880b1ab7a90: 0000000000000000 000000000000000f 
+    ffff8880b1ab7aa0: ffff888107060a80 ffff8880b6a43ec8 
+    ffff8880b1ab7ab0: ffffffff81c14312
+```
+
+使用地址`[ffff8880b0cf0b00:nfs_page]`来查看结构体`nfs_page`中的数据：
+```sh
+crash> struct nfs_page ffff8880b0cf0b00 -x
+struct nfs_page {
+  wb_list = {
+    next = 0xffff8880b0cf0b00,
+    prev = 0xffff8880b0cf0b00
+  },
+  wb_page = 0xffffea0002cd5900,
+  wb_context = 0xffff888107060a80,
+  wb_lock_context = 0xffff888107060a80,
+  wb_index = 0x0,
+  wb_offset = 0x0,
+  wb_pgbase = 0x0,
+  wb_bytes = 0xf,
+  wb_kref = {
+    refcount = {
+      refs = {
+        counter = 0x1
+      }
+    }
+  },
+  wb_flags = 0x1,
+  wb_verf = {
+    data = "\000\000\000\000\000\000\000"
+  },
+  wb_this_page = 0xffff8880b0cf0b00,
+  wb_head = 0xffff8880b0cf0b00
+}
+```
+
+再查看`wb_page = 0xffffea0002cd5900`中的数据：
+```sh
+struct page {
+  ...
+  {
+    {
+      ...
+      mapping = 0x0,
+      ...
+    },
+  }
+}
+```
