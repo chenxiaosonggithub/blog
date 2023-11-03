@@ -1,3 +1,3 @@
 cmd="cp"
-array=(gitconfig)
+array=(gitconfig set_proxy.sh)
 . common.sh
