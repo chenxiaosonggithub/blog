@@ -22,6 +22,8 @@
 
 [Linux配置文件](http://chenxiaosong.com/linux/linux-config.html)
 
+[反向ssh和内网穿透](http://chenxiaosong.com/linux/ssh-reverse.html)
+
 # 网站搭建
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/chenxiaosong.com/chenxiaosong.com.html)
