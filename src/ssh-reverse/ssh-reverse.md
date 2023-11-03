@@ -50,6 +50,11 @@ sudo systemctl enable ssh-reverse # 开机启动
 sudo systemctl restart ssh-reverse # 重启服务
 ```
 
+在public-server上查看是否在监听某些端口：
+```sh
+netstat -tnpl | grep 8888
+```
+
 这时private-client就可以直接访问private-server了：
 ```sh
 ssh -p 55555 sonvhi@chenxiaosong.com
