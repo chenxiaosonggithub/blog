@@ -61,6 +61,8 @@ sudo systemctl restart smbd.service # 重启cifs server
 
 sudo apt install bridge-utils -y # TODO: 不确定是否为虚拟机需要的
 
+strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_ # 查看glibc的版本，docker中无法编译有些低版本的内核代码
+
 # 安装游戏软件stem时需要安装的依赖软件，但steam里的游戏在ubuntu下根本跑不动（我在戴尔笔记本xps13上试过cs非常卡）
 sudo apt install libc6-i386 libgl1:i386 -y # for steam
 ```

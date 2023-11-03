@@ -27,6 +27,7 @@ array=(
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
     src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"
+    src/docker/docker.md linux/docker.html "Docker安装与使用"
     # 自由软件
     src/free-software/free-software.md free-software/free-software.html "自由软件介绍"
     # 运动与健康

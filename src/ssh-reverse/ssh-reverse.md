@@ -1,3 +1,5 @@
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+
 现在有3台电脑：
 ```
 1. 局域网电脑 private-server
