@@ -6,7 +6,7 @@
 
 # Linux内核
 
-[Linux内核编译与调试环境](http://chenxiaosong.com/kernel/kernel-environment.html)
+[Linux内核编译](http://chenxiaosong.com/kernel/kernel-build.html)
 
 [怎么贡献Linux内核社区](http://chenxiaosong.com/kernel/kernel-mailinglist.html)
 

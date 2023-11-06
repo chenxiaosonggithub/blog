@@ -16,7 +16,7 @@ array=(
     src/self-introduction/openharmony.md self-introduction/openharmony.html "陈孝松OpenHarmony贡献"
     src/self-introduction/blog.md self-introduction/blog.html "陈孝松博客"
     # Linux内核
-    src/kernel-environment/kernel-environment.md kernel/kernel-environment.html "Linux内核编译与调试环境"
+    src/kernel-environment/kernel-build.md kernel/kernel-build.html "Linux内核编译"
     src/kernel-mailinglist/kernel-mailinglist.md kernel/kernel-mailinglist.html "怎么贡献Linux内核社区"
     # nfs
     src/nfs/nfs-handle-writeback-errors-correctly.md nfs/nfs-handle-writeback-errors-correctly.html "nfs回写错误处理不正确的问题"
