@@ -180,7 +180,7 @@ crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
 ```
 
-# 4.2. 查看崩溃在哪一行
+## 4.2. 查看崩溃在哪一行
 
 ```sh
 # 查看内核日志
