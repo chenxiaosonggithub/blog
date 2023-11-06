@@ -8,6 +8,10 @@
 
 [Linux内核编译](http://chenxiaosong.com/kernel/kernel-build.html)
 
+[GDB调试Linux内核](http://chenxiaosong.com/kernel/kernel-gdb.html)
+
+[crash解析vmcore](http://chenxiaosong.com/kernel/kernel-crash-vmcore.html)
+
 [怎么贡献Linux内核社区](http://chenxiaosong.com/kernel/kernel-mailinglist.html)
 
 # nfs（网络文件系统）
