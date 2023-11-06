@@ -172,8 +172,14 @@ cat /proc/sys/kernel/panic_on_oops # 确认是否生效
 # 启动crash
 crash vmlinux vmcore
 
-# 查看内核日志，其中包含 RIP: 0010:_raw_spin_lock+0x1d/0x35 和 nfs_inode_add_request+0x1cc/0x5b8
+# 查看内核日志
 crash> dmesg | less
+...
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000080
+...
+RIP: 0010:_raw_spin_lock+0x1d/0x35
+...
+ nfs_inode_add_request+0x1cc/0x5b8
 
 # 在内核仓库目录下执行的shell命令，在docker环境中打印不出具体行号，原因暂时母鸡
 ./scripts/faddr2line build/vmlinux nfs_inode_add_request+0x1cc/0x5b8 # 或者把vmlinux替换成ko文件
@@ -214,55 +220,41 @@ crash> mod -d <module name> # 删除
 ```sh
 # -F[F]：类似于 -f，不同之处在于当适用时以符号方式显示堆栈数据；如果堆栈数据引用了 slab cache 对象，将在方括号内显示 slab cache 的名称；在 ia64 架构上，将以符号方式替代参数寄存器的内容。如果输入 -F 两次，并且堆栈数据引用了 slab cache 对象，将同时显示地址和 slab cache 的名称在方括号中。
 crash> bt -FF
- #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+#10 [ffff8880b1ab79c0] async_page_fault at ffffffff8380119e
+    [exception RIP: _raw_spin_lock+29]
+    ...
+    RDX: 0000000000000001  RSI: ffff8880b5760000  RDI: 0000000000000002
+    ...
+#11 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
     ffff8880b1ab7a80: ffffea0002cd5900 [ffff8880b0cf0b00:nfs_page] 
-    ffff8880b1ab7a90: 0000000000000000 000000000000000f 
-    ffff8880b1ab7aa0: [ffff888107060a80:kmalloc-128] [ffff8880b6a43ec8:nfs_inode_cache(198:serial-getty@ttyS0.service)]
+    ...
 
 crash> bt -F
- #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
-    ffff8880b1ab7a80: ffffea0002cd5900 [nfs_page]       
-    ffff8880b1ab7a90: 0000000000000000 000000000000000f 
-    ffff8880b1ab7aa0: [kmalloc-128]    [nfs_inode_cache(198:serial-getty@ttyS0.service)] 
-    ffff8880b1ab7ab0: nfs_setup_write_request+506
+#11 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+    ffff8880b1ab7a80: ffffea0002cd5900 [nfs_page]
 
 # -f：显示堆栈帧中包含的所有数据；此选项可用于确定传递给每个函数的参数；在 ia64 架构上，将显示参数寄存器的内容。
 crash> bt -f
- #8 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
-    ffff8880b1ab7a80: ffffea0002cd5900 ffff8880b0cf0b00 
-    ffff8880b1ab7a90: 0000000000000000 000000000000000f 
-    ffff8880b1ab7aa0: ffff888107060a80 ffff8880b6a43ec8 
-    ffff8880b1ab7ab0: ffffffff81c14312
+#11 [ffff8880b1ab7a78] nfs_inode_add_request at ffffffff81c0a939
+    ffff8880b1ab7a80: ffffea0002cd5900 ffff8880b0cf0b00
 ```
 
-使用地址`[ffff8880b0cf0b00:nfs_page]`来查看结构体`nfs_page`中的数据：
+注意`[ffff8880b0cf0b00:nfs_page]`并不一定是`nfs_page`结构体的起始地址，有可能是中间某个变量的地址，要用`kmem`命令查看：
+```sh
+crash> kmem ffff8880b0cf0b00
+...
+  FREE / [ALLOCATED]
+  [ffff8880b0cf0b00]
+...
+```
+
+只是这里刚好是起始地址，使用地址`ffff8880b0cf0b00`来查看结构体`nfs_page`中的数据：
 ```sh
 crash> struct nfs_page ffff8880b0cf0b00 -x
 struct nfs_page {
-  wb_list = {
-    next = 0xffff8880b0cf0b00,
-    prev = 0xffff8880b0cf0b00
-  },
+  ...
   wb_page = 0xffffea0002cd5900,
-  wb_context = 0xffff888107060a80,
-  wb_lock_context = 0xffff888107060a80,
-  wb_index = 0x0,
-  wb_offset = 0x0,
-  wb_pgbase = 0x0,
-  wb_bytes = 0xf,
-  wb_kref = {
-    refcount = {
-      refs = {
-        counter = 0x1
-      }
-    }
-  },
-  wb_flags = 0x1,
-  wb_verf = {
-    data = "\000\000\000\000\000\000\000"
-  },
-  wb_this_page = 0xffff8880b0cf0b00,
-  wb_head = 0xffff8880b0cf0b00
+  ...
 }
 ```
 
@@ -279,3 +271,56 @@ struct page {
   }
 }
 ```
+
+再看发生崩溃的地方：
+```c
+nfs_inode_add_request
+  spin_lock(&mapping->private_lock) // static __always_inline void spin_lock(spinlock_t *lock)
+    #define raw_spin_lock(lock)     _raw_spin_lock(lock)
+      void __lockfunc _raw_spin_lock(raw_spinlock_t *lock)
+```
+
+再解析结构体偏移：
+```sh
+# 首先已知 struct address_space *mapping = 0
+crash> struct address_space -ox
+struct address_space {
+  ...
+  # 这里正好和dmesg日志中对应上：BUG: unable to handle kernel NULL pointer dereference at 0000000000000080
+  [0x80] spinlock_t private_lock;
+  ...
+}
+SIZE: 0xa8
+
+crash> struct spinlock_t -ox
+typedef struct spinlock {
+        union {
+  [0x0]     struct raw_spinlock rlock;
+        };
+} spinlock_t;
+SIZE: 0x4
+```
+
+再查看`_raw_spin_lock`的反汇编：
+```sh
+crash> dis _raw_spin_lock
+0xffffffff836c0e2d <_raw_spin_lock>:    nopl   0x0(%rax,%rax,1) [FTRACE NOP]
+0xffffffff836c0e32 <_raw_spin_lock+5>:  push   %rbx
+0xffffffff836c0e33 <_raw_spin_lock+6>:  mov    %rdi,%rbx
+0xffffffff836c0e36 <_raw_spin_lock+9>:  mov    $0x4,%esi
+0xffffffff836c0e3b <_raw_spin_lock+14>: call   0xffffffff817f4d19 <kasan_check_write>
+0xffffffff836c0e40 <_raw_spin_lock+19>: mov    $0x0,%eax
+0xffffffff836c0e45 <_raw_spin_lock+24>: mov    $0x1,%edx
+0xffffffff836c0e4a <_raw_spin_lock+29>: lock cmpxchg %edx,(%rbx)
+0xffffffff836c0e4e <_raw_spin_lock+33>: test   %eax,%eax
+0xffffffff836c0e50 <_raw_spin_lock+35>: jne    0xffffffff836c0e54 <_raw_spin_lock+39>
+0xffffffff836c0e52 <_raw_spin_lock+37>: pop    %rbx
+0xffffffff836c0e53 <_raw_spin_lock+38>: ret    
+0xffffffff836c0e54 <_raw_spin_lock+39>: mov    %eax,%esi
+0xffffffff836c0e56 <_raw_spin_lock+41>: mov    %rbx,%rdi
+0xffffffff836c0e59 <_raw_spin_lock+44>: call   0xffffffff813a704d <__pv_queued_spin_lock_slowpath>
+0xffffffff836c0e5e <_raw_spin_lock+49>: xchg   %ax,%ax
+0xffffffff836c0e60 <_raw_spin_lock+51>: jmp    0xffffffff836c0e52 <_raw_spin_lock+37>
+```
+
+x86_64下整数参数使用的寄存器依次为：RDI，RSI，RDX，RCX，R8，R9，`_raw_spin_lock`只有一个参数，从栈中可以看到`RDI: 0000000000000002`，这个值是怎么来的呢？

@@ -52,6 +52,10 @@ sudo systemctl restart ssh-reverse # 重启服务
 
 在public-server上查看是否在监听某些端口：
 ```sh
+# -t: 显示 TCP 端口信息。
+# -u: 显示 UDP 端口信息。
+# -l: 仅显示正在监听的端口。
+# -n: 显示数值格式的端口号，而不是尝试解析服务名称。
 netstat -tnpl | grep 8888
 ```
 
