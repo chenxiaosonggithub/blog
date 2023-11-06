@@ -275,9 +275,9 @@ struct page {
 再看发生崩溃的地方：
 ```c
 nfs_inode_add_request
-  spin_lock(&mapping->private_lock) // static __always_inline void spin_lock(spinlock_t *lock)
-    #define raw_spin_lock(lock)     _raw_spin_lock(lock)
-      void __lockfunc _raw_spin_lock(raw_spinlock_t *lock)
+  spin_lock(lock = &mapping->private_lock) // static __always_inline void spin_lock(spinlock_t *lock)
+    raw_spin_lock(&lock->rlock)
+      _raw_spin_lock(&lock->rlock) // void __lockfunc _raw_spin_lock(raw_spinlock_t *lock)
 ```
 
 再解析结构体偏移：
