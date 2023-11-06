@@ -17,7 +17,7 @@ rm build -rf && mkdir build && cp /home/sonvhi/chenxiaosong/code/blog/src/kernel
 编译命令：
 ```sh
 make O=build menuconfig # 交互式地配置内核的编译选项
-KNLMKFLGS="-j64" make O=build olddefconfig ${KNLMKFLGS} && make O=build bzImage ${KNLMKFLGS} && make O=build modules ${KNLMKFLGS} && make O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
+KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O=build bzImage ${KNLMKFLGS} && make O=build modules ${KNLMKFLGS} && make O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
 ```
 
 # 2. 一些额外的补丁
@@ -222,7 +222,7 @@ ffffffff81c0a939 (t) nfs_inode_add_request+460 /home/sonvhi/chenxiaosong/code/4.
 
 ## 4.3. 分析栈帧数据
 
-## 4.3.1. 确认`page->mapping`为`NULL`
+### 4.3.1. 确认`page->mapping`为`NULL`
 
 查看`nfs_inode_add_request`函数中的堆栈：
 ```sh
