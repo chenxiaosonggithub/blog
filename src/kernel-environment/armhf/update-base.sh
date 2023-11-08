@@ -13,7 +13,7 @@ qemu-system-arm-latest \
 -net nic,macaddr=00:11:22:33:44:55,model=lan9118 \
 -net tap,ifname=tap55,script=no \
 -machine vexpress-a15 \
--dtb ${kernel_path}/arch/arm/boot/dts/vexpress-v2p-ca15-tc1.dtb \
+-dtb ${kernel_path}/build/arch/arm/boot/dts/vexpress-v2p-ca15-tc1.dtb \
 -drive file=armhf-bullseye.qcow2.updating,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device sd-card,drive=root,id=d_root \
 -kernel ${kernel_path}/arch/arm/boot/zImage \
