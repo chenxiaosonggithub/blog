@@ -7,7 +7,7 @@ qemu-system-aarch64 \
 -m 2048 \
 -machine virt \
 -cpu cortex-a72 \
--kernel /home/sonvhi/chenxiaosong/code/$kernel_version/arch/arm64/boot/Image \
+-kernel /home/sonvhi/chenxiaosong/code/$kernel_version/build/arch/arm64/boot/Image \
 --virtfs local,id=kmod_dev,path=/home/sonvhi/chenxiaosong/,security_model=none,mount_tag=9p \
 -device virtio-scsi-pci \
 -net nic,model=virtio,macaddr=00:11:22:33:44:55 \

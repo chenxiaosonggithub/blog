@@ -1,4 +1,4 @@
-array=(8)
+array=(8 9 10)
 image_type=`basename $(pwd)`
 dst_path=$(pwd)/../../vm/
 idx=0
