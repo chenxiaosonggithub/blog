@@ -16,7 +16,7 @@ qemu-system-arm \
 -dtb ${kernel_path}/arch/arm/boot/dts/vexpress-v2p-ca15-tc1.dtb \
 -drive file=arm32-bullseye.qcow2.updating,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device sd-card,drive=root,id=d_root \
--kernel ${kernel_path}/arch/arm/boot/zImage \
+-kernel ${kernel_path}/build/arch/arm/boot/zImage \
 -append "console=ttyAMA0 root=/dev/mmcblk0 rw kmemleak=on" \
 -vga none \
 -nographic \

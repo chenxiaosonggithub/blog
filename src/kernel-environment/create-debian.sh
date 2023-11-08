@@ -8,7 +8,7 @@ set -eux
 
 # Create a minimal Debian distribution in a directory.
 DIR=chroot
-if [ -z ${PREINSTALL_PKGS} ]; then
+if [ -z ${PREINSTALL_PKGS} ]; then # 如果长度为零（即它是一个空字符串），条件成立
 	PREINSTALL_PKGS=openssh-server,curl,tar,gcc,libc6-dev,time,strace,sudo,less,psmisc,selinux-utils,policycoreutils,checkpolicy,selinux-policy-default,firmware-atheros,debian-ports-archive-keyring
 fi
 
