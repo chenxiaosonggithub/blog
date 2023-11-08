@@ -12,9 +12,9 @@ pandoc_common_options="--from markdown --to html --standalone --metadata encodin
 array=(
     # 自我介绍
     src/self-introduction/index.md index.html '陈孝松个人主页'
-    src/self-introduction/photos.md self-introduction/photos.html '陈孝松照片'
-    src/self-introduction/openharmony.md self-introduction/openharmony.html "陈孝松OpenHarmony贡献"
-    src/self-introduction/blog.md self-introduction/blog.html "陈孝松博客"
+    src/self-introduction/photos.md photos.html '陈孝松照片'
+    src/self-introduction/openharmony.md openharmony.html "陈孝松OpenHarmony贡献"
+    src/self-introduction/blog.md blog.html "陈孝松博客"
     # Linux内核
     src/kernel-environment/kernel-build.md kernel/kernel-build.html "Linux内核编译"
     src/kernel-environment/kernel-gdb.md kernel/kernel-gdb.html "GDB调试Linux内核"

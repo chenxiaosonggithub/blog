@@ -50,20 +50,12 @@ server {
 	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
+		try_files $uri $uri/ $uri.html =404;
 	}
 
 	# 网页重定向
-	location /openharmony {
-		# permanent（永久） 或 redirect（临时）, 默认 redirect
-		rewrite ^/openharmony$ http://chenxiaosong.com/self-introduction/openharmony.html;
-	}
-
-	location /blog {
-		rewrite ^/blog$ http://chenxiaosong.com/self-introduction/blog.html;
-	}
-
 	location /kernel/mailinglist {
+		# permanent（永久） 或 redirect（临时）, 默认 redirect
 		rewrite ^/kernel/mailinglist$ https://lore.kernel.org/all/?q=chenxiaosong;
 	}
 
