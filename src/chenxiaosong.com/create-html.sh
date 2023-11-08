@@ -1,7 +1,7 @@
-src_path=/home/sonvhi/chenxiaosong/code/
-dst_path=/var/www/
+src_path=/home/sonvhi/chenxiaosong/code
+dst_path=/var/www
 
-rm ${dst_path}html/ -rf
+rm ${dst_path}/html/ -rf
 
 # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
 # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
@@ -42,25 +42,25 @@ array=(
 )
 element_count="${#array[@]}"
 for ((index=0; index<${element_count}; index=$((index + 3)))); do
-    dst_file=${dst_path}html/${array[${index}+1]}
+    dst_file=${dst_path}/html/${array[${index}+1]}
     dst_dir="$(dirname "${dst_file}")"
     if [ ! -d "${dst_dir}" ]; then
         mkdir -p "${dst_dir}"
     fi
-    pandoc ${src_path}blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${pandoc_common_options}
+    pandoc ${src_path}/blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${pandoc_common_options}
 done
 
 # pictures是我的私有仓库
-cp ${src_path}pictures/pictures/ ${dst_path}html/ -rf
+cp ${src_path}/pictures/pictures/ ${dst_path}/html/ -rf
 
 # css样式
-cp ${src_path}blog/src/chenxiaosong.com/stylesheet.css ${dst_path}html/
+cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${dst_path}/html/
 
-chown -R www-data:www-data ${dst_path}
+chown -R www-data:www-data ${dst_path}/
 
 # -type f：这个选项告诉 find 只搜索普通文件（不包括目录和特殊文件）。
 # -exec chmod 400 {} +：这个部分告诉 find 对每个找到的文件执行 chmod 400 操作。{} 表示找到的文件的占位符，+ 表示一次处理多个文件以提高效率。
-find ${dst_path} -type f -exec chmod 400 {} +
+find ${dst_path}/ -type f -exec chmod 400 {} +
 
 # -type d：这个选项告诉find只搜索目录（不包括普通文件）。
-find ${dst_path} -type d -exec chmod 500 {} +
+find ${dst_path}/ -type d -exec chmod 500 {} +

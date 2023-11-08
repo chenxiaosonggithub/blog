@@ -10,8 +10,8 @@ do
 	dst_path=${base_image_path}/${arch_array[$idx]}-${release_array[$idx]}/create-qcow2.sh
 	rm ${dst_path}
 	ln -s ${PWD}/${arch_array[$idx]}/create-qcow2.sh ${dst_path}
-	dst_path=${base_image_path}/${arch_array[$idx]}-${release_array[$idx]}/update-image.sh
+	dst_path=${base_image_path}/${arch_array[$idx]}-${release_array[$idx]}/update-base.sh
 	rm ${dst_path}
-	ln -s ${PWD}/${arch_array[$idx]}/update-image.sh ${dst_path}
+	ln -s ${PWD}/${arch_array[$idx]}/update-base.sh ${dst_path}
 	idx=`expr ${idx} + 1`
 done
