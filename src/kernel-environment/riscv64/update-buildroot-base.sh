@@ -7,7 +7,7 @@ qemu-system-riscv64-latest \
 -machine virt \
 -nographic \
 -bios /home/sonvhi/chenxiaosong/code/opensbi/build/platform/generic/firmware/fw_jump.bin \
--kernel /home/sonvhi/chenxiaosong/code/riscv64-linux/arch/riscv/boot/Image \
+-kernel /home/sonvhi/chenxiaosong/code/riscv64-linux/arch/build/riscv/boot/Image \
 -append "root=/dev/vda rw console=ttyS0" \
 -object rng-random,filename=/dev/urandom,id=rng0 \
 -device virtio-rng-device,rng=rng0 \
