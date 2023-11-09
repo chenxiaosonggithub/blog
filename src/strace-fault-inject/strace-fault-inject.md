@@ -53,4 +53,4 @@ do
     fi
 ```
 
-当nfsv4.1/4.2挂载时执行到`nfs4_schedule_state_manager`内存分配失败，就会出现`mount`系统调用卡住永远不返回。我的解决方案是[[PATCH v2] NFSv4.1: handle memory allocation failure in nfs4_schedule_state_manager()](https://lore.kernel.org/all/20221112073055.1024799-1-chenxiaosong2@huawei.com/)，只可惜被nfs maintainer一声不响的剽窃了，他的补丁是[NFSv4.x: Fail client initialisation if state manager thread can't run](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b4e4f66901658fae0614dea5bf91062a5387eda7)，大家可以尝试`mount`在主线版本回退这个补丁进行测试。
+当nfsv4.1/4.2挂载时执行到`nfs4_schedule_state_manager`内存分配失败，就会出现`mount`系统调用卡住永远不返回。我的解决方案是[[PATCH v2] NFSv4.1: handle memory allocation failure in nfs4_schedule_state_manager()](https://lore.kernel.org/all/20221112073055.1024799-1-chenxiaosong2@huawei.com/)，只可惜被nfs maintainer一声不响的剽窃了，他的补丁是[NFSv4.x: Fail client initialisation if state manager thread can't run](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b4e4f66901658fae0614dea5bf91062a5387eda7)，大家可以尝试在主线版本回退这个补丁进行测试。
