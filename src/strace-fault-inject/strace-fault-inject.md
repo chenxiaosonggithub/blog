@@ -12,7 +12,7 @@ make
 
 # 2. 内核修改
 
-内核代码打上补丁[src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch)，配置打开文件[src/strace-fault-inject/fault-inject-config.txt](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/fault-inject-config.txt)中的选项
+内核代码打上补丁[src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch)，内核配置选项增加文件[src/strace-fault-inject/fault-inject-config.txt](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/fault-inject-config.txt)中的内容。
 
 # 3. 测试
 
