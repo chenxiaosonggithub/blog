@@ -23,7 +23,8 @@ make
 for i in `seq 1 100000`
 do
     mount_options=<添加挂载选项>
-    strace -f -o output.txt -e trace=mount -e inject=mount:when=1:fault=${i} mount -t nfs -o ${mount_options} localhost:s_test /mnt # ${i}表示第几次内存分配注入故障
+    # fault=${i}表示第几次内存分配注入故障
+    strace -f -o output.txt -e trace=mount -e inject=mount:when=1:fault=${i} mount -t nfs -o ${mount_options} localhost:s_test /mnt
     umount /mnt
     echo "i = ${i}"
     OUT=`grep -nr 'FAIL-NTH 0/' output.txt`
