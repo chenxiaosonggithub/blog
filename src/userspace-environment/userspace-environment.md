@@ -43,7 +43,6 @@ apt-get install bc -y # 内核编译报错/bin/sh: 1: bc: not found
 apt install bash-completion -y # docker 中git不会自动补全
 sudo apt install openssh-server -y # 默认桌面版本ubuntu不会安装ssh server
 sudo apt install ibus*wubi* -y # 安装五笔，要重启才可用
-sudo apt install bridge-utils -y # 不确定是否为虚拟机需要的
 sudo apt-get install fuse -y # v2ray的Linux桌面版本 V2Ray-Desktop-v2.4.0-linux-x86_64.AppImage 无法运行
 sudo apt install tmux -y # Tmux（缩写自"Terminal Multiplexer"）是一个在命令行界面下运行的终端复用工具，我主要是用tmux的会话附加和分离功能
 

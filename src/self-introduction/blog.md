@@ -6,6 +6,8 @@
 
 # Linux内核
 
+[QEMU/KVM环境搭建与使用](http://chenxiaosong.com/kernel/kernel-qemu-kvm.html)
+
 [Linux内核编译](http://chenxiaosong.com/kernel/kernel-build.html)
 
 [GDB调试Linux内核](http://chenxiaosong.com/kernel/kernel-gdb.html)
