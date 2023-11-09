@@ -1,3 +1,5 @@
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+
 # 1. 源码安装 strace
 
 下载[chenxiaosonggithub/strace](https://github.com/chenxiaosonggithub/strace)，这个仓库是在[strace/strace](https://github.com/strace/strace)的基础上修改而来，添加了一个补丁[fault-inject: inject memory allocate failed error](https://github.com/chenxiaosonggithub/strace/commit/b196eb9fd65f2801c7c72f2c5ef1230e5734769e)。
