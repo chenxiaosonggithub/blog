@@ -8,7 +8,7 @@ qemu-system-x86_64-latest \
 -enable-kvm \
 -smp 8 \
 -m 2048 \
--kernel /home/sonvhi/chenxiaosong/code/$kernel_version/arch/x86/boot/bzImage \
+-kernel /home/sonvhi/chenxiaosong/code/$kernel_version/build/arch/x86/boot/bzImage \
 -virtfs local,id=kmod_dev,path=/home/sonvhi/chenxiaosong/,readonly,mount_tag=9p,security_model=none \
 -vga none \
 -nographic \

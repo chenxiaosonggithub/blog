@@ -39,6 +39,8 @@ array=(
     src/health/tooth-clean.md health/tooth-clean.html "牙齿护理"
     # 其他
     src/wubi/wubi.md others/wubi.html "五笔输入法"
+    # private
+    src/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
 )
 element_count="${#array[@]}"
 for ((index=0; index<${element_count}; index=$((index + 3)))); do
