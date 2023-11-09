@@ -40,60 +40,6 @@ yum install xfsprogs-devel -y
 yum install libacl-devel -y
 ```
 
-# qemu
-
-## 源码安装 qemu：
-```shell
-# ubuntu 22.04
-sudo apt-get install libattr1-dev libcap-ng-dev -y
-sudo apt install ninja-build -y
-sudo apt-get install libglib2.0-dev -y
-sudo apt-get install libpixman-1-dev -y
-
-# centos 9
-sudo dnf install glib2-devel -y
-sudo dnf install iasl -y
-sudo dnf install pixman-devel -y
-sudo dnf install libcap-ng-devel -y
-sudo dnf install libattr-devel -y
-
-# centos 9才需要，　http://re2c.org/
-git clone https://github.com/skvadrik/re2c.git
-./autogen.sh
-./configure  --prefix=/home/sonvhi/chenxiaosong/sw/re2c
-make && make install
-
-# centos 要安装 ninja, https://ninja-build.org/
-git clone https://github.com/ninja-build/ninja.git && cd ninja
-./configure.py --bootstrap
-
-# centos9, https://sparse.docs.kernel.org/en/latest/
-git clone git://git.kernel.org/pub/scm/devel/sparse/sparse.git
-make
-
-git clone https://gitlab.com/qemu-project/qemu.git
-git submodule init
-git submodule update --recursive
-mkdir build
-cd build/
-../configure --enable-kvm --enable-virtfs --prefix=/home/sonvhi/chenxiaosong/sw/qemu/
-```
-
-## qemu配置
-
-```shell
-# 非root用户没有权限的解决办法
-# 如果是apt安装的，文件位置 /usr/lib/qemu/qemu-bridge-helper
-sudo chown root libexec/qemu-bridge-helper
-sudo chmod u+s libexec/qemu-bridge-helper
-groups | grep kvm
-sudo usermod -aG kvm $USER
-su - $USER # 或退出shell重新登录, 但在tmux中不起作用
-
-mkdir etc/qemu -p
-vim etc/qemu/bridge.conf # 添加　allow virbr0
-```
-
 # debian rootfs
 
 参考:
@@ -130,7 +76,7 @@ sudo brctl addif br0 enx381428b8c32c # 注意:无线网卡不行, 必须是以�
 sudo brctl addif br0 tap0 # tap0 加入网桥
 ```
 
-centos9中没有 `tunctl`:
+centos9宿主机中没有 `tunctl`:
 ```shell
 sudo ip tuntap add tap0 mode tap user sonvhi
 sudo ip tuntap del tap0 mode tap
