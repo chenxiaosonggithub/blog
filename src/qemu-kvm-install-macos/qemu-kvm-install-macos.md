@@ -1,4 +1,4 @@
-# macOS-Simple-KVM
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
 此文档是介绍在QEMU/KVM中安装macOS VM的操作。
 
@@ -10,17 +10,17 @@
 
 macOS和KVM的新手？ 请看[the FAQs](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/tree/master/docs/FAQs.md)。
 
-## 说明
+# 说明
 
 需要说明的是苹果公司不允许macOS系统在非MAC电脑上安装，所以本文的方法请不要用于商业用途，仅供想折腾的极客参考。
 
 我（陈孝松）有一台macbook pro，但还是更喜欢用Linux（Fedora），有极少数的商业软件没有提供Linux版本，又不想用windows系统，所以偶尔使用QEMU/KVM下安装的macOS系统。
 
-## 准备
+# 准备
 
 你将需要一个具有`qemu`（3.1或更高版本），`python3`，`pip`和KVM模块已启用的Linux系统。 **不需要** Mac电脑。 不同发行版的一些安装命令（本人用的是Fedora）：
 
-```
+```sh
 sudo apt-get install qemu-system qemu-utils python3 python3-pip  # for Ubuntu, Debian, Mint, and PopOS.
 sudo apt-get install qemu-kvm virt-manager bridge-utils -y # ubuntu 20.04
 
@@ -31,26 +31,26 @@ sudo dnf install @virtualization -y # for Fedora
 sudo emerge -a qemu python:3.4 pip # for Gentoo
 ```
 
-## 第1步
+# 第1步
 
 运行`jumpstart.sh`脚本下载macOS的安装介质（需要连接互联网）。 默认安装使用Catalina，但是你可以通过添加`--high-sierra`，`--mojave`或`--catalina`来选择要获取的版本。 例如：
 
-```
+```sh
 ./jumpstart.sh --catalina
 ```
 > 注意：如果已经下载了`BaseSystem.img`，则可以跳过此步骤。 如果你具有`BaseSystem.dmg`，则需要使用dmg2img工具进行转换。
 
-## 第2步
+# 第2步
 
 使用`qemu-img`创建一个空硬盘，根据你的需要修改名称和硬盘大小：
 
-```
+```sh
 qemu-img create -f qcow2 MyDisk.qcow2 64G
 ```
 
 将以下内容添加到`basic.sh`脚本的末尾：
 
-```
+```sh
     -drive id=SystemDisk,if=none,file=MyDisk.qcow2 \
     -device ide-hd,bus=sata.4,drive=SystemDisk \
 ```
@@ -58,7 +58,7 @@ qemu-img create -f qcow2 MyDisk.qcow2 64G
 
 然后运行`basic.sh`来启动机器并安装macOS。 请记住首先在“磁盘工具”中进行分区！
 
-## 第2a步 (Virtual Machine Manager)
+# 第2a步 (Virtual Machine Manager)
 
 1. 如果你想导入到Virt-Manager中进行进一步的配置（而不是只在QEMU上运行），只需运行`sudo ./make.sh --add`。
 3. 运行上述命令后，在Virt-Manager的设置中添加 `MyDisk.qcow2` SATA Disk。
@@ -68,15 +68,15 @@ qemu-img create -f qcow2 MyDisk.qcow2 64G
 6. Boot Options -> Details -> Boot device order, 勾选 SATA Disk 2 和 3, 并把刚加的SATA Disk 3 放在最前面
 7. 开机界面，选择最右边的盘
 
-## 第2b步 (Headless Systems)
+# 第2b步 (Headless Systems)
 
 如果你使用的是cloud-based/headless system，则可以使用`headless.sh`来设置一个快速的VNC实例。 设置是通过变量定义的，如以下示例所示。 默认情况下，VNC将在端口 `5900` 上启动。
 
-```
+```sh
 HEADLESS=1 MEM=1G CPUS=2 SYSTEM_DISK=MyDisk.qcow2 ./headless.sh
 ```
 
-## 第3步
+# 第3步
 
 一切搞定！
 

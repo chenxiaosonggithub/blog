@@ -1,3 +1,5 @@
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+
 单片机STM32开发，大多数人都是在Windows下的Keil软件上进行的。Keil软件不仅要付费，编译还非常非常慢（据说优化做得好）。
 
 在Linux的开发环境下，使用gcc编译、gdb调试，不仅软件是自由开源免费，编译速度还非常非常快。
@@ -14,19 +16,19 @@
 
 先安装开发必备软件：
 
-```shell
+```sh
 sudo apt install build-essential -y
 ```
 
 安装GNU ARM-Toolchain，或源码安装（参考[网站](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm)）：
 
-```shell
+```sh
 sudo apt install gcc-arm-none-eabi -y
 ```
 
 安装OpenOCD，或源码安装（参考[网站](http://openocd.org/getting-openocd/)）：
 
-```shell
+```sh
 sudo apt-get install openocd -y
 ```
 
@@ -36,14 +38,14 @@ sudo apt-get install openocd -y
 
 在项目的顶层目录下，创建build文件夹并进入：
 
-```shell
+```sh
 mkdir build
 cd build
 ```
 
 生成makefile文件：
 
-```shell
+```sh
 cmake -DCMAKE_TOOLCHAIN_FILE="cmake/toolchain-arm-none-eabi.cmake" ..
 ```
 
@@ -57,7 +59,7 @@ STM32L073的cmake文件为[cmake/stm32l0.cmake](https://github.com/Lora-net/LoRa
 
 运行openocd软件（注意这个窗口不能关闭）：
 
-```shell
+```sh
 openocd -f interface/stlink-v2-1.cfg  -f target/stm32l0.cfg
 ```
 
@@ -65,7 +67,7 @@ openocd -f interface/stlink-v2-1.cfg  -f target/stm32l0.cfg
 
 运行gdb：
 
-```shell
+```sh
 arm-none-eabi-gdb src/apps/LoRaMac/LoRaMac-classA
 #此时已经进入gdb，以下命令前的(gdb)表示处于gdb程序中
 (gdb) target extended-remote localhost:3333 #让gdb和openocd连接

@@ -28,7 +28,7 @@
 
 [aarch64架构 4.19 nfs_readpage_async空指针解引用问题](http://chenxiaosong.com/nfs/4.19-aarch64-null-ptr-deref-in-nfs_readpage_async.html)
 
-# Linux环境
+# Linux
 
 [Linux环境安装与配置](http://chenxiaosong.com/linux/userspace-environment.html)
 
@@ -37,6 +37,10 @@
 [反向ssh和内网穿透](http://chenxiaosong.com/linux/ssh-reverse.html)
 
 [Docker安装与使用](http://chenxiaosong.com/linux/docker.html)
+
+[QEMU/KVM安装macOS系统](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)
+
+[STM32 Linux开发环境](http://chenxiaosong.com/linux/stm32-linux.html)
 
 # 网站搭建
 
