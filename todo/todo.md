@@ -1,4 +1,3 @@
-
 # qemu虚拟机启动时指定ip
 
 ```shell
@@ -81,3 +80,8 @@ cat /sys/kernel/debug/tracing/trace_pipe
 /sys/kernel/debug/tracing/trace_options # 这个文件是干嘛的？
 ```
 
+# 参考网址
+
+[在Ubuntu下使用QEMU連網](https://www.twblogs.net/a/5e5f6067bd9eee211685777c)
+
+[QEMU中的网络](https://blog.csdn.net/chengbeng1745/article/details/81271024)

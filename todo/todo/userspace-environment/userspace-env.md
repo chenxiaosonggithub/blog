@@ -46,14 +46,6 @@ Edit -> Preferences -> Enable XML editing 开启 xml 编辑
 sudo mount -t tmpfs -o size=64G syzkaller tmpfs/
 ```
 
-# 免密ssh
-
-```shell
-# 在物理机中
-ssh-keygen
-ssh-copy-id root@192.168.122.87
-```
-
 # 源码安装软件
 
 ## 源码编译 emacs
