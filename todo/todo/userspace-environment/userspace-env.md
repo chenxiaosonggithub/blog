@@ -58,15 +58,6 @@ mkdir build && cd build
 ../configure --prefix=xxx --with-xxx=no
 ```
 
-## 源码安装 strace
-
-```shell
-./bootstrap
-mkdir build && cd build
-../configure --enable-mpers=no
-make
-```
-
 ## 源码安装 gdb
 
 ```shell

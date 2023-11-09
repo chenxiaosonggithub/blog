@@ -16,6 +16,8 @@
 
 [怎么贡献Linux内核社区](http://chenxiaosong.com/kernel/kernel-mailinglist.html)
 
+[strace内存分配失败故障注入](http://chenxiaosong.com/kernel/strace-fault-inject.html)
+
 # nfs（网络文件系统）
 
 [nfs回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-correctly.html)
