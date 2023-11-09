@@ -1,42 +1,4 @@
-[toc]
 
-# 根文件系统
-
-fedora server 安装时， 根文件系统一定不能使用 LVM
-
-```shell
-sudo apt-get install libelf-dev libssl-dev -y
-# 在 Virtual Machine Manager 中创建 qcow2 格式，会马上分配所有空间，所以需要在命令行中创建 qcow2
-qemu-img create -f qcow2 fedora34-server.qcow2 512G
-# -p 显示进度， -f 源镜像格式， -O 转换后的格式， 后面再紧接的是：源文件名称，转换后的文件名称
-qemu-img convert -p -f raw -O qcow2 fedora34-server.raw fedora34-server.qcow2
-# allow virbr0
-sudo vim /etc/qemu/bridge.conf
-# 备份, -F 源文件格式, 注意有些qemu-img版本源文件和目标文件都要指定绝对路径
-qemu-img create -F qcow2 -b /home/sonvhi/chenxiaosong/qemu-kernel/base_image/fedora26-server.qcow2 -f qcow2 image.qcow2
-```
-
-```shell
-# fedora 启动的时候等待： A start job is running for /dev/zram0，解决办法：删除 zram 的配置文件
-mv /usr/lib/systemd/zram-generator.conf /usr/lib/systemd/zram-generator.conf.bak
-
-# fedora26 安装 vim 前，先升级
-sudo dnf update vim-common vim-minimal -y
-```
-
-# 9p
-
-9p: https://wiki.qemu.org/Documentation/9psetup
-
-```
-CONFIG_NET_9P=y
-CONFIG_NET_9P_VIRTIO=y
-CONFIG_NET_9P_DEBUG=y (Optional)
-CONFIG_9P_FS=y
-CONFIG_9P_FS_POSIX_ACL=y
-CONFIG_PCI=y
-CONFIG_VIRTIO_PCI=y
-```
 
 # 启动时指定ip
 
@@ -67,22 +29,6 @@ then
 	ip link set dev $dev up
 	ip route add default via $gw dev $dev
 fi
-```
-
-# 挂载 qcow2
-
-https://www.jianshu.com/p/6b977c02bfb2
-
-```shell
-sudo apt-get install qemu-utils -y
-
-sudo modprobe nbd max_part=8
-sudo qemu-nbd --connect=/dev/nbd0 fedora26-server.qcow2 
-sudo fdisk /dev/nbd0 -l
-sudo mount /dev/nbd0p1 mnt/
-sudo umount mnt
-sudo qemu-nbd --disconnect /dev/nbd0
-sudo modprobe -r nbd
 ```
 
 # xfstests环境
@@ -195,25 +141,6 @@ bullseye aarch64 `/etc/network/interfaces` 需要把 `eth0` 改成 `enp0s1`(通�
 
 ```shell
 apt-get install qemu qemu-kvm bridge-utils qemu-system -y
-```
-
-# mod_cfg.sh
-
-```shell
-if [ "$1" = "" ]
-then
-        echo "please specify version"
-        exit 1
-fi
-mnt_point=/tmp/9p
-mkdir $mnt_point
-mkdir /lib/modules -p
-mount -t 9p -o trans=virtio 9p $mnt_point
-knl_vers=$(uname -r)
-target=${mnt_point}/code/$1/mod/lib/modules/${knl_vers}
-link_name=/lib/modules/${knl_vers}
-rm ${link_name} -rf
-ln -s ${target} ${link_name}
 ```
 
 # riscv ubuntu2204 rootfs
