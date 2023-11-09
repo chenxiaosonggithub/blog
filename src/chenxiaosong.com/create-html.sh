@@ -20,7 +20,7 @@ array=(
     src/kernel-environment/kernel-gdb.md kernel/kernel-gdb.html "GDB调试Linux内核"
     src/kernel-environment/kernel-crash-vmcore.md kernel/kernel-crash-vmcore.html "crash解析vmcore"
     src/kernel-environment/kernel-qemu-kvm.md kernel/kernel-qemu-kvm.html "QEMU/KVM环境搭建与使用"
-    src/kernel-mailinglist/kernel-mailinglist.md kernel/kernel-mailinglist.html "怎么贡献Linux内核社区"
+    src/kernel-environment/kernel-mailinglist.md kernel/kernel-mailinglist.html "怎么贡献Linux内核社区"
     # nfs
     src/nfs/nfs-handle-writeback-errors-correctly.md nfs/nfs-handle-writeback-errors-correctly.html "nfs回写错误处理不正确的问题"
     src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md nfs/4.19-null-ptr-deref-in-nfs_updatepage.html '4.19 nfs_updatepage空指针解引用问题'

@@ -10,11 +10,13 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
 [社区主页](https://www.kernel.org/)
 
-[patchwork](https://lore.kernel.org/patchwork/project/lkml/list/)
+[邮件列表](https://lore.kernel.org/all/)
 
 [按模块划分的patchwork](https://patchwork.kernel.org/)
 
 [bugzilla](https://bugzilla.kernel.org/)
+
+[mainline仓库](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git)
 
 [linux-next仓库](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git)（速度慢）
 
@@ -61,9 +63,7 @@ vim 0000-cover-letter.patch
 
 默认情况下，163邮箱只能在网页和网易邮箱大师登录。如果要用git通过163邮箱发送邮件则需要对163邮箱进行配置。
 
-在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除），如下图所示：
-
-![163邮箱配置](http://chenxiaosong.com/pictures/163-mail-config.png)
+在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除）。
 
 ## 4.2. foxmail邮箱（qq邮箱）配置
 
