@@ -2,13 +2,13 @@
 
 此文档是介绍在QEMU/KVM中安装macOS VM的操作。
 
-大多数内容翻译自foxlet所写的项目[README.md](https://github.com/lioneie/macOS-Simple-KVM/blob/master/README.md)，当然也修改和增加了一些内容。
+大多数内容翻译自foxlet所写的项目[README.md](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/README.md)，当然也修改和增加了一些内容。
 
-项目[github链接](https://github.com/lioneie/macOS-Simple-KVM)（forked from [foxlet](https://github.com/foxlet/macOS-Simple-KVM/tree/master/docs)）。
+项目[github链接](https://github.com/chenxiaosonggithub/macOS-Simple-KVM)（forked from [foxlet](https://github.com/foxlet/macOS-Simple-KVM/tree/master/docs)）。
 
 此项目由[@FoxletFox](https://twitter.com/foxletfox)发起，获得其他许多人的帮助。
 
-macOS和KVM的新手？ 请看[the FAQs](https://github.com/lioneie/macOS-Simple-KVM/tree/master/docs/FAQs.md)。
+macOS和KVM的新手？ 请看[the FAQs](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/tree/master/docs/FAQs.md)。
 
 ## 说明
 
@@ -32,6 +32,7 @@ sudo emerge -a qemu python:3.4 pip # for Gentoo
 ```
 
 ## 第1步
+
 运行`jumpstart.sh`脚本下载macOS的安装介质（需要连接互联网）。 默认安装使用Catalina，但是你可以通过添加`--high-sierra`，`--mojave`或`--catalina`来选择要获取的版本。 例如：
 
 ```
@@ -40,6 +41,7 @@ sudo emerge -a qemu python:3.4 pip # for Gentoo
 > 注意：如果已经下载了`BaseSystem.img`，则可以跳过此步骤。 如果你具有`BaseSystem.dmg`，则需要使用dmg2img工具进行转换。
 
 ## 第2步
+
 使用`qemu-img`创建一个空硬盘，根据你的需要修改名称和硬盘大小：
 
 ```
@@ -57,6 +59,7 @@ qemu-img create -f qcow2 MyDisk.qcow2 64G
 然后运行`basic.sh`来启动机器并安装macOS。 请记住首先在“磁盘工具”中进行分区！
 
 ## 第2a步 (Virtual Machine Manager)
+
 1. 如果你想导入到Virt-Manager中进行进一步的配置（而不是只在QEMU上运行），只需运行`sudo ./make.sh --add`。
 3. 运行上述命令后，在Virt-Manager的设置中添加 `MyDisk.qcow2` SATA Disk。
 3. (Fedora需要这步操作，Ubuntu不需要)将 `OVMF_CODE.fd` 和 `OVMF_VARS-1024x768.fd` 放到 `/usr/share/OVMF/macOS/` 路径下（或其他路径，在home目录下会报`OVMF_CODE.fd权限错误`）。
@@ -66,6 +69,7 @@ qemu-img create -f qcow2 MyDisk.qcow2 64G
 7. 开机界面，选择最右边的盘
 
 ## 第2b步 (Headless Systems)
+
 如果你使用的是cloud-based/headless system，则可以使用`headless.sh`来设置一个快速的VNC实例。 设置是通过变量定义的，如以下示例所示。 默认情况下，VNC将在端口 `5900` 上启动。
 
 ```
@@ -76,4 +80,4 @@ HEADLESS=1 MEM=1G CPUS=2 SYSTEM_DISK=MyDisk.qcow2 ./headless.sh
 
 一切搞定！
 
-要微调系统并提高性能，请查看[docs](https://github.com/lioneie/macOS-Simple-KVM/tree/master/docs)文件夹，以获取更多信息，如[adding memory](https://github.com/lioneie/macOS-Simple-KVM/blob/master/docs/guide-performance.md)，设置[bridged networking](https://github.com/lioneie/macOS-Simple-KVM/blob/master/docs/guide-networking.md)的更多信息，添加 [passthrough hardware (for GPUs)](https://github.com/lioneie/macOS-Simple-KVM/blob/master/docs/guide-passthrough.md)，调整[screen resolution](https://github.com/lioneie/macOS-Simple-KVM/blob/master/docs/guide-screen-resolution.md)并启用声音功能。
+要微调系统并提高性能，请查看[docs](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/tree/master/docs)文件夹，以获取更多信息，如[adding memory](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-performance.md)，设置[bridged networking](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-networking.md)的更多信息，添加 [passthrough hardware (for GPUs)](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-passthrough.md)，调整[screen resolution](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-screen-resolution.md)并启用声音功能。
