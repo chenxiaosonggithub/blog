@@ -30,9 +30,7 @@ sudo apt install ibus*wubi* -y
 
 ubuntu系统配置中，**Keyboard -> Input sources**添加五笔输入法，**Keyboard shortcuts**更改切换输入法的快捷键。
 
-Linux下的极点五笔输入法，四码唯一不自动上屏，只需要修改为：Details -> Auto commit mode: **Normal**
-
-<img src="http://chenxiaosong.com/pictures/jidian-wubi-config.png" width="60%" />
+Linux下的极点五笔输入法，四码唯一不自动上屏，打开五笔的设置，修改：Details -> Auto commit mode: **Normal**
 
 Linux系统五笔输入法，如果按右shift键，会变成拼音输入法（当然，不是智能拼音）。
 

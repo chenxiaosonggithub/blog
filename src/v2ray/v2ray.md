@@ -70,9 +70,7 @@ bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/ins
 sudo systemctl restart v2ray
 ```
 
-我用的操作系统是Fedora，配置如下图所示（其他Linux发行版也大同小异）：
-
-![fedora v2ray客户端配置](http://chenxiaosong.com/pictures/v2ray-fedora-config.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center)
+打开 设置 -> Network -> Manual -> HTTP proxy / HTTPS Proxy 127.0.0.1 1081
 
 # macOS系统客户端安装与配置
 
@@ -94,9 +92,7 @@ sudo systemctl restart v2ray
 ./v2ray run
 ```
 
-配置所连接网络的代理`http://localhost:1081`。
-
-![](http://chenxiaosong.com/pictures/v2ray-macos-wifi-proxy.png)
+配置所连接网络的代理`Server: localhost, Port: 1081`。
 
 # 安卓客户端安装与配置
 
@@ -125,8 +121,4 @@ sudo systemctl restart v2ray
 .\v2ray run
 ```
 
-![](http://chenxiaosong.com/pictures/windows-cmd-run-v2ray.jpg)
-
-然后配置网络的http代理 `http://localhost:1081`。
-
-![](http://chenxiaosong.com/pictures/windows-set-proxy.jpg)
+然后配置网络的http代理 `localhost:1081`。
