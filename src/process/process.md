@@ -50,7 +50,7 @@ Nice值取值范围 0 ~ 39 （对应静态优先级）
 int nice(int incr);
 ```
 
-示例文件[nice.c](https://github.com/lioneie/csdn/blob/master/linux%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A6%82%E8%BF%B0/nice.c)。两个进程并行运行，各自增加自己的计数器。父进程使用默认nice值，子进程nice值可选。
+示例文件[nice.c](https://github.com/chenxiaosonggithub/blog/blob/master/src/process/nice.c)。两个进程并行运行，各自增加自己的计数器。父进程使用默认nice值，子进程nice值可选。
 
 `gcc nice.c -o nice` 编译文件
 
@@ -62,27 +62,27 @@ int nice(int incr);
 
 获取和设置进程优先级：
 
-```
-	getpriority
-	setpriority
+```c
+getpriority
+setpriority
 ```
 
 获取和设置进程的调度策略：
 
-```
-	sched_setscheduler 
-	sched_getscheduler
+```c
+sched_setscheduler 
+sched_getscheduler
 ```
 
 获取和设置POSIX线程的调度：
 
-```
-	pthread_attr_setschedpolicy
-	pthread_attr_getschedpolicy
-	pthread_attr_getschedparam
-	pthread_attr_setschedparam
-	pthread_attr_getinheritsched
-	pthread_attr_setinheritsched
+```c
+pthread_attr_setschedpolicy
+pthread_attr_getschedpolicy
+pthread_attr_getschedparam
+pthread_attr_setschedparam
+pthread_attr_getinheritsched
+pthread_attr_setinheritsched
 ```
 
 # O(1)调度
@@ -90,10 +90,10 @@ int nice(int incr);
 **内核2.4**版本的简陋的**O(n)**调度算法,进程数量多时，调度效率非常低：
 
 ```c
-	for (系统中的每个进程) {
-		重新计算时间片;
-		重新计算优先级;
-	}
+for (系统中的每个进程) {
+	重新计算时间片;
+	重新计算优先级;
+}
 ```
 
 **内核2.6**版本的O(1)调度现在已经被CFS调度取代，但作为一个经典的调度算法，非常值得介绍，其他改进的调度算法都是基于O(1)调度算法。
