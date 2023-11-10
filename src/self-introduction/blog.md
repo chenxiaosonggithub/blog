@@ -38,10 +38,6 @@
 
 [Docker安装与使用](http://chenxiaosong.com/linux/docker.html)
 
-[QEMU/KVM安装macOS系统](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)
-
-[STM32 Linux开发环境](http://chenxiaosong.com/linux/stm32-linux.html)
-
 # 网站搭建
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/chenxiaosong.com/chenxiaosong.com.html)
@@ -53,6 +49,10 @@
 # 不知道怎么分类
 
 [五笔输入法](http://chenxiaosong.com/others/wubi.html)
+
+[QEMU/KVM安装macOS系统](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)
+
+[STM32 Linux开发环境](http://chenxiaosong.com/linux/stm32-linux.html)
 
 # 运动与健康
 
