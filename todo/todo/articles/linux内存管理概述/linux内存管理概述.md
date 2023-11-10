@@ -14,11 +14,13 @@
 
 内存寻址 ----- 操作系统设计的硬件基础之一
 
-![在这里插入图片描述](http://chenxiaosong.com/pictures/mm-logical-addr-translation.png#pic_center)
-
-让我们带着这样的一个问题来看接下来的内容：
-
-**为什么有时使用free命令和top命令查看到的已用内存不一样？**
+```sh
+logical                 linear              physical
+address  +------------+ address  +--------+ address
+-------->|segmentation|--------->| paging |--------->
+         |   unit     |          |  unit  |
+         +------------+          +--------+
+```
 
 # 硬件分段
 
@@ -26,13 +28,37 @@
 
 但X86的段机制还是值得学习的。
 
-<img src="http://chenxiaosong.com/pictures/mm-segment.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="60%"/>
+段选择符segment selector字段：
+```sh
+ 15          3  2 1 0
++-------------+--+---+
+|    index    |TI|RPL|
++-------------+--+---+
+TI = Table indicator 表指示器
+RPL = requestor privilege level 请求者特权级
+```
 
-<img src="http://chenxiaosong.com/pictures/mm-segment-selector.png#pic_center" alt="在这里插入图片描述" width="67%" />
-
-> 这两张图是从pdf书上截图的，需要重画 TODO
-
-通过**段选择符**找到描述符表中的**段描述符**
+通过**段选择符**(segment selector)找到描述符表中的**段描述符**(segment descriptor)：
+```sh
+        descriptor
+          table                         segment 
+      +------------+                 +-------------+
+      |            |     +-*-*-*-*-*>|             |<-*-*-*-+
+      +------------+     |           |             |        |
++---->|  segment   |     *           |             |        *
+|     | discriptor |-*-*-+           |             |        |
+|     +------------+                 |             |        *
+|     |            |                 |             |        |
+|     +------------+                 +-------------+        *
+|                                                           |
+|                                                           *
+|       segmentation           (     nonprogrammable    )   |
+|         register            (         register         )  *
+|    +----------------+       (   +------------------+   )  |
++----|segment selector|       (   |segment descriptor|-*-)-*+
+     +----------------+       (   +------------------+   )
+                               (                        )
+```
 
 **段描述符**包含
 
