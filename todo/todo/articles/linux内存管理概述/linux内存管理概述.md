@@ -46,7 +46,7 @@ RPL = requestor privilege level 请求者特权级
       |            |     +-*-*-*-*-*>|             |<-*-*-*-+
       +------------+     |           |             |        |
 +---->|  segment   |     *           |             |        *
-|     | discriptor |-*-*-+           |             |        |
+|     | descriptor |-*-*-+           |             |        |
 |     +------------+                 |             |        *
 |     |            |                 |             |        |
 |     +------------+                 +-------------+        *
@@ -81,7 +81,47 @@ Linux的权限管理等都交由**分页机制**来完成
 
 # Linux分页
 
-<img src="http://chenxiaosong.com/pictures/mm-paging.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="67%" />
+线性地址(linear address）：
+```sh
+   +-------------+----------------+-------------+--------------+-------------+
+   | global dir  |  upper dir     |  middle dir |     table    |     offset  |
+   +-------------+----------------+-------------+--------------+-------------+
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |        
+        |               |               |               |               |             
+        |               |               |               |               |      page   
+        |               |               |               |               V     +------+
+        |               |               |               |               -     |      |
+        |               |               |               |       page   |+|--->|======|
+        |               |               |               |      table    -     |      |
+        |               |               |               V     +-----+   ^     |      |
+        |               |               |      page     -     |     |   |     +------+
+        |               |               |     middle   |+|--->|=====|---+  
+        |               |               |    director   -     +-----+      
+        |               |               V     +-----+   ^                  
+        |               |      page     -     |     |   |                  
+        |               |     upper    |+|--->|=====|---+                  
+        |               |    director   -     +-----+                      
+        |               V     +-----+   ^                                  
+        |     page      -     |     |   |                                  
+        |    global    |+|--->|=====|---+                                  
+        |   directory   -     +-----+                                      
+        V     +-----+   ^                                        
+        -     |     |   |                                     
+       |+|--->|=====|---+                                                
+        -     +-----+                                           
+        ^                                              
++---+   |
+|cr3|---+
++---+
+```
 
 不同体系结构对位数的划分不一样
 
@@ -95,10 +135,9 @@ Linux的权限管理等都交由**分页机制**来完成
 页框大小（页表）
 ```
 
-
 通过物理地址扩展机制，分页使32位线性地址可以访问64G物理内存（处理器管脚36个）
 
-<img src="http://chenxiaosong.com/pictures/mm-cache.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="60%" />
+![](http://chenxiaosong.com/pictures/mm-cache.png)
 
 内存中的页表，访问速度慢
 
@@ -106,7 +145,7 @@ Linux的权限管理等都交由**分页机制**来完成
 
 # 进程地址空间
 
-<img src="http://chenxiaosong.com/pictures/mm-virt-addr-space.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="50%;" />
+![](http://chenxiaosong.com/pictures/mm-virt-addr-space.png)
 
 每个运行的进程虚拟地址空间4G
 
@@ -114,7 +153,7 @@ Linux的权限管理等都交由**分页机制**来完成
 
 后1G空间所有进程共享，称为**内核空间**
 
-<img src="http://chenxiaosong.com/pictures/mm-layout.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpb241NDQzMDE=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" width="33%;" />
+![](http://chenxiaosong.com/pictures/mm-layout.png)
 
 **TEXT段**：程序代码段
 
