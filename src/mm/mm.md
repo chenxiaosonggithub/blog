@@ -43,19 +43,19 @@ RPL = requestor privilege level 请求者特权级
         descriptor
           table                         segment 
       +------------+                 +-------------+
-      |            |     +-*-*-*-*-*>|             |<-*-*-*-+
+      |            |     +-.-.-.-.-.>|             |<-.-.-.-+
       +------------+     |           |             |        |
-+---->|  segment   |     *           |             |        *
-|     | descriptor |-*-*-+           |             |        |
-|     +------------+                 |             |        *
++---->|  segment   |     .           |             |        .
+|     | descriptor |-.-.-+           |             |        |
+|     +------------+                 |             |        .
 |     |            |                 |             |        |
-|     +------------+                 +-------------+        *
+|     +------------+                 +-------------+        .
 |                                                           |
-|                                                           *
+|                                                           .
 |       segmentation           (     nonprogrammable    )   |
-|         register            (         register         )  *
+|         register            (         register         )  .
 |    +----------------+       (   +------------------+   )  |
-+----|segment selector|       (   |segment descriptor|-*-)-*+
++----|segment selector|       (   |segment descriptor|-.-)-.+
      +----------------+       (   +------------------+   )
                                (                        )
 ```
