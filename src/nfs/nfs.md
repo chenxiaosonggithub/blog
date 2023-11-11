@@ -83,6 +83,7 @@ client端通过nfs操作存储设备经过的路径如下图所示：
        +------>|            |-------+       
                +------------+ 6.            
 ```
+
 # 怎么用？
 
 nfs server安装所需软件：
@@ -110,6 +111,14 @@ mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
 ```
 
 # NFS各版本比较
+
+| 版本 | RFC | 发布时间 | 页数 |
+|-----------|-----------|-----------|----------|
+| NFSv2 | [rfc1094](https://www.rfc-editor.org/rfc/rfc1094.html) | March 1989 | 27 |
+| NFSv3 | [rfc1813](https://www.rfc-editor.org/rfc/rfc1813.html) | June 1995 | 126 |
+| NFSv4 | [rfc3530](https://www.rfc-editor.org/rfc/rfc3530.html) | April 2003 | 275 |
+| NFSv4.1 | [rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html)（被[rfc7530](https://www.rfc-editor.org/rfc/rfc7530.html)取代，March 2015） | January 2010 | 617 |
+| NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) | November 2016 | 104 |
 
 # 文件句柄
 
