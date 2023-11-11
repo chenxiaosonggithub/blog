@@ -117,6 +117,9 @@ mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
 
 反向通道
 
+# delegation机制
+
+冲突处理图
 ```sh
                                 +---------+
                                 |         |
@@ -135,10 +138,6 @@ mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
 |         |<---6.ok-------------|         |
 +---------+                     +---------+
 ```
-
-# delegation机制
-
-冲突处理图
 
 # nfs文件锁
 
