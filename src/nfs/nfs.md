@@ -121,14 +121,61 @@ mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
 | NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) | November 2016 | 104 |
 
 1. NFSv2实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
-2. NFSv3取消了一些限制，如：文件句柄最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
-3. NFSv2和NFSv3都是无状态协议，NFSv4是有状态协议，实现文件锁功能。只有两种请求NULL和COMPOUND，支持delegation。
+2. NFSv3取消了一些限制，如：文件句柄长度最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
+3. NFSv2和NFSv3都是无状态协议，NFSv4是有状态协议，实现文件锁功能。只有两种请求NULL和COMPOUND，支持delegation。文件句柄长度最大128字节。
 4. NFSv4.1支持并行存储。
 5. NFSv4.2引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
 
 # 文件句柄
 
-fh_compose, knfsd_fh, 
+nfs server端的`/etc/exports`文件如下：
+```sh
+/tmp/sda *(rw,no_root_squash,fsid=0)
+/tmp/sda/sdb *(rw,no_root_squash,fsid=1)
+```
+
+nfs server端以下命令执行后，`/tmp/sda/file`和`/tmp/sda/sdb/file`的inode号相同都是12（通过命令`stat file`查看）：
+```sh
+mkfs.ext4 -b 4096 -F /dev/sda
+mkfs.ext4 -b 4096 -F /dev/sdb
+
+mkdir /tmp/sda
+mount -t ext4 /dev/sda /tmp/sda
+touch /tmp/sda/file
+
+mkdir /tmp/sda/sdb
+mount -t ext4 /dev/sdb /tmp/sda/sdb
+touch /tmp/sda/sdb/file
+```
+
+nfs client挂载命令：
+```sh
+mount -t nfs -o vers=4.1 ${server_ip}:/ /mnt
+```
+
+以上命令执行后，`${server_ip}:/`挂载到`/mnt`，nfs client端执行`stat /mnt/file`查看到inode为12。
+
+nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动将`${server_ip}:/sdb`挂载到`/mnt/sdb`。
+
+所以，如果nfs client告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
+
+```c
+#define NFS4_FHSIZE             128
+
+struct knfsd_fh {                                                                    
+        unsigned int    fh_size;        /* significant for NFSv3.                    
+                                         * Points to the current size while building 
+                                         * a new file handle                         
+                                         */                                          
+        union {                                                                      
+                struct nfs_fhbase_old   fh_old;                                      
+                __u32                   fh_pad[NFS4_FHSIZE/4];                       
+                struct nfs_fhbase_new   fh_new;                                      
+        } fh_base;                                                                   
+};                                                                                   
+```
+
+server端生成文件句柄的函数是`fh_compose`。
 
 # clientid
 
