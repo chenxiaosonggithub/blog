@@ -120,9 +120,15 @@ mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
 | NFSv4.1 | [rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html) | January 2010 | 617 |
 | NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) | November 2016 | 104 |
 
+1. NFSv2实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
+2. NFSv3取消了一些限制，如：文件句柄最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
+3. NFSv2和NFSv3都是无状态协议，NFSv4是有状态协议，实现文件锁功能。只有两种请求NULL和COMPOUND，支持delegation。
+4. NFSv4.1支持并行存储。
+5. NFSv4.2引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
+
 # 文件句柄
 
-， fh_compose, knfsd_fh, 
+fh_compose, knfsd_fh, 
 
 # clientid
 
