@@ -43,7 +43,7 @@
   +------------+      +------------+
 ```
 
-这里我要说一个
+sunrpc之下的tcp层和ip层已经保证了数据的可靠性，sunrpc不会对数据的可靠性进行校验。但在我曾经定位过的问题中，出现过一个问题，tcp的校验通过了，但数据还是错误的，概率非常低，所以最终数据的可靠性还要在用户态对文件进行校验。
 
 client端通过nfs操作存储设备经过的路径如下图所示：
 ```sh
@@ -83,6 +83,30 @@ client端通过nfs操作存储设备经过的路径如下图所示：
 ```
 # 怎么用？
 
+nfs server安装所需软件：
+```sh
+apt-get install nfs-kernel-server -y # debian
+```
+
+nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可以通过命令`man 5 exports`查看:
+```shell
+/tmp/ *(rw,no_root_squash,fsid=0)
+/tmp/s_test/ *(rw,no_root_squash,fsid=1)
+/tmp/s_scratch *(rw,no_root_squash,fsid=2)
+```
+
+执行脚本[start-nfs-server.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/nfs/start-nfs-server.sh)启动nfs server。
+
+nfs client挂载：
+```sh
+# nfsv4填写相对路径 /s_test 或 s_test
+mount -t nfs -o vers=4.1 192.168.122.87:/s_test /mnt # /s_test和s_test都可以
+# nfsv3和nfsv2 要写完整的源路径
+mount -t nfs -o vers=3 192.168.122.87:/tmp/s_test /mnt
+# nfsv2, nfs server 需要修改 /etc/nfs.conf, [nfsd] vers2=y
+mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
+```
+
 # NFS各版本比较
 
 # 文件句柄
@@ -118,7 +142,7 @@ client端通过nfs操作存储设备经过的路径如下图所示：
 
 # nfs文件锁
 
-NLM，
+NLM
 
 # pNFS
 
