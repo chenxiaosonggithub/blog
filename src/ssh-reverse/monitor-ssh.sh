@@ -1,14 +1,15 @@
 # 在 root 下执行 ssh-copy-id -p 55555 chenxiaosong.com
 # 在 root 下执行本脚本 bash monitor-ssh.sh
+log_path=/home/sonvhi/chenxiaosong/ssh-monitor
 while true
 do
 	ssh -p 55555 -o ConnectTimeout=1 -q sonvhi@chenxiaosong.com exit
 	if [ $? != 0 ]
 	then
-		echo `date` >> /tmp/ssh-monitor-fail.log
+		echo `date` >> ${log_path}/ssh-monitor-fail.log
 		systemctl restart ssh-reverse.service
 	else
-		echo `date` >> /tmp/ssh-monitor-success.log
+		echo `date` >> ${log_path}/ssh-monitor-success.log
 	fi
 
 	sleep 30
