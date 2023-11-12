@@ -2,13 +2,15 @@
 
 # 环境
 
-[大禹系列｜HH-SCDAYU200开发套件（Quad-core Cortex-A55 up to 2.0GHz）](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
+开发板使用[大禹系列｜HH-SCDAYU200开发套件（Quad-core Cortex-A55 up to 2.0GHz）](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
 
-## docker环境
+## docker环境搭建
 
 在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译, 以ubuntu22.04为例，说明环境的搭建。
 
-```shell
+[`hb`工具安装指导](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-install-tool.md)
+
+```sh
 # 获取代码环境
 apt-get update -y && apt-get install python3 python3-pip -y
 apt-get install git git-lfs -y
@@ -19,8 +21,6 @@ pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
 ln -s /usr/bin/python3 /usr/bin/python
 
 # 编译环境
-docker pull ubuntu:22.04
-docker run --name openharmony --hostname openharmony -it -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu:22.04 bash
 apt-get update && apt-get install binutils git git-lfs gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip m4 bc gnutls-bin python3 python3-pip ruby libtinfo-dev libtinfo5 -y
 apt install file -y
 apt-get install default-jdk -y # 如果报错: javac: command not found
@@ -36,23 +36,7 @@ apt-file search X11/Xcursor/Xcursor.h # libxcursor-dev: /usr/include/X11/Xcursor
 apt-file search X11/extensions/Xrandr.h # libxrandr-dev: /usr/include/X11/extensions/Xrandr.h
 apt-file search X11/extensions/Xinerama.h # libxinerama-dev: /usr/include/X11/extensions/Xinerama.h
 apt install libxcursor-dev libxrandr-dev libxinerama-dev -y
-
-
-# 镜像和容器处理
-rm openharmony-ubuntu:22.04.tar
-docker ps -a # 查看容器
-docker export openharmony > openharmony-ubuntu:22.04.tar # 导出
-docker rm openharmony # 删除容器
-docker image rm openharmony-ubuntu:22.04 # 先删除镜像
-cat openharmony-ubuntu:22.04.tar | docker import - openharmony-ubuntu:22.04 # 导入到镜像
-docker image ls # 查看镜像
-
-# 进入docker
-docker run --name rm-openharmony --hostname rm-openharmony --rm -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong openharmony-ubuntu:22.04 bash # --rm: 退出后删除容器
-docker run --name openharmony --hostname openharmony -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong openharmony-ubuntu:22.04 bash # 退出后不删除容器
 ```
-
-[`hb`工具安装](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-install-tool.md)
 
 ## 获取代码
 
@@ -60,41 +44,42 @@ docker run --name openharmony --hostname openharmony -it -v /home/sonvhi/chenxia
 
 还可以参考openharmony[获取源码](https://gitee.com/openharmony/docs/blob/master/zh-cn/device-dev/quick-start/quickstart-pkg-sourcecode.md)
 
-```shell
+执行以下命令获取代码：
+```sh
 repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify && repo sync -c && repo forall -c 'git lfs pull' && bash build/prebuilts_download.sh
 ```
 
-# 编译
+## 编译
 
-```shell
+编译命令如下：
+```sh
 # 镜像输出在 out/rk3568/packages/phone/images 目录下
 # 32位
 ./build.sh --product-name rk3568 --ccache
-./build.sh --product-name rk3568 --ccache --fast-rebuild # 增量编译时跳过一些已经完成的步骤
+./build.sh --product-name rk3568 --ccache --fast-rebuild # --fast-rebuild 增量编译时跳过一些已经完成的步骤
 ./build.sh --product-name rk3568 --ccache --build-target dfs_service --fast-rebuild
 # 64位
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --fast-rebuild # 增量编译时跳过一些已经完成的步骤
-./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dfs_service --fast-rebuild
+./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dfs_service --fast-rebuild # --build-target dfs_service 只编译某个service
 ```
 
-## qemu 运行调试环境
+## qemu运行调试环境
 
 [device_qemu](https://gitee.com/openharmony/device_qemu#https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_mps3_an547/README_zh.md)
 
 [QEMU教程 for arm - linux](https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_virt/linux/README_zh.md)
 
-```shell
-# 编译qemu-arm-linux-headless失败: https://gitee.com/openharmony/device_qemu/issues/I6AH7L?from=project-issue
+```sh
+# 编译qemu-arm-linux-headless失败的issue，还未解决: https://gitee.com/openharmony/device_qemu/issues/I6AH7L?from=project-issue
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-headless --ccache --jobs 64
-
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-min --ccache --jobs 64
 ```
 
 ## 烧写
 
-linux上压缩：
-```shell
+linux上压缩image文件：
+```sh
 zip -jr images.zip out/rk3568/packages/phone/images/
 ```
 
@@ -103,7 +88,7 @@ zip -jr images.zip out/rk3568/packages/phone/images/
 特别需要注意的是：软件路径中不要含有中文，尤其是对英文版的windows系统。
 
 windows安装`DriverAssitant_v5.1.1\DriverInstall.exe`后，打开`RKDevTool.exe`， 配置以下路径：
-```
+```sh
 0x00000000 Loader MiniLoaderAll.bin
 0x00000000 Parameter parameter.txt
 0x00002000 Uboot uboot.img
@@ -123,14 +108,14 @@ windows安装`DriverAssitant_v5.1.1\DriverInstall.exe`后，打开`RKDevTool.exe
 
 winodws usb线连接rk3568板子上的`usb3.0 OTG`，在rk3568板子上按`reset`键，再长按`vol+/recovery`键，进入loader模式，点击`RKDevTool`工具上的`执行`按钮。可以只烧录`System`和`Userdata`（包含数据库）。
 
-`scp_dfs_service_so.bat`:
-```shell
+复制so文件的脚本`scp_dfs_service_so.bat`:
+```sh
 scp -r -P 55555 sonvhi@chenxiaosong.com:/home/sonvhi/chenxiaosong/code/openharmony/openharmony/out/rk3568/filemanagement/dfs_service/ .
 @pause
 ```
 
-`push_dfs_service_so.bat`:
-```shell
+传输so文件到板子上的脚本`push_dfs_service_so.bat`:
+```sh
 hdc shell mount -o rw,remount /
 
 hdc file send .\dfs_service\libcloud_adapter.z.so                           /system/lib/
@@ -161,7 +146,7 @@ hdc shell reboot
 
 如果始终无法连接，`win+r`，输入`regedit`回车，找到注册表 `计算机\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{88bae032-5a81-49f0-bc3d-a4ff138216d6}`，确认是否有`Upperfilters`和`Lowerfilters`，删除后重新插拔。
 
-```shell
+```sh
 # 从开发板上获取数据库文件
 hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db .
 hdc file recv /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb/media_library.db-wal .
@@ -176,7 +161,8 @@ hdc file send .\media_library.db-shm /data/app/el2/100/database/com.ohos.mediali
 
 ## 日志
 
-```shell
+`hilog`日志设置：
+```sh
 # -w 开启日志落盘任务，start表示开始，stop表示停止
 # -f 设置日志文件名
 # -l 单个日志文件大小
@@ -193,8 +179,8 @@ hilog -b D
 ## crash调试
 
 当程序crash时，可以把相关日志文件导出来分析：
-```shell
-hdc file recv /data/log/faultlog/faultlogger/.
+```sh
+hdc file recv /data/log/faultlog/faultlogger/. .
 ```
 
 日志文件如下：
@@ -214,27 +200,27 @@ Thread name:cloudfiledaemon
 ```
 
 找到 `libcloudfiledaemon` 相关的库文件：
-```shell
+```sh
 find out -name "libcloudfiledaemon*"
 # 注意要选unstripped: out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so
 ```
 
 找出 `0000d2b8` 对应的代码行:
-```shell
-prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a 0000d2b8 # 32位
-prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a xxxxxxxx # 64位
-# foundation/filemanagement/dfs_service/services/cloudfiledaemon/src/fuse_manager/fuse_manager.cpp:353
+```sh
+# 找到foundation/filemanagement/dfs_service/services/cloudfiledaemon/src/fuse_manager/fuse_manager.cpp:353
+prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a 0000d2b8 # 32位用aarch64-linux-gnu-addr2line
+
+prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a xxxxxxxx # 64位要用llvm-addr2line
 ```
 
 ## selinux
 
 有些功能可能会被selinux阻止，可以关闭selinux测试:
-```shell
-mount -o rw,remount /
-echo "SELINUX=permissive" > /etc/selinux/config # 默认是 SELINUX=enforcing
+```sh
+mount -o rw,remount / # 重新可读可写挂载
+echo "SELINUX=permissive" > /etc/selinux/config # 重启后生效，默认是 SELINUX=enforcing
 setenforce 0
 sync
-# reboot
 ```
 
 # 读云端文件
