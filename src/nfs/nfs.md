@@ -19,29 +19,23 @@
  7|application |      |            |
   |   layer    |      |            |
   +------------+      |            |
-  +------------+      |            |
  6|presentation|     4|application | sunrpc
   |   layer    |      |    layer   |
-  +------------+      |            |
   +------------+      |            |
  5|   session  |      |            |
   |   layer    |      |            |
   +------------+      +------------+
-  +------------+      +------------+
  4| transport  |     3| transport  | tcp
   |   layer    |      |   layer    |
-  +------------+      +------------+
   +------------+      +------------+
  3|  network   |     2| internet   | ip
   |   layer    |      |   layer    |
   +------------+      +------------+
-  +------------+      +------------+
- 2|  data link |      |            |
-  |   layer    |     1|  network   |
-  +------------+      |  access    |
+ 2|  data link |     1|  network   |
+  |   layer    |      |  access    |
   +------------+      |   layer    |
  1|  physical  |      |(link layer)|
-  |   layer    |      |            |
+  |  layer     |      |            |
   +------------+      +------------+
 ```
 
@@ -128,6 +122,8 @@ mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
 
 # 文件句柄
 
+我们先来看一下client端告诉server端一个inode号会发生什么。
+
 nfs server端的`/etc/exports`文件如下：
 ```sh
 /tmp/sda *(rw,no_root_squash,fsid=0)
@@ -159,6 +155,7 @@ nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动�
 
 所以，如果nfs client告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
 
+文件句柄的数据结构如下：
 ```c
 #define NFS4_FHSIZE             128
 
@@ -175,13 +172,43 @@ struct knfsd_fh {
 };                                                                                   
 ```
 
-server端生成文件句柄的函数是`fh_compose`。
+server端生成文件句柄的流程是：
+```c
+// 将当前文件句柄设置为根文件系统
+nfsd4_putrootfh
+  exp_pseudoroot
+    fh_compose
+      mk_fsid
 
-# clientid
+// 打开文件时，创新一个新的文件句柄
+nfsd4_open
+  do_open_lookup
+    do_nfsd_create
+      fh_compose
+        mk_fsid
+```
+
+# clientid和delegation机制
+
+前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，相关的两种请求是SETCLIENTID和SETCLIENTID_CONFIRM。
+
+```c
+#define NFS4_VERIFIER_SIZE      8
+
+typedef struct { char data[NFS4_VERIFIER_SIZE]; } nfs4_verifier;
+
+struct nfs_client {
+        ...
+        u64                     cl_clientid;    /* constant */
+        nfs4_verifier           cl_confirm; // Clientid verifier，验证信息
+        ...
+        unsigned long           cl_lease_time; // 有效期
+        unsigned long           cl_last_renewal; // 最后的更新时间
+        ...
+};
+```
 
 反向通道
-
-# delegation机制
 
 冲突处理图
 ```sh
