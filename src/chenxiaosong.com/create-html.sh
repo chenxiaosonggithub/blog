@@ -36,12 +36,13 @@ array=(
     src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"
     src/docker/docker.md linux/docker.html "Docker安装与使用"
     # 其他
-    src/chenxiaosong.com/chenxiaosong.com.md chenxiaosong.com/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
+    src/chenxiaosong.com/chenxiaosong.com.md others/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
-    src/free-software/free-software.md free-software/free-software.html "自由软件介绍"
-    src/qemu-kvm-install-macos/qemu-kvm-install-macos.md linux/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
-    src/stm32-linux/stm32-linux.md linux/stm32-linux.html "STM32 Linux开发环境"
-    src/health/tooth-clean.md health/tooth-clean.html "牙齿护理"
+    src/openharmony/openharmony.md others/openharmony.html "OpenHarmony编译运行调试环境"
+    src/free-software/free-software.md others/free-software.html "自由软件介绍"
+    src/qemu-kvm-install-macos/qemu-kvm-install-macos.md others/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
+    src/stm32-linux/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
+    src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
     # private
     src/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
 )

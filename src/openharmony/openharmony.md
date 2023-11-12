@@ -2,11 +2,11 @@
 
 [点击这里跳转到陈孝松OpenHarmony贡献](http://chenxiaosong.com/openharmony)。
 
-# 环境
+# 1. 环境
 
 开发板使用[大禹系列｜HH-SCDAYU200开发套件（Quad-core Cortex-A55 up to 2.0GHz）](http://www.hihope.org/pro/pro1.aspx?mtt=54)。
 
-## docker环境搭建
+## 1.1. docker环境搭建
 
 在宿主机环境上可能会遇到各种各样的问题，可以使用 docker 编译, 以ubuntu22.04为例，说明环境的搭建。
 
@@ -40,7 +40,7 @@ apt-file search X11/extensions/Xinerama.h # libxinerama-dev: /usr/include/X11/ex
 apt install libxcursor-dev libxrandr-dev libxinerama-dev -y
 ```
 
-## 获取代码
+## 1.2. 获取代码
 
 [HiHope_DAYU200 搭建开发环境](https://gitee.com/hihope_iot/docs/blob/master/HiHope_DAYU200/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%BC%96%E8%AF%91%E6%8C%87%E5%8D%97.md)。
 
@@ -51,7 +51,7 @@ apt install libxcursor-dev libxrandr-dev libxinerama-dev -y
 repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify && repo sync -c && repo forall -c 'git lfs pull' && bash build/prebuilts_download.sh
 ```
 
-## 编译
+## 1.3. 编译
 
 编译命令如下：
 ```sh
@@ -66,19 +66,9 @@ repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-veri
 ./build.sh --product-name rk3568 --ccache --target-cpu arm64 --build-target dfs_service --fast-rebuild # --build-target dfs_service 只编译某个service
 ```
 
-## qemu运行调试环境
+# 2. 运行和调试
 
-[device_qemu](https://gitee.com/openharmony/device_qemu#https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_mps3_an547/README_zh.md)
-
-[QEMU教程 for arm - linux](https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_virt/linux/README_zh.md)
-
-```sh
-# 编译qemu-arm-linux-headless失败的issue，还未解决: https://gitee.com/openharmony/device_qemu/issues/I6AH7L?from=project-issue
-docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-headless --ccache --jobs 64
-docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-min --ccache --jobs 64
-```
-
-## 烧写
+## 2.1. 烧写
 
 linux上压缩image文件：
 ```sh
@@ -138,7 +128,7 @@ hdc shell reboot
 @pause
 ```
 
-## 调试
+## 2.2. hdc工具
 
 [hdc使用指导](https://docs.openharmony.cn/pages/v3.2/zh-cn/device-dev/subsystems/subsys-toolchain-hdc-guide.md/), [hdc_std使用指导](https://docs.openharmony.cn/pages/v3.1/zh-cn/device-dev/subsystems/subsys-toolchain-hdc-guide.md/)。
 
@@ -161,7 +151,17 @@ hdc file send .\media_library.db-wal /data/app/el2/100/database/com.ohos.mediali
 hdc file send .\media_library.db-shm /data/app/el2/100/database/com.ohos.medialibrary.medialibrarydata/rdb
 ```
 
-## 日志
+## 2.3. 关闭selinux
+
+有些功能可能会被selinux阻止，可以关闭selinux测试:
+```sh
+mount -o rw,remount / # 重新可读可写挂载
+echo "SELINUX=permissive" > /etc/selinux/config # 重启后生效，默认是 SELINUX=enforcing
+setenforce 0
+sync
+```
+
+## 2.4. 日志
 
 `hilog`日志设置：
 ```sh
@@ -180,7 +180,7 @@ hilog --baselevel=DEBUG
 hilog | grep "CloudFileDaemon\|CLOUDSYNC_SA\|StorageDaemon" # 端云协同的日志
 ```
 
-## crash调试
+## 2.5. crash调试
 
 当程序crash时，可以把相关日志文件导出来分析：
 ```sh
@@ -217,18 +217,21 @@ prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gn
 prebuilts/clang/ohos/linux-x86_64/15.0.4/llvm/bin/llvm-addr2line -e out/rk3568/lib.unstripped/filemanagement/dfs_service/libcloudfiledaemon.z.so -a xxxxxxxx # 64位要用llvm-addr2line
 ```
 
-## 关闭selinux
+## 2.6. qemu运行调试环境
 
-有些功能可能会被selinux阻止，可以关闭selinux测试:
+[device_qemu](https://gitee.com/openharmony/device_qemu#https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_mps3_an547/README_zh.md)
+
+[QEMU教程 for arm - linux](https://gitee.com/openharmony/device_qemu/blob/HEAD/arm_virt/linux/README_zh.md)
+
 ```sh
-mount -o rw,remount / # 重新可读可写挂载
-echo "SELINUX=permissive" > /etc/selinux/config # 重启后生效，默认是 SELINUX=enforcing
-setenforce 0
-sync
+# 编译qemu-arm-linux-headless失败的issue，还未解决: https://gitee.com/openharmony/device_qemu/issues/I6AH7L?from=project-issue
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-headless --ccache --jobs 64
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ubuntu-openharmony:22.04 ./build.sh --product-name qemu-arm-linux-min --ccache --jobs 64
 ```
 
-# tdd
+# 3. tdd
 
+合入补丁[0001-fuse-read-debug-dentry_meta_file_test-tdd.patch](https://github.com/chenxiaosonggithub/blog/blob/master/src/openharmony/0001-fuse-read-debug-dentry_meta_file_test-tdd.patch)后，编译和运行tdd：
 ```sh
 # 含调试信息的编译结果: out/rk3568/exe.unstripped/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
 # 不含调试信息的编译结果: out/rk3568/tests/unittest/filemanagement/dfs_service/dentry_meta_file_test
@@ -264,7 +267,7 @@ storage_daemon 单元测试：
 ```
 
 
-# libfuse在qemu虚拟机中运行调试
+# 4. 未修改的libfuse在qemu虚拟机中运行调试
 
 ```sh
 # 安装依赖软件
@@ -290,7 +293,7 @@ gdb ./example/passthrough_ll
 (gdb) r
 ```
 
-# hmdfs和libfuse在qemu虚拟机中调试
+# 5. 修改后的hmdfs和libfuse在qemu虚拟机中调试
 
 [chenxiaosonggitee/kernel_linux_5.10](https://gitee.com/chenxiaosonggitee/kernel_linux_5.10)和[chenxiaosonggitee/third_party_libfuse](https://gitee.com/chenxiaosonggitee/third_party_libfuse)在虚拟机中运行：
 ```sh

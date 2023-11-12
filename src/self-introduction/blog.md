@@ -44,14 +44,16 @@
 
 # 还没有分类
 
-[如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/chenxiaosong.com/chenxiaosong.com.html)
+[如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/others/chenxiaosong.com.html)
 
 [五笔输入法](http://chenxiaosong.com/others/wubi.html)
 
-[自由软件介绍](http://chenxiaosong.com/free-software/free-software.html)
+[自由软件介绍](http://chenxiaosong.com/others/free-software.html)
 
-[QEMU/KVM安装macOS系统](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)
+[QEMU/KVM安装macOS系统](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)
 
-[STM32 Linux开发环境](http://chenxiaosong.com/linux/stm32-linux.html)
+[QEMU/KVM安装macOS系统](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)
 
-[牙齿护理](http://chenxiaosong.com/health/tooth-clean.html)
+[STM32 Linux开发环境](http://chenxiaosong.com/others/stm32-linux.html)
+
+[牙齿护理](http://chenxiaosong.com/others/tooth-clean.html)
