@@ -71,8 +71,8 @@ ssh -p 55555 sonvhi@chenxiaosong.com
 
 执行命令命令，运行[src/ssh-reverse/monitor-ssh.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/ssh-reverse/monitor-ssh.sh)脚本：
 ```sh
-mkdir -p /home/sonvhi/chenxiaosong/ssh-monitor
-sudo mount -t tmpfs -o size=64G ssh-monitor /home/sonvhi/chenxiaosong/ssh-monitor
+mkdir -p /home/sonvhi/chenxiaosong/monitor-ssh
+sudo mount -t tmpfs -o size=64G monitor-ssh /home/sonvhi/chenxiaosong/monitor-ssh
 sudo -i # 因为要重启service
 cd /home/sonvhi/chenxiaosong/code/blog/src/ssh-reverse
 bash monitor-ssh.sh &

@@ -1,6 +1,6 @@
 # 在 root 下执行 ssh-copy-id -p 55555 chenxiaosong.com
 # 在 root 下执行本脚本 bash monitor-ssh.sh
-log_path=/home/sonvhi/chenxiaosong/ssh-monitor
+log_path=/home/sonvhi/chenxiaosong/monitor-ssh
 while true
 do
 	ssh -p 55555 -o ConnectTimeout=1 -q sonvhi@chenxiaosong.com exit
