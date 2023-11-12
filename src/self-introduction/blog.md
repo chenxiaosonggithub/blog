@@ -48,9 +48,9 @@
 
 [五笔输入法](http://chenxiaosong.com/others/wubi.html)
 
-[自由软件介绍](http://chenxiaosong.com/others/free-software.html)
+[OpenHarmony编译运行调试环境](http://chenxiaosong.com/others/openharmony.html)
 
-[QEMU/KVM安装macOS系统](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)
+[自由软件介绍](http://chenxiaosong.com/others/free-software.html)
 
 [QEMU/KVM安装macOS系统](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)
 
