@@ -32,7 +32,7 @@
 
 [aarch64架构 4.19 nfs_readpage_async空指针解引用问题](http://chenxiaosong.com/nfs/4.19-aarch64-null-ptr-deref-in-nfs_readpage_async.html)
 
-# Linux
+# Linux环境
 
 [Linux环境安装与配置](http://chenxiaosong.com/linux/userspace-environment.html)
 
@@ -42,22 +42,16 @@
 
 [Docker安装与使用](http://chenxiaosong.com/linux/docker.html)
 
-# 网站搭建
+# 不知道怎么分类
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/chenxiaosong.com/chenxiaosong.com.html)
 
-# 自由软件
+[五笔输入法](http://chenxiaosong.com/others/wubi.html)
 
 [自由软件介绍](http://chenxiaosong.com/free-software/free-software.html)
-
-# 不知道怎么分类
-
-[五笔输入法](http://chenxiaosong.com/others/wubi.html)
 
 [QEMU/KVM安装macOS系统](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)
 
 [STM32 Linux开发环境](http://chenxiaosong.com/linux/stm32-linux.html)
-
-# 运动与健康
 
 [牙齿护理](http://chenxiaosong.com/health/tooth-clean.html)

@@ -30,21 +30,18 @@ array=(
     src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md nfs/4.19-null-ptr-deref-in-nfs_updatepage.html '4.19 nfs_updatepage空指针解引用问题'
     src/nfs/4.19-null-ptr-deref-in-nfs_readpage_async.md nfs/4.19-null-ptr-deref-in-nfs_readpage_async.html '4.19 nfs_readpage_async空指针解引用问题'
     src/nfs/4.19-aarch64-null-ptr-deref-in-nfs_readpage_async.md nfs/4.19-aarch64-null-ptr-deref-in-nfs_readpage_async.html "aarch64架构 4.19 nfs_readpage_async空指针解引用问题"
-    # 网站搭建
-    src/chenxiaosong.com/chenxiaosong.com.md chenxiaosong.com/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
-    # Linux
+    # Linux环境
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
     src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"
     src/docker/docker.md linux/docker.html "Docker安装与使用"
-    # 自由软件
-    src/free-software/free-software.md free-software/free-software.html "自由软件介绍"
-    # 运动与健康
-    src/health/tooth-clean.md health/tooth-clean.html "牙齿护理"
     # 其他
+    src/chenxiaosong.com/chenxiaosong.com.md chenxiaosong.com/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
+    src/free-software/free-software.md free-software/free-software.html "自由软件介绍"
     src/qemu-kvm-install-macos/qemu-kvm-install-macos.md linux/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
     src/stm32-linux/stm32-linux.md linux/stm32-linux.html "STM32 Linux开发环境"
+    src/health/tooth-clean.md health/tooth-clean.html "牙齿护理"
     # private
     src/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
 )
