@@ -81,14 +81,3 @@ HEADLESS=1 MEM=1G CPUS=2 SYSTEM_DISK=MyDisk.qcow2 ./headless.sh
 一切搞定！
 
 要微调系统并提高性能，请查看[docs](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/tree/master/docs)文件夹，以获取更多信息，如[adding memory](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-performance.md)，设置[bridged networking](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-networking.md)的更多信息，添加 [passthrough hardware (for GPUs)](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-passthrough.md)，调整[screen resolution](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-screen-resolution.md)并启用声音功能。
-
-
-# 模拟器与虚拟机
-
-Bochs：x86硬件平台的开源模拟器，帮助文档少，只能模拟x86处理器
-
-QEMU：quick emulation，高速度、跨平台的开源模拟器，能模拟x86、arm等处理器，与Linux的KVM配合使用，能达到与真实机接近的速度
-
-第1类虚拟机监控程序：直接在主机硬件上运行，直接向硬件调度资源，速度快。如Linux的KVM（免费）、Windows的Hyper-V（收费）
-
-第2类虚拟机监控程序：在常规操作系统上以软件层或应用的形式运行，速度慢。如Vmware Workstation、Oracal VirtualBox

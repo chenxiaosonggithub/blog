@@ -1,5 +1,16 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
+
+# 0. 模拟器与虚拟机
+
+Bochs：x86硬件平台的开源模拟器，帮助文档少，只能模拟x86处理器。
+
+QEMU：quick emulation，高速度、跨平台的开源模拟器，能模拟x86、arm等处理器，与Linux的KVM配合使用，能达到与真实机接近的速度。
+
+第1类虚拟机监控程序：直接在主机硬件上运行，直接向硬件调度资源，速度快。如Linux的KVM（免费）、Windows的Hyper-V（收费）。
+
+第2类虚拟机监控程序：在常规操作系统上以软件层或应用的形式运行，速度慢。如Vmware Workstation、Oracal VirtualBox。
+
 # 1. 根文件系统
 
 ## 1.1. 脚本
