@@ -69,7 +69,7 @@ ssh -p 55555 sonvhi@chenxiaosong.com
 
 有时会因为网络波动出现无法远程连接，可以在private-server上使用脚本监测，当监测到无法连接时，重启服务。
 
-执行命令命令，运行[src/ssh-reverse/monitor-ssh.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/ssh-reverse/monitor-ssh.sh)脚本：
+执行以下命令，运行[src/ssh-reverse/monitor-ssh.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/ssh-reverse/monitor-ssh.sh)脚本：
 ```sh
 mkdir -p /home/sonvhi/chenxiaosong/monitor-ssh
 sudo mount -t tmpfs -o size=64G monitor-ssh /home/sonvhi/chenxiaosong/monitor-ssh

@@ -77,6 +77,28 @@ sudo useradd -s /bin/bash -d /home/test -m test # 新建用户test
 sudo userdel -r test # 删除用户test，-r选项代表同时删除用户的家目录和相关文件
 ```
 
+如果没有挂载`/tmp`目录，可以修改`/etc/fstab`文件：
+```sh
+# defaults: 使用默认的挂载选项。
+# noatime: 不更新文件的访问时间戳。
+# nosuid: 不允许设置文件的 SUID 位。
+# nodev: 不允许设备文件。
+# noexec: 不允许执行二进制文件。
+# mode=1777: 设置目录的权限为 1777，确保它是可写的临时目录。
+tmpfs /tmp tmpfs defaults,noatime,nosuid,nodev,noexec,mode=1777,size=20G 0 0
+```
+
+如果内存比较小，可以添加swap：
+```sh
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon -s
+sudo vi /etc/fstab # 在/etc/fstab最后一行添加 /swapfile  none  swap  sw  0  0
+```
+
 # centos 9
 
 centos的开发软件生态比ubuntu还是稍微差一些，尤其是桌面系统。
