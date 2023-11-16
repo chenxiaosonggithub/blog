@@ -193,7 +193,7 @@ Linux交换子系统在磁盘上建立swap area，专门用于存放没有磁盘
 
 在内核代码中，我们经常看到类似`SetPageError`、`PagePrivate`的函数，但总是找不到定义，这是因为这些函数是通过宏定义生成的。
 
-宏定义是对`enum pageflags`中的每个值进行宏展开，这里写出设置和检测的宏定义：
+宏定义是对`enum pageflags`中的每个值进行宏展开，这里列出设置和检测的宏定义：
 ```c
 // 检测
 #define TESTPAGEFLAG(uname, lname, policy)                       
