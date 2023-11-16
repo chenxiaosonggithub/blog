@@ -3,7 +3,7 @@
 log_path=/home/sonvhi/chenxiaosong/monitor-ssh
 while true
 do
-	ssh -p 55555 -o ConnectTimeout=1 -q sonvhi@chenxiaosong.com exit
+	ssh -p 55555 -o ConnectTimeout=1 -q sonvhi@hz.chenxiaosong.com exit
 	if [ $? != 0 ]
 	then
 		echo `date` >> ${log_path}/ssh-monitor-fail.log
