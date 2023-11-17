@@ -10,7 +10,7 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
 [社区主页](https://www.kernel.org/)
 
-[邮件列表](https://lore.kernel.org/all/)
+[邮件列表](https://lore.kernel.org/)
 
 [按模块划分的patchwork](https://patchwork.kernel.org/)
 
@@ -117,3 +117,11 @@ foxmail邮箱`~/.gitconfig`：
 ```shell
 git send-email -to 收件人 -cc 抄送人 补丁文件（可多个）
 ```
+
+# thunderbird邮件客户端
+
+最新版本的[thunderbird](https://www.thunderbird.net/)默认使用html格式发送和显示，需要更改配置，参考[Plain text e-mail - Thunderbird](http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Send_plain_text_messages)。
+
+依次点击 `Account Settings -> Composition & Addressing -> Composition -> 取消勾选Compose messages in HTML format`。
+
+还有，不建议订阅内核任何模块的邮件列表，因为太多了，一旦订阅邮箱基本就爆了，可以在[邮件列表网站](https://lore.kernel.org/)上选择对应的模块在线浏览，如果需要回复，可以把邮件下载下来保存成文件，然后用thunderbird打开文件，然后就可以回复了。
