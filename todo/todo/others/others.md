@@ -21,15 +21,6 @@ int fd = open("file", O_CREAT | O_RDWR, 0700);
 FILE *fp = fdopen(fd, "r"); // mode 字符串格式请参考 fopen()
 ```
 
-# tcpdump
-
-```shell
-tcpdump -B 20480 -w cli.cap # 默认4KB, 单位 KB, 20480 代表 20MB
-# 先用 sysctl -a | grep net.core.rmem 查看
-sysctl net.core.rmem_default=xxx
-sysctl net.core.rmem_max=xxx
-```
-
 # perf
 
 ```shell
