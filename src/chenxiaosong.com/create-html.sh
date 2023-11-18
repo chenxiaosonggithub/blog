@@ -25,7 +25,7 @@ array=(
     src/mm/mm.md kernel/mm.html "Linux内存管理"
     src/process/process.md kernel/process.html "Linux进程调度"
     # nfs
-    src/nfs/nfs.md nfs/nfs.html "NFS介绍"
+    src/nfs/nfs.md nfs/nfs.html "NFS网络文件系统介绍"
     src/nfs/nfs-handle-writeback-errors-correctly.md nfs/nfs-handle-writeback-errors-correctly.html "nfs回写错误处理不正确的问题"
     src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.md nfs/4.19-null-ptr-deref-in-nfs_updatepage.html '4.19 nfs_updatepage空指针解引用问题'
     src/nfs/4.19-null-ptr-deref-in-nfs_readpage_async.md nfs/4.19-null-ptr-deref-in-nfs_readpage_async.html '4.19 nfs_readpage_async空指针解引用问题'
