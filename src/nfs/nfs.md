@@ -120,7 +120,7 @@ mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 
 既然涉及到网络，定位问题肯定也少不了网络抓包，使用`tcpdump`工具拆包：
 ```sh
-tcpdump --buffer-size 20480 -w cli.cap # --buffer-size默认4KB, 单位 KB, 20480 代表 20MB
+tcpdump --buffer-size 20480 -w out.cap # --buffer-size默认4KB, 单位 KB, 20480 代表 20MB
 # 配置网络参数
 sysctl -a | grep net.core.rmem # 查看配置
 sysctl net.core.rmem_default=xxx
