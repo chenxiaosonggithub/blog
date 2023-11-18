@@ -8,7 +8,7 @@
 
 手机号（微信）：18248638938。
 
-爱好：自行车骑行，Linux操作系统。顺便提一句，只用键盘不用鼠标，[五笔打字](http://chenxiaosong.com/others/wubi.html)，喜欢写技术文档。
+爱好：自行车骑行，Linux操作系统。顺便提一句，[只用键盘](http://chenxiaosong.com/pictures/self-introduction/hhkb.jpg)不用鼠标，[五笔打字](http://chenxiaosong.com/others/wubi.html)，喜欢写技术文档。
 
 [自由软件](http://chenxiaosong.com/others/free-software.html)的狂热者，能力一般的极客。现在[麒麟软件](https://www.kylinos.cn/)从事**Linux内核**开发，工作内容全世界都看得到（后面会详细介绍哈）。贡献过多个自由开源软件项目。
 
