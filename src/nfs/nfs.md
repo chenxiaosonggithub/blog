@@ -283,7 +283,7 @@ nfsv2和nfsv3使用NLM（Network Lock Manager）协议实现文件锁，nfsv4实
 
 # pNFS（parallel NFS）
 
-pNFS的网络结构图如下：
+从NFSv4.1开始，引入了pNFS，目的是为了解决系统吞吐量问题，pNFS的网络结构图如下：
 ```sh
 +---------+                                          
 |+---------+
