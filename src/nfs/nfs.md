@@ -167,7 +167,25 @@ nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动�
 
 所以，如果nfs client告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
 
-nfs server文件句柄的数据结构是`struct knfsd_fh`。
+nfs server文件句柄的数据结构是:
+```c
+struct knfsd_fh {                                                             
+        unsigned int    fh_size;        /*                                    
+                                         * Points to the current size while   
+                                         * building a new file handle.        
+                                         */                                   
+        union {                                                               
+                char                    fh_raw[NFS4_FHSIZE];                  
+                struct {                                                      
+                        u8              fh_version;     /* == 1 */            
+                        u8              fh_auth_type;   /* deprecated */      
+                        u8              fh_fsid_type;                         
+                        u8              fh_fileid_type;                       
+                        u32             fh_fsid[]; /* flexible-array member */
+                };                                                            
+        };                                                                    
+};                                                                            
+```
 
 server端生成文件句柄的流程是：
 ```c
@@ -184,6 +202,8 @@ nfsd4_open
       fh_compose
         mk_fsid
 ```
+
+nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wireshark`查看 。
 
 # clientid和delegation机制
 
