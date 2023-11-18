@@ -1,5 +1,7 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
+[点击这里查看陈孝松其他博客](http://chenxiaosong.com/blog)。
+
 # NFS和SunRPC
 
 先看一下维基百科对NFS的定义：
@@ -111,7 +113,7 @@ mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
 /tmp/s_test/ *(rw,no_root_squash)
 ```
 
-这时根路径就是`/`，nfs client挂载命令如下：
+这时nfsv4的根路径就是`/`，nfs client挂载nfsv4的命令如下：
 ```sh
 mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 ```
@@ -134,7 +136,7 @@ mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 
 # 文件句柄
 
-我们先来看一下client端告诉server端一个inode号会发生什么。
+我们先来看一下client端如果只告诉server端一个inode号会发生什么。
 
 nfs server端的`/etc/exports`文件如下：
 ```sh
@@ -165,7 +167,7 @@ mount -t nfs -o vers=4.1 ${server_ip}:/ /mnt
 
 nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动将`${server_ip}:/sdb`挂载到`/mnt/sdb`。
 
-所以，如果nfs client告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
+所以，如果nfs client只告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
 
 nfs server文件句柄的数据结构是:
 ```c
