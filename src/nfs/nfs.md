@@ -207,7 +207,7 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 
 # clientid和delegation机制
 
-前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，相关的两种请求是SETCLIENTID和SETCLIENTID_CONFIRM。
+前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，相关的两种请求是`SETCLIENTID`和`SETCLIENTID_CONFIRM`。
 
 ```c
 #define NFS4_VERIFIER_SIZE      8
@@ -225,9 +225,11 @@ struct nfs_client {
 };
 ```
 
-反向通道
+在nfs client发起`SETCLIENTID`请求时，会创建一个RPC反向通道，nfs client是反向通道的服务器端。
 
-冲突处理图
+delegation机制： 当nfs client1打开一个文件时，nfs server颁发一个凭证，nfs client1读写文件就不用发起`GETATTR`请求。当另一个client2也访问这个文件时，server就先回收client1的凭证，再响应client2的请求。之后，就和nfsv2和nfsv3一样读写之前要发起`GETATTR`请求。
+
+回收delegation的过程如下：
 ```sh
                                 +---------+
                                 |         |
