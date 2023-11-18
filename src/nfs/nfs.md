@@ -229,7 +229,7 @@ struct nfs_client {
 
 在nfs client发起`SETCLIENTID`请求时，会创建一个RPC反向通道，nfs client是反向通道的服务器端。
 
-delegation机制： 当nfs client1打开一个文件时，nfs server颁发一个凭证，nfs client1读写文件就不用发起`GETATTR`请求。当另一个client2也访问这个文件时，server就先回收client1的凭证，再响应client2的请求。之后，就和nfsv2和nfsv3一样读写之前要发起`GETATTR`请求。
+delegation机制： 当nfs client1打开一个文件时，如果RPC反向通道可用，nfs server就会颁发一个凭证，nfs client1读写文件就不用发起`GETATTR`请求。当另一个client2也访问这个文件时，server就先回收client1的凭证，再响应client2的请求。之后，就和nfsv2和nfsv3一样读写之前要发起`GETATTR`请求。
 
 回收delegation的过程如下：
 ```sh
@@ -250,6 +250,8 @@ delegation机制： 当nfs client1打开一个文件时，nfs server颁发一个
 |         |<---6.ok-------------|         |
 +---------+                     +---------+
 ```
+
+如果client1的反向通道抽风了，不能用了，回收delegation就会超时，server删除delegation，响应client2，然后在client1主动向server请求时，再通知client1。
 
 # nfs文件锁
 
