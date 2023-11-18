@@ -1,6 +1,6 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-# NFS简介
+# NFS和SunRPC
 
 先看一下维基百科对NFS的定义：
 
@@ -86,7 +86,7 @@ apt-get install nfs-kernel-server -y # debian
 ```
 
 nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可以通过命令`man 5 exports`查看:
-```shell
+```sh
 /tmp/ *(rw,no_root_squash,fsid=0)
 /tmp/s_test/ *(rw,no_root_squash,fsid=1)
 /tmp/s_scratch *(rw,no_root_squash,fsid=2)
@@ -96,12 +96,24 @@ nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可
 
 nfs client挂载：
 ```sh
-# nfsv4填写相对路径 /s_test 或 s_test
-mount -t nfs -o vers=4.1 192.168.122.87:/s_test /mnt # /s_test和s_test都可以
-# nfsv3和nfsv2 要写完整的源路径
-mount -t nfs -o vers=3 192.168.122.87:/tmp/s_test /mnt
-# nfsv2, nfs server 需要修改 /etc/nfs.conf, [nfsd] vers2=y
-mount -t nfs -o vers=2 192.168.122.87:/tmp/s_test /mnt
+# nfsv4的根路径是/tmp/，源路径填写相对路径 /s_test 或 s_test
+mount -t nfs -o vers=4.0 ${server_ip}:/s_test /mnt
+mount -t nfs -o vers=4.1 ${server_ip}:/s_test /mnt
+mount -t nfs -o vers=4.2 ${server_ip}:/s_test /mnt
+# nfsv3和nfsv2 源路径要写完整的源路径，没有根路径的概念，源路径必须是绝对路径/tmp/s_test
+mount -t nfs -o vers=3 ${server_ip}:/tmp/s_test /mnt
+# nfsv2, nfs server 需要修改 /etc/nfs.conf 中的 `[nfsd] vers2=y`
+mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
+```
+
+如果nfs server的exportfs的配置文件`/etc/exports`如下，没有`fsid`选项：
+```sh
+/tmp/s_test/ *(rw,no_root_squash)
+```
+
+这时根路径就是`/`，nfs client挂载命令如下：
+```sh
+mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 ```
 
 # NFS各版本比较
@@ -155,22 +167,7 @@ nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动�
 
 所以，如果nfs client告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
 
-文件句柄的数据结构如下：
-```c
-#define NFS4_FHSIZE             128
-
-struct knfsd_fh {                                                                    
-        unsigned int    fh_size;        /* significant for NFSv3.                    
-                                         * Points to the current size while building 
-                                         * a new file handle                         
-                                         */                                          
-        union {                                                                      
-                struct nfs_fhbase_old   fh_old;                                      
-                __u32                   fh_pad[NFS4_FHSIZE/4];                       
-                struct nfs_fhbase_new   fh_new;                                      
-        } fh_base;                                                                   
-};                                                                                   
-```
+nfs server文件句柄的数据结构是`struct knfsd_fh`。
 
 server端生成文件句柄的流程是：
 ```c
