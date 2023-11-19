@@ -1,6 +1,6 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-[点击这里查看陈孝松其他博客](http://chenxiaosong.com/blog)。
+[点击这里查看陈孝松所有博客](http://chenxiaosong.com/blog)。
 
 # NFS和SunRPC
 
@@ -139,11 +139,11 @@ sysctl net.core.rmem_max=xxx
 | NFSv4.1 | [rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html) | January 2010 | 617 |
 | NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) | November 2016 | 104 |
 
-1. NFSv2实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
-2. NFSv3取消了一些限制，如：文件句柄长度最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
-3. NFSv2和NFSv3都是无状态协议，NFSv4是有状态协议，实现文件锁功能。只有两种请求NULL和COMPOUND，支持delegation。文件句柄长度最大128字节。
-4. NFSv4.1支持并行存储。
-5. NFSv4.2引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
+1. NFSv2: 实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
+2. NFSv3: 取消了一些限制，如：文件句柄长度最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
+3. NFSv4: 有状态协议（NFSv2和NFSv3都是无状态协议），实现文件锁功能。只有两种请求`NULL`和`COMPOUND`，支持delegation。文件句柄长度最大128字节。
+4. NFSv4.1: 支持并行存储。
+5. NFSv4.2: 引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
 
 # 文件句柄
 
@@ -180,7 +180,7 @@ nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动�
 
 所以，如果nfs client只告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
 
-nfs server文件句柄的数据结构是:
+文件句柄中不仅包含inode信息，还包含服务端具体文件系统的信息，总之就是肯定可以在服务端找到对应的文件。nfs server文件句柄的数据结构是:
 ```c
 struct knfsd_fh {                                                             
         unsigned int    fh_size;        /*                                    
