@@ -156,22 +156,22 @@ sysctl net.core.rmem_max=xxx
 
 nfs server端的`/etc/exports`文件如下：
 ```sh
-/tmp/sda *(rw,no_root_squash,fsid=0)
-/tmp/sda/sdb *(rw,no_root_squash,fsid=1)
+/export/sda *(rw,no_root_squash,fsid=0)
+/export/sda/sdb *(rw,no_root_squash,fsid=1)
 ```
 
-nfs server端以下命令执行后，`/tmp/sda/file`和`/tmp/sda/sdb/file`的inode号相同都是12（通过命令`stat file`查看）：
+nfs server端以下命令执行后，`/export/sda/file`和`/export/sda/sdb/file`的inode号相同都是12（通过命令`stat file`查看）：
 ```sh
 mkfs.ext4 -b 4096 -F /dev/sda
 mkfs.ext4 -b 4096 -F /dev/sdb
 
-mkdir /tmp/sda
-mount -t ext4 /dev/sda /tmp/sda
-touch /tmp/sda/file
+mkdir /export/sda
+mount -t ext4 /dev/sda /export/sda
+touch /export/sda/file
 
-mkdir /tmp/sda/sdb
-mount -t ext4 /dev/sdb /tmp/sda/sdb
-touch /tmp/sda/sdb/file
+mkdir /export/sda/sdb
+mount -t ext4 /dev/sdb /export/sda/sdb
+touch /export/sda/sdb/file
 ```
 
 nfs client挂载命令：
@@ -184,6 +184,35 @@ mount -t nfs -o vers=4.1 ${server_ip}:/ /mnt
 nfs client再执行`stat /mnt/sdb/file`查看到inode也为12，这时会自动将`${server_ip}:/sdb`挂载到`/mnt/sdb`。
 
 所以，如果nfs client只告诉nfs server一个inode号，nfs server不能确定是哪个文件系统的inode，也就无法找到对应的文件。
+
+没看懂，那就对了，是我没讲明白，咱们来看个图：
+```sh
+                      1.+------------+
+                   +----|   client   |
+                   |    +------------+
+           hey man,|          ^                  
+    can you tell me|          |额，你猜？
+ whose inode is 12?|        5.|
+                   |    +------------+
+                   +--->|   server   |
+                        +------------+
+                         | ^      ^ |
+                     2.1.| |      | |2.2.
+               +---------+ |      | +---------+
+               |           |      |           |
+       hey boy |      i know     i know too   |hey girl   
+   do you know?|           |      |           |do you know?
+               v           |      |           v      
+          +----------+ 4.1.|      |4.2   +----------+
+          | /dev/sda |-----+      +------| /dev/sdb |
+          +----------+                   +----------+ 
+               ^                              ^       
+        i am 12|                              |i am 12
+               |3.1.                      3.2.|      
+          +----------+                   +----------+
+          |   file   |                   |   file   |
+          +----------+                   +----------+
+```
 
 文件句柄中不仅包含inode信息，还包含服务端具体文件系统的信息，总之就是肯定可以在服务端找到对应的文件。nfs server文件句柄的数据结构是:
 ```c
