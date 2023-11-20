@@ -68,7 +68,7 @@ sed -i '/sys.path.insert/a\sys.path.insert(0, "'${HOME}'/.gdb-linux")' ${HOME}/.
 
 重新启动GDB就可以使用GDB辅助调试功能：
 ```sh
-(gdb) apropos lx # 帮助命令
+(gdb) apropos lx # 查看有哪些命令
 (gdb) p $lx_current().pid # 打印断点所在进程的进程id
 (gdb) p $lx_current().comm # 打印断点所在进程的进程名
 ```
