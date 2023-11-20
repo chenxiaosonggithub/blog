@@ -339,7 +339,7 @@ mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
 mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 ```
 
-既然涉及到网络，定位问题肯定也少不了网络抓包，使用`tcpdump`工具拆包：
+既然涉及到网络，定位问题肯定也少不了网络抓包，使用`tcpdump`工具抓包：
 ```sh
 # --interface: 指定要监听的网络接口，any表示所有的网络接口
 # --buffer-size: 默认4KB, 单位 KB, 20480 代表 20MB
