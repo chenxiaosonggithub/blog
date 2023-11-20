@@ -55,12 +55,15 @@ gdb命令的用法和用户态程序的调试大同小异。
 使用内核提供的[GDB辅助调试功能](https://www.kernel.org/doc/Documentation/dev-tools/gdb-kernel-debugging.rst)可以更方便的调试内核：
 ```sh
 echo "set auto-load safe-path /" > ~/.gdbinit # 设置自动加载共享库文件的安全路径
-echo "source /home/sonvhi/.gdb-linux/vmlinux-gdb.py" >> ~/.gdbinit # /home/sonvhi 是我的家目录
-# !!! 使用5.10版本执行make scripts_gdb
-make scripts_gdb # 在 linux 仓库下执行，注意最新的版本可能有问题，5.10版本肯定可以
+echo "source ${HOME}/.gdb-linux/vmlinux-gdb.py" >> ~/.gdbinit
+# 曾经碰到过最新的版本有问题，5.10版本可以，但5.10编译出来的可能无法调试最新版本的代码
+make O=build scripts_gdb # 在内核仓库目录下执行
+rm -rf ${HOME}/.gdb-linux/
 mkdir ${HOME}/.gdb-linux/
-cp scripts/gdb/* ${HOME}/.gdb-linux/ -rf
-vim ${HOME}/.gdb-linux/vmlinux-gdb.py # 改成 sys.path.insert(0, "/home/sonvhi/.gdb-linux")
+cp build/scripts/gdb/* ${HOME}/.gdb-linux/ -rf # 在内核仓库目录下执行
+cp scripts/gdb/vmlinux-gdb.py ${HOME}/.gdb-linux/ # 在内核仓库目录下执行
+sed -i '/sys.path.insert/s/^/# /' ${HOME}/.gdb-linux/vmlinux-gdb.py # 将sys.path.insert所在的行注释掉
+sed -i '/sys.path.insert/a\sys.path.insert(0, "'${HOME}'/.gdb-linux")' ${HOME}/.gdb-linux/vmlinux-gdb.py # 插入 sys.path.insert(0, "${HOME}/.gdb-linux")
 ```
 
 重新启动GDB就可以使用GDB辅助调试功能：
