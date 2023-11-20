@@ -80,60 +80,6 @@ client端通过nfs操作存储设备经过的路径如下图所示：
                +------------+ 6.            
 ```
 
-# 怎么用？
-
-nfs server安装所需软件：
-```sh
-apt-get install nfs-kernel-server -y # debian
-```
-
-nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可以通过命令`man 5 exports`查看:
-```sh
-/tmp/ *(rw,no_root_squash,fsid=0)
-/tmp/s_test/ *(rw,no_root_squash,fsid=1)
-/tmp/s_scratch *(rw,no_root_squash,fsid=2)
-```
-
-执行脚本[start-nfs-server.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/nfs/start-nfs-server.sh)启动nfs server。
-
-nfs client安装所需软件：
-```sh
-apt-get install nfs-common -y # debian
-```
-
-nfs client挂载（更多挂载选项可以通过命令`man 5 nfs`查看）：
-```sh
-# nfsv4的根路径是/tmp/，源路径填写相对路径 /s_test 或 s_test
-mount -t nfs -o vers=4.0 ${server_ip}:/s_test /mnt
-mount -t nfs -o vers=4.1 ${server_ip}:/s_test /mnt
-mount -t nfs -o vers=4.2 ${server_ip}:/s_test /mnt
-# nfsv3和nfsv2 源路径要写完整的源路径，没有根路径的概念，源路径必须是绝对路径/tmp/s_test
-mount -t nfs -o vers=3 ${server_ip}:/tmp/s_test /mnt
-# nfsv2, nfs server 需要修改 /etc/nfs.conf 中的 `[nfsd] vers2=y`
-mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
-```
-
-如果nfs server的exportfs的配置文件`/etc/exports`如下，没有`fsid`选项：
-```sh
-/tmp/s_test/ *(rw,no_root_squash)
-```
-
-这时nfsv4的根路径就是`/`，nfs client挂载nfsv4的命令如下：
-```sh
-mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
-```
-
-既然涉及到网络，定位问题肯定也少不了网络抓包，使用`tcpdump`工具拆包：
-```sh
-tcpdump --buffer-size 20480 -w out.cap # --buffer-size默认4KB, 单位 KB, 20480 代表 20MB
-# 配置网络参数，把参数调大可以防止抓包数据丢失
-sysctl -a | grep net.core.rmem # 查看配置
-sysctl net.core.rmem_default=xxx
-sysctl net.core.rmem_max=xxx
-```
-
-`tcpdump`抓包的文件，可以使用`wireshark`分析。
-
 # NFS各版本比较
 
 | 版本 | RFC | 发布时间 | 页数 |
@@ -347,3 +293,61 @@ pNFS系统由三部分组成：
 1. server：保存文件的布局结构（layout），layout是对文件在storage devices中存储方式的一种说明，也就是元数据。pNFS是clients和server的通信协议。
 2. storage devices: 由数据服务器构成，保存文件数据，当clients从server获得layout后，就可以向storage devices发送数据。clients和storage devices的存储协议有：file layout([rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html))、block layout([rfc5663](https://www.rfc-editor.org/rfc/rfc5663.html))、object layout([rfc5664](https://www.rfc-editor.org/rfc/rfc5664.html))。server和storage devices的控制协议（control procotol）不属于pNFS的范围。
 3. clients：支持pNFS和存储协议。
+
+# 怎么用？
+
+最后，我们再来看看怎么用NFS。
+
+nfs server安装所需软件：
+```sh
+apt-get install nfs-kernel-server -y # debian
+```
+
+nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可以通过命令`man 5 exports`查看:
+```sh
+/tmp/ *(rw,no_root_squash,fsid=0)
+/tmp/s_test/ *(rw,no_root_squash,fsid=1)
+/tmp/s_scratch *(rw,no_root_squash,fsid=2)
+```
+
+执行脚本[start-nfs-server.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/nfs/start-nfs-server.sh)启动nfs server。
+
+nfs client安装所需软件：
+```sh
+apt-get install nfs-common -y # debian
+```
+
+nfs client挂载（更多挂载选项可以通过命令`man 5 nfs`查看）：
+```sh
+# nfsv4的根路径是/tmp/，源路径填写相对路径 /s_test 或 s_test
+mount -t nfs -o vers=4.0 ${server_ip}:/s_test /mnt
+mount -t nfs -o vers=4.1 ${server_ip}:/s_test /mnt
+mount -t nfs -o vers=4.2 ${server_ip}:/s_test /mnt
+# nfsv3和nfsv2 源路径要写完整的源路径，没有根路径的概念，源路径必须是绝对路径/tmp/s_test
+mount -t nfs -o vers=3 ${server_ip}:/tmp/s_test /mnt
+# nfsv2, nfs server 需要修改 /etc/nfs.conf 中的 `[nfsd] vers2=y`
+mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
+```
+
+如果nfs server的exportfs的配置文件`/etc/exports`如下，没有`fsid`选项：
+```sh
+/tmp/s_test/ *(rw,no_root_squash)
+```
+
+这时nfsv4的根路径就是`/`，nfs client挂载nfsv4的命令如下：
+```sh
+mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
+```
+
+既然涉及到网络，定位问题肯定也少不了网络抓包，使用`tcpdump`工具拆包：
+```sh
+# --interface: 指定要监听的网络接口，any表示所有的网络接口
+# --buffer-size: 默认4KB, 单位 KB, 20480 代表 20MB
+tcpdump --interface=eth0 --buffer-size=20480 -w out.cap
+# 配置网络参数，把参数调大可以防止抓包数据丢失
+sysctl -a | grep net.core.rmem # 查看配置
+sysctl net.core.rmem_default=xxx
+sysctl net.core.rmem_max=xxx
+```
+
+`tcpdump`抓包的文件，可以使用`wireshark`分析。
