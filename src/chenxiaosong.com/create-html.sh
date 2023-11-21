@@ -35,6 +35,7 @@ array=(
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
     src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"
     src/docker/docker.md linux/docker.html "Docker安装与使用"
+    src/qemu-kvm-install-macos/qemu-kvm-install-macos.md others/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
     src/ghostwriter-makdown/ghostwriter-makdown.md linux/ghostwriter-makdown.html "ghostwriter: 一款makdown编辑器"
     src/mosquitto-mqtt/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
     src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
@@ -43,7 +44,6 @@ array=(
     src/wubi/wubi.md others/wubi.html "五笔输入法"
     src/openharmony/openharmony.md others/openharmony.html "OpenHarmony编译运行调试环境"
     src/free-software/free-software.md others/free-software.html "自由软件介绍"
-    src/qemu-kvm-install-macos/qemu-kvm-install-macos.md others/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
     src/stm32-linux/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
     src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
     # private
