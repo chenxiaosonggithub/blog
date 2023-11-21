@@ -44,6 +44,8 @@
 
 [Docker安装与使用](http://chenxiaosong.com/linux/docker.html)
 
+[ghostwriter: 一款makdown编辑器]((http://chenxiaosong.com/linux/ghostwriter-makdown.html))
+
 # 还没有分类
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/others/chenxiaosong.com.html)
