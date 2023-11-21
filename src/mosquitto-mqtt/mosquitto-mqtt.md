@@ -14,7 +14,7 @@
 
 开机启动服务：`sudo systemctl enable mosquitto`
 
-> 注意：有些系统上mosquitto-clients还需要另外安装（如ubuntu，sudo apt install mosquitto-clients -y）。
+> 注意：有些系统上mosquitto-clients还需要另外安装（如ubuntu，`sudo apt install mosquitto-clients -y`）。
 
 # 订阅消息
 
@@ -36,9 +36,9 @@
 
 编辑配置文件 `sudo vim /etc/mosquitto/mosquitto.conf`，在文件末尾添加以下内容：
 
-```
-allow_anonymous false	#不能匿名访问
-password_file /etc/mosquitto/pwfile		#存放密码的文件
+```sh
+allow_anonymous false # 不能匿名访问
+password_file /etc/mosquitto/pwfile # 存放密码的文件
 ```
 
 第一次新建MQTT账号（**带有选项-c**）：
@@ -52,8 +52,6 @@ password_file /etc/mosquitto/pwfile		#存放密码的文件
 最后重启mosquitto服务：
 
 `sudo systemctl restart mosquitto`
-
-
 
 订阅消息的命令要修改成：
 

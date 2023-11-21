@@ -46,6 +46,8 @@
 
 [ghostwriter: 一款makdown编辑器](http://chenxiaosong.com/linux/ghostwriter-makdown.html)
 
+[使用mosquitto搭建MQTT服务器](http://chenxiaosong.com/linux/mosquitto-mqtt.html)
+
 # 还没有分类
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/others/chenxiaosong.com.html)
