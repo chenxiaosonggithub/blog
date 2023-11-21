@@ -37,6 +37,7 @@ array=(
     src/docker/docker.md linux/docker.html "Docker安装与使用"
     src/ghostwriter-makdown/ghostwriter-makdown.md linux/ghostwriter-makdown.html "ghostwriter: 一款makdown编辑器"
     src/mosquitto-mqtt/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
+    src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     # 其他
     src/chenxiaosong.com/chenxiaosong.com.md others/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
