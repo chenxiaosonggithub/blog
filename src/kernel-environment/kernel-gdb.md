@@ -54,9 +54,9 @@ gdb命令的用法和用户态程序的调试大同小异。
 
 使用内核提供的[GDB辅助调试功能](https://www.kernel.org/doc/Documentation/dev-tools/gdb-kernel-debugging.rst)可以更方便的调试内核：
 ```sh
+# 最新版本（2023.11）编译出来的无法调试4.19和5.10的代码
 echo "set auto-load safe-path /" > ~/.gdbinit # 设置自动加载共享库文件的安全路径
 echo "source ${HOME}/.gdb-linux/vmlinux-gdb.py" >> ~/.gdbinit
-# 曾经碰到过最新的版本有问题，5.10版本可以，但5.10编译出来的可能无法调试最新版本的代码
 make O=build scripts_gdb # 在内核仓库目录下执行
 rm -rf ${HOME}/.gdb-linux/
 mkdir ${HOME}/.gdb-linux/
@@ -64,6 +64,17 @@ cp build/scripts/gdb/* ${HOME}/.gdb-linux/ -rf # 在内核仓库目录下执行
 cp scripts/gdb/vmlinux-gdb.py ${HOME}/.gdb-linux/ # 在内核仓库目录下执行
 sed -i '/sys.path.insert/s/^/# /' ${HOME}/.gdb-linux/vmlinux-gdb.py # 将sys.path.insert所在的行注释掉
 sed -i '/sys.path.insert/a\sys.path.insert(0, "'${HOME}'/.gdb-linux")' ${HOME}/.gdb-linux/vmlinux-gdb.py # 插入 sys.path.insert(0, "${HOME}/.gdb-linux")
+
+# 5.10编译出来的，也可以调试4.19，但无法调试最新的代码
+echo "set auto-load safe-path /" > ~/.gdbinit # 设置自动加载共享库文件的安全路径
+echo "source ${HOME}/.gdb-linux-5.10/vmlinux-gdb.py" >> ~/.gdbinit
+make O=build scripts_gdb # 在5.10内核仓库目录下执行
+rm -rf ${HOME}/.gdb-linux-5.10/
+mkdir ${HOME}/.gdb-linux-5.10/
+cp build/scripts/gdb/* ${HOME}/.gdb-linux-5.10/ -rf # 在5.10内核仓库目录下执行
+cp scripts/gdb/vmlinux-gdb.py ${HOME}/.gdb-linux-5.10/ # 在5.10内核仓库目录下执行
+sed -i '/sys.path.insert/s/^/# /' ${HOME}/.gdb-linux-5.10/vmlinux-gdb.py # 将sys.path.insert所在的行注释掉
+sed -i '/sys.path.insert/a\sys.path.insert(0, "'${HOME}'/.gdb-linux-5.10")' ${HOME}/.gdb-linux-5.10/vmlinux-gdb.py # 插入 sys.path.insert(0, "${HOME}/.gdb-linux-5.10")
 ```
 
 重新启动GDB就可以使用GDB辅助调试功能：
