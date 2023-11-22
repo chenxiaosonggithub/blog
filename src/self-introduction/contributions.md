@@ -20,7 +20,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # LoRaWAN协议翻译
 
-[twowinter/LoRaWAN-Specification_ZH_CN](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN)是由腾讯LoRaWAN专家[towwinter](https://github.com/twowinter)发起的LoRaWAN-Specification的翻译项目。我主要参与了[V1.1版本](https://resources.lora-alliance.org/technical-specifications/lorawan-specification-v1-1)的翻译，lioneie是我曾经的github用户名，lionChen是我曾经的签名。
+[twowinter/LoRaWAN-Specification_ZH_CN](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN)是由腾讯LoRaWAN专家[towwinter](https://github.com/twowinter)发起的LoRaWAN-Specification的翻译项目。我主要参与了[V1.1版本](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/tree/V1.1)的翻译，lioneie是我曾经的github用户名，lionChen是我曾经的签名。
 
 [点击查看pull request: Update chapter 1 ~ 2 of spec V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/4/commits)
 
