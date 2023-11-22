@@ -15,6 +15,7 @@ array=(
     src/self-introduction/photos.md photos.html '陈孝松照片'
     src/self-introduction/openharmony.md openharmony.html "陈孝松OpenHarmony贡献"
     src/self-introduction/blog.md blog.html "陈孝松博客"
+    src/self-introduction/contributions.md contributions.html "陈孝松自由软件贡献"
     # Linux内核
     src/kernel-environment/kernel-build.md kernel/kernel-build.html "Linux内核编译"
     src/kernel-environment/kernel-gdb.md kernel/kernel-gdb.html "GDB调试Linux内核"

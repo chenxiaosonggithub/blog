@@ -28,21 +28,21 @@
 
 2023年10月至今，在麒麟软件从事 **Linux内核** 开发。
 
-# 3. Linux内核贡献
-
-[点击查看Linux内核邮件列表: http://chenxiaosong.com/kernel/mailinglist](http://chenxiaosong.com/kernel/mailinglist)
-
-[点击查看Linux内核仓库提交记录: http://chenxiaosong.com/kernel/gitlog](http://chenxiaosong.com/kernel/gitlog)（加载需要一丢丢时间哈）
-
-Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
-
-主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁（截止2023年10月），修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
-
-# 4. 博客
+# 3. 博客
 
 [点击查看具体的文章: http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)
 
 我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开。我的笔记没有什么高大上的内容，只是记录自己学到的一些知识点，当然如果能对其他热爱技术的朋友有所启发，我就更开心了。
+
+# 4. Linux内核贡献
+
+[点击查看kernel.org网站上我的Linux内核邮件列表](https://lore.kernel.org/all/?q=chenxiaosong)
+
+[点击查看kernel.org网站上我的Linux内核仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈）
+
+Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
+
+主要从事的方向是**文件系统**（nfs，cifs等），贡献过30+个文件系统相关内核补丁（截止2023年10月），修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
 
 # 5. 鸿蒙操作系统贡献
 
@@ -52,9 +52,15 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 、 **fuse（用户态文件系统）** 和 **媒体库** 等开发。
 
-# 6. 自行车骑行
+# 6. 所有的自由开源软件贡献
 
-[点击查看strava上的骑行记录: http://chenxiaosong.com/ride](http://chenxiaosong.com/ride)
+[点击查看我的所有贡献](http://chenxiaosong.com/contributions.html)
+
+除了Linux内核和鸿蒙操作系统的贡献外，还贡献过LoRaWAN、ghostwriter等项目。
+
+# 7. 自行车骑行
+
+[点击查看strava上的骑行记录](https://www.strava.com/athletes/chenxiaosong)
 
 骑行活动都记录在strava上，需要注册登录strava账号才能查看所有的活动，未登录只能查看一周的。
 
