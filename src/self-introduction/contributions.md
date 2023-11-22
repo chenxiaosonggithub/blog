@@ -1,4 +1,4 @@
-这里列出我所有的自由开源软件项目贡献。
+这里列出我所有的自由软件项目贡献。
 
 # Linux内核贡献
 
@@ -22,9 +22,9 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 [twowinter/LoRaWAN-Specification_ZH_CN](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN)是由腾讯LoRaWAN专家[towwinter](https://github.com/twowinter)发起的LoRaWAN-Specification的翻译项目。我主要参与了[V1.1版本](https://resources.lora-alliance.org/technical-specifications/lorawan-specification-v1-1)的翻译，lioneie是我曾经的github用户名，lionChen是我曾经的签名。
 
-[Update chapter 1 ~ 2 of spec V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/4/commits)
+[点击查看pull request: Update chapter 1 ~ 2 of spec V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/4/commits)
 
-[V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/5/commits)
+[点击查看pull request: V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/5/commits)
 
 # ghostwriter: markdown编辑器
 

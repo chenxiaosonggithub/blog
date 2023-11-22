@@ -10,7 +10,7 @@
 
 爱好：自行车骑行，Linux操作系统。顺便提一句，[只用键盘](http://chenxiaosong.com/pictures/self-introduction/hhkb.jpg)不用鼠标，[五笔打字](http://chenxiaosong.com/others/wubi.html)，喜欢写技术文档。
 
-[自由软件](http://chenxiaosong.com/others/free-software.html)的狂热者，能力一般的极客。现在[麒麟软件](https://www.kylinos.cn/)从事**Linux内核**开发，工作内容全世界都看得到（后面会详细介绍哈）。贡献过多个自由开源软件项目。
+自由软件的狂热者，能力一般的极客。现在[麒麟软件](https://www.kylinos.cn/)从事**Linux内核**开发，工作内容全世界都看得到（后面会详细介绍哈）。[贡献过多个自由开源软件项目](http://chenxiaosong.com/contributions.html)。
 
 另外，多年前还从事过**游戏开发**，**web开发**（vue），**嵌入式开发**，但不敢说精通哈，只是现在还能用来做点小东西吧，比如弄个网页、用开发板做个小工具啥的。
 
@@ -52,7 +52,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 、 **fuse（用户态文件系统）** 和 **媒体库** 等开发。
 
-# 6. 所有的自由开源软件贡献
+# 6. 所有的自由软件贡献
 
 [点击查看我的所有贡献](http://chenxiaosong.com/contributions.html)
 
