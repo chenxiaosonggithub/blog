@@ -52,6 +52,10 @@
 
 [samba服务器搭建](http://chenxiaosong.com/linux/samba-server.html)
 
+# 翻译
+
+[Connectathon NFS tests README](http://chenxiaosong.com/translations/cthon-nfs-tests-readme-cn.html)
+
 # 还没有分类
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/others/chenxiaosong.com.html)
