@@ -52,9 +52,9 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 、 **fuse（用户态文件系统）** 和 **媒体库** 等开发。
 
-# 6. 所有的自由软件贡献
+# 6. 自由软件贡献
 
-[点击查看我的所有贡献](http://chenxiaosong.com/contributions.html)
+[点击查看我的自由软件贡献](http://chenxiaosong.com/contributions.html)
 
 除了Linux内核和鸿蒙操作系统的贡献外，还贡献过LoRaWAN、ghostwriter等项目。
 
