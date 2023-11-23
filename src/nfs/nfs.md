@@ -80,6 +80,13 @@ client端通过nfs操作存储设备经过的路径如下图所示：
                +------------+ 6.            
 ```
 
+SunRPC有以下几个版本，你们一定和我一样在心里骂制定标准的人，为什么会有3个version 2，就不能命名成version 3和4？我们查阅时只需要选择[最新版本rfc5531](https://www.rfc-editor.org/rfc/rfc5531)：
+
+- [rfc1050, April 1988,  RPC: Remote Procedure Call Protocol Specification](https://www.rfc-editor.org/rfc/rfc1050)
+- [rfc1057, June 1988,   RPC: Remote Procedure Call Protocol Specification Version 2](https://www.rfc-editor.org/rfc/rfc1057)
+- [rfc1831, August 1995, RPC: Remote Procedure Call Protocol Specification Version 2](https://www.rfc-editor.org/rfc/rfc1831)
+- [rfc5531, May 2009,    RPC: Remote Procedure Call Protocol Specification Version 2](https://www.rfc-editor.org/rfc/rfc5531)
+
 # NFS各版本比较
 
 | 版本 | RFC | 发布时间 | 页数 |
@@ -87,8 +94,8 @@ client端通过nfs操作存储设备经过的路径如下图所示：
 | NFSv2 | [rfc1094](https://www.rfc-editor.org/rfc/rfc1094.html) | March 1989 | 27 |
 | NFSv3 | [rfc1813](https://www.rfc-editor.org/rfc/rfc1813.html) | June 1995 | 126 |
 | NFSv4 | [rfc3530](https://www.rfc-editor.org/rfc/rfc3530.html)<br>（被[rfc7530](https://www.rfc-editor.org/rfc/rfc7530.html)取代，March 2015） | April 2003 | 275 |
-| NFSv4.1 | [rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html) | January 2010 | 617 |
-| NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) | November 2016 | 104 |
+| NFSv4.1 | [rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html) [翻译](http://chenxiaosong.com/translations/rfc5661-nfsv4.1.html) | January 2010 | 617 |
+| NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) [翻译](http://chenxiaosong.com/translations/rfc7862-nfsv4.2.html) | November 2016 | 104 |
 
 1. NFSv2: 实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
 2. NFSv3: 取消了一些限制，如：文件句柄长度最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
