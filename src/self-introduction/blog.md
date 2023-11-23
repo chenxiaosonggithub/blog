@@ -74,4 +74,4 @@
 
 [Network File System (NFS) Version 4 Minor Version 2 Protocol](http://chenxiaosong.com/translations/rfc7862-nfsv4.2.html)
 
-[NFSv4 client identifier](http://chenxiaosong.com/client-identifier.html)
+[NFSv4 client identifier](http://chenxiaosong.com/translations/client-identifier.html)
