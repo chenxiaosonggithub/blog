@@ -24,12 +24,12 @@
 
 以内核主线代码[fs/namespace.c](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/namespace.c?id=8f6f76a6a29f)文件为例，查看`do_new_mount`函数：
 ```sh
-git log -L :do_new_mount:fs/namespace.c
+git log -L:do_new_mount:fs/namespace.c
 ```
 
 我们发现列出的却是`do_new_mount_fc`的修改记录，因为`do_new_mount_fc`包含字符串`do_new_mount`，又在`do_new_mount()`函数前面，解决方法是在`do_new_mount`后面再加个`\(`：
 ```sh
-git log -L :do_new_mount\(:fs/namespace.c
+git log -L:do_new_mount\(:fs/namespace.c
 ```
 
 # github给另一个账户添加另一个ssh key
