@@ -40,10 +40,6 @@ array=(
     src/ghostwriter-makdown/ghostwriter-makdown.md linux/ghostwriter-makdown.html "ghostwriter: 一款makdown编辑器"
     src/mosquitto-mqtt/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
     src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
-    # 翻译
-    src/translations/cthon-nfs-tests-readme-cn.md translations/cthon-nfs-tests-readme-cn.html "Connectathon NFS tests README"
-    src/nfs/rfc5661-nfsv4.1.md translations/rfc5661-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
-    src/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
     # 其他
     src/chenxiaosong.com/chenxiaosong.com.md others/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
@@ -51,6 +47,10 @@ array=(
     src/free-software/free-software.md others/free-software.html "自由软件介绍"
     src/stm32-linux/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
     src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
+    # 翻译
+    src/translations/cthon-nfs-tests-readme-cn.md translations/cthon-nfs-tests-readme-cn.html "Connectathon NFS tests README"
+    src/nfs/rfc5661-nfsv4.1.md translations/rfc5661-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
+    src/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
     # private
     src/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
 )
