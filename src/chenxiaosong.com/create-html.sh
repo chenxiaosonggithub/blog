@@ -42,6 +42,8 @@ array=(
     src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     # 翻译
     src/translations/cthon-nfs-tests-readme-cn.md translations/cthon-nfs-tests-readme-cn.html "Connectathon NFS tests README"
+    src/nfs/rfc5661-nfsv4.1.md translations/rfc5661-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
+    src/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
     # 其他
     src/chenxiaosong.com/chenxiaosong.com.md others/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
