@@ -6,9 +6,9 @@ rm ${dst_path}/html/ -rf
 # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
 # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
 # --toc：这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
-pandoc_common_options="--from markdown --to html --standalone --metadata encoding=gbk --toc --css http://chenxiaosong.com/stylesheet.css"
+pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --css http://chenxiaosong.com/stylesheet.css"
 
-# 每一行代表： markdown文件相对路径 html文件相对路径 网页标题
+# 每一行代表： markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
     # 自我介绍
     src/self-introduction/index.md index.html '陈孝松个人主页'
@@ -51,6 +51,7 @@ array=(
     src/translations/cthon-nfs-tests-readme-cn.md translations/cthon-nfs-tests-readme-cn.html "Connectathon NFS tests README"
     src/translations/nfs/rfc5661-nfsv4.1.md translations/rfc5661-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
     src/translations/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
+    src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
     # private
     src/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
 )
@@ -61,7 +62,11 @@ for ((index=0; index<${element_count}; index=$((index + 3)))); do
     if [ ! -d "${dst_dir}" ]; then
         mkdir -p "${dst_dir}"
     fi
-    pandoc ${src_path}/blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${pandoc_common_options}
+    from_format="--from markdown"
+    if [[ ${array[${index}]} == *.rst ]]; then
+        from_format="--from rst"
+    fi
+    pandoc ${src_path}/blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${from_format} ${pandoc_common_options}
 done
 
 # pictures是我的私有仓库

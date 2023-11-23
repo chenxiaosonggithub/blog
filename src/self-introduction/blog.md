@@ -73,3 +73,5 @@
 [Network File System (NFS) Version 4 Minor Version 1 Protocol](http://chenxiaosong.com/translations/rfc5661-nfsv4.1.html)
 
 [Network File System (NFS) Version 4 Minor Version 2 Protocol](http://chenxiaosong.com/translations/rfc7862-nfsv4.2.html)
+
+[NFSv4 client identifier](http://chenxiaosong.com/client-identifier.html)
