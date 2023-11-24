@@ -30,7 +30,7 @@
 
 # 3. 博客
 
-[点击查看具体的文章: http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)
+[点击查看具体的文章: chenxiaosong.com/blog](http://chenxiaosong.com/blog)
 
 我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开。我的笔记没有什么高大上的内容，只是记录自己学到的一些知识点，当然如果能对其他热爱技术的朋友有所启发，我就更开心了。
 
@@ -46,7 +46,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 # 5. 鸿蒙操作系统贡献
 
-[点击查看具体的代码: http://chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)
+[点击查看具体的代码: chenxiaosong.com/openharmony](http://chenxiaosong.com/openharmony)
 
 OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 

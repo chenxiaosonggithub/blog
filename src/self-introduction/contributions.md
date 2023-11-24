@@ -32,5 +32,5 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # 博客
 
-更多的内容，请查看我的博客，记录自己学到的一些知识点，[点击查看具体的文章: http://chenxiaosong.com/blog](http://chenxiaosong.com/blog)。
+更多的内容，请查看我的博客，记录自己学到的一些知识点，[点击查看具体的文章: chenxiaosong.com/blog](http://chenxiaosong.com/blog)。
 
