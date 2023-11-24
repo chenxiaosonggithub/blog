@@ -148,8 +148,8 @@ ubuntu2204宿主机中创建网络：
 ```sh
 sudo apt-get install uml-utilities -y # tunctl 命令，　centos９没有
 qemu-system-arm -net nic,model=? -M vexpress-a15 # 查看支持的虚拟网络
-sudo tunctl -b # 按顺序创建 tap0 tap1
-sudo tunctl -t tap0 -u sonvhi
+sudo tunctl -b # 按顺序创建 tap0 tap1，每输入一次命令创建一个
+sudo tunctl -t tap0 -u sonvhi # 指定名称创建
 sudo tunctl -t tap1 -u sonvhi
 sudo ip link set tap0 up # 激活
 sudo ip link set tap1 up # 激活

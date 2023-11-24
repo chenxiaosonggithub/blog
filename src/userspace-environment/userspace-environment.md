@@ -39,6 +39,7 @@ sudo apt install flex bison -y # 内核编译所需
 sudo apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 sudo apt install libncurses-dev -y # make menuconfig所依赖的库
 apt-get install bc -y # 内核编译报错/bin/sh: 1: bc: not found
+sudo apt install bridge-utils -y # brctl命令
 
 apt install bash-completion -y # docker 中git不会自动补全
 sudo apt install openssh-server -y # 默认桌面版本ubuntu不会安装ssh server
@@ -57,8 +58,6 @@ sudo apt install wireshark -y
 
 sudo apt install samba -y # 在virt-manager中安装windows或macos时，与Linux宿主机共享文件用samba（就是cifs或smb）比较方便
 sudo systemctl restart smbd.service # 重启cifs server
-
-sudo apt install bridge-utils -y # TODO: 不确定是否为虚拟机需要的
 
 strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_ # 查看glibc的版本，docker中无法编译有些低版本的内核代码
 
