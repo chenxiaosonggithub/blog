@@ -6,7 +6,7 @@
 
 尝试的其中一款编辑器就是[ghostwriter](https://ghostwriter.kde.org/)，这个markdown编辑器功能挺完善，但缺陷也不少。
 
-我刚解决了一个**严重的preview显示缺陷**[Fix #619, Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/commit/e7ddef1d1e9b0ffd6846ea86f4d90f56344948d1)，大家可以先使用源码安装。
+我刚解决了一个**严重的preview显示缺陷**[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)，大家可以先使用源码安装。
 
 [github源码](https://github.com/KDE/ghostwriter)。
 
@@ -59,6 +59,6 @@ cmark_parser_feed(parser, text.toLatin1().data(), text.toLocal8Bit().length());
 
 中文是Unicode编码，一个汉字占2个字节，而`QString.length()`一个汉字只当成一个字节，需要修改成`QString.toLocal8Bit().length()`。
 
-我的修改方案是[Fix #619, Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/commit/e7ddef1d1e9b0ffd6846ea86f4d90f56344948d1)，lioneie是我曾经的github用户名。
+我的修改方案是[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)，lioneie是我曾经的github用户名。
 
 你没看错，就是这么容易解决，参与到自由软件就是这么简单，参与到开源软件就是这么简单。
