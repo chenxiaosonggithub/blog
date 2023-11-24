@@ -1,8 +1,10 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
+[OpenHarmony](https://www.openharmony.cn/mainPlay)是华为“鸿蒙操作系统”的底座，包含：华为捐献的“鸿蒙操作系统”的基础能力 和 其他参与者的贡献。
 
 主要从事开发**端云协同**功能，也就是端设备（如手机、智能设备等）与云端（云服务、云计算资源）之间的协同工作和通信，工作内容有 **内核hmdfs（鸿蒙分布式文件系统）** 、 **fuse（用户态文件系统）** 和 **媒体库** 等开发。
+
+OpenHarmony的代码托管在gitee上，gitee的功能挺完善，但在尊重开源方面以及一些细节方面有待加强，曾经我公开给gitee提过这一问题，具体请查看[《gitee的搜索功能真的很有问题》](https://gitee.com/oschina/git-osc/issues/I76RNI)。
 
 # 1. 内核
 
