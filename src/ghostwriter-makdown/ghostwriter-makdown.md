@@ -6,11 +6,11 @@
 
 尝试的其中一款编辑器就是[ghostwriter](https://ghostwriter.kde.org/)，这个markdown编辑器功能挺完善，但缺陷也不少。
 
-我刚解决了一个**严重的preview显示缺陷**[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)，大家可以先使用源码安装。
+2021年时我解决了一个**严重的preview显示缺陷**[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)。
 
-[github源码](https://github.com/KDE/ghostwriter)。
+如果各位朋友想自己修改或增加功能，可以使用[github源码](https://github.com/KDE/ghostwriter)安装。
 
-# Linux下安装
+# Linux下源码安装
 
 ghostwriter是跨平台的，在Linux、macOS、Windows下都能运行，这里我只介绍Fedora（Linux）下的编译运行，其他平台请参考[README.md](https://github.com/KDE/ghostwriter/blob/master/README.md)。
 
