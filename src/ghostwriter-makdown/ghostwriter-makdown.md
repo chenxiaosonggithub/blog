@@ -4,7 +4,7 @@
 
 现在我是直接在[自己的个人网站]((http://chenxiaosong.com/)上查看最终的显示效果，具体可以看[《如何快速搭建一个简陋的个人网站》](http://chenxiaosong.com/others/chenxiaosong.com.html)。
 
-尝试的其中一款编辑器就是[ghostwriter](https://ghostwriter.kde.org/)，这个markdown编辑器功能挺完善，但缺陷也不少。
+尝试的其中一款编辑器就是[KDE的ghostwriter](https://ghostwriter.kde.org/)，这个markdown编辑器功能挺完善，但缺陷也不少。
 
 2021年时我解决了一个**严重的preview显示缺陷**[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)。
 
