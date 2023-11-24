@@ -6,6 +6,8 @@
 
 我用的主板是和Linus同款的“技嘉Aorus”，有时会抽风恢复默认的BIOS出厂设置，在BIOS的“easy mode”中把“X.M.P. Disabled”改为“X.M.P.-DDR4-3600 18-22-22-42-64-1.35V”。然后点击右下角的“Advanced Mode(F2)”进入“Advanced Mode”，“Tweaker -> Advanced CPU Settings -> SVM Mode”改为 “Enabled”开启硬件虚拟化配置。
 
+grub的配置文件：[src/userspace-environment/boot-efi-EFI](https://github.com/chenxiaosonggithub/blog/tree/master/src/userspace-environment/boot-efi-EFI)，在操作系统中的路径为`/boot/efi/EFI/{ubuntu,centos}/grub.cfg`。
+
 # 双系统grub设置
 
 centos9 grub设置：
