@@ -342,7 +342,6 @@ pNFS系统由三部分组成：
 2. storage devices: 由数据服务器构成，保存文件数据，当clients从server获得layout后，就可以向storage devices发送数据。clients和storage devices的存储协议有：file layout([rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html))、block layout([rfc5663](https://www.rfc-editor.org/rfc/rfc5663.html))、object layout([rfc5664](https://www.rfc-editor.org/rfc/rfc5664.html))。server和storage devices的控制协议（control procotol）不属于pNFS的范围。
 3. clients：支持pNFS和存储协议。
 
-<!-- 
 # nfs文件锁
 
 使用命令`man 5 nfs`查看`lock / nolock`挂载选项翻译如下：
@@ -352,11 +351,14 @@ pNFS系统由三部分组成：
 在使用NFS挂载/var时，必须使用nolock选项禁用NLM锁定，因为/var包含Linux上的NLM实现使用的文件。在挂载不支持NLM协议的NFS服务器上的导出时，也需要使用nolock选项。
 ```
 
-nfsv2和nfsv3使用NLM（Network Lock Manager）协议实现文件锁，nfsv4实现了文件锁，不需要NLM协议。
-
+<!-- 网上查到的，不确定是否正确
 挂载选项`nolock`：这是默认选项，在客户端加锁，不能保证多个客户端之间的数据不发生冲突。和其他文件系统的加锁过程一样。
-
 挂载选项`lock`：在服务端加锁，能够保证所有客户端访问同一文件不发生冲突。这里只介绍服务端锁。
+-->
+
+nfsv2和nfsv3使用NLM（Network Lock Manager）协议实现文件锁。`lock / nolock`挂载选项仅针对nfsv2和nfsv3，未指定时，默认`lock`选项。
+
+nfsv4实现了文件锁，不需要NLM协议。`lock / nolock`挂载选项对nfsv4似乎不起作用。
 
 锁定文件使用的命令是：
 ```sh
@@ -385,4 +387,3 @@ fput
               do_unlk
                 nfs4_proc_lock
 ```
--->
