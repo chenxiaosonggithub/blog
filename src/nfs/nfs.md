@@ -309,6 +309,19 @@ delegation机制： 当nfs client1打开一个文件时，如果RPC反向通道�
 
 如果client1的反向通道抽风了，不能用了，回收delegation就会超时，server删除delegation，响应client2，然后在client1主动向server请求时，再通知client1。
 
+客户端delegation的数据结构为`struct nfs_delegation`，服务端的数据结构为`struct nfs4_delegation`。delegation类型`enum open_delegation_type4`。
+
+server创建delegation的流程：
+```c
+nfsd4_open
+  nfsd4_process_open2
+    nfs4_open_delegation
+      nfsd4_cb_channel_good // 判断反向通道
+      nfs4_set_delegation
+        alloc_init_deleg
+        vfs_setlease // 采用租借锁实现delegation
+```
+
 # pNFS（parallel NFS）
 
 从NFSv4.1开始，引入了pNFS，目的是为了解决系统吞吐量问题，pNFS的网络结构图如下：
