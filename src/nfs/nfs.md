@@ -387,3 +387,18 @@ fput
               do_unlk
                 nfs4_proc_lock
 ```
+
+`nfs4_proc_lock`的第二个参数`int cmd`有3种选项：
+
+- F_GETLK: 查询文件锁
+- F_SETLK: 设置文件锁，如果冲突就退出
+- F_SETLKW: 设置文件锁，如果冲突就等待，直到成功
+
+文件锁相关的请求：
+
+- NFSPROC4_CLNT_LOCK: 加锁
+- NFSPROC4_CLNT_LOCKT: 查询
+- NFSPROC4_CLNT_LOCKU: 解锁
+- NFSPROC4_CLNT_RELEASE_LOCKOWNER: 释放文件锁所有者
+
+判断锁类型的函数`nfs4_lock_type()`。
