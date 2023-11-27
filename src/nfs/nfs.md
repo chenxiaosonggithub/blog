@@ -89,6 +89,7 @@ SunRPC有以下几个版本，你们一定和我一样在心里骂制定标准�
 
 # NFS各版本比较
 
+<!--
 | 版本 | RFC | 发布时间 | 页数 |
 |:-----------:|:-----------:|:-----------:|:----------:|
 | NFSv2 | [rfc1094](https://www.rfc-editor.org/rfc/rfc1094.html) | March 1989 | 27 |
@@ -96,12 +97,22 @@ SunRPC有以下几个版本，你们一定和我一样在心里骂制定标准�
 | NFSv4 | [rfc3530](https://www.rfc-editor.org/rfc/rfc3530.html)<br>（被[rfc7530](https://www.rfc-editor.org/rfc/rfc7530.html)取代，March 2015） | April 2003 | 275 |
 | NFSv4.1 | [rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html) [翻译](http://chenxiaosong.com/translations/rfc5661-nfsv4.1.html) | January 2010 | 617 |
 | NFSv4.2 | [rfc7862](https://www.rfc-editor.org/rfc/rfc7862.html) [翻译](http://chenxiaosong.com/translations/rfc7862-nfsv4.2.html) | November 2016 | 104 |
+-->
+nfs的rfc协议文档有以下几个版本：
 
-1. NFSv2: 实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
-2. NFSv3: 取消了一些限制，如：文件句柄长度最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
-3. NFSv4: 有状态协议（NFSv2和NFSv3都是无状态协议），实现文件锁功能。只有两种请求`NULL`和`COMPOUND`，支持delegation。文件句柄长度最大128字节。
-4. NFSv4.1: 支持并行存储。
-5. NFSv4.2: 引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
+- [rfc1094, March 1989,    NFS: Network File System Protocol Specification](https://www.rfc-editor.org/rfc/rfc1094)
+- [rfc1813, June 1995,     NFS Version 3 Protocol Specification](https://www.rfc-editor.org/rfc/rfc1813)
+- [rfc7530, March 2015,    Network File System (NFS) Version 4 Protocol](https://www.rfc-editor.org/rfc/rfc7530)
+- [rfc8881, August 2020,   Network File System (NFS) Version 4 Minor Version 1 Protocol](https://www.rfc-editor.org/rfc/rfc8881)
+- [rfc7862, November 2016, Network File System (NFS) Version 4 Minor Version 2 Protocol](https://www.rfc-editor.org/rfc/rfc7862)
+
+nfs各个版本的区别：
+
+- NFSv2: 实现基本的功能，有很多的限制，如：读写最大长度限制8192字节，文件句柄长度固定32字节，只支持同步写。
+- NFSv3: 取消了一些限制，如：文件句柄长度最大64字节，支持服务器异步写。增加ACCESS请求检查用户的访问权限。
+- NFSv4: 有状态协议（NFSv2和NFSv3都是无状态协议），实现文件锁功能。只有两种请求`NULL`和`COMPOUND`，支持delegation。文件句柄长度最大128字节。
+- NFSv4.1: 支持并行存储。
+- NFSv4.2: 引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
 
 # 怎么用？
 
