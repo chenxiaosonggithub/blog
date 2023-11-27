@@ -4,7 +4,7 @@
 
 持续更新中。。。
 
-本文章翻译自文档[Network File System (NFS) Version 4 Minor Version 2 Protocol](https://www.rfc-editor.org/rfc/rfc7862.html)。
+本文章翻译自文档[Network File System (NFS) Version 4 Minor Version 2 Protocol](https://www.rfc-editor.org/rfc/rfc7862.html)，大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # 摘要
 

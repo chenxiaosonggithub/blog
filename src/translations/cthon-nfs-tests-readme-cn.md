@@ -1,6 +1,6 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-本文档翻译自[dkruchinin/cthon-nfs-tests 的 README 文件](https://github.com/dkruchinin/cthon-nfs-tests/blob/master/README)，大部分借助于ChatGPT，当然有一丢丢是经过了我的修改。
+本文档翻译自[dkruchinin/cthon-nfs-tests 的 README 文件](https://github.com/dkruchinin/cthon-nfs-tests/blob/master/README)，大部分借助于ChatGPT，当然有一丢丢是经过了我的修改。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # 1. Connectathon NFS Testsuites 简介
 

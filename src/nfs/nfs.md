@@ -322,15 +322,18 @@ nfsd4_open
         vfs_setlease // 采用租借锁实现delegation
 ```
 
-client打开一个有delegation的文件：
+server回收delegation的操作是`NFSPROC4_CLNT_CB_RECALL`（操作处理函数定义在`nfs4_cb_procedures`），处理client发过来的请求的函数是`nfsd4_delegreturn`。
+
+client端相关的流程：
 ```c
 // 由_nfs4_open_and_get_state -> _nfs4_proc_open发起
 rpc_async_schedule
   __rpc_execute
     rpc_prepare_task
       nfs4_open_prepare
-        can_open_delegated // 判断是否要发起请求
+        can_open_delegated // 判断是否要发起open请求
 
+// 打开一个有delegation的文件
 do_dentry_open
   nfs4_file_open
     nfs4_atomic_open
@@ -352,10 +355,9 @@ nfs_end_delegation_return
         nfs4_open_recover_helper
           _nfs4_recover_proc_open // 发起open请求
           nfs4_opendata_to_nfs4_state // 更新struct nfs4_state
-    nfs_do_return_delegation // open后，再回收
+    nfs_do_return_delegation
+      nfs4_proc_delegreturn // 最终调用到nfs4_xdr_enc_delegreturn, 更多的操作查看nfs4_procedures
 ```
-
-server返还delegation的操作是`NFSPROC4_CLNT_CB_RECALL`（操作处理函数定义在`nfs4_cb_procedures`）
 
 # pNFS（parallel NFS）
 
