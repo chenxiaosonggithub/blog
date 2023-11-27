@@ -75,3 +75,7 @@
 [Network File System (NFS) Version 4 Minor Version 2 Protocol](http://chenxiaosong.com/translations/rfc7862-nfsv4.2.html)
 
 [NFSv4 client identifier](http://chenxiaosong.com/translations/client-identifier.html)
+
+[[MS-SMB]: Server Message Block (SMB) Protocol"](http://chenxiaosong.com/translations/ms-smb.html)
+
+[[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3](http://chenxiaosong.com/translations/ms-smb2.html)
