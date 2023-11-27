@@ -322,6 +322,41 @@ nfsd4_open
         vfs_setlease // 采用租借锁实现delegation
 ```
 
+client打开一个有delegation的文件：
+```c
+// 由_nfs4_open_and_get_state -> _nfs4_proc_open发起
+rpc_async_schedule
+  __rpc_execute
+    rpc_prepare_task
+      nfs4_open_prepare
+        can_open_delegated // 判断是否要发起请求
+
+do_dentry_open
+  nfs4_file_open
+    nfs4_atomic_open
+      nfs4_do_open
+        _nfs4_do_open
+          _nfs4_open_and_get_state
+            _nfs4_proc_open
+              nfs4_run_open_task
+                .callback_ops = &nfs4_open_ops, // 会异步调用到nfs4_open_prepare
+            _nfs4_opendata_to_nfs4_state
+              nfs4_try_open_cached
+                can_open_delegated
+
+// 回收delegation
+nfs_end_delegation_return
+  nfs_end_delegation_return
+    nfs_delegation_claim_opens
+      nfs4_open_delegation_recall
+        nfs4_open_recover_helper
+          _nfs4_recover_proc_open // 发起open请求
+          nfs4_opendata_to_nfs4_state // 更新struct nfs4_state
+    nfs_do_return_delegation // open后，再回收
+```
+
+server返还delegation的操作是`NFSPROC4_CLNT_CB_RECALL`（操作处理函数定义在`nfs4_cb_procedures`）
+
 # pNFS（parallel NFS）
 
 从NFSv4.1开始，引入了pNFS，目的是为了解决系统吞吐量问题，pNFS的网络结构图如下：
