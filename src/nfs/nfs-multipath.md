@@ -6,5 +6,12 @@ pull request: [[openEuler-20.03-LTS-SP4]add enfs feature patch and change log in
 
 编译前打开配置`CONFIG_ENFS=y`
 
-
+挂载选项解析流程：
+```c
+nfs_parse_mount_options
+  enfs_check_mount_parse_info
+    nfs_multipath_parse_options
+      nfs_multipath_parse_ip_list
+        nfs_multipath_parse_ip_list_inter
+```
 
