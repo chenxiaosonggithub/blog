@@ -68,7 +68,7 @@
 
 # 翻译
 
-[Connectathon NFS tests README](http://chenxiaosong.com/translations/cthon-nfs-tests-readme-cn.html)
+[Connectathon NFS tests README](http://chenxiaosong.com/translations/cthon-nfs-tests-readme.html)
 
 [Network File System (NFS) Version 4 Minor Version 1 Protocol](http://chenxiaosong.com/translations/rfc8881-nfsv4.1.html)
 
