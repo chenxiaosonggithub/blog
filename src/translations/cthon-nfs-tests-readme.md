@@ -54,7 +54,7 @@ Makefiles中包含两个特殊目标：copy和dist。命令“make copy DESTDIR=
 
 server [-a|-b|-g|-s|-l] [-f|-t] [-n] [-o mnt_options] [-p server_path] [-m mntpoint] [-N numpasses] server_name
 
--a|-b|-g|-s|-l - 将传递给runtests脚本。此参数是可选的。默认值从初始化文件tests.init中读取。变量TEST包含此参数。此参数选择要运行的测试：
+-a|-b|-g|-s|-l      - 将传递给runtests脚本。此参数是可选的。默认值从初始化文件tests.init中读取。变量TEST包含此参数。此参数选择要运行的测试：
     -a	运行基本、一般、特殊和锁定测试
     -b	仅运行基本测试
     -g	仅运行一般测试
