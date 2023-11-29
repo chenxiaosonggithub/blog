@@ -141,6 +141,7 @@ crash> struct address_space -ox
 struct address_space {
   ...
   # 这里正好和dmesg日志中对应上：BUG: unable to handle kernel NULL pointer dereference at 0000000000000080
+  # 当然，如果mapping的地址是一个不为NULL的值，比如是一个无效的地址x，那报错的地址就是0000000000000080+x
   [0x80] spinlock_t private_lock;
   ...
 }
