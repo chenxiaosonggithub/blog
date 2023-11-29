@@ -1,33 +1,12 @@
-编写本文档的目的是为了查找命令方便，也希望可以给同样喜爱vim的朋友一些参考。
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-本人使用的系统是Fedora。
+编写本文档的目的是为了查找命令方便，也希望可以给同样喜爱vim的朋友一些参考。
 
 至于vim最基础的知识，可以在shell下输入`vimtutor`命令查看，网上也有很多翻译的文档，请自行搜索。
 
-# 联系方式
-
-大家如果发现写错的地方或有一些想法想交流的，欢迎评论或发送邮件到<u>lioneie＠163.com</u>。
-
 # vim配置
 
-编辑配置文件 `vim ~/.vimrc` ，以下是我所使用的配置 ：
-
-```
-set number              "显示行号
-syntax on               "语法高亮
-set paste               "粘贴不自动缩进
-set ruler               "右下角显示位置
-set hlsearch            "搜索高亮
-set fdm=indent          "indent缩进折叠，syntax语法折叠
-set pastetoggle=<F9>    "F9粘贴设置切换
-"set ts=4                "一个tab键等于4个空格宽度
-"set sw=4                "按<键和>键缩进时，移动4个空格
-"set expandtab           "tab转化为空格
-set mouse-=a			"鼠标选择文字不会进入visual模式
-colorscheme desert      "支持的color查看/usr/share/vim/vim82/colors/（vim82是vim版本）
-set ic                  "set ic忽略大小写(ignore case), set noic 不忽略大小写
-set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t- "cscope打开quickfix窗口
-```
+配置文件 `~/.vimrc` ，可以参考[我的配置文件](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/vimrc)
 
 加载其他的.vimrc，在~/.vimrc中加入以下内容：
 
@@ -83,7 +62,7 @@ set cscopequickfix=a-,c-,d-,e-,f-,g-,i-,s-,t- "cscope打开quickfix窗口
 m为$时表示最后一行
 ```
 
-跳转（cscope提供的跳转快捷键查看[cscope](#cscope)）：
+跳转（cscope提供的跳转快捷键查看cscope章节）：
 
 ```
 ctrl加]	ctags提供的跳转定义
@@ -130,7 +109,8 @@ ctrl+v	块选择可视范围
 选中可视范围后，按<键向前缩进，按>键向后缩进
 不选中可视范围时，按两次<键向前缩进，按两次>键向后缩进
 取消查找高亮	:nohlsearch (简写成noh)
-大写J		将当前行和下一行合并
+将当前行和下一行合并  大写J
+将匹配到的所有行删除        :g/pattern/d
 ```
 # ctags
 
@@ -146,7 +126,7 @@ ctrl+v	块选择可视范围
 
 安装cscope：`sudo dnf install cscope -y`。
 
-将脚本文件[cscope_maps.vim](https://github.com/lioneie/csdn/blob/master/vim%E4%BD%BF%E7%94%A8/cscope_maps.vim)放到`~/.vim/plugin/`路径下，即可使用快捷键（快捷键种类查看 `:cs help`），如`:cs find s word`查找word引用可使用快捷键`ctrl加\加s`（按顺序依次按3个键）。
+将脚本文件[cscope_maps.vim](https://github.com/chenxiaosonggithub/blog/blob/master/src/vim/cscope_maps.vim)放到`~/.vim/plugin/`路径下，即可使用快捷键（快捷键种类查看 `:cs help`），如`:cs find s word`查找word引用可使用快捷键`ctrl加\加s`（按顺序依次按3个键）。
 
 使用`cscope -Rqbk`（当需要包含`/usr/include`头文件时，不使用`-k`选项）编译代码生成`cscope.out`文件，在`cscope.out`文件所在目录打开`vim`即可加载`cscope.out`文件
 
