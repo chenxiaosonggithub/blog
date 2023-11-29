@@ -14,7 +14,8 @@
 
 此README分为五个部分。第一部分是介绍，您正在阅读的部分。然后是有关在您的计算机上运行测试套件之前必须执行的操作的说明。接下来是有关通常如何运行测试套件的描述，然后是它们在Connectathon上的使用的描述。最后一部分详细描述了每个测试的操作。
 
-此测试套件应该在BSD和基于System V的系统上运行。Connectathon测试套件的System V Release 3端口由Lachman Technology，Incorporated提供，地址为1901 N. Naper Blvd.，Naperville，IL。60563。
+此测试套件应该在BSD和基于System V的系统上运行。Connectathon测试套件的System V Release 3端口由Lachman Technology，Incorporated提供，地址为1901 N. Naper Blvd.,
+Naperville, IL.  60563。
 ```
 
 # 准备运行测试套件
@@ -22,10 +23,10 @@
 ```
 为了准备在您的计算机上运行测试套件，请更改到最高级别的测试套件目录（它应该与包含此README文件的目录相同），根据您所在的平台编辑tests.init，并键入“make”以编译测试程序。如果您不确定是否在正确的目录中，请键入“ls -CF”，您应该看到以下文件和目录：
 
-Makefile    basic/    lock/    tests.h
-README      domount.c    runtests    tests.init
-READWIN.txt    general/    server    tools/
-Testitems    getopt.c    special/    unixdos.h
+Makefile	basic/		lock/		tests.h
+README		domount.c	runtests	tests.init
+READWIN.txt	general/	server		tools/
+Testitems	getopt.c	special/	unixdos.h
 
 "server"脚本使用"getopt"。目录中包含了"getopt"的公共领域版本的源文件。Makefile将为您编译它。
 
@@ -40,7 +41,9 @@ Makefiles中包含两个特殊目标：copy和dist。命令“make copy DESTDIR=
 
 # 如何运行测试套件
 
+```
 有两种运行测试的方式：使用服务器shell脚本或挂载、自行运行测试，然后卸载。我们建议您使用服务器脚本来运行测试。
+```
 
 ## 服务器脚本
 
@@ -123,7 +126,9 @@ NFS测试套件应分为三个阶段运行：
 
 # 测试描述
 
+```
 在括号中包含了测试套件使用的系统和库调用。如果您对如何记录时间统计感兴趣，可以查看源代码，因为这里没有包含。
+```
 
 ##  基本测试
 
@@ -291,7 +296,9 @@ test9: statfs
 
 ## GENERAL:  用于测试服务器负载的一般测试
 
+```
 运行小型编译、tbl、nroff、大型编译、四个同时运行的大型编译和make。
+```
 
 ## SPECIAL:  与特殊测试相关的信息
 
@@ -311,12 +318,13 @@ special目录设置为测试过去出现的特殊问题。这些测试旨在提�
 
 ## LOCK
 
+```
 lock目录包含一个测试程序，可用于测试内核文件和记录锁定功能。这是为了测试网络锁定管理器。
 
 测试程序包含13组锁定测试。它们测试基本的锁定功能。
 
 默认情况下，不测试强制锁定。通常不支持在NFS文件上进行强制锁定。
-
+```
 
 ## MISC
 
