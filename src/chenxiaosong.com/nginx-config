@@ -57,7 +57,7 @@ server {
 
 	location = /default-location {
 		# 设置默认地址的配置，使用302临时重定向
-		return 302 /your-default-location;
+		return 302 /;
 	}
 
 	# 网页重定向
