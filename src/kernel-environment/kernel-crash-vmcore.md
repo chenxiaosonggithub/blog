@@ -13,6 +13,16 @@ cat /proc/sys/kernel/panic_on_oops # 确认是否生效
 (qemu) dump-guest-memory /your_path/vmcore
 ```
 
+在生产环境下，没有用到qemu，除了panic时导出vmcore，还可以手动触发导出vmcore，这在一些场景下收集信息非常有用：
+```sh
+# 这个命令启用了 Magic SysRq 键。Magic SysRq 键提供了一组能够直接与内核进行交互的调试和故障排除功能。
+# 当启用 Magic SysRq 后，您可以使用 Magic SysRq 键与其他键组合来触发特定的操作
+echo 1 > /proc/sys/kernel/sysrq
+# 这个命令触发了 Magic SysRq 键中的 "c" 操作。在 Magic SysRq 中，"c" 表示让内核立即进行系统内核转储。
+# 这对于在系统发生严重故障时收集调试信息非常有用。
+echo c > /proc/sysrq-trigger
+```
+
 以[4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)构造复现导出的vmcore为例，说明vmcore的分析过程。
 
 启动crash：
