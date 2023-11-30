@@ -159,19 +159,6 @@ mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
 mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 ```
 
-既然涉及到网络，定位问题肯定也少不了网络抓包，使用`tcpdump`工具抓包：
-```sh
-# --interface: 指定要监听的网络接口，any表示所有的网络接口
-# --buffer-size: 默认4KB, 单位 KB, 20480 代表 20MB
-tcpdump --interface=eth0 --buffer-size=20480 -w out.cap
-# 配置网络参数，把参数调大可以防止抓包数据丢失
-sysctl -a | grep net.core.rmem # 查看配置
-sysctl net.core.rmem_default=xxx
-sysctl net.core.rmem_max=xxx
-```
-
-`tcpdump`抓包的文件，可以使用`wireshark`分析。
-
 # 文件句柄
 
 我们先来看一下client端如果只告诉server端一个inode号会发生什么。

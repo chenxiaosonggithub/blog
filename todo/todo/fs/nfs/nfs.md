@@ -1,13 +1,4 @@
 
-# 调试开关
-
-```shell
-echo 0x0008 > /proc/sys/sunrpc/nfs_debug # NFSDBG_PAGECACHE        0x0008
-echo 0x0002 > /proc/sys/sunrpc/rpc_debug # RPCDBG_CALL             0x0002
-echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # NFSDBG_ALL              0xFFFF
-echo 0x7fff > /proc/sys/sunrpc/rpc_debug # RPCDBG_ALL              0x7fff
-```
-
 # mount
 
 按顺序从上往下, nfsv4.1
