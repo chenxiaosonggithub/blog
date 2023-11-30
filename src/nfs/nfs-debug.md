@@ -14,7 +14,7 @@ echo 0x7fff > /proc/sys/sunrpc/rpc_debug # RPCDBG_ALL              0x7fff
 
 如果你缩小了nfs定位的范围，比如说只打开`pagecache`相关的nfs日志：
 ```sh
-echo 0x0008 > /proc/sys/sunrpc/nfs_debug # NFSDBG_PAGECACHE        0x0008
+echo 0x0008 > /proc/sys/sunrpc/nfs_debug # NFSDBG_PAGECACHE
 ```
 
 `include/uapi/linux/nfs_fs.h`中所有的nfs调试`flag`:
@@ -39,7 +39,7 @@ echo 0x0008 > /proc/sys/sunrpc/nfs_debug # NFSDBG_PAGECACHE        0x0008
 
 同样的，如果你缩小了rpc定位的范围，比如说只打开`call`相关的rpc日志：
 ```sh
-echo 0x0002 > /proc/sys/sunrpc/rpc_debug # RPCDBG_CALL             0x0002
+echo 0x0002 > /proc/sys/sunrpc/rpc_debug # RPCDBG_CALL
 ```
 
 `include/uapi/linux/sunrpc/debug.h`中所有的rpc调试`flag`:
@@ -109,3 +109,26 @@ echo c > /proc/sysrq-trigger
 ```
 
 关于vmcore的更详细内容，请查看[《crash解析vmcore》](http://chenxiaosong.com/kernel/kernel-crash-vmcore.html)。
+
+# 非特权源端口挂载
+
+默认情况下，nfs挂载使用的源端口是小于1024的特权端口（Privileged Ports），需要root权限。
+
+但在某些情况下，无法挂载时，可以尝试使用非特权端口挂载，这对排查问题很有帮助。
+
+首先，server端的`/etc/exports`文件中对导出路径增加`insecure`选项，如：
+```sh
+/tmp/ *(rw,no_root_squash,fsid=0,insecure)
+```
+
+重启server端服务：
+```sh
+systemctl restart nfs-server.service
+```
+
+client端挂载选项指定`noresvport`：
+```sh
+mount -t nfs -o vers=4.2,noresvport ${server_ip}:/ /mnt
+```
+
+请注意，使用非特权源端口挂载在一些场景下是不安全的（从server端的配置选项`insecure`就能看出），尽量只在调试场景下使用。
