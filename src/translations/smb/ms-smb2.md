@@ -95,4 +95,4 @@ SMB 3.1.1方言引入以下增强功能：
 通过RDMA转换的协商支持RDMA负载的加密。
 ```
 
-todo: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb2/06451bf2-578a-4b9d-94c0-8ce531bf14c4
+# todo: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb2/06451bf2-578a-4b9d-94c0-8ce531bf14c4

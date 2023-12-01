@@ -74,7 +74,7 @@ NFS版本4 次版本1（NFSv4.1）协议是NFS版本4（NFSv4）协议的第二�
 - 修改NFSv4.0协议的规范。
 - 阐明NFSv4.0协议。
 
-todo: 1.5. NFSv4 Goals
+# todo: 1.5. NFSv4 Goals
 
 # 2.10. 会话
 
@@ -101,4 +101,4 @@ NFSv4.1 客户端和服务器必须支持并必须使用本节描述的会话功
 
 一个客户端可以创建多个会话。一个会话不能为多个客户端提供服务。
 
-todo: 2.10.2. NFSv4 Integration
+# todo: 2.10.2. NFSv4 Integration

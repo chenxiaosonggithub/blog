@@ -53,4 +53,4 @@ Server Message Block（SMB）版本1.0协议通过提供额外的安全性、文
 
 其中许多功能都通过对SMB_COM_NEGOTIATE（第2.2.4.5节）和SMB_COM_SESSION_SETUP_ANDX（第2.2.4.6节）命令请求和响应的增强来公开。
 
-todo: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/592d0cbe-41d0-4b8e-8bb9-a60edd85e5e8
+# todo: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/592d0cbe-41d0-4b8e-8bb9-a60edd85e5e8

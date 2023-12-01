@@ -62,4 +62,4 @@ o 通过某些专有手段由客户端与服务器一起使用，例如，标记
 
 NFSv4.2提供了客户端在以前在NFS协议的范围内无法实现这些功能的情况下在服务器上利用这些功能的手段。
 
-todo: 1.4.  Overview of NFSv4.2 Features
+# todo: 1.4.  Overview of NFSv4.2 Features

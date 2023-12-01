@@ -117,4 +117,4 @@ NFSv4.1 在整体NFSv4目标的框架内具有以下目标。
 
 验证器（Verifier）：验证器是由客户端生成的一个64位数量，服务器可以使用它来确定客户端是否已重新启动并丢失了所有先前的锁定状态。
 
-todo:1.7.  Overview of NFSv4.1 Features
+# todo:1.7.  Overview of NFSv4.1 Features
