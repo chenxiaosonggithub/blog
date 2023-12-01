@@ -22,13 +22,13 @@
 
 [Linux进程调度](http://chenxiaosong.com/kernel/process.html)
 
-# nfs（网络文件系统）
+# NFS（网络文件系统）
 
 [NFS网络文件系统介绍](http://chenxiaosong.com/nfs/nfs.html)
 
 [定位NFS问题的常用方法](http://chenxiaosong.com/nfs/nfs-debug.html)
 
-[nfs回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-correctly.html)
+[nfs回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-incorrectly.html)
 
 [4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)
 
