@@ -144,4 +144,39 @@ fedora更新太频繁了，不稳定，不建议用作开发的系统。
 sudo yum install openssl dwarves zstd ncurses-devel -y # 内核编译所需
 ```
 
+# 树莓派
+
+从[Operating system images](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit)下载“Raspberry Pi OS with desktop and recommended software”。
+
+向SD卡烧录系统：
+```sh
+sudo dd bs=4M if=解压之后的img of=/dev/sdb
+```
+
+图形界面的树莓派系统的常用软件安装：
+```sh
+# 解决git无法显示中文
+git config --global core.quotepath false
+
+# 安装五笔，需要重启
+sudo apt-get update -y
+sudo apt install ibus*wubi* -y
+
+# 安装firefox
+# sudo apt update -y
+# sudo apt-get install iceweasel -y
+
+sudo apt update -y
+# 安装emacs
+sudo apt install emacs -y
+# 安装gvim
+sudo apt install vim-gtk3 -y
+```
+
+含代理服务器选项，chrome浏览器启动命令：
+```sh
+chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=127.0.0.1:1080"
+```
+
+
 
