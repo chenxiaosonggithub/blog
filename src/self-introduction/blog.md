@@ -28,7 +28,7 @@
 
 [定位NFS问题的常用方法](http://chenxiaosong.com/nfs/nfs-debug.html)
 
-[nfs回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-incorrectly.html)
+[NFS回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-incorrectly.html)
 
 [4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)
 
