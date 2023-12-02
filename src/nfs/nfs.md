@@ -114,6 +114,20 @@ nfs各个版本的区别：
 - NFSv4.1: 支持并行存储。
 - NFSv4.2: 引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
 
+NFSv2的操作定义在`include/uapi/linux/nfs2.h`中的`NFSPROC_NULL ~ NFSPROC_STATFS`。
+
+NFSv3的操作定义在`include/uapi/linux/nfs3.h`中的`NFS3PROC_NULL ~ NFS3PROC_COMMIT`。
+
+NFSv4的操作定义在`include/uapi/linux/nfs4.h`中的`enum nfs_opnum4`, 为了`/proc/net/rpc/nfs`的输出顺序，另外还定义了`NFSPROC4_CLNT_NULL ~ NFSPROC4_CLNT_READ_PLUS`。
+
+NFSv4反向通道的操作定义在`fs/nfs/callback.h`中的`enum nfs4_callback_opnum`
+<!--
+fs/nfsd/state.h, nfsd4_cb_op
+fs/nfsd/nfs4callback.c, nfs4_cb_procedures
+
+fs/nfsd/nfs4callback.c, enum nfs_cb_opnum4
+-->
+
 # 怎么用？
 
 你可以先跳过这一节，先查看后面的内容，等到你需要搭建NFS环境的时候再来查阅。
