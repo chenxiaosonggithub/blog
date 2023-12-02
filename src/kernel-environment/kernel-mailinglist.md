@@ -111,11 +111,11 @@ foxmail邮箱`~/.gitconfig`：
 
 获取maintainer邮箱：
 ```shell
-./scripts/get_maintainer.pl 补丁文件
+./scripts/get_maintainer.pl file1.patch
 ```
 发送邮件：
 ```shell
-git send-email -to 收件人 -cc 抄送人 补丁文件（可多个）
+git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@example.com file1.patch file2.patch
 ```
 
 # thunderbird邮件客户端
