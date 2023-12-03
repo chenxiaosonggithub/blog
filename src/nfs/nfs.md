@@ -114,19 +114,17 @@ nfs各个版本的区别：
 - NFSv4.1: 支持并行存储。
 - NFSv4.2: 引入复合写操作（COMPOUNDV4 Write Operations），支持服务器端复制（不经过客户端）。
 
-NFSv2的操作定义在`include/uapi/linux/nfs2.h`中的`NFSPROC_NULL ~ NFSPROC_STATFS`。
+NFSv2的操作定义在`include/uapi/linux/nfs2.h`中的`NFSPROC_NULL ~ NFSPROC_STATFS`，编码解码函数定义在`nfs_procedures`和`nfsd_procedures2`。
 
-NFSv3的操作定义在`include/uapi/linux/nfs3.h`中的`NFS3PROC_NULL ~ NFS3PROC_COMMIT`。
+NFSv3的操作定义在`include/uapi/linux/nfs3.h`中的`NFS3PROC_NULL ~ NFS3PROC_COMMIT`，编码解码函数定义在`nfs3_procedures`和`nfsd_procedures3`。
 
-NFSv4的操作定义在`include/uapi/linux/nfs4.h`中的`enum nfs_opnum4`, 为了`/proc/net/rpc/nfs`的输出顺序，另外还定义了`NFSPROC4_CLNT_NULL ~ NFSPROC4_CLNT_READ_PLUS`。
+NFSv4的操作定义在`include/linux/nfs4.h`中的`NFSPROC4_NULL`和`NFSPROC4_COMPOUND`，server编译解码函数定义在`nfsd_procedures4`。
 
-NFSv4反向通道的操作定义在`fs/nfs/callback.h`中的`enum nfs4_callback_opnum`
-<!--
-fs/nfsd/state.h, nfsd4_cb_op
-fs/nfsd/nfs4callback.c, nfs4_cb_procedures
+NFSv4 server详细的操作定义在`include/linux/nfs4.h`中的`enum nfs_opnum4`，处理函数定义在`nfsd4_ops`，编码解码函数定义在`nfsd4_enc_ops`和`nfsd4_dec_ops`。
 
-fs/nfsd/nfs4callback.c, enum nfs_cb_opnum4
--->
+NFSv4 client详细的操作定义在`include/linux/nfs4.h`中的`NFSPROC4_CLNT_NULL ~ NFSPROC4_CLNT_READ_PLUS`，编码解码函数定义在`nfs4_procedures`。
+
+NFSv4反向通道的操作定义在`fs/nfs/callback.h`中的`enum nfs4_callback_opnum`，我已经提了补丁移到头文件：[NFSv4, NFSD: move enum nfs_cb_opnum4 to include/linux/nfs4.h](https://lore.kernel.org/all/tencent_03EDD0CAFBF93A9667CFCA1B68EDB4C4A109@qq.com/)。server在`fs/nfsd/state.h`中还定义了`nfsd4_cb_op`，编码解码函数定义在`nfs4_cb_procedures`。client的编码解码函数定义在`callback_ops`。
 
 # 怎么用？
 
