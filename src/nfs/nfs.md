@@ -277,7 +277,11 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 
 前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，相关的两种请求是`SETCLIENTID`和`SETCLIENTID_CONFIRM`。
 
-clientid相关的信息保存在`struct nfs_client`中，client初始化clientid的函数为`nfs4_init_clientid`和`nfs41_init_clientid`。
+clientid相关的信息保存在`struct nfs_client`和`struct nfs4_client`中。client初始化clientid的函数为`nfs4_init_clientid`和`nfs41_init_clientid`。
+
+`SETCLIENTID`请求： client端编码解码函数为`nfs4_xdr_enc_setclientid`和`nfs4_xdr_dec_setclientid`。server端处理函数是`nfsd4_setclientid`，编码解码函数为`nfsd4_encode_setclientid`和`nfsd4_decode_setclientid`。
+
+`SETCLIENTID_CONFIRM`请求： client端编码解码函数为`nfs4_xdr_enc_setclientid_confirm`和`nfs4_xdr_dec_setclientid_confirm`。server端处理函数是`nfsd4_setclientid_confirm,`，编码解码函数为`nfsd4_encode_noop`和`nfsd4_decode_setclientid_confirm`。
 
 在nfs client发起`SETCLIENTID`请求时，会创建一个RPC反向通道，nfs client是反向通道的服务器端。
 
