@@ -183,12 +183,12 @@ chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=12
 [code-server源码](https://github.com/coder/code-server)
 
 安装命令:
-```shell
+```sh
 curl -fsSL https://code-server.dev/install.sh | sh
 ```
 
 安装成功后，输出以下日志：
-```shell
+```sh
 Ubuntu 22.04.2 LTS
 Installing v4.11.0 of the amd64 deb package from GitHub.
 
