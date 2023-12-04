@@ -51,7 +51,6 @@ array=(
     src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
     # 翻译
     src/translations/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
-    src/translations/nfs/rfc5661-nfsv4.1.md translations/rfc5661-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
     src/translations/nfs/rfc8881-nfsv4.1.md translations/rfc8881-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
     src/translations/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
     src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
