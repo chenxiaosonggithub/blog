@@ -128,7 +128,6 @@ NFSv4.1 客户端和服务器必须支持并必须使用本节描述的会话功
 
 CB_COMPOUND 过程的请求和回复与 COMPOUND 类似，但是没有 SEQUENCE 操作，而是有一个 CB_SEQUENCE 操作。CB_COMPOUND 还有一个额外的字段称为 "callback_ident"，在 NFSv4.1 中是多余的，客户端必须忽略它。CB_SEQUENCE 具有与 SEQUENCE 相同的信息，还包括解决回调竞争所需的其他信息（参见第2.10.6.3节）。
 
-
 #### 2.10.2.2. 客户端标识和会话关联
 
 每个客户端标识（第2.4节）可以有零个或多个活动会话。在 NFSv4.1 中，执行文件访问需要客户端标识和关联的会话。每次会话被使用（无论是客户端向服务器发送请求还是客户端回复来自服务器的回调请求），都会自动续订分配给其关联客户端标识的状态。
@@ -199,7 +198,31 @@ CB_COMPOUND 过程的请求和回复与 COMPOUND 类似，但是没有 SEQUENCE 
 
 区分客户端何时允许使用会话和客户端ID并联需要了解EXCHANGE_ID（第18.35节）操作的结果如何标识服务器。假设客户端通过两个不同的连接发送EXCHANGE_ID，每个连接可能具有不同的目标网络地址，但每个EXCHANGE_ID操作在eia_clientowner字段中具有相同的值。如果相同的NFSv4.1服务器在每个连接上监听，那么每个EXCHANGE_ID结果必须返回eir_clientid、eir_server_owner.so_major_id和eir_server_scope的相同值。然后，客户端可以将每个连接视为引用相同的服务器（经过验证；请参见下文的第2.10.5.1节），并且可以使用每个连接来进行请求和回复的并联。客户端的选择是会话并联还是客户端ID并联。
 
+Session Trunking（会话并联）：
 
+> 如果在两个不同的EXCHANGE_ID请求中，eia_clientowner参数相同，并且在两个EXCHANGE_ID结果中eir_clientid、eir_server_owner.so_major_id、eir_server_owner.so_minor_id和eir_server_scope匹配，那么客户端被允许执行会话并联。如果客户端没有到eir_clientid、eir_server_owner.so_major_id、eir_server_scope和eir_server_owner.so_minor_id元组的会话映射，那么它通过其中一个连接创建会话，将连接与会话关联。如果存在与该元组关联的会话，则客户端可以发送BIND_CONN_TO_SESSION以将连接与会话关联。
 
+> 当然，如果客户端不希望使用会话并联，则不必这样做。它可以在连接上调用CREATE_SESSION。这将导致像下面描述的客户端ID并联。
 
+Client ID Trunking（客户端ID并联）：
+
+> 如果在两个不同的EXCHANGE_ID请求中，eia_clientowner参数相同，并且在两个EXCHANGE_ID结果中eir_clientid、eir_server_owner.so_major_id和eir_server_scope匹配（不管eir_server_owner.so_minor_id结果是否匹配），那么客户端被允许执行客户端ID并联。客户端可以将每个连接与不同的会话关联起来，其中每个会话与同一个服务器关联。
+
+> 客户端通过在每个连接上调用CREATE_SESSION，使用在eir_clientid中返回的相同客户端ID，完成客户端ID并联的操作。这些调用创建两个会话，并将每个连接与其相应的会话关联起来。客户端可以在这一点上自由选择拒绝使用客户端ID并联，简单地放弃连接。
+
+> 在进行客户端ID并联时，锁定状态在与同一客户端ID相关联的多个会话之间共享。这要求服务器在多个会话之间协调状态，并要求客户端能够将相同的锁定状态与多个会话关联起来。
+
+由于各种重新配置事件可能导致eir_server_scope和eir_server_owner值在后续针对同一网络地址的EXCHANGE_ID请求中不同。
+
+在大多数情况下，这些重新配置事件将具有破坏性，并指示先前连接到一个服务器的IP地址现在连接到一个完全不同的服务器。
+
+以下是客户端处理此类情况的一些建议：
+
+- 当eir_server_scope发生变化时，客户端无法确保先前获取的任何ID（例如文件句柄）可以在新服务器上有效使用，即使新服务器接受它们，也无法保证这不是偶然发生的。因此，最好将所有这些状态视为丢失或过时，尽管客户端可以假设意外接受的概率很低，并将此情况视为下一种情况之内。
+
+- 当eir_server_scope保持不变而eir_server_owner.so_major_id发生变化时，客户端可以使用它拥有的文件句柄，将其锁定状态视为丢失，并尝试重新获取或以其他方式重新获取其锁定。它可能会发现其文件句柄现在已经过时。然而，如果未返回NFS4ERR_STALE，则可以继续重新获取或以其他方式重新获取其打开的锁定状态。
+
+- 当eir_server_scope和eir_server_owner.so_major_id保持不变时，客户端必须使用eir_server_owner.so_minor_id的当前值来决定适当的并联形式。这可能导致连接被断开或创建新会话。
+
+# todo: 2.10.5.1. Verifying Claims of Matching Server Identity
 
