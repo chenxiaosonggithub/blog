@@ -273,7 +273,7 @@ nfsd4_open
 
 nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wireshark`查看 。
 
-# clientid和delegation机制
+# clientid
 
 前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，相关的两种请求是`SETCLIENTID`和`SETCLIENTID_CONFIRM`。
 
@@ -284,6 +284,14 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 `SETCLIENTID_CONFIRM`请求： client端编码解码函数为`nfs4_xdr_enc_setclientid_confirm()`和`nfs4_xdr_dec_setclientid_confirm()`。server端处理函数是`nfsd4_setclientid_confirm(),`，编码解码函数为`nfsd4_encode_noop()`和`nfsd4_decode_setclientid_confirm()`。
 
 在nfs client发起`SETCLIENTID`请求时，会创建一个RPC反向通道，nfs client是反向通道的服务器端。server端反向通道相关信息存储在`struct nfs4_cb_conn`,server端发起的callback请求用`struct nfsd4_callback`表示。`nfsd4_setclientid() -> gen_callback()`填充`struct nfs4_cb_conn`，`nfsd4_setclientid_confirm() -> nfsd4_probe_callback()`创建反向通道，`nfsd4_run_cb_work() -> nfsd4_process_cb_update()`创建rpc客户端。
+
+# session
+
+NFSv4.1引入了一个很大很大的设计：session（会话）。`EXCHANGE_ID`取代了`SETCLIENTID`，`CREATE_SESSION`取代了`SETCLIENTID_CONFIRM`。
+
+每个客户端有多个session，session可以连接不同的server。每个session有一个或两个通道：正向通道（fore channel）和反向通道（backchannel）。每个通道有多个连接(connection)，每个连接类型可以不同。
+
+# delegation机制
 
 delegation机制： 当nfs client1打开一个文件时，如果RPC反向通道可用，nfs server就会颁发一个凭证，nfs client1读写文件就不用发起`GETATTR`请求。当另一个client2也访问这个文件时，server就先回收client1的凭证，再响应client2的请求。之后，就和nfsv2和nfsv3一样读写之前要发起`GETATTR`请求。
 
