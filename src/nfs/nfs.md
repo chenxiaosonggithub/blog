@@ -277,6 +277,8 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 
 前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，NFSv4.0相关的两种请求是`SETCLIENTID`和`SETCLIENTID_CONFIRM`。
 
+另外，client有三种stateid：`nfs_delegation stateid`, `nfs4_lock_state ls_stateid`, `nfs4_state open_stateid`。
+
 客户端相关的信息保存在`struct nfs_client`和`struct nfs4_client`中。client初始化clientid的函数为`nfs4_init_clientid()`和`nfs41_init_clientid()`。
 
 `SETCLIENTID`请求： client端编码解码函数为`nfs4_xdr_enc_setclientid()`和`nfs4_xdr_dec_setclientid()`。server端处理函数是`nfsd4_setclientid()`，编码解码函数为`nfsd4_encode_setclientid()`和`nfsd4_decode_setclientid()`。
@@ -293,7 +295,7 @@ NFSv4.1引入了一个很大很大的设计：session（会话）。`EXCHANGE_ID
 
 [rfc8881](https://www.rfc-editor.org/rfc/rfc8881)的“2.10.1. Motivation and Overview”（动机和概述）一节提到session是为了解决以下问题：
 
-- 不支持“仅一次语义”（EOS）。这包括通过服务器故障和恢复对 EOS 的支持不足。
+- 不支持“Exactly Once Semantics（精确一次语义）”（EOS）。这包括通过服务器故障和恢复对 EOS 的支持不足。
 - 有限的回调支持，包括不支持通过防火墙发送回调以及正常请求和回调之间的竞争。
 - 通过多个网络路径的有限trunking支持。
 - 对于完全安全的操作需要机器凭据。
@@ -303,6 +305,8 @@ NFSv4.1引入了一个很大很大的设计：session（会话）。`EXCHANGE_ID
 session trunking: 是指将多个connection关联到同一个session，这些connection可以具有不同的目标和/或源网络地址。当两个连接的目标网络地址（server地址）相同时，server必须支持此类session trunking。当目标网络地址不同时，server可以在`EXCHANGE_ID`操作返回的数据中指示对session trunking的支持。client和server都可以有多个网络interface，connection的源地址和目标地址都可以不一样，如果connection属于同一组client和server就可以用于session trunking。
 
 clientid trunking: 是指将多个session关联到同一个clientid。server必须在允许两个网络地址的session trunking的同时支持clientid trunking，server还允许cliented trunking的其他情况。多个server可能位于同一台机器，一组server可能有同样的数据（共享磁盘、集群），这种情况就可以使用clientid trunking。
+
+todo: Exactly Once Semantics 和 Server Callback Races 的内容有待补充。
 
 # delegation机制
 
@@ -473,3 +477,9 @@ fput
 - NFSPROC4_CLNT_RELEASE_LOCKOWNER: 释放文件锁所有者
 
 判断锁类型的函数`nfs4_lock_type()`。
+
+<!--
+# open
+
+
+-->
