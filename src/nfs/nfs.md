@@ -287,6 +287,8 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 
 # session
 
+<!-- https://www.likecs.com/show-305428643.html -->
+
 NFSv4.1引入了一个很大很大的设计：session（会话）。`EXCHANGE_ID`取代了`SETCLIENTID`，`CREATE_SESSION`取代了`SETCLIENTID_CONFIRM`。
 
 [rfc8881](https://www.rfc-editor.org/rfc/rfc8881)的“2.10.1. Motivation and Overview”（动机和概述）一节提到session是为了解决以下问题：
@@ -297,6 +299,10 @@ NFSv4.1引入了一个很大很大的设计：session（会话）。`EXCHANGE_ID
 - 对于完全安全的操作需要机器凭据。
 
 每个客户端有多个session，session可以连接不同的server。每个session有一个或两个通道：正向通道（fore channel）和反向通道（backchannel）。每个通道有多个连接(connection)，每个连接类型可以不同。
+
+session trunking: 是指将多个connection关联到同一个session，这些connection可以具有不同的目标和/或源网络地址。当两个连接的目标网络地址（server地址）相同时，server必须支持此类session trunking。当目标网络地址不同时，server可以在`EXCHANGE_ID`操作返回的数据中指示对session trunking的支持。client和server都可以有多个网络interface，connection的源地址和目标地址都可以不一样，如果connection属于同一组client和server就可以用于session trunking。
+
+clientid trunking: 是指将多个session关联到同一个clientid。server必须在允许两个网络地址的session trunking的同时支持clientid trunking，server还允许cliented trunking的其他情况。多个server可能位于同一台机器，一组server可能有同样的数据（共享磁盘、集群），这种情况就可以使用clientid trunking。
 
 # delegation机制
 

@@ -80,4 +80,4 @@ LibreOffice Writer（文本）、LibreOffice Calc（表格）、LibreOffice Impr
 
 [vscode](https://code.visualstudio.com/)的源码：[https://github.com/microsoft/vscode](https://github.com/microsoft/vscode)。
 
-另外非vscode官方的能在浏览器中使用的[code-server源码](https://github.com/coder/code-server)也非常好用。
+另外非vscode官方的能在浏览器中使用的[code-server](https://github.com/coder/code-server)也非常好用。
