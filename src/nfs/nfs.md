@@ -275,7 +275,7 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 
 # clientid
 
-前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，相关的两种请求是`SETCLIENTID`和`SETCLIENTID_CONFIRM`。
+前面说过NFSv4最大的变化是有状态的协议，每个客户端有一个独一无二的clientid，NFSv4.0相关的两种请求是`SETCLIENTID`和`SETCLIENTID_CONFIRM`。
 
 客户端相关的信息保存在`struct nfs_client`和`struct nfs4_client`中。client初始化clientid的函数为`nfs4_init_clientid()`和`nfs41_init_clientid()`。
 
@@ -288,6 +288,13 @@ nfs client查看文件的`filehandle`，可以用`tcpdump`抓包，再使用`wir
 # session
 
 NFSv4.1引入了一个很大很大的设计：session（会话）。`EXCHANGE_ID`取代了`SETCLIENTID`，`CREATE_SESSION`取代了`SETCLIENTID_CONFIRM`。
+
+[rfc8881](https://www.rfc-editor.org/rfc/rfc8881)的“2.10.1. Motivation and Overview”（动机和概述）一节提到session是为了解决以下问题：
+
+- 不支持“仅一次语义”（EOS）。这包括通过服务器故障和恢复对 EOS 的支持不足。
+- 有限的回调支持，包括不支持通过防火墙发送回调以及正常请求和回调之间的竞争。
+- 通过多个网络路径的有限trunking支持。
+- 对于完全安全的操作需要机器凭据。
 
 每个客户端有多个session，session可以连接不同的server。每个session有一个或两个通道：正向通道（fore channel）和反向通道（backchannel）。每个通道有多个连接(connection)，每个连接类型可以不同。
 

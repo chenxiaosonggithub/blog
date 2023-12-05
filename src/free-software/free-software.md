@@ -40,7 +40,7 @@ KVM为Linux内核的模块。
 
 QEMU：[https://www.qemu.org/](https://www.qemu.org/)。
 
-[QEMU-KVM安装macOS系统](https://blog.csdn.net/lion544301/article/details/115422081)。
+[QEMU/KVM安装macOS系统](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)。
 
 # 编辑器：emacs
 
@@ -76,3 +76,8 @@ LibreOffice Writer（文本）、LibreOffice Calc（表格）、LibreOffice Impr
 
 源码地址：[https://github.com/LibreOffice/core](https://github.com/LibreOffice/core)。
 
+# vscode编辑器
+
+[vscode](https://code.visualstudio.com/)的源码：[https://github.com/microsoft/vscode](https://github.com/microsoft/vscode)。
+
+另外非vscode官方的能在浏览器中使用的[code-server源码](https://github.com/coder/code-server)也非常好用。
