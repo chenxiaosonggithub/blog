@@ -84,7 +84,7 @@ NFSv4.1 客户端和服务器必须支持并必须使用本节描述的会话功
 
 以前的 NFS 版本和次要版本存在以下问题：
 
-- 不支持“仅一次语义”（EOS）。这包括通过服务器故障和恢复对 EOS 的支持不足。
+- 不支持“精确一次语义”（EOS）。这包括通过服务器故障和恢复对 EOS 的支持不足。
 - 有限的回调支持，包括不支持通过防火墙发送回调以及正常请求和回调之间的竞争。
 - 通过多个网络路径的有限并联支持。
 - 对于完全安全的操作需要机器凭据。
@@ -200,17 +200,17 @@ CB_COMPOUND 过程的请求和回复与 COMPOUND 类似，但是没有 SEQUENCE 
 
 Session Trunking（会话并联）：
 
-> 如果在两个不同的EXCHANGE_ID请求中，eia_clientowner参数相同，并且在两个EXCHANGE_ID结果中eir_clientid、eir_server_owner.so_major_id、eir_server_owner.so_minor_id和eir_server_scope匹配，那么客户端被允许执行会话并联。如果客户端没有到eir_clientid、eir_server_owner.so_major_id、eir_server_scope和eir_server_owner.so_minor_id元组的会话映射，那么它通过其中一个连接创建会话，将连接与会话关联。如果存在与该元组关联的会话，则客户端可以发送BIND_CONN_TO_SESSION以将连接与会话关联。
+- 如果在两个不同的EXCHANGE_ID请求中，eia_clientowner参数相同，并且在两个EXCHANGE_ID结果中eir_clientid、eir_server_owner.so_major_id、eir_server_owner.so_minor_id和eir_server_scope匹配，那么客户端被允许执行会话并联。如果客户端没有到eir_clientid、eir_server_owner.so_major_id、eir_server_scope和eir_server_owner.so_minor_id元组的会话映射，那么它通过其中一个连接创建会话，将连接与会话关联。如果存在与该元组关联的会话，则客户端可以发送BIND_CONN_TO_SESSION以将连接与会话关联。
 
-> 当然，如果客户端不希望使用会话并联，则不必这样做。它可以在连接上调用CREATE_SESSION。这将导致像下面描述的客户端ID并联。
+  当然，如果客户端不希望使用会话并联，则不必这样做。它可以在连接上调用CREATE_SESSION。这将导致像下面描述的客户端ID并联。
 
 Client ID Trunking（客户端ID并联）：
 
-> 如果在两个不同的EXCHANGE_ID请求中，eia_clientowner参数相同，并且在两个EXCHANGE_ID结果中eir_clientid、eir_server_owner.so_major_id和eir_server_scope匹配（不管eir_server_owner.so_minor_id结果是否匹配），那么客户端被允许执行客户端ID并联。客户端可以将每个连接与不同的会话关联起来，其中每个会话与同一个服务器关联。
+- 如果在两个不同的EXCHANGE_ID请求中，eia_clientowner参数相同，并且在两个EXCHANGE_ID结果中eir_clientid、eir_server_owner.so_major_id和eir_server_scope匹配（不管eir_server_owner.so_minor_id结果是否匹配），那么客户端被允许执行客户端ID并联。客户端可以将每个连接与不同的会话关联起来，其中每个会话与同一个服务器关联。
 
-> 客户端通过在每个连接上调用CREATE_SESSION，使用在eir_clientid中返回的相同客户端ID，完成客户端ID并联的操作。这些调用创建两个会话，并将每个连接与其相应的会话关联起来。客户端可以在这一点上自由选择拒绝使用客户端ID并联，简单地放弃连接。
+  客户端通过在每个连接上调用CREATE_SESSION，使用在eir_clientid中返回的相同客户端ID，完成客户端ID并联的操作。这些调用创建两个会话，并将每个连接与其相应的会话关联起来。客户端可以在这一点上自由选择拒绝使用客户端ID并联，简单地放弃连接。
 
-> 在进行客户端ID并联时，锁定状态在与同一客户端ID相关联的多个会话之间共享。这要求服务器在多个会话之间协调状态，并要求客户端能够将相同的锁定状态与多个会话关联起来。
+  在进行客户端ID并联时，锁定状态在与同一客户端ID相关联的多个会话之间共享。这要求服务器在多个会话之间协调状态，并要求客户端能够将相同的锁定状态与多个会话关联起来。
 
 由于各种重新配置事件可能导致eir_server_scope和eir_server_owner值在后续针对同一网络地址的EXCHANGE_ID请求中不同。
 
@@ -224,5 +224,41 @@ Client ID Trunking（客户端ID并联）：
 
 - 当eir_server_scope和eir_server_owner.so_major_id保持不变时，客户端必须使用eir_server_owner.so_minor_id的当前值来决定适当的并联形式。这可能导致连接被断开或创建新会话。
 
-# todo: 2.10.5.1. Verifying Claims of Matching Server Identity
 
+#### 2.10.5.1. 验证匹配服务器身份的声明
+
+当服务器使用两个不同的连接响应并声明具有匹配或部分匹配的eir_server_owner、eir_server_scope和eir_clientid值时，客户端无需信任服务器的声明。在进行流量并联之前，客户端可以通过以下方式验证这些声明：
+
+- 对于会话并联，客户端应在不同网络路径之间可靠地验证是否实际上与同一NFSv4.1服务器关联并可用于同一会话，服务器必须允许客户端执行可靠验证。创建客户端ID时，客户端应指定要根据SP4_SSV或SP4_MACH_CRED（第18.35节）状态保护选项验证BIND_CONN_TO_SESSION。对于SP4_SSV，可靠验证取决于通过SET_SSV（见第18.47节）操作建立的共享秘密（SSV）。
+
+  当新连接与会话关联时（通过BIND_CONN_TO_SESSION操作，见第18.34节），如果客户端为BIND_CONN_TO_SESSION操作指定了SP4_SSV状态保护，则客户端必须使用RPCSEC_GSS保护发送BIND_CONN_TO_SESSION，使用完整性或隐私，以及使用GSS SSV机制（见第2.10.9节）创建的RPCSEC_GSS句柄。
+
+  如果客户端错误地尝试将连接关联到错误服务器的会话，服务器将拒绝尝试，因为它不知道BIND_CONN_TO_SESSION参数的会话标识符，或者将拒绝尝试，因为RPCSEC_GSS身份验证失败。即使服务器错误或恶意接受了连接关联尝试，它在响应中计算的RPCSEC_GSS验证器将不会被客户端验证，因此客户端将知道它不能使用连接进行与指定会话的并联。
+
+  如果客户端指定了SP4_MACH_CRED状态保护，则BIND_CONN_TO_SESSION操作将使用RPCSEC_GSS完整性或隐私，使用在创建客户端ID时使用的相同凭据。通过RPCSEC_GSS的双向身份验证可确保客户端与正确服务器的正确会话关联。
+
+- 对于客户端ID并联，客户端至少有两种验证两个不同EXCHANGE_ID操作获取的相同客户端ID是否来自同一服务器的选项。第一种选择是在发送每个EXCHANGE_ID操作时使用RPCSEC_GSS身份验证。每次使用RPCSEC_GSS身份验证发送EXCHANGE_ID时，客户端记录GSS目标的主体名称。如果EXCHANGE_ID的结果表明客户端ID并联是可能的，并且GSS目标的主体名称相同，则服务器是相同的，允许客户端ID并联。
+
+  验证的第二种选项是使用SP4_SSV保护。当客户端发送EXCHANGE_ID时，它指定SP4_SSV保护。客户端始终必须通过CREATE_SESSION调用来确认首次发送的EXCHANGE_ID。然后，客户端发送SET_SSV。稍后，客户端将EXCHANGE_ID发送到与第一个EXCHANGE_ID发送到的目标网络地址不同的第二个目标网络地址。客户端检查每个EXCHANGE_ID回复是否具有相同的eir_clientid、eir_server_owner.so_major_id和eir_server_scope。如果是这样，客户端通过使用由第二个EXCHANGE_ID返回的RPCSEC_GSS句柄保护的RPCSEC_GSS完整性向第二个目标地址发送CREATE_SESSION操作来验证声明。如果服务器接受CREATE_SESSION请求，并且客户端验证RPCSEC_GSS验证程序和完整性代码，则客户端有证据表明第二个服务器知道SSV，因此这两个服务器正在合作以指定服务器范围和客户端ID并联。
+
+### 2.10.6. Exactly Once Semantics
+
+通过会话，NFSv4.1为在通道上传输的请求提供了精确一次语义（EOS）。EOS在前通道和后通道上都受支持。
+
+每个带有前导SEQUENCE或CB_SEQUENCE操作的COMPOUND或CB_COMPOUND请求必须由接收方执行一次。无论请求是否使用指定的回复缓存（参见第2.10.6.1.3节），都必须满足此要求。即使请求方正在通过在pNFS数据客户端和pNFS数据服务器之间创建的会话发送请求，此要求仍然有效。为了理解此要求的基本原理，将请求分为三类：
+
+- 非幂等请求。
+- 幂等修改请求。
+- 幂等非修改请求。
+
+不可变请求的示例是 RENAME。显然，如果响应者执行相同的 RENAME 请求两次，并且第一次执行成功，那么重新执行将失败。如果响应者返回重新执行的结果，这个结果是不正确的。因此，对于不可变请求，需要使用 EOS。
+
+幂等修改请求的示例是包含 WRITE 操作的 COMPOUND 请求。重复执行相同的 WRITE 具有与执行该 WRITE 一次相同的效果。然而，强制对 WRITE 和其他幂等修改请求使用 EOS 是必要的，以避免数据损坏。
+
+假设客户端向一个不符合规范、不执行 EOS 的服务器发送 WRITE A，并且由于网络分区等原因未收到响应。客户端重新连接到服务器并重新发送 WRITE A。现在，服务器有两个未完成的 A。服务器可能处于这样一种情况，即它执行并回复 A 的重试，而第一个 A 仍在服务器的内部 I/O 系统中等待某个资源。在接收到 WRITE A 的第二次尝试的回复时，客户端认为其 WRITE 已完成，因此可以自由地发送 WRITE B，这与 A 的字节范围重叠。当原始的 A 从服务器的 I/O 系统中调度并执行时（因此第二次 A 将被写入），B 写入的内容可能会被覆盖，从而导致数据损坏。
+
+幂等非修改请求的示例是包含 SEQUENCE、PUTFH、READLINK 操作且没有其他操作的 COMPOUND。重新执行这样的请求不会导致数据损坏或产生不正确的结果。尽管如此，为了保持实现的简单性，响应者必须对所有请求（无论是否幂等且非修改）强制使用 EOS。
+
+请注意，除非服务器将回复缓存持久保存在稳定存储中，并且除非服务器以某种方式实现为永不需要重启（实际上，如果存在这样的服务器，持久保存在稳定存储中的回复缓存与不是如此的回复缓存之间的区别是没有意义的）。有关在回复缓存中持久保存的讨论，请参见第 2.10.6.5 节。不管怎样，即使服务器不将回复缓存持久保存，EOS 也比 NFS 的先前版本改进了鲁棒性和正确性，因为旧的重复请求/回复缓存是基于 ONC RPC 事务标识符（XID）的。第 2.10.6.1 节解释了将 XID 用作回复缓存基础的不足之处，并描述了 NFSv4.1 会话如何改进 XID。
+
+todo: 2.10.6.1. Slot Identifiers and Reply Cache
