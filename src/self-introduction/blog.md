@@ -28,6 +28,8 @@
 
 [定位NFS问题的常用方法](http://chenxiaosong.com/nfs/nfs-debug.html)
 
+[CVE-2022-24448](http://chenxiaosong.com/nfs/CVE-2022-24448.html)
+
 [NFS回写错误处理不正确的问题](http://chenxiaosong.com/nfs/nfs-handle-writeback-errors-incorrectly.html)
 
 [4.19 nfs_updatepage空指针解引用问题](http://chenxiaosong.com/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html)
