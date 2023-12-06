@@ -178,7 +178,7 @@ sudo apt install vim-gtk3 -y
 chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=127.0.0.1:1080"
 ```
 
-# vscode server
+# vscode
 
 [code-server源码](https://github.com/coder/code-server)
 
