@@ -1,4 +1,35 @@
-[toc]
+# 问题描述
+
+```sh
+[   72.796117] EXT4-fs error (device sda): ext4_journal_check_start:83: comm fallocate: Detected aborted journal
+[   72.826847] EXT4-fs (sda): Remounting filesystem read-only
+fallocate: fallocate failed: Read-only file system
+[   74.791830] jbd2_journal_commit_transaction: jh=0xffff9cfefe725d90 bh=0x0000000000000000 end delay
+[   74.793597] ------------[ cut here ]------------
+[   74.794203] kernel BUG at fs/jbd2/transaction.c:2063!
+[   74.794886] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+[   74.795533] CPU: 4 PID: 2260 Comm: jbd2/sda-8 Not tainted 5.17.0-rc8-next-20220315-dirty #150
+[   74.798327] RIP: 0010:__jbd2_journal_unfile_buffer+0x3e/0x60
+[   74.801971] RSP: 0018:ffffa828c24a3cb8 EFLAGS: 00010202
+[   74.802694] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+[   74.803601] RDX: 0000000000000001 RSI: ffff9cfefe725d90 RDI: ffff9cfefe725d90
+[   74.804554] RBP: ffff9cfefe725d90 R08: 0000000000000000 R09: ffffa828c24a3b20
+[   74.805471] R10: 0000000000000001 R11: 0000000000000001 R12: ffff9cfefe725d90
+[   74.806385] R13: ffff9cfefe725d98 R14: 0000000000000000 R15: ffff9cfe833a4d00
+[   74.807301] FS:  0000000000000000(0000) GS:ffff9d01afb00000(0000) knlGS:0000000000000000
+[   74.808338] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   74.809084] CR2: 00007f2b81bf4000 CR3: 0000000100056000 CR4: 00000000000006e0
+[   74.810047] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[   74.810981] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[   74.811897] Call Trace:
+[   74.812241]  <TASK>
+[   74.812566]  __jbd2_journal_refile_buffer+0x12f/0x180
+[   74.813246]  jbd2_journal_refile_buffer+0x4c/0xa0
+[   74.813869]  jbd2_journal_commit_transaction.cold+0xa1/0x148
+[   74.817550]  kjournald2+0xf8/0x3e0
+[   74.819056]  kthread+0x153/0x1c0
+[   74.819963]  ret_from_fork+0x22/0x30
+```
 
 # 复现程序
 
@@ -101,7 +132,7 @@ index fcacafa4510d..9bad5d4b2a84 100644
 
 ## fallocate 文件空洞
 
-```shell
+```sh
 fallocate -l 1M file
 ls -lh
 # total 1.0M
@@ -169,7 +200,7 @@ int main()
 }
 ```
 
-```shell
+```sh
 umount /mnt
 mkfs.ext4 -F -b 4096 /dev/sda
 mount -o data=journal /dev/sda /mnt
@@ -234,7 +265,7 @@ int main()
 }
 ```
 
-```shell
+```sh
 umount /mnt
 mkfs.ext4 -F -b 4096 /dev/sda
 mount -o nodelalloc /dev/sda /mnt # 必须要指定　nodelalloc
@@ -251,7 +282,7 @@ mount -o remount,abort /mnt
 
 ## symbol link
 
-```shell
+```sh
 umount /mnt
 mkfs.ext4 -F -b 4096 /dev/sda
 mount /dev/sda /mnt
@@ -262,9 +293,10 @@ sleep 0.5
 mount -o remount,abort /mnt
 ```
 
+
 # 代码分析
 
-修复补丁： https://patchwork.ozlabs.org/project/linux-ext4/patch/20220317142137.1821590-1-yebin10@huawei.com/
+修复补丁： [jbd2: Fix null-ptr-deref when process reserved list in jbd2_journal_commit_transaction](https://patchwork.ozlabs.org/project/linux-ext4/patch/20220317142137.1821590-1-yebin10@huawei.com/)
 
 ```c
 // mkfs.ext4 -F -b 4096 /dev/sda
