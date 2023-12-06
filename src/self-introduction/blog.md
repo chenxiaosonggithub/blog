@@ -46,7 +46,7 @@
 
 [Docker安装与使用](http://chenxiaosong.com/linux/docker.html)
 
-[QEMU/KVM安装macOS系统](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)
+[QEMU/KVM安装macOS系统](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)
 
 [ghostwriter: 一款makdown编辑器](http://chenxiaosong.com/linux/ghostwriter-makdown.html)
 

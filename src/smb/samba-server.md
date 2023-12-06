@@ -1,4 +1,4 @@
-我是自由软件的狂热者，使用的操作系统是Linux，虽然爽但还是有部分商业软件未提供Linux版本，所以难免要使用其他的操作系统。比如我会在Linux的QEMU/KVM虚拟机下安装macOS（安装方法查看[《QEMU/KVM安装macOS系统》](http://chenxiaosong.com/others/qemu-kvm-install-macos.html)），macOS访问Fedora的文件就需要安装samba服务（没错，我就是不用windows系统）。
+我是自由软件的狂热者，使用的操作系统是Linux，虽然爽但还是有部分商业软件未提供Linux版本，所以难免要使用其他的操作系统。比如我会在Linux的QEMU/KVM虚拟机下安装macOS（安装方法查看[《QEMU/KVM安装macOS系统》](http://chenxiaosong.com/linux/qemu-kvm-install-macos.html)），macOS访问Fedora的文件就需要安装samba服务（没错，我就是不用windows系统）。
 
 # 安装
 
