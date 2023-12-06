@@ -57,8 +57,8 @@ array=(
     src/translations/smb/ms-smb.md translations/ms-smb.html "[MS-SMB]: Server Message Block (SMB) Protocol"
     src/translations/smb/ms-smb2.md translations/ms-smb2.html "[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3"
     # private
-    src/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
-    src/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
+    src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
+    src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
 )
 element_count="${#array[@]}"
 for ((index=0; index<${element_count}; index=$((index + 3)))); do
