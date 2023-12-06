@@ -42,6 +42,7 @@ array=(
     src/userspace-environment/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
     src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     src/userspace-environment/vim.md linux/vim.html "vim编辑器"
+    src/userspace-environment/emacs.md linux/emacs.html "vim编辑器"
     # 其他
     src/chenxiaosong.com/chenxiaosong.com.md others/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"

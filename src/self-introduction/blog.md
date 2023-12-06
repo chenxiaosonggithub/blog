@@ -56,6 +56,8 @@
 
 [vim编辑器](http://chenxiaosong.com/linux/vim.html)
 
+[emacs编辑器](http://chenxiaosong.com/linux/emacs.html)
+
 # 还没有分类
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/others/chenxiaosong.com.html)

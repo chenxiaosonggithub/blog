@@ -1,10 +1,10 @@
-[toc]
+这篇文章记录一下<!--emacs环境以及-->我常用的emacs快捷键，更多的内容请查看emacs的教学文档和帮助文档。
 
 
 ```
-C-<chr>
+C-<chr>: ctrl和<chr>键同时按
 
-M-<chr> 等效 ESC放开后<chr>
+M-<chr>: meta(alt)和<chr>键同时按，等效 ESC放开后再按<chr>
 
 C-x     字符扩展。  C-x 之后输入另一个字符或者组合键。
 M-x     命令名扩展。M-x 之后输入一个命令
@@ -119,4 +119,4 @@ evil 配置： M-x customize-group RET evil RET， 参考： https://evil.readth
 ```
 
 待确认的功能：
-1. 运行时改变 tab 插入空格，空格个数： 暂时通过复制上一行的方式来实现
+1. 临时切换成 tab键 插入空格，以及空格个数： 暂时通过复制上一行的方式来实现
