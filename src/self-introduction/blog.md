@@ -38,6 +38,18 @@
 
 [4.19 nfs lazy umount 后无法挂载的问题](http://chenxiaosong.com/nfs/4.19-nfs-mount-hung.html)
 
+# EXT文件系统
+
+[jbd2_journal_commit_transaction空指针解引用问题](http://chenxiaosong.com/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html)
+
+[ext4_writepages报BUG_ON的问题](http://chenxiaosong.com/ext/bugon-in-ext4_writepages.html)
+
+[start_this_handle报BUG_ON的问题](http://chenxiaosong.com/ext/bugon-in-start_this_handle.html)
+
+[symlink file size 不对的问题](http://chenxiaosong.com/ext/symlink-file-size-not-match.html)
+
+[ext4_search_dir空指针解引用问题](http://chenxiaosong.com/ext/uaf-in-ext4_search_dir.html)
+
 # Linux环境
 
 [Linux环境安装与配置](http://chenxiaosong.com/linux/userspace-environment.html)
