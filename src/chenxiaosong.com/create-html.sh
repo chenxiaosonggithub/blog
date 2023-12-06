@@ -48,7 +48,7 @@ array=(
     src/wubi/wubi.md others/wubi.html "五笔输入法"
     src/openharmony/openharmony.md others/openharmony.html "OpenHarmony编译运行调试环境"
     src/free-software/free-software.md others/free-software.html "自由软件介绍"
-    src/stm32-linux/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
+    src/lorawan/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
     src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
     # 翻译
     src/translations/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
