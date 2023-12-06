@@ -74,8 +74,6 @@
 
 # 翻译
 
-[Connectathon NFS tests README](http://chenxiaosong.com/translations/cthon-nfs-tests-readme.html)
-
 [Network File System (NFS) Version 4 Minor Version 1 Protocol](http://chenxiaosong.com/translations/rfc8881-nfsv4.1.html)
 
 [Network File System (NFS) Version 4 Minor Version 2 Protocol](http://chenxiaosong.com/translations/rfc7862-nfsv4.2.html)
@@ -85,3 +83,7 @@
 [[MS-SMB]: Server Message Block (SMB) Protocol](http://chenxiaosong.com/translations/ms-smb.html)
 
 [[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3](http://chenxiaosong.com/translations/ms-smb2.html)
+
+[Connectathon NFS tests README](http://chenxiaosong.com/translations/cthon-nfs-tests-readme.html)
+
+[Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?](http://chenxiaosong.com/translations/bugzilla-redhat-bug-2176575.html)

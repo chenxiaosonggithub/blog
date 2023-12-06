@@ -51,12 +51,13 @@ array=(
     src/lorawan/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
     src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
     # 翻译
-    src/translations/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
     src/translations/nfs/rfc8881-nfsv4.1.md translations/rfc8881-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
     src/translations/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
     src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
     src/translations/smb/ms-smb.md translations/ms-smb.html "[MS-SMB]: Server Message Block (SMB) Protocol"
     src/translations/smb/ms-smb2.md translations/ms-smb2.html "[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3"
+    src/translations/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
+    src/translations/nfs/bugzilla-redhat-bug-2176575.md translations/bugzilla-redhat-bug-2176575.html "Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?"
     # private
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
