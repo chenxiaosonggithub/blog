@@ -124,11 +124,11 @@ ctrl+v	块选择可视范围
 
 # cscope
 
-安装cscope：`sudo dnf install cscope -y`。
+安装cscope：`sudo apt install cscope -y`，但有很多bug，建议使用[源码](https://github.com/chenxiaosonggithub/cscope)安装，安装说明参考[README.chenxiaosong](https://github.com/chenxiaosonggithub/cscope/blob/configure.chenxiaosong/README.chenxiaosong)，修复了一些bug以及[更改快捷键](https://github.com/chenxiaosonggithub/cscope/commit/79948bf67ed54e449d40f28d35b18eba9c3269d1)。
 
 将脚本文件[cscope_maps.vim](https://github.com/chenxiaosonggithub/blog/blob/master/src/userspace-environment/cscope_maps.vim)放到`~/.vim/plugin/`路径下，即可使用快捷键（快捷键种类查看 `:cs help`），如`:cs find s word`查找word引用可使用快捷键`ctrl加\加s`（按顺序依次按3个键）。
 
-使用`cscope -Rqbk`（当需要包含`/usr/include`头文件时，不使用`-k`选项）编译代码生成`cscope.out`文件，在`cscope.out`文件所在目录打开`vim`即可加载`cscope.out`文件
+使用`cscope -Rqbk`（当需要包含`/usr/include`头文件时，不使用`-k`选项）编译代码生成`cscope.out`文件，在`cscope.out`文件所在目录打开`vim`即可加载`cscope.out`文件。Linux内核代码使用`make cscope`命令生成索引文件。
 
 # 浏览器插件vimium
 
