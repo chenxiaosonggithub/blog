@@ -1,0 +1,1 @@
+[configfs: fix a race in configfs_{,un}register_subsystem()](https://lore.kernel.org/all/20220215071030.3067982-1-chenxiaosong2@huawei.com/)

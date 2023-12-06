@@ -1,0 +1,1 @@
+[NFS: check FMODE_EXEC from open context mode](https://lore.kernel.org/all/20220923054015.2890271-1-chenxiaosong2@huawei.com/)
