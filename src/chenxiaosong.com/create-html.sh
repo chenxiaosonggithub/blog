@@ -34,6 +34,7 @@ array=(
     src/nfs/4.19-null-ptr-deref-in-nfs_readpage_async.md nfs/4.19-null-ptr-deref-in-nfs_readpage_async.html '4.19 nfs_readpage_async空指针解引用问题'
     src/nfs/4.19-aarch64-null-ptr-deref-in-nfs_readpage_async.md nfs/4.19-aarch64-null-ptr-deref-in-nfs_readpage_async.html "aarch64架构 4.19 nfs_readpage_async空指针解引用问题"
     src/nfs/4.19-nfs-mount-hung.md nfs/4.19-nfs-mount-hung.html "4.19 nfs lazy umount 后无法挂载的问题"
+    src/nfs/cthon-nfs-tests.md nfs/cthon-nfs-tests.html "Connectathon NFS tests"
     # ext
     src/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.md ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html "jbd2_journal_commit_transaction空指针解引用问题"
     src/ext/bugon-in-ext4_writepages.md ext/bugon-in-ext4_writepages.html "ext4_writepages报BUG_ON的问题"
@@ -64,7 +65,7 @@ array=(
     src/translations/smb/ms-smb.md translations/ms-smb.html "[MS-SMB]: Server Message Block (SMB) Protocol"
     src/translations/smb/ms-smb2.md translations/ms-smb2.html "[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3"
     src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
-    src/translations/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
+    src/translations/nfs/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
     src/translations/nfs/bugzilla-redhat-bug-2176575.md translations/bugzilla-redhat-bug-2176575.html "Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?"
     # private
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
