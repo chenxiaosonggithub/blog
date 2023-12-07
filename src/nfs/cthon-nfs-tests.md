@@ -48,10 +48,7 @@ general测试包含几种：Small Compile， Tbl， Nroff，Large Compile，Four
 
 报错信息如下：
 ```sh
-GENERAL TESTS: directory /mnt/test
-cd /mnt/test; rm -f Makefile runtests runtests.wrk *.sh *.c mkdummy rmdummy nroff.in makefile.tst
-cp Makefile runtests runtests.wrk *.sh *.c mkdummy rmdummy nroff.in makefile.tst /mnt/test
-
+...
 Small Compile
         0.0 (0.0) real  0.3 (0.0) user  0.0 (0.0) sys
 
@@ -68,19 +65,8 @@ general tests failed
 warning: file 'nroff.in', around line 52:                                      
   table wider than line width                                                  
 0.02user 0.12system 0:00.14elapsed 104%CPU (0avgtext+0avgdata 5860maxresident)k
-0inputs+24outputs (0major+1249minor)pagefaults 0swaps                          
-warning: file 'nroff.in', around line 52:                                      
-  table wider than line width                                                  
-0.02user 0.12system 0:00.14elapsed 104%CPU (0avgtext+0avgdata 5632maxresident)k
-0inputs+24outputs (0major+1250minor)pagefaults 0swaps                          
-warning: file 'nroff.in', around line 52:                                      
-  table wider than line width                                                  
-0.02user 0.12system 0:00.14elapsed 104%CPU (0avgtext+0avgdata 5632maxresident)k
-0inputs+24outputs (0major+1249minor)pagefaults 0swaps                          
-warning: file 'nroff.in', around line 52:                                      
-  table wider than line width                                                  
-0.01user 0.13system 0:00.14elapsed 104%CPU (0avgtext+0avgdata 5632maxresident)k
-0inputs+24outputs (0major+1249minor)pagefaults 0swaps                          
+0inputs+24outputs (0major+1249minor)pagefaults 0swaps
+...                          
 warning: file 'nroff.in', around line 52:                                      
   table wider than line width                                                  
 0.02user 0.12system 0:00.14elapsed 104%CPU (0avgtext+0avgdata 5860maxresident)k
@@ -91,12 +77,7 @@ warning: file 'nroff.in', around line 52:
 ```sh
 0.03user 0.30system 0:00.38elapsed 88%CPU (0avgtext+0avgdata 20608maxresident)k
 0inputs+96outputs (0major+5662minor)pagefaults 0swaps
-0.03user 0.29system 0:00.36elapsed 90%CPU (0avgtext+0avgdata 20480maxresident)k
-0inputs+96outputs (0major+5663minor)pagefaults 0swaps
-0.03user 0.29system 0:00.38elapsed 87%CPU (0avgtext+0avgdata 20480maxresident)k
-0inputs+96outputs (0major+5653minor)pagefaults 0swaps
-0.03user 0.30system 0:00.38elapsed 88%CPU (0avgtext+0avgdata 20352maxresident)k
-0inputs+96outputs (0major+5658minor)pagefaults 0swaps
+...
 0.02user 0.32system 0:00.38elapsed 88%CPU (0avgtext+0avgdata 20352maxresident)k
 0inputs+96outputs (0major+5660minor)pagefaults 0swaps
 ```
@@ -146,4 +127,33 @@ index 5efc091..04dae8e 100644
 +mv -f nroff.new nroff.time
  ./stat nroff.time
  set +e
+```
+
+现在，执行`./runtests -g -f /mnt/test`命令你就能看到很漂亮的输出：
+```sh
+GENERAL TESTS: directory /mnt/test
+cd /mnt/test; rm -f Makefile runtests runtests.wrk *.sh *.c mkdummy rmdummy nroff.in makefile.tst
+cp Makefile runtests runtests.wrk *.sh *.c mkdummy rmdummy nroff.in makefile.tst /mnt/test
+
+Small Compile
+        0.0 (0.0) real  0.3 (0.0) user  0.0 (0.0) sys
+
+Tbl
+        0.0 (0.0) real  0.0 (0.0) user  0.0 (0.0) sys
+
+Nroff
+        0.0 (0.0) real  0.1 (0.0) user  0.0 (0.0) sys
+
+Large Compile
+        0.0 (0.0) real  0.3 (0.0) user  0.0 (0.0) sys
+
+Four simultaneous large compiles
+        0.1 (0.0) real  1.2 (0.0) user  0.0 (0.0) sys
+
+Makefile
+        0.0 (0.0) real  0.3 (0.0) user  0.0 (0.0) sys
+
+General tests complete
+
+All tests completed
 ```
