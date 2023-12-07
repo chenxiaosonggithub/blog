@@ -50,7 +50,7 @@
 
 [start_this_handle报BUG_ON的问题](http://chenxiaosong.com/ext/bugon-in-start_this_handle.html)
 
-[symlink file size 不对的问题](http://chenxiaosong.com/ext/symlink-file-size-not-match.html)
+[symlink file size 错误的问题](http://chenxiaosong.com/ext/symlink-file-size-not-match.html)
 
 [ext4_search_dir空指针解引用问题](http://chenxiaosong.com/ext/uaf-in-ext4_search_dir.html)
 

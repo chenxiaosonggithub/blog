@@ -39,7 +39,7 @@ array=(
     src/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.md ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html "jbd2_journal_commit_transaction空指针解引用问题"
     src/ext/bugon-in-ext4_writepages.md ext/bugon-in-ext4_writepages.html "ext4_writepages报BUG_ON的问题"
     src/ext/bugon-in-start_this_handle.md ext/bugon-in-start_this_handle.html "start_this_handle报BUG_ON的问题"
-    src/ext/symlink-file-size-not-match.md ext/symlink-file-size-not-match.html "symlink file size 不对的问题"
+    src/ext/symlink-file-size-not-match.md ext/symlink-file-size-not-match.html "symlink file size 错误的问题"
     src/ext/uaf-in-ext4_search_dir.md ext/uaf-in-ext4_search_dir.html "ext4_search_dir空指针解引用问题"
     # Linux环境
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
