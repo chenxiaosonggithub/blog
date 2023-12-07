@@ -1,6 +1,6 @@
 # 环境
 
-下载[dkruchinin/cthon-nfs-tests](https://github.com/dkruchinin/cthon-nfs-tests)代码，编辑文件`tests.init`，只需以下3个变量，其他都可以删除：
+下载[dkruchinin/cthon-nfs-tests](https://github.com/dkruchinin/cthon-nfs-tests)代码，编辑文件`tests.init`，只需以下几个变量，其他都可以删除：
 ```sh
 CC=cc
 CFLAGS=`echo -DLINUX`
