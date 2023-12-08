@@ -30,7 +30,7 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # ghostwriter: markdown编辑器
 
-具体的介绍可以查看[《ghostwriter: 一款makdown编辑器》](http://chenxiaosong.com/linux/ghostwriter-makdown.html)。
+ghostwriter是KDE（K桌面环境，全称K Desktop Environment，著名的运行于类UNIX上的自由图形桌面环境）的markdown编辑器，具体的介绍可以查看[《ghostwriter: 一款makdown编辑器》](http://chenxiaosong.com/linux/ghostwriter-makdown.html)。
 
 # 博客
 
