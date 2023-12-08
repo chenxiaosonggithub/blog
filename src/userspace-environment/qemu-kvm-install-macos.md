@@ -2,13 +2,13 @@
 
 此文档是介绍在QEMU/KVM中安装macOS VM的操作。
 
-大多数内容翻译自foxlet所写的项目[README.md](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/README.md)，当然也修改和增加了一些内容。
+大多数内容翻译自foxlet所写的项目[README.md](https://github.com/foxlet/macOS-Simple-KVM/blob/master/README.md)，当然也修改和增加了一些内容。
 
-项目[github链接](https://github.com/chenxiaosonggithub/macOS-Simple-KVM)（forked from [foxlet](https://github.com/foxlet/macOS-Simple-KVM/tree/master/docs)）。
+项目[github链接](https://github.com/foxlet/macOS-Simple-KVM/tree/master/docs)。
 
 此项目由[@FoxletFox](https://twitter.com/foxletfox)发起，获得其他许多人的帮助。
 
-macOS和KVM的新手？ 请看[the FAQs](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/tree/master/docs/FAQs.md)。
+macOS和KVM的新手？ 请看[the FAQs](https://github.com/foxlet/macOS-Simple-KVM/tree/master/docs/FAQs.md)。
 
 # 说明
 
@@ -80,4 +80,4 @@ HEADLESS=1 MEM=1G CPUS=2 SYSTEM_DISK=MyDisk.qcow2 ./headless.sh
 
 一切搞定！
 
-要微调系统并提高性能，请查看[docs](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/tree/master/docs)文件夹，以获取更多信息，如[adding memory](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-performance.md)，设置[bridged networking](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-networking.md)的更多信息，添加 [passthrough hardware (for GPUs)](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-passthrough.md)，调整[screen resolution](https://github.com/chenxiaosonggithub/macOS-Simple-KVM/blob/master/docs/guide-screen-resolution.md)并启用声音功能。
+要微调系统并提高性能，请查看[docs](https://github.com/foxlet/macOS-Simple-KVM/tree/master/docs)文件夹，以获取更多信息，如[adding memory](https://github.com/foxlet/macOS-Simple-KVM/blob/master/docs/guide-performance.md)，设置[bridged networking](https://github.com/foxlet/macOS-Simple-KVM/blob/master/docs/guide-networking.md)的更多信息，添加 [passthrough hardware (for GPUs)](https://github.com/foxlet/macOS-Simple-KVM/blob/master/docs/guide-passthrough.md)，调整[screen resolution](https://github.com/foxlet/macOS-Simple-KVM/blob/master/docs/guide-screen-resolution.md)并启用声音功能。

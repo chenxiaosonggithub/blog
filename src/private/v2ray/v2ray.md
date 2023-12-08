@@ -10,13 +10,13 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 
 # v2ray服务器安装与配置
 
-使用以下命令安装：
+可以使用以下命令安装：
 
 ```shell
 bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 ```
 
-在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Linux的安装包, 如[v2ray-linux-64.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
+也可以在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Linux的安装包, 如[v2ray-linux-64.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
 
 将`/usr/local/etc/config.json`的内容替换成[config_server.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_server.json)中的内容，并修改以下内容
 
@@ -45,13 +45,13 @@ User=sonvhi # 修改成当前用户名
 
 # linux系统客户端安装与配置
 
-使用以下命令安装：
+可以使用以下命令安装：
 
 ```shell
 bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 ```
 
-在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Linux的安装包, 如[v2ray-linux-64.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
+也可以在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Linux的安装包, 如[v2ray-linux-64.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-linux-64.zip)。
 
 将`/usr/local/etc/config.json`的内容替换成[config_client.json](https://github.com/v2fly/v2ray-examples/blob/master/VMess-Websocket/config_client.json)中的内容，并修改以下内容：
 
@@ -66,7 +66,7 @@ bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/ins
 
 修改完配置文件后，需要重启v2ray服务：
 
-```json
+```sh
 sudo systemctl restart v2ray
 ```
 

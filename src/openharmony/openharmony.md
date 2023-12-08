@@ -293,9 +293,9 @@ gdb ./example/passthrough_ll
 (gdb) r
 ```
 
-# 5. 修改后的hmdfs和libfuse在qemu虚拟机中调试
+# 5. hmdfs在qemu虚拟机中调试
 
-[chenxiaosonggitee/kernel_linux_5.10](https://gitee.com/chenxiaosonggitee/kernel_linux_5.10)和[chenxiaosonggitee/third_party_libfuse](https://gitee.com/chenxiaosonggitee/third_party_libfuse)在虚拟机中运行：
+[chenxiaosonggitee/kernel_linux_5.10](https://gitee.com/chenxiaosonggitee/kernel_linux_5.10)在虚拟机中运行：
 ```sh
 mkdir -p /mnt/dst
 mkdir -p /mnt/cache_dir/dentry_cache/cloud
@@ -311,6 +311,4 @@ mount -t hmdfs -o merge,local_dst=/mnt/dst,cache_dir=/mnt/cache_dir,cloud_dir=/m
 # 输出云端文件内容
 ls /mnt/dst/device_view/cloud/
 cat /mnt/dst/device_view/cloud/file1
-# 修改后的libfuse挂载
-./example/hello_ll /mnt/cloud_dir -d
 ```
