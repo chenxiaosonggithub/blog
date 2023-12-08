@@ -22,15 +22,15 @@ OpenHarmony是华为“鸿蒙操作系统”的底座，包含：华为捐献的
 
 # LoRaWAN协议翻译
 
-[twowinter/LoRaWAN-Specification_ZH_CN](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN)是由腾讯LoRaWAN专家[twowinter](https://github.com/twowinter)发起的LoRaWAN-Specification的翻译项目。我主要参与了[V1.1版本](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/tree/V1.1)的翻译，lioneie是我曾经的github用户名，lionChen是我曾经的签名。
-
 [点击查看pull request: Update chapter 1 ~ 2 of spec V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/4/commits)
 
 [点击查看pull request: V1.1](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/pull/5/commits)
 
+[twowinter/LoRaWAN-Specification_ZH_CN](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN)是由腾讯LoRaWAN专家[twowinter](https://github.com/twowinter)发起的[LoRaWAN-Specification](https://resources.lora-alliance.org/technical-specifications/lorawan-specification-v1-1)的翻译项目。我主要参与了[V1.1版本](https://github.com/twowinter/LoRaWAN-Specification_ZH_CN/tree/V1.1)的翻译，[lioneie](https://github.com/lioneie)是我曾经的github用户名，lionChen是我曾经的签名。
+
 # ghostwriter: markdown编辑器
 
-ghostwriter是KDE（K桌面环境，全称K Desktop Environment，著名的运行于类UNIX上的自由图形桌面环境）的markdown编辑器，具体的介绍可以查看[《ghostwriter: 一款makdown编辑器》](http://chenxiaosong.com/linux/ghostwriter-makdown.html)。
+ghostwriter是KDE（K桌面环境，全称K Desktop Environment，著名的运行于类UNIX系统上的自由图形桌面环境）的markdown编辑器，具体的介绍可以查看[《ghostwriter: 一款makdown编辑器》](http://chenxiaosong.com/linux/ghostwriter-makdown.html)。
 
 # 博客
 
