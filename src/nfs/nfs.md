@@ -142,7 +142,7 @@ nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可
 /tmp/s_scratch *(rw,no_root_squash,fsid=2)
 ```
 
-执行脚本[start-nfs-server.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/nfs/start-nfs-server.sh)启动nfs server。
+执行脚本[start-nfs-server.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/nfs/start-nfs-server.sh)启动nfs server。
 
 nfs client安装所需软件：
 ```sh

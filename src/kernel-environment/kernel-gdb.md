@@ -20,9 +20,9 @@ CONFIG_GDB_SCRIPTS=y # gdb python
 CONFIG_RANDOMIZE_BASE = n # 关闭地址随机化
 ```
 
-可以使用我常用的[x86_64的内核配置文件](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/x86_64/config)。
+可以使用我常用的[x86_64的内核配置文件](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/config)。
 
-gcc的编译选项`O1`优化等级不需要修改就可以编译通过。`O0`优化等级无法编译（尝试`CONFIG_JUMP_LABEL=n`还是不行），要修改汇编代码，有兴趣的朋友可以和我一直尝试。`Og`优化等级经过修改可以编译通过，`x86_64`合入目录[`src/kernel-environment/x86_64`](https://github.com/chenxiaosonggithub/blog/tree/master/src/kernel-environment/x86_64)对应版本的补丁。
+gcc的编译选项`O1`优化等级不需要修改就可以编译通过。`O0`优化等级无法编译（尝试`CONFIG_JUMP_LABEL=n`还是不行），要修改汇编代码，有兴趣的朋友可以和我一直尝试。`Og`优化等级经过修改可以编译通过，`x86_64`合入目录[`src/kernel-environment/x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/src/kernel-environment/x86_64)对应版本的补丁。
 
 # 2. qemu命令选项
 

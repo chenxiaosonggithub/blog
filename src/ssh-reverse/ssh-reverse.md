@@ -31,7 +31,7 @@ vim /etc/ssh/sshd_config # GatewayPorts yes
 systemctl restart sshd # 重启ssh
 ```
 
-在private-server上执行[`src/ssh-reverse/link.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/ssh-reverse/link.sh)脚本将[`src/ssh-reverse/ssh-reverse.service`](https://github.com/chenxiaosonggithub/blog/blob/master/src/ssh-reverse/ssh-reverse.service)链接到`/lib/systemd/system/ssh-reverse.service`。
+在private-server上执行[`src/ssh-reverse/link.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/ssh-reverse/link.sh)脚本将[`src/ssh-reverse/ssh-reverse.service`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/ssh-reverse/ssh-reverse.service)链接到`/lib/systemd/system/ssh-reverse.service`。
 
 private-server 在`/etc/bashrc`或`/etc/bash.bashrc`(通过`/etc/profile`查看到底是哪个文件)中添加：
 ```shell
@@ -69,7 +69,7 @@ ssh -p 55555 sonvhi@chenxiaosong.com
 
 有时会因为网络波动出现无法远程连接，可以在private-server上使用脚本监测，当监测到无法连接时，重启服务。
 
-执行以下命令，运行[src/ssh-reverse/monitor-ssh.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/ssh-reverse/monitor-ssh.sh)脚本：
+执行以下命令，运行[src/ssh-reverse/monitor-ssh.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/ssh-reverse/monitor-ssh.sh)脚本：
 ```sh
 mkdir -p /home/sonvhi/chenxiaosong/monitor-ssh
 sudo mount -t tmpfs -o size=64G monitor-ssh /home/sonvhi/chenxiaosong/monitor-ssh

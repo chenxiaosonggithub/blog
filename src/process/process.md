@@ -50,7 +50,7 @@ Nice值取值范围 0 ~ 39 （对应静态优先级）
 int nice(int incr);
 ```
 
-示例文件[nice.c](https://github.com/chenxiaosonggithub/blog/blob/master/src/process/nice.c)。两个进程并行运行，各自增加自己的计数器。父进程使用默认nice值，子进程nice值可选。
+示例文件[nice.c](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/process/nice.c)。两个进程并行运行，各自增加自己的计数器。父进程使用默认nice值，子进程nice值可选。
 
 `gcc nice.c -o nice` 编译文件
 

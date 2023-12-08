@@ -15,7 +15,7 @@ QEMU：quick emulation，高速度、跨平台的开源模拟器，能模拟x86�
 
 ## 1.1. 脚本
 
-进入目录[src/kernel-environment](https://github.com/chenxiaosonggithub/blog/tree/master/src/kernel-environment)，选择相应的cpu架构，如[src/kernel-environment/x86_64](https://github.com/chenxiaosonggithub/blog/tree/master/src/kernel-environment/x86_64)。执行[src/kernel-environment/x86_64/create-raw.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/x86_64/create-raw.sh)生成raw格式的镜像，这个脚本会调用到[src/kernel-environment/create-debian.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/create-debian.sh)，是从[syzkaller的脚本](https://github.com/google/syzkaller/blob/master/tools/create-image.sh)经过修改而来。
+进入目录[src/kernel-environment](https://gitee.com/chenxiaosonggitee/blog/tree/master/src/kernel-environment)，选择相应的cpu架构，如[src/kernel-environment/x86_64](https://gitee.com/chenxiaosonggitee/blog/tree/master/src/kernel-environment/x86_64)。执行[src/kernel-environment/x86_64/create-raw.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/create-raw.sh)生成raw格式的镜像，这个脚本会调用到[src/kernel-environment/create-debian.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/create-debian.sh)，是从[syzkaller的脚本](https://github.com/google/syzkaller/blob/master/tools/create-image.sh)经过修改而来。
 
 注意riscv64架构的镜像，可以直接下载[ubuntu2204](https://ubuntu.com/download/risc-v)（选择[QEMU emulator]）。
 
@@ -25,7 +25,7 @@ QEMU：quick emulation，高速度、跨平台的开源模拟器，能模拟x86�
 qemu-img convert -p -f raw -O qcow2 image.raw image.qcow2
 ```
 
-再执行脚本[src/kernel-environment/link-scripts.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/link-scripts.sh)把脚本链接到相应的目录，执行[src/kernel-environment/x86_64/update-base.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/x86_64/update-base.sh)启动虚拟机更新镜像，再执行[src/kernel-environment/x86_64/create-qcow2.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/x86_64/create-qcow2.sh)生成指向基础镜像的qcow2镜像。
+再执行脚本[src/kernel-environment/link-scripts.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/link-scripts.sh)把脚本链接到相应的目录，执行[src/kernel-environment/x86_64/update-base.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/update-base.sh)启动虚拟机更新镜像，再执行[src/kernel-environment/x86_64/create-qcow2.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/create-qcow2.sh)生成指向基础镜像的qcow2镜像。
 
 介绍完脚本，下面再介绍一下具体的命令。
 
@@ -61,7 +61,7 @@ sudo modprobe -r nbd # 移除模块
 
 ## 1.3. 虚拟机处理
 
-当启用了9p文件系统，就可以把宿主机的modules目录共享给虚拟机，具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本[src/kernel-environment/mod-cfg.sh](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/mod-cfg.sh)挂载和链接模块目录。
+当启用了9p文件系统，就可以把宿主机的modules目录共享给虚拟机，具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本[src/kernel-environment/mod-cfg.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/mod-cfg.sh)挂载和链接模块目录。
 
 root免密登录，`/etc/ssh/sshd_config` 修改以下内容:
 ```

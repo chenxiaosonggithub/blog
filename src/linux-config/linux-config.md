@@ -10,19 +10,19 @@ Linux下一切皆文件，所有的配置选项也都是文件。
 
 所以，脚本一键搞定是多么的寂寞，哦不对，是多么的重要。
 
-把我的[个人笔记仓库](https://github.com/chenxiaosonggithub/blog)clone到本地，进入到目录[`src/linux-config`](https://github.com/chenxiaosonggithub/blog/tree/master/src/linux-config)，执行脚本[`src/linux-config/link.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/link.sh)创建软链接到代码仓库里的配置文件，执行脚本[`src/linux-config/copy.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/copy.sh)复制配置文件到家目录下。
+把我的[个人笔记仓库](https://gitee.com/chenxiaosonggitee/blog)clone到本地，进入到目录[`src/linux-config`](https://gitee.com/chenxiaosonggitee/blog/tree/master/src/linux-config)，执行脚本[`src/linux-config/link.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/link.sh)创建软链接到代码仓库里的配置文件，执行脚本[`src/linux-config/copy.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/copy.sh)复制配置文件到家目录下。
 
 # .bash_profile
 
 .bash_profile 是一个用于配置用户的 Bash shell 环境的文件。它通常位于用户的主目录（$HOME）下。当用户登录到系统时，Bash shell 会尝试执行 .bash_profile 文件中包含的命令和设置。这使得用户能够自定义其 shell 环境和行为。
 
-具体请查看[`.bash_profile`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/bash_profile)。
+具体请查看[`.bash_profile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/bash_profile)。
 
 # .emacs
 
 配置我最喜欢的编辑器emacs，配合着gtags，然后用hhkb键盘看内核代码，真的没有比这更爽的事情了。
 
-具体请查看[`.emacs`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/emacs)。
+具体请查看[`.emacs`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/emacs)。
 
 # .gitconfig
 
@@ -34,13 +34,13 @@ git config --global user.name "ChenXiaoSong"
 git config --global user.email "chenxiaosongemail@foxmail.com"
 ```
 
-具体请查看[`.gitconfig`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/gitconfig)。
+具体请查看[`.gitconfig`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/gitconfig)。
 
 # .origin_xmodmap.txt 和 .xmodmap.txt
 
 xmodmap是Linux桌面系统用于更改键位分布的软件。
 
-[`.origin_xmodmap.txt`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/origin_xmodmap.txt)是用于还原我当年买的xps13笔记本的键位布局，[`.xmodmap.txt`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/xmodmap.txt)是用于xps13的键位更改，符合我的个人习惯。
+[`.origin_xmodmap.txt`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/origin_xmodmap.txt)是用于还原我当年买的xps13笔记本的键位布局，[`.xmodmap.txt`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/xmodmap.txt)是用于xps13的键位更改，符合我的个人习惯。
 
 使用的方法是:
 ```shell
@@ -65,7 +65,7 @@ xmodmap -pke # 除修饰键外的其他键
 . .set_proxy.sh 0 # 取消代理
 ```
 
-具体请查看[`.set_proxy.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/set_proxy.sh)。
+具体请查看[`.set_proxy.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/set_proxy.sh)。
 
 # .tmux.conf
 
@@ -83,10 +83,10 @@ sudo apt install tmux -y
 
 如果已经运行了tmux，要重新加载配置，在终端中输入`tmux source-file ~/.tmux.conf`，使新的prefix设置生效。
 
-具体请查看[`.tmux.conf`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/tmux.conf)。
+具体请查看[`.tmux.conf`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/tmux.conf)。
 
 # .vimrc
 
 vim就是方便小巧，是Linux下最常用的编辑器了，以前我挺喜欢用的，现在我更多的是用emacs看代码。
 
-具体请查看[`.vimrc`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/vimrc)。
+具体请查看[`.vimrc`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/vimrc)。

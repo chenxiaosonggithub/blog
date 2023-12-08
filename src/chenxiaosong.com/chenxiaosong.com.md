@@ -16,7 +16,7 @@ ubuntu安装nginx:
 ```shell
 apt install nginx -y
 ```
-执行脚本[`src/chenxiaosong.com/link.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/chenxiaosong.com/link.sh)将[`src/chenxiaosong.com/nginx-config`](https://github.com/chenxiaosonggithub/blog/blob/master/src/chenxiaosong.com/nginx-config)链接到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
+执行脚本[`src/chenxiaosong.com/link.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/link.sh)将[`src/chenxiaosong.com/nginx-config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/nginx-config)链接到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
 
 重启nginx服务：
 ```shell
@@ -33,7 +33,7 @@ pandoc用于将markdown转换成html。
 apt-get install pandoc -y
 ```
 
-具体的命令可以参考[`src/chenxiaosong.com/create-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/chenxiaosong.com/create-html.sh)，脚本里写了详细的说明。
+具体的命令可以参考[`src/chenxiaosong.com/create-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/create-html.sh)，脚本里写了详细的说明。
 
 
 

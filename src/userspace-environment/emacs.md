@@ -2,16 +2,16 @@
 
 # 安装与配置
 
-我使用的配置文件[.emacs](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/emacs)。
+我使用的配置文件[.emacs](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/linux-config/config-files/emacs)。
 
 ```
 M-x package-refresh-contents 刷新包存储库中可用的包内容
 M-x package-list-packages 显示当前已安装的包和可用的包，安装需要的包，如evil（模拟vim）
 ```
 
-如果你使用的是cscope插件来浏览代码，将[cscope-indexer](https://github.com/chenxiaosonggithub/cscope/blob/configure.chenxiaosong/contrib/xcscope/cscope-indexer)所在路径添加到PATH中。关于cscope的更多内容请查看[《vim编辑器》](http://chenxiaosong.com/linux/vim.html)。
+如果你使用的是cscope插件来浏览代码，将[cscope-indexer](https://gitee.com/chenxiaosonggitee/cscope/blob/configure.chenxiaosong/contrib/xcscope/cscope-indexer)所在路径添加到PATH中。关于cscope的更多内容请查看[《vim编辑器》](http://chenxiaosong.com/linux/vim.html)。
 
-如果你使用的是gtags插件（要先安装`apt install global -y`）来浏览代码，在配置文件中添加[xcscope.el](https://github.com/chenxiaosonggithub/cscope/blob/configure.chenxiaosong/contrib/xcscope/xcscope.el)所在的路径`(add-to-list 'load-path  "/your_path/cscope/contrib/xcscope")`。使用`gtags`命令生成索引文件，Linux内核代码使用`make gtags`生成索引文件。
+如果你使用的是gtags插件（要先安装`apt install global -y`）来浏览代码，在配置文件中添加[xcscope.el](https://gitee.com/chenxiaosonggitee/cscope/blob/configure.chenxiaosong/contrib/xcscope/xcscope.el)所在的路径`(add-to-list 'load-path  "/your_path/cscope/contrib/xcscope")`。使用`gtags`命令生成索引文件，Linux内核代码使用`make gtags`生成索引文件。
 
 # 常用快捷键
 

@@ -9,7 +9,7 @@
 git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux.git # 国内使用googlesource仓库链接比较快
 ```
 
-建议新建一个`build`目录，把所有的编译输出存放在这个目录下，注意[`.config`](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel-environment/x86_64/config)文件要放在`build`目录:
+建议新建一个`build`目录，把所有的编译输出存放在这个目录下，注意[`.config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/config)文件要放在`build`目录:
 ```sh
 rm build -rf && mkdir build && cp /home/sonvhi/chenxiaosong/code/blog/src/kernel-environment/x86_64/config build/.config
 ```
@@ -34,4 +34,4 @@ KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O=build bzIma
 
 默认的内核编译优化等级太高，用GDB调试时不太方便，有些函数语句被优化了，无法打断点，这时就要降低编译优化等级。
 
-可以在[src/kernel-environment/x86_64](https://github.com/chenxiaosonggithub/blog/tree/master/src/kernel-environment/x86_64)目录下选择对应版本的补丁，更多详细的内容请查看[《GDB调试Linux内核》](http://chenxiaosong.com/kernel/kernel-gdb.html)。
+可以在[src/kernel-environment/x86_64](https://gitee.com/chenxiaosonggitee/blog/tree/master/src/kernel-environment/x86_64)目录下选择对应版本的补丁，更多详细的内容请查看[《GDB调试Linux内核》](http://chenxiaosong.com/kernel/kernel-gdb.html)。
