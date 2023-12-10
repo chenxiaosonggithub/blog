@@ -1,16 +1,124 @@
-[001c179c4e26 xfs: fix NULL pointer dereference in xfs_getbmap()](https://lore.kernel.org/all/20220727085230.4073478-1-chenxiaosong2@huawei.com/)
+# 问题描述
 
 ```sh
-1. shell命令: fallocate -l 100M image
-2. shell命令: mkfs.xfs -f image
-3. shell命令: mount image /mnt
-4. c程序: setxattr("/mnt", "trusted.overlay.upper", NULL, 0, XATTR_CREATE)
-5. c程序:
+[   68.392204] BUG: kernel NULL pointer dereference, address: 000000000000002a
+...
+[   68.428987] Call Trace:
+[   68.429726]  <TASK>
+[   68.450295]  xfs_ioc_getbmap+0x192/0x310
+[   68.451510]  xfs_file_ioctl+0x4a4/0xe70
+[   68.473513]  vfs_ioctl+0x3b/0x70
+[   68.474434]  __se_sys_ioctl+0xbd/0xe0
+[   68.475341]  __x64_sys_ioctl+0x1f/0x30
+[   68.476259]  do_syscall_64+0x43/0x120
+[   68.477174]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+```
+
+# 内核构造补丁
+
+```c
+diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
+index 1a1d1f881037..d886be3d301e 100644
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -29,6 +29,7 @@
+ #include "xfs_iomap.h"
+ #include "xfs_reflink.h"
+ #include "xfs_rtbitmap.h"
++#include <linux/delay.h>
+ 
+ /* Kernel only BMAP related definitions and functions */
+ 
+@@ -433,6 +434,10 @@ xfs_getbmap(
+                whichfork = XFS_DATA_FORK;
+        ifp = xfs_ifork_ptr(ip, whichfork);
+ 
++       printk("delay begin\n");
++       mdelay(5000);
++       printk("delay end\n");
++
+        xfs_ilock(ip, XFS_IOLOCK_SHARED);
+        switch (whichfork) {
+        case XFS_ATTR_FORK:
+```
+
+# 用户态程序
+
+`ioctl.c`文件：
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+
+int main() {
+    const char *path = "/mnt";
+    int fd;
+
+    fd = open(path, O_RDONLY | O_DIRECTORY);
+    if (fd == -1) {
+        perror("无法打开目录");
+        return EXIT_FAILURE;
+    }
+
     char arg[32] = "\x01\xff\x00\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00"
                    "\x00\x00\x00\x00\x00\x08\x00\x00\x00\xc6\x2a\xf7";
-    fd = open("/mnt", O_RDONLY|O_DIRECTORY);
-    ioctl(fd, _IOC(_IOC_READ|_IOC_WRITE, 0x58, 0x2c, 0x20), arg);
+
+    if (ioctl(fd, _IOC(_IOC_READ | _IOC_WRITE, 0x58, 0x2c, 0x20), arg) == -1) {
+        perror("ioctl 操作失败");
+        close(fd);
+        return EXIT_FAILURE;
+    }
+
+    printf("ioctl 操作成功\n");
+
+    close(fd);
+    return EXIT_SUCCESS;
+}
 ```
+
+`setxattr.c`文件：
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/xattr.h>
+
+int main() {
+    const char *path = "/mnt";
+    const char *attr_name = "trusted.overlay.upper";
+
+    int result = setxattr(path, attr_name, NULL, 0, XATTR_CREATE);
+
+    if (result == 0) {
+        printf("扩展属性设置成功。\n");
+    } else {
+        perror("设置扩展属性时发生错误");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+```
+
+# 复现命令
+
+```sh
+apt-get install xfsprogs -y
+
+fallocate -l 100M image
+mkfs.xfs -f image
+mount image /mnt
+
+gcc setxattr.c -o setxattr
+gcc ioctl.c -o ioctl
+./ioctl & # 这里会deley 3秒
+sleep 1
+./setxattr
+```
+
+# 代码分析
 
 ```c
          ioctl               |       setxattr
@@ -28,5 +136,7 @@
    xfs_inode_has_attr_fork   |
      ip->i_forkoff > 0       |
    ifp == NULL               |
-   ifp->if_format            |
+   ifp->if_format // null-ptr-deref
 ```
+
+修复补丁： [001c179c4e26 xfs: fix NULL pointer dereference in xfs_getbmap()](https://lore.kernel.org/all/20220727085230.4073478-1-chenxiaosong2@huawei.com/)

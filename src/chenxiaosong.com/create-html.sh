@@ -25,7 +25,6 @@ array=(
     src/strace-fault-inject/strace-fault-inject.md kernel/strace-fault-inject.html "strace内存分配失败故障注入"
     src/mm/mm.md kernel/mm.html "Linux内存管理"
     src/process/process.md kernel/process.html "Linux进程调度"
-    src/filesystem/configfs-race.md kernel/configfs-race.html "configfs加载或卸载模块时的并发问题"
     # nfs
     src/nfs/nfs.md nfs/nfs.html "NFS网络文件系统介绍"
     src/nfs/nfs-debug.md nfs/nfs-debug.html "定位NFS问题的常用方法"
@@ -42,6 +41,9 @@ array=(
     src/ext/bugon-in-start_this_handle.md ext/bugon-in-start_this_handle.html "start_this_handle报BUG_ON的问题"
     src/ext/symlink-file-size-not-match.md ext/symlink-file-size-not-match.html "symlink file size 错误的问题"
     src/ext/uaf-in-ext4_search_dir.md ext/uaf-in-ext4_search_dir.html "ext4_search_dir空指针解引用问题"
+    # 文件系统
+    src/filesystem/configfs-race.md fs/configfs-race.html "configfs加载或卸载模块时的并发问题"
+    src/xfs/xfs-null-ptr-deref-in-xfs_getbmap.md fs/xfs-null-ptr-deref-in-xfs_getbmap.html "xfs_getbmap发生空指针解引用问题"
     # Linux环境
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"

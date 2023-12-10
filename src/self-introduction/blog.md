@@ -22,8 +22,6 @@
 
 [Linux进程调度](http://chenxiaosong.com/kernel/process.html)
 
-[configfs加载或卸载模块时的并发问题](http://chenxiaosong.com/kernel/configfs-race.html)
-
 # NFS（网络文件系统）
 
 [NFS网络文件系统介绍](http://chenxiaosong.com/nfs/nfs.html)
@@ -55,6 +53,12 @@
 [symlink file size 错误的问题](http://chenxiaosong.com/ext/symlink-file-size-not-match.html)
 
 [ext4_search_dir空指针解引用问题](http://chenxiaosong.com/ext/uaf-in-ext4_search_dir.html)
+
+# 文件系统
+
+[configfs加载或卸载模块时的并发问题](http://chenxiaosong.com/fs/configfs-race.html)
+
+[xfs_getbmap发生空指针解引用问题](http://chenxiaosong.com/fs/xfs-null-ptr-deref-in-xfs_getbmap.html)
 
 # Linux环境
 
