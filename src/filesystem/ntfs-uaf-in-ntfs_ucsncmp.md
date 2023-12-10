@@ -1,1 +1,0 @@
-[ntfs: fix use-after-free in ntfs_ucsncmp()](https://lore.kernel.org/all/20220707024801.2978141-1-chenxiaosong2@huawei.com/)
