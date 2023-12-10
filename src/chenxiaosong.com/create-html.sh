@@ -44,6 +44,7 @@ array=(
     # 文件系统
     src/filesystem/configfs-race.md fs/configfs-race.html "configfs加载或卸载模块时的并发问题"
     src/xfs/xfs-null-ptr-deref-in-xfs_getbmap.md fs/xfs-null-ptr-deref-in-xfs_getbmap.html "xfs_getbmap发生空指针解引用问题"
+    src/filesystem/microsoft-fs.md fs/microsoft-fs.html "微软文件系统"
     # Linux环境
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
