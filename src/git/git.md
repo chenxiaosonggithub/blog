@@ -1,3 +1,5 @@
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+
 # git log
 
 查看帮助文档`man 1 git log`：
