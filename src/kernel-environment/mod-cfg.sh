@@ -9,7 +9,7 @@ mkdir $mnt_point
 mkdir /lib/modules -p
 mount -t 9p -o trans=virtio 9p $mnt_point
 knl_vers=$(uname -r)
-target=${knl_base_dir}/mod/lib/modules/${knl_vers}
+target=${knl_base_dir}/build/mod/lib/modules/${knl_vers}
 link_name=/lib/modules/${knl_vers}
 rm ${link_name} -rf
 ln -s ${target} ${link_name}

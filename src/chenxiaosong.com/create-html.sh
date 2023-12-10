@@ -25,6 +25,7 @@ array=(
     src/strace-fault-inject/strace-fault-inject.md kernel/strace-fault-inject.html "strace内存分配失败故障注入"
     src/mm/mm.md kernel/mm.html "Linux内存管理"
     src/process/process.md kernel/process.html "Linux进程调度"
+    src/filesystem/configfs-race.md kernel/configfs-race.html "configfs加载或卸载模块时的并发问题"
     # nfs
     src/nfs/nfs.md nfs/nfs.html "NFS网络文件系统介绍"
     src/nfs/nfs-debug.md nfs/nfs-debug.html "定位NFS问题的常用方法"

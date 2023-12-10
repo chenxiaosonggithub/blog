@@ -61,7 +61,7 @@ sudo modprobe -r nbd # 移除模块
 
 ## 1.3. 虚拟机处理
 
-当启用了9p文件系统，就可以把宿主机的modules目录共享给虚拟机，具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本[src/kernel-environment/mod-cfg.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/mod-cfg.sh)挂载和链接模块目录。
+当启用了9p文件系统，就可以把宿主机的modules目录共享给虚拟机，具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本[src/kernel-environment/mod-cfg.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/mod-cfg.sh)挂载和链接模块目录，注意`/lib/modules/$(uname -r)`是软链接，无法使用`modprobe <ko名>`命令，只能使用`inmod <ko的绝对路径>`。
 
 root免密登录，`/etc/ssh/sshd_config` 修改以下内容:
 ```

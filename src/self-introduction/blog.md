@@ -22,6 +22,8 @@
 
 [Linux进程调度](http://chenxiaosong.com/kernel/process.html)
 
+[configfs加载或卸载模块时的并发问题](http://chenxiaosong.com/kernel/configfs-race.html)
+
 # NFS（网络文件系统）
 
 [NFS网络文件系统介绍](http://chenxiaosong.com/nfs/nfs.html)
