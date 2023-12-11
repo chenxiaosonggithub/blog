@@ -21,7 +21,7 @@ update_repository() {
 update_repository pictures
 update_repository blog
 
-if [ restart = true ]; then
+if [ ${restart} = true ]; then
     echo "recreate html, restart service"
     bash ${src_path}/blog/src/chenxiaosong.com/link.sh
     bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
