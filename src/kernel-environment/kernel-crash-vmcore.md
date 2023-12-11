@@ -1,6 +1,8 @@
 [点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
 
-# 1. 导出vmcore
+# 1. 环境准备
+
+## 1.1. 导出vmcore
 
 首先你需要有个发生panic时的vmcore，有些发行版默认发生oops时不会panic，需要修改配置（注意这样修改重启后会还原）：
 ```sh
@@ -34,6 +36,16 @@ crash vmlinux vmcore
 crash> help mod # 帮助命令
 crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
+```
+
+## 1.2. 源码安装crash
+
+如果内核版本不是最新的（比如4.19或5.10），那么发行版的包管理器安装的crash就可以用，但如果内核版本是最新的，可能就需要通过源码安装crash：
+```sh
+git clone https://github.com/crash-utility/crash.git
+apt-get install autoconf automake libtool -y
+cd crash
+make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好
 ```
 
 # 2. 查看崩溃在哪一行
