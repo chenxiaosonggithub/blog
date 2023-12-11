@@ -11,7 +11,7 @@ update_repository() {
     git fetch origin
     local_head=$(git rev-parse HEAD)
     origin_head=$(git rev-parse origin/master)
-    if [ "${local_head}" = "${origin_head}" ]; then
+    if [ "${local_head}" != "${origin_head}" ]; then
         git pull origin master
         restart=true
     fi
