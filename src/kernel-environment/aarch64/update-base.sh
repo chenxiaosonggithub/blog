@@ -1,5 +1,3 @@
-# ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make Image
-# ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make modules_install INSTALL_MOD_PATH=mod
 kernel_version=aarch64-linux
 
 qemu-system-aarch64 \

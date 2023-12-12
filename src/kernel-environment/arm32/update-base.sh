@@ -1,6 +1,4 @@
 # https://github.com/google/syzkaller/blob/master/docs/linux/setup_linux-host_qemu-vm_arm-kernel.md
-# ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- make zImage
-# ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- make modules_install INSTALL_MOD_PATH=mod
 # sudo tunctl -t tap55 -u sonvhi
 # sudo brctl addif virbr0 tap55
 # sudo ip link set tap55 up # 激活

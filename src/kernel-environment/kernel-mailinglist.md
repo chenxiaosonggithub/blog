@@ -30,6 +30,8 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
 可以参考内核仓库中的补丁，或[我提交的补丁](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)。
 
+注意commit message每行长度不超过 72 个字符。
+
 # 3. 生成patch文件
 
 以下命令会生成补丁文件：

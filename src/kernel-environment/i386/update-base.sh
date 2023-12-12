@@ -1,4 +1,3 @@
-# ARCH=i386 make modules_install INSTALL_MOD_PATH=mod
 # -append "quiet console=ttyS0 IP=192.168.122.2 root=/dev/vda1 rw kmemleak=on" \ # quiet: 不打印信息
 kernel_version=i386-linux
 

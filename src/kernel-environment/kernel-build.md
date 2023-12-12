@@ -14,10 +14,19 @@ git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linu
 rm build -rf && mkdir build && cp /home/sonvhi/chenxiaosong/code/blog/src/kernel-environment/x86_64/config build/.config
 ```
 
-编译命令：
+编译命令，其中`ARCH`的值为`arch/`目录下相应的架构：
 ```sh
-make O=build menuconfig # 交互式地配置内核的编译选项
-KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O=build bzImage ${KNLMKFLGS} && make O=build modules ${KNLMKFLGS} && make O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
+ARCH=x86 && make O=build menuconfig # 交互式地配置内核的编译选项
+ARCH=x86 && KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O=build bzImage ${KNLMKFLGS} && make O=build modules ${KNLMKFLGS} && make O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
+```
+
+如果是其他架构，编译命令是：
+```sh
+ARCH=i386 && make bzImage # x86 32bit
+ARCH=arm && CROSS_COMPILE=arm-linux-gnueabi- && make zImage
+ARCH=arm && CROSS_COMPILE=arm-linux-gnueabihf- && make zImage
+ARCH=arm64 && CROSS_COMPILE=aarch64-linux-gnu- && make Image
+ARCH=riscv && CROSS_COMPILE=riscv64-linux-gnu- && make Image
 ```
 
 # 2. 一些额外的补丁

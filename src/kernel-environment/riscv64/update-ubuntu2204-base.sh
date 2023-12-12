@@ -1,7 +1,5 @@
 # https://ubuntu.com/download/risc-v, ubuntu-22.04.1-preinstalled-server-riscv64+unmatched.img
 # qemu-img convert -p -f raw -O qcow2 riscv64-ubuntu2204.img riscv64-ubuntu2204.qcow2
-# ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- make Image
-# ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- make modules_install INSTALL_MOD_PATH=mod
 qemu-system-riscv64 \
 -machine virt -nographic -m 4096 -smp 4 \
 -bios /usr/lib/riscv64-linux-gnu/opensbi/generic/fw_jump.elf \
