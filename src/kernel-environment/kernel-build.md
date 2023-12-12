@@ -23,8 +23,8 @@ ARCH=x86 && KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O
 如果是其他架构，编译命令是：
 ```sh
 ARCH=i386 && make bzImage # x86 32bit
-ARCH=arm && CROSS_COMPILE=arm-linux-gnueabi- && make zImage
-ARCH=arm && CROSS_COMPILE=arm-linux-gnueabihf- && make zImage
+ARCH=arm && CROSS_COMPILE=arm-linux-gnueabi- && make zImage # armel, arm eabi(embeded abi) little endian, 传参数用普通寄存器
+ARCH=arm && CROSS_COMPILE=arm-linux-gnueabihf- && make zImage # armhf, arm eabi(embeded abi) little endian hard float, 传参数用fpu的寄存器，浮点运算性能更高
 ARCH=arm64 && CROSS_COMPILE=aarch64-linux-gnu- && make Image
 ARCH=riscv && CROSS_COMPILE=riscv64-linux-gnu- && make Image
 ```
