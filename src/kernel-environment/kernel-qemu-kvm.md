@@ -87,6 +87,12 @@ sudo dnf update vim-common vim-minimal -y
 yum install libtool libuuid-devel xfsprogs-devel libacl-devel -y
 ```
 
+## 1.4. 启动
+
+如果你自己编译内核，启动时指定内核，可以参考[这个脚本](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/update-base.sh)（链接中的`x86_64`可以替换成其他架构）中的命令。
+
+如果你的镜像是一个完整的镜像，不想指定内核，就想用镜像本身自带的内核，可以把上面脚本中命令的`-kernel`和`-append`选项删除。
+
 # 2. qemu安装与配置
 
 ## 2.1. 源码安装 qemu
