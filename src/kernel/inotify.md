@@ -50,4 +50,43 @@ main
               if (!g_save_process) // 条件满足，不打印event信息
 ```
 
+## 宿主机上编译
 
+[openEuler内核openEuler-22.03-LTS-SP2分支](https://gitee.com/openeuler/kernel/tree/openEuler-22.03-LTS-SP2/)代码以`gcc -Og`编译。
+
+[sysmonitor/sysmonitor-1.3.2/module](https://gitee.com/openeuler/sysmonitor/tree/master/sysmonitor-1.3.2/module)代码如果以`gcc -Og`编译，需要修改[sysmonitor/sysmonitor-1.3.2/module/Makefile](https://gitee.com/openeuler/sysmonitor/blob/master/sysmonitor-1.3.2/module/Makefile)以保证编译通过：
+```sh
+diff --git a/sysmonitor-1.3.2/module/Makefile b/sysmonitor-1.3.2/module/Makefile
+index 8030152..cdd40ae 100644
+--- a/sysmonitor-1.3.2/module/Makefile
++++ b/sysmonitor-1.3.2/module/Makefile
+@@ -5,9 +5,9 @@
+ 
+ obj-m += sysmonitor.o
+ sysmonitor-objs := sysmonitor_main.o signo_catch.o fdstat.o monitor_netdev.o
+-KERNELDIR ?= /lib/modules/$(shell uname -r)/build
++KERNELDIR ?= /home/sonvhi/chenxiaosong/code/openeuler-22.03/build
+ PWD := $(shell pwd)
+-EXTRA_CFLAGS += -Wall -Werror
++EXTRA_CFLAGS += -Wall
+ 
+ modules:
+        $(MAKE) -C $(KERNELDIR) M=$(PWD) modules
+```
+
+qemu启动时指定`-kernel`和`-append`选项，将编译出的`sysmonitor.ko`复制到虚拟机中的`/lib/modules/sysmonitor/sysmonitor.ko`
+
+## 虚拟机中编译
+
+进入openeuler镜像的虚拟机后。
+
+```sh
+yum-builddep sysmonitor-kmod.spec -y
+dnf install rpm-build -y
+mkdir ../rpmbuild/SOURCES/ -p
+tar -cvjf sysmonitor-1.3.2.tar.bz2 sysmonitor-1.3.2
+mv sysmonitor-1.3.2 ../rpmbuild/SOURCES/
+rpmbuild -ba sysmonitor-kmod.spec
+```
+
+## 调试
