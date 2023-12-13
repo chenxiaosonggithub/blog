@@ -20,7 +20,7 @@ mount -t ntfs /dev/sda1 /mnt
 
 # vfat
 
-除了要打开`CONFIG_VFAT_FS`配置外，还要打开`CONFIG_NLS_ISO8859_1`配置。
+除了要打开`CONFIG_VFAT_FS`配置外，还要打开`CONFIG_NLS_ISO8859_1`等相关的配置。
 
 ```sh
 apt install dosfstools -y

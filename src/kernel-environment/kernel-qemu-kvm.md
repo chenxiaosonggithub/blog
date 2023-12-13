@@ -61,6 +61,13 @@ sudo modprobe -r nbd # 移除模块
 
 ## 1.3. 虚拟机处理
 
+在系统启动界面登录进去后（而不是以ssh登录），默认的窗口大小不会自动调整，需要手动调整：
+```sh
+stty size # 可以先在其他窗口查看大小
+echo "stty rows 54 cols 229" > stty.sh
+. stty.sh
+```
+
 当启用了9p文件系统，就可以把宿主机的modules目录共享给虚拟机，具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本[src/kernel-environment/mod-cfg.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/mod-cfg.sh)挂载和链接模块目录，注意`/lib/modules/$(uname -r)`是软链接，无法使用`modprobe <ko名>`命令，只能使用`inmod <ko的绝对路径>`。
 
 root免密登录，`/etc/ssh/sshd_config` 修改以下内容:
@@ -191,3 +198,16 @@ mv /lib/systemd/system/systemd-modules-load.service /lib/systemd/system/systemd-
 cp /etc/fstab /etc/fstab.bak # 备份
 vim /etc/fstab # 删除　LABEL=UEFI 一行
 ```
+
+# 5. openeuler
+
+[openEuler 22.03 LTS SP2（或更新的版本）](https://www.openeuler.org/en/download/?version=openEuler%2022.03%20LTS%20SP2)，Scenario选择“cloud computing”，下载`qcow2.xz`，解压：
+```sh
+xz -d openEuler-22.03-LTS-SP2-x86_64.qcow2.xz
+```
+
+qemu启动参数需要做一些小修改 `-append "... root=/dev/vda2 ..."`。
+
+默认的登录账号是`root`，密码是 `openEuler12#$`。
+
+注意需要打开`vfat`文件系统相关配置，具体查看[《微软文件系统》](http://chenxiaosong.com/fs/microsoft-fs.html)中`vfat`相关的一节。否则会进入emergency mode，如果你实在不想打开`vfat`文件系统相关配置，可以编辑`/etc/fstab`文件删除`/boot`相关的一行，重启系统就可以正常启动了，但不建议哈。
