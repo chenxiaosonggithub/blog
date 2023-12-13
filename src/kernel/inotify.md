@@ -1,8 +1,10 @@
-# openeuler sysmonitor
+[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
+
+[点击这里查看陈孝松所有博客](http://chenxiaosong.com/blog)。
 
 sysmonitor工具通过内核的inotify特性实现文件的监控功能。inotify 是 Linux 内核提供的一种文件系统监视机制，用于监控文件系统事件，比如文件或目录的创建、删除、修改等。它允许应用程序在文件系统发生变化时立即获得通知，而不需要轮询文件系统状态。
 
-## 测试
+# 测试
 
 相关文档：[docs/sysmonitor](https://gitee.com/openeuler/docs/tree/stable2-22.03_LTS_SP2/docs/zh/docs/sysmonitor)。
 
@@ -26,7 +28,7 @@ Subfile "file" under "/root" was added.
 Subfile "file" under "/root" was deleted.
 ```
 
-## 代码分析
+# 代码分析
 
 [src-openeuler/sysmonitor](https://gitee.com/src-openeuler/sysmonitor)是开发中的代码。[openeuler/sysmonitor](https://gitee.com/openeuler/sysmonitor)是发布的代码。
 
@@ -50,7 +52,7 @@ main
               if (!g_save_process) // 条件满足，不打印event信息
 ```
 
-## 宿主机上编译
+# 宿主机上编译
 
 [openEuler内核openEuler-22.03-LTS-SP2分支](https://gitee.com/openeuler/kernel/tree/openEuler-22.03-LTS-SP2/)代码以`gcc -Og`编译。
 
@@ -76,7 +78,7 @@ index 8030152..cdd40ae 100644
 
 qemu启动时指定`-kernel`和`-append`选项，将编译出的`sysmonitor.ko`复制到虚拟机中的`/lib/modules/sysmonitor/sysmonitor.ko`
 
-## 虚拟机中编译
+# 虚拟机中编译
 
 进入openeuler镜像的虚拟机后。
 
@@ -89,4 +91,3 @@ mv sysmonitor-1.3.2 ../rpmbuild/SOURCES/
 rpmbuild -ba sysmonitor-kmod.spec
 ```
 
-## 调试
