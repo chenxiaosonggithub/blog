@@ -18,7 +18,7 @@
 
 [strace内存分配失败故障注入](http://chenxiaosong.com/kernel/strace-fault-inject.html)
 
-[inotify特性和openEuler的sysmonitor介绍](http://chenxiaosong.com/kernel/inotify.html)
+[openEuler的sysmonitor](http://chenxiaosong.com/kernel/openeuler-sysmonitor.html)
 
 [Linux内存管理](http://chenxiaosong.com/kernel/mm.html)
 
