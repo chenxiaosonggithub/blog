@@ -47,6 +47,7 @@ array=(
     src/xfs/xfs-null-ptr-deref-in-xfs_getbmap.md fs/xfs-null-ptr-deref-in-xfs_getbmap.html "xfs_getbmap发生空指针解引用问题"
     src/filesystem/microsoft-fs.md fs/microsoft-fs.html "微软文件系统"
     # Linux环境
+    src/chenxiaosong.com/chenxiaosong.com.md linux/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
     src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"
@@ -58,8 +59,8 @@ array=(
     src/userspace-environment/vim.md linux/vim.html "vim编辑器"
     src/userspace-environment/emacs.md linux/emacs.html "emacs编辑器"
     # 其他
-    src/chenxiaosong.com/chenxiaosong.com.md others/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
+    src/keybord/keybord.md others/keyboard.html "键盘配置"
     src/openharmony/openharmony.md others/openharmony.html "OpenHarmony编译运行调试环境"
     src/free-software/free-software.md others/free-software.html "自由软件介绍"
     src/lorawan/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
