@@ -24,6 +24,7 @@ array=(
     src/kernel-environment/kernel-mailinglist.md kernel/kernel-mailinglist.html "怎么贡献Linux内核社区"
     src/strace-fault-inject/strace-fault-inject.md kernel/strace-fault-inject.html "strace内存分配失败故障注入"
     src/kernel/openeuler-sysmonitor.md kernel/openeuler-sysmonitor.html "openEuler的sysmonitor"
+    src/kernel/kprobe-scsi-data.md kernel/kprobe-scsi-data.html "使用kprobe监控scsi的读写数据"
     src/mm/mm.md kernel/mm.html "Linux内存管理"
     src/process/process.md kernel/process.html "Linux进程调度"
     # nfs

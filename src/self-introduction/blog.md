@@ -20,6 +20,8 @@
 
 [openEuler的sysmonitor](http://chenxiaosong.com/kernel/openeuler-sysmonitor.html)
 
+[使用kprobe监控scsi的读写数据](http://chenxiaosong.com/kernel/kprobe-scsi-data.html)
+
 [Linux内存管理](http://chenxiaosong.com/kernel/mm.html)
 
 [Linux进程调度](http://chenxiaosong.com/kernel/process.html)
