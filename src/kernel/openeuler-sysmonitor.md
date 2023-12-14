@@ -4,9 +4,9 @@
 
 sysmonitor工具通过内核的inotify特性实现文件的监控功能。inotify 是 Linux 内核提供的一种文件系统监视机制，用于监控文件系统事件，比如文件或目录的创建、删除、修改等。它允许应用程序在文件系统发生变化时立即获得通知，而不需要轮询文件系统状态。
 
-# 测试
-
 相关文档：[docs/sysmonitor](https://gitee.com/openeuler/docs/tree/stable2-22.03_LTS_SP2/docs/zh/docs/sysmonitor)。
+
+# 测试
 
 当前（2023年12月13日）仅在[openEuler内核openEuler-22.03-LTS-SP2分支](https://gitee.com/openeuler/kernel/tree/openEuler-22.03-LTS-SP2/)发布。
 
@@ -32,7 +32,7 @@ Subfile "file" under "/root" was deleted.
 
 [src-openeuler/sysmonitor](https://gitee.com/src-openeuler/sysmonitor)是开发中的代码。[openeuler/sysmonitor](https://gitee.com/openeuler/sysmonitor)是发布的代码。
 
-我们期望`set_event_msg`中的打印是类似`Subfile "file" under "/root" was added, comm: 进程名[进程pid], parent comm: 父进程名[父进程pid]`，但实际运行的日志中没有进程和父进程的信息，代码流程如下：
+我们期望`set_event_msg()`函数中的打印是类似`Subfile "file" under "/root" was added, comm: 进程名[进程pid], parent comm: 父进程名[父进程pid]`，但实际运行的日志中没有进程和父进程的信息，代码流程如下：
 ```c
 #define INOTIFY_IOC_SET_SYSMONITOR_FM 0xABAB
 
@@ -87,7 +87,9 @@ yum-builddep sysmonitor-kmod.spec -y
 dnf install rpm-build -y
 mkdir ../rpmbuild/SOURCES/ -p
 tar -cvjf sysmonitor-1.3.2.tar.bz2 sysmonitor-1.3.2
-mv sysmonitor-1.3.2 ../rpmbuild/SOURCES/
+mv sysmonitor-1.3.2.tar.bz2 ../rpmbuild/SOURCES/
 rpmbuild -ba sysmonitor-kmod.spec
 ```
+
+qemu不管是指定内核和使用镜像自带的内核，运行以上命令后，qemu镜像都损坏了，无法正常使用，重启后发生oom，不知道搞什么东西。
 
