@@ -8,11 +8,11 @@ restart=false
 
 update_repository() {
     cd ${src_path}/${1}/
-    git fetch origin
+    timeout 20 git fetch origin
     local_head=$(git rev-parse HEAD)
     origin_head=$(git rev-parse origin/master)
     if [ "${local_head}" != "${origin_head}" ]; then
-        git pull origin master
+        timeout 20 git pull origin master
         restart=true
     fi
     cd -
