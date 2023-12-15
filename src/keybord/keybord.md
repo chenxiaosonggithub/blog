@@ -33,4 +33,4 @@ v1版本的配置：[autohotkey-v1.1.ahk](https://gitee.com/chenxiaosonggitee/bl
 
 我用的键盘是HHKB，另外还买了一个[YDKB的控制模块](https://ydkb.io/)。
 
-蓝牙出问题，[清除配对信息按键 LShift+RShift+LCtrl+R](https://ydkb.io/help/#/ble-series/troubleshooting)。
+蓝牙出问题，可以尝试[清除配对信息按键 LShift+RShift+LCtrl+R](https://ydkb.io/help/#/ble-series/troubleshooting)。

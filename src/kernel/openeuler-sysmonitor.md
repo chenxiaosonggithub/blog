@@ -89,6 +89,7 @@ mkdir ../rpmbuild/SOURCES/ -p
 tar -cvjf sysmonitor-1.3.2.tar.bz2 sysmonitor-1.3.2
 mv sysmonitor-1.3.2.tar.bz2 ../rpmbuild/SOURCES/
 rpmbuild -ba sysmonitor-kmod.spec
+yum localinstall sysmonitor-kmod-1.3.2-1.2.xxx.x86_64.rpm
 ```
 
 qemu不管是指定内核还是使用镜像自带的内核，运行以上命令后，qemu镜像都损坏了，无法正常使用，重启后发生oom，不知道搞什么东西。
