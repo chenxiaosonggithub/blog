@@ -1,4 +1,6 @@
 - 作者: 陈孝松
 - 主页: [chenxiaosong.com](http://chenxiaosong.com/)
-- 博客: [chenxiaosong.com/blog](http://chenxiaosong.com/blog)
+- 博客: [chenxiaosong.com/blog](http://chenxiaosong.com/blog.html)
+- 贡献: [chenxiaosong.com/contributions](http://chenxiaosong.com/contributions.html)
 - 邮箱: chenxiaosongemail@foxmail.com
+- 手机号(微信): 18248638938
