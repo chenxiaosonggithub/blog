@@ -11,6 +11,7 @@ pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --cs
 # 每一行代表： markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
     # 自我介绍
+    src/self-introduction/common.md common.html "公共的内容"
     src/self-introduction/index.md index.html '陈孝松个人主页'
     src/self-introduction/photos.md photos.html '陈孝松照片'
     src/self-introduction/openharmony.md openharmony.html "陈孝松OpenHarmony贡献"
