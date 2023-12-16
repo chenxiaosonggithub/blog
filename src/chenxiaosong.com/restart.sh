@@ -25,8 +25,7 @@ add_common() {
     sed -i '/<\/header>/,/<\/body>/!d' /var/www/html/common.html
     sed -i '1d;$d' /var/www/html/common.html
     # find ${dst_path}/html/ -type f -name '*.html' -exec sed -i -e '/<header/r /var/www/html/common.html' {} + # 针对所有文件
-    find ${dst_path}/html/ -type f -name '*.html' | grep -v '${dst_path}/html/index.html' | xargs sed -i -e '/<header/r /var/www/html/common.html' # index文件除外
-
+    find ${dst_path}/html/ -type f -name '*.html' | grep -v ${dst_path}/html/index.html | xargs sed -i -e '/<header/r /var/www/html/common.html' # index文件除外
 }
 
 if [ ${restart} = true ]; then
