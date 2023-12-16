@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这篇文章记录一下我是如何搭建[我那个简陋的个人网站](http://chenxiaosong.com/)。各位朋友如果有更好的建议，请务必联系我。
 
 # 域名和公网ip

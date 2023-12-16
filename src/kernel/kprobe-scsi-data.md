@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这篇文章介绍一个block层相关的概率极低的问题的定位方法。
 
 # 问题描述

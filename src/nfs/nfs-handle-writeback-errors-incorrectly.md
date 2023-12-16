@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这里介绍一组我发到社区的补丁集，这组补丁集被nfs maintainer剽窃了，但他修改后的版本却没有解决我提出的问题。
 
 我的补丁集：[nfs: handle writeback errors correctly](https://patchwork.kernel.org/project/linux-nfs/list/?series=628066&state=%2A&archive=both)。

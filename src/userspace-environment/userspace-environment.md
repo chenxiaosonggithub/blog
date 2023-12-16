@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这篇文章记录一下各个常用Linux发行版的软件安装与配置，方便日后查阅。
 
 # BIOS设置

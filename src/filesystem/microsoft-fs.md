@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这里记录一下微软的几个文件系统的一些笔记，稍微用了一下，也顺便发过两个ntfs相关的补丁。
 
 # ntfs

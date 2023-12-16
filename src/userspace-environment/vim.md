@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 编写本文档的目的是为了查找命令方便，也希望可以给同样喜爱vim的朋友一些参考。
 
 至于vim最基础的知识，可以在shell下输入`vimtutor`命令查看，网上也有很多翻译的文档，请自行搜索。

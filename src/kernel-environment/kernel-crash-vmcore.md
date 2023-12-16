@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 # 1. 环境准备
 
 ## 1.1. 导出vmcore

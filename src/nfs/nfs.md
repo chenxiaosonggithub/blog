@@ -1,7 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
-[点击这里查看陈孝松所有博客](http://chenxiaosong.com/blog)。
-
 # NFS和SunRPC
 
 先看一下维基百科对NFS的定义：

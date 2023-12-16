@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 # 先上几张自拍照，没错，我是肌肉男
 
 ![](http://chenxiaosong.com/pictures/self-introduction/banshen.jpg)

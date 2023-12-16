@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这篇文章就是记录一些常用的docker操作命令，方便后续查阅。
 
 # 安装docker

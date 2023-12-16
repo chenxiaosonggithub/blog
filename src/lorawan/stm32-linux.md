@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 单片机STM32开发，大多数人都是在Windows下的Keil软件上进行的。Keil软件不仅要付费，编译还非常非常慢（据说优化做得好）。
 
 在Linux的开发环境下，使用gcc编译、gdb调试，不仅软件是自由开源免费，编译速度还非常非常快。

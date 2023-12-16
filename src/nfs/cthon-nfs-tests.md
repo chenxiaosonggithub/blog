@@ -1,7 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
-[点击这里查看陈孝松所有博客](http://chenxiaosong.com/blog)。
-
 # 环境
 
 下载[dkruchinin/cthon-nfs-tests](https://github.com/dkruchinin/cthon-nfs-tests)代码，编辑文件`tests.init`，只需以下几个变量，其他都可以删除：

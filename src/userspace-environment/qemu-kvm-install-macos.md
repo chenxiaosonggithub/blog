@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 此文档是介绍在QEMU/KVM中安装macOS VM的操作。
 
 大多数内容翻译自foxlet所写的项目[README.md](https://github.com/foxlet/macOS-Simple-KVM/blob/master/README.md)，当然也修改和增加了一些内容。

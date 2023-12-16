@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 这里记录一下我在各个平台上使用的键盘配置，以及我使用的独立键盘。
 
 # Linux

@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 翻译自Red Hat Bugzilla – [Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?](https://bugzilla.redhat.com/show_bug.cgi?id=2176575)，大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想了解具体内容，建议查看原网页，因为我不确定我记录的中文翻译是否完整和正确。
 
 # Frank Ch. Eigler 2023-03-08 18:28:42 UTC

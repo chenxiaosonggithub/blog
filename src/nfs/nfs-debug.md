@@ -1,7 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
-[点击这里查看陈孝松所有博客](http://chenxiaosong.com/blog)。
-
 本文介绍一下我尝试过的nfs定位问题的常用方法，非权威，欢迎指正。
 
 # 日志

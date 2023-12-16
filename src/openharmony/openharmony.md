@@ -1,5 +1,3 @@
-[点击这里跳转到陈孝松个人主页:chenxiaosong.com](http://chenxiaosong.com/)。
-
 [点击这里跳转到陈孝松OpenHarmony贡献](http://chenxiaosong.com/openharmony)。
 
 # 1. 环境
