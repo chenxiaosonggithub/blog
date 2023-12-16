@@ -24,11 +24,11 @@ update_repository pictures
 update_repository blog
 
 add_common() {
-    sed -i '/<\/header>/,/<\/body>/!d' /var/www/html/common.html # 只保留</header>到</body>的内容
-    sed -i '1d;$d' /var/www/html/common.html # 删除第一行和最后一行
+    sed -i '/<\/header>/,/<\/body>/!d' ${dst_path}/html/common.html # 只保留</header>到</body>的内容
+    sed -i '1d;$d' ${dst_path}/html/common.html # 删除第一行和最后一行
     # find ${dst_path}/html/ -type f -name '*.html' -exec sed -i -e '/<header/r ${dst_path}/html/common.html' {} + # 所有文件
     find ${dst_path}/html/ -type f -name '*.html' | grep -v ${dst_path}/html/index.html \
-        | xargs sed -i -e '/<header/r ${dst_path}/html/common.html' # 在/<header之后插入common.html整个文件, index文件除外
+        | xargs sed -i -e '/<header/r '${dst_path}'/html/common.html' # 在/<header之后插入common.html整个文件, index文件除外
 }
 
 if [ ${is_restart} = true ]; then
@@ -43,7 +43,7 @@ if [ ${is_restart} = true ]; then
         sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
     fi
     iptables -F # 根据情况决定是否要清空防火墙规则
-    service nginx is_restart
+    service nginx restart
 else
     echo "no change"
 fi
