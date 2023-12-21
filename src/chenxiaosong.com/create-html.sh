@@ -48,6 +48,7 @@ array=(
     src/filesystem/configfs-race.md fs/configfs-race.html "configfs加载或卸载模块时的并发问题"
     src/xfs/xfs-null-ptr-deref-in-xfs_getbmap.md fs/xfs-null-ptr-deref-in-xfs_getbmap.html "xfs_getbmap发生空指针解引用问题"
     src/filesystem/microsoft-fs.md fs/microsoft-fs.html "微软文件系统"
+    src/btrfs/4.19-btrfs-forced-readonly.md fs/4.19-btrfs-forced-readonly.html "4.19 btrfs文件系统变成只读的问题"
     # Linux环境
     src/chenxiaosong.com/chenxiaosong.com.md linux/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
