@@ -1,4 +1,4 @@
-src_path=/home/sonvhi/chenxiaosong/code
+src_path=/home/sonvhi/chenxiaosong/code # 替换为你的仓库路径
 dst_path=/var/www
 
 rm ${dst_path}/html/ -rf
@@ -81,16 +81,16 @@ array=(
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
 )
-element_count="${#array[@]}"
+element_count="${#array[@]}" # 总个数
 for ((index=0; index<${element_count}; index=$((index + 3)))); do
-    dst_file=${dst_path}/html/${array[${index}+1]}
-    dst_dir="$(dirname "${dst_file}")"
+    dst_file=${dst_path}/html/${array[${index}+1]} # 生成的html文件名
+    dst_dir="$(dirname "${dst_file}")" # html文件所在的文件夹
     if [ ! -d "${dst_dir}" ]; then
-        mkdir -p "${dst_dir}"
+        mkdir -p "${dst_dir}" # 文件夹不存在就创建
     fi
     from_format="--from markdown"
     if [[ ${array[${index}]} == *.rst ]]; then
-        from_format="--from rst"
+        from_format="--from rst" # rst格式
     fi
     pandoc ${src_path}/blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${from_format} ${pandoc_common_options}
 done
