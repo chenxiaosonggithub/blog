@@ -76,6 +76,7 @@ array=(
     src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
     src/translations/nfs/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
     src/translations/nfs/bugzilla-redhat-bug-2176575.md translations/bugzilla-redhat-bug-2176575.html "Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?"
+    src/translations/btrfs/btrfs-doc.rst translations/btrfs-doc.html "BTRFS documentation"
     # private
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"

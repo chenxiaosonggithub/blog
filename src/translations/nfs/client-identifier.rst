@@ -1,5 +1,3 @@
-`点击这里跳转到陈孝松个人主页:chenxiaosong.com <http://chenxiaosong.com/>`_。
-
 本文档翻译自`Documentation/filesystems/nfs/client-identifier.rst <https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/filesystems/nfs/client-identifier.rst?id=d56b699d76d1>`_，翻译时文件的最新提交是``d56b699d76d1 Documentation: Fix typos``，大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 .. SPDX-License-Identifier: GPL-2.0
