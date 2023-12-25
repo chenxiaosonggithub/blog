@@ -30,10 +30,10 @@ add_common() {
     # 先去除common.html文件中其他内容
     sed -i '/<\/header>/,/<\/body>/!d' ${dst_path}/html/common.html # 只保留</header>到</body>的内容
     sed -i '1d;$d' ${dst_path}/html/common.html # 删除第一行和最后一行
-    # 插入common.html整个文件
+    # 在<header之后插入common.html整个文件
     # find ${dst_path}/html/ -type f -name '*.html' -exec sed -i -e '/<header/r ${dst_path}/html/common.html' {} + # 所有文件
     find ${dst_path}/html/ -type f -name '*.html' | grep -v ${dst_path}/html/index.html \
-        | xargs sed -i -e '/<header/r '${dst_path}'/html/common.html' # 在/<header之后插入common.html整个文件, index文件除外
+        | xargs sed -i -e '/<header/r '${dst_path}'/html/common.html' # index文件除外
 }
 
 if [ ${is_restart} = true ]; then
