@@ -2,7 +2,7 @@
 
 首先，标题翻译为：间歇性的、严重的NFS客户端性能下降，是通过`nfs_server_reap_expired_delegations`循环引发的吗？
 
-# Frank Ch. Eigler 2023-03-08 18:28:42 UTC
+# 评论0: Frank Ch. Eigler 2023-03-08 18:28:42 UTC
 
 ```
 我们有一个连接到 Synology 最新的 NFS 服务器的 f37 客户端（内核版本为 6.1.14-200.fc37.x86_64），通过 nfs4 连接。间歇性地，会出现一种情况，其中客户端的速度急剧下降。正常的 NFS 操作是瞬时的，但当出现这种情况时，普通的 ls 操作可能需要几秒钟，Firefox 的启动需要 30 秒。
@@ -167,7 +167,7 @@ fsid 0:60: expected fileid 0x9fbfd6d, got 0x9fbfd6e
 ```
 感谢您的帮助。我已经在所有客户端中添加了modprobe.d nfs nfs4_unique_id=FOO的配置，希望能够避免标识符冲突，如果目前的问题是由此引起的。
 ```
-# 评论14：Trond Myklebust 2023-07-18 01:08:21 UTC
+# Trond Myklebust 2023-07-18 01:08:21 UTC
 
 ```
 如果您在客户端上有唯一的主机名，那么nfs4_unique_id设置是不必要的。
@@ -177,7 +177,7 @@ fsid 0:60: expected fileid 0x9fbfd6d, got 0x9fbfd6e
 因此，这可能解释了循环的原因：服务器期望通过FREE_STATEID释放不再有效的stateid，但这永远不会发生，因为TEST_STATEID的结果告诉客户端stateid是错误的。这再次意味着服务器无法清除SEQUENCEID标志，因此我们又会经历一轮TEST_STATEID。如此循环重复...
 ```
 
-# Benjamin Coddington 2023-08-04 15:28:57 UTC
+# 评论14: Benjamin Coddington 2023-08-04 15:28:57 UTC
 
 ```
 我认为有一个服务器的错误可能会导致这个问题，但我一直无法找到客户端在实践中触发它的方法：
@@ -189,8 +189,8 @@ https://lore.kernel.org/linux-nfs/c0fe2b35900938943048340ef70fc12282fe1af8.16911
 # Benjamin Coddington 2023-08-04 15:33:14 UTC
 
 ```
-（回复Frank Ch. Eigler的评论＃0）
-一旦条件开始，似乎无法停止，即使重新启动服务器也是如此。重新启动客户端确实能够很自然地解决问题。 :-)
+（回复Frank Ch. Eigler的评论0）
+> 一旦条件开始，似乎无法停止，即使重新启动服务器也是如此。重新启动客户端确实能够很自然地解决问题。 :-)
 
 哦，评论14中的问题不用担心。服务器重新启动应该能够解决评论14中修复的问题。
 ```
