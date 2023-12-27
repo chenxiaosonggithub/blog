@@ -142,3 +142,49 @@ server {
 #		try_files $uri $uri/ =404;
 #	}
 #}
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/html/liujiayao;
+	autoindex on; # 打开目录浏览功能
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name liujiayao.com www.liujiayao.com;
+
+	error_page 404 = /default-location;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ $uri.html =404;
+	}
+
+	location = /default-location {
+		# 设置默认地址的配置，使用302临时重定向
+		return 302 /;
+	}
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+	server_name fanglaijiu.com www.fanglaijiu.com;
+
+	# 转发
+	location / {
+		# 如果是端口后面也要有斜杠
+		proxy_pass http://chenxiaosong.com/fanglaijiu/;
+		# 不指定默认用1.0
+		proxy_http_version 1.1;
+		# 将客户端请求头中的 Upgrade 字段的值传递给后端服务器，常用于在进行 WebSocket 连接时，告知后端服务器进行协议升级
+		proxy_set_header Upgrade $http_upgrade;
+		# 设置了请求头中的 Connection 字段的值为 "upgrade"，它告诉后端服务器要升级连接协议
+		proxy_set_header Connection "upgrade";
+		# 设置了请求头中的 Host 字段的值为客户端请求中的 Host 值，它确保将客户端请求中的原始主机头信息传递给后端服务器
+		proxy_set_header Host 8.217.113.83; # $host要替换成ip
+	}
+}
