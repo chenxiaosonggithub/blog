@@ -1,13 +1,6 @@
 src_path=/home/sonvhi/chenxiaosong/code # 替换为你的仓库路径
 dst_path=/var/www
 
-rm ${dst_path}/html/ -rf
-
-# --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
-# --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
-# --toc：这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
-pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --css http://chenxiaosong.com/stylesheet.css"
-
 # 每一行代表： markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
     # 自我介绍
@@ -81,31 +74,67 @@ array=(
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
 )
-element_count="${#array[@]}" # 总个数
-for ((index=0; index<${element_count}; index=$((index + 3)))); do
-    dst_file=${dst_path}/html/${array[${index}+1]} # 生成的html文件名
-    dst_dir="$(dirname "${dst_file}")" # html文件所在的文件夹
-    if [ ! -d "${dst_dir}" ]; then
-        mkdir -p "${dst_dir}" # 文件夹不存在就创建
-    fi
-    from_format="--from markdown"
-    if [[ ${array[${index}]} == *.rst ]]; then
-        from_format="--from rst" # rst格式
-    fi
-    pandoc ${src_path}/blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${from_format} ${pandoc_common_options}
-done
 
-# pictures是我的私有仓库
-cp ${src_path}/pictures/pictures/ ${dst_path}/html/ -rf
+init_all() {
+    rm ${dst_path}/html/ -rf
+    mkdir -p ${dst_path}/html/
+}
 
-# css样式
-cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${dst_path}/html/
+create_html() {
+    # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
+    # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
+    # --toc：这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
+    pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --css http://chenxiaosong.com/stylesheet.css"
 
-chown -R www-data:www-data ${dst_path}/
+    element_count="${#array[@]}" # 总个数
+    for ((index=0; index<${element_count}; index=$((index + 3)))); do
+        dst_file=${dst_path}/html/${array[${index}+1]} # 生成的html文件名
+        dst_dir="$(dirname "${dst_file}")" # html文件所在的文件夹
+        if [ ! -d "${dst_dir}" ]; then
+            mkdir -p "${dst_dir}" # 文件夹不存在就创建
+        fi
+        from_format="--from markdown"
+        if [[ ${array[${index}]} == *.rst ]]; then
+            from_format="--from rst" # rst格式
+        fi
+        pandoc ${src_path}/blog/${array[${index}]} -o ${dst_file} --metadata title="${array[${index}+2]}" ${from_format} ${pandoc_common_options}
+    done
+}
 
-# -type f：这个选项告诉 find 只搜索普通文件（不包括目录和特殊文件）。
-# -exec chmod 400 {} +：这个部分告诉 find 对每个找到的文件执行 chmod 400 操作。{} 表示找到的文件的占位符，+ 表示一次处理多个文件以提高效率。
-find ${dst_path}/ -type f -exec chmod 400 {} +
+copy_secret_repository() {
+    # pictures是我的私有仓库
+    cp ${src_path}/pictures/pictures/ ${dst_path}/html/ -rf
+}
 
-# -type d：这个选项告诉find只搜索目录（不包括普通文件）。
-find ${dst_path}/ -type d -exec chmod 500 {} +
+copy_public_files() {
+    # css样式
+    cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${dst_path}/html/
+}
+
+change_perm() {
+    chown -R www-data:www-data ${dst_path}/
+
+    # -type f：这个选项告诉 find 只搜索普通文件（不包括目录和特殊文件）。
+    # -exec chmod 400 {} +：这个部分告诉 find 对每个找到的文件执行 chmod 400 操作。{} 表示找到的文件的占位符，+ 表示一次处理多个文件以提高效率。
+    find ${dst_path}/ -type f -exec chmod 400 {} +
+
+    # -type d：这个选项告诉find只搜索目录（不包括普通文件）。
+    find ${dst_path}/ -type d -exec chmod 500 {} +
+}
+
+add_common() {
+    # 先去除common.html文件中其他内容
+    sed -i '/<\/header>/,/<\/body>/!d' ${dst_path}/html/common.html # 只保留</header>到</body>的内容
+    sed -i '1d;$d' ${dst_path}/html/common.html # 删除第一行和最后一行
+    # 在<header之后插入common.html整个文件
+    # find ${dst_path}/html/ -type f -name '*.html' -exec sed -i -e '/<header/r ${dst_path}/html/common.html' {} + # 所有文件
+    find ${dst_path}/html/ -type f -name '*.html' | grep -v ${dst_path}/html/index.html \
+        | xargs sed -i -e '/<header/r '${dst_path}'/html/common.html' # index文件除外
+}
+
+init_all
+create_html
+copy_secret_repository
+copy_public_files
+change_perm
+add_common
