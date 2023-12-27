@@ -48,7 +48,6 @@ update_others_html() {
     if [ ${is_others} = false ]; then
         return
     fi
-    is_restart=false
     update_repository liujiayao false
     if [ ${is_restart} = true ]; then
         bash ${src_path}/liujiayao/src/create-html.sh
