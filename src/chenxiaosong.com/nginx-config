@@ -142,3 +142,55 @@ server {
 #		try_files $uri $uri/ =404;
 #	}
 #}
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/html/liujiayao;
+	autoindex on; # 打开目录浏览功能
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name liujiayao.com www.liujiayao.com;
+
+	error_page 404 = /default-location;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ $uri.html =404;
+	}
+
+	location = /default-location {
+		# 设置默认地址的配置，使用302临时重定向
+		return 302 /;
+	}
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	root /var/www/html/fanglaijiu;
+	autoindex on; # 打开目录浏览功能
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name fanglaijiu.com www.fanglaijiu.com;
+
+	error_page 404 = /default-location;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ $uri.html =404;
+	}
+
+	location = /default-location {
+		# 设置默认地址的配置，使用302临时重定向
+		return 302 /;
+	}
+}
