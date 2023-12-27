@@ -5,17 +5,19 @@ dst_path=/var/www
 is_replace=false # 是否要替换ip
 repalace_ip=172.20.23.55 # 内网要替换的ip
 is_push_github=false # 是否要推送到github
+is_others=false # 是否有其他人主页
 
 is_restart=false
 
 # 更新git仓库代码
+# $1: 仓库名， $2: 是否推送到github
 update_repository() {
     cd ${src_path}/${1}/
     timeout 20 git fetch origin # 最多20秒超时，有时会因为网络原因卡住
     local_head=$(git rev-parse HEAD)
     origin_head=$(git rev-parse origin/master)
     if [ "${local_head}" != "${origin_head}" ]; then
-        if [ ${is_push_github} = true ]; then
+        if [ ${2} = true ]; then
             timeout 20 git push github origin/master
             if [ $? = 0 ]; then
                 git pull origin master # 一定成功
@@ -47,6 +49,18 @@ restart_all() {
     fi
 }
 
-update_repository pictures
-update_repository blog
+update_others_html() {
+    if [ ${is_others} = false ]; then
+        return
+    fi
+    is_restart=false
+    update_repository liujiayao false
+    if [ ${is_restart} = true ]; then
+        bash ${src_path}/liujiayao/src/create-html.sh
+    fi
+}
+
+update_repository pictures ${is_push_github}
+update_repository blog ${is_push_github}
 restart_all
+update_others_html
