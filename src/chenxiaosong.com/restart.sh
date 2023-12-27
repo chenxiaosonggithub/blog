@@ -17,15 +17,10 @@ update_repository() {
     local_head=$(git rev-parse HEAD)
     origin_head=$(git rev-parse origin/master)
     if [ "${local_head}" != "${origin_head}" ]; then
+        git pull origin master # 一定成功
+        is_restart=true
         if [ ${2} = true ]; then
-            timeout 20 git push github origin/master
-            if [ $? = 0 ]; then
-                git pull origin master # 一定成功
-                is_restart=true
-            fi
-        else
-            git pull origin master # 一定成功
-            is_restart=true
+            timeout 20 git push github master
         fi
     fi
     cd -
