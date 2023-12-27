@@ -50,6 +50,7 @@ update_others_html() {
     fi
     update_repository liujiayao false
     if [ ${is_restart} = true ]; then
+        echo "update liujiayao"
         bash ${src_path}/liujiayao/src/create-html.sh
     fi
 }
