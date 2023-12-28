@@ -53,6 +53,11 @@ update_others_html() {
         echo "update liujiayao"
         bash ${src_path}/liujiayao/src/create-html.sh
     fi
+    update_repository fanglaijiu false
+    if [ ${is_restart} = true ]; then
+        echo "update fanglaijiu"
+        bash ${src_path}/fanglaijiu/src/create-html.sh
+    fi
 }
 
 update_repository pictures ${is_push_github}
