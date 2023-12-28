@@ -4,8 +4,8 @@ src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
 dst_path=/var/www
 is_replace=false # 是否要替换ip
 repalace_ip=172.20.23.55 # 内网要替换的ip
-is_push_github=false # 是否要推送到github
-is_others=false # 是否有其他人主页
+is_push_github=true # 是否要推送到github
+is_others=true # 是否有其他人主页
 
 is_restart=false
 
