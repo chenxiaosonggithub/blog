@@ -66,6 +66,11 @@ strings /lib/x86_64-linux-gnu/libc.so.6 |grep GLIBC_ # 查看glibc的版本，do
 sudo apt install libc6-i386 libgl1:i386 -y # for steam
 ```
 
+默认`poweroff`和`reboot`等命令可以以非root权限运行，容易误操作，这些命令都软链接到`/bin/systemctl`, 可以用以下命令修改权限：
+```sh
+sudo chmod 700 /bin/systemctl
+```
+
 设置hostname:
 ```sh
 sudo hostnamectl set-hostname Threadripper-Ubuntu2204
