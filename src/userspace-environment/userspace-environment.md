@@ -40,6 +40,7 @@ sudo apt-get install libelf-dev libssl-dev -y # 内核源码编译依赖的库
 sudo apt install libncurses-dev -y # make menuconfig所依赖的库
 apt-get install bc -y # 内核编译报错/bin/sh: 1: bc: not found
 sudo apt install bridge-utils -y # brctl命令
+sudo apt-get install kmod -y # Warning: 'make modules_install' requires /sbin/depmod.
 
 apt install bash-completion -y # docker 中git不会自动补全
 sudo apt install openssh-server -y # 默认桌面版本ubuntu不会安装ssh server

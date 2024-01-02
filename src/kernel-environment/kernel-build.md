@@ -18,6 +18,11 @@ ARCH=x86 && make O=build menuconfig # 交互式地配置内核的编译选项
 ARCH=x86 && KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O=build bzImage ${KNLMKFLGS} && make O=build modules ${KNLMKFLGS} && make O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
 ```
 
+如果报错`Warning: 'make modules_install' requires /sbin/depmod.`，安装所需软件：
+```sh
+sudo apt-get install kmod -y
+```
+
 如果是其他架构，编译命令是：
 ```sh
 ARCH=i386 && make bzImage # x86 32bit
