@@ -18,7 +18,7 @@ echo 1 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enabl
 echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
 echo '!stacktrace' > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
 echo 0 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enable
-echo '-:p_nfs_end_page_writeback' > /sys/kernel/debug/tracing/kprobe_events
+echo '-:p_nfs_end_page_writeback' >> /sys/kernel/debug/tracing/kprobe_events
 
 # 注意要用单引号
 echo 'r:r_nfs4_atomic_open nfs4_atomic_open ret=$retval' >> /sys/kernel/debug/tracing/kprobe_events
@@ -26,7 +26,7 @@ echo 1 > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/enable
 echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/trigger
 echo '!stacktrace' > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/trigger
 echo 0 > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/enable
-echo '-:r_nfs4_atomic_open' > /sys/kernel/debug/tracing/kprobe_events
+echo '-:r_nfs4_atomic_open' >> /sys/kernel/debug/tracing/kprobe_events
 
 echo 0 > /sys/kernel/debug/tracing/trace # 清除trace信息
 cat /sys/kernel/debug/tracing/trace_pipe
