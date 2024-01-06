@@ -60,7 +60,7 @@ netstat -tunpl | grep 8888
 
 这时private-client就可以直接访问private-server了：
 ```sh
-ssh -p 55555 sonvhi@chenxiaosong.com
+ssh -p 55555 sonvhi@hz.chenxiaosong.com
 ```
 
 # 监听
