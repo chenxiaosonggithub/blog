@@ -35,8 +35,9 @@ restart_all() {
         echo "recreate html, restart service"
         bash ${src_path}/blog/src/chenxiaosong.com/link.sh
         bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
-        # 如果部署在局域网，替换成局域网ip
+        # 部署在局域网
         if [ ${is_public_ip} = false ]; then
+            bash ${src_path}/private-blog/create-html.sh
             find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
             # default文件本来是个软链接，执行完sed后变成了文件
             sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
@@ -46,9 +47,6 @@ restart_all() {
     else
         echo "no change"
     fi
-}
-
-do_extra_things() {
 }
 
 update_others_blog() {
@@ -71,5 +69,4 @@ update_others_blog() {
 update_repo pictures ${is_public_ip} # 部署在公网服务器就推到github
 update_repo blog ${is_public_ip} # 部署在公网服务器就推到github
 restart_all
-do_extra_things
 update_others_blog
