@@ -14,8 +14,8 @@ rm build -rf && mkdir build && cp /home/sonvhi/chenxiaosong/code/blog/src/kernel
 
 编译命令，其中`ARCH`的值为`arch/`目录下相应的架构：
 ```sh
-ARCH=x86 && make O=build menuconfig # 交互式地配置内核的编译选项
-ARCH=x86 && KNLMKFLGS="-j64" && make O=build olddefconfig ${KNLMKFLGS} && make O=build bzImage ${KNLMKFLGS} && make O=build modules ${KNLMKFLGS} && make O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
+make ARCH=x86 O=build menuconfig # 交互式地配置内核的编译选项
+KNLMKFLGS="-j64" && make ARCH=x86 O=build olddefconfig ${KNLMKFLGS} && make ARCH=x86 O=build bzImage ${KNLMKFLGS} && make ARCH=x86 O=build modules ${KNLMKFLGS} && make ARCH=x86 O=build modules_install INSTALL_MOD_PATH=mod ${KNLMKFLGS}
 ```
 
 如果报错`Warning: 'make modules_install' requires /sbin/depmod.`，安装所需软件：
@@ -25,13 +25,13 @@ sudo apt-get install kmod -y
 
 如果是其他架构，编译命令是：
 ```sh
-ARCH=i386 && make bzImage # x86 32bit
+make ARCH=i386 O=build bzImage # x86 32bit
 # armel, arm eabi(embeded abi) little endian, 传参数用普通寄存器
-ARCH=arm && CROSS_COMPILE=arm-linux-gnueabi- && make zImage
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-  O=build zImage
 # armhf, arm eabi(embeded abi) little endian hard float, 传参数用fpu的寄存器，浮点运算性能更高
-ARCH=arm && CROSS_COMPILE=arm-linux-gnueabihf- && make zImage
-ARCH=arm64 && CROSS_COMPILE=aarch64-linux-gnu- && make Image
-ARCH=riscv && CROSS_COMPILE=riscv64-linux-gnu- && make Image
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- O=build zImage
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=build Image
+make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- O=build Image
 ```
 
 # 2. 一些额外的补丁

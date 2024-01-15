@@ -1,4 +1,4 @@
-array=(8 9 10)
+array=(5 6)
 image_type=`basename $(pwd)`
 dst_path=$(pwd)/../../vm/
 idx=0
@@ -17,11 +17,11 @@ do
 		exit 1
 	fi
 
-	cp update-image.sh ${dst_path}/${element}.${image_type}/start.sh
+	cp update-base.sh ${dst_path}/${element}.${image_type}/start.sh
 	format_num=$(printf "%02d\n" ${element})
 	gdb_port=`expr 5550 + $element`
 	sed -i "s/00:11:22:33:44:55/00:11:22:33:44:${format_num}/g" ${dst_path}/${element}.${image_type}/start.sh
-	sed -i "s/${image_type}.qcow2.updating/image.qcow2/g" ${dst_path}/${element}.${image_type}/start.sh
+	sed -i "s/${image_type}.qcow2/image.qcow2/g" ${dst_path}/${element}.${image_type}/start.sh
 	echo "-drive file=1,if=none,format=raw,cache=writeback,file.locking=off,id=dd_1 \\" >> ${dst_path}/${element}.${image_type}/start.sh
 	echo "-device scsi-hd,drive=dd_1,id=disk_1,logical_block_size=4096,physical_block_size=4096 \\" >> ${dst_path}/${element}.${image_type}/start.sh
 	echo "-drive file=nvme,if=none,format=raw,cache=writeback,file.locking=off,id=b_nvme_1 \\" >> ${dst_path}/${element}.${image_type}/start.sh

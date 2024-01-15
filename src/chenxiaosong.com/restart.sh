@@ -11,13 +11,13 @@ is_restart=false
 
 # 更新git仓库代码
 # $1: 仓库名， $2: 是否推送到github
-update_repository() {
+update_repo() {
     cd ${src_path}/${1}/
     timeout 20 git fetch origin # 最多20秒超时，有时会因为网络原因卡住
     local_head=$(git rev-parse HEAD)
     origin_head=$(git rev-parse origin/master)
     if [ "${local_head}" != "${origin_head}" ]; then
-        git pull origin master # 一定成功
+        timeout 20 git pull origin master
         is_restart=true
         if [ ${2} = true ]; then
             timeout 20 git push github master
@@ -44,23 +44,27 @@ restart_all() {
     fi
 }
 
-update_others_html() {
+do_extra_things() {
+}
+
+update_others_blog() {
     if [ ${is_others} = false ]; then
         return
     fi
-    update_repository liujiayao false
+    update_repo liujiayao false
     if [ ${is_restart} = true ]; then
         echo "update liujiayao"
         bash ${src_path}/liujiayao/src/create-html.sh
     fi
-    update_repository fanglaijiu false
+    update_repo fanglaijiu false
     if [ ${is_restart} = true ]; then
         echo "update fanglaijiu"
         bash ${src_path}/fanglaijiu/src/create-html.sh
     fi
 }
 
-update_repository pictures ${is_push_github}
-update_repository blog ${is_push_github}
+update_repo pictures ${is_push_github}
+update_repo blog ${is_push_github}
 restart_all
-update_others_html
+do_extra_things
+update_others_blog
