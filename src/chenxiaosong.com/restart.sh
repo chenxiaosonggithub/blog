@@ -1,17 +1,21 @@
 # 运行命令不断检查 while true; do bash restart.sh; sleep 90; done
 
+is_public_ip=true # 是否公网的ip
+
 src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
-dst_path=/var/www
-is_replace=false # 是否要替换ip
+dst_path=/var/www/html
 repalace_ip=172.20.23.55 # 内网要替换的ip
-is_push_github=true # 是否要推送到github
-is_others=true # 是否有其他人主页
 
 is_restart=false
 
 # 更新git仓库代码
 # $1: 仓库名， $2: 是否推送到github
 update_repo() {
+    # 如果是局域网ip，就不更新仓库
+    if [ ${is_public_ip} = false ]; then
+        is_restart=true
+        return
+    fi
     cd ${src_path}/${1}/
     timeout 20 git fetch origin # 最多20秒超时，有时会因为网络原因卡住
     local_head=$(git rev-parse HEAD)
@@ -32,8 +36,8 @@ restart_all() {
         bash ${src_path}/blog/src/chenxiaosong.com/link.sh
         bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
         # 如果部署在局域网，替换成局域网ip
-        if [ ${is_replace} = true ]; then
-            find ${dst_path}/html/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
+        if [ ${is_public_ip} = false ]; then
+            find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
             # default文件本来是个软链接，执行完sed后变成了文件
             sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
         fi
@@ -48,7 +52,8 @@ do_extra_things() {
 }
 
 update_others_blog() {
-    if [ ${is_others} = false ]; then
+    # 如果是局域网ip，就不更新其他人的博客
+    if [ ${is_public_ip} = false ]; then
         return
     fi
     update_repo liujiayao false
@@ -63,8 +68,8 @@ update_others_blog() {
     fi
 }
 
-update_repo pictures ${is_push_github}
-update_repo blog ${is_push_github}
+update_repo pictures ${is_public_ip} # 部署在公网服务器就推到github
+update_repo blog ${is_public_ip} # 部署在公网服务器就推到github
 restart_all
 do_extra_things
 update_others_blog
