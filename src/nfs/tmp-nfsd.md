@@ -1,0 +1,142 @@
+# 问题描述
+
+环境信息：
+```sh
+crash> sys
+      KERNEL: vmlinux
+    DUMPFILE: 0037/127.0.0.1-2024-01-05-09:05:11/vmcore  [PARTIAL DUMP]
+        CPUS: 128
+        DATE: Fri Jan  5 09:03:20 CST 2024
+      UPTIME: 14:23:28
+LOAD AVERAGE: 0.13, 0.11, 0.04
+       TASKS: 1395
+    NODENAME: xzh-act-obbaknas-t
+     RELEASE: 4.19.90-24.4.v2101.ky10.aarch64
+     VERSION: #1 SMP Mon May 24 14:45:37 CST 2021
+     MACHINE: aarch64  (unknown Mhz)
+      MEMORY: 512 GB
+       PANIC: "Internal error: Oops: 8600000e [#1] SMP" (check log for details)
+```
+
+日志：
+```sh
+[51807.593752] WARNING: CPU: 56 PID: 53252 at lib/radix-tree.c:784 delete_node+0x98/0x250
+...
+[51807.593800] CPU: 56 PID: 53252 Comm: kworker/u256:5 Kdump: loaded Not tainted 4.19.90-24.4.v2101.ky10.aarch64 #1
+[51807.593801] Hardware name: WUZHOU S627K4/BC82AMDYA, BIOS 6.55 03/23/2023
+[51807.593824] Workqueue: nfsd4_callbacks nfsd4_run_cb_work [nfsd]
+[51807.593826] pstate: 20c00009 (nzCv daif +PAN +UAO)
+[51807.593828] pc : delete_node+0x98/0x250
+[51807.593829] lr : __radix_tree_delete+0x94/0xc0
+[51807.593830] sp : ffffa62ac5b27c90
+[51807.593830] x29: ffffa62ac5b27c90 x28: 0000000000000000 
+[51807.593832] x27: 0000000000000000 x26: ffff505f0afc6b00 
+[51807.593833] x25: ffffa629f5b648f0 x24: 0000000000000003 
+[51807.593834] x23: 0000000000000000 x22: ffff505f0a38d588 
+[51807.593835] x21: 0000000000000000 x20: ffffc64a6c17c7c0 
+[51807.593836] x19: ffffa64af54fe8b0 x18: ffffc64a6c17c7c0 
+[51807.593837] x17: 0000000000011000 x16: ffff505f0a388930 
+[51807.593838] x15: 0000000000000000 x14: ffffa628c7d2bd20 
+[51807.593839] x13: ffffa628c7d2bb10 x12: 0000000000000000 
+[51807.593840] x11: ffffa628c7d2bb38 x10: 0000000000000000 
+[51807.593841] x9 : 000000000000003e x8 : 0000000000000043 
+[51807.593842] x7 : ffffa628c7d2bd21 x6 : 000000000000003d 
+[51807.593843] x5 : 0000000000000000 x4 : 0000000000000000 
+[51807.593844] x3 : ffffa628c7d2bb28 x2 : 000000000000003f 
+[51807.593845] x1 : ffff505f0a38d588 x0 : ffffa64af5b06230 
+[51807.593847] Call trace:
+[51807.593848]  delete_node+0x98/0x250
+[51807.593850]  __radix_tree_delete+0x94/0xc0
+[51807.593851]  radix_tree_delete_item+0x50/0xc8
+[51807.593852]  idr_remove+0x18/0x20
+[51807.593862]  nfs4_put_stid+0x40/0xa0 [nfsd]
+[51807.593870]  nfsd4_cb_recall_release+0x20/0x30 [nfsd]
+[51807.593878]  nfsd4_run_cb_work+0xcc/0x110 [nfsd]
+[51807.593880]  process_one_work+0x1f8/0x490
+[51807.593881]  worker_thread+0x50/0x4b8
+[51807.593882]  kthread+0x134/0x138
+[51807.593885]  ret_from_fork+0x10/0x18
+[51807.593886] ---[ end trace e77f38e6ef8f5232 ]---
+[51807.645972] Unable to handle kernel read from unreadable memory at virtual address ffffa628c7d2bb28
+[51807.655614] Mem abort info:
+[51807.658887]   ESR = 0x8600000e
+[51807.662420]   Exception class = IABT (current EL), IL = 32 bits
+[51807.668870]   SET = 0, FnV = 0
+[51807.672402]   EA = 0, S1PTW = 0
+[51807.676029] swapper pgtable: 64k pages, 48-bit VAs, pgdp = 000000000ecf001e
+[51807.683534] [ffffa628c7d2bb28] pgd=0000205fbffc0803, pud=0000205fbffc0803, pmd=0068003d80000f11
+[51807.692808] Internal error: Oops: 8600000e [#1] SMP
+...
+[51807.773886] Process swapper/96 (pid: 0, stack limit = 0x00000000aa7d66c2)
+[51807.788356] CPU: 96 PID: 0 Comm: swapper/96 Kdump: loaded Tainted: G        W         4.19.90-24.4.v2101.ky10.aarch64 #1
+[51807.807135] Hardware name: WUZHOU S627K4/BC82AMDYA, BIOS 6.55 03/23/2023
+[51807.818018] pstate: a0400009 (NzCv daif +PAN -UAO)
+[51807.826949] pc : 0xffffa628c7d2bb28
+[51807.834500] lr : rcu_process_callbacks+0x224/0x590
+[51807.843382] sp : ffffc64afebafec0
+[51807.850791] x29: ffffc64afebafec0 x28: 000000000000000a 
+[51807.860198] x27: 000075ebf3f90000 x26: ffff505f0afa5000 
+[51807.869582] x25: ffff505f0ab953c8 x24: ffff505f0ab90000 
+[51807.878968] x23: ffff505f0afce000 x22: ffff505f0afe0e80 
+[51807.888274] x21: ffffc64afebaff40 x20: ffffc64afebb1538 
+[51807.897503] x19: ffffc64afebb1500 x18: ffff505f0afa1000 
+[51807.906639] x17: 0000000000000000 x16: ffff505f0a38d6b8 
+[51807.915682] x15: 0000000000000000 x14: 0000000000000000 
+[51807.924667] x13: ffffa64af7224d90 x12: 0000000000000000 
+[51807.933574] x11: 0000000000000001 x10: ffffc64afebaff28 
+[51807.942413] x9 : 0000000000000000 x8 : 0000000000000060 
+[51807.951156] x7 : ffffa64af517c430 x6 : ffff7fe992bd45c0 
+[51807.959831] x5 : 0000000000210d00 x4 : ffff7fe992bd45e0 
+[51807.968417] x3 : 000000000070006d x2 : ffffa628c7d2bb28 
+[51807.976901] x1 : ffffa628c7d2bb28 x0 : ffffa628c7d2bb28 
+[51807.985289] Call trace:
+[51807.990701]  0xffffa628c7d2bb28
+[51807.996719]  __do_softirq+0x114/0x32c
+[51808.003175]  irq_exit+0x108/0x120
+[51808.009195]  __handle_domain_irq+0x6c/0xc0
+[51808.016016]  gic_handle_irq+0x6c/0x170
+[51808.022432]  el1_irq+0xb8/0x140
+[51808.028154]  arch_cpu_idle+0x38/0x1c0
+[51808.034334]  default_idle_call+0x24/0x58
+[51808.040696]  do_idle+0x1a4/0x268
+[51808.046264]  cpu_startup_entry+0x2c/0x78
+[51808.052481]  secondary_start_kernel+0x17c/0x1c8
+[51808.059303] Code: f54fe8b0 ffffa64a 6c17c7c0 ffffc64a (c7d2bb28) 
+[51808.067801] SMP: stopping secondary CPUs
+[51808.079832] Starting crashdump kernel...
+[51808.086525] Bye!
+```
+
+邮件列表类似问题的讨论：[nfsd: radix tree warning in nfs4_put_stid and kernel panic](https://lore.kernel.org/all/76C32636621C40EC87811F625761F2AF@alyakaslap/)
+
+# 解析vmcore
+
+用`faddr2line`脚本解析：
+```sh
+./scripts/faddr2line vmlinux delete_node+0x98/0x250
+delete_node+0x98/0x250:
+delete_node at lib/radix-tree.c:784
+```
+
+`WARNING`发生在`delete_node`函数的`WARN_ON_ONCE(!list_empty(&node->private_list))`。从时间戳可以看出`Unable to handle kernel read from unreadable memory`是在`WARNING`后立刻发生的。
+
+# 代码分析
+
+```c
+nfsd4_run_cb_work
+  nfsd4_cb_recall_release // cb->cb_ops->release
+    nfs4_put_stid
+      idr_remove
+        radix_tree_delete_item
+          __radix_tree_delete
+            delete_node
+              WARN_ON_ONCE(!list_empty(&node->private_list)) // &node->private_list链表不为空
+```
+
+# 补丁分析
+
+[`2bbfed98a4d8 nfsd: Fix races between nfsd4_cb_release() and nfsd4_shutdown_callback()`](https://lore.kernel.org/all/20191023214318.9350-1-trond.myklebust@hammerspace.com/)。
+
+```c
+
+```
