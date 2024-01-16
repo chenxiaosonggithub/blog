@@ -44,6 +44,7 @@ git clone https://github.com/crash-utility/crash.git
 apt-get install autoconf automake libtool -y
 cd crash
 make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好
+# make target=ARM64 -j64 # 交叉编译能解析arm64 vmcore的crash
 ```
 
 # 2. 查看崩溃在哪一行
