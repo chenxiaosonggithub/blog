@@ -100,7 +100,6 @@ umount <挂载点>
 
 在生产环境下，如果必须要快速恢复环境，且这个环境是可以接受重启系统，就可以尝试手动导出vmcore，vmcore中的信息有时对分析问题很有帮助：
 ```sh
-
 echo 1 > /proc/sys/kernel/sysrq
 echo c > /proc/sysrq-trigger
 ```
