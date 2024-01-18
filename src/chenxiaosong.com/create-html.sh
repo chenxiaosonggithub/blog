@@ -112,6 +112,11 @@ copy_public_files() {
     cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${dst_path}/html/
 }
 
+copy_tmp_files() {
+    mkdir ${dst_path}/html/tmp/
+    cp -rf ${src_path}/tmp/* ${dst_path}/html/tmp/
+}
+
 change_perm() {
     chown -R www-data:www-data ${dst_path}/
 
@@ -137,5 +142,6 @@ init_all
 create_html
 copy_secret_repository
 copy_public_files
+copy_tmp_files
 change_perm
 add_common
