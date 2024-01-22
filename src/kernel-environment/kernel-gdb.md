@@ -6,7 +6,7 @@
 
 这里只介绍`x86_64`下的qemu+gdb调试，其他cpu架构以此类推，只需要做些小改动。
 
-# 1. 编译选项和补丁
+# 编译选项和补丁
 
 首先确保修改以下配置：
 ```sh
@@ -22,7 +22,7 @@ CONFIG_RANDOMIZE_BASE = n # 关闭地址随机化
 
 gcc的编译选项`O1`优化等级不需要修改就可以编译通过。`O0`优化等级无法编译（尝试`CONFIG_JUMP_LABEL=n`还是不行），要修改汇编代码，有兴趣的朋友可以和我一直尝试。`Og`优化等级经过修改可以编译通过，`x86_64`合入目录[`src/kernel-environment/x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/src/kernel-environment/x86_64)对应版本的补丁。
 
-# 2. qemu命令选项
+# qemu命令选项
 
 qemu启动虚拟机时，要添加以下几个选项：
 ```sh
@@ -32,7 +32,7 @@ qemu启动虚拟机时，要添加以下几个选项：
 -s # 相当于 -gdb tcp::1234 默认端口1234，不建议用，最好指定端口
 ```
 
-# 3. GDB命令
+# GDB命令
 
 启动GDB：
 ```sh
@@ -48,7 +48,7 @@ gdb build/vmlinux
 
 gdb命令的用法和用户态程序的调试大同小异。
 
-# 4. GDB辅助调试功能
+# GDB辅助调试功能
 
 使用内核提供的[GDB辅助调试功能](https://www.kernel.org/doc/Documentation/dev-tools/gdb-kernel-debugging.rst)可以更方便的调试内核：
 ```sh
@@ -82,7 +82,7 @@ sed -i '/sys.path.insert/a\sys.path.insert(0, "'${HOME}'/.gdb-linux-5.10")' ${HO
 (gdb) p $lx_current().comm # 打印断点所在进程的进程名
 ```
 
-# 5. GDB打印结构体偏移
+# GDB打印结构体偏移
 
 结构体定义有时候加了很多宏判断，再考虑到内存对齐之类的因素，通过看代码很难确定结构体中某一个成员的偏移大小，使用gdb来打印就很直观。
 
@@ -109,7 +109,7 @@ gdb ./cifs.ko # ko文件或vmlinux
 
 `&(0)->tlink`: tlink的地址，也就是偏移量。
 
-# 6. ko模块
+# ko模块
 
 使用`gdb vmlinux`启动gdb后，如果调用到ko模块里的代码，这时候就不能直接对ko模块的代码进行打断点之类的操作，因为找不到对应的符号。
 

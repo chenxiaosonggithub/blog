@@ -2,7 +2,7 @@
 
 可能很多人早就想贡献Linux内核了，但就是不知道怎么开始。
 
-# 1. 内核社区
+# 内核社区
 
 Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
@@ -22,7 +22,7 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
 [Mainland China Mirror](https://kernel.source.codeaurora.cn/)
 
-# 2. 修改内核代码
+# 修改内核代码
 
 你可以通过[syzkaller测试](https://syzkaller.appspot.com/upstream)发现内核bug，也可以通过阅读内核代码发现bug或进行重构。
 
@@ -30,7 +30,7 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站。
 
 注意commit message每行长度不超过 72 个字符。
 
-# 3. 生成patch文件
+# 生成patch文件
 
 以下命令会生成补丁文件：
 ```shell
@@ -55,9 +55,9 @@ git format-patch --subject-prefix="PATCH next,resend,v2" -3 commit号 --cover-le
 vim 0000-cover-letter.patch
 ```
 
-# 4. 邮箱配置
+# 邮箱配置
 
-## 4.1. 163邮箱配置
+## 163邮箱配置
 
 此处以163邮箱为例，说明邮箱的配置方法，其他邮箱类似。
 
@@ -65,12 +65,12 @@ vim 0000-cover-letter.patch
 
 在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除）。
 
-## 4.2. foxmail邮箱（qq邮箱）配置
+## foxmail邮箱（qq邮箱）配置
 
 在[pc端网页](https://mail.qq.com/)登录foxmail邮箱，点击"Settings -> Third-party Services -> IMAP/SMTP", 点击"Generate Authorization Code"生成在`.gitconfig`和[thunderbird](https://www.thunderbird.net)中登录的密码。
 
 
-# 5. git发送邮件
+# git发送邮件
 
 安装：
 ```shell

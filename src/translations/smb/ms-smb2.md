@@ -2,31 +2,31 @@
 
 持续更新中。。。
 
-# 1 引言
+# 引言
 
 Server Message Block (SMB)协议版本2和版本3支持在计算机之间共享文件和打印资源。该协议借用并扩展了Server Message Block (SMB) Version 1.0 Protocol中的概念，该协议在[MS-SMB]中进行了规定。本规范假定读者熟悉[MS-SMB]以及[MS-WPO]第9节中描述的安全概念。
 
 本规范的第1.5、1.8、1.9、2和3节是规范性的。本规范中的所有其他部分和示例均属于信息性内容。
 
-## 1.1 术语表
+## 术语表
 
 [查阅的时候再翻译](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb2/b1b7cc8a-4d24-4701-bc3f-220b543ceef8)
 
-## 1.2 参考
+## 参考
 
 Microsoft开放规范库中的文档链接指向引用文档的最新发布版本中的正确部分。然而，由于库中的单个文档不会同时更新，因此文档中的部分编号可能不匹配。您可以通过检查勘误表来确认正确的部分编号。
 
-### 1.2.1 规范性引用
+### 规范性引用
 
 我们经常对规范性引用进行调查，以确保它们持续可用。如果您在查找规范性引用时遇到任何问题，请联系dochelp@microsoft.com。我们将协助您找到相关信息。
 
 [请查看网页](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb2/8bba286b-b50f-4766-aaca-c47d4c01a231)
 
-### 1.2.2 信息性引用
+### 信息性引用
 
 [请查看网页](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb2/161ebf6c-6ac1-482b-9717-c62012ecd496)
 
-## 1.3 概述
+## 概述
 
 服务器消息块（Server Message Block，SMB）协议第2版和第3版，以下简称"SMB 2协议"，是原始服务器消息块（SMB）协议（如[MS-SMB]和[MS-CIFS]中所指定）的扩展。这两种协议都用于客户端通过网络请求来自服务器系统的文件和打印服务。两者都是有状态的协议，其中客户端建立与服务器的连接，建立在该连接上的身份验证上下文，然后发出各种请求以访问文件、打印机和命名管道进行进程间通信。
 

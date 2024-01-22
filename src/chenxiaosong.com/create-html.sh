@@ -85,7 +85,7 @@ create_html() {
     # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
     # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
     # --toc：这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
-    pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --css http://chenxiaosong.com/stylesheet.css"
+    pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --number-sections --css http://chenxiaosong.com/stylesheet.css"
 
     element_count="${#array[@]}" # 总个数
     for ((index=0; index<${element_count}; index=$((index + 3)))); do

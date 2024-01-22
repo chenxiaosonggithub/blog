@@ -1,4 +1,4 @@
-# 1. 编译内核代码
+# 编译内核代码
 
 内核开发环境的安装请参考[《Linux环境安装与配置》](http://chenxiaosong.com/linux/userspace-environment.html)其中内核相关的部分。
 
@@ -34,17 +34,17 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=build Image
 make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- O=build Image
 ```
 
-# 2. 一些额外的补丁
+# 一些额外的补丁
 
 如果你要更方便的使用一些调试的功能，就要加一些额外的补丁。
 
-## 2.1. `dump_stack()`输出的栈全是问号的解决办法
+## `dump_stack()`输出的栈全是问号的解决办法
 
 如果你使用`dump_stack()`输出的栈全是问号，可以 revert 补丁 `f1d9a2abff66 x86/unwind/orc: Don't skip the first frame for inactive tasks`。
 
 主线已经有补丁做了 revert： `230db82413c0 x86/unwind/orc: Fix unreliable stack dump with gcov`。
 
-## 2.2. 降低编译优化等级
+## 降低编译优化等级
 
 默认的内核编译优化等级太高，用GDB调试时不太方便，有些函数语句被优化了，无法打断点，这时就要降低编译优化等级。
 

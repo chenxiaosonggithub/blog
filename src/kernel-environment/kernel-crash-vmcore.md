@@ -1,6 +1,6 @@
-# 1. 环境准备
+# 环境准备
 
-## 1.1. 导出vmcore
+## 导出vmcore
 
 首先你需要有个发生panic时的vmcore，有些发行版默认发生oops时不会panic，需要修改配置（注意这样修改重启后会还原）：
 ```sh
@@ -36,7 +36,7 @@ crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
 ```
 
-## 1.2. 源码安装crash
+## 源码安装crash
 
 如果内核版本不是最新的（比如4.19或5.10），那么发行版的包管理器安装的crash就可以用，但如果内核版本是最新的，可能就需要通过源码安装crash：
 ```sh
@@ -47,7 +47,7 @@ make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好
 # make target=ARM64 -j64 # 交叉编译能解析arm64 vmcore的crash
 ```
 
-# 2. 查看崩溃在哪一行
+# 查看崩溃在哪一行
 
 ```sh
 # 查看内核日志
@@ -87,9 +87,9 @@ ffffffff81c0a939 (t) nfs_inode_add_request+460 /home/sonvhi/chenxiaosong/code/4.
 
 另外，由crash的`dis -l`和`sym`命令定位到`include/linux/nfs_fs.h: 248`的`NFS_I()`函数，这就不知道为什么了，麻烦知道的朋友联系我。
 
-# 3. 分析栈帧数据
+# 分析栈帧数据
 
-## 3.1. 确认`page->mapping`为`NULL`
+## 确认`page->mapping`为`NULL`
 
 查看`nfs_inode_add_request`函数中的堆栈：
 ```sh
@@ -179,7 +179,7 @@ SIZE: 0x4
 
 x86_64下整数参数使用的寄存器依次为：RDI，RSI，RDX，RCX，R8，R9，`_raw_spin_lock`只有一个参数，从栈中可以看到`RDI: 0000000000000002`，这个值是怎么来的呢？估计要看`nfs_inode_add_request`和`_raw_spin_lock`的反汇编。
 
-## 3.2. `nfs_inode_add_request`的第一个参数`struct inode *inode`
+## `nfs_inode_add_request`的第一个参数`struct inode *inode`
 
 我们再看一次跟`inode`有关的栈帧数据:
 ```sh

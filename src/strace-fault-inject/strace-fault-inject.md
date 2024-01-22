@@ -1,4 +1,4 @@
-# 1. 源码安装 strace
+# 源码安装 strace
 
 下载[chenxiaosonggithub/strace](https://gitee.com/chenxiaosonggitee/strace)，这个仓库是在[strace/strace](https://github.com/strace/strace)的基础上修改而来，添加了一个补丁[fault-inject: inject memory allocate failed error](https://gitee.com/chenxiaosonggitee/strace/commit/b196eb9fd65f2801c7c72f2c5ef1230e5734769e)。
 
@@ -10,11 +10,11 @@ mkdir build && cd build
 make
 ```
 
-# 2. 内核修改
+# 内核修改
 
 内核代码打上补丁[src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch)，内核配置选项增加文件[src/strace-fault-inject/fault-inject-config.txt](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/strace-fault-inject/fault-inject-config.txt)中的内容。
 
-# 3. 测试
+# 测试
 
 这里说一个我个人通过strace内存分配失败故障注入发现的一个bug，使用的脚本是：
 ```sh
