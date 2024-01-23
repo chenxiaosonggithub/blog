@@ -44,6 +44,8 @@
 
 [4.19 nfs lazy umount 后无法挂载的问题](http://chenxiaosong.com/nfs/4.19-nfs-mount-hung.html)
 
+[4.19 nfs4_put_stid报warning紧接着panic的问题](http://chenxiaosong.com/nfs/4.19-warning-in-nfs4_put_stid-and-panic.html)
+
 [Connectathon NFS tests](http://chenxiaosong.com/nfs/cthon-nfs-tests.html)
 
 # EXT文件系统
