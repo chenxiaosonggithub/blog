@@ -6,7 +6,7 @@
 
 尝试的其中一款编辑器就是[KDE的ghostwriter](https://ghostwriter.kde.org/)，这个markdown编辑器功能挺完善，但缺陷也不少。
 
-2021年时我解决了一个**严重的preview显示缺陷**[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)。
+2021年时我解决了一个**严重的预览界面显示缺陷**[Chinese preview in HTML is complete now. Update README.md.](https://github.com/KDE/ghostwriter/pull/618/commits)。
 
 如果各位朋友想自己修改或增加功能，可以使用[github源码](https://github.com/KDE/ghostwriter)安装。
 
@@ -36,9 +36,9 @@ cd build/release/
 
 这个软件曾经用着感觉还行。
 
-# preview显示缺陷
+# 预览界面显示缺陷
 
-2021年6月刚用ghostwriter时，一个很明显的preview显示缺陷摆在我面前：preview中文显示不完整，刚开始想放弃这个软件，但又觉得其他功能挺完善的，最后还是决定自己解决缺陷。
+2021年6月刚用ghostwriter时，一个很明显的预览界面显示缺陷摆在我面前：预览界面中文显示不完整，刚开始想放弃这个软件，但又觉得其他功能挺完善的，最后还是决定自己解决缺陷。
 
 现在把这个缺陷介绍一下，也希望各位朋友能和我一起完善ghostwriter。
 
