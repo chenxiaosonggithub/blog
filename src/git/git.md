@@ -40,3 +40,9 @@ ssh-keygen -t ed25519-sk -C "YOUR_EMAIL" # 生成新的key
 eval "$(ssh-agent -s)" # 启动 SSH 代理
 ssh-add ~/.ssh/id_ed25519 # 将 SSH 私钥添加到 SSH 代理
 ```
+
+# 常用git命令
+
+```sh
+git name-rev <commit> # 找到<commit>是哪个版本引入的
+```
