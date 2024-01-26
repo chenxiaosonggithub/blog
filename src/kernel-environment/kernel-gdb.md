@@ -50,7 +50,7 @@ gdb命令的用法和用户态程序的调试大同小异。
 
 # GDB辅助调试功能
 
-使用内核提供的[GDB辅助调试功能](https://www.kernel.org/doc/Documentation/dev-tools/gdb-kernel-debugging.rst)可以更方便的调试内核：
+使用内核提供的[GDB辅助调试功能](https://www.kernel.org/doc/Documentation/dev-tools/gdb-kernel-debugging.rst)可以更方便的调试内核（如打印断点处的进程名和进程id等）：
 ```sh
 # 最新版本（2023.11）编译出来的无法调试4.19和5.10的代码
 echo "set auto-load safe-path /" > ~/.gdbinit # 设置自动加载共享库文件的安全路径
