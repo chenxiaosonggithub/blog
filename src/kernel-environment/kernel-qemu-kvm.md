@@ -91,6 +91,8 @@ sudo dnf update vim-common vim-minimal -y
 
 # qemu安装与配置
 
+关于各个发行版怎么安装qemu，可以参考[qemu官网](https://www.qemu.org/download/#linux)的介绍，下面主要介绍一下源码的安装方式。
+
 ## 源码安装 qemu
 
 先安装编译qemu所需的软件：
