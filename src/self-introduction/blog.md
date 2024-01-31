@@ -70,6 +70,8 @@
 
 [4.19 btrfs文件系统变成只读的问题](http://chenxiaosong.com/fs/4.19-btrfs-forced-readonly.html)
 
+[minix文件系统](http://chenxiaosong.com/fs/minix-fs.html)
+
 # Linux环境
 
 [如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/linux/chenxiaosong.com.html)
