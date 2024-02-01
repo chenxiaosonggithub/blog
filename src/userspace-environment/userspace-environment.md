@@ -188,6 +188,12 @@ sudo apt install vim-gtk3 -y
 chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=127.0.0.1:1080"
 ```
 
+# 麒麟系统
+
+<!-- 公司内网，服务器版本： https://172.30.13.199/release/Release/build/os/ISO/, 桌面版本： https://builder.kylin.com/ -->
+
+填写[产品试用申请](https://www.kylinos.cn/support/trial.html)，[x86桌面版本](https://distro-images.kylinos.cn:8802/web_pungi/download/share/hXaJrnQWscuN2YtS7VAZizRP0EFbH4y3/)，[x86服务器版本](https://distro-images.kylinos.cn:8802/web_pungi/download/share/vYTMm38Pkaq0KRGzg9pBsWf2c16FUwJL/)。
+
 # vscode
 
 [code-server源码](https://github.com/coder/code-server)
