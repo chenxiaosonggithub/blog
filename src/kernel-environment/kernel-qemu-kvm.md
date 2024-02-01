@@ -156,6 +156,15 @@ mkdir etc/qemu -p
 vim etc/qemu/bridge.conf # 添加　allow virbr0
 ```
 
+## 修改`virbr0`网段
+
+```sh
+virsh net-list # 查看网络情况
+virsh net-edit default
+virsh net-destroy default
+virsh net-start default
+```
+
 # arm32架构
 
 在 linux 仓库中执行　`make dtbs` 生成 dtb 文件
