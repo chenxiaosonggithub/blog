@@ -6,7 +6,7 @@ xmodmap是Linux桌面系统用于更改键位分布的软件，具体查看[《L
 
 # macOS
 
-`Karabiner-Elements`, 要开启权限`Privacy & Security` -> `Input Monitoring`, 添加`karabiner_observer`、`karabiner_grabber`、`Karabiner-Elements`、`Karabiner-EventViewer`。有时权限还是有问题，需要通过先卸载软件再安装来解决。
+[`Karabiner-Elements`](https://karabiner-elements.pqrs.org/), 要开启权限`Privacy & Security` -> `Input Monitoring`, 添加`karabiner_observer`、`karabiner_grabber`、`Karabiner-Elements`、`Karabiner-EventViewer`。有时权限还是有问题，需要通过先卸载软件再安装来解决。
 
 `Complex Modifications`复杂的映射要修改文件`/Users/sonvhi/.config/karabiner/karabiner.json`。
 
