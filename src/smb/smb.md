@@ -29,8 +29,11 @@ apt-get install samba -y
 ```sh
 pdbedit -L # 查看cifs用户
 smbpasswd -a root # 添加用户，这里的用户名必须是系统用户名
+# 如果 smbpasswd -a 添加用户test失败，就要先创建系统用户test
+useradd -s /bin/bash -d /home/test -m test
 smbpasswd -x root # 删除用户
-smbpasswd -s # 修改密码
+smbpasswd -s root # 修改密码
+smbpasswd -n root # 设置成没密码, 但挂载时好像还是需要密码，以后再看为什么吧
 ```
 
 编辑`/etc/samba/smb.conf`配置文件：
