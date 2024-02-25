@@ -1,5 +1,3 @@
-[toc]
-
 # 制作iso镜像
 
 从 App Store 下载 macOS 安装程序(注意只能下载最新的)，或者从 Hackintosh 网站之类的网站下载。
@@ -25,3 +23,11 @@ rm /tmp/Ventura.dmg
 安装[VMware Fusion](https://www.vmware.com/cn/products/fusion/fusion-evaluation.html)，购买注册码, 支持正版。
 
 "Macintosh HD"默认不是“APFS“文件系统，而且已格式化的文件系统只有80+G大小，需要在“磁盘工具”中”抹掉“重新格式化为APFS, 才能全部利用磁盘空间。
+
+# homebrew
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/sonvhi/.zprofile # 加到环境变量PATH中
+brew install qemu
+```
