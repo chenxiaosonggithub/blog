@@ -48,6 +48,10 @@
 
 [Connectathon NFS tests](http://chenxiaosong.com/nfs/cthon-nfs-tests.html)
 
+# SMB(CIFS)文件系统
+
+[4.19 cifs_reconnect空指针解引用问题](http://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
+
 # EXT文件系统
 
 [jbd2_journal_commit_transaction空指针解引用问题](http://chenxiaosong.com/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html)
