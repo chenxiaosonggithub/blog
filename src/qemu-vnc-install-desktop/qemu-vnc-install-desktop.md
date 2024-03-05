@@ -50,3 +50,5 @@ qemu-system-x86_64 \
 ```
 
 但arm64的麒麟桌面系统没法这样安装，暂时还没找到原因。
+
+可以在arm芯片的mac电脑中用vmware fusion安装arm64的ubuntu。
