@@ -33,6 +33,8 @@ vim /etc/default/grub # GRUB_TIMEOUT=5
 
 我平时工作用的是ubuntu桌面系统。
 
+arm64版本下载：[ubuntu官方下载](http://cdimage.ubuntu.com/jammy/daily-live/current/), [南京大学开源镜像站](http://mirror.nju.edu.cn/ubuntu-cdimage/jammy/daily-live/current/)。
+
 常用的软件安装：
 ```sh
 sudo apt install build-essential -y # 编译所需的常用软件，如gcc等

@@ -30,6 +30,8 @@ qemu-img convert -p -f qcow2 -O raw image.qcow2 image.raw
 
 再执行脚本[src/kernel-environment/link-scripts.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/link-scripts.sh)把脚本链接到相应的目录，执行[src/kernel-environment/x86_64/update-base.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/update-base.sh)启动虚拟机更新镜像（如再安装一些额外的软件），镜像更新完后关闭虚拟机，再执行[src/kernel-environment/x86_64/create-qcow2.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel-environment/x86_64/create-qcow2.sh)生成指向基础镜像的qcow2镜像。
 
+qemu启动后，按快捷键`ctrl+a c`（先按`ctrl+a`松开后再按`c`）再输入`quit`退出qemu。
+
 介绍完脚本，下面再介绍一下具体的命令。
 
 ## 镜像制作

@@ -1,6 +1,14 @@
 # wine
 
-[WineHQ - Run Windows applications on Linux, BSD, Solaris and macOS](https://www.winehq.org/), [Ubuntu WineHQ Repository - WineHQ Wiki](https://wiki.winehq.org/Ubuntu)，[Winetricks - WineHQ Wiki](https://wiki.winehq.org/Winetricks), 有些网络可能安装不了，可以尝试换个网络（也有可能是服务器出了问题，稍后再试试），还有中间可能要再执行`sudo apt-get update -y`命令。
+- [WineHQ - Run Windows applications on Linux, BSD, Solaris and macOS](https://www.winehq.org/)
+- [Ubuntu WineHQ Repository - WineHQ Wiki](https://wiki.winehq.org/Ubuntu)
+- [Winetricks - WineHQ Wiki](https://wiki.winehq.org/Winetricks)
+
+注意ubuntu的wiki中有以下一段话：
+
+> 虽然Ubuntu提供了自己的Wine软件包，但这些软件包通常落后于最新版本。为了尽可能简化安装最新版本的Wine，WineHQ有自己的Ubuntu软件库。如果新版本的Wine出现问题，您还可以选择安装您想要的旧版本。WineHQ软件库仅提供AMD64和i386架构的软件包。如果您需要ARM版本，您可以使用Ubuntu提供的软件包。
+
+有些网络可能安装不了，可以尝试换个网络（也有可能是服务器出了问题，稍后再试试），还有中间可能要再执行`sudo apt-get update -y`命令。
 
 可以尝试下载并直接运行免安装的[putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)，`wine putty.exe`。
 
