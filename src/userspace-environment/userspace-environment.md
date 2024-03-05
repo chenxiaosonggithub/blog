@@ -192,7 +192,16 @@ chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=12
 
 <!-- 公司内网，服务器版本： https://172.30.13.199/release/Release/build/os/ISO/, 桌面版本： https://builder.kylin.com/ -->
 
-填写[产品试用申请](https://www.kylinos.cn/support/trial.html)，[x86桌面版本](https://distro-images.kylinos.cn:8802/web_pungi/download/share/hXaJrnQWscuN2YtS7VAZizRP0EFbH4y3/)，[x86服务器版本](https://distro-images.kylinos.cn:8802/web_pungi/download/share/vYTMm38Pkaq0KRGzg9pBsWf2c16FUwJL/)。
+填写[产品试用申请](https://www.kylinos.cn/support/trial.html)，以下是各个版本的下载地址：
+
+- [Kylin-Server-V10-SP3-General-Release-2303-X86_64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/vYTMm38Pkaq0KRGzg9pBsWf2c16FUwJL/)
+- [Kylin-Desktop-V10-SP1-General-Release-2303-X86_64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/b4vmX7qEk90dyBrFfS5ANpGngaW2hZUK/)
+- [Kylin-Desktop-V10-SP1-HWE-Release-2303-X86_64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/hXaJrnQWscuN2YtS7VAZizRP0EFbH4y3/)
+- [Kylin-Desktop-V10-SP1-General-Release-2303-ARM64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/M8UbGlg2WyeHnANzv0srJOEjC9R7ZXDx/)
+- [Kylin-Desktop-V10-SP1-General-Release-2303-MIPS64el.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/jWbeB9k6FLvySThKilrgX5QUd0cwYtHo/)
+- [Kylin-Desktop-V10-SP1-General-Release-2303-LoongArch64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/k1TnrIxSJ5dt47bzAeiOF0upRslgV9hE/)
+- [Kylin-Desktop-V10-SP1-General-Release-2303-SW64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/XiGHY0EBQSC8ehIqzfPwaxsRu72vo5VT/)
+- [Kylin-Desktop-V10-SP1-2303-update1-Wayland-Release-General-kirin9006c-20230703-ARM64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/d8ug4oiGAQFR7lKsLYOa2tmS9jrW3XT1/)
 
 # vscode
 
@@ -228,6 +237,8 @@ Or, if you don't want/need a background service you can run:
 
 Deploy code-server for your team with Coder: https://github.com/coder/coder
 ```
+
+如果要修改密码等配置，请修改配置文件`${HOME}/.config/code-server/config.yaml`。
 
 注意，和vscode客户端不一样，vscode server装插件时有些插件无法搜索到，这时就需要在[vscode网站](https://marketplace.visualstudio.com/vscode)上下载`.vsix`文件，手动安装。
 
