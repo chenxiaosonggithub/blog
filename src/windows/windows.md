@@ -21,9 +21,11 @@
 # 源码安装wine
 
 [gitlab源码](https://gitlab.winehq.org/wine/wine)，[Developers - WineHQ Wiki](https://wiki.winehq.org/Developers)。
-libgettextpo-dev
+
 首先安装[Building Wine - WineHQ Wiki](https://wiki.winehq.org/Building_Wine)中`Satisfying Build Dependencies`一节提到的依赖，其中ubuntu安装debian一列的软件：
 ```sh
+# 不确定源码安装是否要打开这个配置，但打开也不会出问题嘛
+sudo dpkg --add-architecture i386
 # Generally necessary
 sudo apt install -y gcc-multilib gcc-mingw-w64 libasound2-dev libpulse-dev libdbus-1-dev libfontconfig-dev libfreetype-dev libgnutls28-dev libgl-dev libunwind-dev libx11-dev libxcomposite-dev libxcursor-dev libxfixes-dev libxi-dev libxrandr-dev libxrender-dev libxext-dev
 # Needed for many applications
@@ -31,19 +33,27 @@ sudo apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libosme
 # Rare or domain-specific
 sudo apt install -y libcapi20-dev libcups2-dev libgphoto2-dev libsane-dev libkrb5-dev samba-dev ocl-icd-opencl-dev libpcap-dev libusb-1.0-0-dev libv4l-dev
 ```
-注意以上命令只是我自己整理方便后续部署时查阅，如果你安装的话最好查看网页，因为我不确定是否会新增一些依赖，因为wine软件不断的发展。
+注意以上命令只是我自己整理方便后续部署时查阅，如果你安装的话最好查看网页，因为我不确定是否会新增一些依赖，毕竟wine软件在不断的发展。
 
-上面的开发依赖软件安装后，还是会报错或警告，根据报错或警告信息继续安装以下软件：
+还有一些常用编译依赖项：
+```sh
+sudo apt install -y build-essential 
+```
+
+上面的开发依赖软件安装后，运行`./configure`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
 ```sh
 # 报错
 sudo apt-get install -y flex bison
 sudo apt-get install -y libx11-dev:i386 libfreetype-dev:i386
+
 # 警告
 sudo apt-get install -y libpcsclite-dev gettext
-sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 libpcsclite-dev:i386 samba-dev:i386
-# sudo apt-get install -y libkrb5-dev:i386 # 会出错
-# opengl，用 glxinfo | grep "OpenGL" 能看到输出，但安装完后还是会有告警信息：No OpenGL library found on this system. OpenGL and Direct3D won't be supported.
+## opengl，用 glxinfo | grep "OpenGL" 能看到输出，但安装完后还是会有告警信息：No OpenGL library found on this system. OpenGL and Direct3D won't be supported.
 sudo apt-get install -y mesa-utils libglu1-mesa-dev freeglut3 freeglut3-dev
-# 还是会有告警：No sound system was found. Windows applications will be silent.
+## 加到audio组后，还是会有告警：No sound system was found. Windows applications will be silent.
 sudo usermod -aG audio $USER
 su - $USER
+## i386相关
+sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 libpcsclite-dev:i386
+## sudo apt-get install -y libkrb5-dev:i386 # 安装会出错
+## sudo apt-get install -y samba-dev:i386 # 安装后图形界面没了
