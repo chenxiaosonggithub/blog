@@ -41,7 +41,7 @@ sudo apt install -y libcapi20-dev libcups2-dev libgphoto2-dev libsane-dev libkrb
 sudo apt install -y build-essential 
 ```
 
-上面的开发依赖软件安装后，运行`./configure`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
+上面的开发依赖软件安装后，运行`./configure --prefix=/你要安装的路径`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
 ```sh
 # 报错
 sudo apt-get install -y flex bison
@@ -68,4 +68,11 @@ sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-de
 ### sudo apt-get install -y samba-dev:i386
 ## 安装后图形界面没了，所以不能安装这个软件，其实这个软件并不需要
 ### sudo apt-get install -y libpcsclite-dev:i386
+```
+
+再运行以下命令编译安装：
+```sh
+./configure --prefix=/你要安装的路径
+make -j12 # 12换成你的cpu核数
+make install -j12
 ```
