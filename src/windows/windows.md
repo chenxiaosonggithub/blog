@@ -47,13 +47,24 @@ sudo apt-get install -y flex bison
 sudo apt-get install -y libx11-dev:i386 libfreetype-dev:i386
 
 # 警告
-sudo apt-get install -y libpcsclite-dev gettext
+sudo apt-get install -y gettext 
+# sudo apt install -y libpcsclite-dev # 没用，还是报 libpcsclite not found, smart cards won't be supported.
 ## opengl，用 glxinfo | grep "OpenGL" 能看到输出，但安装完后还是会有告警信息：No OpenGL library found on this system. OpenGL and Direct3D won't be supported.
-sudo apt-get install -y mesa-utils libglu1-mesa-dev freeglut3 freeglut3-dev
+### 所以opengl的告警应该和以下软件无关，而是和i386相关的软件中的某个相关（不确定是哪个）
+### sudo apt-get install -y mesa-utils libglu1-mesa-dev freeglut3 freeglut3-dev
 ## 加到audio组后，还是会有告警：No sound system was found. Windows applications will be silent.
 sudo usermod -aG audio $USER
 su - $USER
 ## i386相关
-sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 libpcsclite-dev:i386
-## sudo apt-get install -y libkrb5-dev:i386 # 安装会出错
-## sudo apt-get install -y samba-dev:i386 # 安装后图形界面没了
+sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 
+sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-dev:i386
+### sudo apt install -y libwayland-dev libwayland-dev:i386 # 安装了还是报 Wayland 32-bit development files not found, the Wayland driver won't be supported.
+## 本来是为了解决 libkrb5 32-bit development files not found (or too old), Kerberos won't be supported.
+### 但安装会出错，所以不能安装这个软件
+### sudo apt-get install -y libkrb5-dev:i386
+## 本来是为了解决 libnetapi not found, Samba NetAPI won't be supported.
+### 但安装后图形界面没了，所以不能安装这个软件
+### sudo apt-get install -y samba-dev:i386
+## 安装后图形界面没了，所以不能安装这个软件，其实这个软件并不需要
+### sudo apt-get install -y libpcsclite-dev:i386
+```

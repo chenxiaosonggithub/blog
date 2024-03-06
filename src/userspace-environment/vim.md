@@ -109,6 +109,7 @@ ctrl+v	块选择可视范围
 取消查找高亮	:nohlsearch (简写成noh)
 将当前行和下一行合并  大写J
 将匹配到的所有行删除        :g/pattern/d
+将没有匹配到的所有行删除        :g!/pattern/d
 ```
 # ctags
 
