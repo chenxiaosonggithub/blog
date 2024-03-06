@@ -20,7 +20,8 @@
 
 # 源码安装wine
 
-[gitlab源码](https://gitlab.winehq.org/wine/wine)，[Developers - WineHQ Wiki](https://wiki.winehq.org/Developers)。
+- [gitlab源码](https://gitlab.winehq.org/wine/wine)
+- [Developers - WineHQ Wiki](https://wiki.winehq.org/Developers)
 
 首先安装[Building Wine - WineHQ Wiki](https://wiki.winehq.org/Building_Wine)中`Satisfying Build Dependencies`一节提到的依赖，其中ubuntu安装debian一列的软件：
 ```sh
