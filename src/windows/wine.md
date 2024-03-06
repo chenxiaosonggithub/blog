@@ -41,7 +41,7 @@ sudo apt install -y libcapi20-dev libcups2-dev libgphoto2-dev libsane-dev libkrb
 sudo apt install -y build-essential 
 ```
 
-上面的开发依赖软件安装后，运行`./configure --prefix=/你要安装的路径`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
+上面的开发依赖软件安装后，运行`./configure --prefix=/你要安装的路径 --enable-win64`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
 ```sh
 # 报错
 sudo apt-get install -y flex bison
@@ -72,7 +72,7 @@ sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-de
 
 再运行以下命令编译安装：
 ```sh
-./configure --prefix=/你要安装的路径
+./configure --prefix=/你要安装的路径 --enable-win64
 make -j12 # 12换成你的cpu核数
 make install -j12
 ```
