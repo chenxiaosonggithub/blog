@@ -36,10 +36,12 @@ sudo apt install -y libcapi20-dev libcups2-dev libgphoto2-dev libsane-dev libkrb
 上面的开发依赖软件安装后，还是会报错或警告，根据报错或警告信息继续安装以下软件：
 ```sh
 # 报错
-sudo apt-get install -y flex bison libx11-dev:i386 libfreetype-dev:i386
+sudo apt-get install -y flex bison
+sudo apt-get install -y libx11-dev:i386 libfreetype-dev:i386
 # 警告
-sudo apt-get install -y libxrender-dev:i386 gettext libgnutls28-dev:i386
-sudo apt-get install -y libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 libkrb5-dev:i386
+sudo apt-get install -y libpcsclite-dev gettext
+sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 libpcsclite-dev:i386 samba-dev:i386
+# sudo apt-get install -y libkrb5-dev:i386 # 会出错
 # opengl，用 glxinfo | grep "OpenGL" 能看到输出，但安装完后还是会有告警信息：No OpenGL library found on this system. OpenGL and Direct3D won't be supported.
 sudo apt-get install -y mesa-utils libglu1-mesa-dev freeglut3 freeglut3-dev
 # 还是会有告警：No sound system was found. Windows applications will be silent.
