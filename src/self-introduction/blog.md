@@ -102,6 +102,8 @@
 
 [emacs编辑器](http://chenxiaosong.com/linux/emacs.html)
 
+[Linux使用wine运行Windows软件](http://chenxiaosong.com/linux/wine.html)
+
 # 还没有分类
 
 [键盘配置](http://chenxiaosong.com/others/keyboard.html)

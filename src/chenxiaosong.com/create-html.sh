@@ -60,6 +60,7 @@ array=(
     src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     src/userspace-environment/vim.md linux/vim.html "vim编辑器"
     src/userspace-environment/emacs.md linux/emacs.html "emacs编辑器"
+    src/windows/wine.md linux/wine.html "Linux使用wine运行Windows软件"
     # 其他
     src/wubi/wubi.md others/wubi.html "五笔输入法"
     src/keybord/keybord.md others/keyboard.html "键盘配置"
