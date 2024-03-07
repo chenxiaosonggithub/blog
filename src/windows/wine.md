@@ -6,7 +6,7 @@
 
 注意[Ubuntu WineHQ Repository - WineHQ Wiki](https://wiki.winehq.org/Ubuntu)中有这样一段话：
 
-> 虽然Ubuntu提供了自己的Wine软件包，但这些软件包通常落后于最新版本。为了尽可能简化安装最新版本的Wine，WineHQ有自己的Ubuntu软件库。如果新版本的Wine出现问题，您还可以选择安装您想要的旧版本。WineHQ软件库仅提供AMD64和i386架构的软件包。如果您需要ARM版本，您可以使用Ubuntu提供的软件包。
+> WineHQ软件库仅提供AMD64和i386架构的软件包。如果您需要ARM版本，您可以使用Ubuntu提供的软件包。
 
 有些网络可能安装不了，可以尝试换个网络（也有可能是服务器出了问题，稍后再试试），还有中间可能要再执行`sudo apt-get update -y`命令。
 
@@ -41,7 +41,7 @@ sudo apt install -y libcapi20-dev libcups2-dev libgphoto2-dev libsane-dev libkrb
 sudo apt install -y build-essential 
 ```
 
-上面的开发依赖软件安装后，运行`./configure --prefix=/你要安装的路径 --enable-win64`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
+上面的开发依赖软件安装后，运行`./configure`后还是会报错或警告，根据报错或警告信息继续安装以下软件：
 ```sh
 # 报错
 sudo apt-get install -y flex bison
@@ -60,6 +60,8 @@ su - $USER
 sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 
 sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-dev:i386
 ### sudo apt install -y libwayland-dev libwayland-dev:i386 # 安装了还是报 Wayland 32-bit development files not found, the Wayland driver won't be supported.
+
+# 以下软件不能安装，不能安装，不能安装，安装了你的系统就完了，写出来只是记录一下曾经尝试的过程
 ## 本来是为了解决 libkrb5 32-bit development files not found (or too old), Kerberos won't be supported.
 ### 但安装会出错，所以不能安装这个软件
 ### sudo apt-get install -y libkrb5-dev:i386
@@ -72,7 +74,15 @@ sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-de
 
 再运行以下命令编译安装：
 ```sh
-./configure --prefix=/你要安装的路径 --enable-win64
-make -j12 # 12换成你的cpu核数
-make install -j12
+# wine源码在 wine-dirs/wine-source
+cd wine-dirs/wine64-build/ # 先到64位编译目录
+../wine-source/configure --enable-win64 --prefix=/你要安装的路径
+make -j12 # 12换成你的cpu核数wine-dirs
+make install -j12 # 这时还无法运行微信
+
+cd ../wine32-build/ # 再到32位编译目录
+PKG_CONFIG_PATH=/usr/lib32 ../wine-source/configure --with-wine64=../wine64-build --prefix=/你要安装的路径
+make -j12
+make install -j12 # 这时可以运行微信了
 ```
+
