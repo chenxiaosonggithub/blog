@@ -8,7 +8,7 @@
 
 > WineHQ软件库仅提供AMD64和i386架构的软件包。如果您需要ARM版本，您可以使用Ubuntu提供的软件包。
 
-有些网络可能安装不了，可以尝试换个网络（也有可能是服务器出了问题，稍后再试试），还有中间可能要再执行`sudo apt-get update -y`命令。
+有些网络可能安装不了，可以尝试换个网络（也有可能是服务器出了问题，稍后再试试）。
 
 可以尝试下载并直接运行免安装的[putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)，`wine putty.exe`。
 
