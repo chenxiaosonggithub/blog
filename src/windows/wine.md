@@ -28,7 +28,8 @@
 # 不确定源码安装是否要打开这个配置，但打开也不会出问题嘛
 sudo dpkg --add-architecture i386
 # Generally necessary
-sudo apt install -y gcc-multilib gcc-mingw-w64 libasound2-dev libpulse-dev libdbus-1-dev libfontconfig-dev libfreetype-dev libgnutls28-dev libgl-dev libunwind-dev libx11-dev libxcomposite-dev libxcursor-dev libxfixes-dev libxi-dev libxrandr-dev libxrender-dev libxext-dev
+sudo apt install -y gcc-multilib # 只针对x86_64的i386
+sudo apt install -y gcc-mingw-w64 libasound2-dev libpulse-dev libdbus-1-dev libfontconfig-dev libfreetype-dev libgnutls28-dev libgl-dev libunwind-dev libx11-dev libxcomposite-dev libxcursor-dev libxfixes-dev libxi-dev libxrandr-dev libxrender-dev libxext-dev
 # Needed for many applications
 sudo apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libosmesa6-dev libsdl2-dev libudev-dev libvulkan-dev
 # Rare or domain-specific
@@ -49,7 +50,7 @@ sudo apt-get install -y libx11-dev:i386 libfreetype-dev:i386
 
 # 警告
 sudo apt-get install -y gettext 
-# sudo apt install -y libpcsclite-dev # 没用，还是报 libpcsclite not found, smart cards won't be supported.
+sudo apt install -y libpcsclite-dev # x86_64下没用，还是报 libpcsclite not found, smart cards won't be supported.
 ## opengl，用 glxinfo | grep "OpenGL" 能看到输出，但安装完后还是会有告警信息：No OpenGL library found on this system. OpenGL and Direct3D won't be supported.
 ### 所以opengl的告警应该和以下软件无关，而是和i386相关的软件中的某个相关（不确定是哪个）
 ### sudo apt-get install -y mesa-utils libglu1-mesa-dev freeglut3 freeglut3-dev
@@ -60,6 +61,9 @@ su - $USER
 sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 
 sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-dev:i386
 ### sudo apt install -y libwayland-dev libwayland-dev:i386 # 安装了还是报 Wayland 32-bit development files not found, the Wayland driver won't be supported.
+
+# aarch64
+sudo apt install clang  lld -y
 
 # 以下软件不能安装，不能安装，不能安装，安装了你的系统就完了，写出来只是记录一下曾经尝试的过程
 ## 本来是为了解决 libkrb5 32-bit development files not found (or too old), Kerberos won't be supported.
