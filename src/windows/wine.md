@@ -63,7 +63,7 @@ sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-de
 ### sudo apt install -y libwayland-dev libwayland-dev:i386 # 安装了还是报 Wayland 32-bit development files not found, the Wayland driver won't be supported.
 
 # aarch64
-sudo apt install clang  lld -y
+sudo apt install clang lld -y
 
 # 以下软件不能安装，不能安装，不能安装，安装了你的系统就完了，写出来只是记录一下曾经尝试的过程
 ## 本来是为了解决 libkrb5 32-bit development files not found (or too old), Kerberos won't be supported.
