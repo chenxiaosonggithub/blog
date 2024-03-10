@@ -104,10 +104,11 @@ server {
 		proxy_set_header Host $host;
 	}
 
-	location /localhost/ {
-		allow 127.0.0.1;
-		deny all;
-	}
+	# 只允许本机访问
+	# location /localhost/ {
+	# 	allow 127.0.0.1;
+	# 	deny all;
+	# }
 
 	# pass PHP scripts to FastCGI server
 	#
