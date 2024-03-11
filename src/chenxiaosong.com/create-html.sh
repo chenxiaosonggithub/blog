@@ -35,6 +35,7 @@ array=(
     src/nfs/cthon-nfs-tests.md nfs/cthon-nfs-tests.html "Connectathon NFS tests"
     # smb(cifs)
     src/smb/4.19-null-ptr-deref-in-cifs_reconnect.md smb/4.19-null-ptr-deref-in-cifs_reconnect.html "4.19 cifs_reconnect空指针解引用问题"
+    src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     # ext
     src/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.md ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html "jbd2_journal_commit_transaction空指针解引用问题"
     src/ext/bugon-in-ext4_writepages.md ext/bugon-in-ext4_writepages.html "ext4_writepages报BUG_ON的问题"
@@ -57,7 +58,6 @@ array=(
     src/userspace-environment/qemu-kvm-install-macos.md linux/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
     src/userspace-environment/ghostwriter-makdown.md linux/ghostwriter-makdown.html "ghostwriter: 一款makdown编辑器"
     src/userspace-environment/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
-    src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     src/userspace-environment/vim.md linux/vim.html "vim编辑器"
     src/userspace-environment/emacs.md linux/emacs.html "emacs编辑器"
     src/windows/wine.md linux/wine.html "Linux使用wine运行Windows软件"

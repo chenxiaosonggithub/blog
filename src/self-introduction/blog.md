@@ -52,6 +52,8 @@
 
 [4.19 cifs_reconnect空指针解引用问题](http://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
 
+[samba服务器搭建](http://chenxiaosong.com/linux/samba-server.html)
+
 # EXT文件系统
 
 [jbd2_journal_commit_transaction空指针解引用问题](http://chenxiaosong.com/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html)
@@ -95,8 +97,6 @@
 [ghostwriter: 一款makdown编辑器](http://chenxiaosong.com/linux/ghostwriter-makdown.html)
 
 [使用mosquitto搭建MQTT服务器](http://chenxiaosong.com/linux/mosquitto-mqtt.html)
-
-[samba服务器搭建](http://chenxiaosong.com/linux/samba-server.html)
 
 [vim编辑器](http://chenxiaosong.com/linux/vim.html)
 
