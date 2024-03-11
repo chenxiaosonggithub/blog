@@ -3,6 +3,11 @@ https://blog.csdn.net/u011795345/article/details/78681213
 https://cloud.tencent.com/developer/article/2148538
 
 virt-install --virt-type kvm --name kylin-desktop --vcpus=4 --ram 4096 --cdrom=Kylin-Desktop-V10-SP1-General-Release-2303-ARM64.iso --disk image.qcow2,format=qcow2 --network network=default --graphics vnc,listen=0.0.0.0,port=5955 --os-type=linux
+
+易江山：
+qemu-img create -f qcow2 kylin-sp1-210528.qcow2 100G
+virt-install --virt-type kvm --name kylin-sp1-210528 --vcpus=4 --ram 4096 --cdrom=/root/virtual-machine/Kylin-Server-10-SP1-Release-Build20-20210518-x86_64.iso  --disk /root/virtual-machine/kylin-sp1-210528.qcow2,format=qcow2 --network network=default --graphics vnc,listen=0.0.0.0,port=5913 --os-type=linux 
+
 -->
 
 安装图形界面发行版时，要么在物理机上安装，要么在virt-manager上安装，如果我们想在没有图形界面的server环境上用命令行安装一个图形界面发行版，可以使用qemu+vnc来实现。下面我们以麒麟系统桌面发行版安装为例说明qemu+vnc的安装过程。
