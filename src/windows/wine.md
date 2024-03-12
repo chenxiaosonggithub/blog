@@ -25,8 +25,9 @@
 
 首先安装[Building Wine - WineHQ Wiki](https://wiki.winehq.org/Building_Wine)中`Satisfying Build Dependencies`一节提到的依赖，其中ubuntu安装debian一列的软件：
 ```sh
-# 不确定源码安装是否要打开这个配置，但打开也不会出问题嘛
 sudo dpkg --add-architecture i386
+sudo dpkg --add-architecture armhf # arm32
+sudo apt-get update -y # 一定要执行
 # Generally necessary
 sudo apt install -y gcc-multilib # 只针对x86_64的i386
 sudo apt install -y gcc-mingw-w64 libasound2-dev libpulse-dev libdbus-1-dev libfontconfig-dev libfreetype-dev libgnutls28-dev libgl-dev libunwind-dev libx11-dev libxcomposite-dev libxcursor-dev libxfixes-dev libxi-dev libxrandr-dev libxrender-dev libxext-dev
@@ -37,7 +38,7 @@ sudo apt install -y libcapi20-dev libcups2-dev libgphoto2-dev libsane-dev libkrb
 ```
 注意以上命令只是我自己整理方便后续部署时查阅，如果你安装的话最好查看网页，因为我不确定是否会新增一些依赖，毕竟wine软件在不断的发展。
 
-还有一些常用编译依赖项：
+可能还要安装一些常用编译依赖项：
 ```sh
 sudo apt install -y build-essential 
 ```
@@ -47,6 +48,7 @@ sudo apt install -y build-essential
 # 报错
 sudo apt-get install -y flex bison
 sudo apt-get install -y libx11-dev:i386 libfreetype-dev:i386
+sudo apt-get install -y libx11-dev:armhf libfreetype-dev:armhf # arm32
 
 # 警告
 sudo apt-get install -y gettext 
@@ -61,9 +63,12 @@ su - $USER
 sudo apt-get install -y libxrender-dev:i386 libgnutls28-dev:i386 libvulkan-dev:i386 libxcursor-dev:i386 libxi-dev:i386 libxext-dev:i386 libxrandr-dev:i386 libxfixes-dev:i386 libxcomposite-dev:i386 libosmesa6-dev:i386 ocl-icd-opencl-dev:i386 libpcap-dev:i386 libdbus-1-dev:i386 libsane-dev:i386 libusb-1.0-0-dev:i386 libv4l-dev:i386 libgphoto2-dev:i386 libpulse-dev:i386 libudev-dev:i386 libsdl2-dev:i386 libcapi20-dev:i386 libcups2-dev:i386 libfontconfig-dev:i386 
 sudo apt-get install -y libgstreamer1.0-dev:i386 libgstreamer-plugins-base1.0-dev:i386
 ### sudo apt install -y libwayland-dev libwayland-dev:i386 # 安装了还是报 Wayland 32-bit development files not found, the Wayland driver won't be supported.
+## arm32
+sudo apt-get install -y libxrender-dev:armhf libgnutls28-dev:armhf libvulkan-dev:armhf libxcursor-dev:armhf libxi-dev:armhf libxext-dev:armhf libxrandr-dev:armhf libxfixes-dev:armhf libxcomposite-dev:armhf libosmesa6-dev:armhf ocl-icd-opencl-dev:armhf libpcap-dev:armhf libdbus-1-dev:armhf libsane-dev:armhf libusb-1.0-0-dev:armhf libv4l-dev:armhf libgphoto2-dev:armhf libpulse-dev:armhf libudev-dev:armhf libsdl2-dev:armhf libcapi20-dev:armhf libcups2-dev:armhf libfontconfig-dev:armhf 
+sudo apt-get install -y libgstreamer1.0-dev:armhf libgstreamer-plugins-base1.0-dev:armhf
 
 # aarch64
-sudo apt install clang lld -y
+sudo apt install -y clang lld
 
 # 以下软件不能安装，不能安装，不能安装，安装了你的系统就完了，写出来只是记录一下曾经尝试的过程
 ## 本来是为了解决 libkrb5 32-bit development files not found (or too old), Kerberos won't be supported.
