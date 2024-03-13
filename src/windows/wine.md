@@ -90,7 +90,10 @@ make -j12 # 12换成你的cpu核数wine-dirs
 make install -j12 # 这时还无法运行微信
 
 cd ../wine32-build/ # 再到32位编译目录
+# x86_64
 PKG_CONFIG_PATH=/usr/lib32 ../wine-source/configure --with-wine64=../wine64-build --prefix=/你要安装的路径
+# aarch64
+PKG_CONFIG_PATH=/usr/lib ../wine-source/configure --with-wine64=../wine64-build --prefix=/你要安装的路径
 make -j12
 make install -j12 # 这时可以运行微信了
 ```
