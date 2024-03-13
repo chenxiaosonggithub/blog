@@ -38,7 +38,7 @@
 
 [点击查看我的自由软件贡献: chenxiaosong.com/contributions](http://chenxiaosong.com/contributions.html)
 
-除了Linux内核和鸿蒙操作系统的贡献外，还贡献过LoRaWAN、ghostwriter等项目。
+除了Linux内核和鸿蒙操作系统的贡献外，还贡献过LoRaWAN、KDE的ghostwriter等项目。
 
 # 自行车骑行
 
