@@ -50,7 +50,7 @@ array=(
     src/filesystem/minix-fs.md fs/minix-fs.html "minix文件系统"
     # Linux环境
     src/qemu-vnc-install-desktop/qemu-vnc-install-desktop.md linux/qemu-vnc-install-desktop.html "QEMU+VNC安装桌面系统"
-    src/chenxiaosong.com/chenxiaosong.com.md linux/chenxiaosong.com.html "如何快速搭建一个简陋的个人网站"
+    src/chenxiaosong.com/chenxiaosong.com.md linux/chenxiaosong.com.html "如何拥有个人域名的网站和邮箱"
     src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
     src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"

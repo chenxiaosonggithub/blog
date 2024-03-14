@@ -82,7 +82,7 @@
 
 [QEMU+VNC安装桌面系统](http://chenxiaosong.com/linux/qemu-vnc-install-desktop.html)
 
-[如何快速搭建一个简陋的个人网站](http://chenxiaosong.com/linux/chenxiaosong.com.html)
+[如何拥有个人域名的网站和邮箱](http://chenxiaosong.com/linux/chenxiaosong.com.html)
 
 [Linux环境安装与配置](http://chenxiaosong.com/linux/userspace-environment.html)
 

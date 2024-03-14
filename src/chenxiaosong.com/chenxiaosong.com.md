@@ -6,7 +6,9 @@
 
 注意默认的80端口要放开。
 
-# nginx
+# 简陋的个人网站
+
+## nginx
 
 Nginx（发音同「engine X」）是异步框架的网页服务器，也可以用作反向代理、负载平衡器和HTTP缓存。
 
@@ -22,7 +24,7 @@ service nginx restart # 在docker中
 sudo systemctl restart nginx
 ```
 
-# pandoc
+## pandoc
 
 pandoc用于将markdown或rst（ReStructuredText）格式文件转换成html。
 
@@ -33,11 +35,11 @@ apt-get install pandoc -y
 
 具体的命令可以参考[`create-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/create-html.sh)，脚本里写了详细的说明。
 
-# 脚本
+## 脚本
 
 [restart.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务。运行命令`while true; do bash restart.sh; sleep 90; done`不断检查。
 
-# 邮件
+# 个人域名后缀的邮箱
 
 是不是受够了在qq邮箱、foxmail邮箱、163邮箱名字已经被抢注了，只能在后面加一些乱七八糟的后缀。你有了域名，就可以拥有一个类似 @chenxiaosong.com 结尾的邮箱了。
 
