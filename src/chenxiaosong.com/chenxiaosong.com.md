@@ -41,7 +41,7 @@ apt-get install pandoc -y
 
 # 个人域名后缀的邮箱
 
-是不是受够了在qq邮箱、foxmail邮箱、163邮箱名字已经被抢注了，只能在后面加一些乱七八糟的后缀。你有了域名，就可以拥有一个类似 @chenxiaosong.com 结尾的邮箱了。
+是不是受够了在qq邮箱、foxmail邮箱、163邮箱注册邮箱时你的姓名全拼已经被抢注了，只能在后面加一些乱七八糟的后缀。你有了域名，就可以拥有一个类似 @chenxiaosong.com 结尾的邮箱了。
 
 首先，在[腾讯企业微信网站](https://work.weixin.qq.com/wework_admin/register_wx?from=exmail&bizmail_code=&wwbiz_version=free&wwbiz_merge=true)上注册一个你个人的企业微信。然后以管理员身份登录到[企业微信](https://work.weixin.qq.com/wework_admin/loginpage_wx)，可通过【管理后台->协作->邮件->概况->配置】中绑定专属域名。详细的操作步骤可参考[如何添加/更换/注销域名？](https://open.work.weixin.qq.com/help2/pc/19809?person_id=1)，温馨提醒：若域名历史没有绑定过邮箱使用且无需搬迁历史邮箱数据的，请选择左侧的【立即迁移】入口；反之，需要搬迁历史邮箱数据的，请选择【同步使用】入口迁移数据。
 
