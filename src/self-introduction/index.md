@@ -4,7 +4,7 @@
 
 目前在湖南长沙，老家胡建，过年回沙县，没错，就是沙县大酒店，哦不对，是沙县小吃的沙县。
 
-邮箱： chenxiaosongemail@foxmail.com，欢迎交流。
+邮箱： chenxiaosong@chenxiaosong.com，欢迎交流。
 
 手机号（微信）：18248638938。
 
