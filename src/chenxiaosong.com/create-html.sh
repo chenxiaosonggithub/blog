@@ -11,6 +11,7 @@ array=(
     src/self-introduction/blog.md blog.html "陈孝松博客"
     src/self-introduction/contributions.md contributions.html "陈孝松自由软件贡献"
     # Linux内核
+    courses/kernel.md kernel/kernel-course.html "Linux内核课程"
     src/kernel-environment/kernel-build.md kernel/kernel-build.html "Linux内核编译"
     src/kernel-environment/kernel-gdb.md kernel/kernel-gdb.html "GDB调试Linux内核"
     src/kernel-environment/kernel-crash-vmcore.md kernel/kernel-crash-vmcore.html "crash解析vmcore"

@@ -4,6 +4,8 @@
 
 # Linux内核
 
+[Linux内核课程](http://chenxiaosong.com/kernel/kernel-course.html)
+
 [QEMU/KVM环境搭建与使用](http://chenxiaosong.com/kernel/kernel-qemu-kvm.html)
 
 [Linux内核编译](http://chenxiaosong.com/kernel/kernel-build.html)
