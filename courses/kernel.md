@@ -95,7 +95,7 @@ Linux内核刚发布时，使用的就是Minix文件系统，现在2024年的Lin
 
 林纳斯在11岁时时就开始写程序，1989年进入大学的第二年去当兵，期间买了安德鲁·斯图尔特·塔能鲍姆所著的教科书《操作系统：设计与实现》（Operating Systems: Design and Implementation，ISBN 0-13-637331-3）及Minix源代码，开始研究操作系统。
 
-接下来说几件关于他的有趣故事。直接从维基百科上copy过来吧：
+接下来说几件关于他的有趣故事<!-- public begin -->。直接从维基百科上copy过来吧<!-- public end -->：
 
 > 托瓦兹坚持开放源代码信念，并对微软等对手的FUD战略大为不满。例如，在一封回应微软资深副总裁克瑞格·蒙迪批评开放源代码运动破坏了知识产权的电子邮件中，托瓦兹写道：“我不知道蒙迪是否听说过艾萨克·牛顿爵士？他不仅因为创立了经典物理学而出名，也还因为说过这样一句话而闻名于世：‘我之所以能够看得更远，是因为我站在巨人肩膀上的缘故。’”托瓦兹又说道：“我宁愿听牛顿的也不愿听蒙迪的。他（牛顿）虽然死了快300年了，却也没有让房间这样地臭气熏天。”<!-- public begin -->陈孝松注：<!-- public end -->需要说明一下，微软现在已经拥抱Linux了，甚至有了自己的Linix发行版了。
 
@@ -115,4 +115,22 @@ Linux内核刚发布时，使用的就是Minix文件系统，现在2024年的Lin
 
 ### 众多的Linux发行版
 
-一个操作系统只有内核肯定是不够的，还需要配套的很多GNU软件，这些软件与内核的集合称为Linux发行版。
+一个操作系统只有内核肯定是不够的，还需要配套很多GNU软件，这些软件与内核的集合称为Linux发行版，更准确的说，应该叫GNU/Linux发行版，因为其中包含了数量庞大的GNU软件，Linix内核虽然非常重要，但也只是占据很小的一部分。
+
+按软件包管理系统划分，介绍使用人数最多的两人大类，当然还有其他发行版本使用别的软件包管理系统。
+
+首先是Debian系，Debian及其派生发行版使用deb软件包格式，并使用dpkg及其前端作为软件包管理器。
+
+- [Debian](https://www.debian.org/)：Debian计划是由伊恩·默多克在1993年发起的，在1993年9月15日发布Debian 0.01版，第一个稳定版本在1996年发布。<!-- public begin -->我内核测试验证的虚拟机用的就是Debian。<!-- public end -->
+- [Ubuntu](https://cn.ubuntu.com/)：然后得说一下在桌面Linux发行版中使用人数比较多的Ubuntu发行版，是Canonical有限公司基于Debian开发的，但和Debian不同的地方是他的目的是开发更加友好的桌面。Ubuntu每6个月发布一个版本，每年的4月和10月，长期支持（LTS）版本每两年发布一次（如Ubuntu 22.04）。普通版本只支持9个月，LTS版本一般支持5年。<!-- public begin -->我编译代码的环境用的就是Ubuntu。<!-- public end -->
+- [银河麒麟桌面系统](https://product.kylinos.cn/productCase/171/36)：银河麒麟为Ubuntu Kylin的商业版本，当前在国内使用人数比较多。
+
+接着介绍一下Red Hat系，使用RPM格式软件包。
+
+- [Red Hat Enterprise Linux](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)：红帽公司发行，Red Hat 1.0版本在1995年5月发行，从Red Hat 9.0版本（2003-03-31）之后不再开发桌面版，开始专注服务器版本Red Hat Enterprise Linux（刚开始是基于 Red Hat Linux）。Red Hat Enterprise Linux 4 （2005-02-15）之后基于社区的Fedora，从 Red Hat Enterprise Linux 9 （2022-05-18）之后基于CentOS Stream和Fedora。
+- [Fedora](https://fedoraproject.org/)：社群开发、红帽公司赞助，约6个月发布新版本。
+- [CentOS](https://www.centos.org/)：来自于Red Hat Enterprise Linux（RHEL）依照开放源代码规定发布的源代码所编译而成，不包含闭源代码的软件，2014年与红帽公司合作，2020年红帽终止Centos，采用CentOS Stream。
+- [Rocky Linux](https://rockylinux.org/)：CentOS的创始人在Centos终止后创建的，继续Centos的目标。首个正式版本8.4在2021年6月21日发布。
+- [openEuler](https://www.openeuler.org/zh/)：2019 年12月31日社区成立，版本发布周期和Ubuntu一样，只是换成了每年的3月和6月。参与度最高的有华为、麒麟软件等公司。
+
+
