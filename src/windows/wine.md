@@ -1,3 +1,26 @@
+源码安装之前，也建议先通过apt安装wine，安装完后运行环境就准备好了。
+
+https://github.com/ptitSeb/box86/blob/master/docs/COMPILE.md
+
+https://github.com/ptitSeb/box64/blob/main/docs/COMPILE.md
+
+```sh
+sudo dpkg --add-architecture i386
+sudo dpkg --add-architecture armhf # arm32
+
+sudo apt-get update -y
+sudo apt install -y wine
+sudo apt install -y libwine # aarch64 arm32
+
+box64 wine putty.exe # wine必须是x86_64下编译的
+```
+
+http://www.opensound.com/download.cgi
+
+https://arcolinux.com/
+
+https://github.com/utmapp/UTM
+
 # wine使用
 
 - [WineHQ - Run Windows applications on Linux, BSD, Solaris and macOS](https://www.winehq.org/)
@@ -10,7 +33,7 @@
 
 有些网络可能安装不了，可以尝试换个网络（也有可能是服务器出了问题，稍后再试试）。
 
-可以尝试下载并直接运行免安装的[putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)，`wine putty.exe`。
+可以尝试下载并直接运行免安装的[putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)，x86_64架构下执行`wine putty.exe`，aarch64架构下执行`wine64 wine-arm64.exe`。
 
 或者安装并运行[微信](https://pc.weixin.qq.com/?lang=en_US)，注意c盘的位置在`${HOME}/.wine/drive_c/`，`wine WeChatSetup.exe`安装后，先进入`cd "${HOME}/.wine/drive_c/Program Files/Tencent/WeChat/[3.9.9.43]"`（有空格），再运行`wine WeChat.exe`。
 
@@ -25,9 +48,6 @@
 
 首先安装[Building Wine - WineHQ Wiki](https://wiki.winehq.org/Building_Wine)中`Satisfying Build Dependencies`一节提到的依赖，其中ubuntu安装debian一列的软件：
 ```sh
-sudo dpkg --add-architecture i386
-sudo dpkg --add-architecture armhf # arm32
-sudo apt-get update -y # 一定要执行
 # Generally necessary
 sudo apt install -y gcc-multilib # 只针对x86_64的i386
 sudo apt install -y gcc-mingw-w64 libasound2-dev libpulse-dev libdbus-1-dev libfontconfig-dev libfreetype-dev libgnutls28-dev libgl-dev libunwind-dev libx11-dev libxcomposite-dev libxcursor-dev libxfixes-dev libxi-dev libxrandr-dev libxrender-dev libxext-dev
