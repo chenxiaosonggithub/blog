@@ -104,20 +104,19 @@ cd ../wine32-build/ # 再到32位编译目录
 # x86_64
 PKG_CONFIG_PATH=/usr/lib32 ../wine-source/configure --with-wine64=../wine64-build --prefix=/你要安装的路径
 # aarch64
-PKG_CONFIG_PATH=/usr/lib ../wine-source/configure --with-wine64=../wine64-build --prefix=/你要安装的路径
+../wine-source/configure --with-wine64=../wine64-build --prefix=/你要安装的路径
 make -j12
 make install -j12 # 这时可以运行微信了
 ```
 
 # 编译后运行
 
-aarch64下还要安装
-https://github.com/ptitSeb/box86/blob/master/docs/COMPILE.md
+aarch64下还要安装box软件，32位box安装参考[ptitSeb/box86/blob/master/docs/COMPILE.md](https://github.com/ptitSeb/box86/blob/master/docs/COMPILE.md)，64位box安装参考[ptitSeb/box64/blob/main/docs/COMPILE.md](https://github.com/ptitSeb/box64/blob/main/docs/COMPILE.md)。
 
-https://github.com/ptitSeb/box64/blob/main/docs/COMPILE.md
-
+aarch64下使用以下命令运行x86架构下的exe程序，注意`wine`是x86_64的Linux下编译出来的：
 ```sh
-box64 wine putty.exe # wine必须是x86_64下编译的
+box64 wine putty.exe
+box86 wine putty.exe
 ```
 
 http://www.opensound.com/download.cgi
