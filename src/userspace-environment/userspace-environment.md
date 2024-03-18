@@ -205,6 +205,12 @@ chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=12
 - [Kylin-Desktop-V10-SP1-General-Release-2303-SW64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/XiGHY0EBQSC8ehIqzfPwaxsRu72vo5VT/)
 - [Kylin-Desktop-V10-SP1-2303-update1-Wayland-Release-General-kirin9006c-20230703-ARM64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/d8ug4oiGAQFR7lKsLYOa2tmS9jrW3XT1/)
 
+注意麒麟系统在arm芯片的macos上无法用vmware fusion安装，可以用[UTM](https://github.com/utmapp/UTM)安装，从[github](https://docs.getutm.app/installation/macos/)上下载安装包。安装虚拟机时cpu、内存、硬盘不要分配太大，比如我用的是M2的Macbook Air（8G内存，8核，256G硬盘），只需分配2核cpu、2G内存（已验证分配4G无法安装）、64G硬盘。安装后的虚拟机文件在`~/Library/Containers/com.utmapp.UTM/Data/Documents`目录下，默认Finder中不显示这个目录，可以在家目录下打开`Show View Options -> Show Library Folder`。
+
+# arcolinux
+
+[ArcoLinux](https://arcolinux.com/)是[Arch Linux](https://archlinux.org/)的衍生发行版。
+
 # vscode
 
 [code-server源码](https://github.com/coder/code-server)
