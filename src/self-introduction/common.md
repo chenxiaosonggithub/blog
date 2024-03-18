@@ -2,5 +2,5 @@
 - 主页: [chenxiaosong.com](http://chenxiaosong.com/)
 - 博客: [chenxiaosong.com/blog](http://chenxiaosong.com/blog.html)
 - 贡献: [chenxiaosong.com/contributions](http://chenxiaosong.com/contributions.html)
-- 邮箱: chenxiaosongemail@foxmail.com
+- 邮箱: chenxiaosong@chenxiaosong.com
 - 手机号(微信): 18248638938
