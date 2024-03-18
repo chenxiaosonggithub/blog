@@ -1,7 +1,7 @@
 src_path=/home/sonvhi/chenxiaosong/code # 替换为你的仓库路径
 dst_path=/var/www
-tmp_html_path=${dst_dir}/html-tmp
-html_path=${dst_dir}/html
+tmp_html_path=${dst_path}/html-tmp
+html_path=${dst_path}/html
 
 # 每一行代表： markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
