@@ -100,9 +100,7 @@
 
 [使用mosquitto搭建MQTT服务器](http://chenxiaosong.com/linux/mosquitto-mqtt.html)
 
-[vim编辑器](http://chenxiaosong.com/linux/vim.html)
-
-[emacs编辑器](http://chenxiaosong.com/linux/emacs.html)
+[编辑器](http://chenxiaosong.com/linux/editor.html)
 
 [Linux使用wine运行Windows软件](http://chenxiaosong.com/linux/wine.html)
 

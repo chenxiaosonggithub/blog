@@ -59,8 +59,7 @@ array=(
     src/userspace-environment/qemu-kvm-install-macos.md linux/qemu-kvm-install-macos.html "QEMU/KVM安装macOS系统"
     src/userspace-environment/ghostwriter-makdown.md linux/ghostwriter-makdown.html "ghostwriter: 一款makdown编辑器"
     src/userspace-environment/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
-    src/userspace-environment/vim.md linux/vim.html "vim编辑器"
-    src/userspace-environment/emacs.md linux/emacs.html "emacs编辑器"
+    src/editor/editor.md linux/editor.html "编辑器"
     src/windows/wine.md linux/wine.html "Linux使用wine运行Windows软件"
     # 其他
     src/wubi/wubi.md others/wubi.html "五笔输入法"

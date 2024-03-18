@@ -205,59 +205,8 @@ chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=12
 - [Kylin-Desktop-V10-SP1-General-Release-2303-SW64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/XiGHY0EBQSC8ehIqzfPwaxsRu72vo5VT/)
 - [Kylin-Desktop-V10-SP1-2303-update1-Wayland-Release-General-kirin9006c-20230703-ARM64.iso](https://distro-images.kylinos.cn:8802/web_pungi/download/share/d8ug4oiGAQFR7lKsLYOa2tmS9jrW3XT1/)
 
-注意麒麟系统在arm芯片的macos上无法用vmware fusion安装，可以用[UTM](https://github.com/utmapp/UTM)安装，从[github](https://docs.getutm.app/installation/macos/)上下载安装包。安装虚拟机时cpu、内存、硬盘不要分配太大，比如我用的是M2的Macbook Air（8G内存，8核，256G硬盘），只需分配2核cpu、2G内存（已验证分配4G无法安装）、64G硬盘。安装后的虚拟机文件在`~/Library/Containers/com.utmapp.UTM/Data/Documents`目录下，默认Finder中不显示这个目录，可以在家目录下打开`Show View Options -> Show Library Folder`。
+注意麒麟系统在arm芯片的macos上无法用vmware fusion安装，可以用[UTM](https://github.com/utmapp/UTM)安装，从[github](https://docs.getutm.app/installation/macos/)上下载安装包。安装虚拟机时cpu、内存、硬盘不要分配太大，比如我用的是M2的Macbook Air（8G内存，8核，256G硬盘），只需分配2G内存（已验证分配4G无法安装），磁盘50G（麒麟系统要求硬盘必须大于50G），安装完成后再次启动前可以把配置改大。安装后的虚拟机文件在`~/Library/Containers/com.utmapp.UTM/Data/Documents`目录下，默认Finder中不显示这个目录，可以在家目录下打开`Show View Options -> Show Library Folder`。
 
 # arcolinux
 
 [ArcoLinux](https://arcolinux.com/)是[Arch Linux](https://archlinux.org/)的衍生发行版。
-
-# vscode
-
-[code-server源码](https://github.com/coder/code-server)
-
-安装命令:
-```sh
-curl -fsSL https://code-server.dev/install.sh | sh
-```
-
-安装成功后，输出以下日志：
-```sh
-Ubuntu 22.04.2 LTS
-Installing v4.11.0 of the amd64 deb package from GitHub.
-
-+ mkdir -p ~/.cache/code-server
-+ curl -#fL -o ~/.cache/code-server/code-server_4.11.0_amd64.deb.incomplete -C - https://github.com/coder/code-server/releases/download/v4.11.0/code-server_4.11.0_amd64.deb
-######################################################################## 100.0%
-+ mv ~/.cache/code-server/code-server_4.11.0_amd64.deb.incomplete ~/.cache/code-server/code-server_4.11.0_amd64.deb
-+ sudo dpkg -i ~/.cache/code-server/code-server_4.11.0_amd64.deb
-Selecting previously unselected package code-server.
-(Reading database ... 226525 files and directories currently installed.)
-Preparing to unpack .../code-server_4.11.0_amd64.deb ...
-Unpacking code-server (4.11.0) ...
-Setting up code-server (4.11.0) ...
-
-deb package has been installed.
-
-To have systemd start code-server now and restart on boot:
-  sudo systemctl enable --now code-server@$USER
-Or, if you don't want/need a background service you can run:
-  code-server
-
-Deploy code-server for your team with Coder: https://github.com/coder/coder
-```
-
-如果要修改密码等配置，请修改配置文件`${HOME}/.config/code-server/config.yaml`。
-
-注意，和vscode客户端不一样，vscode server装插件时有些插件无法搜索到，这时就需要在[vscode网站](https://marketplace.visualstudio.com/vscode)上下载`.vsix`文件，手动安装。
-
-常用插件：
-
-- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。
-
-- C++语言推荐使用插件[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)或[clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)。
-
-- Vue.js推荐使用插件[Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)、[Vue Peek](https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek)、[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)、[Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)、[VueHelper](https://marketplace.visualstudio.com/items?itemName=oysun.vuehelper)
-
-当想在[vscode客户端](https://code.visualstudio.com/)打开远程的文件时, 可以使用 [remote-ssh](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)插件.
-
-
