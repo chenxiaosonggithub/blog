@@ -1,5 +1,7 @@
 src_path=/home/sonvhi/chenxiaosong/code # 替换为你的仓库路径
 dst_path=/var/www
+tmp_html_path=${dst_dir}/html-tmp
+html_path=${dst_dir}/html
 
 # 每一行代表： markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
@@ -83,9 +85,13 @@ array=(
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
 )
 
-init_all() {
-    rm ${dst_path}/html/ -rf
-    mkdir -p ${dst_path}/html/
+init_begin() {
+    mkdir -p ${tmp_html_path}
+}
+
+init_end() {
+    rm ${html_path}/ -rf
+    mv ${tmp_html_path} ${html_path}
 }
 
 create_html() {
@@ -96,7 +102,7 @@ create_html() {
 
     element_count="${#array[@]}" # 总个数
     for ((index=0; index<${element_count}; index=$((index + 3)))); do
-        dst_file=${dst_path}/html/${array[${index}+1]} # 生成的html文件名
+        dst_file=${tmp_html_path}/${array[${index}+1]} # 生成的html文件名
         dst_dir="$(dirname "${dst_file}")" # html文件所在的文件夹
         if [ ! -d "${dst_dir}" ]; then
             mkdir -p "${dst_dir}" # 文件夹不存在就创建
@@ -111,44 +117,45 @@ create_html() {
 
 copy_secret_repository() {
     # pictures是我的私有仓库
-    cp ${src_path}/pictures/pictures/ ${dst_path}/html/ -rf
+    cp ${src_path}/pictures/pictures/ ${tmp_html_path}/ -rf
 }
 
 copy_public_files() {
     # css样式
-    cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${dst_path}/html/
+    cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${tmp_html_path}/
 }
 
 copy_tmp_files() {
-    mkdir ${dst_path}/html/tmp/
-    cp -rf ${src_path}/tmp/* ${dst_path}/html/tmp/
+    mkdir ${tmp_html_path}/tmp/
+    cp -rf ${src_path}/tmp/* ${tmp_html_path}/tmp/
 }
 
 change_perm() {
-    chown -R www-data:www-data ${dst_path}/
+    chown -R www-data:www-data ${tmp_html_path}/
 
     # -type f：这个选项告诉 find 只搜索普通文件（不包括目录和特殊文件）。
     # -exec chmod 400 {} +：这个部分告诉 find 对每个找到的文件执行 chmod 400 操作。{} 表示找到的文件的占位符，+ 表示一次处理多个文件以提高效率。
-    find ${dst_path}/ -type f -exec chmod 400 {} +
+    find ${tmp_html_path}/ -type f -exec chmod 400 {} +
 
     # -type d：这个选项告诉find只搜索目录（不包括普通文件）。
-    find ${dst_path}/ -type d -exec chmod 500 {} +
+    find ${tmp_html_path}/ -type d -exec chmod 500 {} +
 }
 
 add_common() {
     # 先去除common.html文件中其他内容
-    sed -i '/<\/header>/,/<\/body>/!d' ${dst_path}/html/common.html # 只保留</header>到</body>的内容
-    sed -i '1d;$d' ${dst_path}/html/common.html # 删除第一行和最后一行
+    sed -i '/<\/header>/,/<\/body>/!d' ${tmp_html_path}/common.html # 只保留</header>到</body>的内容
+    sed -i '1d;$d' ${tmp_html_path}/common.html # 删除第一行和最后一行
     # 在<header之后插入common.html整个文件
-    # find ${dst_path}/html/ -type f -name '*.html' -exec sed -i -e '/<header/r ${dst_path}/html/common.html' {} + # 所有文件
-    find ${dst_path}/html/ -type f -name '*.html' | grep -v ${dst_path}/html/index.html \
-        | xargs sed -i -e '/<header/r '${dst_path}'/html/common.html' # index文件除外
+    # find ${tmp_html_path}/ -type f -name '*.html' -exec sed -i -e '/<header/r ${tmp_html_path}/common.html' {} + # 所有文件
+    find ${tmp_html_path}/ -type f -name '*.html' | grep -v ${tmp_html_path}/index.html \
+        | xargs sed -i -e '/<header/r '${tmp_html_path}'/common.html' # index文件除外
 }
 
-init_all
+init_begin
 create_html
 copy_secret_repository
 copy_public_files
 copy_tmp_files
 change_perm
 add_common
+init_end
