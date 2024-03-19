@@ -11,6 +11,7 @@
 ```sh
 sudo smbpasswd -a sonvhi # 添加账号，sonvhi必须是linux用户名
 smbpasswd -s sonvhi # 修改密码
+```
 
 # 配置
 
