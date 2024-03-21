@@ -4,7 +4,7 @@ is_public_ip=true # 是否公网的ip
 
 src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
 dst_path=/var/www/html
-repalace_ip=172.20.23.55 # 内网要替换的ip
+repalace_ip=10.42.20.221 # 内网要替换的ip
 
 is_restart=false
 
@@ -39,6 +39,8 @@ restart_all() {
         if [ ${is_public_ip} = false ]; then
             bash ${src_path}/private-blog/create-html.sh
             find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
+            # 邮箱替换回来
+            find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${repalace_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
             # default文件本来是个软链接，执行完sed后变成了文件
             sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
         fi
