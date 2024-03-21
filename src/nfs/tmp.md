@@ -120,3 +120,177 @@ PID: 3748012  TASK: ffff91fe27069780  CPU: 5   COMMAND: "rsync"
     R13: 0000000000000000  R14: 000056228f6ada93  R15: 000056228f6ada80
     ORIG_RAX: 00000000000000d9  CS: 0033  SS: 002b
 ```
+
+下面分析`inode`相关的信息，栈中的数据暂时不分析汇编（TODO），因为从代码上看只会操作一个`inode`。
+
+与进程`3632440`栈一样的几个进程操作的`inode`如下：
+```sh
+crash> bt 3632440 -FF
+ #5 [ffffa932c498be38] iterate_dir at ffffffffa6edccc9
+    ffffa932c498be60: 00000000fffffff2 [ffff91fe2bb65b00:filp]
+crash> kmem ffff91fe2bb65b00
+  FREE / [ALLOCATED]
+  [ffff91fe2bb65b00]
+crash> struct file.f_inode ffff91fe2bb65b00
+  f_inode = 0xffff91fca5985500,
+
+crash> bt 3644149 -FF
+ #5 [ffffa932cf64fe38] iterate_dir at ffffffffa6edccc9
+    ffffa932cf64fe60: 00000000fffffff2 [ffff91fb608c1a00:filp] 
+crash> kmem ffff91fb608c1a00
+  FREE / [ALLOCATED]
+  [ffff91fb608c1a00]
+crash> struct file.f_inode ffff91fb608c1a00
+  f_inode = 0xffff91fca5985500,
+
+crash> bt 3655486 -FF
+ #5 [ffffa932c4d37e38] iterate_dir at ffffffffa6edccc9
+    ffffa932c4d37e60: 00000000fffffff2 [ffff91fe2b81b300:filp] 
+crash> kmem ffff91fe2b81b300
+  FREE / [ALLOCATED]
+  [ffff91fe2b81b300]
+crash> struct file.f_inode ffff91fe2b81b300
+  f_inode = 0xffff91fca5985500,
+
+crash> bt 3667062 -FF
+ #5 [ffffa932d0857e38] iterate_dir at ffffffffa6edccc9
+    ffffa932d0857e60: 00000000fffffff2 [ffff91fe2bd4a900:filp] 
+crash> kmem ffff91fe2bd4a900
+  FREE / [ALLOCATED]
+  [ffff91fe2bd4a900]
+crash> struct file ffff91fe2bd4a900
+  f_inode = 0xffff91fca5985500,
+
+# 3678549
+[ffff91fcbfe03f00:filp]
+  FREE / [ALLOCATED]
+  [ffff91fcbfe03f00]
+  f_inode = 0xffff91fca5985500,
+
+# 3690262
+[ffff91fe2ce37c00:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe2ce37c00]
+  f_inode = 0xffff91fca5985500,
+
+# 3701961
+[ffff91fddda2bb00:filp]
+  FREE / [ALLOCATED]
+  [ffff91fddda2bb00]
+  f_inode = 0xffff91fca5985500,
+
+# 3713720
+[ffff91fe12783b00:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe12783b00]
+  f_inode = 0xffff91fca5985500,
+
+# 3725136
+[ffff91fde961b900:filp]
+  FREE / [ALLOCATED]
+  [ffff91fde961b900]
+  f_inode = 0xffff91fca5985500,
+
+# 3736677
+[ffff91fe29e98300:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe29e98300]
+  f_inode = 0xffff91fca5985500,
+
+# 3759132
+[ffff91fe10973900:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe10973900]
+  f_inode = 0xffff91fca5985500,
+
+# 3770908
+[ffff91fe2f936800:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe2f936800]
+  f_inode = 0xffff91fca5985500,
+
+# 3782024
+[ffff91fde4eb7c00:filp]
+  FREE / [ALLOCATED]
+  [ffff91fde4eb7c00]
+  f_inode = 0xffff91fca5985500,
+
+# 3794329
+[ffff91fe2a111c00:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe2a111c00]
+  f_inode = 0xffff91fca5985500,
+
+# 3805549
+[ffff91fe2bd4a000:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe2bd4a000]
+  f_inode = 0xffff91fca5985500,
+
+# 3817313
+[ffff91fd8704b800:filp]
+  FREE / [ALLOCATED]
+  [ffff91fd8704b800]
+  f_inode = 0xffff91fca5985500,
+
+# 3828467
+[ffff91fe063d3500:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe063d3500]
+  f_inode = 0xffff91fca5985500,
+
+# 3840283
+[ffff91fe25417100:filp]
+  FREE / [ALLOCATED]
+  [ffff91fe25417100]
+  f_inode = 0xffff91fca5985500,
+```
+
+进程`3748012`的`inode`：
+```sh
+crash> bt 3748012 -FF
+[ffff91fdfdcbf000:filp]
+crash> bt 3748012 -FF^C
+crash> kmem ffff91fdfdcbf000
+  FREE / [ALLOCATED]
+  [ffff91fdfdcbf000]
+crash> struct file.f_inode ffff91fdfdcbf000
+  f_inode = 0xffff91fca5985500,
+```
+
+进程`3621271`的`inode`:
+```sh
+crash> bt 3621271 -FF
+PID: 3621271  TASK: ffff91fd6d044680  CPU: 7   COMMAND: "rsync"
+ #0 [ffffa932d099fa90] __schedule at ffffffffa749c4a6
+ #1 [ffffa932d099fb30] schedule at ffffffffa749cb48
+ #2 [ffffa932d099fb38] rwsem_down_read_failed at ffffffffa74a02fc
+ #3 [ffffa932d099fbe0] call_rwsem_down_read_failed at ffffffffa74939d4
+     ffffa932d099fbe8: 0000000000000000 61c8864680b583eb 
+    ffffa932d099fbf8: [ffff91fe29cee027:names_cache] 0000000000000028 
+    ffffa932d099fc08: 0000000000000000 00072a8500000000 
+    ffffa932d099fc18: [ffff91fcb02b7440:dentry] [ffff91fca59855a0:nfs_inode_cache] 
+    ffffa932d099fc28: down_read+19     
+ #4 [ffffa932d099fc28] down_read at ffffffffa749f703
+ #5 [ffffa932d099fc30] lookup_slow at ffffffffa6ed42f7
+ #6 [ffffa932d099fc58] walk_component at ffffffffa6ed47d4
+ #7 [ffffa932d099fcb8] path_lookupat at ffffffffa6ed4f5e
+ #8 [ffffa932d099fd18] filename_lookup at ffffffffa6ed8866
+ #9 [ffffa932d099fe40] vfs_statx at ffffffffa6ecc593
+#10 [ffffa932d099fe98] __do_sys_newlstat at ffffffffa6eccbd9
+#11 [ffffa932d099ff38] do_syscall_64 at ffffffffa6c0430b
+#12 [ffffa932d099ff50] entry_SYSCALL_64_after_hwframe at ffffffffa7600088
+
+crash> kmem ffff91fcb02b7440 # [ffff91fcb02b7440:dentry]
+  FREE / [ALLOCATED]
+  [ffff91fcb02b7440]
+crash> struct dentry ffff91fcb02b7440
+  d_inode = 0xffff91fca5985500,
+
+crash> kmem ffff91fca59855a0 # [ffff91fca59855a0:nfs_inode_cache]
+  FREE / [ALLOCATED]
+  [ffff91fca5985320]
+crash> struct nfs_inode ffff91fca5985320
+crash> struct nfs_inode ffff91fca5985320 -ox
+  [ffff91fca5985500] struct inode vfs_inode;
+```
