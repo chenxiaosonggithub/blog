@@ -43,7 +43,7 @@ crash> ps rsync
   3840283  152322   6  ffff91fe2d5a5e00  UN   1.0  410384 183152  rsync
 ```
 
-其中有19个状态为`UN`的进程的栈如下：
+其中有18个状态为`UN`的进程的栈如下：
 ```sh
 crash> bt 3621271
 PID: 3621271  TASK: ffff91fd6d044680  CPU: 7   COMMAND: "rsync"
@@ -69,8 +69,28 @@ PID: 3621271  TASK: ffff91fd6d044680  CPU: 7   COMMAND: "rsync"
     ORIG_RAX: 0000000000000006  CS: 0033  SS: 002b
 ```
 
-只有一个进程的栈不一样:
+另外2个进程的栈是：
 ```sh
+crash> bt 3632440
+PID: 3632440  TASK: ffff91fde98a1780  CPU: 5   COMMAND: "rsync"
+ #0 [ffffa932c498bca0] __schedule at ffffffffa749c4a6
+ #1 [ffffa932c498bd40] schedule at ffffffffa749cb48
+ #2 [ffffa932c498bd48] rwsem_down_write_failed_killable at ffffffffa74a074d
+ #3 [ffffa932c498bdf0] call_rwsem_down_write_failed_killable at ffffffffa7493a53
+ #4 [ffffa932c498be30] down_write_killable at ffffffffa749f7b0
+ #5 [ffffa932c498be38] iterate_dir at ffffffffa6edccc9
+ #6 [ffffa932c498be78] ksys_getdents64 at ffffffffa6eddc30
+ #7 [ffffa932c498bf30] __x64_sys_getdents64 at ffffffffa6edde46
+ #8 [ffffa932c498bf38] do_syscall_64 at ffffffffa6c0430b
+ #9 [ffffa932c498bf50] entry_SYSCALL_64_after_hwframe at ffffffffa7600088
+    RIP: 00007f612a9bd757  RSP: 00007fff67b2a338  RFLAGS: 00000246
+    RAX: ffffffffffffffda  RBX: 0000562293813e70  RCX: 00007f612a9bd757
+    RDX: 0000000000008000  RSI: 0000562293813ea0  RDI: 0000000000000009
+    RBP: 0000562293813ea0   R8: 0000000000000000   R9: 0000000000000001
+    R10: 0000000000000001  R11: 0000000000000246  R12: ffffffffffffff80
+    R13: 0000000000000000  R14: 000056229381be73  R15: 000056229381be60
+    ORIG_RAX: 00000000000000d9  CS: 0033  SS: 002b
+
 crash> bt 3748012
 PID: 3748012  TASK: ffff91fe27069780  CPU: 5   COMMAND: "rsync"
  #0 [ffffa932c4ea77f8] __schedule at ffffffffa749c4a6
