@@ -50,7 +50,7 @@
 
 [Connectathon NFS tests](http://chenxiaosong.com/nfs/cthon-nfs-tests.html)
 
-[4.19 rsync发生hung task](http://chenxiaosong.com/nfs/4.19-rsync-hung-task.html)
+[4.19 rsync发生hung task的问题](http://chenxiaosong.com/nfs/4.19-rsync-hung-task.html)
 
 # SMB(CIFS)文件系统
 
