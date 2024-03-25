@@ -50,6 +50,8 @@
 
 [Connectathon NFS tests](http://chenxiaosong.com/nfs/cthon-nfs-tests.html)
 
+[4.19 rsync发生hung task](http://chenxiaosong.com/nfs/4.19-rsync-hung-task.html)
+
 # SMB(CIFS)文件系统
 
 [4.19 cifs_reconnect空指针解引用问题](http://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
