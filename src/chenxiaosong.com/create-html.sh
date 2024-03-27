@@ -38,6 +38,7 @@ array=(
     src/nfs/cthon-nfs-tests.md nfs/cthon-nfs-tests.html "Connectathon NFS tests"
     src/nfs/4.19-rsync-hung-task.md nfs/4.19-rsync-hung-task.html "4.19 rsync发生hung task的问题"
     # smb(cifs)
+    src/smb/smb.md smb/smb.html "SMB文件系统介绍"
     src/smb/4.19-null-ptr-deref-in-cifs_reconnect.md smb/4.19-null-ptr-deref-in-cifs_reconnect.html "4.19 cifs_reconnect空指针解引用问题"
     src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
     # ext
