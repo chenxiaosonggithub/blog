@@ -130,10 +130,27 @@ openat
 ```sh
 [   97.616435] nfsd: last server has exited, flushing export cache
 [   98.763518] NFSD: Using UMH upcall client tracking operations.
+[   98.765527] NFSD: starting 90-second grace period (net f0000098)
 ```
 
 主线内核server端重启服务，有如下打印：
 ```sh
 [   64.637398] NFSD: Unable to initialize client recovery tracking! (-110)
+[   64.639536] NFSD: starting 90-second grace period (net f0000000)
 ```
 
+```c
+// rpc.nfsd进程
+write
+  ksys_write
+    vfs_write
+      nfsctl_transaction_write
+        write_threads
+          nfsd_svc
+            nfsd_startup_net
+              nfs4_state_start_net
+                nfsd4_client_tracking_init
+                  if (status) { // status == -110
+                  printk(KERN_WARNING "NFSD: Unable to initialize client"
+                                      "recovery tracking! (%d)\n", status)
+```
