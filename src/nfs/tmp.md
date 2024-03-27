@@ -95,7 +95,7 @@ user    0m0.000s
 sys     0m0.024s
 ```
 
-代码流程如下：
+server重启服务后，client打开文件时server端不断返回`NFS4ERR_GRACE`错误，代码流程如下：
 ```c
 openat
   do_sys_open
@@ -109,7 +109,12 @@ openat
                   nfs4_atomic_open
                     nfs4_do_open
                       status = _nfs4_do_open
-                        
+                        _nfs4_open_and_get_state
+                          _nfs4_proc_open
+                            nfs4_run_open_task
+                              rpc_run_task
+                              // 从抓包数据可以看出，间隔时间依次是 0.105461, 0.20805, 0.407991, 0.807962, 1.665381, 3.264049, 6.463902, 13.311876, 15.35971
+                              status = rpc_wait_for_completion_task
                       nfs4_handle_exception(status)
                         nfs4_do_handle_exception
                           case -NFS4ERR_GRACE:
@@ -118,3 +123,17 @@ openat
                         nfs4_delay
                           nfs4_delay_interruptible
 ```
+
+# server端代码分析
+
+前面说过，5.10内核server端重启服务，有如下打印：
+```sh
+[   97.616435] nfsd: last server has exited, flushing export cache
+[   98.763518] NFSD: Using UMH upcall client tracking operations.
+```
+
+主线内核server端重启服务，有如下打印：
+```sh
+[   64.637398] NFSD: Unable to initialize client recovery tracking! (-110)
+```
+
