@@ -54,7 +54,7 @@
 
 # SMB(CIFS)文件系统
 
-[SMB文件系统介绍](http://chenxiaosong.com/)
+[SMB文件系统介绍](http://chenxiaosong.com/smb/smb.html)
 
 [4.19 cifs_reconnect空指针解引用问题](http://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
 
