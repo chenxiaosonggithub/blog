@@ -24,7 +24,7 @@
 systemctl restart nfs-server # server端命令
 echo something > something
 # 为什么不直接用 echo something > /mnt/file 呢，因为用ps命令无法查看到echo进程
-# 这里好像用cat也没什么卵用，还是要用 ps aux | grep bash 才能找到进程号
+# 但是这里好像用cat也没什么卵用，还是要用 ps aux | grep bash 才能找到进程号
 # cat something > /mnt/file
 # 还是用后台运行的方式，打印出进程号
 echo something > /mnt/file & # 写文件，后台运行，会打印出进程号
@@ -60,6 +60,42 @@ server端用主线，client端用5.10，有问题；server端用5.10，client端
 
 虽然问题出在server端，但我们还是先分析一下client端的代码，看看为什么会卡一会儿。
 
+加调试打印信息：
+```sh
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -617,6 +617,7 @@ int nfs4_handle_exception(struct nfs_server *server, int errorcode, struct nfs4_
+                        exception->retry = 0;
+                        return ret2;
+                }
++               printk("%s:%d, timeout:%ld\n", __func__, __LINE__, exception->timeout);
+                ret = nfs4_delay(&exception->timeout,
+                                exception->interruptible);
+                goto out_retry;
+```
+
+测试打印结果如下：
+```sh
+root@syzkaller:~# time echo something > /mnt/file &
+[1] 547
+[  439.410573] nfs4_handle_exception:620, timeout:0
+[  439.518513] nfs4_handle_exception:620, timeout:200
+[  439.727291] nfs4_handle_exception:620, timeout:400 # 600
+[  440.135717] nfs4_handle_exception:620, timeout:800 # 1400
+[  440.992090] nfs4_handle_exception:620, timeout:1600 # 3000
+[  442.655003] nfs4_handle_exception:620, timeout:3200 # 6200
+[  445.919886] nfs4_handle_exception:620, timeout:6400 # 12600
+[  452.383892] nfs4_handle_exception:620, timeout:12800 # 25400
+[  465.695635] nfs4_handle_exception:620, timeout:25600 # 51000
+[  481.055601] nfs4_handle_exception:620, timeout:30000 # 81000
+[  496.415008] nfs4_handle_exception:620, timeout:30000 # 111000
+[  511.775498] nfs4_handle_exception:620, timeout:30000 # 141000
+real    1m27.820s # 87.82s
+user    0m0.000s
+sys     0m0.024s
+```
+
+代码流程如下：
 ```c
 openat
   do_sys_open
@@ -72,8 +108,13 @@ openat
                 nfs_atomic_open
                   nfs4_atomic_open
                     nfs4_do_open
-                      nfs4_handle_exception
+                      status = _nfs4_do_open
+                        
+                      nfs4_handle_exception(status)
+                        nfs4_do_handle_exception
+                          case -NFS4ERR_GRACE:
+                          exception->delay = 1
                         if (exception->delay) { // 条件满足
-                        nfs4_delay // exception->timeout 时间不断翻倍
+                        nfs4_delay
                           nfs4_delay_interruptible
 ```
