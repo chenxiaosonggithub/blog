@@ -1,0 +1,79 @@
+# 问题描述
+
+用主线内核(`7033999ecd7b`)测试nfs，发现当server端重启服务`systemctl restart nfs-server`，client端再读写文件会卡一会儿，5.10内核没有这个现象。
+
+5.10内核server端重启服务，有如下打印：
+```sh
+[   97.616435] nfsd: last server has exited, flushing export cache
+[   98.763518] NFSD: Using UMH upcall client tracking operations.
+[   98.765527] NFSD: starting 90-second grace period (net f0000098)
+```
+
+主线内核server端重启服务，有如下打印：
+```sh
+[   64.637398] NFSD: Unable to initialize client recovery tracking! (-110)
+[   64.639536] NFSD: starting 90-second grace period (net f0000000)
+```
+
+# 测试
+
+复现命令如下：
+```sh
+# 以下命令如果没有特别强调，默认是client端的命令
+
+systemctl restart nfs-server # server端命令
+echo something > something
+# 为什么不直接用 echo something > /mnt/file 呢，因为用ps命令无法查看到echo进程
+# 这里好像用cat也没什么卵用，还是要用 ps aux | grep bash 才能找到进程号
+# cat something > /mnt/file
+# 还是用后台运行的方式，打印出进程号
+echo something > /mnt/file & # 写文件，后台运行，会打印出进程号
+[1] 493 # 进程号
+
+systemctl restart nfs-server # server端命令
+echo 3 > /proc/sys/vm/drop_caches
+cat /mnt/file & # 读文件
+
+cat /proc/493/stack
+[<0>] nfs4_delay_interruptible+0x33/0xa0
+[<0>] nfs4_delay+0x40/0x50
+[<0>] nfs4_handle_exception+0xd2/0xf0
+[<0>] nfs4_do_open+0x170/0x280
+[<0>] nfs4_atomic_open+0xa9/0x110
+[<0>] nfs_atomic_open+0x3cb/0x720
+[<0>] atomic_open+0x8c/0x1b0
+[<0>] lookup_open+0x330/0x470
+[<0>] open_last_lookups+0x25b/0x4b0
+[<0>] path_openat+0xa5/0x190
+[<0>] do_filp_open+0x53/0xc0
+[<0>] do_sys_openat2+0xab/0xe0
+[<0>] do_sys_open+0xb5/0xd0
+[<0>] __se_sys_openat+0x2f/0x40
+[<0>] __x64_sys_openat+0x23/0x30
+[<0>] do_syscall_64+0xe1/0x1d0
+[<0>] entry_SYSCALL_64_after_hwframe+0x6c/0x74
+```
+
+server端用主线，client端用5.10，有问题；server端用5.10，client端用主线，没有问题。说明问题出在server端。
+
+# client端代码分析
+
+虽然问题出在server端，但我们还是先分析一下client端的代码，看看为什么会卡一会儿。
+
+```c
+openat
+  do_sys_open
+    do_sys_openat2
+      do_filp_open
+        path_openat
+          open_last_lookups
+            lookup_open
+              atomic_open
+                nfs_atomic_open
+                  nfs4_atomic_open
+                    nfs4_do_open
+                      nfs4_handle_exception
+                        if (exception->delay) { // 条件满足
+                        nfs4_delay // exception->timeout 时间不断翻倍
+                          nfs4_delay_interruptible
+```
