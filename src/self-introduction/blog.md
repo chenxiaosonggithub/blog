@@ -52,6 +52,8 @@
 
 [4.19 rsync发生hung task的问题](http://chenxiaosong.com/nfs/4.19-rsync-hung-task.html)
 
+[重启nfs server后client打开文件卡顿很长时间的问题](http://chenxiaosong.com/nfs/unable-to-initialize-client-recovery-tracking.html)
+
 # SMB(CIFS)文件系统
 
 [SMB文件系统介绍](http://chenxiaosong.com/smb/smb.html)

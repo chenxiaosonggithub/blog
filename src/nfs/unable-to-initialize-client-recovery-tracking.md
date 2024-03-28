@@ -148,6 +148,7 @@ openat
 [  122.076097] NFSD: starting 90-second grace period (net f0000000)
 ```
 
+所以现在要分析没打开`CONFIG_NFSD_LEGACY_CLIENT_TRACKING`配置时为什么会报错。`cld_running()`一直处于没有在运行状态。
 ```c
 // rpc.nfsd进程
 write
@@ -160,10 +161,16 @@ write
               nfs4_state_start_net
                 nfsd4_client_tracking_init
                   status = nfsd4_cld_tracking_init(net) = -110 // ETIMEDOUT
+                    running = cld_running() = false // 判断10次，共1秒
                     if (!running) // 条件满足 running == false
                     status = -ETIMEDOUT
                   check_for_legacy_methods(status == -110)
                   if (status) { // status == -110
                   printk(KERN_WARNING "NFSD: Unable to initialize client"
                                       "recovery tracking! (%d)\n", status)
+```
+
+下面分析client端请求打开文件时，server为什么会返回错误`NFS4ERR_GRACE`：
+```c
+
 ```
