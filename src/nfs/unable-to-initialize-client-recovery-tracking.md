@@ -168,9 +168,25 @@ write
                   if (status) { // status == -110
                   printk(KERN_WARNING "NFSD: Unable to initialize client"
                                       "recovery tracking! (%d)\n", status)
+                printk(KERN_INFO "NFSD: starting %lld-second grace period (net %x)\n"
+                queue_delayed_work(laundry_wq, &nn->laundromat_work, nn->nfsd4_grace * HZ)
+
+laundromat_main
 ```
 
 下面分析client端请求打开文件时，server为什么会返回错误`NFS4ERR_GRACE`：
 ```c
-
+nfsd
+  svc_recv
+    svc_handle_xprt
+      svc_process
+        svc_process_common
+          nfsd_dispatch
+            nfsd4_proc_compound
+              nfsd4_open
+                status = nfserr_grace
+                open->op_claim_type == NFS4_OPEN_CLAIM_NULL
+                opens_in_grace(net) = true
+                  __state_in_grace
+                return nfserr_grace
 ```
