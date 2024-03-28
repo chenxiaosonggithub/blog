@@ -148,7 +148,7 @@ openat
 [  122.076097] NFSD: starting 90-second grace period (net f0000000)
 ```
 
-所以现在要分析没打开`CONFIG_NFSD_LEGACY_CLIENT_TRACKING`配置时为什么会报错。`cld_running()`一直处于没有在运行状态。
+所以现在要分析没打开`CONFIG_NFSD_LEGACY_CLIENT_TRACKING`配置时为什么会报错。`cld_running()`一直返回`false`。
 ```c
 // rpc.nfsd进程
 write
