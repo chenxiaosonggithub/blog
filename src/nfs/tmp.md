@@ -58,7 +58,7 @@ server端用主线，client端用5.10，有问题；server端用5.10，client端
 
 # client端代码分析
 
-虽然问题出在server端，但我们还是先分析一下client端的代码，看看为什么会卡一会儿。
+虽然问题出在server端，但我们还是先分析一下client端的代码，看看为什么读写文件会卡一会儿。
 
 加调试打印信息：
 ```sh
@@ -126,17 +126,26 @@ openat
 
 # server端代码分析
 
-前面说过，5.10内核server端重启服务，有如下打印：
+下面我们再分析server端的问题。
+
+首先看一下重启服务时的报错信息。前面说过，5.10内核server端重启服务，有如下打印：
 ```sh
 [   97.616435] nfsd: last server has exited, flushing export cache
 [   98.763518] NFSD: Using UMH upcall client tracking operations.
 [   98.765527] NFSD: starting 90-second grace period (net f0000098)
 ```
 
-主线内核server端重启服务，有如下打印：
+主线内核server端重启服务，有如下错误打印：
 ```sh
 [   64.637398] NFSD: Unable to initialize client recovery tracking! (-110)
 [   64.639536] NFSD: starting 90-second grace period (net f0000000)
+```
+
+主线内核打开`CONFIG_NFSD_LEGACY_CLIENT_TRACKING`配置，没有问题，重启server端服务打印以下日志：
+```sh
+[  122.050050] NFSD: Using UMH upcall client tracking operations.
+[  122.074438] NFSD: Using UMH upcall client tracking operations.
+[  122.076097] NFSD: starting 90-second grace period (net f0000000)
 ```
 
 ```c
@@ -150,6 +159,10 @@ write
             nfsd_startup_net
               nfs4_state_start_net
                 nfsd4_client_tracking_init
+                  status = nfsd4_cld_tracking_init(net) = -110 // ETIMEDOUT
+                    if (!running) // 条件满足 running == false
+                    status = -ETIMEDOUT
+                  check_for_legacy_methods(status == -110)
                   if (status) { // status == -110
                   printk(KERN_WARNING "NFSD: Unable to initialize client"
                                       "recovery tracking! (%d)\n", status)
