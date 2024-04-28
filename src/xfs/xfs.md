@@ -1,0 +1,1 @@
+[xfs_filesystem_structure.pdf](https://mirrors.edge.kernel.org/pub/linux/utils/fs/xfs/docs/xfs_filesystem_structure.pdf)
