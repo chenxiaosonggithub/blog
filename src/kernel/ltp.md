@@ -80,7 +80,7 @@ warnings 0
 ```sh
 mkdir /tmp/s_test -p
 exportfs -i -o fsid=148252,no_root_squash,rw *:/tmp/s_test
-mount -v -t nfs -o proto=tcp,vers=4 10.0.0.2:/tmp/s_test /mnt
+mount -v -t nfs -o proto=tcp,vers=4 localhost:/tmp/s_test /mnt
 ```
 
 在`x86_64`虚拟机中测试正常，在`loongarch64`环境下测试失败。
