@@ -39,6 +39,7 @@ array=(
     src/nfs/cthon-nfs-tests.md nfs/cthon-nfs-tests.html "Connectathon NFS tests"
     src/nfs/4.19-nfs-no-iterate_shared.md nfs/4.19-nfs-no-iterate_shared.html "nfs没实现iterate_shared导致的遍历目录无法并发问题"
     src/nfs/unable-to-initialize-client-recovery-tracking.md nfs/unable-to-initialize-client-recovery-tracking.html "重启nfs server后client打开文件卡顿很长时间的问题"
+    src/nfs/4.19-ltp-nfs-fail.md nfs/4.19-ltp-nfs-fail.html "4.19 ltp nfs测试失败问题"
     # smb(cifs)
     src/smb/smb.md smb/smb.html "SMB文件系统介绍"
     src/smb/4.19-null-ptr-deref-in-cifs_reconnect.md smb/4.19-null-ptr-deref-in-cifs_reconnect.html "4.19 cifs_reconnect空指针解引用问题"

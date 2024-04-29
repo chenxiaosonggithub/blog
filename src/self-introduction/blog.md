@@ -56,6 +56,8 @@
 
 [重启nfs server后client打开文件卡顿很长时间的问题](https://chenxiaosong.com/nfs/unable-to-initialize-client-recovery-tracking.html)
 
+[4.19 ltp nfs测试失败问题](https://chenxiaosong.com/nfs/4.19-ltp-nfs-fail.html)
+
 # SMB(CIFS)文件系统
 
 [SMB文件系统介绍](https://chenxiaosong.com/smb/smb.html)
