@@ -609,7 +609,7 @@ qemu启动虚拟机时，要添加以下几个选项：
 -s # 相当于 -gdb tcp::1234 默认端口1234，不建议用，最好指定端口
 ```
 
-完整的启动命令查看制作好的Ubuntu虚拟机镜像（从百度网盘中下载的）中的`${HOME}/qemu-kernel/start.sh`脚本。
+完整的启动命令查看制作好的Ubuntu虚拟机镜像<!-- public begin -->（从百度网盘中下载的）<!-- private end -->中的`${HOME}/qemu-kernel/start.sh`脚本。
 
 ### GDB命令
 
