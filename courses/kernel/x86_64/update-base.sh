@@ -6,8 +6,8 @@ qemu-system-x86_64 \
 -cpu host \
 -smp 16 \
 -m 4096 \
--kernel /home/sonvhi/chenxiaosong/code/$kernel_version/build/arch/x86/boot/bzImage \
--virtfs local,id=kmod_dev,path=/home/sonvhi/chenxiaosong/,readonly,mount_tag=9p,security_model=none \
+-kernel ${HOME}/chenxiaosong/code/$kernel_version/build/arch/x86/boot/bzImage \
+-virtfs local,id=kmod_dev,path=${HOME}/chenxiaosong/,readonly,mount_tag=9p,security_model=none \
 -vga none \
 -nographic \
 -append "nokaslr console=ttyS0 root=/dev/vda rw kmemleak=on" \

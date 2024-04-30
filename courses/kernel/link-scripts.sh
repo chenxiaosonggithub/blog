@@ -1,4 +1,4 @@
-base_image_path=/home/sonvhi/chenxiaosong/qemu-kernel/base_image
+base_image_path=${HOME}/chenxiaosong/qemu-kernel/base_image
 
 arch_array=(	x86_64		aarch64		arm32		armhf		i386		riscv64)
 release_array=(	bullseye	bullseye	bullseye	bullseye	bullseye	ubuntu2204)
