@@ -72,6 +72,10 @@ server {
 		rewrite ^/tmp/(.*)$ https://gitee.com/chenxiaosonggitee/tmp/blob/master/$1;
 	}
 
+	location /baidunetdisk {
+		rewrite ^/baidunetdisk$ https://pan.baidu.com/s/12hDXdKdIE4-ggjcS7-88lw?pwd=1234;
+	}
+
 	# 转发
 	# location /code-server/ { # 注意code-server后面有斜杠
 	# 	# 端口后面也要有斜杠
