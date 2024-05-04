@@ -533,7 +533,7 @@ virsh net-start default
 
 ### qemu运行qcow2镜像
 
-制作好的Ubuntu虚拟机镜像<!-- public begin -->（从百度网盘中下载的）<!-- private end -->中的`${HOME}/qemu-kernel/start.sh`脚本中每个选项的可选值可以使用以下命令查看：
+制作好的Ubuntu虚拟机镜像<!-- public begin -->（从百度网盘中下载的）<!-- public end -->中的`${HOME}/qemu-kernel/start.sh`脚本中每个选项的可选值可以使用以下命令查看：
 ```sh
 qemu-system-aarch64 -cpu ?
 qemu-system-x86_64 -machine ?
@@ -609,7 +609,7 @@ qemu启动虚拟机时，要添加以下几个选项：
 -s # 相当于 -gdb tcp::1234 默认端口1234，不建议用，最好指定端口
 ```
 
-完整的启动命令查看制作好的Ubuntu虚拟机镜像<!-- public begin -->（从百度网盘中下载的）<!-- private end -->中的`${HOME}/qemu-kernel/start.sh`脚本。
+完整的启动命令查看制作好的Ubuntu虚拟机镜像<!-- public begin -->（从百度网盘中下载的）<!-- public end -->中的`${HOME}/qemu-kernel/start.sh`脚本。
 
 ### GDB命令
 
