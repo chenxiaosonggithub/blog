@@ -37,8 +37,6 @@ Linux内核开发相关的环境请查看[《Linux内核课程》](https://chenx
 
 常用的软件安装：
 ```sh
-sudo apt install bridge-utils -y # brctl命令
-
 apt install bash-completion -y # docker 中git不会自动补全
 sudo apt install openssh-server -y # 默认桌面版本ubuntu不会安装ssh server
 sudo apt install ibus*wubi* -y # 安装五笔，要重启才可用

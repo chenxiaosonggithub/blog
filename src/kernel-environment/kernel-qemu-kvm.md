@@ -5,6 +5,7 @@
 
 ubuntu2204宿主机中创建网络：
 ```sh
+sudo apt install bridge-utils -y # brctl命令
 sudo apt-get install uml-utilities -y # tunctl 命令，　centos９没有
 qemu-system-arm -net nic,model=? -M vexpress-a15 # 查看支持的虚拟网络
 sudo tunctl -b # 按顺序创建 tap0 tap1，每输入一次命令创建一个
