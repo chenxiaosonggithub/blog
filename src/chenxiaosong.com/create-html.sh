@@ -89,6 +89,7 @@ array=(
     src/translations/wine/box86-docs-X86WINE.md translations/box86-docs-X86WINE.html "box86 Installing Wine (and winetricks)"
     src/translations/ltp/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
     src/translations/ltp/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
+    src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
     # private
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
