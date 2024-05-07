@@ -69,6 +69,7 @@ array=(
     src/editor/editor.md linux/editor.html "编辑器"
     src/windows/wine.md linux/wine.html "Linux使用wine运行Windows软件"
     # 其他
+    src/windows/windows.md others/windows.html "Windows系统"
     src/wubi/wubi.md others/wubi.html "五笔输入法"
     src/keybord/keybord.md others/keyboard.html "键盘配置"
     src/openharmony/openharmony.md others/openharmony.html "OpenHarmony编译运行调试环境"

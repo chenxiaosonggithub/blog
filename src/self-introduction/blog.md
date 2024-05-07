@@ -116,6 +116,8 @@
 
 # 还没有分类
 
+[Windows系统](https://chenxiaosong.com/oothers/windows.html)
+
 [键盘配置](https://chenxiaosong.com/others/keyboard.html)
 
 [五笔输入法](https://chenxiaosong.com/others/wubi.html)

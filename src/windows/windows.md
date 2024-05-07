@@ -1,3 +1,15 @@
+# 安装系统
+
+[老毛桃U盘PE重装教程](https://www.laomaotao.net/help/2020/0806/8620.html)
+
+MSR分区(微软保留分区)是GPT磁盘上用于保留空间以供备用的分区。例如在将磁盘转换为动态磁盘时会使用这些空间。
+
+ESP分区(UEFI System partition)用于采用了UEFI BIOS的电脑系统，用来启动操作系统。分区内存放引导管理程序、驱动程序、系统维护工具等。
+
+如果电脑采用了UEFI系统，或当前磁盘将来可能会用在UEFI系统上启动系统，则应建立ESP分区。
+
+远程登录工具可以使用`MobaXterm`。
+
 # wsl
 
 应用商店中安装wsl（不需要翻墙），打开`Turn Windows features on or off` 中的wsl
