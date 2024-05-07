@@ -14,5 +14,5 @@ qemu-system-x86_64 \
 -device virtio-scsi-pci \
 -drive file=x86_64-bullseye.qcow2,if=none,format=qcow2,cache=writeback,file.locking=off,id=root \
 -device virtio-blk,drive=root,id=d_root \
+-net tap \
 -net nic,model=virtio,macaddr=00:11:22:33:44:55 \
--net bridge,br=virbr0 \
