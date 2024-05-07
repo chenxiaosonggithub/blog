@@ -58,7 +58,7 @@ docker exec -it rm-workspace bash # 启动bash，退出bash后不会导致容器
 
 当要把一个容器保存成镜像时，执行以下命令：
 ```sh
-docker run --name workspace --hostname workspace -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong workspace-ubuntu:22.04 bash # 前台运行，停止后不删除容器
+docker run --name workspace --hostname workspace --privileged -it -v /home/sonvhi/chenxiaosong:/home/sonvhi/chenxiaosong -w /home/sonvhi/chenxiaosong workspace-ubuntu:22.04 bash # 前台运行，停止后不删除容器
 docker ps -a # 查看容器
 docker stop workspace # 停止容器
 rm workspace-ubuntu\:22.04.tar # 确保当前目录下没有文件
