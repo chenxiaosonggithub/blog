@@ -986,6 +986,8 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站：
 - [按模块划分的patchwork](https://patchwork.kernel.org/): 补丁的邮件都会在这里归档。
 - [bugzilla](https://bugzilla.kernel.org/): 上面有很多未解决的bug，想在社区提补丁可以在这上面找问题。
 - [syzbot](https://syzkaller.appspot.com/upstream): [谷歌的syzkaller](https://github.com/google/syzkaller)模糊测试跑出来的bug，想在社区提补丁也可以在这上面找问题。
+- [kernelnewbies](https://kernelnewbies.org/): 适合内核初学者看的黑客。
+- [LWN.net](https://lwn.net/): Linux新闻周刊。
 
 ## 内核源码树
 
@@ -1075,7 +1077,7 @@ vim 0000-cover-letter.patch
 
 依次点击 `Account Settings -> Composition & Addressing -> Composition -> 取消勾选Compose messages in HTML format`。
 
-还有，不建议订阅内核任何模块的邮件列表，因为太多了，一旦订阅邮箱基本就爆了，可以在[邮件列表网站](https://lore.kernel.org/)上选择对应的模块在线浏览，如果需要回复，可以把邮件下载下来保存成文件，然后用thunderbird打开文件，然后就可以回复了。
+还有，不建议订阅内核任何模块的邮件列表，因为太多了，一旦订阅邮箱基本就爆了，可以在[邮件列表网站](https://lore.kernel.org/)上选择对应的模块在线浏览，如果需要回复，可以把邮件下载下来保存成文件，然后用thunderbird打开文件，然后就可以回复了。如果实在要订阅，可以访问[vger.kernel.org](https://subspace.kernel.org/vger.kernel.org.html)和[linux-kernel mailing list FAQ](http://vger.kernel.org/lkml/)。
 
 ### git发送邮件
 
@@ -1129,3 +1131,9 @@ git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@exa
 # 文件系统
 
 一般的Linux书籍都是先讲解进程和内存相关的知识，但我想先讲解文件系统。<!-- public begin -->第一，因为我就是做文件系统的，更擅长这一块，其他模块的内容我还要再去好好看看书，毕竟不能误人子弟嘛；第二，是<!-- public end -->因为文件系统模块更接近于用户态，是相对比较好理解的内容（当然想深入还是要下大功夫的），由文件系统入手比较适合初学者。
+
+## 什么是文件系统
+
+我们买电脑时，肯定会配一块硬盘（现在一般是固态硬盘），硬盘是用来存储数据资料的。比如要存储一句话:"我爱操作系统"，一个汉字占用2个字节，存储这一句话要占用12个字节（不包括结束符），我们可以用2种方法来存储。第一种方法是从硬盘第一个字节开始存储，前两个字节存储"我"，第三四个字节存储"爱"，以此类推。第二种方法是先创建一个文件，在这个文件里存储这句话，我们打开硬盘时，只需要找到这个文件的位置，就能找到这句话。第一种方法数据管理起来很不方便，所以一般都用第二种方法，第二种方法管理数据的规则就称为文件系统。
+
+
