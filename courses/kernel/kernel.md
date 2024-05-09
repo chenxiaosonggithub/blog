@@ -380,6 +380,11 @@ eval "$(ssh-agent -s)" # 启动 SSH 代理
 ssh-add ~/.ssh/id_ed25519 # 将 SSH 私钥添加到 SSH 代理
 ```
 
+`cherry-pick`多个`commit`:
+```sh
+git cherry-pick <commit1>..<commitN> # 不包含commit1
+```
+
 ## 代码编译
 
 ### 获取代码
