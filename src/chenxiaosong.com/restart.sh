@@ -37,7 +37,7 @@ restart_all() {
         bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
         # 部署在局域网
         if [ ${is_public_ip} = false ]; then
-            bash ${src_path}/private-blog/create-html.sh
+            bash ${src_path}/private-blog/scripts/create-html.sh
             find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
             find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${repalace_ip}'/http:\/\/'${repalace_ip}'/g' {} +
             # 邮箱替换回来
@@ -58,7 +58,7 @@ update_others_blog() {
     if [ ${is_public_ip} = false ]; then
         return
     fi
-    bash ${src_path}/private-blog/src/update-others-blog.sh
+    bash ${src_path}/private-blog/src/scripts/update-others-blog.sh
 }
 
 update_repo pictures ${is_public_ip} # 部署在公网服务器就推到github
