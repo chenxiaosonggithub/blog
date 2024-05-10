@@ -21,7 +21,7 @@ apt install nginx -y
 
 在[阿里云](https://yundun.console.aliyun.com/?p=cas#/certExtend/free/cn-hangzhou)购买免费SSL证书，再点击“创建证书”，点击“状态”栏中的感叹号，然后根据提示添加域名解析记录，注意证书签发后有效期为3个月。
 
-执行脚本[`link-config.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/link-config.sh)将[`nginx-config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/nginx-config)链接到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
+执行脚本[`copy-config.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/copy-config.sh)将[`nginx-config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/nginx-config)链接到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
 
 重启nginx服务：
 ```sh

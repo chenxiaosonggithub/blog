@@ -33,7 +33,7 @@ update_repo() {
 restart_all() {
     if [ ${is_restart} = true ]; then
         echo "recreate html, restart service"
-        bash ${src_path}/blog/src/chenxiaosong.com/link-config.sh
+        bash ${src_path}/blog/src/chenxiaosong.com/copy-config.sh
         bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
         # 部署在局域网
         if [ ${is_public_ip} = false ]; then
