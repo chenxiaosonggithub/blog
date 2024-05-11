@@ -58,7 +58,7 @@ update_others_blog() {
     if [ ${is_public_ip} = false ]; then
         return
     fi
-    bash ${src_path}/private-blog/scripts/update-others-blog.sh
+    bash ${src_path}/private-blog/scripts/update-others-blog.sh ${is_restart}
 }
 
 update_repo pictures ${is_public_ip} # 部署在公网服务器就推到github
