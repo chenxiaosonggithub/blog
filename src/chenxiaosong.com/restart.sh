@@ -63,5 +63,6 @@ update_others_blog() {
 
 update_repo pictures ${is_public_ip} # 部署在公网服务器就推到github
 update_repo blog ${is_public_ip} # 部署在公网服务器就推到github
+update_repo private-blog false # 部署在公网服务器就推到github
 restart_all
 update_others_blog
