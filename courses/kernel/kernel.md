@@ -402,6 +402,12 @@ echo "全部合并成功"
 ```
 <!-- public end -->
 
+`git cherry-pick`或`git am`合补丁时如果有冲突，在解决完冲突后，在`commit`信息中在`Conflicts:`后列出冲突文件，如：
+```sh
+Conflicts:
+        include/linux/sunrpc/clnt.h
+```
+
 ## 代码编译
 
 ### 获取代码
