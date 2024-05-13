@@ -1,4 +1,4 @@
-本文档翻译自[xfs/xfstests-dev.git 的 README 文件](https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/tree/README)（[github](https://github.com/kdave/xfstests/blob/master/README)），大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自[kernel.org xfs/xfstests-dev.git 的 README 文件](https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/tree/README)（[或github](https://github.com/kdave/xfstests/blob/master/README)），大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # 构建FSQA套件
 
