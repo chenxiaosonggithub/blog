@@ -159,3 +159,5 @@
 [LTP Network Tests README](https://chenxiaosong.com/translations/ltp-network-tests-readme.html)
 
 [QEMU Documentation/Networking/NAT](https://chenxiaosong.com/translations/qemu-networking-nat.html)
+
+[(x)fstests README](https://chenxiaosong.com/translations/xfstests-readme.html)

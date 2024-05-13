@@ -91,6 +91,7 @@ array=(
     src/translations/tests/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
     src/translations/tests/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
     src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
+    src/translations/tests/xfstests-readme.rst translations/xfstests-readme.html "(x)fstests README"
     # private
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
