@@ -1,10 +1,8 @@
-_______________________
-构建FSQA套件
-_______________________
+# 构建FSQA套件
 
-Ubuntu或Debian
-----------------
+## Ubuntu或Debian
 
+```
 1. 确保软件包列表是最新的并安装所有必要的软件包：
 
    $ sudo apt-get update
@@ -18,10 +16,11 @@ Ubuntu或Debian
 
    $ sudo apt-get install exfatprogs f2fs-tools ocfs2-tools udftools xfsdump \
         xfslibs-dev
+```
 
-Fedora
-------
+## Fedora
 
+```
 1. 从标准存储库安装所有必要的软件包：
 
    $ sudo yum install acl attr automake bc dbench dump e2fsprogs fio gawk gcc \
@@ -33,10 +32,11 @@ Fedora
 
     $ sudo yum install btrfs-progs exfatprogs f2fs-tools ocfs2-tools xfsdump \
         xfsprogs-devel
+```
 
-RHEL或CentOS
---------------
+## RHEL或CentOS
 
+```
 1. 启用EPEL存储库：
     - 请参阅https://docs.fedoraproject.org/en-US/epel/#How_can_I_use_these_extra_packages.3F
 
@@ -67,10 +67,11 @@ RHEL或CentOS
 
     对于ocfs2构建和安装：
      - 请参阅https://github.com/markfasheh/ocfs2-tools
+```
 
-SUSE Linux企业版或openSUSE
----------------------------------
+## SUSE Linux企业版或openSUSE
 
+```
 1. 从标准存储库安装所有必要的软件包：
 
    $ sudo zypper install acct automake bc dbench duperemove dump fio gcc git \
@@ -84,18 +85,20 @@ SUSE Linux企业版或openSUSE
 
     对于XFS安装：
      $ sudo zypper install xfsdump xfsprogs-devel
+```
 
-构建和安装测试、库和工具
---------------------------------------
+## 构建和安装测试、库和工具
 
+```
 $ git clone git://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git
 $ cd xfstests-dev
 $ make
 $ sudo make install
+```
 
-环境设置
------------------
+## 环境设置
 
+```
 1. 编译 XFS/EXT4/BTRFS 等文件系统到您的内核中，或者加载为模块。例如，
    对于 XFS，可以在内核配置中启用 XFS_FS，或者将其编译为模块，并使用 'sudo modprobe xfs' 加载它。大多数发行版通常都会在内核中/作为模块提供这些文件系统。
 
@@ -158,10 +161,11 @@ $ sudo make install
     export SCRATCH_MNT=/mnt/scratch
 
 从这一点开始，您可以运行一些基本测试，请参阅下面的 '使用 FSQA 套件'。
+```
 
-附加设置
-----------------
+## 附加设置
 
+```
 某些测试需要在您的 local.config 中进行额外配置。将以下变量添加到 local.config 并将该文件保存在您的工作区中。或者根据测试机器的主机名在 common/config 中的 switch 中添加一个 case 来分配这些变量。或者使用 'setenv' 进行设置。
 
 额外的 TEST 设备规范：
@@ -221,11 +225,11 @@ $ sudo make install
  - 将 IDMAPPED_MOUNTS 设置为 true，以在 idmapped 挂载上运行所有测试。虽然此选项支持所有文件系统，但目前只有 -overlay 预计可以无问题运行。对于其他文件系统，可能需要对测试套件进行额外的补丁和修复。
  - 将 REPORT_VARS_FILE 设置为包含冒号分隔的名称-值对的文件，这些名称-值对将记录在测试部分报告中。名称必须是唯一的。冒号周围的空格将被移除。
  - 将 CANON_DEVS 设置为 yes，以规范化设备符号链接。这样，您就可以使用类似于 TEST_DEV/dev/disk/by-id/nvme-* 的东西，使得设备在重新启动之间保持持久。默认情况下此功能已禁用。
+```
 
-______________________
-使用FSQA套件
-______________________
+# 使用FSQA套件
 
+```
 运行测试：
 
     - cd xfstests
@@ -248,12 +252,11 @@ ______________________
     check脚本测试每个脚本的返回值，并将输出与期望输出进行比较。如果输出不符合预期，则会输出差异，并生成一个.out.bad文件以表示测试失败。
 
     意外的控制台消息、崩溃和挂起可能被视为失败，但不一定会被QA系统检测到。
+```
 
-__________________________
-添加到FSQA套件
-__________________________
+# 添加到FSQA套件
 
-
+```
 创建新的测试脚本：
 
     使用 "new" 脚本。
@@ -350,9 +353,10 @@ __________________________
     每个测试的最近一次通过的经过时间保存在 "check.time" 中。
 
     工具目录中的 compare-failures 脚本可用于比较失败，给定包含那些运行的stdout的文件。
+```
 
-__________________
-提交补丁
-__________________
+# 提交补丁
 
+```
 将补丁发送到 fstests 邮件列表，地址为 fstests@vger.kernel.org。
+```
