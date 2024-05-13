@@ -1,2 +1,2 @@
-[xfstests-dev](https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/tree/README)
+[(x)fstests README中文翻译](http://10.42.20.221/translations/xfstests-readme.html)。
 
