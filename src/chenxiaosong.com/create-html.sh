@@ -88,8 +88,8 @@ array=(
     src/translations/wine/building-wine-winehq-wiki.md translations/building-wine-winehq-wiki.html "Building Wine - WineHQ Wiki"
     src/translations/wine/box64-docs-X64WINE.md translations/box64-docs-X64WINE.html "box64 Installing Wine64"
     src/translations/wine/box86-docs-X86WINE.md translations/box86-docs-X86WINE.html "box86 Installing Wine (and winetricks)"
-    src/translations/ltp/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
-    src/translations/ltp/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
+    src/translations/tests/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
+    src/translations/tests/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
     src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
     # private
     src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
