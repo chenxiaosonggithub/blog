@@ -1160,8 +1160,153 @@ git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@exa
 
 一般的Linux书籍都是先讲解进程和内存相关的知识，但我想先讲解文件系统。<!-- public begin -->第一，因为我就是做文件系统的，更擅长这一块，其他模块的内容我还要再去好好看看书，毕竟不能误人子弟嘛；第二，是<!-- public end -->因为文件系统模块更接近于用户态，是相对比较好理解的内容（当然想深入还是要下大功夫的），由文件系统入手比较适合初学者。
 
-## 什么是文件系统
+我们先来看一下什么是文件系统？我们买电脑时，肯定会配一块硬盘（现在一般是固态硬盘），硬盘是用来存储数据资料的。比如要存储一句话:"我爱操作系统"，一个汉字占用2个字节，存储这一句话要占用12个字节（不包括结束符），我们可以用2种方法来存储。第一种方法是从硬盘第一个字节开始存储，前两个字节存储"我"，第三四个字节存储"爱"，以此类推。第二种方法是先创建一个文件，在这个文件里存储这句话，我们打开硬盘时，只需要找到这个文件的位置，就能找到这句话。第一种方法数据管理起来很不方便，所以一般都用第二种方法，第二种方法管理数据的规则就称为文件系统。
 
-我们买电脑时，肯定会配一块硬盘（现在一般是固态硬盘），硬盘是用来存储数据资料的。比如要存储一句话:"我爱操作系统"，一个汉字占用2个字节，存储这一句话要占用12个字节（不包括结束符），我们可以用2种方法来存储。第一种方法是从硬盘第一个字节开始存储，前两个字节存储"我"，第三四个字节存储"爱"，以此类推。第二种方法是先创建一个文件，在这个文件里存储这句话，我们打开硬盘时，只需要找到这个文件的位置，就能找到这句话。第一种方法数据管理起来很不方便，所以一般都用第二种方法，第二种方法管理数据的规则就称为文件系统。
+## 虚拟文件系统
 
+虚拟文件系统英文全称Virtual file system，缩写为VFS，又称为虚拟文件切换系统（virtual filesystem switch）。所有的文件系统都要先经过虚拟文件系统层，虚拟文件系统相当于制定了一套规则，如果你想写一个新的文件系统，只需要遵守这套规则就可以了。
+
+VFS虽然是用C语言写的，但使用了面向对象的设计思路。
+
+### 超级块
+
+超级块英文全称是super block，存储特定文件系统的信息。如果是基于磁盘的文件系统，通常对应磁盘上特定扇区中的数据。如果不是基于磁盘的文件系统（如procfs或sysfs），会在使用时创建超级块，只保留在内存中。
+
+超级块对象结构体定义在文件`include/linux/fs.h`中，比较长，不用背，遇到了查一下就好。
+```c
+struct super_block {
+	struct list_head	s_list;		/* 放在最开头，指向 super_blocks，使用list_add_tail加到super_blocks链表中 */
+	dev_t			s_dev;		/* 设备标识符 */
+	unsigned char		s_blocksize_bits; // 块大小，单位：bit
+	unsigned long		s_blocksize; // 块大小，单位：字节
+	loff_t			s_maxbytes;	/* 文件大小上限 */
+	struct file_system_type	*s_type; // 文件系统类型
+	const struct super_operations	*s_op; // 超级块方法
+	const struct dquot_operations	*dq_op; // 磁盘限额方法
+	const struct quotactl_ops	*s_qcop; // 限额控制方法
+	const struct export_operations *s_export_op; // 导出方法
+	unsigned long		s_flags; // 挂载标志
+	unsigned long		s_iflags;	/* internal SB_I_* flags */
+	unsigned long		s_magic; // 文件系统幻数
+	struct dentry		*s_root; // 目录挂载点
+	struct rw_semaphore	s_umount; // 卸载信号量
+	int			s_count; // 超级块引用计数
+	atomic_t		s_active; // 活动引用计数
+#ifdef CONFIG_SECURITY
+	void                    *s_security; // 安全模块
+#endif
+	const struct xattr_handler **s_xattr; // 扩展的属性操作
+#ifdef CONFIG_FS_ENCRYPTION
+	const struct fscrypt_operations	*s_cop;
+	struct fscrypt_keyring	*s_master_keys; /* master crypto keys in use */
+#endif
+#ifdef CONFIG_FS_VERITY
+	const struct fsverity_operations *s_vop;
+#endif
+#if IS_ENABLED(CONFIG_UNICODE)
+	struct unicode_map *s_encoding;
+	__u16 s_encoding_flags;
+#endif
+	struct hlist_bl_head	s_roots;	/* alternate root dentries for NFS */
+	struct list_head	s_mounts;	/* list of mounts; _not_ for fs use */
+	struct block_device	*s_bdev; // 相关的块设备
+	struct backing_dev_info *s_bdi;
+	struct mtd_info		*s_mtd; // 存储磁盘信息
+	struct hlist_node	s_instances; // 这种类型的所有文件系统
+	unsigned int		s_quota_types;	/* Bitmask of supported quota types */
+	struct quota_info	s_dquot;	/* 限额相关选项 */
+
+	struct sb_writers	s_writers;
+
+	/*
+	 * Keep s_fs_info, s_time_gran, s_fsnotify_mask, and
+	 * s_fsnotify_marks together for cache efficiency. They are frequently
+	 * accessed and rarely modified.
+	 */
+	void			*s_fs_info;	/* Filesystem private info，文件系统特殊信息 */
+
+	/* Granularity of c/m/atime in ns (cannot be worse than a second) */
+	u32			s_time_gran; // 时间戳粒度
+	/* Time limits for c/m/atime in seconds */
+	time64_t		   s_time_min;
+	time64_t		   s_time_max;
+#ifdef CONFIG_FSNOTIFY
+	__u32			s_fsnotify_mask;
+	struct fsnotify_mark_connector __rcu	*s_fsnotify_marks;
+#endif
+
+	char			s_id[32];	/* Informational name，文本名字 */
+	uuid_t			s_uuid;		/* UUID */
+
+	unsigned int		s_max_links;
+
+	/*
+	 * The next field is for VFS *only*. No filesystems have any business
+	 * even looking at it. You had been warned.
+	 */
+	struct mutex s_vfs_rename_mutex;	/* Kludge，重命名锁 */
+
+	/*
+	 * Filesystem subtype.  If non-empty the filesystem type field
+	 * in /proc/mounts will be "type.subtype"
+	 */
+	const char *s_subtype; // 子类型名称
+
+	const struct dentry_operations *s_d_op; /* default d_op for dentries */
+
+	struct shrinker s_shrink;	/* per-sb shrinker handle */
+
+	/* Number of inodes with nlink == 0 but still referenced */
+	atomic_long_t s_remove_count;
+
+	/*
+	 * Number of inode/mount/sb objects that are being watched, note that
+	 * inodes objects are currently double-accounted.
+	 */
+	atomic_long_t s_fsnotify_connectors;
+
+	/* Read-only state of the superblock is being changed */
+	int s_readonly_remount;
+
+	/* per-sb errseq_t for reporting writeback errors via syncfs */
+	errseq_t s_wb_err;
+
+	/* AIO completions deferred from interrupt context */
+	struct workqueue_struct *s_dio_done_wq;
+	struct hlist_head s_pins;
+
+	/*
+	 * Owning user namespace and default context in which to
+	 * interpret filesystem uids, gids, quotas, device nodes,
+	 * xattrs and security labels.
+	 */
+	struct user_namespace *s_user_ns;
+
+	/*
+	 * The list_lru structure is essentially just a pointer to a table
+	 * of per-node lru lists, each of which has its own spinlock.
+	 * There is no need to put them into separate cachelines.
+	 */
+	struct list_lru		s_dentry_lru; // 未被使用目录项链表
+	struct list_lru		s_inode_lru;
+	struct rcu_head		rcu;
+	struct work_struct	destroy_work;
+
+	struct mutex		s_sync_lock;	/* sync serialisation lock */
+
+	/*
+	 * Indicates how deep in a filesystem stack this SB is
+	 */
+	int s_stack_depth;
+
+	/* s_inode_list_lock protects s_inodes */
+	spinlock_t		s_inode_list_lock ____cacheline_aligned_in_smp;
+	struct list_head	s_inodes;	/* 索引节点链表 */
+
+	spinlock_t		s_inode_wblist_lock;
+	struct list_head	s_inodes_wb;	/* writeback inodes */
+} __randomize_layout;
+```
+
+超级块对象通过`alloc_super()`函数创建和初始化。
 

@@ -1,4 +1,4 @@
-# `dir_nlink`
+# 最大子目录数
 
 <!-- https://blog.51cto.com/u_11529070/10129653 -->
 ```sh
@@ -8,6 +8,9 @@ dumpe2fs -h /dev/sda # 或者用dumpe2fs命令
 ```
 
 以前ext4默认没开`dir_nlink`选项，子目录数量不能超过有限制，查看补丁`f8628a14a27e ext4: Remove 65000 subdirectory limit`。现在ext4默认打开`dir_nlink`选项，没有64000个的限制，具体查看`EXT4_FEATURE_RO_COMPAT_SUPP`宏定义。
+
+ext4文件系统大小支持1EB。
+
 
 # 支持长文件名
 
