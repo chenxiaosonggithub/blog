@@ -1172,7 +1172,7 @@ VFS虽然是用C语言写的，但使用了面向对象的设计思路。
 
 超级块英文全称是super block，存储特定文件系统的信息。如果是基于磁盘的文件系统，通常对应磁盘上特定扇区中的数据。如果不是基于磁盘的文件系统（如procfs或sysfs），会在使用时创建超级块，只保留在内存中。
 
-超级块对象结构体定义在文件`include/linux/fs.h`中，比较长，不用背，遇到了查一下就好。
+超级块对象结构体定义在文件`include/linux/fs.h`中，比较长，不用背，遇到了查一下就好，我会在这里加一些中文注释。
 ```c
 struct super_block {
 	struct list_head	s_list;		/* 放在最开头，指向 super_blocks，使用list_add_tail加到super_blocks链表中 */
@@ -1308,5 +1308,17 @@ struct super_block {
 } __randomize_layout;
 ```
 
-超级块对象通过`alloc_super()`函数创建和初始化。
+超级块对象通过`alloc_super()`函数创建和初始化，具体的文件系统如ext2文件系统的流程如下：
+```sh
+mount
+  do_mount
+    path_mount
+      do_new_mount
+        vfs_get_tree
+          legacy_get_tree
+            ext2_mount
+              mount_bdev
+                sget
+                  alloc_super
+```
 
