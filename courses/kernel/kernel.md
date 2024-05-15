@@ -1596,7 +1596,7 @@ struct dentry {
 	 * d_alias and d_rcu can share memory
 	 */
 	union {
-		struct hlist_node d_alias;	/* inode alias list，索引节点别名链表 */
+		struct hlist_node d_alias;	/* inode alias list，索引节点别名链表，当有多个硬链接时，就有多个dentry指向同一个inode，多个dentry都放到d_alias链表中 */
 		struct hlist_bl_node d_in_lookup_hash;	/* only for in-lookup ones */
 	 	struct rcu_head d_rcu; // RCU加锁
 	} d_u;
@@ -1706,7 +1706,7 @@ struct file_operations {
 	ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
 	int (*iopoll)(struct kiocb *kiocb, struct io_comp_batch *,
 			unsigned int flags);
-	int (*iterate_shared) (struct file *, struct dir_context *);
+	int (*iterate_shared) (struct file *, struct dir_context *); // v6.6在iterate_dir中加读锁，但在较早的版本（如v4.19）有些文件系统未实现此方法时加写锁
 	__poll_t (*poll) (struct file *, struct poll_table_struct *); // 睡眠等待给定文件活动
 	long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long); // 不需要持有BKL，相比compat_ioctl，优先实现此方法
 	long (*compat_ioctl) (struct file *, unsigned int, unsigned long); // 可移植变种，也不需要持有BKL
@@ -1905,3 +1905,24 @@ struct ucounts {
 	atomic_long_t rlimit[UCOUNT_RLIMIT_COUNTS];
 };
 ```
+
+## ext2文件系统
+
+### 先做几个VFS的验证
+
+通过 inode 获取文件名
+```c
+// 取链表中的第一个，文件可能有多个硬链接对应多个dentry，文件夹只可能有一个dentry
+container_of(inode->i_dentry, struct dentry, d_u.d_alias);
+
+// 遍历链表，文件可能有多个硬链接对应多个dentry，文件夹只可能有一个dentry
+struct dentry *tmp = NULL;
+hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
+        // tmp->d_inode 的判断是否多余？是否在某些情况下有必要判断？
+        if (inode->i_sb && tmp && tmp->d_inode == inode) {
+                tmp->d_name.name;
+        }
+}
+```
+
+通过 inode 得到完整的路径
