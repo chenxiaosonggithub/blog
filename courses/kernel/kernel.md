@@ -1910,18 +1910,20 @@ struct ucounts {
 
 ### 先做几个VFS的验证
 
-通过 inode 获取文件名
+通过 inode 获取文件名，文件可能有多个硬链接对应多个dentry，文件夹没有多个硬链接只可能有一个dentry
 ```c
-// 取链表中的第一个，文件可能有多个硬链接对应多个dentry，文件夹只可能有一个dentry
-container_of(inode->i_dentry, struct dentry, d_u.d_alias);
+#include <linux/fs.h>
+#include <linux/dcache.h>
 
-// 遍历链表，文件可能有多个硬链接对应多个dentry，文件夹只可能有一个dentry
-struct dentry *tmp = NULL;
-hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
-        // tmp->d_inode 的判断是否多余？是否在某些情况下有必要判断？
-        if (inode->i_sb && tmp && tmp->d_inode == inode) {
-                tmp->d_name.name;
-        }
+void get_file_name(struct inode *inode)
+{
+    char buf[PATH_MAX];
+    struct dentry *dentry = d_find_alias(inode);
+    if (dentry) {
+        d_path(dentry, buf, PATH_MAX);
+        printk("File name: %s\n", buf);
+        dput(dentry);
+    }
 }
 ```
 
