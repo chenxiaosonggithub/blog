@@ -1874,3 +1874,34 @@ struct fs_struct {
 } __randomize_layout;
 ```
 
+`mnt_namespace`表示单进程命名空间，`struct task_struct`中的`nsproxy->mnt_namespace`成员指向它。
+
+```c
+struct mnt_namespace {
+	struct ns_common	ns;
+	struct mount *	root; // 根目录的挂载点
+	/*
+	 * Traversal and modification of .list is protected by either
+	 * - taking namespace_sem for write, OR
+	 * - taking namespace_sem for read AND taking .ns_lock.
+	 */
+	struct list_head	list; // 挂载点链表
+	spinlock_t		ns_lock;
+	struct user_namespace	*user_ns;
+	struct ucounts		*ucounts; // 用户计数
+	u64			seq;	/* Sequence number to prevent loops */
+	wait_queue_head_t poll; // 轮询的等待队列
+	u64 event; // 事件计数
+	unsigned int		mounts; /* # of mounts in the namespace */
+	unsigned int		pending_mounts;
+} __randomize_layout;
+
+struct ucounts {
+	struct hlist_node node;
+	struct user_namespace *ns;
+	kuid_t uid;
+	atomic_t count; // 引用计数
+	atomic_long_t ucount[UCOUNT_COUNTS];
+	atomic_long_t rlimit[UCOUNT_RLIMIT_COUNTS];
+};
+```
