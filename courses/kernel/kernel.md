@@ -320,7 +320,7 @@ sudo systemctl restart code-server@$USER
 常用插件：
 <!-- public end -->
 
-- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。
+- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。除了用鼠标操作跳转之外，还可以在左上角的目录点击`Go -> Go to Symbol in Editor`（快捷键是`Ctrl+Shift+O`）。
 
 <!-- public begin -->
 - C++语言推荐使用插件[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)或[clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)。浏览C/C++代码时，建议这两个插件和[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)选一个，不要安装多个。
@@ -1160,7 +1160,36 @@ git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@exa
 
 一般的Linux书籍都是先讲解进程和内存相关的知识，但我想先讲解文件系统。<!-- public begin -->第一，因为我就是做文件系统的，更擅长这一块，其他模块的内容我还要再去好好看看书，毕竟不能误人子弟嘛；第二，是<!-- public end -->因为文件系统模块更接近于用户态，是相对比较好理解的内容（当然想深入还是要下大功夫的），由文件系统入手比较适合初学者。
 
+## 什么是文件系统
+
 我们先来看一下什么是文件系统？我们买电脑时，肯定会配一块硬盘（现在一般是固态硬盘），硬盘是用来存储数据资料的。比如要存储一句话:"我爱操作系统"，一个汉字占用2个字节，存储这一句话要占用12个字节（不包括结束符），我们可以用2种方法来存储。第一种方法是从硬盘第一个字节开始存储，前两个字节存储"我"，第三四个字节存储"爱"，以此类推。第二种方法是先创建一个文件，在这个文件里存储这句话，我们打开硬盘时，只需要找到这个文件的位置，就能找到这句话。第一种方法数据管理起来很不方便，所以一般都用第二种方法，第二种方法管理数据的规则就称为文件系统。
+
+我们来实际操作一下，虚拟机中的`${HOME}/qemu-kernel/start.sh`文件中增加以下内容（如果已有就不用增加）：
+```sh
+-drive file=1,if=none,format=raw,cache=writeback,file.locking=off,id=dd_1 \
+-device scsi-hd,drive=dd_1,id=disk_1,logical_block_size=512,physical_block_size=512 \
+```
+
+然后在`${HOME}/qemu-kernel/`目录下创建一个1G的空文件：
+```sh
+fallocate -l 1G 1
+```
+
+进入虚拟机后，可以使用上面提到的第一种方法，直接从磁盘的第一个字节开始存：
+```sh
+echo "我爱操作系统" > /dev/sda
+cat /dev/sda # 从磁盘的第一个字节开始输出
+```
+
+也可以用上面提到的第二种方法，也就是我们要学的文件系统：
+```sh
+mkfs.ext4 -F /dev/sda # 格式化文件系统
+mount -t ext4 /dev/sda /mnt # 把磁盘挂载到某个目录
+df /dev/sda # 查看是否已经挂载上
+echo "我爱操作系统" > /mnt/file # 存到挂载点下的某个文件中
+cat /mnt/file # 输出文件内容
+umount /mnt # 卸载文件系统
+```
 
 ## 虚拟文件系统
 
@@ -1168,11 +1197,11 @@ git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@exa
 
 VFS虽然是用C语言写的，但使用了面向对象的设计思路。
 
-### 超级块
+### 超级块对象
 
 超级块英文全称是super block，存储特定文件系统的信息。如果是基于磁盘的文件系统，通常对应磁盘上特定扇区中的数据。如果不是基于磁盘的文件系统（如procfs或sysfs），会在使用时创建超级块，只保留在内存中。
 
-超级块对象结构体定义在文件`include/linux/fs.h`中，比较长，不用背，遇到了查一下就好。
+超级块对象结构体定义在文件`include/linux/fs.h`中，比较长，不用背，用到时查一下就好，我会在这里加一些中文注释。
 ```c
 struct super_block {
 	struct list_head	s_list;		/* 放在最开头，指向 super_blocks，使用list_add_tail加到super_blocks链表中 */
@@ -1208,7 +1237,7 @@ struct super_block {
 	__u16 s_encoding_flags;
 #endif
 	struct hlist_bl_head	s_roots;	/* alternate root dentries for NFS */
-	struct list_head	s_mounts;	/* list of mounts; _not_ for fs use */
+	struct list_head	s_mounts;	/* list of mounts; _not_ for fs use，struct mount的mnt_instance加到这个链表中 */
 	struct block_device	*s_bdev; // 相关的块设备
 	struct backing_dev_info *s_bdi;
 	struct mtd_info		*s_mtd; // 存储磁盘信息
@@ -1308,5 +1337,265 @@ struct super_block {
 } __randomize_layout;
 ```
 
-超级块对象通过`alloc_super()`函数创建和初始化。
+超级块对象通过`alloc_super()`函数创建和初始化，具体的文件系统如ext2文件系统的流程如下：
+```c
+mount // 系统调用
+  do_mount
+    path_mount
+      do_new_mount
+        vfs_get_tree
+          legacy_get_tree
+            ext2_mount // ext2_fs_type的.mount方法
+              mount_bdev
+                sget
+                  alloc_super
+```
 
+### 超级块操作
+
+超级块对象中最重要的一个成员是`s_op`，也就是面向对象思想的一个体现，超级块操作函数表结构体也是定义在文件`include/linux/fs.h`中。也不需要背，用到时查一下就可以。
+
+```c
+struct super_operations {
+ 	struct inode *(*alloc_inode)(struct super_block *sb); // 创建和初始化一个新的索引节点对象
+	void (*destroy_inode)(struct inode *); // 销毁索引节点
+	void (*free_inode)(struct inode *); // 释放索引节点
+
+  void (*dirty_inode) (struct inode *, int flags); // 索引节点脏（也就是数据被修改了）时调用，日志更新（如ext4的jbd2）
+	int (*write_inode) (struct inode *, struct writeback_control *wbc); // 将索引节点写入磁盘
+	int (*drop_inode) (struct inode *); // 最后一个索引节点的引用释放后调用，普通unix文件系统不会定义这个函数
+	void (*evict_inode) (struct inode *); // 从磁盘删除索引节点
+	void (*put_super) (struct super_block *); // 释放超级块，要持有超级块锁
+	int (*sync_fs)(struct super_block *sb, int wait); // 文件系统的元数据与磁盘同步
+	int (*freeze_super) (struct super_block *, enum freeze_holder who);
+	int (*freeze_fs) (struct super_block *);
+	int (*thaw_super) (struct super_block *, enum freeze_holder who);
+	int (*unfreeze_fs) (struct super_block *);
+	int (*statfs) (struct dentry *, struct kstatfs *); // 获取文件系统状态
+	int (*remount_fs) (struct super_block *, int *, char *); // 指定新的选项重新安装文件系统
+	void (*umount_begin) (struct super_block *); // 中断安装操作，目前只有网络相关的文件系统以及fuse实现了
+
+	int (*show_options)(struct seq_file *, struct dentry *);
+	int (*show_devname)(struct seq_file *, struct dentry *);
+	int (*show_path)(struct seq_file *, struct dentry *);
+	int (*show_stats)(struct seq_file *, struct dentry *);
+#ifdef CONFIG_QUOTA
+	ssize_t (*quota_read)(struct super_block *, int, char *, size_t, loff_t);
+	ssize_t (*quota_write)(struct super_block *, int, const char *, size_t, loff_t);
+	struct dquot **(*get_dquots)(struct inode *);
+#endif
+	long (*nr_cached_objects)(struct super_block *,
+				  struct shrink_control *);
+	long (*free_cached_objects)(struct super_block *,
+				    struct shrink_control *);
+	void (*shutdown)(struct super_block *sb);
+};
+```
+
+注意在C语言的实现中，如果要获取`struct super_block *`父对象，必须要传入指针。
+
+### 索引节点对象
+
+索引节点包含了操作文件和目录时的全部信息。
+
+```c
+/*
+ * 将“struct inode”中的大多数已读字段和经常访问的字段（特别是用于RCU路径查找和“stat”数据的字段）放在前面。
+ */
+struct inode {
+	umode_t			i_mode;
+	unsigned short		i_opflags;
+	kuid_t			i_uid;
+	kgid_t			i_gid;
+	unsigned int		i_flags;
+
+#ifdef CONFIG_FS_POSIX_ACL
+	struct posix_acl	*i_acl;
+	struct posix_acl	*i_default_acl;
+#endif
+
+	const struct inode_operations	*i_op;
+	struct super_block	*i_sb;
+	struct address_space	*i_mapping;
+
+#ifdef CONFIG_SECURITY
+	void			*i_security;
+#endif
+
+	/* Stat data, not accessed from path walking */
+	unsigned long		i_ino;
+	/*
+	 * Filesystems may only read i_nlink directly.  They shall use the
+	 * following functions for modification:
+	 *
+	 *    (set|clear|inc|drop)_nlink
+	 *    inode_(inc|dec)_link_count
+	 */
+	union {
+		const unsigned int i_nlink;
+		unsigned int __i_nlink;
+	};
+	dev_t			i_rdev;
+	loff_t			i_size;
+	struct timespec64	i_atime;
+	struct timespec64	i_mtime;
+	struct timespec64	__i_ctime; /* use inode_*_ctime accessors! */
+	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
+	unsigned short          i_bytes;
+	u8			i_blkbits;
+	u8			i_write_hint;
+	blkcnt_t		i_blocks;
+
+#ifdef __NEED_I_SIZE_ORDERED
+	seqcount_t		i_size_seqcount;
+#endif
+
+	/* Misc */
+	unsigned long		i_state;
+	struct rw_semaphore	i_rwsem;
+
+	unsigned long		dirtied_when;	/* jiffies of first dirtying */
+	unsigned long		dirtied_time_when;
+
+	struct hlist_node	i_hash;
+	struct list_head	i_io_list;	/* backing dev IO list */
+#ifdef CONFIG_CGROUP_WRITEBACK
+	struct bdi_writeback	*i_wb;		/* the associated cgroup wb */
+
+	/* foreign inode detection, see wbc_detach_inode() */
+	int			i_wb_frn_winner;
+	u16			i_wb_frn_avg_time;
+	u16			i_wb_frn_history;
+#endif
+	struct list_head	i_lru;		/* inode LRU list */
+	struct list_head	i_sb_list;
+	struct list_head	i_wb_list;	/* backing dev writeback list */
+	union {
+		struct hlist_head	i_dentry;
+		struct rcu_head		i_rcu;
+	};
+	atomic64_t		i_version;
+	atomic64_t		i_sequence; /* see futex */
+	atomic_t		i_count;
+	atomic_t		i_dio_count;
+	atomic_t		i_writecount;
+#if defined(CONFIG_IMA) || defined(CONFIG_FILE_LOCKING)
+	atomic_t		i_readcount; /* struct files open RO */
+#endif
+	union {
+		const struct file_operations	*i_fop;	/* former ->i_op->default_file_ops */
+		void (*free_inode)(struct inode *);
+	};
+	struct file_lock_context	*i_flctx;
+	struct address_space	i_data;
+	struct list_head	i_devices;
+	union {
+		struct pipe_inode_info	*i_pipe;
+		struct cdev		*i_cdev;
+		char			*i_link;
+		unsigned		i_dir_seq;
+	};
+
+	__u32			i_generation;
+
+#ifdef CONFIG_FSNOTIFY
+	__u32			i_fsnotify_mask; /* all events this inode cares about */
+	struct fsnotify_mark_connector __rcu	*i_fsnotify_marks;
+#endif
+
+#ifdef CONFIG_FS_ENCRYPTION
+	struct fscrypt_info	*i_crypt_info;
+#endif
+
+#ifdef CONFIG_FS_VERITY
+	struct fsverity_info	*i_verity_info;
+#endif
+
+	void			*i_private; /* fs or device private pointer */
+} __randomize_layout;
+```
+
+### 索引节点操作
+
+```c
+struct inode_operations {
+	struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+	const char * (*get_link) (struct dentry *, struct inode *, struct delayed_call *);
+	int (*permission) (struct mnt_idmap *, struct inode *, int);
+	struct posix_acl * (*get_inode_acl)(struct inode *, int, bool);
+
+	int (*readlink) (struct dentry *, char __user *,int);
+
+	int (*create) (struct mnt_idmap *, struct inode *,struct dentry *,
+		       umode_t, bool);
+	int (*link) (struct dentry *,struct inode *,struct dentry *);
+	int (*unlink) (struct inode *,struct dentry *);
+	int (*symlink) (struct mnt_idmap *, struct inode *,struct dentry *,
+			const char *);
+	int (*mkdir) (struct mnt_idmap *, struct inode *,struct dentry *,
+		      umode_t);
+	int (*rmdir) (struct inode *,struct dentry *);
+	int (*mknod) (struct mnt_idmap *, struct inode *,struct dentry *,
+		      umode_t,dev_t);
+	int (*rename) (struct mnt_idmap *, struct inode *, struct dentry *,
+			struct inode *, struct dentry *, unsigned int);
+	int (*setattr) (struct mnt_idmap *, struct dentry *, struct iattr *);
+	int (*getattr) (struct mnt_idmap *, const struct path *,
+			struct kstat *, u32, unsigned int);
+	ssize_t (*listxattr) (struct dentry *, char *, size_t);
+	int (*fiemap)(struct inode *, struct fiemap_extent_info *, u64 start,
+		      u64 len);
+	int (*update_time)(struct inode *, int);
+	int (*atomic_open)(struct inode *, struct dentry *,
+			   struct file *, unsigned open_flag,
+			   umode_t create_mode);
+	int (*tmpfile) (struct mnt_idmap *, struct inode *,
+			struct file *, umode_t);
+	struct posix_acl *(*get_acl)(struct mnt_idmap *, struct dentry *,
+				     int);
+	int (*set_acl)(struct mnt_idmap *, struct dentry *,
+		       struct posix_acl *, int);
+	int (*fileattr_set)(struct mnt_idmap *idmap,
+			    struct dentry *dentry, struct fileattr *fa);
+	int (*fileattr_get)(struct dentry *dentry, struct fileattr *fa);
+	struct offset_ctx *(*get_offset_ctx)(struct inode *inode);
+} ____cacheline_aligned;
+```
+
+### 目录项对象
+
+```c
+struct dentry {
+	/* RCU lookup touched fields */
+	unsigned int d_flags;		/* protected by d_lock */
+	seqcount_spinlock_t d_seq;	/* per dentry seqlock */
+	struct hlist_bl_node d_hash;	/* lookup hash list */
+	struct dentry *d_parent;	/* parent directory */
+	struct qstr d_name;
+	struct inode *d_inode;		/* Where the name belongs to - NULL is
+					 * negative */
+	unsigned char d_iname[DNAME_INLINE_LEN];	/* small names */
+
+	/* Ref lookup also touches following */
+	struct lockref d_lockref;	/* per-dentry lock and refcount */
+	const struct dentry_operations *d_op;
+	struct super_block *d_sb;	/* The root of the dentry tree */
+	unsigned long d_time;		/* used by d_revalidate */
+	void *d_fsdata;			/* fs-specific data */
+
+	union {
+		struct list_head d_lru;		/* LRU list */
+		wait_queue_head_t *d_wait;	/* in-lookup ones only */
+	};
+	struct list_head d_child;	/* child of parent list */
+	struct list_head d_subdirs;	/* our children */
+	/*
+	 * d_alias and d_rcu can share memory
+	 */
+	union {
+		struct hlist_node d_alias;	/* inode alias list */
+		struct hlist_bl_node d_in_lookup_hash;	/* only for in-lookup ones */
+	 	struct rcu_head d_rcu;
+	} d_u;
+} __randomize_layout;
+```
