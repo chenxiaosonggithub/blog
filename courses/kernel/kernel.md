@@ -320,7 +320,7 @@ sudo systemctl restart code-server@$USER
 常用插件：
 <!-- public end -->
 
-- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。
+- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。除了用鼠标操作跳转之外，还可以在左上角的目录点击`Go -> Go to Symbol in Editor`（快捷键是`Ctrl+Shift+O`）。
 
 <!-- public begin -->
 - C++语言推荐使用插件[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)或[clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)。浏览C/C++代码时，建议这两个插件和[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)选一个，不要安装多个。
@@ -1168,7 +1168,7 @@ git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@exa
 
 VFS虽然是用C语言写的，但使用了面向对象的设计思路。
 
-### 超级块
+### 超级块对象
 
 超级块英文全称是super block，存储特定文件系统的信息。如果是基于磁盘的文件系统，通常对应磁盘上特定扇区中的数据。如果不是基于磁盘的文件系统（如procfs或sysfs），会在使用时创建超级块，只保留在内存中。
 
@@ -1208,7 +1208,7 @@ struct super_block {
 	__u16 s_encoding_flags;
 #endif
 	struct hlist_bl_head	s_roots;	/* alternate root dentries for NFS */
-	struct list_head	s_mounts;	/* list of mounts; _not_ for fs use */
+	struct list_head	s_mounts;	/* list of mounts; _not_ for fs use，struct mount的mnt_instance加到这个链表中 */
 	struct block_device	*s_bdev; // 相关的块设备
 	struct backing_dev_info *s_bdi;
 	struct mtd_info		*s_mtd; // 存储磁盘信息
@@ -1309,16 +1309,54 @@ struct super_block {
 ```
 
 超级块对象通过`alloc_super()`函数创建和初始化，具体的文件系统如ext2文件系统的流程如下：
-```sh
-mount
+```c
+mount // 系统调用
   do_mount
     path_mount
       do_new_mount
         vfs_get_tree
           legacy_get_tree
-            ext2_mount
+            ext2_mount // ext2_fs_type的.mount方法
               mount_bdev
                 sget
                   alloc_super
 ```
 
+### 超级块操作
+
+```c
+struct super_operations {
+   	struct inode *(*alloc_inode)(struct super_block *sb);
+	void (*destroy_inode)(struct inode *);
+	void (*free_inode)(struct inode *);
+
+   	void (*dirty_inode) (struct inode *, int flags);
+	int (*write_inode) (struct inode *, struct writeback_control *wbc);
+	int (*drop_inode) (struct inode *);
+	void (*evict_inode) (struct inode *);
+	void (*put_super) (struct super_block *);
+	int (*sync_fs)(struct super_block *sb, int wait);
+	int (*freeze_super) (struct super_block *, enum freeze_holder who);
+	int (*freeze_fs) (struct super_block *);
+	int (*thaw_super) (struct super_block *, enum freeze_holder who);
+	int (*unfreeze_fs) (struct super_block *);
+	int (*statfs) (struct dentry *, struct kstatfs *);
+	int (*remount_fs) (struct super_block *, int *, char *);
+	void (*umount_begin) (struct super_block *);
+
+	int (*show_options)(struct seq_file *, struct dentry *);
+	int (*show_devname)(struct seq_file *, struct dentry *);
+	int (*show_path)(struct seq_file *, struct dentry *);
+	int (*show_stats)(struct seq_file *, struct dentry *);
+#ifdef CONFIG_QUOTA
+	ssize_t (*quota_read)(struct super_block *, int, char *, size_t, loff_t);
+	ssize_t (*quota_write)(struct super_block *, int, const char *, size_t, loff_t);
+	struct dquot **(*get_dquots)(struct inode *);
+#endif
+	long (*nr_cached_objects)(struct super_block *,
+				  struct shrink_control *);
+	long (*free_cached_objects)(struct super_block *,
+				    struct shrink_control *);
+	void (*shutdown)(struct super_block *sb);
+};
+```
