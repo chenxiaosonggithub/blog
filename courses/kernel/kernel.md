@@ -1353,7 +1353,7 @@ mount // 系统调用
 
 ### 超级块操作
 
-超级块对象中最重要的一个成员是`s_op`，也就是面向对象思想的一个体现，超级块操作函数表结构体也是定义在文件`include/linux/fs.h`中。也不需要背，用到时查一下就可以。
+超级块对象中最重要的一个成员是`s_op`，也是面向对象思想的一个体现，超级块操作函数表结构体也是定义在文件`include/linux/fs.h`中。也不需要背，用到时查一下就可以。
 
 ```c
 struct super_operations {
@@ -1517,32 +1517,34 @@ struct inode {
 
 ### 索引节点操作
 
+索引节点对象中最重要的一个成员是`i_op`，也是面向对象思想的一个体现，索引节点操作函数表结构体也是定义在文件`include/linux/fs.h`中。还是不需要背，用到什么查什么就好。
+
 ```c
 struct inode_operations {
-	struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+	struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int); // 寻找索引节点，对应dentry中的文件名
 	const char * (*get_link) (struct dentry *, struct inode *, struct delayed_call *);
-	int (*permission) (struct mnt_idmap *, struct inode *, int);
+	int (*permission) (struct mnt_idmap *, struct inode *, int); // 检查访问模式
 	struct posix_acl * (*get_inode_acl)(struct inode *, int, bool);
 
-	int (*readlink) (struct dentry *, char __user *,int);
+	int (*readlink) (struct dentry *, char __user *,int); // 复制符号链接中的数据
 
-	int (*create) (struct mnt_idmap *, struct inode *,struct dentry *,
+	int (*create) (struct mnt_idmap *, struct inode *,struct dentry *, // 为dentry创建一个新的索引节点
 		       umode_t, bool);
-	int (*link) (struct dentry *,struct inode *,struct dentry *);
-	int (*unlink) (struct inode *,struct dentry *);
-	int (*symlink) (struct mnt_idmap *, struct inode *,struct dentry *,
+	int (*link) (struct dentry *,struct inode *,struct dentry *); // 创建硬链接
+	int (*unlink) (struct inode *,struct dentry *); // 删除索引节点对象
+	int (*symlink) (struct mnt_idmap *, struct inode *,struct dentry *, // 创建符号链接
 			const char *);
-	int (*mkdir) (struct mnt_idmap *, struct inode *,struct dentry *,
+	int (*mkdir) (struct mnt_idmap *, struct inode *,struct dentry *, // 创建新目录
 		      umode_t);
-	int (*rmdir) (struct inode *,struct dentry *);
-	int (*mknod) (struct mnt_idmap *, struct inode *,struct dentry *,
+	int (*rmdir) (struct inode *,struct dentry *); // 删除目录
+	int (*mknod) (struct mnt_idmap *, struct inode *,struct dentry *, // 创建特殊文件（设备文件、命名管道、套接字）
 		      umode_t,dev_t);
-	int (*rename) (struct mnt_idmap *, struct inode *, struct dentry *,
+	int (*rename) (struct mnt_idmap *, struct inode *, struct dentry *, // 移动文件
 			struct inode *, struct dentry *, unsigned int);
-	int (*setattr) (struct mnt_idmap *, struct dentry *, struct iattr *);
-	int (*getattr) (struct mnt_idmap *, const struct path *,
+	int (*setattr) (struct mnt_idmap *, struct dentry *, struct iattr *); // 被notify_change()调用，修改索引节点后，通知
+	int (*getattr) (struct mnt_idmap *, const struct path *, // 从磁盘更新时调用
 			struct kstat *, u32, unsigned int);
-	ssize_t (*listxattr) (struct dentry *, char *, size_t);
+	ssize_t (*listxattr) (struct dentry *, char *, size_t); // 将所有属性列表复制到缓冲列表中
 	int (*fiemap)(struct inode *, struct fiemap_extent_info *, u64 start,
 		      u64 len);
 	int (*update_time)(struct inode *, int);
@@ -1564,38 +1566,76 @@ struct inode_operations {
 
 ### 目录项对象
 
+需要注意目录项表示路径中的一个部分，如`/home/linux/file`路径中，`/`、`home`、`linux`是目录，属于目录项对象，`file`属于文件，也属于目录项对象。也就是说，目录项也能表示文件。目录项对象结构体定义在`include/linux/dcache.h`中，成员不多。
+
 ```c
 struct dentry {
 	/* RCU lookup touched fields */
-	unsigned int d_flags;		/* protected by d_lock */
+	unsigned int d_flags;		/* protected by d_lock，目录项标识 */
 	seqcount_spinlock_t d_seq;	/* per dentry seqlock */
-	struct hlist_bl_node d_hash;	/* lookup hash list */
-	struct dentry *d_parent;	/* parent directory */
-	struct qstr d_name;
-	struct inode *d_inode;		/* Where the name belongs to - NULL is
-					 * negative */
-	unsigned char d_iname[DNAME_INLINE_LEN];	/* small names */
+	struct hlist_bl_node d_hash;	/* lookup hash list, 散列表 */
+	struct dentry *d_parent;	/* parent directory，父目录 */
+	struct qstr d_name; // 目录项名，d_name.name是字符串数组
+	struct inode *d_inode;		/* Where the name belongs to - NULL is negative， 关联的索引节点 */
+	unsigned char d_iname[DNAME_INLINE_LEN];	/* small names，短文件名 */
 
 	/* Ref lookup also touches following */
-	struct lockref d_lockref;	/* per-dentry lock and refcount */
-	const struct dentry_operations *d_op;
-	struct super_block *d_sb;	/* The root of the dentry tree */
-	unsigned long d_time;		/* used by d_revalidate */
-	void *d_fsdata;			/* fs-specific data */
+	struct lockref d_lockref;	/* per-dentry lock and refcount，使用计数，用d_count()函数获取 */
+	const struct dentry_operations *d_op; // 目录项操作指针
+	struct super_block *d_sb;	/* The root of the dentry tree，文件的超级块 */
+	unsigned long d_time;		/* used by d_revalidate，重置时间 */
+	void *d_fsdata;			/* fs-specific data，文件系统特有数据 */
 
 	union {
-		struct list_head d_lru;		/* LRU list */
+		struct list_head d_lru;		/* LRU list，Least Recently Used 最近最少使用链表 */
 		wait_queue_head_t *d_wait;	/* in-lookup ones only */
 	};
-	struct list_head d_child;	/* child of parent list */
-	struct list_head d_subdirs;	/* our children */
+	struct list_head d_child;	/* child of parent list，目录项内部形成的链表 */
+	struct list_head d_subdirs;	/* our children，子目录链表 */
 	/*
 	 * d_alias and d_rcu can share memory
 	 */
 	union {
-		struct hlist_node d_alias;	/* inode alias list */
+		struct hlist_node d_alias;	/* inode alias list，索引节点别名链表 */
 		struct hlist_bl_node d_in_lookup_hash;	/* only for in-lookup ones */
-	 	struct rcu_head d_rcu;
+	 	struct rcu_head d_rcu; // RCU加锁
 	} d_u;
 } __randomize_layout;
+```
+
+目录项有3种状态：
+
+- 被使用：`d_inode`不为空，`d_count()`大于等于`1`
+- 未被使用：`d_inode`不为空，`d_count()`为`0`，注意曾经可能使用过
+- 无效状态：`d_inode`为空
+
+目录项缓存有3种：
+
+- "被使用的"目录项链表：`inode->i_dentry`链表，一个`inode`可能有多个链接，一个`inode`可能有多个`dentry`
+- "Least Recently Used 最近最少使用"链表：`d_lru`链表，包含未被使用和无效状态的`dentry`
+- 散列表：`dentry_hashtable`链表，散列值由`d_hash()`计算，`d_lookup()`查找散列表
+
+目录项让相应的索引节点的`i_count`为正，目录项被缓存了，索引节点肯定也被缓存了。
+
+### 目录项操作
+
+目录项操作结构体定义在`include/linux/dcache.h`中，方法不多。
+
+```c
+struct dentry_operations {
+	int (*d_revalidate)(struct dentry *, unsigned int); // 判断目录项对象是否有效，从缓存中使用目录项时会调用，一般文件系统不实现这个方法
+	int (*d_weak_revalidate)(struct dentry *, unsigned int);
+	int (*d_hash)(const struct dentry *, struct qstr *); // 生成散列值
+	int (*d_compare)(const struct dentry *,
+			unsigned int, const char *, const struct qstr *);
+	int (*d_delete)(const struct dentry *);
+	int (*d_init)(struct dentry *);
+	void (*d_release)(struct dentry *);
+	void (*d_prune)(struct dentry *);
+	void (*d_iput)(struct dentry *, struct inode *);
+	char *(*d_dname)(struct dentry *, char *, int);
+	struct vfsmount *(*d_automount)(struct path *);
+	int (*d_manage)(const struct path *, bool);
+	struct dentry *(*d_real)(struct dentry *, const struct inode *);
+} ____cacheline_aligned;
 ```
