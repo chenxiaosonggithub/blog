@@ -320,7 +320,7 @@ sudo systemctl restart code-server@$USER
 常用插件：
 <!-- public end -->
 
-- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。除了用鼠标操作跳转之外，还可以在左上角的目录点击`Go -> Go to Symbol in Editor`（快捷键是`Ctrl+Shift+O`）。
+- C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。
 
 <!-- public begin -->
 - C++语言推荐使用插件[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)或[clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)。浏览C/C++代码时，建议这两个插件和[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)选一个，不要安装多个。
@@ -1619,23 +1619,258 @@ struct dentry {
 
 ### 目录项操作
 
-目录项操作结构体定义在`include/linux/dcache.h`中，方法不多。
+目录项对象中最重要的一个成员是`d_op`，目录项操作结构体定义在`include/linux/dcache.h`中，方法不多。
 
 ```c
 struct dentry_operations {
 	int (*d_revalidate)(struct dentry *, unsigned int); // 判断目录项对象是否有效，从缓存中使用目录项时会调用，一般文件系统不实现这个方法
 	int (*d_weak_revalidate)(struct dentry *, unsigned int);
 	int (*d_hash)(const struct dentry *, struct qstr *); // 生成散列值
-	int (*d_compare)(const struct dentry *,
+	int (*d_compare)(const struct dentry *, // 比较两个文件名，微软的文件系统需要实现，因为不区分大小写
 			unsigned int, const char *, const struct qstr *);
-	int (*d_delete)(const struct dentry *);
+	int (*d_delete)(const struct dentry *); // d_count等于0时调用
 	int (*d_init)(struct dentry *);
-	void (*d_release)(struct dentry *);
+	void (*d_release)(struct dentry *); // 释放
 	void (*d_prune)(struct dentry *);
-	void (*d_iput)(struct dentry *, struct inode *);
+	void (*d_iput)(struct dentry *, struct inode *); // dentry丢失相关的inode，也就是磁盘索引节点被删除了，调用此方法
 	char *(*d_dname)(struct dentry *, char *, int);
 	struct vfsmount *(*d_automount)(struct path *);
 	int (*d_manage)(const struct path *, bool);
 	struct dentry *(*d_real)(struct dentry *, const struct inode *);
 } ____cacheline_aligned;
 ```
+
+### 文件对象
+
+站在用户角度，我们更关心的是文件对象。文件对象表示进程打开的文件，多个进程可能同时打开和操作同一个文件，同一个文件可能存在多个文件对象，最终指向同一个`dentry`。
+
+```c
+/*
+ * f_{lock,count,pos_lock}成员可能存在高度争用，共享相同的缓存行。
+ * 而f_{lock,mode}经常一起使用，因此也共享相同的缓存行。
+ * 读取频率较高的f_{path,inode,op}被保存在单独的缓存行中。
+ */
+struct file {
+	union {
+		struct llist_node	f_llist; // 文件对象链表
+		struct rcu_head 	f_rcuhead; // 释放之后的rcu链表
+		unsigned int 		f_iocb_flags;
+	};
+
+	/*
+	 * Protects f_ep, f_flags.
+	 * Must not be taken from IRQ context.
+	 */
+	spinlock_t		f_lock; // 单个文件结构锁
+	fmode_t			f_mode; // 访问模式
+	atomic_long_t		f_count; // 引用计数
+	struct mutex		f_pos_lock;
+	loff_t			f_pos; // 当前位移量（文件指针）
+	unsigned int		f_flags; // 打开时指定的标志
+	struct fown_struct	f_owner; // 拥有者通过信号进行异步IO数据的传送
+	const struct cred	*f_cred; // 文件的信任状
+	struct file_ra_state	f_ra; // 预读状态
+	struct path		f_path; // 包含dentry和vfsmount
+	struct inode		*f_inode;	/* cached value */
+	const struct file_operations	*f_op; // 文件操作表
+
+	u64			f_version; // 版本号
+#ifdef CONFIG_SECURITY
+	void			*f_security; // 安全模块
+#endif
+	/* needed for tty driver, and maybe others */
+	void			*private_data; // tty设备驱动的钩子
+
+#ifdef CONFIG_EPOLL
+	/* Used by fs/eventpoll.c to link all the hooks to this file */
+	struct hlist_head	*f_ep; // 事件池链表
+#endif /* #ifdef CONFIG_EPOLL */
+	struct address_space	*f_mapping; // 页缓存映射
+	errseq_t		f_wb_err;
+	errseq_t		f_sb_err; /* for syncfs */
+} __randomize_layout
+  __attribute__((aligned(4)));	/* lest something weird decides that 2 is OK */
+```
+
+### 文件操作
+
+文件对象中最重要的一个成员是`f_op`，你会发现，文件操作方法名和很多系统调用很像。
+
+```c
+struct file_operations {
+	struct module *owner;
+	loff_t (*llseek) (struct file *, loff_t, int); // 更新偏移量指针
+	ssize_t (*read) (struct file *, char __user *, size_t, loff_t *); // 读取数据，并更新文件指针
+	ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *); // 写入数据并更新指针
+	ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
+	ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
+	int (*iopoll)(struct kiocb *kiocb, struct io_comp_batch *,
+			unsigned int flags);
+	int (*iterate_shared) (struct file *, struct dir_context *);
+	__poll_t (*poll) (struct file *, struct poll_table_struct *); // 睡眠等待给定文件活动
+	long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long); // 不需要持有BKL，相比compat_ioctl，优先实现此方法
+	long (*compat_ioctl) (struct file *, unsigned int, unsigned long); // 可移植变种，也不需要持有BKL
+	int (*mmap) (struct file *, struct vm_area_struct *); // 将文件映射到地址空间上
+	unsigned long mmap_supported_flags;
+	int (*open) (struct inode *, struct file *); // 创建新的文件对象，与inode关联
+	int (*flush) (struct file *, fl_owner_t id); // 已打开文件的引用计数减少时调用，作用取决于具体的文件系统
+	int (*release) (struct inode *, struct file *); // 当引用计数为0时调用，作用取决于具体的文件系统
+	int (*fsync) (struct file *, loff_t, loff_t, int datasync); // 所有文件的缓存数据写回磁盘
+	int (*fasync) (int, struct file *, int); // 打开或关闭异步IO的通告信号
+	int (*lock) (struct file *, int, struct file_lock *); // 给文件上锁
+	unsigned long (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long); // 获取未使用的地址空间来映射给定的文件
+	int (*check_flags)(int); // 检查fcntl()系统调用的flags的有效性，只有nfs实现了
+	int (*flock) (struct file *, int, struct file_lock *); // 提供忠告锁
+	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
+	ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
+	void (*splice_eof)(struct file *file);
+	int (*setlease)(struct file *, int, struct file_lock **, void **);
+	long (*fallocate)(struct file *file, int mode, loff_t offset,
+			  loff_t len);
+	void (*show_fdinfo)(struct seq_file *m, struct file *f);
+#ifndef CONFIG_MMU
+	unsigned (*mmap_capabilities)(struct file *);
+#endif
+	ssize_t (*copy_file_range)(struct file *, loff_t, struct file *,
+			loff_t, size_t, unsigned int);
+	loff_t (*remap_file_range)(struct file *file_in, loff_t pos_in,
+				   struct file *file_out, loff_t pos_out,
+				   loff_t len, unsigned int remap_flags);
+	int (*fadvise)(struct file *, loff_t, loff_t, int);
+	int (*uring_cmd)(struct io_uring_cmd *ioucmd, unsigned int issue_flags);
+	int (*uring_cmd_iopoll)(struct io_uring_cmd *, struct io_comp_batch *,
+				unsigned int poll_flags);
+} __randomize_layout;
+```
+
+### 其他数据结构
+
+`file_system_type`描述各种特定文件系统类型，每种文件系统只有一个`file_system_type`对象。
+```c
+struct file_system_type {
+	const char *name; // 名字
+	int fs_flags; // 类型标志
+#define FS_REQUIRES_DEV		1 
+#define FS_BINARY_MOUNTDATA	2
+#define FS_HAS_SUBTYPE		4
+#define FS_USERNS_MOUNT		8	/* Can be mounted by userns root */
+#define FS_DISALLOW_NOTIFY_PERM	16	/* Disable fanotify permission events */
+#define FS_ALLOW_IDMAP         32      /* FS has been updated to handle vfs idmappings. */
+#define FS_RENAME_DOES_D_MOVE	32768	/* FS will handle d_move() during rename() internally. */
+	int (*init_fs_context)(struct fs_context *);
+	const struct fs_parameter_spec *parameters;
+	struct dentry *(*mount) (struct file_system_type *, int, // 从磁盘中读取超级块
+		       const char *, void *);
+	void (*kill_sb) (struct super_block *); // 终止访问超级块
+	struct module *owner; // 文件系统模块
+	struct file_system_type * next; // 链表中下一个文件系统类型
+	struct hlist_head fs_supers; // 超级块对象链表
+
+	// 运行时使锁生效
+	struct lock_class_key s_lock_key;
+	struct lock_class_key s_umount_key;
+	struct lock_class_key s_vfs_rename_key;
+	struct lock_class_key s_writers_key[SB_FREEZE_LEVELS];
+
+	struct lock_class_key i_lock_key;
+	struct lock_class_key i_mutex_key;
+	struct lock_class_key invalidate_lock_key;
+	struct lock_class_key i_mutex_dir_key;
+};
+```
+
+文件系统挂载时，有一个`mount`结构体在挂载点被创建，代表文件系统实例，也就是代表一个挂载点。
+
+```c
+struct mount {
+	struct hlist_node mnt_hash; // 散列表
+	struct mount *mnt_parent; // 父文件系统
+	struct dentry *mnt_mountpoint; // 挂载点的目录项
+	struct vfsmount mnt;
+	union {
+		struct rcu_head mnt_rcu;
+		struct llist_node mnt_llist;
+	};
+#ifdef CONFIG_SMP
+	struct mnt_pcp __percpu *mnt_pcp;
+#else
+	int mnt_count; // 引用计数
+	int mnt_writers; // 写者引用计数
+#endif
+	struct list_head mnt_mounts;	/* list of children, anchored here，子文件系统链表 */
+	struct list_head mnt_child;	/* and going through their mnt_child，子文件系统链表 */
+	struct list_head mnt_instance;	/* mount instance on sb->s_mounts */
+	const char *mnt_devname;	/* Name of device e.g. /dev/dsk/hda1，设备文件名 */
+	struct list_head mnt_list; // 描述符链表
+	struct list_head mnt_expire;	/* link in fs-specific expiry list，在到期链表的位置 */
+	struct list_head mnt_share;	/* circular list of shared mounts，在共享安装链表的位置 */
+	struct list_head mnt_slave_list;/* list of slave mounts，从安装链表 */
+	struct list_head mnt_slave;	/* slave list entry，在从安装链表的位置 */
+	struct mount *mnt_master;	/* slave is on master->mnt_slave_list，从安装链表的主人 */
+	struct mnt_namespace *mnt_ns;	/* containing namespace，相关的命名空间 */
+	struct mountpoint *mnt_mp;	/* where is it mounted */
+	union {
+		struct hlist_node mnt_mp_list;	/* list mounts with the same mountpoint */
+		struct hlist_node mnt_umount;
+	};
+	struct list_head mnt_umounting; /* list entry for umount propagation */
+#ifdef CONFIG_FSNOTIFY
+	struct fsnotify_mark_connector __rcu *mnt_fsnotify_marks;
+	__u32 mnt_fsnotify_mask;
+#endif
+	int mnt_id;			/* mount identifier，安装标识符 */
+	int mnt_group_id;		/* peer group identifier，组标识符 */
+	int mnt_expiry_mark;		/* true if marked for expiry，到期时为1 */
+	struct hlist_head mnt_pins;
+	struct hlist_head mnt_stuck_children;
+} __randomize_layout;
+
+struct vfsmount {
+	struct dentry *mnt_root;	/* root of the mounted tree，该文件系统的根目录项 */
+	struct super_block *mnt_sb;	/* pointer to superblock，超级块 */
+	int mnt_flags; // 挂载标志, MNT_NOSUID 等
+	struct mnt_idmap *mnt_idmap;
+} __randomize_layout;
+```
+
+`files_struct`描述单个进程相关的信息，`struct task_struct`中的`files`成员指向它。
+```c
+/*
+ * Open file table structure
+ */
+struct files_struct {
+  /*
+   * read mostly part
+   */
+	atomic_t count; // 引用计数
+	bool resize_in_progress;
+	wait_queue_head_t resize_wait;
+
+	struct fdtable __rcu *fdt; // 如果打开的文件数大于NR_OPEN_DEFAULT，分配一个新数组
+	struct fdtable fdtab; // 基fd表
+  /*
+   * written part on a separate cache line in SMP
+   */
+	spinlock_t file_lock ____cacheline_aligned_in_smp; // 单个文件的锁
+	unsigned int next_fd; // 缓存下一个可用的fd
+	unsigned long close_on_exec_init[1]; // exec()时关闭的fd链表
+	unsigned long open_fds_init[1]; // 打开的fd链表
+	unsigned long full_fds_bits_init[1];
+	struct file __rcu * fd_array[NR_OPEN_DEFAULT]; // 默认的文件对象数组
+};
+```
+
+`fs_struct`表示文件系统进程相关的信息，`struct task_struct`中的`fs`成员指向它。
+
+```c
+struct fs_struct {
+	int users; // 用户数目
+	spinlock_t lock; // 保护该结构体的锁
+	seqcount_spinlock_t seq;
+	int umask; // 掩码
+	int in_exec; // 当前正在执行的文件
+	struct path root; // 根目录路径
+	struct path pwd; // 当前工作目录的路径
+} __randomize_layout;
+```
+
