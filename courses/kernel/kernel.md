@@ -1396,34 +1396,34 @@ struct super_operations {
 
 ### 索引节点对象
 
-索引节点包含了操作文件和目录时的全部信息。
+索引节点包含了操作文件和目录时的全部信息，也定义在`include/linux/fs.h`。也不需要背，用到时查一下就可以。
 
 ```c
 /*
  * 将“struct inode”中的大多数已读字段和经常访问的字段（特别是用于RCU路径查找和“stat”数据的字段）放在前面。
  */
 struct inode {
-	umode_t			i_mode;
+	umode_t			i_mode; // 访问权限
 	unsigned short		i_opflags;
-	kuid_t			i_uid;
-	kgid_t			i_gid;
-	unsigned int		i_flags;
+	kuid_t			i_uid; // 使用者的id
+	kgid_t			i_gid; // 使用组的id
+	unsigned int		i_flags; // 文件系统标志
 
 #ifdef CONFIG_FS_POSIX_ACL
 	struct posix_acl	*i_acl;
 	struct posix_acl	*i_default_acl;
 #endif
 
-	const struct inode_operations	*i_op;
-	struct super_block	*i_sb;
-	struct address_space	*i_mapping;
+	const struct inode_operations	*i_op; // 索引节点操作表
+	struct super_block	*i_sb; // 相关的超级块
+	struct address_space	*i_mapping; // 相关的地址映射
 
 #ifdef CONFIG_SECURITY
-	void			*i_security;
+	void			*i_security; // 安全模块
 #endif
 
 	/* Stat data, not accessed from path walking */
-	unsigned long		i_ino;
+	unsigned long		i_ino; // 索引节点号
 	/*
 	 * Filesystems may only read i_nlink directly.  They shall use the
 	 * following functions for modification:
@@ -1432,32 +1432,32 @@ struct inode {
 	 *    inode_(inc|dec)_link_count
 	 */
 	union {
-		const unsigned int i_nlink;
+		const unsigned int i_nlink; // 硬链接数
 		unsigned int __i_nlink;
 	};
-	dev_t			i_rdev;
-	loff_t			i_size;
-	struct timespec64	i_atime;
-	struct timespec64	i_mtime;
-	struct timespec64	__i_ctime; /* use inode_*_ctime accessors! */
-	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
-	unsigned short          i_bytes;
-	u8			i_blkbits;
+	dev_t			i_rdev; // 实际设备标识符
+	loff_t			i_size; // 大小，单位：字节
+	struct timespec64	i_atime; // 最后访问时间
+	struct timespec64	i_mtime; // 最后修改时间
+	struct timespec64	__i_ctime; /* use inode_*_ctime accessors! 最后改变时间 */
+	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size，自旋锁 */
+	unsigned short          i_bytes; // 使用的字节数
+	u8			i_blkbits; // 以位为单位的块大小
 	u8			i_write_hint;
-	blkcnt_t		i_blocks;
+	blkcnt_t		i_blocks; // 文件的块数
 
 #ifdef __NEED_I_SIZE_ORDERED
-	seqcount_t		i_size_seqcount;
+	seqcount_t		i_size_seqcount; // 对 i_size 进行串行计数
 #endif
 
 	/* Misc */
-	unsigned long		i_state;
+	unsigned long		i_state; // 状态标志
 	struct rw_semaphore	i_rwsem;
 
-	unsigned long		dirtied_when;	/* jiffies of first dirtying */
+	unsigned long		dirtied_when;	/* jiffies of first dirtying，第一次弄脏数据的时间 */
 	unsigned long		dirtied_time_when;
 
-	struct hlist_node	i_hash;
+	struct hlist_node	i_hash; // 散列表
 	struct list_head	i_io_list;	/* backing dev IO list */
 #ifdef CONFIG_CGROUP_WRITEBACK
 	struct bdi_writeback	*i_wb;		/* the associated cgroup wb */
@@ -1467,31 +1467,31 @@ struct inode {
 	u16			i_wb_frn_avg_time;
 	u16			i_wb_frn_history;
 #endif
-	struct list_head	i_lru;		/* inode LRU list */
-	struct list_head	i_sb_list;
+	struct list_head	i_lru;		/* inode LRU list，Least Recently Used 最近最少使用链表 */
+	struct list_head	i_sb_list; // 超级块链表
 	struct list_head	i_wb_list;	/* backing dev writeback list */
 	union {
-		struct hlist_head	i_dentry;
+		struct hlist_head	i_dentry; // 目录项链表
 		struct rcu_head		i_rcu;
 	};
-	atomic64_t		i_version;
+	atomic64_t		i_version; // 版本号
 	atomic64_t		i_sequence; /* see futex */
-	atomic_t		i_count;
+	atomic_t		i_count; // 引用计数
 	atomic_t		i_dio_count;
-	atomic_t		i_writecount;
+	atomic_t		i_writecount; // 写者计数
 #if defined(CONFIG_IMA) || defined(CONFIG_FILE_LOCKING)
 	atomic_t		i_readcount; /* struct files open RO */
 #endif
 	union {
-		const struct file_operations	*i_fop;	/* former ->i_op->default_file_ops */
+		const struct file_operations	*i_fop;	/* former ->i_op->default_file_ops，缺少的索引节点操作 */
 		void (*free_inode)(struct inode *);
 	};
 	struct file_lock_context	*i_flctx;
-	struct address_space	i_data;
-	struct list_head	i_devices;
+	struct address_space	i_data; // 设备地址映射
+	struct list_head	i_devices; // 块设备链表
 	union {
-		struct pipe_inode_info	*i_pipe;
-		struct cdev		*i_cdev;
+		struct pipe_inode_info	*i_pipe; // 管道信息
+		struct cdev		*i_cdev; // 字符设备驱动
 		char			*i_link;
 		unsigned		i_dir_seq;
 	};
@@ -1511,7 +1511,7 @@ struct inode {
 	struct fsverity_info	*i_verity_info;
 #endif
 
-	void			*i_private; /* fs or device private pointer */
+	void			*i_private; /* fs or device private pointer，私有指针 */
 } __randomize_layout;
 ```
 
