@@ -1910,7 +1910,7 @@ struct ucounts {
 
 #### `inode`的`i_nlink`
 
-调试补丁为<!-- public begin -->[`0001-debug-inode-i_nlink.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-inode-i_nlink.patch)<!-- public end --><!-- private begin -->`0001-debug-inode-i_nlink.patch`<!-- private end -->。
+调试补丁为<!-- public begin -->[`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-vfs.patch)<!-- public end --><!-- private begin -->`0001-debug-vfs.patch`<!-- private end -->，看其中的`debug_inode_nlink()`函数。
 
 在ext2文件系统下测试：
 ```sh
@@ -1953,21 +1953,6 @@ mkdir // 系统调用
 
 #### 通过`inode`得到完整路径
 
-通过 inode 获取文件名，文件可能有多个硬链接对应多个dentry，文件夹没有多个硬链接只可能有一个dentry
-```c
-#include <linux/fs.h>
-#include <linux/dcache.h>
-
-void get_file_name(struct inode *inode)
-{
-    char buf[PATH_MAX];
-    struct dentry *dentry = d_find_alias(inode);
-    if (dentry) {
-        d_path(dentry, buf, PATH_MAX);
-        printk("File name: %s\n", buf);
-        dput(dentry);
-    }
-}
-```
+调试补丁为<!-- public begin -->[`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-vfs.patch)<!-- public end --><!-- private begin -->`0001-debug-vfs.patch`<!-- private end -->，看其中的`debug_get_full_path()`函数。
 
 ## ext2文件系统
