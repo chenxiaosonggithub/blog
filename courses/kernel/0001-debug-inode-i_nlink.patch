@@ -1,0 +1,75 @@
+From 4c0c2edee0c462aa1d79346d4dde19a4e969b4b4 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Date: Thu, 16 May 2024 06:09:31 +0000
+Subject: [PATCH] debug inode i_nlink
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+---
+ fs/ext2/dir.c     |  8 ++++++++
+ fs/ext2/file.c    | 11 +++++++++++
+ fs/xfs/xfs_file.c |  8 ++++++++
+ 3 files changed, 27 insertions(+)
+
+diff --git a/fs/ext2/dir.c b/fs/ext2/dir.c
+index b335f17f682f..19994cad5f90 100644
+--- a/fs/ext2/dir.c
++++ b/fs/ext2/dir.c
+@@ -265,6 +265,14 @@ ext2_readdir(struct file *file, struct dir_context *ctx)
+ 	unsigned chunk_mask = ~(ext2_chunk_size(inode)-1);
+ 	bool need_revalidate = !inode_eq_iversion(inode, file->f_version);
+ 	bool has_filetype;
++	unsigned int nlink = inode->i_nlink;
++	struct dentry *tmp = NULL;
++	printk("%s:%d, dir:%px, inode:%px, nlink:%d\n",
++	       __func__, __LINE__, file, inode, nlink);
++	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
++		printk("%s:%d, name:%s, dentry:%px, inode:%px\n",
++		       __func__, __LINE__, tmp->d_name.name, tmp, tmp->d_inode);
++	}
+ 
+ 	if (pos > inode->i_size - EXT2_DIR_REC_LEN(1))
+ 		return 0;
+diff --git a/fs/ext2/file.c b/fs/ext2/file.c
+index 1039e5bf90af..fe471af84b69 100644
+--- a/fs/ext2/file.c
++++ b/fs/ext2/file.c
+@@ -281,6 +281,17 @@ static ssize_t ext2_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 
+ static ssize_t ext2_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ {
++	struct file *file = iocb->ki_filp;
++	struct inode *inode = file_inode(file);
++	unsigned int nlink = inode->i_nlink;
++	struct dentry *tmp = NULL;
++	printk("%s:%d, file:%px, inode:%px, nlink:%d\n",
++	       __func__, __LINE__, file, inode, nlink);
++	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
++		printk("%s:%d, name:%s, dentry:%px, inode:%px\n",
++		       __func__, __LINE__, tmp->d_name.name, tmp, tmp->d_inode);
++	}
++
+ #ifdef CONFIG_FS_DAX
+ 	if (IS_DAX(iocb->ki_filp->f_mapping->host))
+ 		return ext2_dax_read_iter(iocb, to);
+diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
+index 203700278ddb..6ef52068938d 100644
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -1238,6 +1238,14 @@ xfs_file_readdir(
+ 	struct inode	*inode = file_inode(file);
+ 	xfs_inode_t	*ip = XFS_I(inode);
+ 	size_t		bufsize;
++	unsigned int nlink = inode->i_nlink;
++	struct dentry *tmp = NULL;
++	printk("%s:%d, dir:%px, inode:%px, nlink:%d\n",
++	       __func__, __LINE__, file, inode, nlink);
++	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
++		printk("%s:%d, name:%s, dentry:%px, inode:%px\n",
++		       __func__, __LINE__, tmp->d_name.name, tmp, tmp->d_inode);
++	}
+ 
+ 	/*
+ 	 * The Linux API doesn't pass down the total size of the buffer
+-- 
+2.34.1
+
