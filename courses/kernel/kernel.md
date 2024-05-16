@@ -1906,13 +1906,52 @@ struct ucounts {
 };
 ```
 
-## ext2文件系统
+### 举几个例子
 
-### 先做几个VFS的验证
+#### `inode`的`i_nlink`
 
-#### 硬链接
+调试补丁为<!-- public begin -->[`0001-debug-inode-i_nlink.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-inode-i_nlink.patch)<!-- public end --><!-- private begin -->`0001-debug-inode-i_nlink.patch`<!-- private end -->。
 
-#### 通过`inode`获取文件名
+在ext2文件系统下测试：
+```sh
+fallocate -l 100M image
+mkfs.ext2 -F image
+mount -t ext2 image /mnt
+cd /mnt
+echo "i love os" > file
+cat file # 这时i_nlink为1，只有一个dentry
+ln file link # 创建硬链接i_nlink加1
+cat file # 这时i_nlink为2，有两个dentry
+ln -s file slink # 创建软链接i_nlink不变
+cat file # 这时i_nlink不变还是为2
+ls # 这时i_nlink为3
+mkdir dir # 只有创建文件夹i_nlink才会增加，创建文件不会
+ls # 这时i_nlink为4
+```
+
+对文件创建硬链接时`ln file link`，增加`inode->i_nlink`的流程如下：
+```c
+linkat // 系统调用
+  do_linkat
+    vfs_link
+      ext2_link // ext2_dir_inode_operations的.link方法
+        inode_inc_link_count
+          inc_nlink
+            inode->__i_nlink++
+```
+
+在目录`dir1`下创建`dir2`文件夹，父目录`dir1`的`inode->i_nlink`增加的流程如下：
+```c
+mkdir // 系统调用
+  do_mkdirat
+    vfs_mkdir
+      ext2_mkdir // ext2_dir_inode_operations 的.mkdir方法
+        inode_inc_link_count
+          inc_nlink
+            inode->__i_nlink++
+```
+
+#### 通过`inode`得到完整路径
 
 通过 inode 获取文件名，文件可能有多个硬链接对应多个dentry，文件夹没有多个硬链接只可能有一个dentry
 ```c
@@ -1931,6 +1970,4 @@ void get_file_name(struct inode *inode)
 }
 ```
 
-### 通过`inode`得到完整路径
-
-通过 inode 得到完整的路径
+## ext2文件系统
