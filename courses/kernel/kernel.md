@@ -1188,6 +1188,11 @@ mount -t ext4 /dev/sda /mnt # 把磁盘挂载到某个目录
 df /dev/sda # 查看是否已经挂载上
 echo "我爱操作系统" > /mnt/file # 存到挂载点下的某个文件中
 cat /mnt/file # 输出文件内容
+debugfs /dev/sda
+# debugfs:  stats # Block size: 1024
+# debugfs:  stat file # BLOCKS: (0):7169
+dd if=/dev/sda of=./data bs=1 skip=7341056 count=20
+cat data
 umount /mnt # 卸载文件系统
 ```
 
@@ -1940,7 +1945,7 @@ linkat // 系统调用
             inode->__i_nlink++
 ```
 
-在目录`dir1`下创建`dir2`文件夹，父目录`dir1`的`inode->i_nlink`增加的流程如下：
+不能对目录创建硬链接。在目录`dir1`下创建`dir2`文件夹，父目录`dir1`的`inode->i_nlink`增加的流程如下：
 ```c
 mkdir // 系统调用
   do_mkdirat
