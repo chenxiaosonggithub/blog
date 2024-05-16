@@ -1483,7 +1483,7 @@ struct inode {
 	atomic_t		i_readcount; /* struct files open RO */
 #endif
 	union {
-		const struct file_operations	*i_fop;	/* former ->i_op->default_file_ops，缺少的索引节点操作 */
+		const struct file_operations	*i_fop;	/* former ->i_op->default_file_ops，默认的索引节点操作 */
 		void (*free_inode)(struct inode *);
 	};
 	struct file_lock_context	*i_flctx;
@@ -1910,6 +1910,10 @@ struct ucounts {
 
 ### 先做几个VFS的验证
 
+#### 硬链接
+
+#### 通过`inode`获取文件名
+
 通过 inode 获取文件名，文件可能有多个硬链接对应多个dentry，文件夹没有多个硬链接只可能有一个dentry
 ```c
 #include <linux/fs.h>
@@ -1926,5 +1930,7 @@ void get_file_name(struct inode *inode)
     }
 }
 ```
+
+### 通过`inode`得到完整路径
 
 通过 inode 得到完整的路径
