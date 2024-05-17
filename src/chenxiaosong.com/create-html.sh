@@ -104,7 +104,7 @@ array=(
 # --standalone：此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
 # --metadata encoding=gbk：这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
 # --toc：这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
-pandoc_common_options="--to html --standalone --metadata encoding=gbk --toc --number-sections --css https://chenxiaosong.com/stylesheet.css"
+pandoc_common_options="--to html --standalone --metadata encoding=gbk --number-sections --css https://chenxiaosong.com/stylesheet.css"
 
 init_begin() {
     mkdir -p ${tmp_html_path}
@@ -130,12 +130,19 @@ create_sign() {
 create_html() {
     create_sign
     element_count="${#array[@]}" # 总个数
-    for ((index=0; index<${element_count}; index=$((index + 5)))); do
-        src_file=${src_path}/blog/${array[${index}+2]} # 相对路径
-        if [[ ${array[${index}+2]} == '/'* ]]; then
-            src_file=${array[${index}+2]} # 绝对路径
+    count_per_line=5
+    for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
+        is_toc=${array[${index}]}
+        is_sign=${array[${index}+1]}
+        ifile=${array[${index}+2]}
+        ofile=${array[${index}+3]}
+        html_title=${array[${index}+4]}
+
+        src_file=${src_path}/blog/${ifile} # 相对路径
+        if [[ ${ifile} == '/'* ]]; then
+            src_file=${ifile} # 绝对路径
         fi
-        dst_file=${tmp_html_path}/${array[${index}+3]} # 生成的html文件名
+        dst_file=${tmp_html_path}/${ofile} # 生成的html文件名
         dst_dir="$(dirname "${dst_file}")" # html文件所在的文件夹
         if [ ! -d "${dst_dir}" ]; then
             mkdir -p "${dst_dir}" # 文件夹不存在就创建
@@ -144,7 +151,7 @@ create_html() {
         if [[ ${src_file} == *.rst ]]; then
             from_format="--from rst" # rst格式
         fi
-        pandoc ${src_file} -o ${dst_file} --metadata title="${array[${index}+4]}" ${from_format} ${pandoc_common_options}
+        pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_common_options}
         # 在<header之后插入sign.html整个文件
         sed -i -e '/<header/r '${tmp_html_path}'/sign.html' ${dst_file} # index文件除外
     done
