@@ -23,6 +23,9 @@ copy_lan_config() {
 }
 
 restart_all() {
+    if [ ${is_restart} = false ]; then
+        return
+    fi
     echo "recreate html, restart service"
     copy_public_config
     bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
