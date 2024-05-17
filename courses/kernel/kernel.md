@@ -10,6 +10,8 @@
 持续更新中。。。
 <!-- public end -->
 
+点击下面的标题跳转。
+
 # [Linux内核简介](https://chenxiaosong.com/courses/kernel-introduction.html)
 
 <!--
