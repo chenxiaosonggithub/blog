@@ -1,8 +1,8 @@
-if [ "$1" = "" ]
-then
-        echo "please specify version"
-        exit 1
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 \${repo_name}"
+    return
 fi
+
 mnt_point=/tmp/9p
 knl_base_dir=${mnt_point}/code/$1 # 修改成内核代码目录
 mkdir $mnt_point

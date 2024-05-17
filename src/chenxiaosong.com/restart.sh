@@ -3,21 +3,18 @@
 is_public_ip=true # 是否公网的ip
 repalace_ip=10.42.20.221 # 内网要替换的ip
 
-src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
-dst_path=/var/www/html
-
+code_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
 is_restart=false # 是否重新启动
-config_file=/etc/nginx/sites-enabled/default
 
 # 更新git仓库代码
 # $1: 仓库名， $2: 是否推送到github
 update_repo() {
     # 如果是局域网ip，就不更新仓库
     if [ ${is_public_ip} = false ]; then
-        is_restart=true
+        is_restart=true # 但要重启所有
         return
     fi
-    cd ${src_path}/${1}/
+    cd ${code_path}/${1}/
     timeout 20 git fetch origin # 最多20秒超时，有时会因为网络原因卡住
     local_head=$(git rev-parse HEAD)
     origin_head=$(git rev-parse origin/master)
@@ -31,49 +28,11 @@ update_repo() {
     cd -
 }
 
-copy_public_config() {
-    rm ${config_file}
-    cp ${src_path}/blog/src/chenxiaosong.com/nginx-config ${config_file}
-    cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
-}
-
-copy_lan_config() {
-    rm ${config_file}
-    cp ${src_path}/blog/src/chenxiaosong.com/lan-nginx-config ${config_file}
-}
-
-restart_all() {
-    if [ ${is_restart} = true ]; then
-        echo "recreate html, restart service"
-        copy_public_config
-        bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
-        # 部署在局域网
-        if [ ${is_public_ip} = false ]; then
-            bash ${src_path}/private-blog/scripts/create-html.sh
-            find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
-            find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${repalace_ip}'/http:\/\/'${repalace_ip}'/g' {} +
-            # 邮箱替换回来
-            find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${repalace_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
-            copy_lan_config
-            sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
-        fi
-        iptables -F # 根据情况决定是否要清空防火墙规则
-        service nginx restart # 重启nginx服务，docker中不支持systemd
-    else
-        echo "no change"
-    fi
-}
-
-update_others_blog() {
-    # 如果是局域网ip，就不更新其他人的博客
-    if [ ${is_public_ip} = false ]; then
-        return
-    fi
-    bash ${src_path}/private-blog/scripts/update-others-blog.sh ${is_restart}
-}
-
 update_repo pictures ${is_public_ip} # 部署在公网服务器就推到github
 update_repo blog ${is_public_ip} # 部署在公网服务器就推到github
-update_repo private-blog false # 部署在公网服务器就推到github
-restart_all
-update_others_blog
+update_repo private-blog false # 不用推到github
+
+if [ ${is_restart} = false ]; then
+    echo "no change"
+fi
+bash ${code_path}/blog/src/chenxiaosong.com/do_restart.sh ${is_public_ip} ${repalace_ip} ${is_restart}
