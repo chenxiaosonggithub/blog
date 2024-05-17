@@ -13,6 +13,7 @@ cp_to_dst_path courses/kernel/kernel-introduction.md
 cp_to_dst_path courses/kernel/kernel-dev-invironment.md
 cp_to_dst_path courses/kernel/kernel-book.md
 cp_to_dst_path courses/kernel/kernel-source.md
+cp_to_dst_path courses/kernel/kernel-fs.md
 # 把private内容删除
 find ${dst_path} -type f -name '*.md' -exec perl -i -pe 's/<!-- private begin -->.*?<!-- private end -->//g' {} + # 只能在同一行内，必须放在前面
 find ${dst_path} -type f -name '*.md' -exec sed -i '/<!-- private begin -->/,/<!-- private end -->/d' {} + # 只能按行为单位删除
