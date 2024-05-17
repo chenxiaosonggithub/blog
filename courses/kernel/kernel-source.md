@@ -1,4 +1,6 @@
+<!-- public begin -->
 [点击跳转到内核课程所有目录](https://chenxiaosong.com/courses/kernel)
+<!-- public end -->
 
 # 内核社区
 

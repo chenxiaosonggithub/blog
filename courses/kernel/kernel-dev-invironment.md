@@ -1,4 +1,6 @@
+<!-- public begin -->
 [点击跳转到内核课程所有目录](https://chenxiaosong.com/courses/kernel)
+<!-- public end -->
 
 下面介绍Linux内核编译环境和测试环境的搭建过程，当然我也为各位朋友准备好了已经安装好的虚拟机镜像，只需下载运行即可。
 
