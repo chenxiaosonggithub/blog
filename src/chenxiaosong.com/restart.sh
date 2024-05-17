@@ -7,6 +7,7 @@ src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
 dst_path=/var/www/html
 
 is_restart=false # 是否重新启动
+config_file=/etc/nginx/sites-enabled/default
 
 # 更新git仓库代码
 # $1: 仓库名， $2: 是否推送到github
@@ -30,10 +31,21 @@ update_repo() {
     cd -
 }
 
+copy_public_config() {
+    rm ${config_file}
+    cp ${src_path}/blog/src/chenxiaosong.com/nginx-config ${config_file}
+    cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
+}
+
+copy_lan_config() {
+    rm ${config_file}
+    cp ${src_path}/blog/src/chenxiaosong.com/lan-nginx-config ${config_file}
+}
+
 restart_all() {
     if [ ${is_restart} = true ]; then
         echo "recreate html, restart service"
-        bash ${src_path}/blog/src/chenxiaosong.com/copy-config.sh
+        copy_public_config
         bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
         # 部署在局域网
         if [ ${is_public_ip} = false ]; then
@@ -42,8 +54,7 @@ restart_all() {
             find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${repalace_ip}'/http:\/\/'${repalace_ip}'/g' {} +
             # 邮箱替换回来
             find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${repalace_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
-            # default文件本来是个软链接，执行完sed后变成了文件
-            bash ${src_path}/blog/src/chenxiaosong.com/copy-private-config.sh
+            copy_lan_config
             sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
         fi
         iptables -F # 根据情况决定是否要清空防火墙规则

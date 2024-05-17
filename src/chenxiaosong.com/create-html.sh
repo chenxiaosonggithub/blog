@@ -120,7 +120,7 @@ create_html() {
 
     element_count="${#array[@]}" # 总个数
     for ((index=0; index<${element_count}; index=$((index + 3)))); do
-        src_file=${src_path}/blog/${array[${index}]}
+        src_file=${src_path}/blog/${array[${index}]} # 相对路径
         if [[ ${array[${index}]} == '/'* ]]; then
             src_file=${array[${index}]} # 绝对路径
         fi
