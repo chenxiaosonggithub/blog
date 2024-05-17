@@ -7,7 +7,7 @@ tmp_courses_path=/tmp/blog-courses
 # 每一行代表： markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
     # 自我介绍
-    src/self-introduction/common.md common.html "公共的内容"
+    src/self-introduction/sign.md sign.html "公共的内容"
     src/self-introduction/index.md index.html '陈孝松个人主页'
     src/self-introduction/photos.md photos.html '陈孝松照片'
     src/self-introduction/openharmony.md openharmony.html "陈孝松OpenHarmony贡献"
@@ -158,14 +158,14 @@ change_perm() {
     find ${tmp_html_path}/ -type d -exec chmod 500 {} +
 }
 
-add_common() {
-    # 先去除common.html文件中其他内容
-    sed -i '/<\/header>/,/<\/body>/!d' ${tmp_html_path}/common.html # 只保留</header>到</body>的内容
-    sed -i '1d;$d' ${tmp_html_path}/common.html # 删除第一行和最后一行
-    # 在<header之后插入common.html整个文件
-    # find ${tmp_html_path}/ -type f -name '*.html' -exec sed -i -e '/<header/r ${tmp_html_path}/common.html' {} + # 所有文件
+add_sign() {
+    # 先去除sign.html文件中其他内容
+    sed -i '/<\/header>/,/<\/body>/!d' ${tmp_html_path}/sign.html # 只保留</header>到</body>的内容
+    sed -i '1d;$d' ${tmp_html_path}/sign.html # 删除第一行和最后一行
+    # 在<header之后插入sign.html整个文件
+    # find ${tmp_html_path}/ -type f -name '*.html' -exec sed -i -e '/<header/r ${tmp_html_path}/sign.html' {} + # 所有文件
     find ${tmp_html_path}/ -type f -name '*.html' | grep -v ${tmp_html_path}/index.html \
-        | xargs sed -i -e '/<header/r '${tmp_html_path}'/common.html' # index文件除外
+        | xargs sed -i -e '/<header/r '${tmp_html_path}'/sign.html' # index文件除外
 }
 
 init_begin
@@ -173,5 +173,5 @@ create_html
 copy_secret_repository
 copy_public_files
 change_perm
-add_common
+add_sign
 init_end
