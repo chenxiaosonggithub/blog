@@ -13,7 +13,7 @@ array=(
     1 1 src/self-introduction/blog.md blog.html "陈孝松博客"
     1 1 src/self-introduction/contributions.md contributions.html "陈孝松自由软件贡献"
     # 课程
-    1 1 ${tmp_courses_path}/kernel.md courses/kernel.html "Linux内核课程"
+    0 1 ${tmp_courses_path}/kernel.md courses/kernel.html "Linux内核课程"
     1 1 ${tmp_courses_path}/kernel-introduction.md courses/kernel-introduction.html "Linux内核简介"
     1 1 ${tmp_courses_path}/kernel-dev-invironment.md courses/kernel-dev-invironment.html "Linux内核开发环境"
     1 1 ${tmp_courses_path}/kernel-book.md courses/kernel-book.html "Linux内核书籍推荐"
@@ -137,6 +137,7 @@ create_html() {
         ifile=${array[${index}+2]}
         ofile=${array[${index}+3]}
         html_title=${array[${index}+4]}
+        pandoc_options=${pandoc_common_options}
 
         src_file=${src_path}/blog/${ifile} # 相对路径
         if [[ ${ifile} == '/'* ]]; then
@@ -151,9 +152,14 @@ create_html() {
         if [[ ${src_file} == *.rst ]]; then
             from_format="--from rst" # rst格式
         fi
-        pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_common_options}
-        # 在<header之后插入sign.html整个文件
-        sed -i -e '/<header/r '${tmp_html_path}'/sign.html' ${dst_file} # index文件除外
+        if [[ ${is_toc} == 1 ]]; then
+            pandoc_options="${pandoc_options} --toc"
+        fi
+        pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_options}
+        if [[ ${is_sign} == 1 ]]; then
+            # 在<header之后插入sign.html整个文件
+            sed -i -e '/<header/r '${tmp_html_path}'/sign.html' ${dst_file} # index文件除外
+        fi
     done
 }
 
