@@ -44,11 +44,7 @@ restart_all() {
 }
 
 update_others_blog() {
-    # 如果是局域网ip，就不更新其他人的博客
-    if [ ${is_public_ip} = false ]; then
-        return
-    fi
-    bash ${src_path}/private-blog/scripts/update-others-blog.sh ${is_restart}
+    bash ${src_path}/private-blog/scripts/update-others-blog.sh ${is_restart} ${is_public_ip}
 }
 
 restart_all
