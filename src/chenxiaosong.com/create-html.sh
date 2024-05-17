@@ -16,6 +16,7 @@ array=(
     # 课程
     ${tmp_courses_path}/kernel.md courses/kernel.html "Linux内核课程"
     ${tmp_courses_path}/kernel-introduction.md courses/kernel-introduction.html "Linux内核简介"
+    ${tmp_courses_path}/kernel-dev-invironment.md courses/kernel-dev-invironment.html "Linux内核开发环境"
     courses/book-contents.md courses/book-contents.html "书籍目录"
     # Linux内核
     src/kernel-environment/kernel-crash-vmcore.md kernel/kernel-crash-vmcore.html "crash解析vmcore"
