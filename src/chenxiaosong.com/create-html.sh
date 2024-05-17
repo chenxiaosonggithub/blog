@@ -18,6 +18,7 @@ array=(
     ${tmp_courses_path}/kernel-introduction.md courses/kernel-introduction.html "Linux内核简介"
     ${tmp_courses_path}/kernel-dev-invironment.md courses/kernel-dev-invironment.html "Linux内核开发环境"
     ${tmp_courses_path}/kernel-book.md courses/kernel-book.html "Linux内核书籍推荐"
+    ${tmp_courses_path}/kernel-source.md courses/kernel-source.html "Linux内核源码介绍"
     courses/book-contents.md courses/book-contents.html "书籍目录"
     # Linux内核
     src/kernel-environment/kernel-crash-vmcore.md kernel/kernel-crash-vmcore.html "crash解析vmcore"
