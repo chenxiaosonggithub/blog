@@ -116,7 +116,7 @@
 
 # 还没有分类
 
-[Windows系统](https://chenxiaosong.com/oothers/windows.html)
+[Windows系统](https://chenxiaosong.com/others/windows.html)
 
 [键盘配置](https://chenxiaosong.com/others/keyboard.html)
 
