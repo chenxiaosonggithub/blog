@@ -18,6 +18,7 @@ create_sign() {
 
 # 要定义数组array, 每一行代表： 是否生成目录 是否添加签名 markdown或rst文件相对路径 html文件相对路径 网页标题
 create_html() {
+    # local array=("${!1}") # 使用间接引用来接收数组，调用的地方 create_html array[@] ${src_path} ${tmp_html_path}
     local src_path=$1
     local tmp_html_path=$2
 
