@@ -1,9 +1,5 @@
 在Linux操作系统要运行Windows的`exe`程序，可以使用`wine`，还能跨cpu运行呢。
 
-[点击这里在哔哩哔哩bilibili在线观看《x86_64的Linux使用wine运行Windows程序》](https://www.bilibili.com/video/BV1Bp421D7ro/)。
-
-[点击这里在哔哩哔哩bilibili在线观看《arm64的Linux使用wine运行Windows程序》](https://www.bilibili.com/video/BV1GF4m1P7UW/)。
-
 # 运行环境
 
 源码安装之前，也建议先通过apt安装wine，安装完后运行环境就准备好了。

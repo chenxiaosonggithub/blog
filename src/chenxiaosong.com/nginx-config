@@ -78,6 +78,14 @@ server {
 		rewrite ^/baidunetdisk$ https://pan.baidu.com/s/12hDXdKdIE4-ggjcS7-88lw?pwd=1234;
 	}
 
+	location /bili {
+		rewrite ^/bili$ https://space.bilibili.com/351970900;
+	}
+
+	location /bili/kernel {
+		rewrite ^/bili/kernel$ https://www.bilibili.com/video/BV15C411E7Sm/;
+	}
+
 	# 转发
 	# location /code-server/ { # 注意code-server后面有斜杠
 	# 	# 端口后面也要有斜杠
