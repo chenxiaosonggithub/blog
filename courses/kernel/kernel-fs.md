@@ -828,3 +828,5 @@ mount
 调试补丁为<!-- public begin -->[`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-vfs.patch)<!-- public end --><!-- private begin -->`0001-debug-vfs.patch`<!-- private end -->，看其中的`debug_get_full_path()`函数。
 
 # ext2文件系统
+
+英文全称Extended file system，翻译为扩展文件系统。Linux内核最开始用的是minix文件系统，直到1992年4月，Rémy Card开发了ext文件系统，采用Unix文件系统（UFS）的元数据结构，在linux内核0.96c版中引入。
