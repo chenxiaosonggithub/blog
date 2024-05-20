@@ -1,4 +1,4 @@
-本文档翻译自[linux-test-project/ltp 的 README 文件](https://github.com/linux-test-project/ltp/blob/master/README.md)，大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自[linux-test-project/ltp 的 README 文件](https://github.com/linux-test-project/ltp/blob/master/README.md)，翻译时文件的最新提交是`2a50d18cc README: Mention -f param for strace`，大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # Linux Test Project
 

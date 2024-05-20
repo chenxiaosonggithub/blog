@@ -1,4 +1,4 @@
-本文档翻译自[kernel.org xfs/xfstests-dev.git 的 README 文件](https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/tree/README)（[或github](https://github.com/kdave/xfstests/blob/master/README)），大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自[kernel.org xfs/xfstests-dev.git 的 README 文件](https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/tree/README)（[或github](https://github.com/kdave/xfstests/blob/master/README)），翻译时文件的最新提交是`790a9e7c3c94f1a576e05478b832a423252c3edd common/rc: notrun if io_uring is disabled by sysctl`，大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # 构建FSQA套件
 

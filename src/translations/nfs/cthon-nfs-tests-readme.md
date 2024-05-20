@@ -1,4 +1,4 @@
-本文档翻译自[dkruchinin/cthon-nfs-tests 的 README 文件](https://github.com/dkruchinin/cthon-nfs-tests/blob/master/README)，大部分借助于ChatGPT，当然有一丢丢是经过了我的修改。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自[dkruchinin/cthon-nfs-tests 的 README 文件](https://github.com/dkruchinin/cthon-nfs-tests/blob/master/README)，翻译时文件的最新提交是`0acf9a75ebc467e9b2563b09f057aae297769d21 As published in 2004 on http://www.connectathon.org/nfstests.html`，大部分借助于ChatGPT，当然有一丢丢是经过了我的修改。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # Connectathon NFS测试套件简介
 

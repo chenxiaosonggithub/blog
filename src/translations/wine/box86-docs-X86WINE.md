@@ -1,4 +1,4 @@
-本文翻译自[box86 Installing Wine (and winetricks)](https://github.com/ptitSeb/box86/blob/master/docs/X86WINE.md)。
+本文翻译自[box86 Installing Wine (and winetricks)](https://github.com/ptitSeb/box86/blob/master/docs/X86WINE.md)，翻译时文件的最新提交是`7748d10246be2b0269d76971c74d242bf659dbcb update X86WINE, libxxf86vm1:armhf (#955)`。
 
 # 安装 Wine（和 winetricks）
 
@@ -122,7 +122,7 @@ if [ "$karch" = "aarch64" ] || [ "$karch" = "aarch64-linux-gnu" ] || [ "$karch" 
         libdbus-1-3:armhf libfontconfig1:armhf libfreetype6:armhf libglu1-mesa:armhf libglu1:armhf libgnutls30:armhf \
         libgssapi-krb5-2:armhf libkrb5-3:armhf libodbc1:armhf libosmesa6:armhf libsdl2-2.0-0:armhf libv4l-0:armhf \
         libxcomposite1:armhf libxcursor1:armhf libxfixes3:armhf libxi6:armhf libxinerama1:armhf libxrandr2:armhf \
-        libxrender1:armhf libxxf86vm1 libc6:armhf libcap2-bin:armhf # to run wine-i386 through box86:armhf on aarch64
+        libxrender1:armhf libxxf86vm1:armhf libc6:armhf libcap2-bin:armhf # to run wine-i386 through box86:armhf on aarch64
         # This list found by downloading...
         #	wget https://dl.winehq.org/wine-builds/debian/dists/bullseye/main/binary-i386/wine-devel-i386_7.1~bullseye-1_i386.deb
         #	wget https://dl.winehq.org/wine-builds/debian/dists/bullseye/main/binary-i386/winehq-devel_7.1~bullseye-1_i386.deb

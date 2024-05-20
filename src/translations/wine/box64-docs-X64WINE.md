@@ -1,4 +1,4 @@
-本文翻译自[box64 Installing Wine64](https://github.com/ptitSeb/box64/blob/main/docs/X64WINE.md)。
+本文翻译自[box64 Installing Wine64](https://github.com/ptitSeb/box64/blob/main/docs/X64WINE.md)，翻译时文件的最新提交是`0cc04e5253aa31544ca9e234b37e20b1ab81232f Create X64WINE.md (#423)`。
 
 # 安装 Wine64
 
