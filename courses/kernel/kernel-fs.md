@@ -800,6 +800,29 @@ mkdir // 系统调用
             inode->__i_nlink++
 ```
 
+### `super_block`的`s_mounts`
+
+调试补丁为<!-- public begin -->[`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-vfs.patch)<!-- public end --><!-- private begin -->`0001-debug-vfs.patch`<!-- private end -->，看其中的`debug_sb_mounts()`函数。
+
+每个挂载路径下有3个`struct mount`，分别是一次调用`vfs_create_mount()`和两次调用`clone_mnt()`创建的:
+```c
+mount
+  do_mount
+    path_mount
+      do_new_mount
+        do_new_mount_fc
+          vfs_create_mount
+            list_add_tail(&mnt->mnt_instance, &mnt->mnt.mnt_sb->s_mounts)
+          do_add_mount
+            graft_tree
+              attach_recursive_mnt
+                propagate_mnt
+                  propagate_one
+                    copy_tree
+                      clone_mnt // 调用了两次
+                        list_add_tail(&mnt->mnt_instance, &sb->s_mounts)
+```
+
 ### 通过`inode`得到完整路径
 
 调试补丁为<!-- public begin -->[`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/0001-debug-vfs.patch)<!-- public end --><!-- private begin -->`0001-debug-vfs.patch`<!-- private end -->，看其中的`debug_get_full_path()`函数。
