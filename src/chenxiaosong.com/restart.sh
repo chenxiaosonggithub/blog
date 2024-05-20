@@ -1,7 +1,7 @@
 # 运行命令不断检查 while true; do bash restart.sh; sleep 90; done
 
 is_public_ip=true # 是否公网的ip
-repalace_ip=10.42.20.221 # 内网要替换的ip
+lan_ip=10.42.20.221 # 内网要替换的ip
 
 code_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
 is_restart=false # 是否重新启动
@@ -35,4 +35,4 @@ update_repo private-blog false # 不用推到github
 if [ ${is_restart} = false ]; then
     echo "no change"
 fi
-bash ${code_path}/blog/src/chenxiaosong.com/do_restart.sh ${is_public_ip} ${repalace_ip} ${is_restart}
+bash ${code_path}/blog/src/chenxiaosong.com/do_restart.sh ${is_public_ip} ${lan_ip} ${is_restart}

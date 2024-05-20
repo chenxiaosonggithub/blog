@@ -1,10 +1,10 @@
 if [ $# -ne 3 ]; then
-    echo "Usage: $0 \${is_public_ip} \${repalace_ip} \${is_restart}"
+    echo "Usage: $0 \${is_public_ip} \${lan_ip} \${is_restart}"
     return
 fi
 
 is_public_ip=$1
-repalace_ip=$2 # 内网要替换的ip
+lan_ip=$2 # 内网要替换的ip
 is_restart=$3
 
 src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
@@ -21,6 +21,18 @@ copy_config() {
     cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
 }
 
+replace_lan_ip() {
+    # 部署在局域网
+    if [ ${is_public_ip} = false ]; then
+        bash ${src_path}/private-blog/scripts/create-html.sh
+        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${lan_ip}'/g' {} +
+        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${lan_ip}'/http:\/\/'${lan_ip}'/g' {} +
+        # 邮箱替换回来
+        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${lan_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
+        sed -i 's/chenxiaosong.com/'${lan_ip}'/g' /etc/nginx/sites-enabled/default
+    fi
+}
+
 restart_all() {
     if [ ${is_restart} = false ]; then
         return
@@ -28,15 +40,7 @@ restart_all() {
     echo "recreate html, restart service"
     copy_config
     bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
-    # 部署在局域网
-    if [ ${is_public_ip} = false ]; then
-        bash ${src_path}/private-blog/scripts/create-html.sh
-        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' {} +
-        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${repalace_ip}'/http:\/\/'${repalace_ip}'/g' {} +
-        # 邮箱替换回来
-        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${repalace_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
-        sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
-    fi
+    replace_lan_ip
     iptables -F # 根据情况决定是否要清空防火墙规则
     service nginx restart # 重启nginx服务，docker中不支持systemd
 }
