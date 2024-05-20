@@ -833,9 +833,22 @@ mount
 
 # ext2文件系统
 
-英文全称Extended file system，翻译为扩展文件系统。Linux内核最开始用的是minix文件系统，直到1992年4月，Rémy Card开发了ext文件系统，采用Unix文件系统（UFS）的元数据结构，在linux内核0.96c版中引入。
+英文全称Extended file system，翻译为扩展文件系统。Linux内核最开始用的是minix文件系统，直到1992年4月，Rémy Card开发了ext文件系统，采用Unix文件系统（UFS）的元数据结构，在linux内核0.96c版中引入。设计上参考了BSD的快速文件系统（Fast File System，简称FFS）。
 
 相关文档网站：
 
 - [内核仓库ext2文档](https://www.kernel.org/doc/html/latest/filesystems/ext2.html)
 - [ext4 wiki](https://ext4.wiki.kernel.org/index.php/Main_Page)
+
+## 物理结构
+
+块组（block group）的内容如下:
+
+|  超级块   | 组描<br>述符  | 数据位图 | inode<br>位图 | inode表 | 数据块 |
+|  ----    | ----         | ---     | ---         | ---      | --- |
+| 1个块    | k个块         |  1个块 |     1个块       | n个块   | m个块 |
+
+启动扇区和块组：
+
+| 启动块 | 块组0 | 块组1 | ... | 块组n |
+| ---   | ---  | ---   | --- | ---  |
