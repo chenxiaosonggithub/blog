@@ -22,6 +22,7 @@
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
+	# ssl begin
 	# http 重定向到 https
 	return 301 https://$host$request_uri;
 }
@@ -32,6 +33,7 @@ server {
 	listen [::]:443 ssl default_server;
 	ssl_certificate /root/ssl/chenxiaosong.com.pem;
 	ssl_certificate_key /root/ssl/chenxiaosong.com.key;
+	# ssl end
 	#
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332

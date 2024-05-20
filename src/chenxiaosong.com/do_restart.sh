@@ -11,15 +11,14 @@ src_path=/home/sonvhi/chenxiaosong/code # 替换成你的仓库路径
 dst_path=/var/www/html
 config_file=/etc/nginx/sites-enabled/default
 
-copy_public_config() {
+copy_config() {
     rm ${config_file}
     cp ${src_path}/blog/src/chenxiaosong.com/nginx-config ${config_file}
+    if [ ${is_public_ip} = false ]; then
+        # 局域网删除ssl相关配置
+        sed -i '/# ssl begin/,/# ssl end/d' ${config_file} # 只能按行为单位删除
+    fi
     cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
-}
-
-copy_lan_config() {
-    rm ${config_file}
-    cp ${src_path}/blog/src/chenxiaosong.com/lan-nginx-config ${config_file}
 }
 
 restart_all() {
@@ -27,7 +26,7 @@ restart_all() {
         return
     fi
     echo "recreate html, restart service"
-    copy_public_config
+    copy_config
     bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
     # 部署在局域网
     if [ ${is_public_ip} = false ]; then
@@ -36,7 +35,6 @@ restart_all() {
         find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${repalace_ip}'/http:\/\/'${repalace_ip}'/g' {} +
         # 邮箱替换回来
         find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${repalace_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
-        copy_lan_config
         sed -i 's/chenxiaosong.com/'${repalace_ip}'/g' /etc/nginx/sites-enabled/default
     fi
     iptables -F # 根据情况决定是否要清空防火墙规则
