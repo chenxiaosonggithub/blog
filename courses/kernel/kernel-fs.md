@@ -830,3 +830,8 @@ mount
 # ext2文件系统
 
 英文全称Extended file system，翻译为扩展文件系统。Linux内核最开始用的是minix文件系统，直到1992年4月，Rémy Card开发了ext文件系统，采用Unix文件系统（UFS）的元数据结构，在linux内核0.96c版中引入。
+
+相关文档网站：
+
+- [内核仓库ext2文档](https://www.kernel.org/doc/html/latest/filesystems/ext2.html)
+- [ext4 wiki](https://ext4.wiki.kernel.org/index.php/Main_Page)
