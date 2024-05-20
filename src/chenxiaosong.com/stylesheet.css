@@ -15,3 +15,22 @@ blockquote {
   color: #656d76;
   border-left: .25em solid #d0d7de;
 }
+
+/* 表格样式 */
+table {
+  border-collapse: collapse;
+}
+
+/* 表头样式 */
+th {
+  border: 2px solid rgb(0, 0, 0); /* 边框颜色和粗细 */
+  padding: 8px;
+  text-align: center;
+}
+
+/* 单元格样式 */
+td {
+  border: 2px solid rgb(0, 0, 0);
+  padding: 8px;
+  text-align: center;
+}
