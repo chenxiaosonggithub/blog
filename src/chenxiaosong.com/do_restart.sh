@@ -14,11 +14,12 @@ config_file=/etc/nginx/sites-enabled/default
 copy_config() {
     rm ${config_file}
     cp ${src_path}/blog/src/chenxiaosong.com/nginx-config ${config_file}
-    if [ ${is_public_ip} = false ]; then
+    if [ ${is_public_ip} = true ]; then
+        cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
+    else
         # 局域网删除ssl相关配置
         sed -i '/# ssl begin/,/# ssl end/d' ${config_file} # 只能按行为单位删除
     fi
-    cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
 }
 
 replace_lan_ip() {
