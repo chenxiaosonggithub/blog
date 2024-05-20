@@ -26,11 +26,10 @@ replace_lan_ip() {
     # 部署在局域网
     if [ ${is_public_ip} = false ]; then
         bash ${src_path}/private-blog/scripts/create-html.sh
-        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong.com/'${lan_ip}'/g' {} +
-        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/https:\/\/'${lan_ip}'/http:\/\/'${lan_ip}'/g' {} +
+        find ${dst_path}/ -type f -exec sed -i 's/chenxiaosong.com/'${lan_ip}'/g' {} +
+        find ${dst_path}/ -type f -exec sed -i 's/https:\/\/'${lan_ip}'/http:\/\/'${lan_ip}'/g' {} +
         # 邮箱替换回来
-        find ${dst_path}/ -type f -name '*.html' -exec sed -i 's/chenxiaosong@'${lan_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
-        sed -i 's/chenxiaosong.com/'${lan_ip}'/g' /etc/nginx/sites-enabled/default
+        find ${dst_path}/ -type f -exec sed -i 's/chenxiaosong@'${lan_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
     fi
 }
 
