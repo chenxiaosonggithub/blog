@@ -1,5 +1,3 @@
-[点击这里在哔哩哔哩bilibili在线观看配套视频](https://www.bilibili.com/video/BV1Pz421k7K9/)。
-
 现在有3台电脑：
 ```
 1. 局域网电脑 private-server

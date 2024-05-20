@@ -1,7 +1,5 @@
 这篇文章记录一下我是如何搭建[我那个简陋的个人网站](https://chenxiaosong.com/)，以及怎么拥有个人域名后缀的邮箱。各位朋友如果有更好的建议，请务必联系我。
 
-[点击这里在哔哩哔哩bilibili在线观看配套的教学视频](https://www.bilibili.com/video/BV1Di421f76B/)。
-
 # 域名和公网ip
 
 首先，得先申请个域名，比如《你的名字拼音全拼.com》，可以在[阿里云](https://dc.console.aliyun.com/next/index?spm=5176.100251.console-base.ddomain.17894f15m8MjuR#/overview)、腾讯云等平台注册申请。然后还要有一台有公网ip的服务器，我用的是[阿里云的服务器](https://ecs.console.aliyun.com/home#/)。再把这个域名对应到这个公网ip上。
