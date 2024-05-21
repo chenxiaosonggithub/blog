@@ -840,7 +840,7 @@ mount
 - [内核仓库ext2文档](https://www.kernel.org/doc/html/latest/filesystems/ext2.html)
 - [ext4 wiki](https://ext4.wiki.kernel.org/index.php/Main_Page)
 
-## 物理结构
+## 磁盘数据结构
 
 ### 块组
 
@@ -891,7 +891,7 @@ struct ext2_super_block {
 	__le16	s_mnt_count;		/* Mount count，挂载次数 */
 	__le16	s_max_mnt_count;	/* Maximal mount count，检查之前挂载操作的次数 */
 	__le16	s_magic;		/* Magic signature，幻数 */
-	__le16	s_state;		/* File system state，状态标志,挂载时为0，正常卸载为1，错误为2 */
+	__le16	s_state;		/* File system state，状态标志,挂载时为0，正常卸载为1(EXT2_VALID_FS)，错误为2(EXT2_ERROR_FS) */
 	__le16	s_errors;		/* Behaviour when detecting errors，检测到错误的行为 */
 	__le16	s_minor_rev_level; 	/* minor revision level，次版本号 */
 	__le32	s_lastcheck;		/* time of last check，最后检查的时间 */
@@ -977,7 +977,7 @@ struct ext2_group_desc
  * Structure of an inode on the disk
  */
 struct ext2_inode {
-	__le16	i_mode;		/* File mode，文件类型和访问权限 */
+	__le16	i_mode;		/* File mode，文件类型和访问权限，查看S_ISREG()等函数 */
 	__le16	i_uid;		/* Low 16 bits of Owner Uid，拥有者id */
 	// 文件长度，最高位没使用，最大表示2GB文件，大于2GB文件再使用i_dir_acl字段
 	__le32	i_size;		/* Size in bytes */
@@ -1047,7 +1047,32 @@ struct ext2_xattr_entry {
 };
 ```
 
-### 
+### 各种文件类型的存储
+
+普通文件刚创建时是空的，不需要数据块，可以用`truncate()`或`open()`系统调用清空，如输入命令`> filename`。
+
+设备文件、管道、套接字所有信息都存放在inode中。
+
+符号链接名小于60个字符就放到`struct ext2_inode`的`i_block`数组中（15个4字节），如果大于60个字符就存到单独数据块中。
+
+最后重点讲一下目录的存储，数据块包含`ext2_dir_entry_2`结构：
+```c
+/*
+ * 目录项的新版本。由于EXT2结构以英特尔字节顺序存储，并且name_len字段永远不可能大于255个字符，因此可以安全地将额外的一个字节重新分配给file_type字段。
+ */
+struct ext2_dir_entry_2 {
+	__le32	inode;			/* Inode number，索引节点号 */
+	__le16	rec_len;		/* Directory entry length，目录项长度，总是4的倍数 */
+	__u8	name_len;		/* Name length，文件名长度 */
+	__u8	file_type; // 文件类型，struct ext2_dir_entry中没有
+	char	name[];			/* File name, up to EXT2_NAME_LEN，文件名，最大255字节 */
+};
+```
+
+我们举个例子，刚格式化完ext2，创建目录`mkdir dir`，创建文件`touch file`、创建软链接`ln -s file link`
+```sh
+
+```
 
 ### 工具软件
 
