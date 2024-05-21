@@ -833,7 +833,7 @@ mount
 
 # ext2文件系统
 
-英文全称Extended file system，翻译为扩展文件系统。Linux内核最开始用的是minix文件系统，直到1992年4月，Rémy Card开发了ext文件系统，采用Unix文件系统（UFS）的元数据结构，在linux内核0.96c版中引入。设计上参考了BSD的快速文件系统（Fast File System，简称FFS）。
+英文全称Extended file system，翻译为扩展文件系统。Linux内核最开始用的是minix文件系统，直到1992年4月，Rémy Card开发了ext文件系统，采用Unix文件系统（UFS）的元数据结构，在linux内核0.96c版中引入。设计上参考了BSD的快速文件系统（Fast File System，简称FFS）。1993年1月0.99版本中ext2合入内核，	2001年11月2.4.15版本中ext3合入内核，2006年10月10日2.6.19版本中ext4合入内核。
 
 相关文档网站：
 
@@ -846,7 +846,7 @@ mount
 
 块组（block group）的内容如下:
 
-|  超级块   | 组描<br>述符  | 数据位图 | inode<br>位图 | inode表 | 数据块 |
+|  超级块   | 组描<br>述符  | 数据块位图 | inode<br>位图 | inode表 | 数据块 |
 |  ----    | ----         | ---     | ---         | ---      | --- |
 | 1个块    | k个块         |  1个块 |     1个块       | n个块   | m个块 |
 
@@ -866,14 +866,172 @@ mount
 - inode表：块组中的inode
 - 数据块：文件的有用数据
 
+举个例子，`32GB`的磁盘整个盘格式化为ext2文件系统，块大小为`4KB`，1个块大小的数据块位图描述`8*4K=32K`个数据块，也就是`32K*4KB=128MB`，大约有`32*1024MB/128MB=256`个块组。总块数为`total`，块大小为`bsize`字节，块组的总数约为`total/(8*bsize)`，套到上面的例子，就是`total=32*1024MB/4KB=8192K`，块组的总数约为`8192K/(8*4K)=256`个。`bsize`越小，块组数越大。
+
 ### 超级块
 
 ```c
+/*
+ * Structure of the super block
+ */
+struct ext2_super_block {
+	__le32	s_inodes_count;		/* Inodes count，索引节点总数 */
+	__le32	s_blocks_count;		/* Blocks count，块总数 */
+	__le32	s_r_blocks_count;	/* Reserved blocks count，保留的块数 */
+	__le32	s_free_blocks_count;	/* Free blocks count，空闲块计数器 */
+	__le32	s_free_inodes_count;	/* Free inodes count，空闲索引节点计数器 */
+	__le32	s_first_data_block;	/* First Data Block，第一个使用的块号，总是为1 */
+	__le32	s_log_block_size;	/* Block size，块大小，对数表示，值为0时表示2^0*1024=1024，值为1时表示2^1*1024=2048,值为2时表示2^2*1024=4096 */
+	__le32	s_log_frag_size;	/* Fragment size，片大小 */
+	__le32	s_blocks_per_group;	/* # Blocks per group，每组中的块数 */
+	__le32	s_frags_per_group;	/* # Fragments per group，每组中的片数 */
+	__le32	s_inodes_per_group;	/* # Inodes per group，每组中的索引节点数 */
+	__le32	s_mtime;		/* Mount time，最后一次挂载时间 */
+	__le32	s_wtime;		/* Write time，写时间 */
+	__le16	s_mnt_count;		/* Mount count，挂载次数 */
+	__le16	s_max_mnt_count;	/* Maximal mount count，检查之前挂载操作的次数 */
+	__le16	s_magic;		/* Magic signature，幻数 */
+	__le16	s_state;		/* File system state，状态标志,挂载时为0，正常卸载为1，错误为2 */
+	__le16	s_errors;		/* Behaviour when detecting errors，检测到错误的行为 */
+	__le16	s_minor_rev_level; 	/* minor revision level，次版本号 */
+	__le32	s_lastcheck;		/* time of last check，最后检查的时间 */
+	__le32	s_checkinterval;	/* max. time between checks，检查间隔 */
+	__le32	s_creator_os;		/* OS，在什么操作系统上格式化的 */
+	__le32	s_rev_level;		/* Revision level，主版本号 */
+	__le16	s_def_resuid;		/* Default uid for reserved blocks，保留块的默认uid */
+	__le16	s_def_resgid;		/* Default gid for reserved blocks，保留块默认gid */
+	/*
+	 * These fields are for EXT2_DYNAMIC_REV superblocks only.
+	 *
+	 * Note: the difference between the compatible feature set and
+	 * the incompatible feature set is that if there is a bit set
+	 * in the incompatible feature set that the kernel doesn't
+	 * know about, it should refuse to mount the filesystem.
+	 * 
+	 * e2fsck's requirements are more strict; if it doesn't know
+	 * about a feature in either the compatible or incompatible
+	 * feature set, it must abort and not try to meddle with
+	 * things it doesn't understand...
+	 */
+	__le32	s_first_ino; 		/* First non-reserved inode，第一个非保留的索引节点号 */
+	__le16   s_inode_size; 		/* size of inode structure，磁盘索引节点大小 */
+	__le16	s_block_group_nr; 	/* block group # of this superblock，超级块块组号 */
+	__le32	s_feature_compat; 	/* compatible feature set，兼容特性 */
+	__le32	s_feature_incompat; 	/* incompatible feature set，非兼容特性 */
+	__le32	s_feature_ro_compat; 	/* readonly-compatible feature set，只读兼容特性 */
+	__u8	s_uuid[16];		/* 128-bit uuid for volume，文件系统标识符 */
+	char	s_volume_name[16]; 	/* volume name，卷名 */
+	char	s_last_mounted[64]; 	/* directory where last mounted，最后挂载点路径 */
+	__le32	s_algorithm_usage_bitmap; /* For compression，压缩 */
+	/*
+	 * Performance hints.  Directory preallocation should only
+	 * happen if the EXT2_COMPAT_PREALLOC flag is on.
+	 */
+	__u8	s_prealloc_blocks;	/* Nr of blocks to try to preallocate，预分配的块数 */
+	__u8	s_prealloc_dir_blocks;	/* Nr to preallocate for dirs，为目录预分配的块数 */
+	__u16	s_padding1; // 对齐用的
+	/*
+	 * Journaling support valid if EXT3_FEATURE_COMPAT_HAS_JOURNAL set. 日志相关
+	 */
+	__u8	s_journal_uuid[16];	/* uuid of journal superblock */
+	__u32	s_journal_inum;		/* inode number of journal file */
+	__u32	s_journal_dev;		/* device number of journal file */
+	__u32	s_last_orphan;		/* start of list of inodes to delete */
+	__u32	s_hash_seed[4];		/* HTREE hash seed */
+	__u8	s_def_hash_version;	/* Default hash version to use */
+	__u8	s_reserved_char_pad;
+	__u16	s_reserved_word_pad;
+	__le32	s_default_mount_opts;
+ 	__le32	s_first_meta_bg; 	/* First metablock block group */
+	__u32	s_reserved[190];	/* Padding to the end of the block */
+};
+```
 
+### 组描述符
+
+```c
+/*
+ * Structure of a blocks group descriptor
+ */
+struct ext2_group_desc
+{
+	__le32	bg_block_bitmap;		/* Blocks bitmap block，数据块位图所在的块号 */
+	__le32	bg_inode_bitmap;		/* Inodes bitmap block，inode位图所在的块号 */
+	__le32	bg_inode_table;		/* Inodes table block，inode表所在的起始块号 */
+	__le16	bg_free_blocks_count;	/* Free blocks count，组中空闲块个数 */
+	__le16	bg_free_inodes_count;	/* Free inodes count，组中空闲索引节点数 */
+	__le16	bg_used_dirs_count;	/* Directories count，组中目录数 */
+	__le16	bg_pad;
+	__le32	bg_reserved[3];
+};
+```
+
+### inode表
+
+`struct ext2_group_desc`的`bg_inode_table`表示inode表所在的起始块号，磁盘索引节点固定128字节，1024块大小包含8个inode，4096包含32个inode。
+
+```c
+/*
+ * Structure of an inode on the disk
+ */
+struct ext2_inode {
+	__le16	i_mode;		/* File mode，文件类型和访问权限 */
+	__le16	i_uid;		/* Low 16 bits of Owner Uid，拥有者id */
+	__le32	i_size;		/* Size in bytes，文件长度 */
+	__le32	i_atime;	/* Access time，访问时间 */
+	__le32	i_ctime;	/* Creation time，索引节点最后改变时间 */
+	__le32	i_mtime;	/* Modification time，文件数据最后改变时间 */
+	__le32	i_dtime;	/* Deletion Time，删除时间 */
+	__le16	i_gid;		/* Low 16 bits of Group Id，用户组id */
+	__le16	i_links_count;	/* Links count，硬链接计数 */
+	__le32	i_blocks;	/* Blocks count，数据块数 */
+	__le32	i_flags;	/* File flags，文件标志 */
+	union {
+		struct {
+			__le32  l_i_reserved1;
+		} linux1;
+		struct {
+			__le32  h_i_translator;
+		} hurd1;
+		struct {
+			__le32  m_i_reserved1;
+		} masix1;
+	} osd1;				/* OS dependent 1，特定操作系统信息 */
+	// 数据块指针，指向15个块，前12个指向数据，第13个一次间接地址，第14个二次间接地址，第15个三次间接地址
+	__le32	i_block[EXT2_N_BLOCKS];/* Pointers to blocks */
+	__le32	i_generation;	/* File version (for NFS)，文件版本，给nfs用的 */
+	__le32	i_file_acl;	/* File ACL，访问控制列表 */
+	__le32	i_dir_acl;	/* Directory ACL，目录访问控制列表 */
+	__le32	i_faddr;	/* Fragment address，片地址 */
+	union {
+		struct {
+			__u8	l_i_frag;	/* Fragment number */
+			__u8	l_i_fsize;	/* Fragment size */
+			__u16	i_pad1;
+			__le16	l_i_uid_high;	/* these 2 fields    */
+			__le16	l_i_gid_high;	/* were reserved2[0] */
+			__u32	l_i_reserved2;
+		} linux2;
+		struct {
+			__u8	h_i_frag;	/* Fragment number */
+			__u8	h_i_fsize;	/* Fragment size */
+			__le16	h_i_mode_high;
+			__le16	h_i_uid_high;
+			__le16	h_i_gid_high;
+			__le32	h_i_author;
+		} hurd2;
+		struct {
+			__u8	m_i_frag;	/* Fragment number */
+			__u8	m_i_fsize;	/* Fragment size */
+			__u16	m_pad1;
+			__u32	m_i_reserved2[2];
+		} masix2;
+	} osd2;				/* OS dependent 2，特定文件系统信息 */
+};
 ```
 
 ### 间接（indirection）
 
 ### 工具软件
 
-`defrag.ext2`
+`defrag.ext2` `e2fsck` 
