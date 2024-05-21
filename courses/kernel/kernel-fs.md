@@ -861,7 +861,7 @@ mount
 
 - 超级块：存储文件系统自身元数据
 - 组描述符：包含所有块组的状态
-- 数据块位图：每个bit表示对应的数据块是否空闲
+- 数据块位图：每个bit表示对应的数据块是否空闲，1表示占用，0表示空闲
 - inode位图：每个bit表示对应的inode是否空闲
 - inode表：块组中的inode
 - 数据块：文件的有用数据
@@ -968,7 +968,9 @@ struct ext2_group_desc
 
 ### inode表
 
-`struct ext2_group_desc`的`bg_inode_table`表示inode表所在的起始块号，磁盘索引节点固定128字节，1024块大小包含8个inode，4096包含32个inode。
+`struct ext2_group_desc`的`bg_inode_table`表示inode表所在的起始块号，磁盘索引节点固定128字节（可以在gdb中打印`p sizeof(struct ext2_inode)`），1024字节块大小包含8个inode，4096字节块大小包含32个inode。
+
+注意没有索引节点号，因为可以通过计算出来，比如块大小为4096字节，块组中inode位图占用一个块，一个块组的inode个数为4096，索引节点12345在磁盘上的位置可以这样计算`12345/4096=3余57`，所以在第3个块组（从块组0开始算）中索引节点表中的第57个表项。
 
 ```c
 /*
@@ -977,14 +979,15 @@ struct ext2_group_desc
 struct ext2_inode {
 	__le16	i_mode;		/* File mode，文件类型和访问权限 */
 	__le16	i_uid;		/* Low 16 bits of Owner Uid，拥有者id */
-	__le32	i_size;		/* Size in bytes，文件长度 */
+	// 文件长度，最高位没使用，最大表示2GB文件，大于2GB文件再使用i_dir_acl字段
+	__le32	i_size;		/* Size in bytes */
 	__le32	i_atime;	/* Access time，访问时间 */
 	__le32	i_ctime;	/* Creation time，索引节点最后改变时间 */
 	__le32	i_mtime;	/* Modification time，文件数据最后改变时间 */
 	__le32	i_dtime;	/* Deletion Time，删除时间 */
 	__le16	i_gid;		/* Low 16 bits of Group Id，用户组id */
 	__le16	i_links_count;	/* Links count，硬链接计数 */
-	__le32	i_blocks;	/* Blocks count，数据块数 */
+	__le32	i_blocks;	/* Blocks count，数据块数，以512字节为单位 */
 	__le32	i_flags;	/* File flags，文件标志 */
 	union {
 		struct {
@@ -997,10 +1000,11 @@ struct ext2_inode {
 			__le32  m_i_reserved1;
 		} masix1;
 	} osd1;				/* OS dependent 1，特定操作系统信息 */
-	// 数据块指针，指向15个块，前12个指向数据，第13个一次间接地址，第14个二次间接地址，第15个三次间接地址
+	// i_block 数据块指针，指向15个块，前12个指向数据，第13个一次间接地址，第14个二次间接地址，第15个三次间接地址
 	__le32	i_block[EXT2_N_BLOCKS];/* Pointers to blocks */
 	__le32	i_generation;	/* File version (for NFS)，文件版本，给nfs用的 */
-	__le32	i_file_acl;	/* File ACL，访问控制列表 */
+	// i_file_acl 访问控制列表，指向一个存放增强属性的块，其他inode如果增强属性一样，可以共享同一个块
+	__le32	i_file_acl;	/* File ACL */
 	__le32	i_dir_acl;	/* Directory ACL，目录访问控制列表 */
 	__le32	i_faddr;	/* Fragment address，片地址 */
 	union {
@@ -1030,7 +1034,20 @@ struct ext2_inode {
 };
 ```
 
-### 间接（indirection）
+`i_file_acl`指向一个存放增强属性的块，其他inode如果增强属性一样，可以共享同一个块，系统调用`setxattr()`、`lsetxattr()`、`fsetxattr()`设置文件增强属性，`getxattr()`、`lgetxattr()`、`fgetxattr()`返回文件增强属性，`listxattr()`、`llistxattr()`、`flistxattr()`列出文件所有增强属性。这些系统调用是通过	`chacl()`、`setfacl()`、`getfacl()`调用的。没有正式成为POSIX标准。
+```c
+struct ext2_xattr_entry {
+	__u8	e_name_len;	/* length of name */
+	__u8	e_name_index;	/* attribute name index */
+	__le16	e_value_offs;	/* offset in disk block of value */
+	__le32	e_value_block;	/* disk block attribute is stored on (n/i) */
+	__le32	e_value_size;	/* size of attribute value */
+	__le32	e_hash;		/* hash value of name and value */
+	char	e_name[];	/* attribute name，可变数组/柔性数组/零长度数组 */
+};
+```
+
+### 
 
 ### 工具软件
 
