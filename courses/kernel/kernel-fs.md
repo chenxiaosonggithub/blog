@@ -1133,7 +1133,7 @@ struct ext2_sb_info {
         unsigned long s_groups_count;   /* Number of groups in the fs */
         unsigned long s_overhead_last;  /* Last calculated overhead */
         unsigned long s_blocks_last;    /* Last seen block count */
-        // 指向包含磁盘超级块的缓冲区的缓冲区首部
+        // 包含磁盘超级块的缓冲区的缓冲区头
         struct buffer_head * s_sbh;     /* Buffer containing the super block */
         // 指向磁盘超级块所在的缓冲区
         struct ext2_super_block * s_es; /* Pointer to the super block in the buffer */
@@ -1174,6 +1174,33 @@ struct ext2_sb_info {
         struct dax_device *s_daxdev;
         u64 s_dax_part_off;
 };
+```
+
+各个数据结构之间的关系如下图：
+```sh
+                                   ext2 partition
+                                       +-------+----------+----------+----------+
+                                       | super |group     |group     |group     |
+                                       | block |descriptor|descriptor|descriptor|
+                                       +-------+----------+----------+----------+
+                                           ^         ^          ^            ^
+                                           |         |          |            |
+                                           |         +------+   +--------+   +----------+
+                                           |                |            |              |
+                                     +-----------+     +-----------+ +-----------+ +-----------+
+ +---------------------+             |  buffer   |     |  buffer   | |  buffer   | |  buffer   |
+ |   super_block       |        +--->+-----------+     +-----------+ +-----------+ +-----------+
+ |                     |        |         ^                 ^             ^             ^
+ |    s_fs_info        |        |         |b_data           |b_data       |b_data       |b_data
+ | +--------------+----|--s_es--+         |                 |             |             |  
+ | | ext2_sb_info |----|----s_sbh--->+-----------+    +-----------------------------------------+
+ | +--------------+    |             |buffer_head|    |+-----------+ +-----------+ +-----------+|
+ |           |         |             +-----------+    ||buffer_head| |buffer_head| |buffer_head||
+ +---------------------+                              |+-----------+ +-----------+ +-----------+|
+             |                                        +-----------------------------------------+
+          s_group_desc                                              ^
+             |                                                      |
+             +------------------------------------------------------+
 ```
 
 ## 工具软件

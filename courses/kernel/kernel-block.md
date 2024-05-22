@@ -15,7 +15,7 @@ struct buffer_head {
         unsigned long b_state;          /* buffer state bitmap (see above)，缓冲区状态标志，查看枚举bh_state_bits */
         struct buffer_head *b_this_page;/* circular list of page's buffers,页中的缓冲区 */
         union {
-                struct page *b_page;    /* the page this bh is mapped to，存储缓冲区的page */
+                struct page *b_page;    /* the page this bh is mapped to，存储b_data数据的page */
                 struct folio *b_folio;  /* the folio this bh is mapped to */
         };
 
