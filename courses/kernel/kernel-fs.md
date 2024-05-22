@@ -608,16 +608,16 @@ struct file_system_type {
 #define FS_HAS_SUBTYPE          4
 #define FS_USERNS_MOUNT         8       /* Can be mounted by userns root */
 #define FS_DISALLOW_NOTIFY_PERM 16      /* Disable fanotify permission events */
-#define FS_ALLOW_IDMAP         32      /* FS has been updated to handle vfs idmappings. */
+#define FS_ALLOW_IDMAP         32       /* FS has been updated to handle vfs idmappings. */
 #define FS_RENAME_DOES_D_MOVE   32768   /* FS will handle d_move() during rename() internally. */
         int (*init_fs_context)(struct fs_context *);
         const struct fs_parameter_spec *parameters;
         struct dentry *(*mount) (struct file_system_type *, int, // 从磁盘中读取超级块
                        const char *, void *);
-        void (*kill_sb) (struct super_block *); // 终止访问超级块
+        void (*kill_sb) (struct super_block *);   // 终止访问超级块
         struct module *owner; // 文件系统模块
         struct file_system_type * next; // 链表中下一个文件系统类型
-        struct hlist_head fs_supers; // 超级块对象链表
+        struct hlist_head fs_supers;    // 超级块对象链表
 
         // 运行时使锁生效
         struct lock_class_key s_lock_key;
@@ -636,9 +636,9 @@ struct file_system_type {
 
 ```c
 struct mount {
-        struct hlist_node mnt_hash; // 散列表
-        struct mount *mnt_parent; // 父文件系统
-        struct dentry *mnt_mountpoint; // 挂载点的目录项
+        struct hlist_node mnt_hash;     // 散列表
+        struct mount *mnt_parent;       // 父文件系统
+        struct dentry *mnt_mountpoint;  // 挂载点的目录项
         struct vfsmount mnt;
         union {
                 struct rcu_head mnt_rcu;
@@ -647,14 +647,14 @@ struct mount {
 #ifdef CONFIG_SMP
         struct mnt_pcp __percpu *mnt_pcp;
 #else
-        int mnt_count; // 引用计数
+        int mnt_count;   // 引用计数
         int mnt_writers; // 写者引用计数
 #endif
         struct list_head mnt_mounts;    /* list of children, anchored here，子文件系统链表 */
         struct list_head mnt_child;     /* and going through their mnt_child，子文件系统链表 */
         struct list_head mnt_instance;  /* mount instance on sb->s_mounts */
         const char *mnt_devname;        /* Name of device e.g. /dev/dsk/hda1，设备文件名 */
-        struct list_head mnt_list; // 描述符链表
+        struct list_head mnt_list;      // 描述符链表
         struct list_head mnt_expire;    /* link in fs-specific expiry list，在到期链表的位置 */
         struct list_head mnt_share;     /* circular list of shared mounts，在共享安装链表的位置 */
         struct list_head mnt_slave_list;/* list of slave mounts，从安装链表 */
@@ -681,7 +681,7 @@ struct mount {
 struct vfsmount {
         struct dentry *mnt_root;        /* root of the mounted tree，该文件系统的根目录项 */
         struct super_block *mnt_sb;     /* pointer to superblock，超级块 */
-        int mnt_flags; // 挂载标志, MNT_NOSUID 等
+        int mnt_flags;                  // 挂载标志, MNT_NOSUID 等
         struct mnt_idmap *mnt_idmap;
 } __randomize_layout;
 ```
@@ -695,21 +695,21 @@ struct files_struct {
   /*
    * read mostly part
    */
-        atomic_t count; // 引用计数
+        atomic_t count;             // 引用计数
         bool resize_in_progress;
         wait_queue_head_t resize_wait;
 
-        struct fdtable __rcu *fdt; // 如果打开的文件数大于NR_OPEN_DEFAULT，分配一个新数组
-        struct fdtable fdtab; // 基fd表
+        struct fdtable __rcu *fdt;  // 如果打开的文件数大于NR_OPEN_DEFAULT，分配一个新数组
+        struct fdtable fdtab;       // 基fd表
   /*
    * written part on a separate cache line in SMP
    */
-        spinlock_t file_lock ____cacheline_aligned_in_smp; // 单个文件的锁
-        unsigned int next_fd; // 缓存下一个可用的fd
-        unsigned long close_on_exec_init[1]; // exec()时关闭的fd链表
-        unsigned long open_fds_init[1]; // 打开的fd链表
+        spinlock_t file_lock ____cacheline_aligned_in_smp;  // 单个文件的锁
+        unsigned int next_fd;                               // 缓存下一个可用的fd
+        unsigned long close_on_exec_init[1];                // exec()时关闭的fd链表
+        unsigned long open_fds_init[1];                     // 打开的fd链表
         unsigned long full_fds_bits_init[1];
-        struct file __rcu * fd_array[NR_OPEN_DEFAULT]; // 默认的文件对象数组
+        struct file __rcu * fd_array[NR_OPEN_DEFAULT];      // 默认的文件对象数组
 };
 ```
 
@@ -717,13 +717,13 @@ struct files_struct {
 
 ```c
 struct fs_struct {
-        int users; // 用户数目
-        spinlock_t lock; // 保护该结构体的锁
+        int users;              // 用户数目
+        spinlock_t lock;        // 保护该结构体的锁
         seqcount_spinlock_t seq;
-        int umask; // 掩码
-        int in_exec; // 当前正在执行的文件
-        struct path root; // 根目录路径
-        struct path pwd; // 当前工作目录的路径
+        int umask;              // 掩码
+        int in_exec;            // 当前正在执行的文件
+        struct path root;       // 根目录路径
+        struct path pwd;        // 当前工作目录的路径
 } __randomize_layout;
 ```
 
@@ -955,8 +955,8 @@ struct ext2_super_block {
  */
 struct ext2_group_desc
 {
-        __le32  bg_block_bitmap;                /* Blocks bitmap block，数据块位图所在的块号 */
-        __le32  bg_inode_bitmap;                /* Inodes bitmap block，inode位图所在的块号 */
+        __le32  bg_block_bitmap;        /* Blocks bitmap block，数据块位图所在的块号 */
+        __le32  bg_inode_bitmap;        /* Inodes bitmap block，inode位图所在的块号 */
         __le32  bg_inode_table;         /* Inodes table block，inode表所在的起始块号 */
         __le16  bg_free_blocks_count;   /* Free blocks count，组中空闲块个数 */
         __le16  bg_free_inodes_count;   /* Free inodes count，组中空闲索引节点数 */
@@ -1078,7 +1078,7 @@ struct ext2_dir_entry_2 {
         __le32  inode;                  /* Inode number，索引节点号 */
         __le16  rec_len;                /* Directory entry length，目录项长度，总是4的倍数 */
         __u8    name_len;               /* Name length，文件名长度 */
-        __u8    file_type;      // 文件类型，struct ext2_dir_entry中没有
+        __u8    file_type;              // 文件类型，struct ext2_dir_entry中没有
         char    name[];                 /* File name, up to EXT2_NAME_LEN，文件名，最大255字节 */
 };
 ```
