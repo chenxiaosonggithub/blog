@@ -18,7 +18,7 @@
 -device scsi-hd,drive=dd_1,id=disk_1,logical_block_size=512,physical_block_size=512 \
 ```
 
-然后在`${HOME}/qemu-kernel/`目录下创建一个1G的空文件：
+然后在`${HOME}/qemu-kernel/`目录下创建一个文件：
 ```sh
 fallocate -l 1G 1
 ```
@@ -1089,7 +1089,7 @@ struct ext2_dir_entry_2 {
                                  |
                     name_len--+  |
                               |  |
-  address       inode rec_len |  |   name
+  address     inode   rec_len |  |   name
           +--+--+--+--|--+--|--|--|--+--+--+--+
         0 |      2    |  12 | 1| 2| . \0 \0 \0|
           +--+--+--+--|--+--|--|--|--+--+--+--+
@@ -1105,6 +1105,77 @@ struct ext2_dir_entry_2 {
           +--+--+--+--|--+--|--|--|--+--+--+--+
 ```
 
-### 工具软件
+## 内存数据结构
+
+磁盘和内存数据结构的关系如下，动态缓存指文件关闭或数据块被删除后页框回收算法从高速缓存中删除数据：
+
+- 超级块：磁盘`ext2_super_block`，内存`ext2_sb_info`，总是缓存
+- 组描述符：磁盘和内存都是`ext2_group_desc`，总是缓存
+- 块位图和inode位图：磁盘是块中的位数组，内存是缓冲区中的位数组，动态缓存
+- 索引节点：磁盘`ext2_inode`，内存`ext2_inode_info`，动态缓存，空闲索引节点从不缓存
+- 数据块：磁盘是字节数组，内存是VFS缓冲区，动态缓存，空闲块从不缓存
+
+### 超级块
+
+VFS的`struct super_block`中的`s_fs_info`指向`struct ext2_sb_info`类型的结构：
+```c
+/*
+ * second extended-fs super-block data in memory
+ */
+struct ext2_sb_info {
+        unsigned long s_inodes_per_block;/* Number of inodes per block */
+        unsigned long s_blocks_per_group;/* Number of blocks in a group */
+        unsigned long s_inodes_per_group;/* Number of inodes in a group */
+        unsigned long s_itb_per_group;  /* Number of inode table blocks per group */
+        unsigned long s_gdb_count;      /* Number of group descriptor blocks */
+        // 组描述符的个数，可以放在一个块中
+        unsigned long s_desc_per_block; /* Number of group descriptors per block */
+        unsigned long s_groups_count;   /* Number of groups in the fs */
+        unsigned long s_overhead_last;  /* Last calculated overhead */
+        unsigned long s_blocks_last;    /* Last seen block count */
+        // 指向包含磁盘超级块的缓冲区的缓冲区首部
+        struct buffer_head * s_sbh;     /* Buffer containing the super block */
+        // 指向磁盘超级块所在的缓冲区
+        struct ext2_super_block * s_es; /* Pointer to the super block in the buffer */
+        // 指向一个缓冲区（包含组描述符的缓冲区）首部数组
+        struct buffer_head ** s_group_desc;
+        unsigned long  s_mount_opt;
+        unsigned long s_sb_block;
+        kuid_t s_resuid;
+        kgid_t s_resgid;
+        unsigned short s_mount_state;
+        unsigned short s_pad;
+        int s_addr_per_block_bits;
+        int s_desc_per_block_bits;
+        int s_inode_size;
+        int s_first_ino;
+        spinlock_t s_next_gen_lock;
+        u32 s_next_generation;
+        unsigned long s_dir_count;
+        u8 *s_debts;
+        struct percpu_counter s_freeblocks_counter;
+        struct percpu_counter s_freeinodes_counter;
+        struct percpu_counter s_dirs_counter;
+        struct blockgroup_lock *s_blockgroup_lock;
+        /* root of the per fs reservation window tree */
+        spinlock_t s_rsv_window_lock;
+        struct rb_root s_rsv_window_root;
+        struct ext2_reserve_window_node s_rsv_window_head;
+        /*
+         * s_lock protects against concurrent modifications of s_mount_state,
+         * s_blocks_last, s_overhead_last and the content of superblock's
+         * buffer pointed to by sbi->s_es.
+         *
+         * Note: It is used in ext2_show_options() to provide a consistent view
+         * of the mount options.
+         */
+        spinlock_t s_lock;
+        struct mb_cache *s_ea_block_cache;
+        struct dax_device *s_daxdev;
+        u64 s_dax_part_off;
+};
+```
+
+## 工具软件
 
 `defrag.ext2` `e2fsck` 
