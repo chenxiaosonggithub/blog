@@ -1203,6 +1203,86 @@ struct ext2_sb_info {
              +------------------------------------------------------+
 ```
 
+挂载时`ext2_fill_super()`从磁盘读取超级块。
+
+### 索引节点
+
+```c
+/*
+ * second extended file system inode data in memory
+ */
+struct ext2_inode_info {
+        __le32  i_data[15];
+        __u32   i_flags;
+        __u32   i_faddr;
+        __u8    i_frag_no;
+        __u8    i_frag_size;
+        __u16   i_state;
+        __u32   i_file_acl;
+        __u32   i_dir_acl;
+        __u32   i_dtime;
+
+        /*
+         * i_block_group 是包含此文件 inode 的块组的编号。
+         * 在 inode 的整个生命周期中保持不变，它用于进行块分配决策 - 
+         * 我们试图将文件的数据块放置在其 inode 块附近，并将新的 inode 放置在其父目录的 inode 附近。
+         */
+        __u32   i_block_group;
+
+        /* block reservation info */
+        struct ext2_block_alloc_info *i_block_alloc_info;
+
+        __u32   i_dir_start_lookup;
+#ifdef CONFIG_EXT2_FS_XATTR
+        /*
+         * 扩展属性可以独立于主文件数据进行读取。即使在读取时也获取 i_mutex 会导致扩展属性的读取者和常规文件数据的写入者之间产生竞争，
+         * 因此我们在读取或更改扩展属性时，会改为在 xattr_sem 上进行同步。
+         */
+        struct rw_semaphore xattr_sem;
+#endif
+        rwlock_t i_meta_lock;
+
+        /*
+         * truncate_mutex is for serialising ext2_truncate() against
+         * ext2_getblock().  It also protects the internals of the inode's
+         * reservation data structures: ext2_reserve_window and
+         * ext2_reserve_window_node.
+         */
+        struct mutex truncate_mutex;
+        struct inode    vfs_inode;      // 虚拟文件系统的索引节点
+        struct list_head i_orphan;      /* unlinked but open inodes */
+#ifdef CONFIG_QUOTA
+        struct dquot *i_dquot[MAXQUOTAS];
+#endif
+};
+
+struct ext2_block_alloc_info {                                                   
+        /* 预留窗口信息 */                               
+        struct ext2_reserve_window_node rsv_window_node;                         
+        /*                                                                       
+         * 是曾经 ext2_inode_info 结构中的 i_next_alloc_block 
+         * 是文件中最近分配的块的逻辑（文件相对）编号。
+         * 我们用这个来检测线性递增的分配请求。
+         */                                                                      
+        __u32                   last_alloc_logical_block;                        
+        /*                                                                       
+         * 曾是 ext2_inode_info 结构中的 i_next_alloc_goal                              
+         * 是 i_next_alloc_block 的物理对应项。它是最近分配给该文件的块的物理块编号。
+         * 当我们检测到线性递增的请求时，这为我们提供了下一次分配的目标。
+         */                                                                      
+        ext2_fsblk_t            last_alloc_physical_block;                       
+};                                                                               
+```
+
+由`ext2_alloc_inode()`分配索引节点对象。
+
+## 创建ext2文件系统
+
+<!-- 格式化 `superfortat` `fdformat` -->
+
+`mkfs.ext2 /dev/sda`相当于`mke2fs -t 2 -b 1024 -m 5`
+
 ## 工具软件
 
-`defrag.ext2` `e2fsck` 
+`defrag.ext2` `e2fsck`
+
