@@ -1203,7 +1203,9 @@ struct ext2_sb_info {
              +------------------------------------------------------+
 ```
 
-挂载时`ext2_fill_super()`从磁盘读取超级块。
+挂载时`struct file_system_type ext2_fs_type`的`ext2_mount()`方法再执行到`ext2_fill_super()`从磁盘读取超级块。
+
+ext2超级块的操作实现是`struct super_operations ext2_sops`。
 
 ### 索引节点
 
@@ -1229,7 +1231,7 @@ struct ext2_inode_info {
          */
         __u32   i_block_group;
 
-        /* block reservation info */
+        /* 块预读 */
         struct ext2_block_alloc_info *i_block_alloc_info;
 
         __u32   i_dir_start_lookup;
@@ -1274,15 +1276,39 @@ struct ext2_block_alloc_info {
 };                                                                               
 ```
 
-由`ext2_alloc_inode()`分配索引节点对象。
+由`struct super_operations ext2_sops`的`ext2_alloc_inode()`分配索引节点对象。
+
+ext2索引节点操作实现:
+
+- 常规文件: `struct inode_operations ext2_file_inode_operations`
+- 目录: `struct inode_operations ext2_dir_inode_operations`
+- 快速符号链接（路径名小于60字节）: `struct inode_operations ext2_fast_symlink_inode_operations`
+- 普通符号链接（路径名大于60字节）: `struct inode_operations ext2_symlink_inode_operations`
 
 ## 创建ext2文件系统
 
 <!-- 格式化 `superfortat` `fdformat` -->
 
-`mkfs.ext2 /dev/sda`相当于`mke2fs -t 2 -b 1024 -m 5`
+`mkfs.ext2 /dev/sda`相当于`mke2fs -t 2 -b 1024 -m 5`，块大小默认`1024`字节，保留块百分比默认`5%`，每`8192`字节设置一个索引节点，`lost+found`目录放丢失和找到的缺陷块。
+
+我们举个例子，一个2MB大小的磁盘（也可以打开内核配置`CONFIG_BLK_DEV_LOOP`然后对文件执行同样的操作），执行完以下命令：
+```sh
+mkfs.ext2 /dev/sda
+# od选项：以十六进制格式，每行输出一个字节，并且每个字节都输出其地址，具体查看命令 man 1 od
+dd if=/dev/sda bs=1K count=2048 | od -tx1 -Ax > image # 也可以试试 dumpesfs 和 debugfs
+```
+
+TODO
+
+## 管理磁盘空间
+
+创建索引节点 `ext2_new_inode()`，删除索引节点 `ext2_free_inode()`。
+
+当块大小为`1024`字节时，命令`echo -n something | dd of=file bs=1 seek=4098`创建一个有“洞”的文件，索引节点的`i_size`值为`4099`，但`i_blocks`的值为2，因为只占用1个块，1个块`1024`字节，以`512`为单位的`i_blocks`的值为2。`i_block[]`数组前4个元素值为0，第五个元素存放块号。
+
+分配数据块调用`ext2_get_block() -> ext2_alloc_blocks() -> ext2_new_blocks()`，释放数据块调用`ext2_free_blocks()`。
 
 ## 工具软件
 
-`defrag.ext2` `e2fsck`
+`defrag.ext2` `e2fsck` `dumpesfs` `debugfs`
 
