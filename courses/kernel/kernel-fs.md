@@ -1308,6 +1308,8 @@ TODO
 
 分配数据块调用`ext2_get_block() -> ext2_alloc_blocks() -> ext2_new_blocks()`，释放数据块调用`ext2_free_blocks()`。
 
+最后再讲一下数据块寻址，`inode`的`i_block[]`数组默认有15个元素，每个元素4字节，前12个直接指向存放数据的逻辑块（对应的文件块号是`0~11`）。第13个元素指向的是间接块，这个间接块上存了一个`bsize/4`个元素的数组（其中`bsize`表示块大小），对应的文件块号为`12~(11+bsize/4)`。第14个元素指向二级间接块，第15个元素指向三级间接块。
+
 ## 工具软件
 
 `defrag.ext2` `e2fsck` `dumpesfs` `debugfs`
