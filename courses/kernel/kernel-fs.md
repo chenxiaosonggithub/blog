@@ -855,7 +855,7 @@ mount
 | 启动块 | 块组0 | 块组1 | ... | 块组n |
 | ---   | ---  | ---   | --- | ---  |
 
-对于超级块的存储，ext2的后续版本ext4采用了稀疏超级块（sparse superblock）技术，超级块只存储到块组0、块组1和其他ID可以表示为3、5、7的幂的块组中，也就是0、1、3、5、7、9、25、49...
+对于超级块的存储，ext2的采用了稀疏超级块（sparse superblock）技术，超级块只存储到块组0、块组1和其他ID可以表示为3、5、7的幂的块组中，也就是0、1、3、5、7、9、25、49...
 
 块组中内容的解释：
 
@@ -1291,14 +1291,93 @@ ext2索引节点操作实现:
 
 `mkfs.ext2 /dev/sda`相当于`mke2fs -t 2 -b 1024 -m 5`，块大小默认`1024`字节，保留块百分比默认`5%`，每`8192`字节设置一个索引节点，`lost+found`目录放丢失和找到的缺陷块。
 
-我们举个例子，一个2MB大小的磁盘（也可以打开内核配置`CONFIG_BLK_DEV_LOOP`然后对文件执行同样的操作），执行完以下命令：
+我们举个例子，一个比较小的磁盘（也可以打开内核配置`CONFIG_BLK_DEV_LOOP`然后对文件执行同样的操作），执行完以下命令：
+<!--
 ```sh
-mkfs.ext2 /dev/sda
 # od选项：以十六进制格式，每行输出一个字节，并且每个字节都输出其地址，具体查看命令 man 1 od
-dd if=/dev/sda bs=1K count=2048 | od -tx1 -Ax > image # 也可以试试 debugfs
+# dd if=/dev/sda bs=1K count=2048 | od -tx1 -Ax > image # 也可以试试 debugfs
+```
+-->
+```sh
+mkfs.ext2 -F /dev/sda # 8412KB大小
+dd if=/dev/sda of=image bs=1K count=8412
+vim image # 然后输入 :%!xxd，当然也可以使用其他编辑器打开查看二进制数据
 ```
 
-TODO
+其中执行`mkfs.ext2`输出以下日志：
+```sh
+mke2fs 1.46.2 (28-Feb-2021)
+Discarding device blocks: done                            
+Creating filesystem with 8412 1k blocks and 2112 inodes
+Filesystem UUID: 13b5577a-898c-40e5-a9e6-c0a0dd2b8ab6
+Superblock backups stored on blocks: 
+        8193
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Writing superblocks and filesystem accounting information: done
+```
+
+通过`debugfs image`，然后输入`stats`查看到有2个块组（如果磁盘大小减小成`8411KB`，则只用1个块组）：
+```sh
+Filesystem volume name:   <none>
+Last mounted on:          <not available>
+Filesystem UUID:          13b5577a-898c-40e5-a9e6-c0a0dd2b8ab6
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      ext_attr resize_inode dir_index filetype sparse_super large_file
+Filesystem flags:         signed_directory_hash 
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              2112
+Block count:              8412
+Reserved block count:     420
+Overhead clusters:        337
+Free blocks:              8061
+Free inodes:              2101
+First block:              1
+Block size:               1024
+Fragment size:            1024
+Reserved GDT blocks:      32
+Blocks per group:         8192
+Fragments per group:      8192
+Inodes per group:         1056
+Inode blocks per group:   132
+Filesystem created:       Thu May 23 12:50:34 2024
+Last mount time:          n/a
+Last write time:          Thu May 23 12:50:34 2024
+Mount count:              0
+Maximum mount count:      -1
+Last checked:             Thu May 23 12:50:34 2024
+Check interval:           0 (<none>)
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:               128
+Default directory hash:   half_md4
+Directory Hash Seed:      2ac788a5-17e7-49f1-9b94-4ca6c9397d55
+Directories:              2
+ Group  0: block bitmap at 35, inode bitmap at 36, inode table at 37
+           8010 free blocks, 1045 free inodes, 2 used directories
+ Group  1: block bitmap at 8227, inode bitmap at 8228, inode table at 8229
+           51 free blocks, 1056 free inodes, 0 used directories
+```
+
+默认1个块大小`1024(0x400)`字节，每个块的内容如下：
+
+- 第0个块: `0~0x400`为引导块（启动块）
+- 第1个块: `0x400~0x800`为超级块（`gdb`打印`p sizeof(struct ext2_super_block)`的值为`1024`），超级块固定1个块
+  - `0x400`地址为`s_inodes_count`成员，值为`0xb8(184)`，注意是小端模式存储的
+  - `0x438`地址的值为`EXT2_SUPER_MAGIC`，是`s_magic`成员的值，偏移量可以用`gdb`命令`p &((struct ext2_super_block *)0)->s_magic`查看
+  - 其他字段的值请自行实践查看
+- 第2个块: `0x800~0xc00`，两个块组描述符，一个块组描述符`32`字节，每个块组中含有全部块组的块组描述符，如果超过`32`个块组（`32*32=1024`），组描述符就不只一个块。和超级块一样，块组描述符也是只存储到块组0、1、3、5、7、9、25、49...
+  - 第一个`ext2_group_desc`，`bg_block_bitmap`的值为`35(0x23)`
+- 第35个块: `0x8c00~0x9000`为数据块位图
+- 第36个块: `0x9000~0x9400`为索引节点位图
+- 第37~164个块: `0x9400~0x29400`为inode表，inode表占`128`个块（`1024`个inode`）
+  - `0x9900`为`lost+found`文件的`ext2_inode`，`0x9928`为`i_block[]`（值为`0xaa`），数据块的地址为`0xaa*1024=0x2a800`，也就是`.`和`..`两个隐藏的文件夹
 
 ## 管理磁盘空间
 
@@ -1321,6 +1400,4 @@ TODO
 - `debugfs`: ext2/ext3/ext4文件系统调试器，具体用法查看`man 8 debugfs`。
 - `dumpe2fs`: 显示ext2、ext3、ext4文件系统的超级快和块组信息，具体用法查看`man 8 dumpe2fs`。
 - `tune2fs`: 用于管理文件系统参数，具体用法查看`man 8 tune2fs`。
-
-# proc文件系统
 
