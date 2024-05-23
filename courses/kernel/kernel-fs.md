@@ -1295,7 +1295,7 @@ ext2索引节点操作实现:
 ```sh
 mkfs.ext2 /dev/sda
 # od选项：以十六进制格式，每行输出一个字节，并且每个字节都输出其地址，具体查看命令 man 1 od
-dd if=/dev/sda bs=1K count=2048 | od -tx1 -Ax > image # 也可以试试 dumpesfs 和 debugfs
+dd if=/dev/sda bs=1K count=2048 | od -tx1 -Ax > image # 也可以试试 debugfs
 ```
 
 TODO
@@ -1312,5 +1312,15 @@ TODO
 
 ## 工具软件
 
-`defrag.ext2` `e2fsck` `dumpesfs` `debugfs`
+<!-- `defrag.ext2` `dumpesfs`  -->
+
+最后再介绍几个ext文件系统相关的用户态工具：
+
+- `mke2fs`: 用于建立ext2文件系统，ext2文件系统直接使用`mkfs.ext2`（相当于`mke2fs -t 2`），ext4直接使用`mkfs.ext4`。具体用法查看`man 8 mke2fs`。
+- `e2fsck`: 用于检查使用 ext2 文件系统的 partition 是否正常工作，对于ext2文件系统可以直接使用`fsck.ext2`命令，ext4直接使用`fsck.ext4`。具体用法查看`man 8 e2fsck`。
+- `debugfs`: ext2/ext3/ext4文件系统调试器，具体用法查看`man 8 debugfs`。
+- `dumpe2fs`: 显示ext2、ext3、ext4文件系统的超级快和块组信息，具体用法查看`man 8 dumpe2fs`。
+- `tune2fs`: 用于管理文件系统参数，具体用法查看`man 8 tune2fs`。
+
+# proc文件系统
 
