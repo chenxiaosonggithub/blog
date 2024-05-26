@@ -1285,6 +1285,16 @@ ext2索引节点操作实现:
 - 快速符号链接（路径名小于60字节）: `struct inode_operations ext2_fast_symlink_inode_operations`
 - 普通符号链接（路径名大于60字节）: `struct inode_operations ext2_symlink_inode_operations`
 
+## 管理磁盘空间
+
+创建索引节点 `ext2_new_inode()`，删除索引节点 `ext2_free_inode()`。
+
+当块大小为`1024`字节时，命令`echo -n something | dd of=file bs=1 seek=4098`创建一个有“洞”的文件，索引节点的`i_size`值为`4099`，但`i_blocks`的值为2，因为只占用1个块，1个块`1024`字节，以`512`为单位的`i_blocks`的值为2。`i_block[]`数组前4个元素值为0，第五个元素存放块号。
+
+分配数据块调用`ext2_get_block() -> ext2_alloc_blocks() -> ext2_new_blocks()`，释放数据块调用`ext2_free_blocks()`。
+
+最后再讲一下数据块寻址，`inode`的`i_block[]`数组默认有15个元素，每个元素4字节，前12个直接指向存放数据的逻辑块（对应的文件块号是`0~11`）。第13个元素指向的是间接块，这个间接块上存了一个`bsize/4`个元素的数组（其中`bsize`表示块大小），对应的文件块号为`12~(11+bsize/4)`。第14个元素指向二级间接块，第15个元素指向三级间接块。
+
 ## 创建ext2文件系统
 
 <!-- 格式化 `superfortat` `fdformat` -->
@@ -1378,16 +1388,6 @@ Directories:              2
 - 第36个块: `0x9000~0x9400`为索引节点位图
 - 第37~164个块: `0x9400~0x29400`为inode表，inode表占`128`个块（`1024`个inode`）
   - `0x9900`为`lost+found`文件的`ext2_inode`，`0x9928`为`i_block[]`（值为`0xaa`），数据块的地址为`0xaa*1024=0x2a800`，也就是`.`和`..`两个隐藏的文件夹
-
-## 管理磁盘空间
-
-创建索引节点 `ext2_new_inode()`，删除索引节点 `ext2_free_inode()`。
-
-当块大小为`1024`字节时，命令`echo -n something | dd of=file bs=1 seek=4098`创建一个有“洞”的文件，索引节点的`i_size`值为`4099`，但`i_blocks`的值为2，因为只占用1个块，1个块`1024`字节，以`512`为单位的`i_blocks`的值为2。`i_block[]`数组前4个元素值为0，第五个元素存放块号。
-
-分配数据块调用`ext2_get_block() -> ext2_alloc_blocks() -> ext2_new_blocks()`，释放数据块调用`ext2_free_blocks()`。
-
-最后再讲一下数据块寻址，`inode`的`i_block[]`数组默认有15个元素，每个元素4字节，前12个直接指向存放数据的逻辑块（对应的文件块号是`0~11`）。第13个元素指向的是间接块，这个间接块上存了一个`bsize/4`个元素的数组（其中`bsize`表示块大小），对应的文件块号为`12~(11+bsize/4)`。第14个元素指向二级间接块，第15个元素指向三级间接块。
 
 ## 工具软件
 
