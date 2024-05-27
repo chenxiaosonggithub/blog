@@ -1391,7 +1391,8 @@ Directories:              2
 
 ## 工具软件
 
-<!-- `defrag.ext2` `dumpesfs`  -->
+<!-- `defrag.ext2` `dumpesfs` -->
+<!-- https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html/managing_file_systems/comparison-of-tools-used-with-ext4-and-xfs_getting-started-with-an-ext4-file-system -->
 
 最后再介绍几个ext文件系统相关的用户态工具：
 
@@ -1400,4 +1401,7 @@ Directories:              2
 - `debugfs`: ext2/ext3/ext4文件系统调试器，具体用法查看`man 8 debugfs`。
 - `dumpe2fs`: 显示ext2、ext3、ext4文件系统的超级快和块组信息，具体用法查看`man 8 dumpe2fs`。
 - `tune2fs`: 用于管理文件系统参数，具体用法查看`man 8 tune2fs`。
-
+- `e2image`: 将关键的 ext2/ext3/ext4 文件系统元数据保存到文件中，具体用法查看`man 8 e2image`。
+  - `e2image device image-file`: 保存元数据，查看超级快和块组信息使用`debugfs -i image-file`和`dumpe2fs -i image-file`。
+  - `e2image -I device image-file`: 恢复。
+- `dump`: 备份ext2/3/4文件系统，安装`apt install dump -y`。
