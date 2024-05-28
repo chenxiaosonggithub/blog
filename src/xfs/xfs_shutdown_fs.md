@@ -49,3 +49,9 @@ xfs_db> p
 fdblocks = 36891964 # 超级块中存放的所有AG的空闲块总和
 ```
 -->
+
+查看日志：
+```sh
+xfs_logprint -n dm.img > xfs_logprint-n-log.txt # 不尝试解释日志数据，只解释日志头信息。
+xfs_logprint dm.img > xfs_logprint-log.txt # 解释日志数据和日志头信息
+```
