@@ -23,6 +23,29 @@ xfs_mdrestore 故障日志20240308.metadump  dm.img
 xfs_repair -n dm.img 2>&1 | tee xfs_repair-log.txt
 ```
 
-日志[`xfs_repair-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs_repair-log.txt)。
+# 分析镜像
 
-# 
+日志[`xfs_repair-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs_repair-log.txt)中:
+```sh
+agf_freeblks 3997090, counted 4111777 in ag 0
+agf_longest 14556, counted 14846 in ag 0
+```
+
+代表AG0中空闲块数量不对。
+
+再解析镜像：
+```sh
+xfs_db -r dm.img 
+xfs_db> agf 0
+xfs_db> p
+freeblks = 3997090 # AG0中空闲块数量
+longest = 14556 # AG0中可用的最长连续空闲块的数量
+```
+
+<!--
+```sh
+xfs_db> sb 0
+xfs_db> p
+fdblocks = 36891964 # 超级块中存放的所有AG的空闲块总和
+```
+-->
