@@ -122,7 +122,7 @@ lsn = 0x383dc00078a00
 grep -r "0x58 0x41 0x47 0x46 0x00 0x00 0x00 0x01 0x00 0x00 0x00 0x00" xfs_logprint-n-log.txt --line-number
 ```
 
-分别在以下各行号的位置，`tail_lsn`分别为：
+分别在以下各行号的位置，对应的`tail_lsn`分别为：
 ```sh
 48263  lsn: 230650,371712	tail_lsn: 230650,293888
 52116  lsn: 230650,386560	tail_lsn: 230650,293888
