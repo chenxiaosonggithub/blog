@@ -1,6 +1,6 @@
 # 问题描述
 
-`dmesg`中报warning，请查看[`xfs_shutdown_fs_log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs_shutdown_fs_log.txt)。
+`dmesg`中报warning，请查看[`xfs-shutdown-fs-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs-shutdown-fs-log.txt)。
 
 ```sh
 cat sos_commands/scsi/lsscsi 
