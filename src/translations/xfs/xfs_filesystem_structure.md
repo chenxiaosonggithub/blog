@@ -138,3 +138,79 @@ xfs_foo_read_verify(struct xfs_buf *bp)
                 xfs_buf_ioerror(bp, EFSCORRUPTED);
         }
 }
+```
+
+代码通过检查超级块的特性位确保只有在文件系统启用CRC时才检查CRC，然后如果CRC验证通过（或者不需要CRC），则验证块的实际内容。验证函数将采取几种不同的形式，具体取决于是否可以使用魔术数来确定块的格式。
+
+如果不能，代码结构如下：
+```c
+static bool
+xfs_foo_verify(struct xfs_buf *bp)
+{
+        struct xfs_mount *mp = bp->b_target->bt_mount;
+        struct xfs_ondisk_hdr *hdr = bp->b_addr;
+        if (hdr->magic != cpu_to_be32(XFS_FOO_MAGIC))
+                return false;
+        if (!xfs_sb_version_hascrc(&mp->m_sb)) {
+                if (!uuid_equal(&hdr->uuid, &mp->m_sb.sb_uuid))
+                        return false;
+                if (bp->b_bn != be64_to_cpu(hdr->blkno))
+                        return false;
+                if (hdr->owner == 0)
+                        return false;
+        }
+        /* object specific verification checks here */
+        return true;
+}
+```
+
+如果不同格式有不同的魔术数，验证函数将如下所示：
+```c
+static bool
+xfs_foo_verify(struct xfs_buf *bp)
+{
+        struct xfs_mount *mp = bp->b_target->bt_mount;
+        struct xfs_ondisk_hdr *hdr = bp->b_addr;
+        if (hdr->magic == cpu_to_be32(XFS_FOO_CRC_MAGIC)) {
+                if (!uuid_equal(&hdr->uuid, &mp->m_sb.sb_uuid))
+                        return false;
+                if (bp->b_bn != be64_to_cpu(hdr->blkno))
+                        return false;
+                if (hdr->owner == 0)
+                        return false;
+        } else if (hdr->magic != cpu_to_be32(XFS_FOO_MAGIC))
+                return false;
+        /* object specific verification checks here */
+        return true;
+}
+```
+
+写验证器与读验证器非常相似，它们只是执行操作的顺序与读验证器相反。一个典型的写验证器如下：
+```c
+static void
+xfs_foo_write_verify(struct xfs_buf *bp)
+{
+        struct xfs_mount *mp = bp->b_target->bt_mount;
+        struct xfs_buf_log_item *bip = bp->b_fspriv;
+        if (!xfs_foo_verify(bp)) {
+                XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp, bp->b_addr);
+                xfs_buf_ioerror(bp, EFSCORRUPTED);
+                return;
+        }
+        if (!xfs_sb_version_hascrc(&mp->m_sb))
+                return;
+        if (bip) {
+                struct xfs_ondisk_hdr *hdr = bp->b_addr;
+                hdr->lsn = cpu_to_be64(bip->bli_item.li_lsn);
+        }
+        xfs_update_cksum(bp->b_addr, BBTOB(bp->b_length), XFS_FOO_CRC_OFF);
+}
+```
+
+这将验证元数据的内部结构，然后再进行其他操作，检测内存中修改元数据时发生的损坏。如果元数据验证通过，并且启用了CRC，我们将更新LSN字段（上次修改时间）并计算元数据的CRC。一旦完成这些操作，我们就可以发出IO。
+
+### Inodes and Dquots
+
+TODO
+
+#

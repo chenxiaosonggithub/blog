@@ -1,4 +1,6 @@
+# 问题描述
 
+`dmesg`中报warning，请查看[`xfs_shutdown_fs_log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs_shutdown_fs_log.txt)。
 
 ```sh
 cat sos_commands/scsi/lsscsi 
@@ -22,3 +24,5 @@ xfs_repair -n dm.img 2>&1 | tee xfs_repair-log.txt
 ```
 
 日志[`xfs_repair-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs_repair-log.txt)。
+
+# 
