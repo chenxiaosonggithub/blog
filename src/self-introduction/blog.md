@@ -30,8 +30,6 @@
 
 # NFS（网络文件系统）
 
-<!-- [NFS网络文件系统介绍](https://chenxiaosong.com/nfs/nfs.html) -->
-
 [定位NFS问题的常用方法](https://chenxiaosong.com/nfs/nfs-debug.html)
 
 [CVE-2022-24448](https://chenxiaosong.com/nfs/CVE-2022-24448.html)
