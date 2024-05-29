@@ -49,3 +49,13 @@ apt-get install pandoc -y
 首先，在[腾讯企业微信网站](https://work.weixin.qq.com/wework_admin/register_wx?from=exmail&bizmail_code=&wwbiz_version=free&wwbiz_merge=true)上注册一个你个人的企业微信。然后以管理员身份登录到[企业微信](https://work.weixin.qq.com/wework_admin/loginpage_wx)，可通过【管理后台->协作->邮件->概况->配置】中绑定专属域名。详细的操作步骤可参考[如何添加/更换/注销域名？](https://open.work.weixin.qq.com/help2/pc/19809?person_id=1)，温馨提醒：若域名历史没有绑定过邮箱使用且无需搬迁历史邮箱数据的，请选择左侧的【立即迁移】入口；反之，需要搬迁历史邮箱数据的，请选择【同步使用】入口迁移数据。
 
 如果还是不知道怎么操作腾讯企业邮箱，请咨询企业微信客服。
+
+# github.io
+
+[GitHub Pages 文档](https://docs.github.com/zh/pages)。
+
+`Settings -> Pages -> Build and deployment -> GitHub Actions`。
+
+# gitee.io
+
+[gitee静态页面托管](https://gitee.com/help/categories/56)。
