@@ -1,6 +1,6 @@
 # 问题描述
 
-`dmesg`中报warning，请查看[`xfs-shutdown-fs-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs-shutdown-fs-log.txt)。
+`dmesg`中报warning，请查看[`xfs-shutdown-fs-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs-shutdown-fs-log.txt)。其他报`Corruption of in-memory data detected.  Shutting down filesystem`的时刻分别为`8507581.813487, 9013282.995965, 142392.165592, 153722.596734`，最短时间间隔`(153722-142392)/3600s=约3小时`
 
 ```sh
 cat sos_commands/scsi/lsscsi 
@@ -122,6 +122,7 @@ lsn = 0x383dc00078a00
 grep -r "0x58 0x41 0x47 0x46 0x00 0x00 0x00 0x01 0x00 0x00 0x00 0x00" xfs_logprint-n-log.txt --line-number
 ```
 
+<!--
 分别在以下各行号的位置，对应的`tail_lsn`分别为：
 ```sh
 48263  lsn: 230650,371712	tail_lsn: 230650,293888
@@ -151,3 +152,14 @@ grep -r "0x58 0x41 0x47 0x46 0x00 0x00 0x00 0x01 0x00 0x00 0x00 0x00" xfs_logpri
 227624 lsn: 230651,153088	tail_lsn: 230651,147968
 229392 lsn: 230651,154624	tail_lsn: 230651,147968
 ```
+-->
+
+查看AG1的信息：
+```sh
+xfs_db> agf 1
+xfs_db> p 
+lsn = 0x384fb00032800
+```
+
+`lsn = 0x384fb00032800 = (0x384fb, 0x00032800) = (230651, 206848)`也大于前面分析的`lsn: 230651,154624`。
+
