@@ -66,6 +66,12 @@
 
 [samba服务器搭建](https://chenxiaosong.com/linux/samba-server.html)
 
+# XFS文件系统
+
+[xfs_getbmap发生空指针解引用问题](https://chenxiaosong.com/xfs/xfs-null-ptr-deref-in-xfs_getbmap.html)
+
+[xfs agf没落盘的问题](https://chenxiaosong.com/xfs/xfs-shutdown-fs.html)
+
 # EXT文件系统
 
 [jbd2_journal_commit_transaction空指针解引用问题](https://chenxiaosong.com/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html)
@@ -81,8 +87,6 @@
 # 文件系统
 
 [configfs加载或卸载模块时的并发问题](https://chenxiaosong.com/fs/configfs-race.html)
-
-[xfs_getbmap发生空指针解引用问题](https://chenxiaosong.com/fs/xfs-null-ptr-deref-in-xfs_getbmap.html)
 
 [微软文件系统](https://chenxiaosong.com/fs/microsoft-fs.html)
 

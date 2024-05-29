@@ -50,6 +50,9 @@ array=(
     1 1 src/smb/smb.md smb/smb.html "SMB文件系统介绍"
     1 1 src/smb/4.19-null-ptr-deref-in-cifs_reconnect.md smb/4.19-null-ptr-deref-in-cifs_reconnect.html "4.19 cifs_reconnect空指针解引用问题"
     1 1 src/smb/samba-server.md linux/samba-server.html "samba服务器搭建"
+    # xfs
+    1 1 src/xfs/xfs-null-ptr-deref-in-xfs_getbmap.md xfs/xfs-null-ptr-deref-in-xfs_getbmap.html "xfs_getbmap发生空指针解引用问题"
+    1 1 src/xfs/xfs-shutdown-fs.md xfs/xfs-shutdown-fs.html "xfs agf没落盘的问题"
     # ext
     1 1 src/ext/null-ptr-deref-in-jbd2_journal_commit_transaction.md ext/null-ptr-deref-in-jbd2_journal_commit_transaction.html "jbd2_journal_commit_transaction空指针解引用问题"
     1 1 src/ext/bugon-in-ext4_writepages.md ext/bugon-in-ext4_writepages.html "ext4_writepages报BUG_ON的问题"
@@ -58,7 +61,6 @@ array=(
     1 1 src/ext/uaf-in-ext4_search_dir.md ext/uaf-in-ext4_search_dir.html "ext4_search_dir空指针解引用问题"
     # 文件系统
     1 1 src/filesystem/configfs-race.md fs/configfs-race.html "configfs加载或卸载模块时的并发问题"
-    1 1 src/xfs/xfs-null-ptr-deref-in-xfs_getbmap.md fs/xfs-null-ptr-deref-in-xfs_getbmap.html "xfs_getbmap发生空指针解引用问题"
     1 1 src/filesystem/microsoft-fs.md fs/microsoft-fs.html "微软文件系统"
     1 1 src/btrfs/4.19-btrfs-forced-readonly.md fs/4.19-btrfs-forced-readonly.html "4.19 btrfs文件系统变成只读的问题"
     1 1 src/filesystem/minix-fs.md fs/minix-fs.html "minix文件系统"
