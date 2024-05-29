@@ -32,7 +32,7 @@ array=(
     1 1 src/process/process.md kernel/process.html "Linux进程调度"
     1 1 src/kernel/gio-to-mount.md kernel/gio-to-mount.html "gio执行慢的临时解决办法"
     # nfs
-    1 1 src/nfs/nfs.md nfs/nfs.html "NFS网络文件系统介绍"
+    # 1 1 src/nfs/nfs.md nfs/nfs.html "NFS网络文件系统介绍"
     1 1 src/nfs/nfs-debug.md nfs/nfs-debug.html "定位NFS问题的常用方法"
     1 1 src/nfs/CVE-2022-24448.md nfs/CVE-2022-24448.html "CVE-2022-24448"
     1 1 src/nfs/nfs-handle-writeback-errors-incorrectly.md nfs/nfs-handle-writeback-errors-incorrectly.html "NFS回写错误处理不正确的问题"
