@@ -1406,7 +1406,7 @@ Directories:              2
   - `e2image -I device image-file`: 恢复。
 - `dump`: 备份ext2/3/4文件系统，安装`apt install dump -y`。
 
-<!-- public begin -->
+<!-- ing begin -->
 # ext4文件系统
 
 ## jbd2
@@ -1440,4 +1440,4 @@ ext4本身不处理日志，而是利用日志块设备（journal block device, 
 - 日志记录: 描述一个磁盘块的一次更新。由低级操作所修改的整个`buffer`组成，直接操作`buffer`和`buffer_head`，在日志内部表现为普通的数据块或元数据。
 - 原子操作处理: 一次高级修改对应的日志记录，修改文件系统的每个系统调用都引起一次单独的原子操作处理。
 - 事务: 包括几个原子操作处理。
-<!-- public end -->
+<!-- ing end -->

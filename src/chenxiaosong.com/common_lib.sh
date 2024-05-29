@@ -70,3 +70,37 @@ change_perm() {
     find ${html_path}/ -type d -exec chmod 500 {} +
 }
 
+remove_comments() {
+    local md_path=$1
+    local is_public=$2
+
+    local begin_str='<!-- private begin -->'
+    local end_str='<!-- private end -->'
+    if [[ ${is_public} == true ]]; then
+        begin_str='<!-- public begin -->'
+        end_str='<!-- public end -->'
+    fi
+
+    # 把begin和end之间的内容删除, sed 默认只支持贪婪模式，要支持非贪婪模式要用Perl正则表达式（PCRE）
+    find ${md_path} -type f -name '*.md' -exec perl -i -pe "s/${begin_str}.*?${end_str}//g" {} + # 只能在同一行内，必须放在前面
+    find ${md_path} -type f -name '*.md' -exec sed -i "/${begin_str}/,/${end_str}/d" {} + # 只能按行为单位删除
+    # 正在写的内容就先不放上去
+    begin_str='<!-- ing begin -->'
+    end_str='<!-- ing begin -->'
+    find ${md_path} -type f -name '*.md' -exec perl -i -pe "s/${begin_str}.*?${end_str}//g" {} + # 只能在同一行内，必须放在前面
+    find ${md_path} -type f -name '*.md' -exec sed -i "/${begin_str}/,/${end_str}/d" {} + # 只能按行为单位删除
+    # 把注释全部删除
+    find ${md_path} -type f -name '*.md' -exec perl -i -pe 's/<!--.*?-->//g' {} + # 只能在同一行内，必须放在前面
+    find ${md_path} -type f -name '*.md' -exec sed -i '/<!--/,/-->/d' {} + # 只能按行为单位删除
+}
+
+remove_private() {
+    local md_path=$1
+    remove_comments $1 false
+}
+
+remove_public() {
+    local md_path=$1
+    remove_comments $1 true
+}
+
