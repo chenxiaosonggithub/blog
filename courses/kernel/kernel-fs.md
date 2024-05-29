@@ -772,14 +772,14 @@ mkfs.ext2 -F image
 mount -t ext2 image /mnt
 cd /mnt
 echo "i love os" > file
-cat file # 这时i_nlink为1，只有一个dentry
+cat file # 这时文件的i_nlink为1，只有一个dentry
 ln file link # 创建硬链接i_nlink加1
-cat file # 这时i_nlink为2，有两个dentry
+cat file # 这时文件的i_nlink为2，有两个dentry
 ln -s file slink # 创建软链接i_nlink不变
-cat file # 这时i_nlink不变还是为2
-ls # 这时i_nlink为3
+cat file # 这时文件的i_nlink不变还是为2
+ls # 这时目录的i_nlink为3
 mkdir dir # 只有创建文件夹i_nlink才会增加，创建文件不会
-ls # 这时i_nlink为4
+ls # 这时目录的i_nlink为4
 ```
 
 对文件创建硬链接时`ln file link`，增加`inode->i_nlink`的流程如下：
