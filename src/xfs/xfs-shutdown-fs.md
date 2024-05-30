@@ -163,5 +163,46 @@ lsn = 0x384fb00032800
 
 `lsn = 0x384fb00032800 = (0x384fb, 0x00032800) = (230651, 206848)`也大于前面分析的`lsn: 230651,154624`。
 
+# 代码分析
+
+<!--
+```c
+kthread
+  worker_thread
+    process_scheduled_works
+      process_one_work
+        wb_workfn
+          wb_do_writeback
+            wb_check_start_all
+              wb_writeback
+                __writeback_inodes_wb
+                  writeback_sb_inodes
+                    __writeback_single_inode
+                      do_writepages
+                        xfs_vm_writepages
+                          iomap_writepages
+                            iomap_writepage_map
+                              iomap_writepage_map_blocks
+                                xfs_map_blocks
+                                  xfs_bmapi_convert_delalloc
+                                    xfs_bmapi_convert_one_delalloc
+                                      xfs_bmapi_allocate
+                                        xfs_bmap_alloc_userdata
+                                          xfs_bmap_btalloc
+```
+-->
+```c
+// echo <9000个字节> > /mnt/file
+xfs_bmap_btalloc
+  xfs_bmap_btalloc_best_length
+    xfs_alloc_vextent_start_ag
+      xfs_alloc_vextent_iterate_ags
+        xfs_alloc_vextent_prepare_ag
+          xfs_alloc_fix_freelist
+            xfs_alloc_read_agf
+      xfs_alloc_vextent_finish
+        xfs_alloc_update_counters(tp=0xffff88810558c828, agbp=0xffff88810210a700, len=-3)
+```
+
 # 构造
 
