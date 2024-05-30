@@ -163,3 +163,5 @@
 [QEMU Documentation/Networking/NAT](https://chenxiaosong.com/translations/qemu-networking-nat.html)
 
 [(x)fstests README](https://chenxiaosong.com/translations/xfstests-readme.html)
+
+[xfs_filesystem_structure.pdf](https://chenxiaosong.com/translations/xfs_filesystem_structure.html)

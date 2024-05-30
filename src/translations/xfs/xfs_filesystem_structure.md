@@ -283,3 +283,73 @@ typedef struct xlog_rec_ext_header {
 - `xh_cycle_data`：溢出的循环数据。
 
 ## Log Operations
+
+在一个日志记录中，日志操作记录为一个系列，其中包含一个操作头紧跟着一个数据区域。操作头的格式如下：
+```c
+typedef struct xlog_op_header {
+        __be32 oh_tid;
+        __be32 oh_len;
+        __u8 oh_clientid;
+        __u8 oh_flags;
+        __u16 oh_res2;
+} xlog_op_header_t;
+```
+
+- `oh_tid`：此操作的事务 ID。
+- `oh_len`：数据区域的字节数。
+- `oh_clientid`：此操作的发起者。可以是以下之一：
+
+| Client ID | Originator |
+| ----------|------------|
+|XFS_TRANSACTION| 操作来自一个事务.|
+|XFS_VOLUME| ⁇?|
+|XFS_LOG| ⁇?|
+
+- `oh_flags`：指定与此操作相关联的标志。这可以是以下值的组合（尽管大多数情况下只会设置一个）：
+
+|Flag | Description|
+|-----|------------|
+|XLOG_START_TRANS |开始一个新的事务。下一个操作头应该描述一个事务头。.|
+|XLOG_COMMIT_TRANS| Commit this transaction.|
+|XLOG_CONTINUE_TRANS| Continue this trans into new log record.|
+|XLOG_WAS_CONT_TRANS| This transaction started in a previous log record.|
+|XLOG_END_TRANS| End of a continued transaction.|
+|XLOG_UNMOUNT_TRANS| Transaction to unmount a filesystem.|
+
+- `oh_res2`: Padding.
+
+数据区域紧跟在操作头之后，长度正好为 oh_len 字节。这些有效载荷是以主机字节顺序排列的，这意味着不能在具有不同字节顺序的系统上重新播放未经清理的 XFS 文件系统的日志。
+
+## Log Items
+
+以下是可以跟随`xlog_op_header`的日志项负载类型。除了缓冲数据和inode核心外，所有日志项都有一个魔术数字来区分它们自己。缓冲数据项只会在xfs_buf_log_format项之后出现；而inode核心项只会在xfs_inode_log_format项之后出现。
+
+|Magic| Hexadecimal| Operation Type|
+|-----|------------|---------------|
+|XFS_TRANS_HEADER_MAGIC|0x5452414e |Log Transaction Header |
+|XFS_LI_EFI|0x1236 |Extent Freeing Intent                 |
+|XFS_LI_EFD|0x1237 |Extent Freeing Done                   |
+|XFS_LI_IUNLINK|0x1238| Unknown?                          |
+|XFS_LI_INODE|0x123b| Inode Updates                       |
+|XFS_LI_BUF|0x123c| Buffer Writes                         |
+|XFS_LI_DQUOT|0x123d |Update Quota                        |
+|XFS_LI_QUOTAOFF|0x123e |Quota Off                        |
+|XFS_LI_ICREATE|0x123f |Inode Creation                    |
+|XFS_LI_RUI|0x1240 |Reverse Mapping Update Intent         |
+|XFS_LI_RUD|0x1241 |Reverse Mapping Update Done           |
+|XFS_LI_CUI|0x1242 |Reference Count Update Intent         |
+|XFS_LI_CUD|0x1243 |Reference Count Update Done           |
+|XFS_LI_BUI|0x1244 |File Block Mapping Update Intent      |
+|XFS_LI_BUD|0x1245 |File Block Mapping Update Done        | 
+
+请注意，所有日志项（除了事务头）必须以以下头部结构开头。类型和大小字段嵌入到每个日志项头部中，但没有单独定义的头部。
+```c
+struct xfs_log_item {
+        __uint16_t magic;
+        __uint16_t size;
+};
+```
+
+### Transaction Headers
+
+TODO
