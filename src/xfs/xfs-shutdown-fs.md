@@ -251,6 +251,7 @@ xfs_log_force
       xlog_state_release_iclog
         xlog_sync
           xlog_write_iclog
+            submit_bio // 执行完调用到 xlog_bio_end_io
 
 kthread
   smpboot_thread_fn
