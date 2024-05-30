@@ -253,10 +253,27 @@ xfs_log_force
           xlog_write_iclog
 
 kthread
+  smpboot_thread_fn
+    run_ksoftirqd
+      handle_softirqs
+        blk_done_softirq
+          blk_complete_reqs
+            lo_complete_rq
+              blk_mq_end_request
+                __blk_mq_end_request
+                  flush_end_io
+                    blk_flush_complete_seq
+                      blk_mq_end_request
+                        blk_update_request
+                          bio_endio
+                            xlog_bio_end_io
+                              queue_work(..., &iclog->ic_end_io_work) // 触发 xlog_ioend_work
+
+kthread
   worker_thread
     process_scheduled_works
       process_one_work
-        xlog_ioend_work
+        xlog_ioend_work // 由 xlog_bio_end_io 触发
           xlog_state_done_syncing
 ```
 
