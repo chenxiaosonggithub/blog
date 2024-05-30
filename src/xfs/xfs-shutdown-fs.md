@@ -227,6 +227,7 @@ kthread
           xlog_cil_write_chain
             xlog_write
               xlog_write_full
+                xlog_write_iovec
               xlog_state_release_iclog
 
 // sync 命令
@@ -251,7 +252,8 @@ xfs_log_force
       xlog_state_release_iclog
         xlog_sync
           xlog_write_iclog
-            submit_bio // 执行完调用到 xlog_bio_end_io
+            iclog->ic_bio.bi_end_io = xlog_bio_end_io
+            submit_bio // 落盘成功后调用到 xlog_bio_end_io
 
 kthread
   smpboot_thread_fn
@@ -279,4 +281,3 @@ kthread
 ```
 
 # 构造
-

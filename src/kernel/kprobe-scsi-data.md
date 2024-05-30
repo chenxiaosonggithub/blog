@@ -28,15 +28,6 @@ echo 3 > /proc/sys/vm/drop_caches
 
 使用[kprobe_scsi.c](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel/kprobe_scsi.c)来检测`scsi_dispatch_cmd`（写）和`scsi_finish_command`（读）函数中的数据，与预期的数据内容比较，查看内核日志看看是否能正确识别出错误数据。`Makefile`文件如下：
 ```sh
-obj-m += kprobe_blkwrite.o
-
-KDIR := /home/sonvhi/chenxiaosong/code/aarch64-4.19
-
-all:
-	make -C ${KDIR} M=`pwd`
-
-clean:
-	rm -f *.ko *.o *.mod *.mod.o *.mod.c .*.cmd *.symvers  modul*
 ```
 
 再把`file`文件内容变成正确的，再查看内核日志：
