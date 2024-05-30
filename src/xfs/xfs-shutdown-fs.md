@@ -167,6 +167,7 @@ lsn = 0x384fb00032800
 
 <!--
 ```c
+// echo <9000个字节> > /mnt/file
 kthread
   worker_thread
     process_scheduled_works
@@ -202,6 +203,61 @@ xfs_bmap_btalloc
             xfs_alloc_read_agf
       xfs_alloc_vextent_finish
         xfs_alloc_update_counters(tp=0xffff88810558c828, agbp=0xffff88810210a700, len=-3)
+
+mount
+  do_mount
+    path_mount
+      do_new_mount
+        vfs_get_tree
+          xfs_fs_get_tree
+            get_tree_bdev
+              xfs_fs_fill_super
+                xfs_mountfs
+                  xfs_log_mount
+                    xlog_alloc_log
+                      // 初始化 l_iclog_bufs 个 xlog_in_core_t
+                      INIT_WORK(&iclog->ic_end_io_work, xlog_ioend_work);
+
+// sync 命令
+kthread
+  worker_thread
+    process_scheduled_works
+      process_one_work
+        xlog_cil_push_work
+          xlog_cil_write_chain
+            xlog_write
+              xlog_write_full
+              xlog_state_release_iclog
+
+// sync 命令
+sync
+  ksys_sync
+    iterate_supers
+      sync_fs_one_sb
+        xfs_fs_sync_fs
+          xfs_log_force
+
+// 写操作后过一段时间触发
+kthread
+  worker_thread
+    process_scheduled_works
+      process_one_work
+        xfs_log_worker
+          xfs_log_force
+
+xfs_log_force
+  xlog_force_and_check_iclog
+    xlog_force_iclog
+      xlog_state_release_iclog
+        xlog_sync
+          xlog_write_iclog
+
+kthread
+  worker_thread
+    process_scheduled_works
+      process_one_work
+        xlog_ioend_work
+          xlog_state_done_syncing
 ```
 
 # 构造
