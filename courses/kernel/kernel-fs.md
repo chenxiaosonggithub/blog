@@ -880,7 +880,8 @@ struct ext2_super_block {
         __le32  s_r_blocks_count;       /* Reserved blocks count，保留的块数 */
         __le32  s_free_blocks_count;    /* Free blocks count，空闲块计数器 */
         __le32  s_free_inodes_count;    /* Free inodes count，空闲索引节点计数器 */
-        __le32  s_first_data_block;     /* First Data Block，第一个使用的块号，总是为1 */
+        __le32  s_first_data_block;     /* First Data Block，第一个数据块的块号，总是为1 */
+        // 最小 EXT2_MIN_BLOCK_SIZE，最大 EXT2_MAX_BLOCK_SIZE
         __le32  s_log_block_size;       /* Block size，块大小，对数表示，值为0时表示2^0*1024=1024，值为1时表示2^1*1024=2048,值为2时表示2^2*1024=4096 */
         __le32  s_log_frag_size;        /* Fragment size，片大小 */
         __le32  s_blocks_per_group;     /* # Blocks per group，每组中的块数 */
@@ -890,7 +891,7 @@ struct ext2_super_block {
         __le32  s_wtime;                /* Write time，写时间 */
         __le16  s_mnt_count;            /* Mount count，挂载次数 */
         __le16  s_max_mnt_count;        /* Maximal mount count，检查之前挂载操作的次数 */
-        __le16  s_magic;                /* Magic signature，幻数 */
+        __le16  s_magic;                /* Magic signature，幻数，EXT2_SUPER_MAGIC */
         __le16  s_state;                /* File system state，状态标志,挂载时为0，正常卸载为1(EXT2_VALID_FS)，错误为2(EXT2_ERROR_FS) */
         __le16  s_errors;               /* Behaviour when detecting errors，检测到错误的行为 */
         __le16  s_minor_rev_level;      /* minor revision level，次版本号 */
@@ -916,7 +917,7 @@ struct ext2_super_block {
         __le32  s_first_ino;            /* First non-reserved inode，第一个非保留的索引节点号 */
         __le16   s_inode_size;          /* size of inode structure，磁盘索引节点大小 */
         __le16  s_block_group_nr;       /* block group # of this superblock，超级块块组号 */
-        __le32  s_feature_compat;       /* compatible feature set，兼容特性 */
+        __le32  s_feature_compat;       /* compatible feature set，兼容特性，查看 EXT2_FEATURE_COMPAT_DIR_PREALLOC 等宏定义 */
         __le32  s_feature_incompat;     /* incompatible feature set，非兼容特性 */
         __le32  s_feature_ro_compat;    /* readonly-compatible feature set，只读兼容特性 */
         __u8    s_uuid[16];             /* 128-bit uuid for volume，文件系统标识符 */
@@ -1098,6 +1099,28 @@ struct ext2_dir_entry_2 {
        24 |      11   |  20 |10| 2| l  o  s  t  +  f  o  u  n  d \0 \0|
           +--+--+--+--|--+--|--|--|--+--+--+--+--+--+--+--+--+--+--+--+
        44 |    15809  |  12 | 3| 2| d  i  r \0|
+          +--+--+--+--|--+--|--|--|--+--+--+--+
+       56 |      12   |  12 | 4| 1| f  i  l  e|
+          +--+--+--+--|--+--|--|--|--+--+--+--+
+       68 |      13   |  12 | 4| 7| l  i  n  k|
+          +--+--+--+--|--+--|--|--|--+--+--+--+
+```
+
+如果删除`dir`，就会变成以下样子，删除的目录`inode`改为`0`，然后前一项的`rec_len`加上`12`。
+```sh
+                      file_type--+
+                                 |
+                    name_len--+  |
+                              |  |
+  address     inode   rec_len |  |   name
+          +--+--+--+--|--+--|--|--|--+--+--+--+
+        0 |      2    |  12 | 1| 2| . \0 \0 \0|
+          +--+--+--+--|--+--|--|--|--+--+--+--+
+       12 |      2    |  12 | 2| 2| .  . \0 \0|
+          +--+--+--+--|--+--|--|--|--+--+--+--+--+--+--+--+--+--+--+--+
+       24 |      11   |  32 |10| 2| l  o  s  t  +  f  o  u  n  d \0 \0|
+          +--+--+--+--|--+--|--|--|--+--+--+--+--+--+--+--+--+--+--+--+
+       44 |      0    |  12 | 3| 2| d  i  r \0|
           +--+--+--+--|--+--|--|--|--+--+--+--+
        56 |      12   |  12 | 4| 1| f  i  l  e|
           +--+--+--+--|--+--|--|--|--+--+--+--+
