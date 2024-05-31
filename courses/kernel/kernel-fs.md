@@ -12,6 +12,12 @@
 
 我们先来看一下什么是文件系统？我们买电脑时，肯定会配一块硬盘（现在一般是固态硬盘），硬盘是用来存储数据资料的。比如要存储一句话:"我爱操作系统"，一个汉字占用2个字节，存储这一句话要占用12个字节（不包括结束符），我们可以用2种方法来存储。第一种方法是从硬盘第一个字节开始存储，前两个字节存储"我"，第三四个字节存储"爱"，以此类推。第二种方法是先创建一个文件，在这个文件里存储这句话，我们打开硬盘时，只需要找到这个文件的位置，就能找到这句话。第一种方法数据管理起来很不方便，所以一般都用第二种方法，第二种方法管理数据的规则就称为文件系统。
 
+文件系统可以分为3类：
+
+- 磁盘文件系统，如ext2、ext4、xfs、ntfs等。
+- 网络文件系统，如nfs、cifs等。
+- 特殊文件系统，如procfs、sysfs等。
+
 我们来实际操作一下，虚拟机中的`${HOME}/qemu-kernel/start.sh`文件中增加以下内容（如果已有就不用增加）：
 ```sh
 -drive file=1,if=none,format=raw,cache=writeback,file.locking=off,id=dd_1 \
@@ -600,7 +606,7 @@ struct file_operations {
 
 ## 其他数据结构
 
-`file_system_type`描述各种特定文件系统类型，每种文件系统只有一个`file_system_type`对象。
+`file_system_type`描述各种特定文件系统类型，每种文件系统只有一个`file_system_type`对象，具体文件系统如ext2模块加载时调用`init_ext2_fs() -> register_filesystem()`注册。根文件系统类型`rootfs_fs_type`。
 ```c
 struct file_system_type {
         const char *name; // 名字
@@ -760,6 +766,8 @@ struct ucounts {
         atomic_long_t rlimit[UCOUNT_RLIMIT_COUNTS];
 };
 ```
+
+还有文件锁的数据结构为`struct file_lock`。
 
 ## 举几个例子
 
