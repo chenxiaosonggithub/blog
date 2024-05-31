@@ -1,4 +1,4 @@
-obj-m += debug-xfs-log.o
+obj-m += debug-drop-bio.o
 
 KDIR := /home/sonvhi/chenxiaosong/code/x86_64-linux/build
 
