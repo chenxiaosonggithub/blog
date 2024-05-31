@@ -368,6 +368,8 @@ struct inode {
 } __randomize_layout;
 ```
 
+地址映射结构体`struct address_space`，操作方法`struct address_space_operations`。
+
 ## 索引节点操作
 
 索引节点对象中最重要的一个成员是`i_op`，也是面向对象思想的一个体现，索引节点操作函数表结构体也是定义在文件`include/linux/fs.h`中。还是不需要背，用到什么查什么就好。
@@ -1182,7 +1184,7 @@ struct ext2_sb_info {
         struct blockgroup_lock *s_blockgroup_lock;
         /* root of the per fs reservation window tree */
         spinlock_t s_rsv_window_lock;
-        struct rb_root s_rsv_window_root;
+        struct rb_root s_rsv_window_root; // ext2_reserve_window_node的所有实例
         struct ext2_reserve_window_node s_rsv_window_head;
         /*
          * s_lock protects against concurrent modifications of s_mount_state,
@@ -1296,7 +1298,15 @@ struct ext2_block_alloc_info {
          * 当我们检测到线性递增的请求时，这为我们提供了下一次分配的目标。
          */                                                                      
         ext2_fsblk_t            last_alloc_physical_block;                       
-};                                                                               
+};
+
+struct ext2_reserve_window_node {                       
+        struct rb_node          rsv_node;               
+        __u32                   rsv_goal_size;      // 预留窗口的预期长度, 最大为 EXT2_MAX_RESERVE_BLOCKS
+        __u32                   rsv_alloc_hit;      // 预分配的命中数
+        struct ext2_reserve_window      rsv_window; // 预留窗口
+};                                                      
+
 ```
 
 由`struct super_operations ext2_sops`的`ext2_alloc_inode()`分配索引节点对象。
@@ -1307,6 +1317,8 @@ ext2索引节点操作实现:
 - 目录: `struct inode_operations ext2_dir_inode_operations`
 - 快速符号链接（路径名小于60字节）: `struct inode_operations ext2_fast_symlink_inode_operations`
 - 普通符号链接（路径名大于60字节）: `struct inode_operations ext2_symlink_inode_operations`
+
+`ext2_inode_info->vfs_inode->i_mapping->a_ops`的实现是`ext2_aops`和`ext2_dax_aops`（DAX，Direct Access，允许文件系统直接访问持久性内存（如非易失性内存，NVDIMM）上的数据，而无需经过缓存。这可以显著提高I/O性能，特别是在读取和写入小文件时）。
 
 ## 管理磁盘空间
 
