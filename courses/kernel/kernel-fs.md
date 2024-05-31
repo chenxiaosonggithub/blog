@@ -368,7 +368,7 @@ struct inode {
 } __randomize_layout;
 ```
 
-地址映射结构体`struct address_space`，操作方法`struct address_space_operations`。
+一个文件或块设备在内存中的映射用结构体`struct address_space`表示，操作方法`struct address_space_operations`。
 
 ## 索引节点操作
 
