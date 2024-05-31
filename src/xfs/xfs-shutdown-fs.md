@@ -283,4 +283,9 @@ kthread
 
 # 构造
 
-打上补丁[`0001-debug-drop-bio.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/0001-debug-drop-bio.patch)，执行`make`命令（[`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/Makefile)）编译[`debug-drop-bio.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/debug-drop-bio.c)模块，在虚拟机中执行加载模块`insmod ./debug-drop-bio.ko`，再执行`echo somthting > /mnt/file`分配新的块，接着`umount`文件系统，就能复现此问题。
+打上补丁[`0001-debug-drop-bio.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/0001-debug-drop-bio.patch)，执行`make`命令（[`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/Makefile)）编译[`debug-drop-bio.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/debug-drop-bio.c)模块，在虚拟机中执行加载模块`insmod ./debug-drop-bio.ko`，再执行`echo somthting > /mnt/file`分配新的块，接着`umount`文件系统，就能得到AGF有问题的镜像。
+
+```sh
+echo 1234567890 > file
+fallocate -o 15 -l 10M file
+```
