@@ -1,4 +1,4 @@
-From 4c19bd08493ddaec71355b8d941d56673b21e003 Mon Sep 17 00:00:00 2001
+From 30736bdda7b665fd89304017609678a2e35cd70c Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 Date: Fri, 31 May 2024 04:43:56 +0000
 Subject: [PATCH] debug drop bio
@@ -29,7 +29,7 @@ index e9e809a63c59..b0f535789578 100644
  	return blk_status_to_errno(bio->bi_status);
  }
 diff --git a/block/blk-core.c b/block/blk-core.c
-index 82c3ae22d76d..3392ed0daea5 100644
+index 82c3ae22d76d..3433ce2e7846 100644
 --- a/block/blk-core.c
 +++ b/block/blk-core.c
 @@ -51,6 +51,9 @@
@@ -94,17 +94,17 @@ index 82c3ae22d76d..3392ed0daea5 100644
 +		if (!tmp)
 +			goto unmap;
 +
-+		// printk("%s:%d, find X\n", __func__, __LINE__);
++		printk("%s:%d, find X\n", __func__, __LINE__);
 +		if (!(tmp + 1 <= last_addr && tmp[1] == 'A'))
 +			goto again;
-+		// printk("%s:%d, find A\n", __func__, __LINE__);
++		printk("%s:%d, find A\n", __func__, __LINE__);
 +		if (!(tmp + 2 <= last_addr && tmp[2] == 'G'))
 +			goto again;
-+		// printk("%s:%d, find G\n", __func__, __LINE__);
++		printk("%s:%d, find G\n", __func__, __LINE__);
 +		if (!(tmp + 3 <= last_addr && tmp[3] == 'F'))
 +			goto again;
-+		// printk("%s:%d, find F\n", __func__, __LINE__);
-+		// printk("%s:%d, find success\n", __func__, __LINE__);
++		printk("%s:%d, find F\n", __func__, __LINE__);
++		printk("%s:%d, find success\n", __func__, __LINE__);
 +		ret = 0;
 +unmap:
 +		kunmap_local(kaddr);
