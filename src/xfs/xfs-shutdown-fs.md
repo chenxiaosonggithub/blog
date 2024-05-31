@@ -163,9 +163,9 @@ lsn = 0x384fb00032800
 
 `lsn = 0x384fb00032800 = (0x384fb, 0x00032800) = (230651, 206848)`也大于前面分析的`lsn: 230651,154624`。
 
+<!--
 # 代码分析
 
-<!--
 ```c
 // echo <9000个字节> > /mnt/file
 kthread
@@ -191,7 +191,7 @@ kthread
                                         xfs_bmap_alloc_userdata
                                           xfs_bmap_btalloc
 ```
--->
+
 ```c
 // echo <9000个字节> > /mnt/file
 xfs_bmap_btalloc
@@ -279,5 +279,8 @@ kthread
         xlog_ioend_work // 由 xlog_bio_end_io 触发
           xlog_state_done_syncing
 ```
+-->
 
 # 构造
+
+打上补丁[`0001-debug-drop-bio.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/0001-debug-drop-bio.patch)，执行`make`命令（[`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/Makefile)）编译[`debug-drop-bio.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/xfs/debug-drop-bio.c)模块，在虚拟机中执行加载模块`insmod ./debug-drop-bio.ko`，再执行`echo somthting > /mnt/file`分配新的块，接着`umount`文件系统，就能复现此问题。
