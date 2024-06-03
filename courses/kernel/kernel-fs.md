@@ -374,8 +374,6 @@ struct inode {
 } __randomize_layout;
 ```
 
-一个文件或块设备在内存中的映射用结构体`struct address_space`表示，操作方法`struct address_space_operations`。
-
 ## 索引节点操作
 
 索引节点对象中最重要的一个成员是`i_op`，也是面向对象思想的一个体现，索引节点操作函数表结构体也是定义在文件`include/linux/fs.h`中。还是不需要背，用到什么查什么就好。
@@ -602,6 +600,78 @@ struct file_operations {
         int (*uring_cmd_iopoll)(struct io_uring_cmd *, struct io_comp_batch *,
                                 unsigned int poll_flags);
 } __randomize_layout;
+```
+
+## 地址空间
+
+磁盘块可能不连续和动态变化的，文件访问需要将文件看作一个连续的字节流，这个矛盾的解决核心在于地址空间的引入
+
+```c
+// 可缓存、可映射对象的内容。
+struct address_space {
+        struct inode            *host;            // 拥有者，可以是 inode 或 block_device。
+        struct xarray           i_pages;          // 缓存的页面。
+        struct rw_semaphore     invalidate_lock;  // 在无效操作期间，保护页缓存内容与文件偏移->磁盘块映射之间的一致性。它还用于阻止通过内存映射修改页缓存内容。
+        gfp_t                   gfp_mask;         // 用于分配页面的内存分配标志。
+        atomic_t                i_mmap_writable;  // VM_SHARED 映射的数量。
+#ifdef CONFIG_READ_ONLY_THP_FOR_FS
+        /* number of thp, only for non-shmem files */
+        atomic_t                nr_thps;        // 页缓存中的 THP（非共享内存）数量。
+#endif
+        struct rb_root_cached   i_mmap;         // 私有和共享映射的树。
+        unsigned long           nrpages;        // 页条目的数量，由 i_pages 锁保护。
+        pgoff_t                 writeback_index;// 写回从这里开始。
+        const struct address_space_operations *a_ops; // 方法。
+        unsigned long           flags;          // 错误位和标志（AS_*）。
+        struct rw_semaphore     i_mmap_rwsem;   // 保护 @i_mmap 和 @i_mmap_writable
+        errseq_t                wb_err;         // 最近发生的错误。
+        spinlock_t              private_lock;   // 供 address_space 的拥有者使用。
+        struct list_head        private_list;   // 供 address_space 的拥有者使用。
+        void                    *private_data;  // 供 address_space 的拥有者使用。
+} __attribute__((aligned(sizeof(long)))) __randomize_layout;
+
+struct address_space_operations {
+        int (*writepage)(struct page *page, struct writeback_control *wbc); // 将文件在内存page中的更新到磁盘上
+        int (*read_folio)(struct file *, struct folio *); // 从磁盘上读取文件的数据到内存page中
+
+        /* Write back some dirty pages from this mapping. */
+        int (*writepages)(struct address_space *, struct writeback_control *); // 将多个page更新到磁盘上
+
+        /* Mark a folio dirty.  Return true if this dirtied it */
+        bool (*dirty_folio)(struct address_space *, struct folio *);
+
+        void (*readahead)(struct readahead_control *);
+
+        int (*write_begin)(struct file *, struct address_space *mapping, // 要求具体文件系统准备将数据写到文件
+                                loff_t pos, unsigned len,
+                                struct page **pagep, void **fsdata);
+        int (*write_end)(struct file *, struct address_space *mapping,   // 完成数据复制之后调用，具体文件系统 unlock page，释放引用计数，更新 i_size
+                                loff_t pos, unsigned len, unsigned copied,
+                                struct page *page, void *fsdata);
+
+        /* Unfortunately this kludge is needed for FIBMAP. Don't use it */
+        sector_t (*bmap)(struct address_space *, sector_t); // 将文件中的逻辑块扇区编号映射为对应设备上的物理块扇区编号
+        void (*invalidate_folio) (struct folio *, size_t offset, size_t len); // 使某个page部分或全部失效
+        bool (*release_folio)(struct folio *, gfp_t); // 日志文件系统使用，释放page
+        void (*free_folio)(struct folio *folio);
+        ssize_t (*direct_IO)(struct kiocb *, struct iov_iter *iter); // 绕过page cache
+        /*
+         * 将folio的内容移动到指定的目标，如果migrate_mode是MIGRATE_ASYNC，就不阻塞（异步）
+         */
+        int (*migrate_folio)(struct address_space *, struct folio *dst,
+                        struct folio *src, enum migrate_mode);
+        int (*launder_folio)(struct folio *); // 释放一个folio之前调用，回写dirty的folio
+        bool (*is_partially_uptodate) (struct folio *, size_t from, // 判断是否最新
+                        size_t count);
+        void (*is_dirty_writeback) (struct folio *, bool *dirty, bool *wb);
+        int (*error_remove_page)(struct address_space *, struct page *); // 被内存故障处理代码使用
+
+        /* swapfile support */
+        int (*swap_activate)(struct swap_info_struct *sis, struct file *file,
+                                sector_t *span);
+        void (*swap_deactivate)(struct file *file);
+        int (*swap_rw)(struct kiocb *iocb, struct iov_iter *iter);
+};
 ```
 
 ## 其他数据结构
