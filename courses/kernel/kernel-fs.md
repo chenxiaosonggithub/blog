@@ -604,7 +604,7 @@ struct file_operations {
 
 ## 地址空间
 
-磁盘块可能不连续和动态变化的，文件访问需要将文件看作一个连续的字节流，这个矛盾的解决核心在于地址空间的引入
+磁盘块可能不连续和动态变化的，文件访问需要将文件看作一个连续的字节流，这个矛盾的解决核心在于地址空间的引入。
 
 ```c
 // 可缓存、可映射对象的内容。
@@ -1520,6 +1520,30 @@ Directories:              2
   - `e2image device image-file`: 保存元数据，查看超级快和块组信息使用`debugfs -i image-file`和`dumpe2fs -i image-file`。
   - `e2image -I device image-file`: 恢复。
 - `dump`: 备份ext2/3/4文件系统，安装`apt install dump -y`。
+
+## 开发一个新文件系统的步骤
+
+以ext2为例，说明开发一个新文件系统所需的步骤，也可以作为学习一个文件系统的方法步骤。
+
+1. 定义超级块结构，磁盘`struct ext2_super_block`，内存`struct ext2_sb_info`。
+2. 实现超级块操作方法`ext2_sops`。
+3. 定义索引节点结构，磁盘`struct ext2_inode`，内存`struct ext2_inode_info`（内嵌`struct inode    vfs_inode`）。
+4. 实现各种类型文件的索引节点操作方法:
+  - 常规文件`ext2_file_inode_operations`。
+  - 目录`ext2_dir_inode_operations`。
+  - 快速符号链接（路径名小于60字节）`ext2_fast_symlink_inode_operations`。
+  - 普通符号链接（路径名大于60字节）`ext2_symlink_inode_operations`。
+  - 其他`ext2_special_inode_operations`。
+5. 实现`dentry`操作方法，ext和xfs等文件系统都没定义，nfs为`nfs_dentry_operations`和`nfs4_dentry_operations`，smb client为`cifs_dentry_ops`和`cifs_ci_dentry_ops`。
+6. 实现各种类型文件的`file`操作方法:
+  - 常规文件`ext2_file_operations`。
+  - 目录`ext2_dir_operations`。
+  - 其他类型查看`init_special_inode()`函数。
+7. 实现各种类型文件的`address_space`操作方法：
+  - 常规文件`ext2_aops`和`ext2_dax_aops`。
+  - 其他类型，如块设备`def_blk_aops`。
+8. 定义文件系统类型`ext2_fs_type`。
+9. 模块加载卸载方法，`init_ext2_fs`和`exit_ext2_fs`。
 
 <!-- ing begin -->
 # ext4文件系统
