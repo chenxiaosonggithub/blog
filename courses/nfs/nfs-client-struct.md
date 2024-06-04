@@ -14,7 +14,7 @@
 
 # 超级块
 
-由于nfs没有磁盘超级块，所以只有内存超级块结构体`struct nfs_server`，在`nfs_get_tree_common()`函数中赋值`fc->s_fs_info = server`。
+由于nfs client没有磁盘超级块，所以只有内存超级块结构体，在`nfs_get_tree_common()`函数中赋值`fc->s_fs_info = server`。
 
 这个结构体太长了。
 
@@ -196,10 +196,9 @@ static const struct super_operations nfs4_sops = {
 
 # 索引节点
 
-nfs没有磁盘索引节点，只有内存索引节点`struct nfs_inode`。
+nfs没有磁盘索引节点，只有内存索引节点。
 
 ```c
-
 /*
  * nfs fs inode data in memory
  */
@@ -208,18 +207,15 @@ struct nfs_inode {
          * The 64bit 'inode number'
          */
         __u64 fileid;
-
         /*
          * NFS file handle
          */
         struct nfs_fh           fh;
-
         /*
          * Various flags
          */
         unsigned long           flags;                  /* atomic bit ops */
         unsigned long           cache_validity;         /* bit mask */
-
         /*
          * read_cache_jiffies is when we started read-caching this inode.
          * attrtimeo is for how long the cached information is assumed
