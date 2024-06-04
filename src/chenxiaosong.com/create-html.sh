@@ -21,6 +21,8 @@ array=(
     1 1 ${tmp_courses_path}/kernel-book.md courses/kernel-book.html "Linux内核书籍推荐"
     1 1 ${tmp_courses_path}/kernel-source.md courses/kernel-source.html "Linux内核源码介绍"
     1 1 ${tmp_courses_path}/kernel-fs.md courses/kernel-fs.html "文件系统"
+    0 1 courses/nfs/nfs-client-struct.md courses/nfs-client-struct.html "nfs client数据结构"
+    0 1 courses/smb/smb-client-struct.md courses/smb-client-struct.html "smb client数据结构"
     1 1 courses/book-contents.md courses/book-contents.html "书籍目录"
     # Linux内核
     1 1 src/kernel-environment/kernel-crash-vmcore.md kernel/kernel-crash-vmcore.html "crash解析vmcore"

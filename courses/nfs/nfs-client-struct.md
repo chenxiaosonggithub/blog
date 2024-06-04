@@ -1,6 +1,4 @@
-# nfs client 结构体
-
-我们通过开发一个新操作系统需要的步骤，来切入学习nfs。
+我们通过开发一个新操作系统需要的步骤，来切入学习nfs client。
 
 1. 定义磁盘和内存的超级块结构。
 2. 实现超级块操作方法。
@@ -12,11 +10,13 @@
 8. 定义文件系统类型。
 9. 模块加载卸载方法。
 
-## 超级块
+这里主要是列出一些结构体及赋值，后面会慢慢加些中文注释。
+
+# 超级块
 
 由于nfs没有磁盘超级块，所以只有内存超级块结构体`struct nfs_server`，在`nfs_get_tree_common()`函数中赋值`fc->s_fs_info = server`。
 
-这个结构体太长了，以后慢慢的加些注释吧。
+这个结构体太长了。
 
 ```c
 /*
@@ -160,7 +160,7 @@ struct nfs_server {
 };
 ```
 
-## 超级块操作
+# 超级块操作
 
 ```c
 // nfsv2, nfsv3
@@ -194,7 +194,7 @@ static const struct super_operations nfs4_sops = {
 };                                                 
 ```
 
-## 索引节点
+# 索引节点
 
 nfs没有磁盘索引节点，只有内存索引节点`struct nfs_inode`。
 
@@ -331,9 +331,9 @@ struct nfs_inode {
 };
 ```
 
-## 索引节点操作
+# 索引节点操作
 
-### 常规文件
+## 常规文件
 
 ```c
 // nfsv2
@@ -364,7 +364,7 @@ static const struct inode_operations nfs4_file_inode_operations = {
 };                                                                 
 ```
 
-### 目录
+## 目录
 
 ```c
 // nfsv2
@@ -423,7 +423,7 @@ static const struct inode_operations nfs4_dir_inode_operations = {
 };                                                                
 ```
 
-### 符号链接
+## 符号链接
 
 ```c
 /*                                                            
@@ -436,7 +436,7 @@ const struct inode_operations nfs_symlink_inode_operations = {
 };                                                            
 ```
 
-### 命名空间
+## 命名空间
 
 ```c
 const struct inode_operations nfs_mountpoint_inode_operations = {
@@ -450,7 +450,7 @@ const struct inode_operations nfs_referral_inode_operations = {
 };                                                               
 ```
 
-## `dentry`操作
+# `dentry`操作
 
 ```c
 // nfsv2 nfsv3
@@ -474,9 +474,9 @@ const struct dentry_operations nfs4_dentry_operations = {
 };                                                       
 ```
 
-## `file`操作
+# `file`操作
 
-### 常规文件
+## 常规文件
 
 ```c
 // nfsv2 nfsv3
@@ -523,7 +523,7 @@ const struct file_operations nfs4_file_operations = {
 };                                                   
 ```
 
-### 目录
+## 目录
 
 ```c
 const struct file_operations nfs_dir_operations = {
@@ -536,9 +536,9 @@ const struct file_operations nfs_dir_operations = {
 };                                                 
 ```
 
-## `address_space`操作
+# `address_space`操作
 
-### 常规文件
+## 常规文件
 
 ```c
 const struct address_space_operations nfs_file_aops = { 
@@ -561,7 +561,7 @@ const struct address_space_operations nfs_file_aops = {
 };                                                      
 ```
 
-### 目录
+## 目录
 
 ```c
 const struct address_space_operations nfs_dir_aops = {
@@ -569,7 +569,7 @@ const struct address_space_operations nfs_dir_aops = {
 };                                                    
 ```
 
-## 文件系统类型
+# 文件系统类型
 
 ```c
 // nfsv2 nfsv3
@@ -593,6 +593,6 @@ struct file_system_type nfs4_fs_type = {
 };                                                                          
 ```
 
-## 模块加载卸载方法
+# 模块加载卸载方法
 
 `init_nfs_fs()`和`exit_nfs_fs()`。
