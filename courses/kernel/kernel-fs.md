@@ -1541,6 +1541,7 @@ Directories:              2
   - 其他类型查看`init_special_inode()`函数。
 7. 实现各种类型文件的`address_space`操作方法：
   - 常规文件`ext2_aops`和`ext2_dax_aops`。
+  - 目录，ext2没定义目录相关的操作，nfs为`nfs_dir_aops`。
   - 其他类型，如块设备`def_blk_aops`。
 8. 定义文件系统类型`ext2_fs_type`。
 9. 模块加载卸载方法，`init_ext2_fs`和`exit_ext2_fs`。

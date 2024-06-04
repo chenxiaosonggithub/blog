@@ -1,6 +1,6 @@
 做这个课程的目的是通过整理知识点来找到一些正在开发中或需要完善的特性进行社区贡献。
 
-以v6.6代码为例。
+以v6.6代码为例。注意，我只会列出结构体的代码，会在结构的成员加些中文注释（也可能以后再加），不会贴整段的函数代码，因为我觉得函数的实现要自己去看，看具体问题时再看函数实现才有意义。
 
 # nfs client 结构体
 
@@ -367,3 +367,236 @@ static const struct inode_operations nfs4_file_inode_operations = {
         .listxattr      = nfs4_listxattr,                          
 };                                                                 
 ```
+
+### 目录
+
+```c
+// nfsv2
+static const struct inode_operations nfs_dir_inode_operations = {
+        .create         = nfs_create,                            
+        .lookup         = nfs_lookup,                            
+        .link           = nfs_link,                              
+        .unlink         = nfs_unlink,                            
+        .symlink        = nfs_symlink,                           
+        .mkdir          = nfs_mkdir,                             
+        .rmdir          = nfs_rmdir,                             
+        .mknod          = nfs_mknod,                             
+        .rename         = nfs_rename,                            
+        .permission     = nfs_permission,                        
+        .getattr        = nfs_getattr,                           
+        .setattr        = nfs_setattr,                           
+};                                                               
+
+// nfsv3
+static const struct inode_operations nfs3_dir_inode_operations = {
+        .create         = nfs_create,                             
+        .lookup         = nfs_lookup,                             
+        .link           = nfs_link,                               
+        .unlink         = nfs_unlink,                             
+        .symlink        = nfs_symlink,                            
+        .mkdir          = nfs_mkdir,                              
+        .rmdir          = nfs_rmdir,                              
+        .mknod          = nfs_mknod,                              
+        .rename         = nfs_rename,                             
+        .permission     = nfs_permission,                         
+        .getattr        = nfs_getattr,                            
+        .setattr        = nfs_setattr,                            
+#ifdef CONFIG_NFS_V3_ACL                                          
+        .listxattr      = nfs3_listxattr,                         
+        .get_inode_acl  = nfs3_get_acl,                           
+        .set_acl        = nfs3_set_acl,                           
+#endif                                                            
+};                                                                
+
+// nfsv4
+static const struct inode_operations nfs4_dir_inode_operations = {
+        .create         = nfs_create,                             
+        .lookup         = nfs_lookup,                             
+        .atomic_open    = nfs_atomic_open,                        
+        .link           = nfs_link,                               
+        .unlink         = nfs_unlink,                             
+        .symlink        = nfs_symlink,                            
+        .mkdir          = nfs_mkdir,                              
+        .rmdir          = nfs_rmdir,                              
+        .mknod          = nfs_mknod,                              
+        .rename         = nfs_rename,                             
+        .permission     = nfs_permission,                         
+        .getattr        = nfs_getattr,                            
+        .setattr        = nfs_setattr,                            
+        .listxattr      = nfs4_listxattr,                         
+};                                                                
+```
+
+### 符号链接
+
+```c
+/*                                                            
+ * symlinks can't do much...                                  
+ */                                                           
+const struct inode_operations nfs_symlink_inode_operations = {
+        .get_link       = nfs_get_link,                       
+        .getattr        = nfs_getattr,                        
+        .setattr        = nfs_setattr,                        
+};                                                            
+```
+
+### 命名空间
+
+```c
+const struct inode_operations nfs_mountpoint_inode_operations = {
+        .getattr        = nfs_getattr,                           
+        .setattr        = nfs_setattr,                           
+};                                                               
+                                                                 
+const struct inode_operations nfs_referral_inode_operations = {  
+        .getattr        = nfs_namespace_getattr,                 
+        .setattr        = nfs_namespace_setattr,                 
+};                                                               
+```
+
+## `dentry`操作
+
+```c
+// nfsv2 nfsv3
+const struct dentry_operations nfs_dentry_operations = {
+        .d_revalidate   = nfs_lookup_revalidate,        
+        .d_weak_revalidate      = nfs_weak_revalidate,  
+        .d_delete       = nfs_dentry_delete,            
+        .d_iput         = nfs_dentry_iput,              
+        .d_automount    = nfs_d_automount,              
+        .d_release      = nfs_d_release,                
+}; 
+
+// nfsv4
+const struct dentry_operations nfs4_dentry_operations = {
+        .d_revalidate   = nfs4_lookup_revalidate,        
+        .d_weak_revalidate      = nfs_weak_revalidate,   
+        .d_delete       = nfs_dentry_delete,             
+        .d_iput         = nfs_dentry_iput,               
+        .d_automount    = nfs_d_automount,               
+        .d_release      = nfs_d_release,                 
+};                                                       
+```
+
+## `file`操作
+
+### 常规文件
+
+```c
+// nfsv2 nfsv3
+const struct file_operations nfs_file_operations = {
+        .llseek         = nfs_file_llseek,          
+        .read_iter      = nfs_file_read,            
+        .write_iter     = nfs_file_write,           
+        .mmap           = nfs_file_mmap,            
+        .open           = nfs_file_open,            
+        .flush          = nfs_file_flush,           
+        .release        = nfs_file_release,         
+        .fsync          = nfs_file_fsync,           
+        .lock           = nfs_lock,                 
+        .flock          = nfs_flock,                
+        .splice_read    = nfs_file_splice_read,     
+        .splice_write   = iter_file_splice_write,   
+        .check_flags    = nfs_check_flags,          
+        .setlease       = simple_nosetlease,        
+};                                                  
+
+// nfsv4
+const struct file_operations nfs4_file_operations = {
+        .read_iter      = nfs_file_read,             
+        .write_iter     = nfs_file_write,            
+        .mmap           = nfs_file_mmap,             
+        .open           = nfs4_file_open,            
+        .flush          = nfs4_file_flush,           
+        .release        = nfs_file_release,          
+        .fsync          = nfs_file_fsync,            
+        .lock           = nfs_lock,                  
+        .flock          = nfs_flock,                 
+        .splice_read    = nfs_file_splice_read,      
+        .splice_write   = iter_file_splice_write,    
+        .check_flags    = nfs_check_flags,           
+        .setlease       = nfs4_setlease,             
+#ifdef CONFIG_NFS_V4_2                               
+        .copy_file_range = nfs4_copy_file_range,     
+        .llseek         = nfs4_file_llseek,          
+        .fallocate      = nfs42_fallocate,           
+        .remap_file_range = nfs42_remap_file_range,  
+#else                                                
+        .llseek         = nfs_file_llseek,           
+#endif                                               
+};                                                   
+```
+
+### 目录
+
+```c
+const struct file_operations nfs_dir_operations = {
+        .llseek         = nfs_llseek_dir,          
+        .read           = generic_read_dir,        
+        .iterate_shared = nfs_readdir,             
+        .open           = nfs_opendir,             
+        .release        = nfs_closedir,            
+        .fsync          = nfs_fsync_dir,           
+};                                                 
+```
+
+## `address_space`操作
+
+### 常规文件
+
+```c
+const struct address_space_operations nfs_file_aops = { 
+        .read_folio = nfs_read_folio,                   
+        .readahead = nfs_readahead,                     
+        .dirty_folio = filemap_dirty_folio,             
+        .writepage = nfs_writepage,                     
+        .writepages = nfs_writepages,                   
+        .write_begin = nfs_write_begin,                 
+        .write_end = nfs_write_end,                     
+        .invalidate_folio = nfs_invalidate_folio,       
+        .release_folio = nfs_release_folio,             
+        .migrate_folio = nfs_migrate_folio,             
+        .launder_folio = nfs_launder_folio,             
+        .is_dirty_writeback = nfs_check_dirty_writeback,
+        .error_remove_page = generic_error_remove_page, 
+        .swap_activate = nfs_swap_activate,             
+        .swap_deactivate = nfs_swap_deactivate,         
+        .swap_rw = nfs_swap_rw,                         
+};                                                      
+```
+
+### 目录
+
+```c
+const struct address_space_operations nfs_dir_aops = {
+        .free_folio = nfs_readdir_clear_array,        
+};                                                    
+```
+
+## 文件系统类型
+
+```c
+// nfsv2 nfsv3
+struct file_system_type nfs_fs_type = {                                     
+        .owner                  = THIS_MODULE,                              
+        .name                   = "nfs",                                    
+        .init_fs_context        = nfs_init_fs_context,                      
+        .parameters             = nfs_fs_parameters,                        
+        .kill_sb                = nfs_kill_super,                           
+        .fs_flags               = FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
+};                                                                          
+
+// nfsv4                                       
+struct file_system_type nfs4_fs_type = {                                    
+        .owner                  = THIS_MODULE,                              
+        .name                   = "nfs4",                                   
+        .init_fs_context        = nfs_init_fs_context,                      
+        .parameters             = nfs_fs_parameters,                        
+        .kill_sb                = nfs_kill_super,                           
+        .fs_flags               = FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
+};                                                                          
+```
+
+## 模块加载卸载方法
+
+`init_nfs_fs()`和`exit_nfs_fs()`。
