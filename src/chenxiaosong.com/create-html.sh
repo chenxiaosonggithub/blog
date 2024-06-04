@@ -104,6 +104,7 @@ array=(
     1 1 src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
     1 1 src/translations/tests/xfstests-readme.md translations/xfstests-readme.html "(x)fstests README"
     1 1 src/translations/xfs/xfs_filesystem_structure.md translations/xfs_filesystem_structure.html "xfs_filesystem_structure.pdf"
+    1 1 src/translations/smb/ksmbd-kernel-doc.md translations/ksmbd-kernel-doc.html "KSMBD kernel doc"
     # private
     1 1 src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     1 1 src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"

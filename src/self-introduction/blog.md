@@ -165,3 +165,5 @@
 [(x)fstests README](https://chenxiaosong.com/translations/xfstests-readme.html)
 
 [xfs_filesystem_structure.pdf](https://chenxiaosong.com/translations/xfs_filesystem_structure.html)
+
+[KSMBD kernel doc](https://chenxiaosong.com/translations/ksmbd-kernel-doc.html)
