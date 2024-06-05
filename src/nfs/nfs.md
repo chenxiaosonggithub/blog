@@ -124,35 +124,6 @@ NFSv4 client详细的操作定义在`include/linux/nfs4.h`中的`NFSPROC4_CLNT_N
 
 NFSv4反向通道的操作定义在`fs/nfs/callback.h`中的`enum nfs4_callback_opnum`，我已经提了补丁移到公共头文件：[NFSv4, NFSD: move enum nfs_cb_opnum4 to include/linux/nfs4.h](https://lore.kernel.org/all/tencent_03EDD0CAFBF93A9667CFCA1B68EDB4C4A109@qq.com/)。server在`fs/nfsd/state.h`中还定义了`nfsd4_cb_op`，编码解码函数定义在`nfs4_cb_procedures`。client的编码解码函数定义在`callback_ops`。
 
-# 怎么用？
-
-nfs client安装所需软件：
-```sh
-apt-get install nfs-common -y # debian
-```
-
-nfs client挂载（更多挂载选项可以通过命令`man 5 nfs`查看）：
-```sh
-# nfsv4的根路径是/tmp/，源路径填写相对路径 /s_test 或 s_test
-mount -t nfs -o vers=4.0 ${server_ip}:/s_test /mnt
-mount -t nfs -o vers=4.1 ${server_ip}:/s_test /mnt
-mount -t nfs -o vers=4.2 ${server_ip}:/s_test /mnt
-# nfsv3和nfsv2 源路径要写完整的源路径，没有根路径的概念，源路径必须是绝对路径/tmp/s_test
-mount -t nfs -o vers=3 ${server_ip}:/tmp/s_test /mnt
-# nfsv2, nfs server 需要修改 /etc/nfs.conf 中的 `[nfsd] vers2=y`
-mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
-```
-
-如果nfs server的exportfs的配置文件`/etc/exports`如下，没有`fsid`选项：
-```sh
-/tmp/s_test/ *(rw,no_root_squash)
-```
-
-这时nfsv4的根路径就是`/`，nfs client挂载nfsv4的命令如下：
-```sh
-mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
-```
-
 # 文件句柄
 
 我们先来看一下client端如果只告诉server端一个inode号会发生什么。
