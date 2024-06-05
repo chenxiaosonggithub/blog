@@ -126,22 +126,6 @@ NFSv4反向通道的操作定义在`fs/nfs/callback.h`中的`enum nfs4_callback_
 
 # 怎么用？
 
-你可以先跳过这一节，先查看后面的内容，等到你需要搭建NFS环境的时候再来查阅。
-
-nfs server安装所需软件：
-```sh
-apt-get install nfs-kernel-server -y # debian
-```
-
-nfs server编辑exportfs的配置文件`/etc/exports`，配置选项的含义可以通过命令`man 5 exports`查看:
-```sh
-/tmp/ *(rw,no_root_squash,fsid=0)
-/tmp/s_test/ *(rw,no_root_squash,fsid=1)
-/tmp/s_scratch *(rw,no_root_squash,fsid=2)
-```
-
-执行脚本[nfs-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/nfs/nfs-svr-setup.sh)启动nfs server。
-
 nfs client安装所需软件：
 ```sh
 apt-get install nfs-common -y # debian
