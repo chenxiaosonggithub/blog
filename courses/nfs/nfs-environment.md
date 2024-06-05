@@ -62,7 +62,7 @@ exportfs -auv # 全部删除
 还有两个文件：
 
 - `/var/lib/nfs/etab`: 记录`/etc/exports`配置文件或`exportfs`命令分享出来的目录权限配置值。
-- `/var/lib/nfs/xtab`和`/var/lib/nfs/rmtab`: 记录客户端数据
+- `/var/lib/nfs/xtab`和`/var/lib/nfs/rmtab`: 记录客户端数据。
 
 # nfs client环境
 

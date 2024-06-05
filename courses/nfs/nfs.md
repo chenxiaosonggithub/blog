@@ -12,4 +12,8 @@
 
 点击下面的标题跳转。
 
+# [nfs简介](https://chenxiaosong.com/courses/nfs-introduction.html)
+
+# [nfs环境](https://chenxiaosong.com/courses/nfs-environment.html)
+
 # [nfs client数据结构](https://chenxiaosong.com/courses/nfs-client-struct.html)
