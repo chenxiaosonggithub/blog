@@ -2,11 +2,11 @@
 
 # ksmbd-tools
 
-ksmbd-tools 是 ksmbd 内核服务器 的一组用户空间实用程序，已在 Linux 5.15 版本中合并到主线。
+ksmbd-tools 是 ksmbd 内核服务器 的一组用户空间实用程序，ksmbd 已在 Linux 5.15 版本中合并到主线。
 
 ## Building and Installing
 
-您应该首先检查您的发行版是否有 ksmbd-tools 的软件包，如果有的话，考虑通过包管理器安装它。否则，请按照以下说明自行构建它。可以使用 GNU Autotools 或 Meson 构建系统。
+您应该首先检查您的发行版是否有 `ksmbd-tools` 的软件包，如果有的话，考虑通过包管理器安装它。否则，请按照以下说明自行构建它。可以使用 GNU Autotools 或 Meson 构建系统。
 
 Debian 及其衍生版本的依赖项: `git` `gcc` `pkgconf` `autoconf`  
 `automake` `libtool` `make` `meson` `ninja-build` `gawk` `libnl-3-dev`  
@@ -39,35 +39,29 @@ ninja
 sudo ninja install
 ```
 
-By default, the utilities are in `/usr/local/sbin` and the files they use by  
-default are under `/usr/local/etc` in the `ksmbd` directory.
+默认情况下，实用程序位于 `/usr/local/sbin`，它们默认使用的文件位于  
+`/usr/local/etc` 下的 `ksmbd` 目录中。
 
-If you would like to install ksmbd-tools under `/usr`, where it may conflict  
-with ksmbd-tools installed using the package manager, give `--prefix=/usr`  
-and `--sysconfdir=/etc` as options to `configure` or `meson`. In that case,  
-the utilities are in `/usr/sbin` and the files they use by default are under  
-`/etc` in the `ksmbd` directory.
+如果您想将 ksmbd-tools 安装在 `/usr` 下，这可能会与使用包管理器安装的  
+ksmbd-tools 冲突，请在 `configure` 或 `meson` 中添加 `--prefix=/usr` 和  
+`--sysconfdir=/etc` 作为选项。在这种情况下，实用程序位于 `/usr/sbin`，它们  
+默认使用的文件位于 `/etc` 下的 `ksmbd` 目录中。
 
-It is likely that you should give `--with-rundir` or `-Drundir` as an option  
-to `configure` or `meson`, respectively. This is due to it being likely that  
-your system does not mount a tmpfs filesystem at the directory given by the  
-default value. Common choices are `/run`, `/var/run`, or `/tmp`. ksmbd-tools  
-uses the directory for per-process modifiable data, namely the `ksmbd.lock`  
-file holding the PID of the `ksmbd.mountd` manager process. If your autoconf  
-supports it, you may instead choose to give `--runstatedir` to `configure`.
+很可能您应该将 `--with-rundir` 或 `-Drundir` 作为选项添加到 `configure` 或  
+`meson` 中。这是因为您的系统可能没有在默认值给定的目录下挂载 tmpfs 文件系统。  
+常见的选择是 `/run`、`/var/run` 或 `/tmp`。ksmbd-tools 使用该目录存放每个进程  
+可修改的数据，即 `ksmbd.lock` 文件，该文件保存 `ksmbd.mountd` 管理进程的 PID。  
+如果您的 autoconf 支持，您也可以选择将 `--runstatedir` 作为选项添加到 `configure` 中。
 
-If you have systemd and it meets at least the minimum version required, the  
-build will install the `ksmbd.service` unit file. The unit file supports the  
-usual unit commands and handles loading of the kernel module. Note that the  
-location of the unit file may conflict with ksmbd-tools installed using the  
-package manager. You can bypass the version check and choose the unit file  
-directory yourself by giving `--with-systemdsystemunitdir=DIR` or  
-`-Dsystemdsystemunitdir=DIR` as an option to either `configure` or `meson`,  
-respectively.
+如果您有 systemd 并且它至少满足所需的最低版本，构建将安装 `ksmbd.service` 单元文件。  
+该单元文件支持常见的单元命令，并处理加载内核模块。请注意，单元文件的位置可能与  
+使用包管理器安装的 ksmbd-tools 冲突。您可以绕过版本检查并自己选择单元文件目录，  
+通过将 `--with-systemdsystemunitdir=DIR` 或 `-Dsystemdsystemunitdir=DIR` 作为选项添加到  
+`configure` 或 `meson` 中。
 
 ## Usage
 
-Manual pages:
+帮助文档:
 ```sh
 man 8 ksmbd.addshare
 man 8 ksmbd.adduser

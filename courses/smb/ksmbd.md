@@ -6,11 +6,37 @@
 
 # 环境
 
+```sh
+apt install -y git gcc pkgconf autoconf automake libtool make meson ninja-build gawk libnl-3-dev libnl-genl-3-dev libglib2.0-dev
+git clone https://github.com/cifsd-team/ksmbd-tools.git
+cd ksmbd-tools
+./autogen.sh
+./configure --with-rundir=/run # --prefix=/usr/local/sbin --sysconfdir=/usr/local/etc
+make
+sudo make install 
+```
+
+安装的二进制文件为`/usr/local/sbin/ksmbd.*`，配置文件例子`/usr/local/etc/ksmbd/ksmbd.conf.example`。
+
+以上是使用`autotools`编译，如果要使用`meson`编译，查看[ksmbd-tools README](https://chenxiaosong.com/translations/ksmbd-tools-readme.html)。
+
 用户操作：
 ```sh
-ksmbd.adduser --add-user=MyUser
-ksmbd.adduser --update-user=MyUser --password=MyNewPassword
-ksmbd.adduser --del-user=MyUser
+# 以下3个命令是很早以前的命令
+# ksmbd.adduser --add-user=MyUser
+# ksmbd.adduser --update-user=MyUser --password=MyNewPassword
+# ksmbd.adduser --del-user=MyUser
+
+mkdir -vp /tmp/s_test
+# 生成 ksmbd.conf
+sudo ksmbd.addshare --add \
+                    --option "path = /tmp/s_test" \
+                    --option 'read only = no' \
+                    TEST
+sudo ksmbd.addshare --update TEST # 填写其他信息
+sudo ksmbd.adduser --add root
+sudo ksmbd.mountd # 启动
+sudo ksmbd.control --shutdown # 关闭
 ```
 
 编辑配置文件`/usr/local/ksmbd-tools/etc/ksmbd/ksmbd.conf`:
