@@ -21,12 +21,15 @@ sudo make install
 以上是使用`autotools`编译，如果要使用`meson`编译，查看[ksmbd-tools README](https://chenxiaosong.com/translations/ksmbd-tools-readme.html)。
 
 用户操作：
+<!--
 ```sh
 # 以下3个命令是很早以前的命令
 # ksmbd.adduser --add-user=MyUser
 # ksmbd.adduser --update-user=MyUser --password=MyNewPassword
 # ksmbd.adduser --del-user=MyUser
-
+```
+-->
+```sh
 mkdir -vp /tmp/s_test
 # 生成 ksmbd.conf
 sudo ksmbd.addshare --add \
