@@ -16,7 +16,7 @@ smbpasswd -s root # 修改密码
 smbpasswd -n root # 设置成没密码, 但挂载时好像还是需要密码，以后再看为什么吧
 ```
 
-编辑`/etc/samba/smb.conf`配置文件：
+编辑[`/etc/samba/smb.conf`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb.conf)配置文件（不区分大小写），具体参数用法查看`man 5 smb.conf`：
 ```sh
 [global]
 # 通过 man smb.conf 查看
