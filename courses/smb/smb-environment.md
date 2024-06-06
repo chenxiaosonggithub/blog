@@ -1,3 +1,7 @@
+# 内核server搭建
+
+请查看[KSMBD - SMB3 Kernel Server](https://chenxiaosong.com/courses/ksmbd.html)。
+
 # 用户态server搭建
 
 安装用户态工具：
