@@ -7,7 +7,12 @@
 - [鸟哥的Linux私房菜 简体 - "SAMBA服务器"章节](http://cn.linux.vbird.org/linux_server/#part3)
 - [鸟哥的Linux私房菜 繁体 - "SAMBA伺服器"](https://linux.vbird.org/linux_server/centos6/0370samba.php)
 - [鸟哥的Linux私房菜 繁体 - 伺服器架設篇目錄 - RockyLinux 9 (開發中)](https://linux.vbird.org/linux_server/rocky9/)
+- [Samba - opening windows to a wider world](https://www.samba.org/)
 
 点击下面的标题跳转。
+
+# [smb简介](https://chenxiaosong.com/courses/smb-introduction.html)
+
+# [smb环境](https://chenxiaosong.com/courses/smb-environment.html)
 
 # [smb client数据结构](https://chenxiaosong.com/courses/smb-client-struct.html)
