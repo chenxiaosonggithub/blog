@@ -28,4 +28,4 @@ ksmbd.adduser --del-user=MyUser
         path = /tmp/s_scratch         
 ```
 
-执行脚本[ksmbd-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/smb/ksmbd-svr-setup.sh)启动内核的ksmbd server。
+执行脚本[ksmbd-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/smb/ksmbd-svr-setup.sh)启动内核的ksmbd server。
