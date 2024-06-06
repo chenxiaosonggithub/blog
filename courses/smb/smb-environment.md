@@ -5,14 +5,18 @@
 apt-get install samba -y
 ```
 
-用户操作：
+用户操作（优先用`pdbedit`而不是`smbpasswd`）：
 ```sh
 pdbedit -L # 查看cifs用户
-smbpasswd -a root # 添加用户，这里的用户名必须是系统用户名
+pdbedit -Lw # -w: 使用旧版的 smbpasswd 格式显示
+pdbedit -a -u root # -a: 新增
+smbpasswd -a root # 添加用户，这里的用户名必须是系统用户名（在/etc/passwd中有）
 # 如果 smbpasswd -a 添加用户test失败，就要先创建系统用户test
 useradd -s /bin/bash -d /home/test -m test
+pdbedit -x -u root # 删除用户
 smbpasswd -x root # 删除用户
-smbpasswd -s root # 修改密码
+smbpasswd -s root # 修改密码，显示密码
+smbpasswd root # 修改密码，不显示密码
 smbpasswd -n root # 设置成没密码, 但挂载时好像还是需要密码，以后再看为什么吧
 ```
 
@@ -44,6 +48,7 @@ server min protocol = NT1
 - `smbstatus`: 联机状况。
 - `smbpasswd,pdbedit`: 账号密码，早期`smbpasswd`，使用TDB后用`pdbedit`。
 - `testparm`: 检查`/etc/samba/smb.conf`。
+- `smbstatus`: 观察状态。
 
 文档查看`/usr/share/doc/samba*`。
 
@@ -55,8 +60,19 @@ apt install cifs-utils -y # 安装 cifs 客户端, 否则无法挂载
 apt install smbclient -y # 查询服务器共享了哪些目录
 ```
 
+测试：
+```sh
+smbclient -L //127.0.0.1 -U root
+smbclient //127.0.0.1/TEST -U root # 然后用help查看帮助，ftp的语法
+nmblookup -U 192.168.53.209 netbios_name
+nmblookup -S netbios_name
+```
+
 挂载命令：
 ```shell
+getsebool -a | grep samba
+setsebool -P samba_enable_home_dirs=1
+# 选项： password=密码，iocharset=本机编码（如big5、utf8、cp950），codepage=远程主机编码
 mount -t cifs -o username=root,vers=1.0,cifsacl //localhost/TEST /mnt
 mount -t cifs -o username=root,mfsymlinks,vers=2.0,cifsacl,nocase //localhost/TEST /mnt
 mount -t cifs -o username=root,mfsymlinks,vers=2.1 //localhost/TEST /mnt
