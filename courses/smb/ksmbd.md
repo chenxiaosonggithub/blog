@@ -39,19 +39,20 @@ sudo ksmbd.mountd # 启动
 sudo ksmbd.control --shutdown # 关闭
 ```
 
-编辑配置文件`/usr/local/ksmbd-tools/etc/ksmbd/ksmbd.conf`:
+编辑配置文件`/usr/local/etc/ksmbd/ksmbd.conf`:
 ```sh
 [global]
-        writeable = yes               
-        public = yes                  
-                                      
-[TEST]                                
-        comment = xfstests test dir   
-        path = /tmp/s_test            
-                                      
-[SCRATCH]                             
+        writeable = yes
+        public = yes
+
+[TEST]
+        comment = xfstests test dir
+        ; 注意路径后面不要有空格，被路径后的空格坑过
+        path = /tmp/s_test
+
+[SCRATCH]
         comment = xfstests scratch dir
-        path = /tmp/s_scratch         
+        path = /tmp/s_scratch
 ```
 
 执行脚本[ksmbd-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/smb/ksmbd-svr-setup.sh)启动内核的ksmbd server。
