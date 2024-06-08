@@ -20,21 +20,21 @@
 
 ```c
 /*
- * NFS client parameters stored in the superblock.
+ * NFS client parameters stored in the superblock. 挂载参数不同时每挂载一次创建一个nfs_server，请看nfs_compare_super()
  */
 struct nfs_server {
-        struct nfs_client *     nfs_client;     /* shared client and NFS4 state */
+        struct nfs_client *     nfs_client;     /* shared client and NFS4 state, 多个nfs_server对应一个nfs_client */
         struct list_head        client_link;    /* List of other nfs_server structs
                                                  * that share the same client
                                                  */
         struct list_head        master_link;    /* link in master servers list */
-        struct rpc_clnt *       client;         /* RPC client handle */
-        struct rpc_clnt *       client_acl;     /* ACL RPC client handle */
-        struct nlm_host         *nlm_host;      /* NLM client handle */
-        struct nfs_iostats __percpu *io_stats;  /* I/O statistics */
-        atomic_long_t           writeback;      /* number of writeback pages */
+        struct rpc_clnt *       client;         /* RPC client handle， rpc客户端 */
+        struct rpc_clnt *       client_acl;     /* ACL RPC client handle， acl想着的rpc客户端 */
+        struct nlm_host         *nlm_host;      /* NLM client handle, v2 v3文件锁 */
+        struct nfs_iostats __percpu *io_stats;  /* I/O statistics， io统计信息 */
+        atomic_long_t           writeback;      /* number of writeback pages， 正在向server写入的页的个数 */
         unsigned int            write_congested;/* flag set when writeback gets too high */
-        unsigned int            flags;          /* various flags */
+        unsigned int            flags;          /* various flags， 挂载选项 */
 
 /* The following are for internal use only. Also see uapi/linux/nfs_mount.h */
 #define NFS_MOUNT_LOOKUP_CACHE_NONEG    0x10000
@@ -51,25 +51,25 @@ struct nfs_server {
 #define NFS_MOUNT_SHUTDOWN              0x08000000
 
         unsigned int            fattr_valid;    /* Valid attributes */
-        unsigned int            caps;           /* server capabilities */
-        unsigned int            rsize;          /* read size */
+        unsigned int            caps;           /* server capabilities， server的功能，getattr请求获取的 */
+        unsigned int            rsize;          /* read size， read请求数据最大值 */
         unsigned int            rpages;         /* read size (in pages) */
-        unsigned int            wsize;          /* write size */
+        unsigned int            wsize;          /* write size，write请求数据最大值 */
         unsigned int            wpages;         /* write size (in pages) */
-        unsigned int            wtmult;         /* server disk block size */
-        unsigned int            dtsize;         /* readdir size */
-        unsigned short          port;           /* "port=" setting */
-        unsigned int            bsize;          /* server block size */
+        unsigned int            wtmult;         /* server disk block size， server磁盘块大小 */
+        unsigned int            dtsize;         /* readdir size, readdir请求 */
+        unsigned short          port;           /* "port=" setting， server端口 */
+        unsigned int            bsize;          /* server block size， server块大小 */
 #ifdef CONFIG_NFS_V4_2
         unsigned int            gxasize;        /* getxattr size */
         unsigned int            sxasize;        /* setxattr size */
         unsigned int            lxasize;        /* listxattr size */
 #endif
-        unsigned int            acregmin;       /* attr cache timeouts */
+        unsigned int            acregmin;       /* attr cache timeouts， 普通文件缓存超时时间 */
         unsigned int            acregmax;
-        unsigned int            acdirmin;
+        unsigned int            acdirmin;       // 目录缓存
         unsigned int            acdirmax;
-        unsigned int            namelen;
+        unsigned int            namelen;        // 文件名最大长度
         unsigned int            options;        /* extra options enabled by mount */
         unsigned int            clone_blksize;  /* granularity of a CLONE operation */
 #define NFS_OPTION_FSCACHE      0x00000001      /* - local caching enabled */
@@ -81,8 +81,8 @@ struct nfs_server {
         struct nfs_fsid         fsid;
         int                     s_sysfs_id;     /* sysfs dentry index */
         __u64                   maxfilesize;    /* maximum file size */
-        struct timespec64       time_delta;     /* smallest time granularity */
-        unsigned long           mount_time;     /* when this fs was mounted */
+        struct timespec64       time_delta;     /* smallest time granularity， 时间精度 */
+        unsigned long           mount_time;     /* when this fs was mounted， 挂载时间 */
         struct super_block      *super;         /* VFS super block */
         dev_t                   s_dev;          /* superblock dev numbers */
         struct nfs_auth_info    auth_info;      /* parsed auth flavors */
@@ -92,7 +92,7 @@ struct nfs_server {
         char                    *fscache_uniq;  /* Uniquifier (or NULL) */
 #endif
 
-        u32                     pnfs_blksize;   /* layout_blksize attr */
+        u32                     pnfs_blksize;   /* layout_blksize attr，block layout才会用到 */
 #if IS_ENABLED(CONFIG_NFS_V4)
         u32                     attr_bitmask[3];/* V4 bitmask representing the set
                                                    of attributes supported on this
@@ -117,9 +117,9 @@ struct nfs_server {
                                                    filesystem */
         u32                     fh_expire_type; /* V4 bitmask representing file
                                                    handle volatility type for
-                                                   this filesystem */
-        struct pnfs_layoutdriver_type  *pnfs_curr_ld; /* Active layout driver */
-        struct rpc_wait_queue   roc_rpcwaitq;
+                                                   this filesystem， 文件句柄过期原因 */
+        struct pnfs_layoutdriver_type  *pnfs_curr_ld; /* Active layout driver，有3种：block layout、file layout、object layout */
+        struct rpc_wait_queue   roc_rpcwaitq;   // rpc任务等待队列
         void                    *pnfs_ld_data;  /* per mount point data */
 
         /* the following fields are protected by nfs_client->cl_lock */
@@ -127,9 +127,9 @@ struct nfs_server {
 #endif
         struct ida              openowner_id;
         struct ida              lockowner_id;
-        struct list_head        state_owners_lru;
-        struct list_head        layouts;
-        struct list_head        delegations;
+        struct list_head        state_owners_lru; // 空闲的nfs4_state_owner
+        struct list_head        layouts;        // pnfs_layout_hdr链表
+        struct list_head        delegations;    // nfs_delegation链表
         struct list_head        ss_copies;
 
         unsigned long           mig_gen;
@@ -138,16 +138,16 @@ struct nfs_server {
 #define NFS_MIG_FAILED                  (2)
 #define NFS_MIG_TSM_POSSIBLE            (3)
 
-        void (*destroy)(struct nfs_server *);
+        void (*destroy)(struct nfs_server *);   // nfs_destroy_server和nfs4_destroy_server
 
-        atomic_t active; /* Keep trace of any activity to this server */
+        atomic_t active; /* Keep trace of any activity to this server， 引用计数 */
 
         /* mountd-related mount options */
-        struct sockaddr_storage mountd_address;
-        size_t                  mountd_addrlen;
-        u32                     mountd_version;
-        unsigned short          mountd_port;
-        unsigned short          mountd_protocol;
+        struct sockaddr_storage mountd_address; // mount服务器地址
+        size_t                  mountd_addrlen; // mount服务器地址长度
+        u32                     mountd_version; // mount协议版本
+        unsigned short          mountd_port;    // mount协议端口
+        unsigned short          mountd_protocol;// 传输层协议,默认tcp
         struct rpc_wait_queue   uoc_rpcwaitq;
 
         /* XDR related information */
@@ -206,11 +206,11 @@ struct nfs_inode {
         /*
          * The 64bit 'inode number'
          */
-        __u64 fileid;
+        __u64 fileid; // 索引节点编号
         /*
          * NFS file handle
          */
-        struct nfs_fh           fh;
+        struct nfs_fh           fh; // 文件句柄
         /*
          * Various flags
          */
@@ -230,14 +230,14 @@ struct nfs_inode {
          * Please note the comparison is greater than or equal
          * so that zero timeout values can be specified.
          */
-        unsigned long           read_cache_jiffies;
-        unsigned long           attrtimeo;
-        unsigned long           attrtimeo_timestamp;
+        unsigned long           read_cache_jiffies;     // 文件属性更新时间
+        unsigned long           attrtimeo;              // 文件属性超时时间
+        unsigned long           attrtimeo_timestamp;    // attrtimeo最后个性时间
 
-        unsigned long           attr_gencount;
+        unsigned long           attr_gencount;          // 文件属性相关计数
 
-        struct rb_root          access_cache;
-        struct list_head        access_cache_entry_lru;
+        struct rb_root          access_cache;           // nfs_access_entry链表
+        struct list_head        access_cache_entry_lru; // 
         struct list_head        access_cache_inode_lru;
 
         union {
@@ -312,7 +312,7 @@ struct nfs_inode {
         /* pNFS layout information */
         struct pnfs_layout_hdr *layout;
 #endif /* CONFIG_NFS_V4*/
-        /* how many bytes have been written/read and how many bytes queued up */
+        /* how many bytes have been written/read and how many bytes queued up, 已经读写的数据量 */
         __u64 write_io;
         __u64 read_io;
 #ifdef CONFIG_NFS_V4_2

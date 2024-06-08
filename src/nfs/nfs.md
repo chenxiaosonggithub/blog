@@ -351,8 +351,15 @@ fput
 
 判断锁类型的函数`nfs4_lock_type()`。
 
-<!--
-# open
+# todo
 
+- `exportfs`: 解析结果`/var/lib/nfs/etab`
+- `rpc.nfsd`：
+- `rpc.mountd`: 
+  - 开启MOUNT服务（NFS4不需要），请求server基本信息（主要是根节点的文件句柄）
+  - 解析`/var/lib/nfs/etab`
 
--->
+v2 v3 sun, v4 netapp
+
+nfsv3锁功能需要NLM
+
