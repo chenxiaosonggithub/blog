@@ -37,12 +37,11 @@ sudo ksmbd.addshare --add \
                     --option 'read only = no' \
                     TEST
 sudo ksmbd.addshare --update TEST # 填写其他信息
-sudo ksmbd.adduser --add root
-sudo ksmbd.mountd # 启动
-sudo ksmbd.control --shutdown # 关闭
+sudo ksmbd.adduser --add root # 和samba不一样，ksmbd用户不需要是系统用户名（不需要在/etc/passwd中有）
+sudo ksmbd.adduser --delete root # 删除用户
 ```
 
-编辑配置文件`/usr/local/etc/ksmbd/ksmbd.conf`:
+配置文件`/usr/local/etc/ksmbd/ksmbd.conf`的一个例子如下:
 ```sh
 [global]
         writeable = yes
@@ -52,10 +51,12 @@ sudo ksmbd.control --shutdown # 关闭
         comment = xfstests test dir
         ; 注意路径后面不要有空格，被路径后的空格坑过
         path = /tmp/s_test
-
-[SCRATCH]
-        comment = xfstests scratch dir
-        path = /tmp/s_scratch
 ```
 
 执行脚本[ksmbd-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/smb/ksmbd-svr-setup.sh)启动内核的ksmbd server。
+
+```sh
+sudo ksmbd.control --shutdown # 关闭
+sudo ksmbd.mountd # 启动
+sudo mount -o user=root //127.0.0.1/TEST /mnt
+```
