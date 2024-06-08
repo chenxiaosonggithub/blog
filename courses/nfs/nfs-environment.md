@@ -5,6 +5,7 @@
 nfs server安装所需软件：
 ```sh
 apt-get install nfs-kernel-server -y # debian
+dnf install nfs-utils -y # openeuler
 ```
 
 nfs server编辑`exportfs`的配置文件`/etc/exports`，配置选项的含义可以通过命令`man 5 exports`查看:
@@ -69,6 +70,7 @@ exportfs -auv # 全部删除
 nfs client安装所需软件：
 ```sh
 apt-get install nfs-common -y # debian
+dnf install nfs-utils -y # openeuler
 ```
 
 nfs client挂载（更多挂载选项可以通过命令`man 5 nfs`查看）：
@@ -79,7 +81,7 @@ mount -t nfs -o vers=4.1 ${server_ip}:/s_test /mnt
 mount -t nfs -o vers=4.2 ${server_ip}:/s_test /mnt
 # nfsv3和nfsv2 源路径要写完整的源路径，没有根路径的概念，源路径必须是绝对路径/tmp/s_test
 mount -t nfs -o vers=3 ${server_ip}:/tmp/s_test /mnt
-# nfsv2, nfs server 需要修改 /etc/nfs.conf 中的 `[nfsd] vers2=y`
+# nfsv2, nfs server 需要修改 /etc/nfs.conf 中的 `[nfsd] vers2=y`,但在Debian 11 (bullseye) 上安装的nfs-utils 1.3.3上找不到/etc/nfs.conf
 mount -t nfs -o vers=2 ${server_ip}:/tmp/s_test /mnt
 ```
 

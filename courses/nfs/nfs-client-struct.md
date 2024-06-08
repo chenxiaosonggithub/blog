@@ -169,9 +169,9 @@ struct nfs_server {
  * The nfs_client identifies our client state to the server.                                       
  */                                                                                                
 struct nfs_client {                                                                                
-        refcount_t              cl_count;                                                          
-        atomic_t                cl_mds_count;                                                      
-        int                     cl_cons_state;  /* current construction state (-ve: init error) */ 
+        refcount_t              cl_count;       // 引用计数
+        atomic_t                cl_mds_count;   //
+        int                     cl_cons_state;  /* current construction state (-ve: init error)，下面的3种状态 */ 
 #define NFS_CS_READY            0               /* ready to be used */                             
 #define NFS_CS_INITING          1               /* busy initialising */                            
 #define NFS_CS_SESSION_INITING  2               /* busy initialising  session */                   
@@ -192,16 +192,16 @@ struct nfs_client {
 #define NFS_CS_DS               7               /* - Server is a DS */                             
 #define NFS_CS_REUSEPORT        8               /* - reuse src port on reconnect */                
 #define NFS_CS_PNFS             9               /* - Server used for pnfs */                       
-        struct sockaddr_storage cl_addr;        /* server identifier */                            
-        size_t                  cl_addrlen;                                                        
+        struct sockaddr_storage cl_addr;        /* server identifier， 服务器ip和端口 */
+        size_t                  cl_addrlen;     // cl_addr的长度
         char *                  cl_hostname;    /* hostname of server */                           
         char *                  cl_acceptor;    /* GSSAPI acceptor name */                         
         struct list_head        cl_share_link;  /* link in global client list */                   
-        struct list_head        cl_superblocks; /* List of nfs_server structs */                   
+        struct list_head        cl_superblocks; /* List of nfs_server structs,一个nfs_client包含多个nfs_server */                   
                                                                                                    
-        struct rpc_clnt *       cl_rpcclient;                                                      
-        const struct nfs_rpc_ops *rpc_ops;      /* NFS protocol vector */                          
-        int                     cl_proto;       /* Network transport protocol */                   
+        struct rpc_clnt *       cl_rpcclient;   // 与nfs_server无关的RPC请求时使用
+        const struct nfs_rpc_ops *rpc_ops;      /* NFS protocol vector, 有nfs_v2_clientops、nfs_v3_clientops、nfs_v4_clientops */                          
+        int                     cl_proto;       /* Network transport protocol, 默认tcp */
         struct nfs_subversion * cl_nfs_mod;     /* pointer to nfs version module */                
                                                                                                    
         u32                     cl_minorversion;/* NFSv4 minorversion */                           
@@ -218,9 +218,9 @@ struct nfs_client {
                                                                                                    
         spinlock_t              cl_lock;                                                           
                                                                               
-        unsigned long           cl_lease_time;                                
-        unsigned long           cl_last_renewal;                              
-        struct delayed_work     cl_renewd;                                    
+        unsigned long           cl_lease_time;  // 一般为90s
+        unsigned long           cl_last_renewal;
+        struct delayed_work     cl_renewd;      // 超时调用nfs4_renew_state()
                                                                               
         struct rpc_wait_queue   cl_rpcwaitq;                                  
                                                                               
@@ -265,11 +265,43 @@ struct nfs_client {
          * This is used to generate the mv0 callback address.                 
          */                                                                   
         char                    cl_ipaddr[48];                                
-        struct net              *cl_net;                                      
+        struct net              *cl_net; // 网络命名空间
         struct list_head        pending_cb_stateids;                          
 };                                                                            
 ```
 
+## 相关代码流程
+
+```c
+// v3
+mount
+  do_mount
+    path_mount
+      do_new_mount
+        vfs_get_tree
+          nfs_get_tree
+            nfs_try_get_tree
+              nfs_try_mount_request
+                nfs3_create_server
+                  nfs_create_server
+                    nfs_init_server
+                      nfs_get_client
+                        nfs_init_client
+
+// v4
+mount
+  do_mount
+    path_mount
+      do_new_mount
+        vfs_get_tree
+          nfs_get_tree
+            nfs4_try_get_tree
+              nfs4_create_server
+                nfs4_init_server
+                  nfs4_set_client
+                    nfs_get_client
+                      nfs4_init_client
+```
 
 # 超级块操作
 

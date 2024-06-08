@@ -1,3 +1,11 @@
+# 修改成不需要密码
+
+`/etc/passwd`修改成：
+```sh
+root::0:0:Super User:/root:/bin/bash
+```
+
+`/etc/shadow`可以不修改。
 
 # arm32架构
 
