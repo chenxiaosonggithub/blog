@@ -363,3 +363,9 @@ v2 v3 sun, v4 netapp
 
 nfsv3锁功能需要NLM
 
+- `ac, noac`
+- `actimeo`: `acregmin、acregmax、acdirmin、acdirmax`统一的值
+- `sec`: 默认`sys`
+- `sharecache  nosharecache`: 同一文件系统挂载到不到的目录是，是否共享文件缓存
+- `lookupcache`
+- `fsc`: fscache，数据保存到客户端磁盘，只读或修改不频繁

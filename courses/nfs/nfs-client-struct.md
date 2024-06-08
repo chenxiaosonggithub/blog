@@ -14,6 +14,8 @@
 
 # 超级块
 
+## `struct nfs_server`
+
 由于nfs client没有磁盘超级块，所以只有内存超级块结构体，在`nfs_get_tree_common()`函数中赋值`fc->s_fs_info = server`。
 
 这个结构体太长了。
@@ -159,6 +161,115 @@ struct nfs_server {
         struct kobject          kobj;
 };
 ```
+
+## `struct nfs_client`
+
+```c
+/*                                                                                                 
+ * The nfs_client identifies our client state to the server.                                       
+ */                                                                                                
+struct nfs_client {                                                                                
+        refcount_t              cl_count;                                                          
+        atomic_t                cl_mds_count;                                                      
+        int                     cl_cons_state;  /* current construction state (-ve: init error) */ 
+#define NFS_CS_READY            0               /* ready to be used */                             
+#define NFS_CS_INITING          1               /* busy initialising */                            
+#define NFS_CS_SESSION_INITING  2               /* busy initialising  session */                   
+        unsigned long           cl_res_state;   /* NFS resources state */                          
+#define NFS_CS_CALLBACK         1               /* - callback started */                           
+#define NFS_CS_IDMAP            2               /* - idmap started */                              
+#define NFS_CS_RENEWD           3               /* - renewd started */                             
+#define NFS_CS_STOP_RENEW       4               /* no more state to renew */                       
+#define NFS_CS_CHECK_LEASE_TIME 5               /* need to check lease time */                     
+        unsigned long           cl_flags;       /* behavior switches */                            
+#define NFS_CS_NORESVPORT       0               /* - use ephemeral src port */                     
+#define NFS_CS_DISCRTRY         1               /* - disconnect on RPC retry */                    
+#define NFS_CS_MIGRATION        2               /* - transparent state migr */                     
+#define NFS_CS_INFINITE_SLOTS   3               /* - don't limit TCP slots */                      
+#define NFS_CS_NO_RETRANS_TIMEOUT       4       /* - Disable retransmit timeouts */                
+#define NFS_CS_TSM_POSSIBLE     5               /* - Maybe state migration */                      
+#define NFS_CS_NOPING           6               /* - don't ping on connect */                      
+#define NFS_CS_DS               7               /* - Server is a DS */                             
+#define NFS_CS_REUSEPORT        8               /* - reuse src port on reconnect */                
+#define NFS_CS_PNFS             9               /* - Server used for pnfs */                       
+        struct sockaddr_storage cl_addr;        /* server identifier */                            
+        size_t                  cl_addrlen;                                                        
+        char *                  cl_hostname;    /* hostname of server */                           
+        char *                  cl_acceptor;    /* GSSAPI acceptor name */                         
+        struct list_head        cl_share_link;  /* link in global client list */                   
+        struct list_head        cl_superblocks; /* List of nfs_server structs */                   
+                                                                                                   
+        struct rpc_clnt *       cl_rpcclient;                                                      
+        const struct nfs_rpc_ops *rpc_ops;      /* NFS protocol vector */                          
+        int                     cl_proto;       /* Network transport protocol */                   
+        struct nfs_subversion * cl_nfs_mod;     /* pointer to nfs version module */                
+                                                                                                   
+        u32                     cl_minorversion;/* NFSv4 minorversion */                           
+        unsigned int            cl_nconnect;    /* Number of connections */                        
+        unsigned int            cl_max_connect; /* max number of xprts allowed */                  
+        const char *            cl_principal;   /* used for machine cred */                        
+        struct xprtsec_parms    cl_xprtsec;     /* xprt security policy */                         
+                                                                                                   
+#if IS_ENABLED(CONFIG_NFS_V4)                                                                      
+        struct list_head        cl_ds_clients; /* auth flavor data servers */                      
+        u64                     cl_clientid;    /* constant */                                     
+        nfs4_verifier           cl_confirm;     /* Clientid verifier */                            
+        unsigned long           cl_state;                                                          
+                                                                                                   
+        spinlock_t              cl_lock;                                                           
+                                                                              
+        unsigned long           cl_lease_time;                                
+        unsigned long           cl_last_renewal;                              
+        struct delayed_work     cl_renewd;                                    
+                                                                              
+        struct rpc_wait_queue   cl_rpcwaitq;                                  
+                                                                              
+        /* idmapper */                                                        
+        struct idmap *          cl_idmap;                                     
+                                                                              
+        /* Client owner identifier */                                         
+        const char *            cl_owner_id;                                  
+                                                                              
+        u32                     cl_cb_ident;    /* v4.0 callback identifier */
+        const struct nfs4_minor_version_ops *cl_mvops;                        
+        unsigned long           cl_mig_gen;                                   
+                                                                              
+        /* NFSv4.0 transport blocking */                                      
+        struct nfs4_slot_table  *cl_slot_tbl;                                 
+                                                                              
+        /* The sequence id to use for the next CREATE_SESSION */              
+        u32                     cl_seqid;                                     
+        /* The flags used for obtaining the clientid during EXCHANGE_ID */    
+        u32                     cl_exchange_flags;                            
+        struct nfs4_session     *cl_session;    /* shared session */          
+        bool                    cl_preserve_clid;                             
+        struct nfs41_server_owner *cl_serverowner;                            
+        struct nfs41_server_scope *cl_serverscope;                            
+        struct nfs41_impl_id    *cl_implid;                                   
+        /* nfs 4.1+ state protection modes: */                                
+        unsigned long           cl_sp4_flags;                                 
+#define NFS_SP4_MACH_CRED_MINIMAL  1    /* Minimal sp4_mach_cred - state ops  
+                                         * must use machine cred */           
+#define NFS_SP4_MACH_CRED_CLEANUP  2    /* CLOSE and LOCKU */                 
+#define NFS_SP4_MACH_CRED_SECINFO  3    /* SECINFO and SECINFO_NO_NAME */     
+#define NFS_SP4_MACH_CRED_STATEID  4    /* TEST_STATEID and FREE_STATEID */   
+#define NFS_SP4_MACH_CRED_WRITE    5    /* WRITE */                           
+#define NFS_SP4_MACH_CRED_COMMIT   6    /* COMMIT */                          
+#define NFS_SP4_MACH_CRED_PNFS_CLEANUP  7 /* LAYOUTRETURN */                  
+#if IS_ENABLED(CONFIG_NFS_V4_1)                                               
+        wait_queue_head_t       cl_lock_waitq;                                
+#endif /* CONFIG_NFS_V4_1 */                                                  
+#endif /* CONFIG_NFS_V4 */                                                    
+                                                                              
+        /* Our own IP address, as a null-terminated string.                   
+         * This is used to generate the mv0 callback address.                 
+         */                                                                   
+        char                    cl_ipaddr[48];                                
+        struct net              *cl_net;                                      
+        struct list_head        pending_cb_stateids;                          
+};                                                                            
+```
+
 
 # 超级块操作
 
