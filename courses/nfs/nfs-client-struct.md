@@ -22,7 +22,7 @@
 
 ```c
 /*
- * NFS client parameters stored in the superblock. 挂载参数不同时每挂载一次创建一个nfs_server，请看nfs_compare_super()
+ * NFS client parameters stored in the superblock. 挂载参数不同时每挂载一次创建一个nfs_server，请看 nfs_compare_super()
  */
 struct nfs_server {
         struct nfs_client *     nfs_client;     /* shared client and NFS4 state, 多个nfs_server对应一个nfs_client */

@@ -369,3 +369,22 @@ nfsv3锁功能需要NLM
 - `sharecache  nosharecache`: 同一文件系统挂载到不到的目录是，是否共享文件缓存
 - `lookupcache`
 - `fsc`: fscache，数据保存到客户端磁盘，只读或修改不频繁
+
+读：
+```c
+nfs_file_read
+  nfs_file_direct_read // dio
+  nfs_revalidate_mapping
+    __nfs_revalidate_inode
+      nfs_refresh_inode
+  generic_file_read_iter
+```
+
+`struct nfs_pageio_ops nfs_pgio_rw_ops`。
+
+`struct nfs_pgio_completion_ops`
+
+radix树
+
+`nfs_generic_pg_pgios`
+
