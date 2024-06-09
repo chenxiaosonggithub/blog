@@ -129,7 +129,7 @@ struct nfs_server {
 #endif
         struct ida              openowner_id;
         struct ida              lockowner_id;
-        struct list_head        state_owners_lru; // 空闲的nfs4_state_owner
+        struct list_head        state_owners_lru; // 空闲的nfs4_state_owner(表示客户端的用户)
         struct list_head        layouts;        // pnfs_layout_hdr链表
         struct list_head        delegations;    // nfs_delegation链表
         struct list_head        ss_copies;

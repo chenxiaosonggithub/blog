@@ -388,3 +388,21 @@ radix树
 
 `nfs_generic_pg_pgios`
 
+`struct nfs_openargs nfs_openres nfs_open_confirmargs nfs_open_confirmres nfs4_opendata`
+
+server和 client：
+
+- `nfs4_openowner nfs4_state_owner`
+- `nfs4_ol_stateid nfs4_state`
+
+Linux没有实现OPEN_DELEGATE_WRITE open_delegation_type4, 好像不对，有实现
+
+`encode_open()`
+
+`CLOSE和OPEN_DOWNGRADE`
+
+`struct rpc_call_ops`
+
+`struct auth_ops svcauth_unix`
+
+`rpc_procinfo rpc_message`

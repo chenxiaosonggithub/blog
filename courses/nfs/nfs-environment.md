@@ -37,6 +37,8 @@ tmp              192.168.122.0/24(ro)   localhost(rw)   *.chenxiaosong.com(ro,sy
 - client账号为root时，默认`root_squash`压缩成`nobody(nfsnobody) `，`no_root_squash`不压缩。
 - `all_squash`把所有的用户都压缩成`nobody(nfsnobody)`。
 - `anonuid,anongid`设置`nobody(nfsnobody)`对应的uid和gid。
+- `nohide`和`crossmnt`: 仅针对v2和v3.
+- `fsid=num|root|uuid`: 文件系统标识。
 
 用以下命令查看开了哪些端口：
 ```sh
