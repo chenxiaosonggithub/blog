@@ -91,3 +91,5 @@ nfs的rfc协议文档有以下几个版本：
 - [rfc7530, March 2015,    Network File System (NFS) Version 4 Protocol](https://www.rfc-editor.org/rfc/rfc7530)
 - [rfc8881, August 2020,   Network File System (NFS) Version 4 Minor Version 1 Protocol](https://www.rfc-editor.org/rfc/rfc8881)
 - [rfc7862, November 2016, Network File System (NFS) Version 4 Minor Version 2 Protocol](https://www.rfc-editor.org/rfc/rfc7862)
+
+现在很多的发行版已经不支持nfsv2，所以我们的教程只讲解nfsv3和nfsv4相关的代码。
