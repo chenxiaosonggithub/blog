@@ -71,59 +71,46 @@ man 5 ksmbd.conf
 man 5 ksmbdpwd.db
 ```
 
-Example session:
+示例会话:
 ```sh
-# If you built and installed ksmbd-tools yourself using autoconf defaults,
-# the utilities are in `/usr/local/sbin',
-# the default user database is `/usr/local/etc/ksmbd/ksmbdpwd.db', and
-# the default configuration file is `/usr/local/etc/ksmbd/ksmbd.conf'.
+# 如果你使用 autoconf 默认设置自行构建并安装了 ksmbd-tools，工具位于 /usr/local/sbin'，默认用户数据库是 /usr/local/etc/ksmbd/ksmbdpwd.db'，默认配置文件是 `/usr/local/etc/ksmbd/ksmbd.conf'。
 
-# Otherwise it is likely that,
-# the utilities are in `/usr/sbin',
-# the default user database is `/etc/ksmbd/ksmbdpwd.db', and
-# the default configuration file is `/etc/ksmbd/ksmbd.conf'.
+# 否则，工具可能位于 /usr/sbin'，默认用户数据库是 /etc/ksmbd/ksmbdpwd.db'，默认配置文件是 `/etc/ksmbd/ksmbd.conf'。
 
-# Create the share path directory.
-# The share stores files in this directory using its underlying filesystem.
+# 创建共享路径目录。共享使用其底层文件系统在此目录中存储文件。
 mkdir -vp $HOME/MyShare
 
-# Add a share to the default configuration file.
-# Note that `ksmbd.addshare' does not do variable expansion.
-# Without `--add', `ksmbd.addshare' will update `MyShare' if it exists.
+# 将共享添加到默认配置文件。请注意，ksmbd.addshare 不进行变量扩展。没有 --add 时，如果 MyShare 存在，ksmbd.addshare 将更新 MyShare。
 sudo ksmbd.addshare --add \
                     --option "path = $HOME/MyShare" \
                     --option 'read only = no' \
                     MyShare
 
-# The default configuration file now has a new section for `MyShare'.
+# 默认配置文件现在有一个新的部分用于 MyShare。
 #
 # [MyShare]
 #         ; share parameters
 #         path = /home/tester/MyShare
 #         read only = no
 #
-# Each share has its own section with share parameters that apply to it.
-# A share parameter given in `[global]' changes its default value.
-# `[global]' also has global parameters which are not share specific.
 
-# You can interactively update a share by omitting `--option'.
-# Without `--update', `ksmbd.addshare' will add `MyShare' if it does not exist.
+# 每个共享都有自己的部分，其中包含适用于该共享的共享参数。在 [global] 中给出的共享参数会更改其默认值。[global] 还包含一些不特定于共享的全局参数。
+
+# 你可以通过省略 --option 来交互式地更新共享。如果没有 --update，ksmbd.addshare 会添加 MyShare（如果它不存在的话）。
 sudo ksmbd.addshare --update MyShare
 
-# Add a user to the default user database.
-# You will be prompted for a password.
+# 将用户添加到默认用户数据库。系统将提示你输入密码。
 sudo ksmbd.adduser --add MyUser
 
-# There is no system user called `MyUser' so it has to be mapped to one.
-# We can force all users accessing the share to map to a system user and group.
+# 没有名为 MyUser 的系统用户，因此需要将其映射到一个系统用户。我们可以强制所有访问共享的用户映射到一个系统用户和组。
 
-# Update share parameters of a share in the default configuration file.
+更# 新默认配置文件中共享的共享参数。
 sudo ksmbd.addshare --update \
                     --option "force user = $USER" \
                     --option "force group = $USER" \
                     MyShare
 
-# The default configuration file now has the updated share parameters.
+# 默认配置文件现在包含更新后的共享参数。
 #
 # [MyShare]
 #         ; share parameters
@@ -133,52 +120,45 @@ sudo ksmbd.addshare --update \
 #         read only = no
 #
 
-# Add the kernel module.
+# 加载内核模块。
 sudo modprobe ksmbd
 
-# Start the user and kernel mode daemons.
-# All interfaces are listened to by default.
+# 启动用户模式和内核模式守护程序。所有接口默认都被监听。
 sudo ksmbd.mountd
 
-# Mount the new share with cifs-utils and authenticate as the new user.
-# You will be prompted for the password given previously with `ksmbd.adduser'.
+# 使用 cifs-utils 挂载新共享，并以新用户身份进行身份验证。你将被提示输入之前使用 ksmbd.adduser 设置的密码。
 sudo mount -o user=MyUser //127.0.0.1/MyShare /mnt
 
-# You can now access the share at `/mnt'.
+# 你现在可以在 /mnt 访问该共享。
 sudo touch /mnt/new_file_from_cifs_utils
 
-# Unmount the share.
+# 卸载该共享。
 sudo umount /mnt
 
-# Update the password of a user in the default user database.
-# `--password' can be used to give the password instead of prompting.
+# 更新默认用户数据库中用户的密码。
+# 可以使用 --password 选项来指定密码，而不是提示输入密码。
 sudo ksmbd.adduser --update --password MyNewPassword MyUser
 
-# Delete a user from the default user database.
+# 从默认用户数据库中删除一个用户。
 sudo ksmbd.adduser --delete MyUser
 
-# The utilities notify ksmbd.mountd of changes by sending it the SIGHUP signal.
-# This can be done manually when changes are made without using the utilities.
+# 这些工具通过向 ksmbd.mountd 发送 SIGHUP 信号来通知其更改。在不使用这些工具的情况下进行更改时，可以手动执行此操作。
 sudo ksmbd.control --reload
 
-# Toggle ksmbd debug printing of the `smb' component.
+# 切换 ksmbd 对 "smb" 组件的调试打印。
 sudo ksmbd.control --debug smb
 
-# Some changes require restarting the user and kernel mode daemons.
-# Modifying any global parameter is one example of such a change.
-# Restarting means starting `ksmbd.mountd' after shutting the daemons down.
+# 有些更改需要重新启动用户模式和内核模式守护程序。修改任何全局参数就是这种更改的一个例子。重新启动意味着在关闭守护程序后启动 ksmbd.mountd。
 
 # Shutdown the user and kernel mode daemons.
 sudo ksmbd.control --shutdown
 
-# Remove the kernel module.
+# 卸载内核模块。
 sudo modprobe -r ksmbd
 ```
 
 ## Packages
 
-The following packaging status tracker is provided by
-[the Repology project](https://repology.org)
-.
+以下打包状态跟踪器由[the Repology project](https://repology.org)提供。.
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/ksmbd-tools.svg)](https://repology.org/project/ksmbd-tools/versions)
