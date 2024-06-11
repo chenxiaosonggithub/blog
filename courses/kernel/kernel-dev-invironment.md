@@ -475,6 +475,8 @@ mv /usr/lib/systemd/zram-generator.conf /usr/lib/systemd/zram-generator.conf.bak
 # fedora26 安装 vim 前，先升级
 sudo dnf update vim-common vim-minimal -y
 ```
+
+注意fedora中账号密码输完后要用`ctrl+j`，不要用回车。
 <!-- public end -->
 
 # 使用GDB调试内核代码
