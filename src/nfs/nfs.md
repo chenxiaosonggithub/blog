@@ -351,6 +351,10 @@ fput
 
 判断锁类型的函数`nfs4_lock_type()`。
 
+# pnfs 环境
+
+
+
 # todo
 
 - `exportfs`: 解析结果`/var/lib/nfs/etab`
@@ -415,3 +419,9 @@ NFSv2和NFSv3通过MOUNT协议获取根节点的⽂件句柄,[nfs-utils](https:/
 
 NFSv4通过PUTROOTFH请求获取根节点的⽂件句柄
 
+`nfs4_open_delegation()`
+
+`nfs_end_delegation_return()`
+
+Clients和Storage Devices传输数据时需要使用专门的存储协议。目前RFC定义了三种存储协议：file
+layout(RFC5661)、block layout(RFC5663)、object layout(RFC5664)
