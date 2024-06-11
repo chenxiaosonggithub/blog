@@ -44,12 +44,12 @@ pNFS 的重要性在于它将并行 I/O 的优势与网络文件系统 (NFS) 的
 
 NFS4.1 标准文档很大，因为它包括了对 NFSv4 的完整描述以及新的 4.1 特性。还有两个伴随文档，描述了 pNFS 存储的对象布局和块布局。
 
-- RFC 5661 - 描述了 NFS 版本 4 的小版本 1，包括从基础协议保留的特性以及后续进行的协议扩展。
-- RFC 5662 - 包含了协议的机器可读的 XDR 定义。
-- RFC 5663 - 提供了一个基于块的布局类型定义的规范，用于与 NFSv4.1 协议一起使用。因此，这是 NFS 版本 4 的小版本 1 的伴随规范。
-- RFC 5664 - 提供了一个基于对象的布局类型定义的规范，用于与 NFSv4.1 协议一起使用。因此，这是 NFS 版本 4 的小版本 1 的伴随规范。
+- [RFC 5661](https://datatracker.ietf.org/doc/html/rfc5661) - 描述了 NFS 版本 4 的小版本 1，包括从基础协议保留的特性以及后续进行的协议扩展。
+- [RFC 5662](https://datatracker.ietf.org/doc/html/rfc5662) - 包含了协议的机器可读的 XDR 定义。
+- [RFC 5663](https://datatracker.ietf.org/doc/html/rfc5663) - 提供了一个基于块的布局类型定义的规范，用于与 NFSv4.1 协议一起使用。因此，这是 NFS 版本 4 的小版本 1 的伴随规范。
+- [RFC 5664](https://datatracker.ietf.org/doc/html/rfc5664) - 提供了一个基于对象的布局类型定义的规范，用于与 NFSv4.1 协议一起使用。因此，这是 NFS 版本 4 的小版本 1 的伴随规范。
 
-# 下载pNFS的源代码
+## 下载pNFS的源代码
 
 从[linux-nfs.org](http://wiki.linux-nfs.org/wiki/index.php/PNFS_Development_Git_tree)（根据GNU通用公共许可证第2版提供）和opensolaris.org（根据OpenSolaris二进制许可证提供）下载pNFS启用的Linux内核的最新开发源代码。
 
