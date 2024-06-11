@@ -10,6 +10,8 @@
 
 [Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?](https://chenxiaosong.com/translations/bugzilla-redhat-bug-2176575.html)
 
+[pnfs.com](https://chenxiaosong.com/translations/pnfs.com.html)
+
 # smb
 
 [[MS-SMB]: Server Message Block (SMB) Protocol](https://chenxiaosong.com/translations/ms-smb.html)
