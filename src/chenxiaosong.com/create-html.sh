@@ -92,24 +92,32 @@ array=(
     1 1 src/lorawan/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
     1 1 src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"
     # 翻译
-    1 1 src/translations/nfs/rfc8881-nfsv4.1.md translations/rfc8881-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
-    1 1 src/translations/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
-    1 1 src/translations/smb/ms-smb.md translations/ms-smb.html "[MS-SMB]: Server Message Block (SMB) Protocol"
-    1 1 src/translations/smb/ms-smb2.md translations/ms-smb2.html "[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3"
-    1 1 src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
-    1 1 src/translations/nfs/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
-    1 1 src/translations/nfs/bugzilla-redhat-bug-2176575.md translations/bugzilla-redhat-bug-2176575.html "Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?"
-    1 1 src/translations/btrfs/btrfs-doc.rst translations/btrfs-doc.html "BTRFS documentation"
-    1 1 src/translations/wine/building-wine-winehq-wiki.md translations/building-wine-winehq-wiki.html "Building Wine - WineHQ Wiki"
-    1 1 src/translations/wine/box64-docs-X64WINE.md translations/box64-docs-X64WINE.html "box64 Installing Wine64"
-    1 1 src/translations/wine/box86-docs-X86WINE.md translations/box86-docs-X86WINE.html "box86 Installing Wine (and winetricks)"
-    1 1 src/translations/tests/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
-    1 1 src/translations/tests/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
-    1 1 src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
-    1 1 src/translations/tests/xfstests-readme.md translations/xfstests-readme.html "(x)fstests README"
-    1 1 src/translations/xfs/xfs_filesystem_structure.md translations/xfs_filesystem_structure.html "xfs_filesystem_structure.pdf"
-    1 1 src/translations/smb/ksmbd-kernel-doc.md translations/ksmbd-kernel-doc.html "KSMBD kernel doc"
-    1 1 src/translations/smb/ksmbd-tools-readme.md translations/ksmbd-tools-readme.html "ksmbd-tools README"
+    1 1 src/translations/translations.md translations/translations.html "翻译"
+        # nfs
+        1 1 src/translations/nfs/rfc8881-nfsv4.1.md translations/rfc8881-nfsv4.1.html "Network File System (NFS) Version 4 Minor Version 1 Protocol"
+        1 1 src/translations/nfs/rfc7862-nfsv4.2.md translations/rfc7862-nfsv4.2.html "Network File System (NFS) Version 4 Minor Version 2 Protocol"
+        1 1 src/translations/nfs/client-identifier.rst translations/client-identifier.html "NFSv4 client identifier"
+        1 1 src/translations/nfs/cthon-nfs-tests-readme.md translations/cthon-nfs-tests-readme.html "Connectathon NFS tests README"
+        1 1 src/translations/nfs/bugzilla-redhat-bug-2176575.md translations/bugzilla-redhat-bug-2176575.html "Red Hat Bugzilla - Bug 2176575 - intermittent severe NFS client performance drop via nfs_server_reap_expired_delegations looping?"
+        # smb
+        1 1 src/translations/smb/ms-smb.md translations/ms-smb.html "[MS-SMB]: Server Message Block (SMB) Protocol"
+        1 1 src/translations/smb/ms-smb2.md translations/ms-smb2.html "[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3"
+        1 1 src/translations/smb/ksmbd-kernel-doc.md translations/ksmbd-kernel-doc.html "KSMBD kernel doc"
+        1 1 src/translations/smb/ksmbd-tools-readme.md translations/ksmbd-tools-readme.html "ksmbd-tools README"
+        # btrfs
+        1 1 src/translations/btrfs/btrfs-doc.rst translations/btrfs-doc.html "BTRFS documentation"
+        # xfs
+        1 1 src/translations/xfs/xfs_filesystem_structure.md translations/xfs_filesystem_structure.html "xfs_filesystem_structure.pdf"
+        # wine
+        1 1 src/translations/wine/building-wine-winehq-wiki.md translations/building-wine-winehq-wiki.html "Building Wine - WineHQ Wiki"
+        1 1 src/translations/wine/box64-docs-X64WINE.md translations/box64-docs-X64WINE.html "box64 Installing Wine64"
+        1 1 src/translations/wine/box86-docs-X86WINE.md translations/box86-docs-X86WINE.html "box86 Installing Wine (and winetricks)"
+        # tests
+        1 1 src/translations/tests/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
+        1 1 src/translations/tests/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
+        1 1 src/translations/tests/xfstests-readme.md translations/xfstests-readme.html "(x)fstests README"
+        # qemu
+        1 1 src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
     # private
     1 1 src/private/v2ray/v2ray.md private/v2ray.html "v2ray代理服务器"
     1 1 src/private/chatgpt/chatgpt.md private/chatgpt.html "注册ChatGPT"
