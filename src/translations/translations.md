@@ -12,6 +12,8 @@
 
 [pnfs.com](https://chenxiaosong.com/translations/pnfs.com.html)
 
+[kernel doc: Reference counting in pnfs](https://chenxiaosong.com/translations/kernel-doc-pnfs.html)
+
 # smb
 
 [[MS-SMB]: Server Message Block (SMB) Protocol](https://chenxiaosong.com/translations/ms-smb.html)
