@@ -278,3 +278,260 @@ nfs 调试：
 echo 32767 > /proc/sys/sunrpc/nfsd_debug
 echo 32767 > /proc/sys/sunrpc/nfs_debug
 ```
+# Configuring pNFS/spnfsd
+
+[原网页](https://linux-nfs.org/wiki/index.php?title=Configuring_pNFS/spnfsd)。
+
+注意：spnfs已经从git://linux-nfs.org/~bhalevy/linux-pnfs.git pnfs-all-3.2中删除。
+
+## What is pNFS ?
+
+pNFS是NFSv4.1提供的新功能，也称为Parallel NFS。Parallel NFS（pNFS）扩展了网络文件共享版本4（NFSv4），允许客户端直接访问由NFSv4服务器使用的存储上的文件数据。这种绕过服务器进行数据访问的能力可以提高性能和并行性，但需要额外的客户端功能来进行数据访问，其中一些取决于所使用的存储类别。
+
+Parallel NFS具有多种直接访问数据的方式。目前，提供了三种“布局”：
+
+- LAYOUT4_FILE：跨多个NFS服务器进行条带化
+- LAYOUT4_BLOCK_VOLUME：允许客户端按块设备中存储的方式访问数据
+- LAYOUT4_OSD2_OBJECTS：基于OSD2协议。
+
+NFSv4.1和pNFS由以下RFC描述：
+
+- RFC5661：网络文件系统（NFS）版本4.1协议
+- RFC5662：网络文件系统（NFS）版本4.1，外部数据表示标准（XDR）描述
+- RFC5663：并行NFS（pNFS）块/卷布局
+- RFC5664：基于对象的并行NFS（pNFS）操作
+
+## What is spNFS ?
+
+spNFS是一个简单的pNFS LAYOUT4_FILE服务器实现，它使用独立的NFS服务器作为数据服务器，并将大部分MDS逻辑放在用户空间守护进程中。截至2011年初，它基本上没有维护，并且我们不再推荐使用它；如果您仍想尝试spNFS，可以使用以下步骤，但是您可能会更喜欢使用不同的服务器实现（请参阅 http://wiki.linux-nfs.org/wiki/index.php/PNFS_server_projects ）。
+
+## Content of this document
+
+这份文档描述了如何使用3台机器设置一个基本的pNFS/LAYOUT4_FILE测试配置，使用服务器端的spNFS。
+
+（警告：截至2011年2月，spNFS代码大部分未维护；我们不再推荐使用。）
+
+我使用的机器是：
+
+- nfsmds，IP地址= XX.YY.ZZ.A，用作元数据服务器
+- nfsds，IP地址= XX.YY.ZZ.B，用作数据服务器
+- nfsclient，IP地址= XX.YY.ZZ.C，用作客户端
+
+## Where is the source code?
+
+首先要做的是重新编译一个兼容的内核和nfs-utils发行版。我使用了Benny Halevy的git仓库中的那些。
+```sh
+ # Get kernel repository
+ git clone git://git.linux-nfs.org/projects/bhalevy/linux-pnfs.git
+ 
+ # Get nfs-utils repository
+ git://linux-nfs.org/~bhalevy/pnfs-nfs-utils.git
+```
+
+在这份文档中，我使用了具有以下状态的版本库。
+- pnfs-nfs-utils: commit id = 2b5373db8615a52c47dbcf3ab968fad7cdcc6fed (pnfs-nfs-utils-1-2-2)
+- kernel linux-pnfs: commit id = cbd09e0fb2b160a06a44aad1c21786b99401823f (pnfs-all-2.6.33-2010-03-09)
+
+## Let's go configuring now...
+
+### Building the pnfs Kernel
+
+内核编译正常。只需确保在`.config`文件中配置了正确的选项。
+
+```sh
+       CONFIG_NETWORK_FILESYSTEMS=y
+       CONFIG_NFS_FS=m
+       CONFIG_NFS_V4=y
+       CONFIG_NFS_V4_1=y
+       CONFIG_PNFS=y
+       CONFIG_NFSD=m
+       CONFIG_PNFSD=y
+       # CONFIG_PNFSD_LOCAL_EXPORT is not set
+       CONFIG_SPNFS=y
+       CONFIG_SPNFS_LAYOUTSEGMENTS=y
+```
+
+使用2.6.34或更高版本的内核，添加（应该与`CONFIG_NFS_FS`相同）。
+```sh
+CONFIG_PNFS_FILE_LAYOUT=m
+```
+
+### Building nfs-utils
+
+编译pnfs-nfs-utils将按照以下步骤进行。
+
+```sh
+ # autoreconf --instal
+ # ./configure --prefix=/usr && make && make install
+```
+
+但是您必须确保已安装以下产品（所有节点都使用Fedora 12安装）：
+
+- libtirpc + libtirpc-dev
+- tcp_wrappers + tcp_wrapper-libs + tcp_wrappers-devel
+- libblkid + libblkid-devel
+- libevent + libevent-devel
+- libnfsidmap
+- device-mapper-devel (starting Fedora 15)
+
+你会发现它们都是rpm包，但是libnfsidmap不是。对于这个包，您需要获取最新版本，进行编译和安装（不要忘记指定“./configure --prefix=/usr”）。您可以从nfs-utils-lib-devel-1.1.4-8或更高版本获取它。
+
+基本上，类似以下命令的命令应该可以完成所有必需的工作（以Fedora 15为例）：
+```sh
+ # yum install libtirpc{,-devel} tcp_wrappers{,-devel} libevent{,-devel} libnfsidmap{,-devel} openldap-devel \
+               libgssglue{,-devel} krb5-devel libblkid{,-devel} device-mapper-devel libcap{,-devel}
+```
+
+### Configuring the test bed to used pNFS over LAYOUT4_FILES
+
+在这种配置中，客户端（nfsclient）将挂载MDS（nfsmds）。客户端插入了一个特定的内核模块，称为布局驱动程序，用于连接到DS。所有的元数据流量将通过MDS传递，但数据流量将在DS和客户端之间进行。
+
+MDS应该能够挂载DS并在其上具有root访问权限。它运行一个用户空间守护程序，spnfsd（它是nfs-utils的一部分），使用此挂载点从DS获取信息。
+
+#### Configuring the spNFS Data Server
+
+数据服务器只是一个普通的NFSv4.1服务器。重要的是，元数据服务器必须具有对其的root访问权限，以防止由于EPERM错误导致的奇怪行为。
+
+数据服务器的`/etc/exports`在nfsds上将如下所示：
+```sh
+/export/spnfs  *(rw,sync,fsid=0,insecure,no_subtree_check,pnfs,no_root_squash)
+```
+
+#### Configuring the spNFS Metadata Server
+
+MDS是DS的客户端，并运行spnfsd。它也是启用了pNFS的NFSv4.1服务器。
+
+spnfsd配置分两步进行：
+
+- 将MDS配置为DS的客户端
+- 编写`/etc/spnfsd.conf`文件
+
+在MDS上，/etc/fstab应包含以下行：
+```sh
+nfsds:/       /spnfs/XX.YY.ZZ.B   nfs4    minorversion=1        0 0
+```
+
+必须通过NFSv4进行挂载，并将`minorversion`设置为1。
+
+它的`/etc/spnfsd`配置文件将如下所示（这是一个单个DS配置）:
+```sh
+ [General]
+ Verbosity = 1
+ Stripe-size = 8192
+ Dense-striping = 0
+ Pipefs-Directory = /var/lib/nfs/rpc_pipefs
+ DS-Mount-Directory = /spnfs
+ 
+ [DataServers]
+ NumDS = 1
+ DS1_IP = XX.YY.ZZ.B
+ DS1_PORT = 2049
+ DS1_ROOT = /
+ DS1_ID = 1
+```
+
+最后，`/etc/exports`将如下所示:
+```sh
+ /export  *(rw,sync,pnfs,fsid=0,insecure,no_subtree_check,no_root_squash)
+```
+
+注意在`exports`选项中有`pnfs`。
+
+#### Configuring the client
+
+客户端将作为普通的NFSv4.1客户端使用。唯一要做的就是确保布局驱动程序内核模块已加载。
+```sh
+# modprobe nfs_layout_nfsv41_files
+```
+
+（在2.6.26之前的内核中被称为nfslayoutdriver）
+
+然后，您可以在客户端上挂载MDS：
+```sh
+# mount -t nfs4 -o minorversion=1 nfsmds:/ /mnt
+```
+
+警告：在进行任何读/写操作之前，请确保NFSv4的宽限期已经过去。通常，在nfs服务启动后需要90秒。
+
+#### Basic test
+
+第一个测试非常简单：在客户端上，我向文件写入50个字节：
+```sh
+ # echo "jljlkjljjhkjhkhkjhkjhkjhkjhkjhkjhkjhkjhkjhkjhkjhk" > ./myfile
+ # ls -i ./myfile
+ 330246 myfile
+```
+
+在数据服务器上，我应该看到一个新文件，其文件名包含了myfile的文件ID，并位于其导出给MDS的根目录中。
+```sh
+ # ls -l /export/spnfs/330246*
+ -rwxrwxrwx 1 root root 50 Mar 24 10:49 /export/spnfs/330246.2343187478
+ # cat /export/spnfs/330246.2343187478
+ jljlkjljjhkjhkhkjhkjhkjhkjhkjhkjhkjhkjhkjhkjhkjhk
+```
+
+正如您所见，这个文件位于数据服务器上，包含了客户端写入的数据。
+
+在MDS上，文件具有正确的大小，但如果在NFS之外查看，它没有分配任何块。它不包含任何数据。
+```sh
+ # cd /export
+ # stat myfile
+ File: `myfile'
+ Size: 50              Blocks: 0            IO Block: 4096   regular file
+ Device: fd00h/64768d    Inode: 330246      Links: 1
+ Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+ Access: 2010-03-24 12:56:02.331151053 +0100
+ Modify: 2010-03-24 10:49:08.997150735 +0100
+ Change: 2010-03-24 10:49:08.997150735 +0100
+ 
+ # cat myfile
+ (no output, the file is empty)
+ ```
+
+ -- Philippe Deniel 2010-04-07
+
+# PNFS server projects
+
+[原网页](http://wiki.linux-nfs.org/wiki/index.php/PNFS_server_projects)。
+
+这是我们知道的一些可能被包含在主要Linux发行版中的项目列表。这意味着它们需要在Linux上运行，以自由/开源软件许可发布，并具备足够的质量、性能和实用性，以说服上游项目（如Linux内核），证明它们值得额外代码的投入。
+
+对于每个项目，我们想知道还有多少工作要做才能满足这些要求。
+
+## files-based projects
+
+### spNFS
+
+将后端数据存储在普通的本地磁盘文件系统中（如ext3），采用混合用户/内核（类似fuse）设计，并通过IO与元数据服务器通信。 (2008 connectathon presentation.)
+
+目前未维护。可能需要进行一两次重新设计。
+
+### gfs2
+
+基于文件的服务器，使用gfs2在元数据服务器和数据服务器之间共享数据。
+
+初步原型已存在。已通过一些简单测试。已知在协议上有些作弊（基于早期的4.1代码，尚未在数据服务器上强制使用stateid）。已经有使用中的崩溃报告。关于性能还没有详细信息。
+
+### ocfs2
+
+现在没有这样的实现。但是，似乎可以使用集群软件的用户空间部分（对内核文件系统代码进行最少或没有修改）来实现简单的pNFS。因此，对gfs2的任何工作也应该可以轻松应用于ocfs2（因为它们共享用户空间基础设施）。
+
+## block-based projects
+
+Rick McNeal，LSI Logic，发布了：http://git.linux-nfs.org/?p=rmcneal/linux-pnfs.git;a=summary 和 http://git.linux-nfs.org/?p=rmcneal/ctl.git;a=summary
+
+基于spnfs基础设施实现基于块的pNFS MDS。计划将其合并到pnfs树中，一旦我们有了一些最基本的文档，描述如何设置服务器。
+
+Rick McNeal说：“我想我应该介入并谈谈关于块布局工作的事情。pNFS服务器可以运行在任何愿意提供inode到块映射函数的文件系统上。由于客户端被期望具有与服务器相同的对存储的块级访问，因此不会给存储设备增加额外的负载。
+
+[1] 还有几个其他部分，但问题的核心是需要将inode映射到`devid/extent_list`。”
+
+未维护。看起来仍然是一个非常原型阶段的项目。
+
+## objects-based projects
+
+### exofs
+
+基于对象的文件系统，部分用作pNFS后端。Exofs目前已合并，并支持nfs导出。打算支持跨多个OSD的镜像和raid0。当前状态不确定。
+
+Benny Halevy在2009年2月15日表示：“我们对对象后端的计划是将exofs（扩展对象文件系统）导出到pNFS上。Exofs是内核驻留的，使用OSD进行持久存储。目前它支持单个OSD，对多个OSD的支持已经在路线图上。关于集群化，pNFS over exofs的架构是集中的，因此有一个单独的MDS运行文件系统代码的单个实例，并且有多个OSD，文件系统管理器和客户端都在与之通信。”
