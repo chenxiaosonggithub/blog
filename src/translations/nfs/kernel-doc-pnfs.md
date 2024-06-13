@@ -1,4 +1,4 @@
-本文档翻译自[Reference counting in pnfs](https://github.com/torvalds/linux/blob/34e75cf4beb1a88a61b7c76b5fdc99c43cff8594/Documentation/filesystems/nfs/pnfs.rst)，，翻译时文件的最新提交是`34e75cf4beb1a88a61b7c76b5fdc99c43cff8594 Documentation: nfs: convert pnfs.txt to ReST`，大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自[Reference counting in pnfs](https://github.com/torvalds/linux/blob/34e75cf4beb1a88a61b7c76b5fdc99c43cff8594/Documentation/filesystems/nfs/pnfs.rst)，翻译时文件的最新提交是`34e75cf4beb1a88a61b7c76b5fdc99c43cff8594 Documentation: nfs: convert pnfs.txt to ReST`，大部分借助于ChatGPT。仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 # Reference counting in pnfs
 

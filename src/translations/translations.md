@@ -16,6 +16,8 @@
 
 [linux-nfs.org PNFS Development](https://chenxiaosong.com/translations/pnfs-development.html)
 
+[kernel doc: NFSv4.1 Server Implementation](https://chenxiaosong.com/translations/kernel-doc-nfs41-server.html)
+
 # smb
 
 [[MS-SMB]: Server Message Block (SMB) Protocol](https://chenxiaosong.com/translations/ms-smb.html)
