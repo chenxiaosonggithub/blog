@@ -83,11 +83,11 @@ array=(
     1 1 src/userspace-environment/mosquitto-mqtt.md linux/mosquitto-mqtt.html "使用mosquitto搭建MQTT服务器"
     1 1 src/editor/editor.md linux/editor.html "编辑器"
     1 1 src/windows/wine.md linux/wine.html "Linux使用wine运行Windows软件"
+    1 1 src/openharmony/openharmony.md linux/openharmony.html "OpenHarmony编译运行调试环境"
     # 其他
     1 1 src/windows/windows.md others/windows.html "Windows系统"
     1 1 src/wubi/wubi.md others/wubi.html "五笔输入法"
     1 1 src/keybord/keybord.md others/keyboard.html "键盘配置"
-    1 1 src/openharmony/openharmony.md others/openharmony.html "OpenHarmony编译运行调试环境"
     1 1 src/free-software/free-software.md others/free-software.html "自由软件介绍"
     1 1 src/lorawan/stm32-linux.md others/stm32-linux.html "STM32 Linux开发环境"
     1 1 src/health/tooth-clean.md others/tooth-clean.html "牙齿护理"

@@ -114,6 +114,8 @@
 
 [Linux使用wine运行Windows软件](https://chenxiaosong.com/linux/wine.html)
 
+[OpenHarmony编译运行调试环境](https://chenxiaosong.com/linux/openharmony.html)
+
 # 还没有分类
 
 [Windows系统](https://chenxiaosong.com/others/windows.html)
@@ -121,8 +123,6 @@
 [键盘配置](https://chenxiaosong.com/others/keyboard.html)
 
 [五笔输入法](https://chenxiaosong.com/others/wubi.html)
-
-[OpenHarmony编译运行调试环境](https://chenxiaosong.com/others/openharmony.html)
 
 [自由软件介绍](https://chenxiaosong.com/others/free-software.html)
 
