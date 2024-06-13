@@ -18,6 +18,10 @@
 
 [kernel doc: NFSv4.1 Server Implementation](https://chenxiaosong.com/translations/kernel-doc-nfs41-server.html)
 
+[kernel doc: pNFS block layout server user guide](https://chenxiaosong.com/translations/kernel-doc-pnfs-block-server.html)
+
+[kernel doc: pNFS SCSI layout server user guide](https://chenxiaosong.com/translations/kernel-doc-pnfs-scsi-server.html)
+
 # smb
 
 [[MS-SMB]: Server Message Block (SMB) Protocol](https://chenxiaosong.com/translations/ms-smb.html)

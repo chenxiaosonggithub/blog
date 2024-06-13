@@ -103,6 +103,8 @@ array=(
         1 1 src/translations/nfs/kernel-doc-pnfs.md translations/kernel-doc-pnfs.html "kernel doc: Reference counting in pnfs"
         1 1 src/translations/nfs/pnfs-development.md translations/pnfs-development.html "linux-nfs.org PNFS Development"
         1 1 src/translations/nfs/kernel-doc-nfs41-server.md translations/kernel-doc-nfs41-server.html "kernel doc: NFSv4.1 Server Implementation"
+        1 1 src/translations/nfs/kernel-doc-pnfs-block-server.md translations/kernel-doc-pnfs-block-server.html "kernel doc: pNFS block layout server user guide"
+        1 1 src/translations/nfs/kernel-doc-pnfs-scsi-server.md translations/kernel-doc-pnfs-scsi-server.html "kernel doc: pNFS SCSI layout server user guide"
         # smb
         1 1 src/translations/smb/ms-smb.md translations/ms-smb.html "[MS-SMB]: Server Message Block (SMB) Protocol"
         1 1 src/translations/smb/ms-smb2.md translations/ms-smb2.html "[MS-SMB2]: Server Message Block (SMB) Protocol Versions 2 and 3"
