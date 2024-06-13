@@ -37,7 +37,7 @@ sudo ksmbd.addshare --add \
                     --option 'read only = no' \
                     TEST
 sudo ksmbd.addshare --update TEST # 填写其他信息
-sudo ksmbd.adduser --add root # 和samba不一样，ksmbd用户不需要是系统用户名（不需要在/etc/passwd中有）
+sudo ksmbd.adduser --add root
 sudo ksmbd.adduser --delete root # 删除用户
 ```
 
@@ -49,7 +49,7 @@ sudo ksmbd.adduser --delete root # 删除用户
 
 [TEST]
         comment = xfstests test dir
-        ; 注意路径后面不要有空格，被路径后的空格坑过
+        ; 注意路径后面不要有空格，我被路径后的空格坑过
         path = /tmp/s_test
 ```
 
