@@ -52,7 +52,7 @@ create_html() {
         pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_options}
         if [[ ${is_sign} == 1 ]]; then
             # 在<header之后插入sign.html整个文件
-            sed -i -e '/<header/r '${tmp_html_path}'/sign.html' ${dst_file} # index文件除外
+            sed -i -e '/<header/r '${tmp_html_path}'/sign.html' ${dst_file}
         fi
     done
 }
