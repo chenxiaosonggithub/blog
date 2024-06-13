@@ -1525,9 +1525,13 @@ Directories:              2
 
 以ext2为例，说明开发一个新文件系统所需的步骤，也可以作为学习一个文件系统的方法步骤。
 
-1. 定义超级块结构，磁盘`struct ext2_super_block`，内存`struct ext2_sb_info`。
+1. 定义超级块结构。
+  - 磁盘超级块结构`struct ext2_super_block`，在`struct file_system_type ext2_fs_type`的`.mount`函数里调用到的`ext2_fill_super()`中找。
+  - 内存超级块结构`struct ext2_sb_info`，赋值给`struct super_block`的`s_fs_info`成员。
 2. 实现超级块操作方法`ext2_sops`。
-3. 定义索引节点结构，磁盘`struct ext2_inode`，内存`struct ext2_inode_info`（内嵌`struct inode    vfs_inode`）。
+3. 定义索引节点结构。
+  - 磁盘索引节点结构`struct ext2_inode`，在超级块操作方法`ext2_sops`的`.write_inode`函数中找。
+  - 内存索引节点结构`struct ext2_inode_info`，内嵌`struct inode vfs_inode`，在超级块操作方法`ext2_sops`的很多函数都可以找到。
 4. 实现各种类型文件的索引节点操作方法:
   - 常规文件`ext2_file_inode_operations`。
   - 目录`ext2_dir_inode_operations`。
