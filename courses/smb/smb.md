@@ -8,6 +8,8 @@
 - [鸟哥的Linux私房菜 繁体 - "SAMBA伺服器"](https://linux.vbird.org/linux_server/centos6/0370samba.php)
 - [鸟哥的Linux私房菜 繁体 - 伺服器架設篇目錄 - RockyLinux 9 (開發中)](https://linux.vbird.org/linux_server/rocky9/)
 - [Samba - opening windows to a wider world](https://www.samba.org/)
+- [kernel Documentation: `admin-guide/cifs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/cifs)
+- [kernel Documentation: `filesystems/smb`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/smb)
 
 点击下面的标题跳转。
 

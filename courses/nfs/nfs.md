@@ -8,7 +8,9 @@
 - [鸟哥的Linux私房菜 繁体 - "NFS伺服器"](https://linux.vbird.org/linux_server/centos6/0330nfs.php)
 - [鸟哥的Linux私房菜 繁体 - 伺服器架設篇目錄 - RockyLinux 9 (開發中)](https://linux.vbird.org/linux_server/rocky9/)
 - [Main Page - Linux NFS](https://linux-nfs.org/wiki/index.php/Main_Page)
-- [kernel NFS Documentation](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/nfs)
+- [kernel Documentation: `filesystem/nfs`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/nfs)
+- [kernel Documentation: `admin-guide/nfs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/nfs)
+- [nfs-utils](https://git.kernel.org/pub/scm/linux/kernel/git/rw/nfs-utils.git)
 
 点击下面的标题跳转。
 

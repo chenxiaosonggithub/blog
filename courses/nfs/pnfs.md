@@ -2,8 +2,10 @@
 
 [pnfs.com](http://www.pnfs.com/)
 
-file layout: [rfc8881 nfsv4.1](https://www.rfc-editor.org/rfc/rfc8881)
+file layout: [August 2020 rfc8881 nfsv4.1](https://www.rfc-editor.org/rfc/rfc8881)
 
-block layout: [rfc5663 Parallel NFS (pNFS) Block/Volume Layout](https://www.rfc-editor.org/rfc/rfc5663), [rfc6688 Parallel NFS (pNFS) Block Disk Protection](https://www.rfc-editor.org/rfc/rfc6688)
+block layout: [January 2010 rfc5663 Parallel NFS (pNFS) Block/Volume Layout](https://www.rfc-editor.org/rfc/rfc5663), [July 2012 rfc6688 Parallel NFS (pNFS) Block Disk Protection](https://www.rfc-editor.org/rfc/rfc6688)
 
-object layout: [rfc5664 Object-Based Parallel NFS (pNFS) Operations](https://www.rfc-editor.org/rfc/rfc5664)
+object layout: [January 2010 rfc5664 Object-Based Parallel NFS (pNFS) Operations](https://www.rfc-editor.org/rfc/rfc5664)
+
+flexible file layout: [August 2018 rfc8435 Parallel NFS (pNFS) Flexible File Layout](https://www.rfc-editor.org/rfc/rfc8435)
