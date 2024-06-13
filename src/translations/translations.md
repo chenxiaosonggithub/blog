@@ -4,7 +4,7 @@
 
 [Network File System (NFS) Version 4 Minor Version 2 Protocol](https://chenxiaosong.com/translations/rfc7862-nfsv4.2.html)
 
-[NFSv4 client identifier](https://chenxiaosong.com/translations/client-identifier.html)
+[NFSv4 client identifier](https://chenxiaosong.com/translations/kernel-doc-client-identifier.html)
 
 [Connectathon NFS tests README](https://chenxiaosong.com/translations/cthon-nfs-tests-readme.html)
 
