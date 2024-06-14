@@ -17,26 +17,26 @@
 ```
 我不知道除了你这里列出的文档以外，还有没有其他最新的文档。
 
-请注意，Linux NFS客户端实现了文件、块和flexfile布局类型，但Linux NFS服务器仅实现了pNFS块布局类型。
+请注意，Linux NFS客户端实现了file、block和flexfile layout类型，但Linux NFS服务器仅实现了pNFS block layout类型。
 
-我一直在构建测试，旨在每次发布NFSD时运行这些测试，以检验Linux NFS服务器和客户端对pNFS块布局的支持，因为pNFS块是我们的客户端和服务器之间的共同点。
+我一直在构建测试，旨在每次发布NFSD时运行这些测试，以检验Linux NFS服务器和客户端对pNFS block layout的支持，因为pNFS block是我们的客户端和服务器之间的共同点。
 
-请查看[1]顶部的9个提交。这些提交包含对kdevops的更改，增加了它设置iSCSI目标并在其本地NFS服务器上启用pNFS的能力。如果你能阅读Ansible脚本，这些可能会帮助你形成使用Linux NFS实现及其iSCSI目标和发起程序来设置你自己环境的配方。
+请查看[1]顶部的9个提交。这些提交包含对kdevops的更改，增加了它设置iSCSI target并在其本地NFS服务器上启用pNFS的能力。如果你能阅读Ansible脚本，这些可能会帮助你形成使用Linux NFS实现及其iSCSI target和initiator来设置你自己环境的配方。
 
 管理员文档（除了kdevops之外）还在待办事项列表中，但尚未开始。
 
 [1] https://github.com/chucklever/kdevops/tree/pnfs-block-testing
 ```
 
-## 除了block layout外，nfs server有没计划实现其他的layout布局?
+## 除了block layout外，nfs server有没计划实现其他的layout?
 
 [Chuck Lever 回复内容](https://lore.kernel.org/all/1D4505F5-1923-4E7B-A12B-F1E05308914C@oracle.com/)翻译如下：
 ```
-对象布局类型已经被弃用。如果我没记错的话，Linux NFS 客户端几年前就移除了对该类型的支持。服务器端也不计划支持它。
+object layout类型已经被弃用。如果我没记错的话，Linux NFS 客户端几年前就移除了对该类型的支持。服务器端也不计划支持它。
 
-文件布局类型通常需要一个集群文件系统作为后端。你可以在 Ceph 或 gfs2 上构建一些东西，但这将是一个重大努力，并且需要用户需求。目前没有任何需求。
+file layout类型通常需要一个集群文件系统作为后端。你可以在 Ceph 或 gfs2 上构建一些东西，但这将是一个重大努力，并且需要用户需求。目前没有任何需求。
 
-NFS 服务器有一个玩具级的 flexfile 布局实现，仅仅是一个概念验证。我们确实有一个未规划的待办事项，即研究如何将其扩展以提供测试客户端 flexfile 支持的平台。但这个工作不是优先任务。
+NFS 服务器有一个玩具级的 flexfile layout实现，仅仅是一个概念验证。我们确实有一个未规划的待办事项，即研究如何将其扩展以提供测试客户端 flexfile 支持的平台。但这个工作不是优先任务。
 ```
 
 # 简介
