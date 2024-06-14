@@ -30,6 +30,8 @@
 
 # NFS（网络文件系统）
 
+[nfs文件系统](https://chenxiaosong.com/courses/nfs.html)
+
 [定位NFS问题的常用方法](https://chenxiaosong.com/nfs/nfs-debug.html)
 
 [CVE-2022-24448](https://chenxiaosong.com/nfs/CVE-2022-24448.html)
@@ -57,6 +59,8 @@
 [4.19 ltp nfs测试失败问题](https://chenxiaosong.com/nfs/4.19-ltp-nfs-fail.html)
 
 # SMB(CIFS)文件系统
+
+[smb文件系统](https://chenxiaosong.com/nfs/courses/smb.html)
 
 [4.19 cifs_reconnect空指针解引用问题](https://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
 

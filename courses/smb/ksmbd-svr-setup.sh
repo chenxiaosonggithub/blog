@@ -10,7 +10,8 @@ mount -t ext4 /dev/sdb /tmp/s_scratch
 systemctl stop firewalld
 setenforce 0
 
-systemctl stop smbd.service
+systemctl stop smbd.service # debian
+systemctl stop smb.service # fedora
 
 chmod 777 /tmp/s_test
 chmod 777 /tmp/s_scratch

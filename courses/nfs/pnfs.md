@@ -11,7 +11,7 @@
 
 [Question about pNFS documentation](https://lore.kernel.org/all/BA2DED4720A37AFC+88e58d9e-6117-476d-8e06-1d1a62037d6d@chenxiaosong.com/)
 
-Chuck Lever 回复内容如下：
+Chuck Lever 回复内容翻译如下：
 ```
 我不知道除了你这里列出的文档以外，还有没有其他最新的文档。
 
