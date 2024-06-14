@@ -60,7 +60,7 @@
 
 # SMB(CIFS)文件系统
 
-[smb文件系统](https://chenxiaosong.com/nfs/courses/smb.html)
+[smb文件系统](https://chenxiaosong.com/courses/smb.html)
 
 [4.19 cifs_reconnect空指针解引用问题](https://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
 
