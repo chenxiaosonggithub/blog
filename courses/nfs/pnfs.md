@@ -7,11 +7,13 @@
 - object layout: [January 2010 rfc5664 Object-Based Parallel NFS (pNFS) Operations](https://www.rfc-editor.org/rfc/rfc5664)
 - flexible file layout: [August 2018 rfc8435 Parallel NFS (pNFS) Flexible File Layout](https://www.rfc-editor.org/rfc/rfc8435)
 
-# 社区邮件交流
+# 我和社区的邮件交流
 
 [Question about pNFS documentation](https://lore.kernel.org/all/BA2DED4720A37AFC+88e58d9e-6117-476d-8e06-1d1a62037d6d@chenxiaosong.com/)
 
-我问有没有详细的pNFS环境搭建文档，Chuck Lever 回复内容翻译如下：
+## 有没有详细的pNFS环境搭建指导文档?
+
+[Chuck Lever 回复内容](https://lore.kernel.org/all/08BB98A6-FA14-4551-B977-8BC4029DB0E1@oracle.com/)翻译如下：
 ```
 我不知道除了你这里列出的文档以外，还有没有其他最新的文档。
 
@@ -26,7 +28,9 @@
 [1] https://github.com/chucklever/kdevops/tree/pnfs-block-testing
 ```
 
-我再问除了block layout外，nfs server有没计划实现其他的layout布局，Chuck Lever 回复内容翻译如下：
+## 除了block layout外，nfs server有没计划实现其他的layout布局?
+
+[Chuck Lever 回复内容](https://lore.kernel.org/all/1D4505F5-1923-4E7B-A12B-F1E05308914C@oracle.com/)翻译如下：
 ```
 对象布局类型已经被弃用。如果我没记错的话，Linux NFS 客户端几年前就移除了对该类型的支持。服务器端也不计划支持它。
 
