@@ -12,7 +12,7 @@
 
 点击下面的标题跳转。
 
-# [Linux内核简介](https://chenxiaosong.com/courses/kernel-introduction.html)
+# [内核简介](https://chenxiaosong.com/courses/kernel-introduction.html)
 
 <!--
 ## Linux内核的就业
@@ -52,12 +52,12 @@
 - 熟悉Linux驱动开发流程和驱动框架
 -->
 
-# [Linux内核开发环境](https://chenxiaosong.com/courses/kernel-dev-invironment.html)
+# [内核开发环境](https://chenxiaosong.com/courses/kernel-dev-invironment.html)
 
 <!-- public begin -->
-# [Linux内核书籍推荐](https://chenxiaosong.com/courses/kernel-book.html)
+# [内核书籍推荐](https://chenxiaosong.com/courses/kernel-book.html)
 <!-- public end -->
 
-# [Linux内核源码介绍](https://chenxiaosong.com/courses/kernel-source.html)
+# [内核源码介绍](https://chenxiaosong.com/courses/kernel-source.html)
 
 # [文件系统](https://chenxiaosong.com/courses/kernel-fs.html)
