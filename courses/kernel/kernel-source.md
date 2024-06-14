@@ -109,7 +109,7 @@ vim 0000-cover-letter.patch
 
 最新版本的[thunderbird](https://www.thunderbird.net/)默认使用html格式发送和显示，需要更改配置，参考[Plain text e-mail - Thunderbird](http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Send_plain_text_messages)。
 
-依次点击 `Account Settings（账户设置） -> Composition & Addressing -> Composition（编写） -> 取消勾选 Compose messages in HTML format（以html格式编写消息）`。
+依次点击 `Account Settings（账户设置） -> 地址簿 -> Composition & Addressing -> Composition（编写） -> 取消勾选 Compose messages in HTML format（以html格式编写消息）`。
 
 thunderbird有个快捷键`k`，会忽略话题，不小心按下后邮件就会不再显示，可以在`查看 -> 话题`里勾选`已忽略话题`，就能看到不小心按下`k`而不显示的邮件。
 
