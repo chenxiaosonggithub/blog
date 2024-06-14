@@ -6,14 +6,15 @@
 
 安装用户态工具：
 ```sh
-apt-get install samba -y
+apt-get install samba -y # debian
+dnf install samba -y # fedora
 ```
 
 用户操作（优先用`pdbedit`而不是`smbpasswd`）：
 ```sh
 pdbedit -L # 查看cifs用户
 pdbedit -Lw # -w: 使用旧版的 smbpasswd 格式显示
-pdbedit -a -u root # -a: 新增
+pdbedit -a -u root # -a: 新增，这里的用户名必须是系统用户名（在/etc/passwd中有）
 smbpasswd -a root # 添加用户，这里的用户名必须是系统用户名（在/etc/passwd中有）
 # 如果 smbpasswd -a 添加用户test失败，就要先创建系统用户test
 useradd -s /bin/bash -d /home/test -m test
