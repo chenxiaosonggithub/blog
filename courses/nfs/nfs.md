@@ -20,4 +20,4 @@
 
 # [Parallel NFS (pNFS)](https://chenxiaosong.com/courses/pnfs.html)
 
-# [nfsd(nfs server)](https://chenxiaosong.com/courses/nfsd.html)
+# [nfs server (nfsd)](https://chenxiaosong.com/courses/nfsd.html)
