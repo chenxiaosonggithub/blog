@@ -21,3 +21,5 @@
 # [Parallel NFS (pNFS)](https://chenxiaosong.com/courses/pnfs.html)
 
 # [nfs server (nfsd)](https://chenxiaosong.com/courses/nfsd.html)
+
+# [NFS Procedures和Operations](https://chenxiaosong.com/courses/nfs-procedures.html)

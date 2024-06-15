@@ -27,6 +27,7 @@ array=(
         1 1 courses/nfs/nfs-client-struct.md courses/nfs-client-struct.html "nfs client数据结构"
         1 1 courses/nfs/pnfs.md courses/pnfs.html "Parallel NFS (pNFS)"
         1 1 courses/nfs/nfsd.md courses/nfsd.html "nfs server (nfsd)"
+        1 1 courses/nfs/nfs-procedures.md courses/nfs-procedures.html "NFS Procedures和Operations"
     0 1 courses/smb/smb.md courses/smb.html "smb文件系统"
         1 1 courses/smb/smb-introduction.md courses/smb-introduction.html "smb简介"
         1 1 courses/smb/smb-environment.md courses/smb-environment.html "smb环境"
