@@ -4,6 +4,24 @@
 - [ksmbd-tools](https://github.com/cifsd-team/ksmbd-tools)
 - [cifsd-team/ksmbd](https://github.com/cifsd-team/ksmbd)
 
+# 现状
+
+- [开发进度](https://github.com/torvalds/linux/blob/master/Documentation/filesystems/smb/ksmbd.rst)。
+- maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好。
+- 使用指导文档较全。
+- cve漏洞暂时较多：
+  - 9.8分[CVE-2022-47939](https://nvd.nist.gov/vuln/detail/cve-2022-47939)
+  - 9.8分[CVE-2023-32254](https://nvd.nist.gov/vuln/detail/CVE-2023-32254)
+  - 9.0分[CVE-2023-32250](https://nvd.nist.gov/vuln/detail/CVE-2023-32250)
+  - 8.8分[CVE-2022-47942](https://nvd.nist.gov/vuln/detail/CVE-2022-47942)
+  - 8.1分[CVE-2022-47940](https://nvd.nist.gov/vuln/detail/CVE-2022-47940)
+  - 8.1分[CVE-2023-32258](https://nvd.nist.gov/vuln/detail/CVE-2023-32258)
+  - 8.1分[CVE-2023-32257](https://nvd.nist.gov/vuln/detail/CVE-2023-32257)
+  - 7.8分[CVE-2023-32356](https://nvd.nist.gov/vuln/detail/CVE-2023-32356)
+  - 7.5分[CVE-2023-32252](https://nvd.nist.gov/vuln/detail/CVE-2023-32252)
+  - 7.5分[CVE-2023-32248](https://nvd.nist.gov/vuln/detail/CVE-2023-32248)
+  - 7.5分[CVE-2023-32247](https://nvd.nist.gov/vuln/detail/CVE-2023-32247)
+
 # 环境
 
 ```sh

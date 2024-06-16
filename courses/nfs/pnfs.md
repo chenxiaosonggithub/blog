@@ -1,11 +1,11 @@
 # 文档
 
-- [PNFS Development - Linux NFS](https://linux-nfs.org/wiki/index.php/PNFS_Development)
-- [pnfs.com](http://www.pnfs.com/)
-- file layout: [August 2020 rfc8881 nfsv4.1](https://www.rfc-editor.org/rfc/rfc8881)
+- [PNFS Development - Linux NFS](https://chenxiaosong.com/translations/pnfs-development.html)
+- [pnfs.com](https://chenxiaosong.com/translations/pnfs.com.html)
 - block layout: [January 2010 rfc5663 Parallel NFS (pNFS) Block/Volume Layout](https://www.rfc-editor.org/rfc/rfc5663), [July 2012 rfc6688 Parallel NFS (pNFS) Block Disk Protection](https://www.rfc-editor.org/rfc/rfc6688)
-- object layout: [January 2010 rfc5664 Object-Based Parallel NFS (pNFS) Operations](https://www.rfc-editor.org/rfc/rfc5664)
 - flexible file layout: [August 2018 rfc8435 Parallel NFS (pNFS) Flexible File Layout](https://www.rfc-editor.org/rfc/rfc8435)
+- object layout （已废弃）: [January 2010 rfc5664 Object-Based Parallel NFS (pNFS) Operations](https://www.rfc-editor.org/rfc/rfc5664)
+- file layout （没有用户需求）: [August 2020 rfc8881 nfsv4.1](https://www.rfc-editor.org/rfc/rfc8881)
 
 # 我和社区的邮件交流
 
@@ -38,6 +38,21 @@ file layout类型通常需要一个集群文件系统作为后端。你可以在
 
 NFS 服务器有一个玩具级的 flexfile layout实现，仅仅是一个概念验证。我们确实有一个未规划的待办事项，即研究如何将其扩展以提供测试客户端 flexfile 支持的平台。但这个工作不是优先任务。
 ```
+
+# 现状
+
+客户端:
+
+- maintainer: Trond Myklebust <trondmy@kernel.org>。
+- 实现了file, block, flexfile layout的支持，object layout已经废弃（已移除支持）。
+- 使用指导文档少。
+
+服务端:
+
+- maintainer: Chuck Lever <chuck.lever@oracle.com>，友好。
+- block layout实现较完善，maintainer在自己仓库有提供测试用例。
+- flexfile layout有初步的实现（概念验证阶段），待扩展。
+- file layout（无用户需求）和object layout（已废弃）不打算实现。
 
 # 简介
 
