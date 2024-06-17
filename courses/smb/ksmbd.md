@@ -6,7 +6,7 @@
 
 # 现状
 
-- [开发进度](https://github.com/torvalds/linux/blob/master/Documentation/filesystems/smb/ksmbd.rst)。
+- [开发进度](https://github.com/torvalds/linux/blob/master/Documentation/filesystems/smb/ksmbd.rst#ksmbd-feature-status)。
 - maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好。
 - 使用指导文档较全。
 - cve漏洞暂时较多：
