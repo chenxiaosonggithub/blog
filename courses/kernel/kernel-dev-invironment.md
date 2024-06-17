@@ -162,6 +162,12 @@ sudo systemctl restart code-server@$USER
 当想在[vscode客户端](https://code.visualstudio.com/)打开远程的文件时, 可以使用 [remote-ssh](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)插件.
 <!-- public end -->
 
+<!-- public begin -->
+## Woboq CodeBrowser
+
+https://github.com/KDAB/codebrowser
+<!-- public end -->
+
 ## git的一些特殊用法
 
 这里我们不介绍git的一般用法，仅介绍一些特殊用法。
