@@ -1,7 +1,7 @@
 # 参考资料
 
 - [KSMBD kernel doc](https://chenxiaosong.com/translations/ksmbd-kernel-doc.html)
-- [ksmbd-tools](https://github.com/cifsd-team/ksmbd-tools)
+- [ksmbd-tools](https://chenxiaosong.com/translations/ksmbd-tools-readme.html)
 - [cifsd-team/ksmbd](https://github.com/cifsd-team/ksmbd)
 
 # 现状
