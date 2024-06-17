@@ -14,8 +14,6 @@
 
 [QEMU/KVM环境搭建与使用](https://chenxiaosong.com/kernel/kernel-qemu-kvm.html)
 
-[crash解析vmcore](https://chenxiaosong.com/kernel/kernel-crash-vmcore.html)
-
 [strace内存分配失败故障注入](https://chenxiaosong.com/kernel/strace-fault-inject.html)
 
 [openEuler的sysmonitor](https://chenxiaosong.com/kernel/openeuler-sysmonitor.html)

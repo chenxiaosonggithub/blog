@@ -36,7 +36,6 @@ array=(
         1 1 courses/smb/smb-client-struct.md courses/smb-client-struct.html "smb client数据结构"
     1 1 courses/book-contents.md courses/book-contents.html "书籍目录"
     # Linux内核
-    1 1 src/kernel-environment/kernel-crash-vmcore.md kernel/kernel-crash-vmcore.html "crash解析vmcore"
     1 1 src/kernel-environment/kernel-qemu-kvm.md kernel/kernel-qemu-kvm.html "QEMU/KVM环境搭建与使用"
     1 1 src/strace-fault-inject/strace-fault-inject.md kernel/strace-fault-inject.html "strace内存分配失败故障注入"
     1 1 src/kernel/openeuler-sysmonitor.md kernel/openeuler-sysmonitor.html "openEuler的sysmonitor"
