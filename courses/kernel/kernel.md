@@ -52,7 +52,7 @@
 - 熟悉Linux驱动开发流程和驱动框架
 -->
 
-# [内核开发环境](https://chenxiaosong.com/courses/kernel-dev-invironment.html)
+# [内核开发环境](https://chenxiaosong.com/courses/kernel-dev-environment.html)
 
 <!-- public begin -->
 # [内核书籍推荐](https://chenxiaosong.com/courses/kernel-book.html)

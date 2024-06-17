@@ -12,7 +12,7 @@ mkdir ${dst_path} -p
 # 复制到/tmp
 cp_to_dst_path courses/kernel/kernel.md
 cp_to_dst_path courses/kernel/kernel-introduction.md
-cp_to_dst_path courses/kernel/kernel-dev-invironment.md
+cp_to_dst_path courses/kernel/kernel-dev-environment.md
 cp_to_dst_path courses/kernel/kernel-book.md
 cp_to_dst_path courses/kernel/kernel-source.md
 cp_to_dst_path courses/kernel/kernel-fs.md

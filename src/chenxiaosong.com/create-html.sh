@@ -17,7 +17,7 @@ array=(
     # 课程
     0 1 ${tmp_courses_path}/kernel.md courses/kernel.html "Linux内核课程"
         1 1 ${tmp_courses_path}/kernel-introduction.md courses/kernel-introduction.html "内核简介"
-        1 1 ${tmp_courses_path}/kernel-dev-invironment.md courses/kernel-dev-invironment.html "内核开发环境"
+        1 1 ${tmp_courses_path}/kernel-dev-environment.md courses/kernel-dev-environment.html "内核开发环境"
         1 1 ${tmp_courses_path}/kernel-book.md courses/kernel-book.html "内核书籍推荐"
         1 1 ${tmp_courses_path}/kernel-source.md courses/kernel-source.html "内核源码介绍"
         1 1 ${tmp_courses_path}/kernel-fs.md courses/kernel-fs.html "文件系统"
