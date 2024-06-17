@@ -21,6 +21,7 @@ array=(
         1 1 ${tmp_courses_path}/kernel-book.md courses/kernel-book.html "内核书籍推荐"
         1 1 ${tmp_courses_path}/kernel-source.md courses/kernel-source.html "内核源码介绍"
         1 1 ${tmp_courses_path}/kernel-fs.md courses/kernel-fs.html "文件系统"
+        1 1 ${tmp_courses_path}/kernel-debug.md courses/kernel-debug.html "内核调试方法"
     0 1 courses/nfs/nfs.md courses/nfs.html "nfs文件系统"
         1 1 courses/nfs/nfs-introduction.md courses/nfs-introduction.html "nfs简介"
         1 1 courses/nfs/nfs-environment.md courses/nfs-environment.html "nfs环境"

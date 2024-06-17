@@ -16,5 +16,6 @@ cp_to_dst_path courses/kernel/kernel-dev-invironment.md
 cp_to_dst_path courses/kernel/kernel-book.md
 cp_to_dst_path courses/kernel/kernel-source.md
 cp_to_dst_path courses/kernel/kernel-fs.md
+cp_to_dst_path courses/kernel/kernel-debug.md
 
 remove_private ${dst_path}

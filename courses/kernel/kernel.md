@@ -61,3 +61,5 @@
 # [内核源码介绍](https://chenxiaosong.com/courses/kernel-source.html)
 
 # [文件系统](https://chenxiaosong.com/courses/kernel-fs.html)
+
+# [内核调试方法](https://chenxiaosong.com/courses/kernel-debug.html)
