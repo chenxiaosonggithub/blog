@@ -23,3 +23,5 @@
 # [nfs server (nfsd)](https://chenxiaosong.com/courses/nfsd.html)
 
 # [NFS Procedures和Operations](https://chenxiaosong.com/courses/nfs-procedures.html)
+
+# [nfs文件句柄](https://chenxiaosong.com/courses/nfs-filehandle.html)
