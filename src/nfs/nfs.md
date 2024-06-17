@@ -245,16 +245,6 @@ nfs_end_delegation_return
       nfs4_proc_delegreturn // 最终调用到nfs4_xdr_enc_delegreturn, 更多的操作查看nfs4_procedures
 ```
 
-# pNFS（parallel NFS）
-
-从NFSv4.1开始，引入了pNFS，目的是为了解决系统吞吐量问题
-
-pNFS系统由三部分组成：
-
-1. server：保存文件的布局结构（layout），layout是对文件在storage devices中存储方式的一种说明，也就是元数据。pNFS是clients和server的通信协议。
-2. storage devices: 由数据服务器构成，保存文件数据，当clients从server获得layout后，就可以向storage devices发送数据。clients和storage devices的存储协议有：file layout([rfc5661](https://www.rfc-editor.org/rfc/rfc5661.html))、block layout([rfc5663](https://www.rfc-editor.org/rfc/rfc5663.html))、object layout([rfc5664](https://www.rfc-editor.org/rfc/rfc5664.html))。server和storage devices的控制协议（control procotol）不属于pNFS的范围。
-3. clients：支持pNFS和存储协议。
-
 # nfs文件锁
 
 使用命令`man 5 nfs`查看`lock / nolock`挂载选项翻译如下：

@@ -61,9 +61,9 @@ pNFS的网络结构图如下：
 +---------+                                          
 | +---------+
 | | +---------+                             +---------+
-| | |         |            pNFS             |         |
-+-| | clients |<--------------------------->| server  |
-  +-|         |                             |         |
+| | |         |            pNFS             |  meta   |
++-| | clients |<--------------------------->|  data   |
+  +-|         |                             | server  |
     +---------+                             +---------+
        ^ ^ ^                                     ^     
        | | |                                     | 
@@ -74,9 +74,13 @@ pNFS的网络结构图如下：
        | | | protocol  +---------+               | 
        | | +---------->| +---------+             |     
        | +------------>| | +---------+  control  |
-       +-------------->| | |         |  protocol |
-                       | | | storage |<----------+
-                       +-| | devices |      
-                         +-|         |
+       +-------------->| | |  data   |  protocol |
+                       | | |  server |<----------+
+                       +-| |(storage |      
+                         +-| devices)|
                            +---------+
 ```
+
+- pNFS: client和meta data server的通信协议。meta data server 保存文件的布局结构（layout），layout是对文件在data server中存储方式的一种说明，也就是元数据。
+- storage protocol: 我们只关心 block layout 和 flexfile layout。
+- control protocol: 不属于pNFS的范围。对block layout来说是iSCSI。
