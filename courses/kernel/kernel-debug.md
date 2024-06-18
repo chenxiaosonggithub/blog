@@ -243,6 +243,8 @@ CONFIG_PREEMPT_TRACER=y
 # `systemtap`
 
 - [Systemtap tutorial](https://sourceware.org/systemtap/)
+- [systemtap源码](https://sourceware.org/git/?p=systemtap.git;a=tree)
+- [源码中的例子](https://sourceware.org/git/?p=systemtap.git;a=tree;f=testsuite/systemtap.examples;h=816fa8005086a2fcec91a82883aec4956a1ae96c;hb=HEAD)
 
 基于`kprobe`，典型的应用是列出前几个调用次数最多的系统调用。
 
