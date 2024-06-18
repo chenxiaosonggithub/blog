@@ -199,3 +199,80 @@ crash> mod -S # 从某个特定目录加载所有模块，默认从/lib/modules/
 ```
 
 # `ftrace`
+
+<!--
+https://cloud.tencent.com/developer/article/1429041
+
+```shell
+#!/bin/bash
+func_name=do_dentry_open
+
+echo nop > /sys/kernel/debug/tracing/current_tracer
+echo 0 > /sys/kernel/debug/tracing/tracing_on
+echo $$ > /sys/kernel/debug/tracing/set_ftrace_pid # 当前脚本程序的pid
+echo function_graph > /sys/kernel/debug/tracing/current_tracer
+echo $func_name > /sys/kernel/debug/tracing/set_graph_function
+echo 1 > /sys/kernel/debug/tracing/tracing_on
+exec "$@" # 用 $@ 进程替换当前shell进程，并且保持PID不变, 注意后面的命令不会执行
+
+cat /sys/kernel/debug/tracing/trace > ftrace_output
+```
+-->
+```sh
+CONFIG_FTRACE=y
+CONFIG_HAVE_FUNCTION_TRACER=y
+CONFIG_HAVE_FUNCTION_GRAPH_TRACER=y
+CONFIG_HAVE_DYNAMIC_FTRACE=y
+CONFIG_FUNCTION_TRACER=y
+CONFIG_IRQSOFF_TRACER=y
+CONFIG_SCHED_TRACER=y
+# CONFIG_ENABLE_DEFAULT_TRACERS # 这个好像必须要关闭
+CONFIG_FTRACE_SYSCALLS=y
+CONFIG_PREEMPT_TRACER=y
+```
+
+`/sys/kernel/debug/tracing/`目录下的常见tracer和event如下：
+
+- `available_tracers`: 支持的跟踪器。
+- `available_events`: 支持的事件。
+- `current_tracer`: 当前正在使用的跟踪器，默认为`nop`。
+- `trace`: 用`cat`命令查看跟踪信息。
+- `tracing_on`: 开启或暂停。
+- `options`: 选项。
+
+# `systemtap`
+
+- [Systemtap tutorial](https://sourceware.org/systemtap/)
+
+典型的应用是列出前几个调用次数最多的系统调用。
+
+安装：
+```sh
+sudo apt install systemtap -y
+sudo dnf install systemtap -y
+```
+
+使用：
+`hello-world.stp`文件如下：
+```sh
+probe begin
+{
+  print ("hello world\n")
+  exit ()
+}
+```
+
+运行：
+```sh
+stap hello-world.stp
+# 报错： Incorrect version or missing kernel-devel package, use: dnf install kernel-devel-6.8.5-301.fc40.x86_64
+
+dnf install kernel-devel-6.8.5-301.fc40.x86_64 -y
+
+stap hello-world.stp # 再次运行
+hello world
+
+# 或者编译成ko再运行
+stap -m helloword hello-word.stp
+staprun helloword.ko
+```
