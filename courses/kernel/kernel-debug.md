@@ -244,7 +244,7 @@ CONFIG_PREEMPT_TRACER=y
 
 - [Systemtap tutorial](https://sourceware.org/systemtap/)
 
-典型的应用是列出前几个调用次数最多的系统调用。
+基于`kprobe`，典型的应用是列出前几个调用次数最多的系统调用。
 
 安装：
 ```sh
