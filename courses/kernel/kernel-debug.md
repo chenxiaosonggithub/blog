@@ -130,7 +130,6 @@ echo c > /proc/sysrq-trigger
 
 启动crash：
 ```sh
-# 启动crash
 crash vmlinux vmcore
 
 # 加载ko模块：
