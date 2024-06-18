@@ -1,3 +1,5 @@
+除前面我们介绍过的GDB调试方法只适用于虚拟机中，我们平时看代码学习时可以用一下，如果是在工作中客户遇到的问题，GDB调试方法就用不上了，这时就需要用到其他调试方法了。
+
 # `kdump`和`crash`
 
 ## fedora环境
@@ -196,3 +198,5 @@ crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
 crash> mod -S # 从某个特定目录加载所有模块，默认从/lib/modules/`uname -r` 目录
 ```
+
+# `ftrace`

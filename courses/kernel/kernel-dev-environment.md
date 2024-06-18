@@ -497,6 +497,11 @@ sudo dnf update vim-common vim-minimal -y
 
 这里只介绍`x86_64`下的qemu+gdb调试，其他cpu架构以此类推，只需要做些小改动。
 
+如果是其他cpu架构，要安装：
+```sh
+sudo apt install gdb-multiarch -y
+```
+
 ## 编译选项和补丁
 
 首先确保修改以下配置：
