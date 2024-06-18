@@ -92,38 +92,3 @@ sudo mount -o user=root //127.0.0.1/TEST /mnt
 ```
 
 # 代码流程
-
-```c
-// 请求是struct smb_rqst *rqst->rq_iov, 回复是struct kvec *resp_iov
-compound_send_recv
-  smb2_setup_request // ses->server->ops->setup_request
-    smb2_get_mid_entry
-      smb2_mid_entry_alloc
-      // 加到队列中
-      list_add_tail(&(*mid)->qhead, &server->pending_mid_q);
-    // 状态设置成已提交
-    midQ[i]->mid_state = MID_REQUEST_SUBMITTED
-    smb_send_rqst
-      __smb_send_rqst
-        smb_send_kvec
-    wait_for_response
-      // 状态要为已接收，在dequeue_mid()中设置
-      midQ->mid_state != MID_RESPONSE_RECEIVED
-    // 回复的内容
-    buf = (char *)midQ[i]->resp_buf
-
-kthread
-  cifs_demultiplex_thread
-    smb2_find_mid // server->ops->find_mid
-      __smb2_find_mid
-        // 从pending_mid_q链表中找
-        list_for_each_entry
-    standard_receive3
-      cifs_handle_standard
-        handle_mid
-          dequeue_mid
-            // 状态设置成已接收
-            mid->mid_state = MID_RESPONSE_RECEIVED
-            // 在锁的保护下从链表中删除（可能是pending_mid_q链表也可能是retry_list链表）
-            list_del_init(&mid->qhead)
-```
