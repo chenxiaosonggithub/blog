@@ -16,7 +16,7 @@
 #include <linux/module.h>
 #include <linux/kprobes.h>
 
-// ext2_readdir(struct file *file, struct dir_context *ctx)
+// int ext2_readdir(struct file *file, struct dir_context *ctx)
 static char symbol[KSYM_NAME_LEN] = "ext2_readdir";
 module_param_string(symbol, symbol, KSYM_NAME_LEN, 0644);
 

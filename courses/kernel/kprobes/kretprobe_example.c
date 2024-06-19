@@ -25,7 +25,8 @@
 #include <linux/ktime.h>
 #include <linux/sched.h>
 
-static char func_name[KSYM_NAME_LEN] = "kernel_clone";
+// int ext2_readdir(struct file *file, struct dir_context *ctx)
+static char func_name[KSYM_NAME_LEN] = "ext2_readdir";
 module_param_string(func, func_name, KSYM_NAME_LEN, 0644);
 MODULE_PARM_DESC(func, "Function to kretprobe; this module will report the"
 			" function's execution time");
@@ -39,12 +40,34 @@ struct my_data {
 static int entry_handler(struct kretprobe_instance *ri, struct pt_regs *regs)
 {
 	struct my_data *data;
+	struct file *file;
+	struct dir_context *ctx;
+	struct dentry *tmp;
 
 	if (!current->mm)
 		return 1;	/* Skip kernel threads */
 
 	data = (struct my_data *)ri->data;
 	data->entry_stamp = ktime_get();
+// x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
+#ifdef CONFIG_X86
+	file = (struct file *)regs->di;
+	ctx = (struct dir_context *)regs->si;
+	pr_info("ip = %lx, flags = 0x%lx\n",
+		regs->ip, regs->flags);
+#endif
+// aarch64函数参数用到的寄存器：X0 ~ X7
+#ifdef CONFIG_ARM64
+	file = (struct file *)regs->regs[0];;
+	ctx = (struct dir_context *)regs->regs[1];;
+	pr_info("pc = 0x%lx, pstate = 0x%lx\n",
+		(long)regs->pc, (long)regs->pstate);
+#endif
+	struct inode *inode = file_inode(file);
+	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias)
+		break;
+	pr_info("dir name:%s, ctx:0x%p\n",
+		tmp->d_name.name, ctx);
 	return 0;
 }
 NOKPROBE_SYMBOL(entry_handler);
