@@ -10,6 +10,7 @@
 	smtpuser = chenxiaosong@chenxiaosong.com
 	smtpencryption = ssl
 	smtppass = 此处填写腾讯企业邮箱的授权密码
+	smtpserverport = 465
 [credential]
 	helper = store
 [color]
