@@ -92,3 +92,18 @@ sudo mount -o user=root //127.0.0.1/TEST /mnt
 ```
 
 # 代码流程
+
+```c
+kthread
+  worker_thread
+    process_scheduled_works
+      process_one_work
+        handle_ksmbd_work
+          __handle_ksmbd_work
+            __process_request
+              smb2_open
+                dentry_open
+                  vfs_open
+                    do_dentry_open
+                      ext2_file_open
+```
