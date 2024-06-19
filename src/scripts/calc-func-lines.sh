@@ -1,3 +1,5 @@
+filename_suffix='.c' # 如果要遍历全部文件，就改为空字符串
+
 # 检查参数
 if [ $# -ne 2 ]; then
     echo "用法: $0 <文件名或目录名> <多少行(行数大于这个值的函数才会打印)>"
@@ -9,6 +11,10 @@ gt_lines=$2
 
 calc_func_lines() {
     local input_file=$1
+
+    if [[ $input_file != *$filename_suffix ]]; then
+        return
+    fi
 
     local cur_line_num=0 # 当前在哪一行
     local func_name_line # 函数名
