@@ -240,6 +240,52 @@ CONFIG_PREEMPT_TRACER=y
 - `tracing_on`: 开启或暂停。
 - `options`: 选项。
 
+# `kprobe`
+
+- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
+
+## `tracepoint`
+
+比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
+```sh
+find /sys/kernel/debug/tracing/events/ -name "*ext2*" # 查找函数所在位置
+echo 1 > /sys/kernel/debug/tracing/events/nfs/ext2_dio_read_begin/enable # 使能函数的tracepoint
+```
+
+## `kprobe`命令
+
+kprobe的使用如下：
+```sh
+# 可以用 kprobe 跟踪的函数
+cat /sys/kernel/debug/tracing/available_filter_functions
+
+# x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
+# aarch64函数参数用到的寄存器：X0 ~ X7
+# wb_bytes 在 nfs_page 结构体中的偏移为 56， x32代表32位（4字节），注意 rdi 寄存器要写成 di
+echo 'p:p_nfs_end_page_writeback nfs_end_page_writeback wb_bytes=+56(%di):x32' >> /sys/kernel/debug/tracing/kprobe_events
+echo 1 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enable
+echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
+echo '!stacktrace' > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
+echo 0 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enable
+echo '-:p_nfs_end_page_writeback' >> /sys/kernel/debug/tracing/kprobe_events
+
+# kretprobe，可以跟踪函数返回值
+# 注意要用单引号
+echo 'r:r_nfs4_atomic_open nfs4_atomic_open ret=$retval' >> /sys/kernel/debug/tracing/kprobe_events
+echo 1 > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/enable
+echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/trigger
+echo '!stacktrace' > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/trigger
+echo 0 > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/enable
+echo '-:r_nfs4_atomic_open' >> /sys/kernel/debug/tracing/kprobe_events
+
+echo 0 > /sys/kernel/debug/tracing/trace # 清除trace信息
+cat /sys/kernel/debug/tracing/trace_pipe
+```
+
+## 插入`kprobe`模块
+
+参考<!-- public begin -->[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/kprobes)<!-- public end --><!-- private begin -->`kernel/kprobes`里的例子<!-- private end -->。
+
 # `systemtap`
 
 - [Systemtap tutorial](https://sourceware.org/systemtap/)
