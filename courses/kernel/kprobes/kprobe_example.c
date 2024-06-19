@@ -16,7 +16,8 @@
 #include <linux/module.h>
 #include <linux/kprobes.h>
 
-static char symbol[KSYM_NAME_LEN] = "kernel_clone";
+// ext2_readdir(struct file *file, struct dir_context *ctx)
+static char symbol[KSYM_NAME_LEN] = "ext2_readdir";
 module_param_string(symbol, symbol, KSYM_NAME_LEN, 0644);
 
 /* For each probe you need to allocate a kprobe structure */
@@ -27,38 +28,28 @@ static struct kprobe kp = {
 /* kprobe pre_handler: called just before the probed instruction is executed */
 static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
+	struct file *file;
+	struct dir_context *ctx;
+	struct dentry *tmp;
+// x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
 #ifdef CONFIG_X86
+	file = (struct file *)regs->di;
+	ctx = (struct dir_context *)regs->si;
 	pr_info("<%s> p->addr = 0x%p, ip = %lx, flags = 0x%lx\n",
 		p->symbol_name, p->addr, regs->ip, regs->flags);
 #endif
-#ifdef CONFIG_PPC
-	pr_info("<%s> p->addr = 0x%p, nip = 0x%lx, msr = 0x%lx\n",
-		p->symbol_name, p->addr, regs->nip, regs->msr);
-#endif
-#ifdef CONFIG_MIPS
-	pr_info("<%s> p->addr = 0x%p, epc = 0x%lx, status = 0x%lx\n",
-		p->symbol_name, p->addr, regs->cp0_epc, regs->cp0_status);
-#endif
+// aarch64函数参数用到的寄存器：X0 ~ X7
 #ifdef CONFIG_ARM64
+	file = (struct file *)regs->regs[0];;
+	ctx = (struct dir_context *)regs->regs[1];;
 	pr_info("<%s> p->addr = 0x%p, pc = 0x%lx, pstate = 0x%lx\n",
 		p->symbol_name, p->addr, (long)regs->pc, (long)regs->pstate);
 #endif
-#ifdef CONFIG_ARM
-	pr_info("<%s> p->addr = 0x%p, pc = 0x%lx, cpsr = 0x%lx\n",
-		p->symbol_name, p->addr, (long)regs->ARM_pc, (long)regs->ARM_cpsr);
-#endif
-#ifdef CONFIG_RISCV
-	pr_info("<%s> p->addr = 0x%p, pc = 0x%lx, status = 0x%lx\n",
-		p->symbol_name, p->addr, regs->epc, regs->status);
-#endif
-#ifdef CONFIG_S390
-	pr_info("<%s> p->addr, 0x%p, ip = 0x%lx, flags = 0x%lx\n",
-		p->symbol_name, p->addr, regs->psw.addr, regs->flags);
-#endif
-#ifdef CONFIG_LOONGARCH
-	pr_info("<%s> p->addr = 0x%p, era = 0x%lx, estat = 0x%lx\n",
-		p->symbol_name, p->addr, regs->csr_era, regs->csr_estat);
-#endif
+	struct inode *inode = file_inode(file);
+	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias)
+		break;
+	pr_info("<%s> dir name:%s, ctx:0x%p\n",
+		p->symbol_name, tmp->d_name.name, ctx);
 
 	/* A dump_stack() here will give a stack backtrace */
 	return 0;
@@ -72,33 +63,9 @@ static void __kprobes handler_post(struct kprobe *p, struct pt_regs *regs,
 	pr_info("<%s> p->addr = 0x%p, flags = 0x%lx\n",
 		p->symbol_name, p->addr, regs->flags);
 #endif
-#ifdef CONFIG_PPC
-	pr_info("<%s> p->addr = 0x%p, msr = 0x%lx\n",
-		p->symbol_name, p->addr, regs->msr);
-#endif
-#ifdef CONFIG_MIPS
-	pr_info("<%s> p->addr = 0x%p, status = 0x%lx\n",
-		p->symbol_name, p->addr, regs->cp0_status);
-#endif
 #ifdef CONFIG_ARM64
 	pr_info("<%s> p->addr = 0x%p, pstate = 0x%lx\n",
 		p->symbol_name, p->addr, (long)regs->pstate);
-#endif
-#ifdef CONFIG_ARM
-	pr_info("<%s> p->addr = 0x%p, cpsr = 0x%lx\n",
-		p->symbol_name, p->addr, (long)regs->ARM_cpsr);
-#endif
-#ifdef CONFIG_RISCV
-	pr_info("<%s> p->addr = 0x%p, status = 0x%lx\n",
-		p->symbol_name, p->addr, regs->status);
-#endif
-#ifdef CONFIG_S390
-	pr_info("<%s> p->addr, 0x%p, flags = 0x%lx\n",
-		p->symbol_name, p->addr, regs->flags);
-#endif
-#ifdef CONFIG_LOONGARCH
-	pr_info("<%s> p->addr = 0x%p, estat = 0x%lx\n",
-		p->symbol_name, p->addr, regs->csr_estat);
 #endif
 }
 
