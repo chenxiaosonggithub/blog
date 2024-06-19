@@ -1,4 +1,5 @@
-filename_suffix='.c' # 如果要遍历全部文件，就改为空字符串
+# 此处遍历以'.c'结尾的文件，如果要遍历全部文件，就改为空字符串
+filename_suffix='.c'
 
 # 检查参数
 if [ $# -ne 2 ]; then
