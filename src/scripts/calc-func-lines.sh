@@ -3,7 +3,7 @@ filename_suffix='.c'
 
 # 检查参数
 if [ $# -ne 2 ]; then
-    echo "用法: $0 <文件名或目录名> <多少行(行数大于这个值的函数才会打印)>"
+    echo "用法: bash $0 <文件名或目录名> <多少行(行数大于这个值的函数才会打印)>"
     return 1
 fi
 
@@ -50,15 +50,6 @@ calc_func_lines() {
     done < "$input_file"
 }
 
-if [ -f "$input_file_or_dir" ]; then
-    # 是文件就直接解析
-    calc_func_lines  $input_file_or_dir
-    exit 1
-elif [ -d "$input_file_or_dir" ]; then
-    # 是目录就遍历
-    iter_dir $input_file_or_dir
-fi
-
 iter_dir() {
     local input_dir=$1
 
@@ -70,3 +61,13 @@ iter_dir() {
         fi
     done
 }
+
+if [ -f "$input_file_or_dir" ]; then
+    # 是文件就直接解析
+    calc_func_lines  $input_file_or_dir
+    exit 1
+elif [ -d "$input_file_or_dir" ]; then
+    # 是目录就遍历
+    iter_dir $input_file_or_dir
+fi
+
