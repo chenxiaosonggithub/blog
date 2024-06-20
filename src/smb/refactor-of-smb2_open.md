@@ -88,11 +88,73 @@ smb2_open
   req->DesiredAccess // 访问权限检查
   req->FileAttributes // 属性
   smb2_find_context_vals // 4次调用，non-durable handle
+  ksmbd_override_fsids // 这个还没看懂TODO
   ksmbd_vfs_kern_path_locked // 获取当前文件和父目录的path
   if (stream_name) { // 处理stream name
-  
+
   dentry_open
     vfs_open
       do_dentry_open
         ext2_file_open // 执行到具体的后端文件系统
+```
+
+# 公共头文件`fs/smb/common/smb2status.h`
+
+## `fs/smb/client/smb2status.h`
+
+- [`fs/smb/client/smb2status.h`的修改历史](https://github.com/torvalds/linux/commits/master/fs/smb/client/smb2status.h)
+- [`fs/cifs/smb2status.h`的修改历史](https://github.com/torvalds/linux/commits/38c8a9a52082579090e34c033d439ed2cd1a462d/fs/cifs/smb2status.h?browsing_rename_history=true&new_path=fs/smb/client/smb2status.h&original_branch=master)
+
+## `fs/smb/server/smbstatus.h`
+
+- [`fs/smb/server/smbstatus.h`的修改历史](https://github.com/torvalds/linux/commits/master/fs/smb/server/smbstatus.h)
+- [`fs/ksmbd/smbstatus.h`的修改历史](https://github.com/torvalds/linux/commits/38c8a9a52082579090e34c033d439ed2cd1a462d/fs/ksmbd/smbstatus.h?browsing_rename_history=true&new_path=fs/smb/server/smbstatus.h&original_branch=master)
+- [`fs/cifsd/smbstatus.h`的修改历史](https://github.com/torvalds/linux/commits/1a93084b9a89818aec0ac7b59a5a51f2112bf203/fs/cifsd/smbstatus.h?browsing_rename_history=true&new_path=fs/smb/server/smbstatus.h&original_branch=master)
+
+`e2f34481b24d cifsd: add server-side procedures for SMB3`的`fs/cifsd/smbstatus.h`最新的`fs/smb/server/smbstatus.h`只有以下不同：
+```sh
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: LGPL-2.1+ */
+ /*
+- *   fs/server/smb2status.h
++ *   fs/cifs/smb2status.h
+  *
+  *   SMB2 Status code (network error) definitions
+  *   Definitions are from MS-ERREF
+```
+
+## 最新代码对比
+
+在vim下，`fs/smb/server/smbstatus.h`先做两组替换`:%s/\t\\\n\t/ /g`和`:%s/ \\\n\t/ /g`，然后再对比两个文件，有以下不同：
+```c
+-#define STATUS_SEVERITY_SUCCESS cpu_to_le32(0x0000)
++#define STATUS_SEVERITY_SUCCESS __constant_cpu_to_le32(0x0000)
+ #define STATUS_SEVERITY_INFORMATIONAL cpu_to_le32(0x0001)
+ #define STATUS_SEVERITY_WARNING cpu_to_le32(0x0002)
+ #define STATUS_SEVERITY_ERROR cpu_to_le32(0x0003)
+@@ -27,7 +27,7 @@ struct ntstatus {
+        __le32 Code;
+ };
+
+-#define STATUS_SUCCESS 0x00000000
++#define STATUS_SUCCESS cpu_to_le32(0x00000000)
+ #define STATUS_WAIT_0 cpu_to_le32(0x00000000)
+ #define STATUS_WAIT_1 cpu_to_le32(0x00000001)
+ #define STATUS_WAIT_2 cpu_to_le32(0x00000002)
+@@ -982,6 +982,8 @@ struct ntstatus {
+ #define STATUS_INVALID_TASK_INDEX cpu_to_le32(0xC0000501)
+ #define STATUS_THREAD_ALREADY_IN_TASK cpu_to_le32(0xC0000502)
+ #define STATUS_CALLBACK_BYPASS cpu_to_le32(0xC0000503)
++#define STATUS_SERVER_UNAVAILABLE cpu_to_le32(0xC0000466)
++#define STATUS_FILE_NOT_AVAILABLE cpu_to_le32(0xC0000467)
+ #define STATUS_PORT_CLOSED cpu_to_le32(0xC0000700)
+ #define STATUS_MESSAGE_LOST cpu_to_le32(0xC0000701)
+ #define STATUS_INVALID_MESSAGE cpu_to_le32(0xC0000702)
+@@ -1767,6 +1769,3 @@ struct ntstatus {
+ #define STATUS_IPSEC_INVALID_PACKET cpu_to_le32(0xC0360005)
+ #define STATUS_IPSEC_INTEGRITY_CHECK_FAILED cpu_to_le32(0xC0360006)
+ #define STATUS_IPSEC_CLEAR_TEXT_DROP cpu_to_le32(0xC0360007)
+-
+-#define STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP cpu_to_le32(0xC05D0000)
+-#define STATUS_INVALID_LOCK_RANGE cpu_to_le32(0xC00001a1)
 ```
