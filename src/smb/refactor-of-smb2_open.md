@@ -81,7 +81,16 @@ smb2_open
   smb2_get_name // 获取要打开的文件名
   parse_stream_name // stream name是什么鬼，后面再看TODO
   ksmbd_share_veto_filename // 检查是否禁止访问的文件，veto翻译为禁止或否决
-  server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE // 处理durable
+  server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE // 处理durable handle
+  req->ImpersonationLevel // 扮演，模仿
+  req->CreateOptions // 判断选项是否有效
+  req->CreateDisposition // Disposition 性情，气质，脾性
+  req->DesiredAccess // 访问权限检查
+  req->FileAttributes // 属性
+  smb2_find_context_vals // 4次调用，non-durable handle
+  ksmbd_vfs_kern_path_locked // 获取当前文件和父目录的path
+  if (stream_name) { // 处理stream name
+  
   dentry_open
     vfs_open
       do_dentry_open
