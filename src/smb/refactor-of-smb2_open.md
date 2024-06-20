@@ -126,25 +126,12 @@ smb2_open
 ## 最新代码对比
 
 在vim下，`fs/smb/server/smbstatus.h`先做两组替换`:%s/\t\\\n\t/ /g`和`:%s/ \\\n\t/ /g`，然后再对比两个文件，有以下不同：
-```c
--#define STATUS_SEVERITY_SUCCESS cpu_to_le32(0x0000)
-+#define STATUS_SEVERITY_SUCCESS __constant_cpu_to_le32(0x0000)
- #define STATUS_SEVERITY_INFORMATIONAL cpu_to_le32(0x0001)
- #define STATUS_SEVERITY_WARNING cpu_to_le32(0x0002)
- #define STATUS_SEVERITY_ERROR cpu_to_le32(0x0003)
-@@ -27,7 +27,7 @@ struct ntstatus {
-        __le32 Code;
- };
-
--#define STATUS_SUCCESS 0x00000000
-+#define STATUS_SUCCESS cpu_to_le32(0x00000000)
- #define STATUS_WAIT_0 cpu_to_le32(0x00000000)
- #define STATUS_WAIT_1 cpu_to_le32(0x00000001)
- #define STATUS_WAIT_2 cpu_to_le32(0x00000002)
+```sh
 @@ -982,6 +982,8 @@ struct ntstatus {
  #define STATUS_INVALID_TASK_INDEX cpu_to_le32(0xC0000501)
  #define STATUS_THREAD_ALREADY_IN_TASK cpu_to_le32(0xC0000502)
  #define STATUS_CALLBACK_BYPASS cpu_to_le32(0xC0000503)
+# 这俩是client端的
 +#define STATUS_SERVER_UNAVAILABLE cpu_to_le32(0xC0000466)
 +#define STATUS_FILE_NOT_AVAILABLE cpu_to_le32(0xC0000467)
  #define STATUS_PORT_CLOSED cpu_to_le32(0xC0000700)
@@ -154,7 +141,7 @@ smb2_open
  #define STATUS_IPSEC_INVALID_PACKET cpu_to_le32(0xC0360005)
  #define STATUS_IPSEC_INTEGRITY_CHECK_FAILED cpu_to_le32(0xC0360006)
  #define STATUS_IPSEC_CLEAR_TEXT_DROP cpu_to_le32(0xC0360007)
--
+# 这俩是server端的
 -#define STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP cpu_to_le32(0xC05D0000)
 -#define STATUS_INVALID_LOCK_RANGE cpu_to_le32(0xC00001a1)
 ```
