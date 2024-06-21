@@ -203,7 +203,7 @@ chromium-browser --proxy-server="https=127.0.0.1:1080;http=127.0.0.1:1080;ftp=12
 
 基于openeuler的服务器麒麟系统用`qemu`命令行启动时，编辑网络用命令`nmtui`，网络接口名改成和`ifconfig`中一样的名。
 
-注意麒麟系统在arm芯片的macos上无法用vmware fusion安装，可以用[UTM](https://github.com/utmapp/UTM)安装，从[github](https://docs.getutm.app/installation/macos/)上下载安装包。安装虚拟机时cpu、内存、硬盘不要分配太大，比如我用的是M2的Macbook Air（8G内存，8核，256G硬盘），只需分配2G内存（已验证分配4G无法安装），磁盘64G（默认分区方式要求硬盘必须大于50G）。安装时最好使用自定义分区，`efi`分区`512M`（注意要在下拉选项中选择），swap分区可以分配稍大一些，剩下全给`/`，备份分区在虚拟机中就不分配了。安装完成后再次启动前可以把配置改大，但8G内存的电脑分配的内存不要超过2G，否则容易卡死（比如当启动其他虚拟机时）。安装后的虚拟机文件在`~/Library/Containers/com.utmapp.UTM/Data/Documents`目录下，默认Finder中不显示这个目录，可以在家目录下打开`Show View Options -> Show Library Folder`。注意要修改成不休眠，默认10分钟锁屏幕，15分钟进入休眠，utm虚拟机就无法唤醒了。
+注意麒麟系统在arm芯片的macos上无法用vmware fusion安装，可以用[UTM](https://github.com/utmapp/UTM)安装。安装虚拟机时cpu、内存、硬盘不要分配太大，比如我用的是M2的Macbook Air（8G内存，8核，256G硬盘），只需分配2G内存（已验证分配4G无法安装），磁盘64G（默认分区方式要求硬盘必须大于50G）。安装完成后再次启动前可以把配置改大，但8G内存的电脑分配的内存不要超过2G，否则容易卡死（比如当启动其他虚拟机时）。安装时最好使用自定义分区，`efi`分区`512M`（注意要在下拉选项中选择），swap分区可以分配稍大一些，剩下全给`/`，备份分区在虚拟机中就不分配了。注意要修改成不休眠，默认10分钟锁屏幕，15分钟进入休眠，utm虚拟机就无法唤醒了。
 
 一直提示“发现未认证应用执行”的解决办法，打开`/etc/default/grub`，修改为`GRUB_CMDLINE_LINUX_SECURITY="security="`，更新grub配置`sudo update-grub`，最后，重启系统。
 
