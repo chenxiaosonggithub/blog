@@ -1,3 +1,5 @@
+# -M ubuntu \
+# -cpu qemu64 \
 # -append "quiet console=ttyS0 IP=192.168.122.2 root=/dev/vda1 rw kmemleak=on" \ # quiet: 不打印信息
 kernel_version=x86_64-linux
 
