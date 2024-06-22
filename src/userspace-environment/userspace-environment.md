@@ -108,6 +108,11 @@ sudo swapon -s
 sudo vi /etc/fstab # 在/etc/fstab最后一行添加 /swapfile  none  swap  sw  0  0
 ```
 
+shell界面路径名显示绝对路径，想换成只显示最后一个路径名分量, `~/.bashrc`文件修改以下变量：
+```sh
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
+```
+
 # centos 9
 
 centos的开发软件生态比ubuntu还是稍微差一些，尤其是桌面系统。
