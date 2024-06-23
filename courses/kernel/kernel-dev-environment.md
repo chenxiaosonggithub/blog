@@ -362,6 +362,12 @@ sudo modprobe -r nbd # 移除模块
 qemu-img convert -p -f qcow2 -O raw image.qcow2 image.raw
 ```
 
+ubuntu24.04报错`dmesg`中`virtio_net virtio0 enp0s1: renamed from eth0`，解决办法：
+```sh
+sudo vim /etc/netplan/50-cloud-init.yaml # 把网络接口名改成enp0s1
+sudo netplan apply
+```
+
 ## 源码安装qemu
 
 关于各个Linux发行版怎么安装qemu，可以参考[qemu官网](https://www.qemu.org/download/#linux)的介绍，下面主要介绍一下源码的安装方式，源码安装方式可以使用qemu的最新特性。
