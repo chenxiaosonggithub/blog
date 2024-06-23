@@ -228,10 +228,6 @@ CONFIG_PREEMPT_TRACER=y
 - `tracing_on`: 开启或暂停。
 - `options`: 选项。
 
-# `kprobe`
-
-- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
-
 ## `tracepoint`
 
 比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
@@ -240,7 +236,11 @@ find /sys/kernel/debug/tracing/events/ -name "*ext2*" # 查找函数所在位置
 echo 1 > /sys/kernel/debug/tracing/events/nfs/ext2_dio_read_begin/enable # 使能函数的tracepoint
 ```
 
-## `kprobe`命令
+# `kprobe`
+
+- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
+
+## `kprobe` on `ftrace`
 
 kprobe的使用如下：
 ```sh
