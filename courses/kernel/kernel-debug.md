@@ -69,7 +69,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 注意ubuntu server（如ubuntu22.04.4）的`/boot/grub/grub.cfg`中的`crashkernel`后的值是`512M-:192M`，要删掉后面的`-:192M`，否则无法生成`vmcore`。
 
 再重启系统：
-```
+```sh
 sudo reboot # 重启才会生效
 ```
 
@@ -107,6 +107,8 @@ crash /var/crash/${date-time}/dump.${date-time} /usr/lib/debug/boot/vmlinux-`una
 
 ## qemu环境
 
+qemu启动的命令行最好指定`-append "nokaslr ..."`。
+
 在qemu环境中运行，不需要安装`kdump`工具。有些发行版默认发生oops时不会panic，需要修改配置（注意这样修改重启后会还原）：
 ```sh
 echo 1 > /proc/sys/kernel/panic_on_oops # 注意不能用 vim 编辑
@@ -116,6 +118,7 @@ cat /proc/sys/kernel/panic_on_oops # 确认是否生效
 按`ctrl + a c`打开QEMU控制台，使用以下命令导出vmcore：
 ```sh
 (qemu) dump-guest-memory /your_path/vmcore
+(qemu) dump-guest-memory -z /your_path/vmcore # 压缩
 ```
 
 除了panic时导出vmcore，还可以手动触发导出vmcore，这在一些场景下收集信息非常有用：
@@ -128,9 +131,18 @@ echo 1 > /proc/sys/kernel/sysrq
 echo c > /proc/sysrq-trigger
 ```
 
-启动crash：
+`x86_64`启动`crash`：
 ```sh
 crash vmlinux vmcore
+```
+
+`aarch64`启动`crash`要特殊处理：
+```sh
+# 先启动gdb打印变量值
+(gdb) target remote:5555
+(gdb) p /x kimage_voffset # 在我的虚拟机中值为 0xffff80003fe00000
+crash vmlinux vmcore -m vabits_actual=48 -m kimage_voffset=0xffff80003fe00000
+```
 
 # 加载ko模块：
 crash> help mod # 帮助命令
