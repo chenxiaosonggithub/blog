@@ -143,9 +143,9 @@ crash> mod -d <module name> # 删除
 如果内核版本不是最新的（比如4.19或5.10），那么发行版的包管理器安装的crash就可以用，但如果内核版本是最新的，可能就需要通过源码安装crash：
 ```sh
 git clone https://github.com/crash-utility/crash.git
-apt-get install autoconf automake libtool -y
+sudo apt-get install autoconf automake libtool texinfo -y
 cd crash
-make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好，放到相应的位置
+make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好（如 http://ftp.gnu.org/gnu/gdb/gdb-10.2.tar.gz），放到相应的位置
 # make target=ARM64 -j64 # 交叉编译能解析arm64 vmcore的crash
 ```
 
@@ -184,6 +184,11 @@ crash> mod # 显示所有模块的信息
 crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
 crash> mod -S # 从某个特定目录加载所有模块，默认从/lib/modules/`uname -r` 目录
+```
+
+`sym`命令：
+```sh
+
 ```
 
 # `ftrace`
