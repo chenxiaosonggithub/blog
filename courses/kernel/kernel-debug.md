@@ -107,6 +107,8 @@ crash /var/crash/${date-time}/dump.${date-time} /usr/lib/debug/boot/vmlinux-`una
 
 ## qemu环境
 
+<!-- https://blog.csdn.net/yanghao23/article/details/135892612 -->
+
 qemu启动的命令行最好指定`-append "nokaslr ..."`。
 
 在qemu环境中运行，不需要安装`kdump`工具。有些发行版默认发生oops时不会panic，需要修改配置（注意这样修改重启后会还原）：
@@ -144,7 +146,8 @@ crash vmlinux vmcore
 crash vmlinux vmcore -m vabits_actual=48 -m kimage_voffset=0xffff80003fe00000
 ```
 
-# 加载ko模块：
+加载ko模块：
+```sh
 crash> help mod # 帮助命令
 crash> mod -s <module name> <ko path> # 加载
 crash> mod -d <module name> # 删除
