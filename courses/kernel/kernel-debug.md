@@ -2,6 +2,8 @@
 
 # `kdump`和`crash`
 
+<!-- https://github.com/gatieme/LDD-LinuxDeviceDrivers/blob/master/study/debug/tools/systemtap/01-install/README.md -->
+
 ## fedora环境
 
 安装工具：
@@ -40,11 +42,17 @@ echo c > /proc/sysrq-trigger
 安装`kernel-debuginfo`软件包：
 ```sh
 sudo dnf --enablerepo=fedora-debuginfo install kernel-debuginfo
+sudo dnf install kernel-devel-`uname -r` -y #  kernel-headers-`uname -r` 可能会找不到
 ```
 
 启动crash:
 ```sh
-crash /var/crash/${ip}-${date-time}/vmcore /usr/lib/debug/lib/modules/vmlinux
+crash /var/crash/${ip}-${date-time}/vmcore /usr/lib/debug/lib/modules/`uname -r`/vmlinux
+```
+
+如果要编译外部模块，需要复制`vmlinux`:
+```sh
+cp /usr/lib/debug/lib/modules/`uname -r`/vmlinux /usr/lib/modules/`uname -r`/build/
 ```
 
 ## ubuntu环境
@@ -115,6 +123,11 @@ sudo apt install linux-image-`uname -r`-dbgsym -y
 启动crash:
 ```sh
 crash /var/crash/${date-time}/dump.${date-time} /usr/lib/debug/boot/vmlinux-`uname -r`
+```
+
+如果要编译外部模块，需要复制`vmlinux`:
+```sh
+cp /usr/lib/debug/boot/vmlinux-`uname -r` /usr/lib/modules/`uname -r`/build/
 ```
 
 ## qemu环境

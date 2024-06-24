@@ -153,6 +153,7 @@ fedora更新太频繁了，不稳定，不建议用作开发的系统。
 
 安装软件：
 ```shell
+sudo dnf groupinstall "Development Tools" -y
 sudo yum install openssl dwarves zstd ncurses-devel -y # 内核编译所需
 ```
 
