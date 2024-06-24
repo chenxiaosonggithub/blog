@@ -49,12 +49,22 @@ crash /var/crash/${ip}-${date-time}/vmcore /usr/lib/debug/lib/modules/vmlinux
 
 ## ubuntu环境
 
+以ubuntu24.04为例。
+
 安装工具：
 ```sh
 sudo apt-get update -y
 sudo apt install linux-crashdump -y
 sudo apt install crash -y
 ```
+<!--
+重新编译内核:
+```sh
+cp /boot/config-6.8.0-35-generic build/.config
+make O=build menuconfig # 清除 CONFIG_SYSTEM_TRUSTED_KEYS 和 CONFIG_SYSTEM_REVOCATION_KEYS 的值
+make O=build -j8
+```
+-->
 
 修改`/etc/default/grub`文件，在`GRUB_CMDLINE_LINUX=`一行的最后添加以下内容：
 ```sh
@@ -89,13 +99,15 @@ echo 1 > /proc/sys/kernel/sysrq
 echo c > /proc/sysrq-trigger
 ```
 
-安装`kernel-debuginfo`软件包（必须要是ubuntu server才能找到对应内核版本的软件包），参考[Debug symbol packages](https://ubuntu.com/server/docs/debug-symbol-packages)：
+安装`kernel-debuginfo`软件包（必须要是ubuntu server才能找到对应内核版本的软件包），参考[Debug symbol packages](https://ubuntu.com/server/docs/debug-symbol-packages)，（如果安装下载很慢，[也可以在仓库先下载好](http://ddebs.ubuntu.com/pool/main/l/linux/)）：
 ```sh
 sudo apt install ubuntu-dbgsym-keyring -y
+
 echo "deb http://ddebs.ubuntu.com $(lsb_release -cs) main restricted universe multiverse
 deb http://ddebs.ubuntu.com $(lsb_release -cs)-updates main restricted universe multiverse
 deb http://ddebs.ubuntu.com $(lsb_release -cs)-proposed main restricted universe multiverse" | \
 sudo tee -a /etc/apt/sources.list.d/ddebs.list
+
 sudo apt-get update -y
 sudo apt install linux-image-`uname -r`-dbgsym -y
 ```
