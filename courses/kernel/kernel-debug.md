@@ -255,7 +255,58 @@ crash> struct ext2_inode ffff88800dc59820 # 解析值
 crash> struct ext2_inode.i_mtime ffff88800dc59820 # 某个成员的值
 ```
 
+`p`命令：
+```sh
+crash> p jiffies
+crash> p ext2_readdir # 输出函数符号地址
+crash> p irq_stat # percpu变量，定义在 arch/x86/kernel/irq.c 中
+crash> p irq_stat:0 # cpu 0
+```
 
+`irq`中断相关信息：
+```sh
+# -a: 中断亲和性
+# -s: 系统中断信息
+crash> irq # 所有中断
+crash> irq 0 # 第0个中断
+crash> irq -b # 下半部
+```
+
+`task`命令显示`struct task_struct`和`struct thread_info`的内容：
+```sh
+crash> task -x # 16进制
+```
+
+`vm`命令显示进程地址空间：
+```sh
+# -p: 虚拟地址和物理地址
+# -m: mm_struct
+# -R: 搜索
+# -v: 所有 vm_area_struct
+# -f num: 显示num在vm_flags对应的位
+crash> vm # 崩溃瞬间进程
+crash> vm 575 # 指定pid
+```
+
+`kmem`显示内存信息：
+```sh
+crash> kmem -i # 系统内存使用情况
+crash> kmem -s # slab使用情况
+crash> kmem -v # vmalloc
+crash> kmem -V # vm_stat
+crash> kmem -z # zone
+crash> kmem -p # page
+crash> kmem -g # page flag
+```
+
+`list`命令：
+```sh
+crash> list super_blocks
+# -s: 链表成员
+# -h: 链表头地址，这里可以用 p super_blocks 获取
+crash> list -s super_block.s_blocksize_bits,s_maxbytes -h 0xffff888005462800
+crash> list -h 0xffff888005462800 | wc -l # 链表长度
+```
 
 # `ftrace`
 
