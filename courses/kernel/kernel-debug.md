@@ -171,6 +171,68 @@ cat trace_pipe
 
 参考<!-- public begin -->[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/kprobes)<!-- public end --><!-- private begin -->`kernel/kprobes`里的例子<!-- private end -->。
 
+# 打印
+
+## `printk`
+
+8个打印等级：
+```c
+#define KERN_EMERG      KERN_SOH "0"    /* 系统不可用 */              
+#define KERN_ALERT      KERN_SOH "1"    /* 需要立刻处理 */
+#define KERN_CRIT       KERN_SOH "2"    /* 紧急 */             
+#define KERN_ERR        KERN_SOH "3"    /* 错误 */                
+#define KERN_WARNING    KERN_SOH "4"    /* 警告 */              
+#define KERN_NOTICE     KERN_SOH "5"    /* 重要提示 */
+#define KERN_INFO       KERN_SOH "6"    /* 提示 */                   
+#define KERN_DEBUG      KERN_SOH "7"    /* 调试信息 */            
+```
+
+默认配置是等级高于`CONFIG_CONSOLE_LOGLEVEL_DEFAULT`会打印，qemu启动时可以指定`append="... loglevel=8`。
+
+`/proc/sys/kernel/printk`文件中的内容含义如下：
+```c
+int console_printk[4] = {                                             
+        CONSOLE_LOGLEVEL_DEFAULT,       /* 控制台输出等级 */        
+        MESSAGE_LOGLEVEL_DEFAULT,       /* 默认消息输出等级 */
+        CONSOLE_LOGLEVEL_MIN,           /* 最低输出等级 */
+        CONSOLE_LOGLEVEL_DEFAULT,       /* 默认控制台输出等级，启动时 */
+};                                                                    
+```
+
+常用的输出函数有`print_hex_dump()`和`dump_stack()`。
+
+`include/asm-generic/bug.h`文件中的`BUG_ON(condition)`当满足条件（`condition == true`）时会panic。`WARN_ON(condition)`当满足条件（`condition == true`）时不会panic，只会打印信息。
+
+## 动态打印
+
+打开配置`CONFIG_DYNAMIC_DEBUG`。
+
+```sh
+cd /sys/kernel/debug/dynamic_debug/
+cat control | less # 查看所有的动态打印
+echo 'file fs/ext4/extents.c +p' > control # 打开文件中所有的动态打印
+echo 'module ext4 -p' > control # 关闭ext4模块所有动态打印
+echo 'func ext4_ext_binsearch +p' > control # 打开某个函数的打印
+echo -n '*ext4* -p' > control # 关闭文件路径中包含ext4的打印
+echo -n '+p' > control # 所有打印
+```
+
+系统启动相关的代码（如`smpboot`），需要在启动时传递参数：
+```sh
+# p: 打开
+# f: 函数名
+# l: 行号
+# m: 模块名
+# t: 线程id
+qemu-system-x86_64 -append "... smpboot.dyndbg=+plftm"
+```
+
+也可以修改子系统的`Makefile`，添加以下内容：
+```sh
+ccflags-y += -DDEBUG
+ccflags-y += -DVERBOSE_DEBUG
+```
+
 # `kdump`和`crash`
 
 <!-- https://github.com/gatieme/LDD-LinuxDeviceDrivers/blob/master/study/debug/tools/systemtap/01-install/README.md -->
@@ -498,75 +560,19 @@ index b335f17f682f..01893352b0bb 100644
                 return 0;
 ```
 
-# 打印
-
-## `printk`
-
-8个打印等级：
-```c
-#define KERN_EMERG      KERN_SOH "0"    /* 系统不可用 */              
-#define KERN_ALERT      KERN_SOH "1"    /* 需要立刻处理 */
-#define KERN_CRIT       KERN_SOH "2"    /* 紧急 */             
-#define KERN_ERR        KERN_SOH "3"    /* 错误 */                
-#define KERN_WARNING    KERN_SOH "4"    /* 警告 */              
-#define KERN_NOTICE     KERN_SOH "5"    /* 重要提示 */
-#define KERN_INFO       KERN_SOH "6"    /* 提示 */                   
-#define KERN_DEBUG      KERN_SOH "7"    /* 调试信息 */            
-```
-
-默认配置是等级高于`CONFIG_CONSOLE_LOGLEVEL_DEFAULT`会打印，qemu启动时可以指定`append="... loglevel=8`。
-
-`/proc/sys/kernel/printk`文件中的内容含义如下：
-```c
-int console_printk[4] = {                                             
-        CONSOLE_LOGLEVEL_DEFAULT,       /* 控制台输出等级 */        
-        MESSAGE_LOGLEVEL_DEFAULT,       /* 默认消息输出等级 */
-        CONSOLE_LOGLEVEL_MIN,           /* 最低输出等级 */
-        CONSOLE_LOGLEVEL_DEFAULT,       /* 默认控制台输出等级，启动时 */
-};                                                                    
-```
-
-常用的输出函数有`print_hex_dump()`和`dump_stack()`。
-
-`include/asm-generic/bug.h`文件中的`BUG_ON(condition)`当满足条件（`condition == true`）时会panic。`WARN_ON(condition)`当满足条件（`condition == true`）时不会panic，只会打印信息。
+<!-- ing begin -->
 
 # `oops`
 
 发生`oops`时，除了导出`vmcore`后使用`crash`分析外，还可以用其他方法分析。
 
-编译外部模块时，要在`Makefile`中指定`KBUILD_CFLAGS += -g`参数。
-
-## 动态打印
-
-打开配置`CONFIG_DYNAMIC_DEBUG`。
+编译外部模块时，要在`Makefile`中指定`KBUILD_CFLAGS += -g`参数添加符号信息表。
 
 ```sh
-cd /sys/kernel/debug/dynamic_debug/
-cat control | less # 查看所有的动态打印
-echo 'file fs/ext4/extents.c +p' > control # 打开文件中所有的动态打印
-echo 'module ext4 -p' > control # 关闭ext4模块所有动态打印
-echo 'func ext4_ext_binsearch +p' > control # 打开某个函数的打印
-echo -n '*ext4* -p' > control # 关闭文件路径中包含ext4的打印
-echo -n '+p' > control # 所有打印
+# 交叉编译用 aarch64-linux-gnu-objdump
+
 ```
 
-系统启动相关的代码（如`smpboot`），需要在启动时传递参数：
-```sh
-# p: 打开
-# f: 函数名
-# l: 行号
-# m: 模块名
-# t: 线程id
-qemu-system-x86_64 -append "... smpboot.dyndbg=+plftm"
-```
-
-也可以修改子系统的`Makefile`，添加以下内容：
-```sh
-ccflags-y += -DDEBUG
-ccflags-y += -DVERBOSE_DEBUG
-```
-
-<!-- ing begin -->
 # `perf`
 
 ## 编译
