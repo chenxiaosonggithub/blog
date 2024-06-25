@@ -191,7 +191,7 @@ make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好（如 h
 # make target=ARM64 -j64 # 交叉编译能解析arm64 vmcore的crash
 ```
 
-# `crash`常用命令
+## `crash`常用命令
 
 `help`命令:
 ```sh
@@ -306,6 +306,25 @@ crash> list super_blocks
 # -h: 链表头地址，这里可以用 p super_blocks 获取
 crash> list -s super_block.s_blocksize_bits,s_maxbytes -h 0xffff888005462800
 crash> list -h 0xffff888005462800 | wc -l # 链表长度
+```
+
+## 例子
+
+构造一个空指针访问的场景：
+```sh
+diff --git a/fs/ext2/dir.c b/fs/ext2/dir.c
+index b335f17f682f..01893352b0bb 100644
+--- a/fs/ext2/dir.c
++++ b/fs/ext2/dir.c
+@@ -266,6 +266,9 @@ ext2_readdir(struct file *file, struct dir_context *ctx)
+        bool need_revalidate = !inode_eq_iversion(inode, file->f_version);
+        bool has_filetype;
+ 
++       file = NULL;
++       file->f_pos = 2;
++
+        if (pos > inode->i_size - EXT2_DIR_REC_LEN(1))
+                return 0;
 ```
 
 # `ftrace`

@@ -1,4 +1,4 @@
-if [ $# -ne 3 ]; then
+if [ $# -ne 1 ]; then
     echo "Usage: $0 \${repo_name}"
     return
 fi
