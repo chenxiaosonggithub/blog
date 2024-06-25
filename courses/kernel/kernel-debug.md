@@ -65,8 +65,8 @@ cat trace_pipe | less
 跟踪函数。
 
 ```sh
-cat available_filter_functions # 查看可跟踪的函数
 cd /sys/kernel/debug/tracing/
+cat available_filter_functions # 查看可跟踪的函数
 echo 0 > tracing_on
 cat set_ftrace_pid
 echo 1234 > set_ftrace_pid # 指定pid
@@ -93,11 +93,17 @@ echo > set_ftrace_notrace # 清空
 比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
 ```sh
 cd /sys/kernel/debug/tracing/
+echo nop > current_tracer
+echo 1 > tracing_on
 cat available_events  | grep ext2
 echo ext2:ext2_dio_read_begin > set_event
 # find events/ -name "*ext2*" # 也可以查找函数所在位置，比较慢
 # echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
-echo ext2:* > set_event # 所有的ext2跟踪点
+# echo ext2:* > set_event # 所有的ext2跟踪点
+
+echo 1234567890 > /mnt/file-in # ext2文件系统
+dd if=/mnt/file-in of=/mnt/file-out iflag=direct bs=1 count=10
+cat trace_pipe
 ```
 
 到相应`tracepoint`的目录下，设置跟踪条件：
@@ -147,22 +153,22 @@ cat available_filter_functions
 
 # x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
 # aarch64函数参数用到的寄存器：X0 ~ X7
-# wb_bytes 在 nfs_page 结构体中的偏移为 56， x32代表32位（4字节），注意 rdi 寄存器要写成 di
-echo 'p:p_nfs_end_page_writeback nfs_end_page_writeback wb_bytes=+56(%di):x32' >> kprobe_events
-echo 1 > events/kprobes/p_nfs_end_page_writeback/enable
-echo stacktrace > events/kprobes/p_nfs_end_page_writeback/trigger
-echo '!stacktrace' > events/kprobes/p_nfs_end_page_writeback/trigger
-echo 0 > events/kprobes/p_nfs_end_page_writeback/enable
-echo '-:p_nfs_end_page_writeback' >> kprobe_events
+# f_mode 在 file 结构体中的偏移为 20, x32代表32位（4字节），注意 rdi 寄存器要写成 di
+echo 'p:p_ext2_readdir ext2_readdir file=+20(%di):x32' >> kprobe_events
+echo 1 > events/kprobes/p_ext2_readdir/enable
+echo stacktrace > events/kprobes/p_ext2_readdir/trigger
+echo '!stacktrace' > events/kprobes/p_ext2_readdir/trigger
+echo 0 > events/kprobes/p_ext2_readdir/enable
+echo '-:p_ext2_readdir' >> kprobe_events
 
 # kretprobe，可以跟踪函数返回值
 # 注意要用单引号
-echo 'r:r_nfs4_atomic_open nfs4_atomic_open ret=$retval' >> kprobe_events
-echo 1 > events/kprobes/r_nfs4_atomic_open/enable
-echo stacktrace > events/kprobes/r_nfs4_atomic_open/trigger
-echo '!stacktrace' > events/kprobes/r_nfs4_atomic_open/trigger
-echo 0 > events/kprobes/r_nfs4_atomic_open/enable
-echo '-:r_nfs4_atomic_open' >> kprobe_events
+echo 'r:r_ext2_readdir ext2_readdir ret=$retval' >> kprobe_events
+echo 1 > events/kprobes/r_ext2_readdir/enable
+echo stacktrace > events/kprobes/r_ext2_readdir/trigger
+echo '!stacktrace' > events/kprobes/r_ext2_readdir/trigger
+echo 0 > events/kprobes/r_ext2_readdir/enable
+echo '-:r_ext2_readdir' >> kprobe_events
 
 echo 0 > trace # 清除trace信息
 cat trace_pipe
