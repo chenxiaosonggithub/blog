@@ -6,6 +6,8 @@
 
 ## fedora环境
 
+以fedora40为例。
+
 安装工具：
 ```sh
 sudo dnf install kexec-tools -y
@@ -226,10 +228,34 @@ crash> mod -d <module name> # 删除
 crash> mod -S # 从某个特定目录加载所有模块，默认从/lib/modules/`uname -r` 目录
 ```
 
-`sym`命令：
+`sym`命令（解析符号信息）：
 ```sh
-
+crash> sym -l # 相当于查看 System.map
+crash> sym -m ubifs # 查看某个内核模块
+crash> sym -q ext2 # 查看包含ext2字符串的符号信息
 ```
+
+`rd`命令用于读取内存地址的值：
+```sh
+# -p: 物理地址
+# -u: 用户空间虚拟地址
+# -d: 10进制
+# -s: 显示符号
+# -32: 32位宽
+# -64: 64位宽
+# -a: ascii码
+crash> rd 0xffff888005462800 20 # 读20个值
+```
+
+`struct`命令：
+```sh
+crash> struct ext2_inode # 显示结构体定义
+crash> struct ext2_inode -o # 偏移
+crash> struct ext2_inode ffff88800dc59820 # 解析值
+crash> struct ext2_inode.i_mtime ffff88800dc59820 # 某个成员的值
+```
+
+
 
 # `ftrace`
 
