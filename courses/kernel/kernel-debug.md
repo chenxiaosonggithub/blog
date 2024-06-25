@@ -134,6 +134,7 @@ cat trace_pipe | less
 
 # `kprobe`
 
+- [Documentation/trace](https://github.com/torvalds/linux/tree/master/Documentation/trace)
 - [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
 
 ## `kprobe` on `ftrace`
