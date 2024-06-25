@@ -4,7 +4,7 @@ filename_suffix='.c'
 # 检查参数
 if [ $# -ne 2 ]; then
     echo "用法: bash $0 <文件名或目录名> <多少行(行数大于这个值的函数才会打印)>"
-    return 1
+    exit 1
 fi
 
 input_file_or_dir=$1

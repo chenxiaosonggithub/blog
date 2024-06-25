@@ -3,7 +3,7 @@
 # 检查参数
 if [ $# -ne 1 ]; then
     echo "用法: $0 <文件名>"
-    return 1
+    exit 1
 fi
 
 # 检查文件是否存在
