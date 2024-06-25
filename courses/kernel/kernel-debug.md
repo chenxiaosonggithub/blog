@@ -1,5 +1,176 @@
 除前面我们介绍过的GDB调试方法只适用于虚拟机中，我们平时看代码学习时可以用一下，如果是在工作中客户遇到的问题，GDB调试方法就用不上了，这时就需要用到其他调试方法了。
 
+# `ftrace`
+
+名字来源于 function trace。
+
+<!--
+https://cloud.tencent.com/developer/article/1429041
+
+```shell
+#!/bin/bash
+func_name=do_dentry_open
+
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer
+echo 0 > tracing_on
+echo $$ > set_ftrace_pid # 当前脚本程序的pid
+echo function_graph > current_tracer
+echo $func_name > set_graph_function
+echo 1 > tracing_on
+exec "$@" # 用 $@ 进程替换当前shell进程，并且保持PID不变, 注意后面的命令不会执行
+
+cat trace > ftrace_output # 在脚本中这个命令不会执行
+```
+-->
+```sh
+CONFIG_FTRACE=y
+CONFIG_HAVE_FUNCTION_TRACER=y
+CONFIG_HAVE_FUNCTION_GRAPH_TRACER=y
+CONFIG_HAVE_DYNAMIC_FTRACE=y
+CONFIG_FUNCTION_TRACER=y
+CONFIG_IRQSOFF_TRACER=y
+CONFIG_SCHED_TRACER=y
+# CONFIG_ENABLE_DEFAULT_TRACERS # 这个好像必须要关闭
+CONFIG_FTRACE_SYSCALLS=y
+CONFIG_PREEMPT_TRACER=y
+CONFIG_DYNAMIC_FTRACE=y
+```
+
+`/sys/kernel/debug/tracing/`目录下的常见tracer和event如下：
+
+- `available_tracers`: 支持的跟踪器。
+- `available_events`: 支持的事件。
+- `current_tracer`: 当前正在使用的跟踪器，默认为`nop`。
+- `trace`: 用`cat`命令查看跟踪信息。
+- `tracing_on`: 开启或暂停。
+- `options`: 选项。
+
+## `irqsoff`
+
+跟踪中断延迟。
+
+```sh
+cd /sys/kernel/debug/tracing/
+echo 0 > options/function-trace # 为了减少延迟
+echo irqsoff > current_tracer
+echo 1 > tracing_on
+... # 停一会儿，收集日志
+echo 0 > tracing_on
+cat trace_pipe | less
+```
+
+## `function`和`function_graph`
+
+跟踪函数。
+
+```sh
+cat available_filter_functions # 查看可跟踪的函数
+cd /sys/kernel/debug/tracing/
+echo 0 > tracing_on
+cat set_ftrace_pid
+echo 1234 > set_ftrace_pid # 指定pid
+echo ext2_readdir > set_graph_function # 跟踪某个函数
+# echo function > current_tracer
+echo function_graph > current_tracer # 更加直观
+echo 1 > tracing_on
+... # 收集日志
+echo 0 > tracing_on
+cat trace_pipe | less
+```
+
+还可以指定要跟踪和不跟踪的函数，需要打开配置`CONFIG_DYNAMIC_FTRACE`：
+```sh
+echo func1 func2 > set_ftrace_filter # 要跟踪的函数
+echo func3 func4 > set_ftrace_notrace # 不跟踪的函数
+echo 'ext2_*' >> set_ftrace_filter # ext2_ 开头的函数
+echo '*ext4*' >> set_ftrace_notrace # 包含ext4的函数
+echo > set_ftrace_notrace # 清空
+```
+
+## `tracepoint`
+
+比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
+```sh
+cd /sys/kernel/debug/tracing/
+cat available_events  | grep ext2
+echo ext2:ext2_dio_read_begin > set_event
+# find events/ -name "*ext2*" # 也可以查找函数所在位置，比较慢
+# echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
+echo ext2:* > set_event # 所有的ext2跟踪点
+```
+
+到相应`tracepoint`的目录下，设置跟踪条件：
+```sh
+cd /sys/kernel/debug/tracing/
+cd events/ext2/ext2_dio_read_begin
+ls # enable  filter  format  hist  id  trigger
+```
+
+## `trace-cmd`和`kernelshark`
+
+```sh
+sudo apt install trace-cmd -y
+sudo apt install kernelshark -y # 图形界面
+```
+
+使用按照`reset -> record -> stop -> report`:
+```sh
+trace-cmd record -h # 查看帮助
+trace-cmd record -e 'ext2_dio_read_begin' # 输出文件 trace.dat
+kernelshark trace.dat #  图形化查看数据
+```
+
+## `trace_marker`
+
+```sh
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer # 必须要是nop
+echo 1 > tracing_on
+echo "hello trace_marker" > trace_marker
+echo 0 > tracing_on
+cat trace_pipe | less
+```
+
+# `kprobe`
+
+- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
+
+## `kprobe` on `ftrace`
+
+kprobe的使用如下：
+```sh
+cd /sys/kernel/debug/tracing/
+# 可以用 kprobe 跟踪的函数
+cat available_filter_functions
+
+# x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
+# aarch64函数参数用到的寄存器：X0 ~ X7
+# wb_bytes 在 nfs_page 结构体中的偏移为 56， x32代表32位（4字节），注意 rdi 寄存器要写成 di
+echo 'p:p_nfs_end_page_writeback nfs_end_page_writeback wb_bytes=+56(%di):x32' >> kprobe_events
+echo 1 > events/kprobes/p_nfs_end_page_writeback/enable
+echo stacktrace > events/kprobes/p_nfs_end_page_writeback/trigger
+echo '!stacktrace' > events/kprobes/p_nfs_end_page_writeback/trigger
+echo 0 > events/kprobes/p_nfs_end_page_writeback/enable
+echo '-:p_nfs_end_page_writeback' >> kprobe_events
+
+# kretprobe，可以跟踪函数返回值
+# 注意要用单引号
+echo 'r:r_nfs4_atomic_open nfs4_atomic_open ret=$retval' >> kprobe_events
+echo 1 > events/kprobes/r_nfs4_atomic_open/enable
+echo stacktrace > events/kprobes/r_nfs4_atomic_open/trigger
+echo '!stacktrace' > events/kprobes/r_nfs4_atomic_open/trigger
+echo 0 > events/kprobes/r_nfs4_atomic_open/enable
+echo '-:r_nfs4_atomic_open' >> kprobe_events
+
+echo 0 > trace # 清除trace信息
+cat trace_pipe
+```
+
+## 插入`kprobe`模块
+
+参考<!-- public begin -->[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/kprobes)<!-- public end --><!-- private begin -->`kernel/kprobes`里的例子<!-- private end -->。
+
 # `kdump`和`crash`
 
 <!-- https://github.com/gatieme/LDD-LinuxDeviceDrivers/blob/master/study/debug/tools/systemtap/01-install/README.md -->
@@ -327,176 +498,21 @@ index b335f17f682f..01893352b0bb 100644
                 return 0;
 ```
 
-# `ftrace`
+<!-- ing begin -->
+# `perf`
 
-名字来源于 function trace。
+## 编译
 
-<!--
-https://cloud.tencent.com/developer/article/1429041
-
-```shell
-#!/bin/bash
-func_name=do_dentry_open
-
-cd /sys/kernel/debug/tracing/
-echo nop > current_tracer
-echo 0 > tracing_on
-echo $$ > set_ftrace_pid # 当前脚本程序的pid
-echo function_graph > current_tracer
-echo $func_name > set_graph_function
-echo 1 > tracing_on
-exec "$@" # 用 $@ 进程替换当前shell进程，并且保持PID不变, 注意后面的命令不会执行
-
-cat trace > ftrace_output # 在脚本中这个命令不会执行
-```
--->
+在内核编译环境上，在内核代码目录下：
 ```sh
-CONFIG_FTRACE=y
-CONFIG_HAVE_FUNCTION_TRACER=y
-CONFIG_HAVE_FUNCTION_GRAPH_TRACER=y
-CONFIG_HAVE_DYNAMIC_FTRACE=y
-CONFIG_FUNCTION_TRACER=y
-CONFIG_IRQSOFF_TRACER=y
-CONFIG_SCHED_TRACER=y
-# CONFIG_ENABLE_DEFAULT_TRACERS # 这个好像必须要关闭
-CONFIG_FTRACE_SYSCALLS=y
-CONFIG_PREEMPT_TRACER=y
-CONFIG_DYNAMIC_FTRACE=y
+# 根据 make 命令报错提示安装
+sudo apt install -y libdw-dev systemtap-sdt-dev libunwind-dev libslang2-dev libperl-dev libzstd-dev libcap-dev libnuma-dev libbabeltrace-ctf-dev libpfm4-dev libtraceevent-dev
+
+cd tools/perf
+# export ARCH=arm64
+# export CROSS_COMPILE=aarch64-linux-gnu-
+make -j8
 ```
-
-`/sys/kernel/debug/tracing/`目录下的常见tracer和event如下：
-
-- `available_tracers`: 支持的跟踪器。
-- `available_events`: 支持的事件。
-- `current_tracer`: 当前正在使用的跟踪器，默认为`nop`。
-- `trace`: 用`cat`命令查看跟踪信息。
-- `tracing_on`: 开启或暂停。
-- `options`: 选项。
-
-## `irqsoff`
-
-跟踪中断延迟。
-
-```sh
-cd /sys/kernel/debug/tracing/
-echo 0 > options/function-trace # 为了减少延迟
-echo irqsoff > current_tracer
-echo 1 > tracing_on
-... # 停一会儿，收集日志
-echo 0 > tracing_on
-cat trace_pipe | less
-```
-
-## `function`和`function_graph`
-
-跟踪函数。
-
-```sh
-cat available_filter_functions # 查看可跟踪的函数
-cd /sys/kernel/debug/tracing/
-echo 0 > tracing_on
-cat set_ftrace_pid
-echo 1234 > set_ftrace_pid # 指定pid
-echo ext2_readdir > set_graph_function # 跟踪某个函数
-# echo function > current_tracer
-echo function_graph > current_tracer # 更加直观
-echo 1 > tracing_on
-... # 收集日志
-echo 0 > tracing_on
-cat trace_pipe | less
-```
-
-还可以指定要跟踪和不跟踪的函数，需要打开配置`CONFIG_DYNAMIC_FTRACE`：
-```sh
-echo func1 func2 > set_ftrace_filter # 要跟踪的函数
-echo func3 func4 > set_ftrace_notrace # 不跟踪的函数
-echo 'ext2_*' >> set_ftrace_filter # ext2_ 开头的函数
-echo '*ext4*' >> set_ftrace_notrace # 包含ext4的函数
-echo > set_ftrace_notrace # 清空
-```
-
-## `tracepoint`
-
-比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
-```sh
-cd /sys/kernel/debug/tracing/
-cat available_events  | grep ext2
-echo ext2:ext2_dio_read_begin > set_event
-# find events/ -name "*ext2*" # 也可以查找函数所在位置，比较慢
-# echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
-echo ext2:* > set_event # 所有的ext2跟踪点
-```
-
-到相应`tracepoint`的目录下，设置跟踪条件：
-```sh
-cd /sys/kernel/debug/tracing/
-cd events/ext2/ext2_dio_read_begin
-ls # enable  filter  format  hist  id  trigger
-```
-
-## `trace-cmd`和`kernelshark`
-
-```sh
-sudo apt install trace-cmd -y
-sudo apt install kernelshark -y # 图形界面
-```
-
-使用按照`reset -> record -> stop -> report`:
-```sh
-trace-cmd record -h # 查看帮助
-trace-cmd record -e 'ext2_dio_read_begin' # 输出文件 trace.dat
-kernelshark trace.dat #  图形化查看数据
-```
-
-## `trace_marker`
-
-```sh
-cd /sys/kernel/debug/tracing/
-echo nop > current_tracer # 必须要是nop
-echo 1 > tracing_on
-echo "hello trace_marker" > trace_marker
-echo 0 > tracing_on
-cat trace_pipe | less
-```
-
-# `kprobe`
-
-- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
-
-## `kprobe` on `ftrace`
-
-kprobe的使用如下：
-```sh
-cd /sys/kernel/debug/tracing/
-# 可以用 kprobe 跟踪的函数
-cat available_filter_functions
-
-# x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
-# aarch64函数参数用到的寄存器：X0 ~ X7
-# wb_bytes 在 nfs_page 结构体中的偏移为 56， x32代表32位（4字节），注意 rdi 寄存器要写成 di
-echo 'p:p_nfs_end_page_writeback nfs_end_page_writeback wb_bytes=+56(%di):x32' >> kprobe_events
-echo 1 > events/kprobes/p_nfs_end_page_writeback/enable
-echo stacktrace > events/kprobes/p_nfs_end_page_writeback/trigger
-echo '!stacktrace' > events/kprobes/p_nfs_end_page_writeback/trigger
-echo 0 > events/kprobes/p_nfs_end_page_writeback/enable
-echo '-:p_nfs_end_page_writeback' >> kprobe_events
-
-# kretprobe，可以跟踪函数返回值
-# 注意要用单引号
-echo 'r:r_nfs4_atomic_open nfs4_atomic_open ret=$retval' >> kprobe_events
-echo 1 > events/kprobes/r_nfs4_atomic_open/enable
-echo stacktrace > events/kprobes/r_nfs4_atomic_open/trigger
-echo '!stacktrace' > events/kprobes/r_nfs4_atomic_open/trigger
-echo 0 > events/kprobes/r_nfs4_atomic_open/enable
-echo '-:r_nfs4_atomic_open' >> kprobe_events
-
-echo 0 > trace # 清除trace信息
-cat trace_pipe
-```
-
-## 插入`kprobe`模块
-
-参考<!-- public begin -->[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/kprobes)<!-- public end --><!-- private begin -->`kernel/kprobes`里的例子<!-- private end -->。
 
 # `systemtap`
 
@@ -536,3 +552,4 @@ hello world
 stap -m helloword hello-word.stp
 staprun helloword.ko
 ```
+<!-- ing end -->
