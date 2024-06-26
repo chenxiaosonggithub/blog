@@ -154,6 +154,7 @@ kprobe的使用如下：
 cd /sys/kernel/debug/tracing/
 # 可以用 kprobe 跟踪的函数
 cat available_filter_functions
+echo 1 > tracing_on
 
 # x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
 # aarch64函数参数用到的寄存器：X0 ~ X7
