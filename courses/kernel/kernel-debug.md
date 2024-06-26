@@ -101,7 +101,9 @@ echo ext2:ext2_dio_read_begin > set_event
 # echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
 # echo ext2:* > set_event # 所有的ext2跟踪点
 
-# ext2文件系统
+fallocate -l 10M ~/image
+mkfs.ext2 -F image
+mount image /mnt
 echo 1234567890 > /mnt/file-in
 dd if=/mnt/file-in of=~/file-out iflag=direct bs=512 count=1 # bs不能随意指定
 cat trace_pipe
@@ -125,6 +127,7 @@ sudo apt install kernelshark -y # 图形界面
 ```sh
 trace-cmd record -h # 查看帮助
 trace-cmd record -e 'ext2_dio_read_begin' # 输出文件 trace.dat
+trace-cmd report trace.dat # 字符界面解析数据
 kernelshark trace.dat #  图形化查看数据
 ```
 
