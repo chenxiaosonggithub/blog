@@ -158,7 +158,7 @@ cat available_filter_functions
 # x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
 # aarch64函数参数用到的寄存器：X0 ~ X7
 # f_mode 在 file 结构体中的偏移为 20, x32代表32位（4字节），注意 rdi 寄存器要写成 di
-echo 'p:p_ext2_readdir ext2_readdir file=+20(%di):x32' >> kprobe_events
+echo 'p:p_ext2_readdir ext2_readdir f_mode=+20(%di):x32' >> kprobe_events
 echo 1 > events/kprobes/p_ext2_readdir/enable
 echo stacktrace > events/kprobes/p_ext2_readdir/trigger
 echo '!stacktrace' > events/kprobes/p_ext2_readdir/trigger
