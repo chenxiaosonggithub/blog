@@ -90,7 +90,7 @@ echo > set_ftrace_notrace # 清空
 
 ## `tracepoint`
 
-比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
+比如我们要打开`ext2_dio_read_iter()`函数的`ext2_dio_read_begin`的tracepoint：
 ```sh
 cd /sys/kernel/debug/tracing/
 echo nop > current_tracer
@@ -101,8 +101,9 @@ echo ext2:ext2_dio_read_begin > set_event
 # echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
 # echo ext2:* > set_event # 所有的ext2跟踪点
 
-echo 1234567890 > /mnt/file-in # ext2文件系统
-dd if=/mnt/file-in of=/mnt/file-out iflag=direct bs=1 count=10
+# ext2文件系统
+echo 1234567890 > /mnt/file-in
+dd if=/mnt/file-in of=~/file-out iflag=direct bs=512 count=1 # bs不能随意指定
 cat trace_pipe
 ```
 
