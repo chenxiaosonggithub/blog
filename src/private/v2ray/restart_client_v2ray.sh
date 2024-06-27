@@ -8,7 +8,7 @@ if [ -z "${port}" -o -z "${country}" ]
 then
 	echo "Usage:"
 	echo "  . restart_client_v2ray.sh \${port} \${country}"
-	return 1
+	exit 1
 fi
 
 sed -i "s/^${port_line}.*$/${port_line}${port},/" ${config_file}

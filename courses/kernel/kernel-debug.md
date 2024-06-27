@@ -1,10 +1,257 @@
 除前面我们介绍过的GDB调试方法只适用于虚拟机中，我们平时看代码学习时可以用一下，如果是在工作中客户遇到的问题，GDB调试方法就用不上了，这时就需要用到其他调试方法了。
 
+# `ftrace`
+
+名字来源于 function trace。
+
+<!--
+https://cloud.tencent.com/developer/article/1429041
+
+```shell
+#!/bin/bash
+func_name=do_dentry_open
+
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer
+echo 0 > tracing_on
+echo $$ > set_ftrace_pid # 当前脚本程序的pid
+echo function_graph > current_tracer
+echo $func_name > set_graph_function
+echo 1 > tracing_on
+exec "$@" # 用 $@ 进程替换当前shell进程，并且保持PID不变, 注意后面的命令不会执行
+
+cat trace > ftrace_output # 在脚本中这个命令不会执行
+```
+-->
+```sh
+CONFIG_FTRACE=y
+CONFIG_HAVE_FUNCTION_TRACER=y
+CONFIG_HAVE_FUNCTION_GRAPH_TRACER=y
+CONFIG_HAVE_DYNAMIC_FTRACE=y
+CONFIG_FUNCTION_TRACER=y
+CONFIG_IRQSOFF_TRACER=y
+CONFIG_SCHED_TRACER=y
+# CONFIG_ENABLE_DEFAULT_TRACERS # 这个好像必须要关闭
+CONFIG_FTRACE_SYSCALLS=y
+CONFIG_PREEMPT_TRACER=y
+CONFIG_DYNAMIC_FTRACE=y
+```
+
+`/sys/kernel/debug/tracing/`目录下的常见tracer和event如下：
+
+- `available_tracers`: 支持的跟踪器。
+- `available_events`: 支持的事件。
+- `current_tracer`: 当前正在使用的跟踪器，默认为`nop`。
+- `trace`: 用`cat`命令查看跟踪信息。
+- `tracing_on`: 开启或暂停。
+- `options`: 选项。
+
+## `irqsoff`
+
+跟踪中断延迟。
+
+```sh
+cd /sys/kernel/debug/tracing/
+echo 0 > options/function-trace # 为了减少延迟
+echo irqsoff > current_tracer
+echo 1 > tracing_on
+... # 停一会儿，收集日志
+echo 0 > tracing_on
+cat trace_pipe | less
+```
+
+## `function`和`function_graph`
+
+跟踪函数。
+
+```sh
+cd /sys/kernel/debug/tracing/
+cat available_filter_functions # 查看可跟踪的函数
+echo 0 > tracing_on
+cat set_ftrace_pid
+echo 1234 > set_ftrace_pid # 指定pid
+echo ext2_readdir > set_graph_function # 跟踪某个函数
+# echo function > current_tracer
+echo function_graph > current_tracer # 更加直观
+echo 1 > tracing_on
+... # 收集日志
+echo 0 > tracing_on
+cat trace_pipe | less
+```
+
+还可以指定要跟踪和不跟踪的函数，需要打开配置`CONFIG_DYNAMIC_FTRACE`：
+```sh
+echo func1 func2 > set_ftrace_filter # 要跟踪的函数
+echo func3 func4 > set_ftrace_notrace # 不跟踪的函数
+echo 'ext2_*' >> set_ftrace_filter # ext2_ 开头的函数
+echo '*ext4*' >> set_ftrace_notrace # 包含ext4的函数
+echo > set_ftrace_notrace # 清空
+```
+
+## `tracepoint`
+
+比如我们要打开`ext2_dio_read_iter()`函数的`ext2_dio_read_begin`的tracepoint：
+```sh
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer
+echo 1 > tracing_on
+cat available_events  | grep ext2
+echo ext2:ext2_dio_read_begin > set_event
+# find events/ -name "*ext2*" # 也可以查找函数所在位置，比较慢
+# echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
+# echo ext2:* > set_event # 所有的ext2跟踪点
+
+fallocate -l 10M ~/image
+mkfs.ext2 -F image
+mount image /mnt
+echo 1234567890 > /mnt/file-in
+dd if=/mnt/file-in of=~/file-out iflag=direct bs=512 count=1 # bs不能随意指定
+cat trace_pipe
+```
+
+到相应`tracepoint`的目录下，设置跟踪条件：
+```sh
+cd /sys/kernel/debug/tracing/
+cd events/ext2/ext2_dio_read_begin
+ls # enable  filter  format  hist  id  trigger
+```
+
+## `trace-cmd`和`kernelshark`
+
+```sh
+sudo apt install trace-cmd -y
+sudo apt install kernelshark -y # 图形界面
+```
+
+使用按照`reset -> record -> stop -> report`:
+```sh
+trace-cmd record -h # 查看帮助
+trace-cmd record -e 'ext2_dio_read_begin' # 输出文件 trace.dat
+trace-cmd report trace.dat # 字符界面解析数据
+kernelshark trace.dat #  图形化查看数据
+```
+
+## `trace_marker`
+
+```sh
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer # 必须要是nop
+echo 1 > tracing_on
+echo "hello trace_marker" > trace_marker
+echo 0 > tracing_on
+cat trace_pipe | less
+```
+
+# `kprobe`
+
+- [Documentation/trace](https://github.com/torvalds/linux/tree/master/Documentation/trace)
+- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
+
+## `kprobe` on `ftrace`
+
+kprobe的使用如下：
+```sh
+cd /sys/kernel/debug/tracing/
+# 可以用 kprobe 跟踪的函数
+cat available_filter_functions
+echo 1 > tracing_on
+
+# x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
+# aarch64函数参数用到的寄存器：X0 ~ X7
+# f_mode 在 file 结构体中的偏移为 20, x32代表32位（4字节），注意 rdi 寄存器要写成 di
+echo 'p:p_ext2_readdir ext2_readdir f_mode=+20(%di):x32' >> kprobe_events
+echo 1 > events/kprobes/p_ext2_readdir/enable
+echo stacktrace > events/kprobes/p_ext2_readdir/trigger
+echo '!stacktrace' > events/kprobes/p_ext2_readdir/trigger
+echo 0 > events/kprobes/p_ext2_readdir/enable
+echo '-:p_ext2_readdir' >> kprobe_events
+
+# kretprobe，可以跟踪函数返回值
+# 注意要用单引号
+echo 'r:r_ext2_readdir ext2_readdir ret=$retval' >> kprobe_events
+echo 1 > events/kprobes/r_ext2_readdir/enable
+echo stacktrace > events/kprobes/r_ext2_readdir/trigger
+echo '!stacktrace' > events/kprobes/r_ext2_readdir/trigger
+echo 0 > events/kprobes/r_ext2_readdir/enable
+echo '-:r_ext2_readdir' >> kprobe_events
+
+echo 0 > trace # 清除trace信息
+cat trace_pipe
+```
+
+## 插入`kprobe`模块
+
+参考<!-- public begin -->[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/kprobes)<!-- public end --><!-- private begin -->`kernel/kprobes`里的例子<!-- private end -->。
+
+# 打印
+
+## `printk`
+
+8个打印等级：
+```c
+#define KERN_EMERG      KERN_SOH "0"    /* 系统不可用 */              
+#define KERN_ALERT      KERN_SOH "1"    /* 需要立刻处理 */
+#define KERN_CRIT       KERN_SOH "2"    /* 紧急 */             
+#define KERN_ERR        KERN_SOH "3"    /* 错误 */                
+#define KERN_WARNING    KERN_SOH "4"    /* 警告 */              
+#define KERN_NOTICE     KERN_SOH "5"    /* 重要提示 */
+#define KERN_INFO       KERN_SOH "6"    /* 提示 */                   
+#define KERN_DEBUG      KERN_SOH "7"    /* 调试信息 */            
+```
+
+默认配置是等级高于`CONFIG_CONSOLE_LOGLEVEL_DEFAULT`会打印，qemu启动时可以指定`append="... loglevel=8`。
+
+`/proc/sys/kernel/printk`文件中的内容含义如下：
+```c
+int console_printk[4] = {                                             
+        CONSOLE_LOGLEVEL_DEFAULT,       /* 控制台输出等级 */        
+        MESSAGE_LOGLEVEL_DEFAULT,       /* 默认消息输出等级 */
+        CONSOLE_LOGLEVEL_MIN,           /* 最低输出等级 */
+        CONSOLE_LOGLEVEL_DEFAULT,       /* 默认控制台输出等级，启动时 */
+};                                                                    
+```
+
+常用的输出函数有`print_hex_dump()`和`dump_stack()`。
+
+`include/asm-generic/bug.h`文件中的`BUG_ON(condition)`当满足条件（`condition == true`）时会panic。`WARN_ON(condition)`当满足条件（`condition == true`）时不会panic，只会打印信息。
+
+## 动态打印
+
+打开配置`CONFIG_DYNAMIC_DEBUG`。
+
+```sh
+cd /sys/kernel/debug/dynamic_debug/
+cat control | less # 查看所有的动态打印
+echo 'file fs/ext4/extents.c +p' > control # 打开文件中所有的动态打印
+echo 'module ext4 -p' > control # 关闭ext4模块所有动态打印
+echo 'func ext4_ext_binsearch +p' > control # 打开某个函数的打印
+echo -n '*ext4* -p' > control # 关闭文件路径中包含ext4的打印
+echo -n '+p' > control # 所有打印
+```
+
+系统启动相关的代码（如`smpboot`），需要在启动时传递参数：
+```sh
+# p: 打开
+# f: 函数名
+# l: 行号
+# m: 模块名
+# t: 线程id
+qemu-system-x86_64 -append "... smpboot.dyndbg=+plftm"
+```
+
+也可以修改子系统的`Makefile`，添加以下内容：
+```sh
+ccflags-y += -DDEBUG
+ccflags-y += -DVERBOSE_DEBUG
+```
+
 # `kdump`和`crash`
 
 <!-- https://github.com/gatieme/LDD-LinuxDeviceDrivers/blob/master/study/debug/tools/systemtap/01-install/README.md -->
 
 ## fedora环境
+
+以fedora40为例。
 
 安装工具：
 ```sh
@@ -189,7 +436,7 @@ make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好（如 h
 # make target=ARM64 -j64 # 交叉编译能解析arm64 vmcore的crash
 ```
 
-# `crash`常用命令
+## `crash`常用命令
 
 `help`命令:
 ```sh
@@ -226,98 +473,132 @@ crash> mod -d <module name> # 删除
 crash> mod -S # 从某个特定目录加载所有模块，默认从/lib/modules/`uname -r` 目录
 ```
 
-`sym`命令：
+`sym`命令（解析符号信息）：
 ```sh
-
+crash> sym -l # 相当于查看 System.map
+crash> sym -m ubifs # 查看某个内核模块
+crash> sym -q ext2 # 查看包含ext2字符串的符号信息
 ```
 
-# `ftrace`
-
-<!--
-https://cloud.tencent.com/developer/article/1429041
-
-```shell
-#!/bin/bash
-func_name=do_dentry_open
-
-echo nop > /sys/kernel/debug/tracing/current_tracer
-echo 0 > /sys/kernel/debug/tracing/tracing_on
-echo $$ > /sys/kernel/debug/tracing/set_ftrace_pid # 当前脚本程序的pid
-echo function_graph > /sys/kernel/debug/tracing/current_tracer
-echo $func_name > /sys/kernel/debug/tracing/set_graph_function
-echo 1 > /sys/kernel/debug/tracing/tracing_on
-exec "$@" # 用 $@ 进程替换当前shell进程，并且保持PID不变, 注意后面的命令不会执行
-
-cat /sys/kernel/debug/tracing/trace > ftrace_output
-```
--->
+`rd`命令用于读取内存地址的值：
 ```sh
-CONFIG_FTRACE=y
-CONFIG_HAVE_FUNCTION_TRACER=y
-CONFIG_HAVE_FUNCTION_GRAPH_TRACER=y
-CONFIG_HAVE_DYNAMIC_FTRACE=y
-CONFIG_FUNCTION_TRACER=y
-CONFIG_IRQSOFF_TRACER=y
-CONFIG_SCHED_TRACER=y
-# CONFIG_ENABLE_DEFAULT_TRACERS # 这个好像必须要关闭
-CONFIG_FTRACE_SYSCALLS=y
-CONFIG_PREEMPT_TRACER=y
+# -p: 物理地址
+# -u: 用户空间虚拟地址
+# -d: 10进制
+# -s: 显示符号
+# -32: 32位宽
+# -64: 64位宽
+# -a: ascii码
+crash> rd 0xffff888005462800 20 # 读20个值
 ```
 
-`/sys/kernel/debug/tracing/`目录下的常见tracer和event如下：
-
-- `available_tracers`: 支持的跟踪器。
-- `available_events`: 支持的事件。
-- `current_tracer`: 当前正在使用的跟踪器，默认为`nop`。
-- `trace`: 用`cat`命令查看跟踪信息。
-- `tracing_on`: 开启或暂停。
-- `options`: 选项。
-
-## `tracepoint`
-
-比如我们要打开`ext2_dio_read_begin`函数的tracepoint：
+`struct`命令：
 ```sh
-find /sys/kernel/debug/tracing/events/ -name "*ext2*" # 查找函数所在位置
-echo 1 > /sys/kernel/debug/tracing/events/nfs/ext2_dio_read_begin/enable # 使能函数的tracepoint
+crash> struct ext2_inode # 显示结构体定义
+crash> struct ext2_inode -o # 偏移
+crash> struct ext2_inode ffff88800dc59820 # 解析值
+crash> struct ext2_inode.i_mtime ffff88800dc59820 # 某个成员的值
 ```
 
-# `kprobe`
-
-- [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
-
-## `kprobe` on `ftrace`
-
-kprobe的使用如下：
+`p`命令：
 ```sh
-# 可以用 kprobe 跟踪的函数
-cat /sys/kernel/debug/tracing/available_filter_functions
-
-# x86_64函数参数用到的寄存器：RDI, RSI, RDX, RCX, R8, R9
-# aarch64函数参数用到的寄存器：X0 ~ X7
-# wb_bytes 在 nfs_page 结构体中的偏移为 56， x32代表32位（4字节），注意 rdi 寄存器要写成 di
-echo 'p:p_nfs_end_page_writeback nfs_end_page_writeback wb_bytes=+56(%di):x32' >> /sys/kernel/debug/tracing/kprobe_events
-echo 1 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enable
-echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
-echo '!stacktrace' > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/trigger
-echo 0 > /sys/kernel/debug/tracing/events/kprobes/p_nfs_end_page_writeback/enable
-echo '-:p_nfs_end_page_writeback' >> /sys/kernel/debug/tracing/kprobe_events
-
-# kretprobe，可以跟踪函数返回值
-# 注意要用单引号
-echo 'r:r_nfs4_atomic_open nfs4_atomic_open ret=$retval' >> /sys/kernel/debug/tracing/kprobe_events
-echo 1 > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/enable
-echo stacktrace > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/trigger
-echo '!stacktrace' > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/trigger
-echo 0 > /sys/kernel/debug/tracing/events/kprobes/r_nfs4_atomic_open/enable
-echo '-:r_nfs4_atomic_open' >> /sys/kernel/debug/tracing/kprobe_events
-
-echo 0 > /sys/kernel/debug/tracing/trace # 清除trace信息
-cat /sys/kernel/debug/tracing/trace_pipe
+crash> p jiffies
+crash> p ext2_readdir # 输出函数符号地址
+crash> p irq_stat # percpu变量，定义在 arch/x86/kernel/irq.c 中
+crash> p irq_stat:0 # cpu 0
 ```
 
-## 插入`kprobe`模块
+`irq`中断相关信息：
+```sh
+# -a: 中断亲和性
+# -s: 系统中断信息
+crash> irq # 所有中断
+crash> irq 0 # 第0个中断
+crash> irq -b # 下半部
+```
 
-参考<!-- public begin -->[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/courses/kernel/kprobes)<!-- public end --><!-- private begin -->`kernel/kprobes`里的例子<!-- private end -->。
+`task`命令显示`struct task_struct`和`struct thread_info`的内容：
+```sh
+crash> task -x # 16进制
+```
+
+`vm`命令显示进程地址空间：
+```sh
+# -p: 虚拟地址和物理地址
+# -m: mm_struct
+# -R: 搜索
+# -v: 所有 vm_area_struct
+# -f num: 显示num在vm_flags对应的位
+crash> vm # 崩溃瞬间进程
+crash> vm 575 # 指定pid
+```
+
+`kmem`显示内存信息：
+```sh
+crash> kmem -i # 系统内存使用情况
+crash> kmem -s # slab使用情况
+crash> kmem -v # vmalloc
+crash> kmem -V # vm_stat
+crash> kmem -z # zone
+crash> kmem -p # page
+crash> kmem -g # page flag
+```
+
+`list`命令：
+```sh
+crash> list super_blocks
+# -s: 链表成员
+# -h: 链表头地址，这里可以用 p super_blocks 获取
+crash> list -s super_block.s_blocksize_bits,s_maxbytes -h 0xffff888005462800
+crash> list -h 0xffff888005462800 | wc -l # 链表长度
+```
+
+## 例子
+
+构造一个空指针访问的场景：
+```sh
+diff --git a/fs/ext2/dir.c b/fs/ext2/dir.c
+index b335f17f682f..01893352b0bb 100644
+--- a/fs/ext2/dir.c
++++ b/fs/ext2/dir.c
+@@ -266,6 +266,9 @@ ext2_readdir(struct file *file, struct dir_context *ctx)
+        bool need_revalidate = !inode_eq_iversion(inode, file->f_version);
+        bool has_filetype;
+ 
++       file = NULL;
++       file->f_pos = 2;
++
+        if (pos > inode->i_size - EXT2_DIR_REC_LEN(1))
+                return 0;
+```
+
+<!-- ing begin -->
+
+# `oops`
+
+发生`oops`时，除了导出`vmcore`后使用`crash`分析外，还可以用其他方法分析。
+
+编译外部模块时，要在`Makefile`中指定`KBUILD_CFLAGS += -g`参数添加符号信息表。
+
+```sh
+# 交叉编译用 aarch64-linux-gnu-objdump
+
+```
+
+# `perf`
+
+## 编译
+
+在内核编译环境上，在内核代码目录下：
+```sh
+# 根据 make 命令报错提示安装
+sudo apt install -y libdw-dev systemtap-sdt-dev libunwind-dev libslang2-dev libperl-dev libzstd-dev libcap-dev libnuma-dev libbabeltrace-ctf-dev libpfm4-dev libtraceevent-dev
+
+cd tools/perf
+# export ARCH=arm64
+# export CROSS_COMPILE=aarch64-linux-gnu-
+make -j8
+```
 
 # `systemtap`
 
@@ -357,3 +638,4 @@ hello world
 stap -m helloword hello-word.stp
 staprun helloword.ko
 ```
+<!-- ing end -->

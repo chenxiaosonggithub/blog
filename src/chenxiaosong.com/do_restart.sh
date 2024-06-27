@@ -1,6 +1,6 @@
 if [ $# -ne 3 ]; then
     echo "Usage: $0 \${is_public_ip} \${lan_ip} \${is_restart}"
-    return
+    exit 1
 fi
 
 is_public_ip=$1
