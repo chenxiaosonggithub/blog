@@ -2,6 +2,8 @@
 
 # `ftrace`
 
+- [Documentation/trace](https://github.com/torvalds/linux/tree/master/Documentation/trace)
+
 名字来源于 function trace。
 
 <!--
@@ -582,6 +584,162 @@ index b335f17f682f..01893352b0bb 100644
         if (pos > inode->i_size - EXT2_DIR_REC_LEN(1))
                 return 0;
 ```
+
+## 查看崩溃在哪一行
+
+可以使用内核仓库的脚本：
+```sh
+# 查看内核日志
+crash> dmesg | less
+...
+BUG: kernel NULL pointer dereference, address: 0000000000000040
+...
+RIP: 0010:ext2_readdir+0x7e/0x310
+...
+ iterate_dir+0xb6/0x1f0
+
+# 在内核仓库目录下执行的shell命令，在docker ubuntu2204环境中打印不出具体行号，原因暂时母鸡
+./scripts/faddr2line build/vmlinux ext2_readdir+0x7e/0x310 # 或者把vmlinux替换成ko文件
+ext2_readdir at fs/ext2/dir.c:270
+```
+
+也可以在`crash`中反汇编查看：
+```sh
+# 查看崩溃的栈
+crash> bt
+...
+    [exception RIP: ext2_readdir+126]
+    RIP: ffffffff81796a9e
+
+# 反汇编指定地址的代码，以查看其汇编指令, -l 选项用于在反汇编时显示源代码行号（如果可用）
+crash> dis -l ffffffff81796a9e
+/home/linux/code/linux/build/../fs/ext2/dir.c: 270
+0xffffffff81796a9e <ext2_readdir+126>:  movq   $0x2,0x40
+
+# 查找指定地址的符号信息
+crash> sym ffffffff81796a9e
+ffffffff81796a9e (t) ext2_readdir+126 /home/linux/code/linux/build/../fs/ext2/dir.c: 270
+```
+
+`faddr2line`脚本和`crash`解析的结果都是崩溃在`fs/ext2/dir.c: 270`，也就是`file->f_pos = 2`。
+
+## `file->f_pos`在结构体中的偏移量
+
+```sh
+crash> struct file -ox
+struct file {
+  ...
+  [0x40] loff_t f_pos;
+  ...
+}
+SIZE: 0xe8
+```
+
+可以看出`f_pos`的偏移量是`0x40`，这就是`dmesg`日志中`BUG: kernel NULL pointer dereference, address: 0000000000000040`的含义。
+
+## 分析slab cache
+
+```sh
+crash> bt -FF
+...
+ #5 [ffffc900021cfd70] asm_exc_page_fault at ffffffff82a00bc2
+    [exception RIP: ext2_readdir+126]
+    ...
+    ffffc900021cfd78: [ffff888014451800:kmalloc-2k] [ffff88800eda3ce8:ext2_inode_cache] 
+    ffffc900021cfd88: 0000000000000000 [ffff888006899200:filp]
+...
+```
+
+我们先看`[ffff88800eda3ce8:ext2_inode_cache]`，注意这个并不是`struct ext2_inode_info`的指针的地址，用以下命令：
+```sh
+crash> kmem ffff88800eda3ce8
+CACHE             OBJSIZE  ALLOCATED     TOTAL  SLABS  SSIZE  NAME
+...
+  FREE / [ALLOCATED]
+  [ffff88800eda3c30]
+```
+
+`struct ext2_inode_info`的地址是`ffff88800eda3c30`，`[ALLOCATED]`代表已分配，那么`ffff88800eda3ce8:ext2_inode_cache`的地址是什么结构体的呢，我们查看`struct ext2_inode_info`结构体：
+```sh
+crash> struct ext2_inode_info ffff88800eda3c30 -ox
+struct ext2_inode_info {
+  ...
+  [ffff88800eda3ce8] struct inode vfs_inode;
+  ...
+}
+SIZE: 0x350
+```
+
+所以`ffff88800eda3ce8`是`struct inode`的指针地址。
+
+再看`[ffff888006899200:filp]`：
+```sh
+crash> kmem ffff888006899200
+...
+  FREE / [ALLOCATED]
+  [ffff888006899200]
+```
+
+刚好是`struct file`指针的地址。
+
+## 分析汇编
+
+查看栈中寄存器的信息：
+```sh
+crash> bt
+...
+    [exception RIP: ext2_readdir+126]
+    RIP: ffffffff81796a9e  RSP: ffffc900021cfe20  RFLAGS: 00010297
+    RAX: 0000000000000000  RBX: 0000000000000000  RCX: 00000000fffff000
+    RDX: 0000000000000001  RSI: ffff888008be8000  RDI: 0000000000001000
+    RBP: ffffc900021cfec0   R8: 0000000000000000   R9: 0000000000000000
+    R10: 0000000000000000  R11: 0000000000000000  R12: ffff888006899200
+    R13: 0000000000000000  R14: ffff88800eda3ce8  R15: ffff888014451800
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+```
+
+再反汇编`ext2_readdir()`函数，只看`ext2_readdir+126`之前的:
+```sh
+0xffffffff81796a20 <ext2_readdir>:      nopl   0x0(%rax,%rax,1) [FTRACE NOP]
+0xffffffff81796a25 <ext2_readdir+5>:    push   %r15
+0xffffffff81796a27 <ext2_readdir+7>:    push   %r14
+0xffffffff81796a29 <ext2_readdir+9>:    push   %r13
+0xffffffff81796a2b <ext2_readdir+11>:   push   %r12
+0xffffffff81796a2d <ext2_readdir+13>:   push   %rbp
+0xffffffff81796a2e <ext2_readdir+14>:   push   %rbx
+0xffffffff81796a2f <ext2_readdir+15>:   sub    $0x28,%rsp
+0xffffffff81796a33 <ext2_readdir+19>:   mov    %rdi,%r12
+0xffffffff81796a36 <ext2_readdir+22>:   mov    %rsi,%rbp
+0xffffffff81796a39 <ext2_readdir+25>:   call   0xffffffff813318e0 <__sanitizer_cov_trace_pc>
+0xffffffff81796a3e <ext2_readdir+30>:   mov    0x8(%rbp),%rax
+0xffffffff81796a42 <ext2_readdir+34>:   mov    0xa8(%r12),%r14
+0xffffffff81796a4a <ext2_readdir+42>:   mov    0x28(%r14),%r15
+0xffffffff81796a4e <ext2_readdir+46>:   mov    %r15,0x10(%rsp)
+0xffffffff81796a53 <ext2_readdir+51>:   mov    %eax,%ebx
+0xffffffff81796a55 <ext2_readdir+53>:   and    $0xfff,%ebx
+0xffffffff81796a5b <ext2_readdir+59>:   mov    %rax,%r13
+0xffffffff81796a5e <ext2_readdir+62>:   sar    $0xc,%r13
+0xffffffff81796a62 <ext2_readdir+66>:   mov    0x50(%r14),%rdi
+0xffffffff81796a66 <ext2_readdir+70>:   lea    0xfff(%rdi),%rdx
+0xffffffff81796a6d <ext2_readdir+77>:   shr    $0xc,%rdx
+0xffffffff81796a71 <ext2_readdir+81>:   mov    %rdx,0x8(%rsp)
+0xffffffff81796a76 <ext2_readdir+86>:   mov    0x18(%r15),%rdi
+0xffffffff81796a7a <ext2_readdir+90>:   mov    %rdi,(%rsp)
+0xffffffff81796a7e <ext2_readdir+94>:   mov    (%rsp),%ecx
+0xffffffff81796a81 <ext2_readdir+97>:   neg    %ecx
+0xffffffff81796a83 <ext2_readdir+99>:   mov    %ecx,0x1c(%rsp)
+0xffffffff81796a87 <ext2_readdir+103>:  mov    0x148(%r14),%rdx
+0xffffffff81796a8e <ext2_readdir+110>:  shr    %rdx
+0xffffffff81796a91 <ext2_readdir+113>:  cmp    %rdx,0xb8(%r12)
+0xffffffff81796a99 <ext2_readdir+121>:  setne  0x18(%rsp)
+0xffffffff81796a9e <ext2_readdir+126>:  movq   $0x2,0x40
+```
+
+`x86_64`下整数参数使用的寄存器依次为：`RDI，RSI，RDX，RCX，R8，R9`，要注意的是栈中的寄存器值可能已经经过运算，所以这些寄存器不能直接对应函数参数，要分析汇编。
+
+先看第一个参数，本来是寄存器`rdi`，但和`rdi`的值被`mov    0x18(%r15),%rdi`改变了，所以这个寄存器的值已经不是函数刚传入时的参数，那要怎么找到第一个参数的值呢？我们看到`mov    %rdi,%r12`把值赋给了`r12`寄存器，而之后`r12`寄存器的值没有被覆盖，所以`r12`就是第一个参数的值，就是`R12: ffff888006899200`，和前面我们在栈中找到的slab cache `[ffff888006899200:filp]`的值一样。
+
+与第二个入参相关的寄存器是`rsi`，只有`mov    %rsi,%rbp`一条汇编指令，意思是将源寄存器 `%rsi` 的内容移动到目标寄存器 `%rbp`，所以`rsi`的值没有被改变，就是第二个参数的值。
 
 <!-- ing begin -->
 
