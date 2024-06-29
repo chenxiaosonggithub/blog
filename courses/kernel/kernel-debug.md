@@ -116,20 +116,28 @@ cd events/ext2/ext2_dio_read_begin
 ls # enable  filter  format  hist  id  trigger
 ```
 
-## `trace-cmd`和`kernelshark`
+## `trace-cmd`<!-- public begin -->和`kernelshark`<!-- public end -->
 
 ```sh
 sudo apt install trace-cmd -y
+```
+<!-- public begin -->
+```sh
 sudo apt install kernelshark -y # 图形界面
 ```
+<!-- public end -->
 
 使用按照`reset -> record -> stop -> report`:
 ```sh
 trace-cmd record -h # 查看帮助
 trace-cmd record -e 'ext2_dio_read_begin' # 输出文件 trace.dat
 trace-cmd report trace.dat # 字符界面解析数据
+```
+<!-- public begin -->
+```sh
 kernelshark trace.dat #  图形化查看数据
 ```
+<!-- public end -->
 
 ## `trace_marker`
 
@@ -186,6 +194,9 @@ cat trace_pipe
 # 打印
 
 ## `printk`
+
+- [使用printk记录消息](https://www.kernel.org/doc/html/latest/translations/zh_CN/core-api/printk-basics.html)
+- [如何获得正确的printk格式占位符](https://www.kernel.org/doc/html/latest/translations/zh_CN/core-api/printk-formats.html)
 
 8个打印等级：
 ```c
