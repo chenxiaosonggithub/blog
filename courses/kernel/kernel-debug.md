@@ -566,7 +566,7 @@ crash> list -s super_block.s_blocksize_bits,s_maxbytes -h 0xffff888005462800
 crash> list -h 0xffff888005462800 | wc -l # 链表长度
 ```
 
-## 例子
+## 例子1
 
 构造一个空指针访问的场景：
 ```sh
