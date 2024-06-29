@@ -585,7 +585,7 @@ index b335f17f682f..01893352b0bb 100644
                 return 0;
 ```
 
-## 查看崩溃在哪一行
+### 查看崩溃在哪一行
 
 可以使用内核仓库的脚本：
 ```sh
@@ -623,7 +623,7 @@ ffffffff81796a9e (t) ext2_readdir+126 /home/linux/code/linux/build/../fs/ext2/di
 
 `faddr2line`脚本和`crash`解析的结果都是崩溃在`fs/ext2/dir.c: 270`，也就是`file->f_pos = 2`。
 
-## `file->f_pos`在结构体中的偏移量
+### `file->f_pos`在结构体中的偏移量
 
 ```sh
 crash> struct file -ox
@@ -637,7 +637,7 @@ SIZE: 0xe8
 
 可以看出`f_pos`的偏移量是`0x40`，这就是`dmesg`日志中`BUG: kernel NULL pointer dereference, address: 0000000000000040`的含义。
 
-## 分析slab cache
+### 分析slab cache
 
 ```sh
 crash> bt -FF
@@ -682,7 +682,7 @@ crash> kmem ffff888006899200
 
 刚好是`struct file`指针的地址。
 
-## 分析汇编
+### 分析汇编
 
 查看栈中寄存器的信息：
 ```sh
