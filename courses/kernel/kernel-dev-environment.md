@@ -409,11 +409,13 @@ make
 再下载编译qemu：
 ```sh
 git clone https://gitlab.com/qemu-project/qemu.git
+cd qemu
 git submodule init
 git submodule update --recursive
 mkdir build
 cd build/
 ../configure --enable-kvm --enable-virtfs --prefix=${HOME}/chenxiaosong/sw/qemu/
+make
 ```
 
 ## qemu配置
