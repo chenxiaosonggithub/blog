@@ -457,6 +457,11 @@ crash> help # 查看支持的所有命令
 crash> help bt # 查看具体命令（bt）的用法
 ```
 
+`sys`命令查看系统信息：
+```sh
+crash> sys
+```
+
 `bt`命令:
 ```sh
 crash> bt # 查看崩溃瞬间正在运行的进程的内核栈
