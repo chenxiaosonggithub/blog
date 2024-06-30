@@ -705,6 +705,7 @@ crash> bt
 
 再反汇编`ext2_readdir()`函数，只看`ext2_readdir+126`之前的:
 ```sh
+crash> dis -l ext2_readdir
 0xffffffff81796a20 <ext2_readdir>:      nopl   0x0(%rax,%rax,1) [FTRACE NOP]
 0xffffffff81796a25 <ext2_readdir+5>:    push   %r15
 0xffffffff81796a27 <ext2_readdir+7>:    push   %r14
