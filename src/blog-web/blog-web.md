@@ -19,7 +19,7 @@ apt install nginx -y
 
 在[阿里云](https://yundun.console.aliyun.com/?p=cas#/certExtend/free/cn-hangzhou)购买免费SSL证书，再点击“创建证书”，点击“状态”栏中的感叹号，然后根据提示添加域名解析记录，注意证书签发后有效期为3个月。
 
-将[`nginx-config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/nginx-config)复制到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
+将[`nginx-config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/nginx-config)复制到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
 
 重启nginx服务：
 ```sh
@@ -36,11 +36,11 @@ pandoc用于将markdown或rst（ReStructuredText）格式文件转换成html。
 apt-get install pandoc -y
 ```
 
-具体的命令可以参考[`create-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/create-html.sh)，脚本里写了详细的说明。
+具体的命令可以参考[`create-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/create-html.sh)，脚本里写了详细的说明。
 
 ## 脚本
 
-[restart.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/chenxiaosong.com/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务。运行命令`while true; do bash restart.sh; sleep 90; done`不断检查。
+[restart.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务。运行命令`while true; do bash restart.sh; sleep 90; done`不断检查。
 
 # 个人域名后缀的邮箱
 

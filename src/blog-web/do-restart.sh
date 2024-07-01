@@ -13,7 +13,7 @@ config_file=/etc/nginx/sites-enabled/default
 
 copy_config() {
     rm ${config_file}
-    cp ${src_path}/blog/src/chenxiaosong.com/nginx-config ${config_file}
+    cp ${src_path}/blog/src/blog-web/nginx-config ${config_file}
     if [ ${is_public_ip} = true ]; then
         cat ${src_path}/blog/../private-blog/scripts/others-nginx-config >> ${config_file}
     else
@@ -27,9 +27,10 @@ replace_lan_ip() {
     if [ ${is_public_ip} = false ]; then
         bash ${src_path}/private-blog/scripts/create-html.sh
         find ${dst_path}/ -type f -exec sed -i 's/chenxiaosong.com/'${lan_ip}'/g' {} +
+        # 局域网用http，不用https
         find ${dst_path}/ -type f -exec sed -i 's/https:\/\/'${lan_ip}'/http:\/\/'${lan_ip}'/g' {} +
         # 邮箱替换回来
-        find ${dst_path}/ -type f -exec sed -i 's/chenxiaosong@'${lan_ip}'/chenxiaosong@chenxiaosong.com/g' {} +
+        find ${dst_path}/ -type f -exec sed -i 's/@'${lan_ip}'/@chenxiaosong.com/g' {} +
     fi
 }
 
@@ -39,7 +40,7 @@ restart_all() {
     fi
     echo "recreate html, restart service"
     copy_config
-    bash ${src_path}/blog/src/chenxiaosong.com/create-html.sh
+    bash ${src_path}/blog/src/blog-web/create-html.sh
     replace_lan_ip
     iptables -F # 根据情况决定是否要清空防火墙规则
     service nginx restart # 重启nginx服务，docker中不支持systemd

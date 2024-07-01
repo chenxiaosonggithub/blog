@@ -4,7 +4,7 @@ tmp_html_path=${dst_path}/html-tmp
 html_path=${dst_path}/html
 tmp_courses_path=/tmp/blog-courses
 
-. ${src_path}/blog/src/chenxiaosong.com/common_lib.sh
+. ${src_path}/blog/src/blog-web/common-lib.sh
 
 # 每一行代表： 是否生成目录 是否添加签名 markdown或rst文件相对路径 html文件相对路径 网页标题
 array=(
@@ -77,7 +77,7 @@ array=(
     1 1 src/filesystem/minix-fs.md fs/minix-fs.html "minix文件系统"
     # Linux环境
     1 1 src/qemu-vnc-install-desktop/qemu-vnc-install-desktop.md linux/qemu-vnc-install-desktop.html "QEMU+VNC安装桌面系统"
-    1 1 src/chenxiaosong.com/chenxiaosong.com.md linux/chenxiaosong.com.html "如何拥有个人域名的网站和邮箱"
+    1 1 src/blog-web/blog-web.md linux/blog-web.html "如何拥有个人域名的网站和邮箱"
     1 1 src/userspace-environment/userspace-environment.md linux/userspace-environment.html "Linux环境安装与配置"
     1 1 src/linux-config/linux-config.md linux/linux-config.html "Linux配置文件"
     1 1 src/ssh-reverse/ssh-reverse.md linux/ssh-reverse.html "反向ssh和内网穿透"
@@ -150,7 +150,7 @@ copy_secret_repository() {
 
 copy_public_files() {
     # css样式
-    cp ${src_path}/blog/src/chenxiaosong.com/stylesheet.css ${tmp_html_path}/
+    cp ${src_path}/blog/src/blog-web/stylesheet.css ${tmp_html_path}/
 }
 
 init_begin

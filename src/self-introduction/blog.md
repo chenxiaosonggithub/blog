@@ -96,7 +96,7 @@
 
 [QEMU+VNC安装桌面系统](https://chenxiaosong.com/linux/qemu-vnc-install-desktop.html)
 
-[如何拥有个人域名的网站和邮箱](https://chenxiaosong.com/linux/chenxiaosong.com.html)
+[如何拥有个人域名的网站和邮箱](https://chenxiaosong.com/linux/blog-web.html)
 
 [Linux环境安装与配置](https://chenxiaosong.com/linux/userspace-environment.html)
 

@@ -2,7 +2,7 @@
 src_path=/home/sonvhi/chenxiaosong/code
 dst_path=/tmp/blog-courses
 
-. ${src_path}/blog/src/chenxiaosong.com/common_lib.sh
+. ${src_path}/blog/src/blog-web/common-lib.sh
 
 cp_to_dst_path() {
     cp ${src_path}/blog/${1} ${dst_path}

@@ -35,4 +35,4 @@ update_repo private-blog false # 不用推到github
 if [ ${is_restart} = false ]; then
     echo "no change"
 fi
-bash ${code_path}/blog/src/chenxiaosong.com/do_restart.sh ${is_public_ip} ${lan_ip} ${is_restart}
+bash ${code_path}/blog/src/blog-web/do-restart.sh ${is_public_ip} ${lan_ip} ${is_restart}
