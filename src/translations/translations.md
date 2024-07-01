@@ -56,6 +56,8 @@
 
 [(x)fstests README](https://chenxiaosong.com/translations/xfstests-readme.html)
 
+[syzkaller - kernel fuzzer](https://chenxiaosong.com/translations/syzkaller.html)
+
 # qemu
 
 [QEMU Documentation/Networking/NAT](https://chenxiaosong.com/translations/qemu-networking-nat.html)

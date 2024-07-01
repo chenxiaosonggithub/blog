@@ -126,6 +126,7 @@ array=(
         1 1 src/translations/tests/ltp-readme.md translations/ltp-readme.html "Linux Test Project README"
         1 1 src/translations/tests/ltp-network-tests-readme.md translations/ltp-network-tests-readme.html "LTP Network Tests README"
         1 1 src/translations/tests/xfstests-readme.md translations/xfstests-readme.html "(x)fstests README"
+        1 1 src/translations/tests/syzkaller.md translations/syzkaller.html "syzkaller - kernel fuzzer"
         # qemu
         1 1 src/translations/qemu/qemu-networking-nat.md translations/qemu-networking-nat.html "QEMU Documentation/Networking/NAT"
     # private
