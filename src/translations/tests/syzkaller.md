@@ -46,9 +46,47 @@
 
 这不是谷歌的官方产品。
 
-# How to set up syzkaller
+# How to set up syzkaller(docs/setup.md)
 
-翻译自[`syzkaller/docs/linux/setup.md`](https://github.com/google/syzkaller/blob/master/docs/linux/setup.md)，翻译时文件的最新提交是`dd26401e5ae3c1fe62beadcfb937ee5d06f304e2 docs: update required Go version`。
+翻译自[`docs/setup.md`](https://github.com/google/syzkaller/blob/master/docs/setup.md), 翻译时文件的最新提交是`c6f10907c38ce49ddc321539f75aabf0a9ad6c71 all: remove akaros support`。
+
+通用的 Linux 内核模糊测试设置说明请参见[这里](linux/setup.md)。
+
+其他内核的设置请参见：
+[FreeBSD](freebsd/README.md)，
+[Darwin/XNU](darwin/README.md)，
+[Fuchsia](fuchsia/README.md)，
+[NetBSD](netbsd/README.md)，
+[OpenBSD](openbsd/setup.md)，
+[Windows](windows/README.md)。
+
+按照这些说明操作后，你应该能够运行 `syz-manager`，看到它执行程序，并能够访问暴露在 `http://127.0.0.1:56741`（或你在 manager 配置中指定的其他地址）的统计信息。
+如果一切正常，典型的执行日志应如下所示：
+```sh
+$ ./bin/syz-manager -config=my.cfg
+2017/06/14 16:39:05 loading corpus...
+2017/06/14 16:39:05 loaded 0 programs (0 total, 0 deleted)
+2017/06/14 16:39:05 serving http on http://127.0.0.1:56741
+2017/06/14 16:39:05 serving rpc on tcp://127.0.0.1:34918
+2017/06/14 16:39:05 booting test machines...
+2017/06/14 16:39:05 wait for the connection from test machine...
+2017/06/14 16:39:59 received first connection from test machine vm-9
+2017/06/14 16:40:05 executed 293, cover 43260, crashes 0, repro 0
+2017/06/14 16:40:15 executed 5992, cover 88463, crashes 0, repro 0
+2017/06/14 16:40:25 executed 10959, cover 116991, crashes 0, repro 0
+2017/06/14 16:40:35 executed 15504, cover 132403, crashes 0, repro 0
+```
+
+此时，确保 syzkaller 能够收集已执行程序的代码覆盖率（除非你在配置中指定 `"cover": false` 或者你正在模糊测试的内核尚不支持覆盖率）。
+网页上的 `cover` 计数器应为非零。
+
+更多关于配置文件格式的信息，请参见[这里](configuration.md)。
+
+故障排除提示请参见[此页面](troubleshooting.md)。
+
+# How to set up syzkaller(docs/linux/setup.md)
+
+翻译自[`docs/linux/setup.md`](https://github.com/google/syzkaller/blob/master/docs/linux/setup.md)，翻译时文件的最新提交是`dd26401e5ae3c1fe62beadcfb937ee5d06f304e2 docs: update required Go version`。
 
 关于如何使用 syzkaller 进行 Linux 内核模糊测试的通用说明如下所示[below](#install)。
 
