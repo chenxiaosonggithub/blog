@@ -20,7 +20,7 @@
 
 ## 虚拟机软件
 
-接下来介绍几个常用的虚拟机软件。Windows系统推荐使用VirtualBox，arm64苹果系统推荐使用UTM。
+接下来介绍几个常用的虚拟机软件。Windows系统推荐使用VirtualBox，arm64苹果系统推荐使用UTM。<!-- public begin -->如果你在看VMware虚拟机相关的视频，[请转为查看这个视频](https://chenxiaosong.com/bili/kernel/vm)<!-- public end -->
 
 - [VirtualBox](https://www.virtualbox.org/)。首先在[VirtualBox下载界面](https://www.virtualbox.org/wiki/Downloads)下载对应平台的安装包，比如如果要在Windows系统下安装VirtualBox，点击**Windows hosts**下载安装包。VirtualBox的安装过程很简单，只需根据安装提示操作即可。VirtualBox安装完成后，下载**VirtualBox 7.0.14 Oracle VM VirtualBox Extension Pack**安装插件。
 - [VMware](https://www.vmware.com/)。在[VMware Workstation下载界面](https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html)下载对应平台的安装包，注意非商业用途只能不使用Workstation Player。苹果电脑要下载[VMware Fusion](https://www.vmware.com/products/fusion/fusion-evaluation.html)，点击[Fusion 13 Player for macOS 12+](https://customerconnect.vmware.com/evalcenter?p=fusion-player-personal-13)注册登录账号，注册信息填写类似`Address 1: 1ONE, City: SACRAMENTO, Postal code: 94203-0001, Country/Territory: United States, State or province: California`，注册后会有个人使用的`LICENSE KEYS`。安装过程很简单，只需根据提示操作即可。<!-- public begin -->Linux下安装VMware时需要注意的是`/tmp`目录的挂载不能在`/etc/fstab`文件中指定`noexec`，还需要安装gcc较新的版本（如`VMware-Workstation-Full-17.5.1-23298084.x86_64.bundle`在ubuntu2204下安装时要安装gcc12，默认安装的是gcc11）。<!-- public end -->

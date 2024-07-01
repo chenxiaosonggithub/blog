@@ -86,6 +86,10 @@ server {
 		rewrite ^/bili/kernel$ https://www.bilibili.com/video/BV15C411E7Sm/;
 	}
 
+	location /bili/kernel/vm {
+		rewrite ^/bili/kernel/vm$ https://www.bilibili.com/video/BV1Ss421T7KY/?vd_source=b3241359025e41f053e9e1b071acb6f8;
+	}
+
 	# 转发
 	# location /code-server/ { # 注意code-server后面有斜杠
 	# 	# 端口后面也要有斜杠
