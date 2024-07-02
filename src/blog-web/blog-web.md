@@ -50,7 +50,13 @@ apt-get install pandoc -y
 
 ### `wkhtmltopdf`
 
-参考[linux.cn的《如何在 Linux 下将网页转换为 PDF 文件》](https://linux.cn/article-13928-1.html)
+参考[linux.cn的《如何在 Linux 下将网页转换为 PDF 文件》](https://linux.cn/article-13928-1.html)。
+
+注意不能用`apt`安装（目录不能跳转），要在[`wkhtmltopdf/packaging/releases`](https://github.com/wkhtmltopdf/packaging/releases/)里下载最新的版本，ubuntu22.04下载`jammy`相关的文件。
+
+```sh
+wkhtmltopdf --enable-internal-links --enable-external-links test.html test.pdf
+```
 
 ### `pandoc`
 
@@ -82,10 +88,15 @@ fc-list :lang=zh # 查看支持中文的字体
 
 这时就可以转换了：
 ```sh
-pandoc test.html --pdf-engine=xelatex -V CJKmainfont="AR PL UKai CN" -o test.pdf
+pandoc test.html --pdf-engine=xelatex -V CJKmainfont="AR PL UKai CN" -o test.pdf --metadata encoding=gbk --number-sections --css https://chenxiaosong.com/stylesheet.css
 ```
 
-但显示好像有点小问题，感兴趣的朋友可以再研究一下。
+但`xelatex`字体好像有点小问题，感兴趣的朋友可以再研究一下。
+
+还可以调用`wkhtmltopdf`：
+```sh
+pandoc test.html --pdf-engine=wkhtmltopdf -o test.pdf
+```
 
 # 个人域名后缀的邮箱
 
