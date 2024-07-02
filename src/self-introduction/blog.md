@@ -10,6 +10,14 @@
 
 在这里郑重承诺一下，课程里的每一个字，我都是用键盘一字一句的敲出来，绝对不会复制粘贴，引用其他朋友原话的内容我也会标明出处，欢迎各位朋友的监督。
 
+# NFS文件系统课程
+
+[点击查看nfs文件系统（持续更新中）](https://chenxiaosong.com/courses/nfs.html)
+
+# SMB文件系统课程
+
+[点击查看smb文件系统（持续更新中）](https://chenxiaosong.com/courses/smb.html)
+
 # Linux内核
 
 [QEMU/KVM环境搭建与使用](https://chenxiaosong.com/kernel/kernel-qemu-kvm.html)
@@ -27,8 +35,6 @@
 [gio执行慢的临时解决办法](https://chenxiaosong.com/kernel/gio-to-mount.html)
 
 # NFS（网络文件系统）
-
-[nfs文件系统](https://chenxiaosong.com/courses/nfs.html)
 
 [定位NFS问题的常用方法](https://chenxiaosong.com/nfs/nfs-debug.html)
 
@@ -57,8 +63,6 @@
 [4.19 ltp nfs测试失败问题](https://chenxiaosong.com/nfs/4.19-ltp-nfs-fail.html)
 
 # SMB(CIFS)文件系统
-
-[smb文件系统](https://chenxiaosong.com/courses/smb.html)
 
 [4.19 cifs_reconnect空指针解引用问题](https://chenxiaosong.com/smb/4.19-null-ptr-deref-in-cifs_reconnect.html)
 
