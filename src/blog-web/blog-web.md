@@ -46,7 +46,7 @@ apt-get install pandoc -y
 
 ### `chrome`
 
-参考[《无头 Chrome 使用入门》](https://developer.chrome.com/blog/headless-chrome?hl=zh-cn)，`chrome`的路径可能在`/opt/google/chrome/chrome`。
+可以在图形界面系统中浏览器`右键 -> 打印(ctrl+p) -> 另存为pdf`。也可以参考[《无头 Chrome 使用入门》](https://developer.chrome.com/blog/headless-chrome?hl=zh-cn)使用命令行将链接存为pdf，`chrome`的路径可能在`/opt/google/chrome/chrome`。
 
 ### `wkhtmltopdf`
 
@@ -56,6 +56,7 @@ apt-get install pandoc -y
 
 ```sh
 wkhtmltopdf --enable-internal-links --enable-external-links test.html test.pdf
+wkhtmltopdf --enable-internal-links --enable-external-links https://chenxiaosong.com/courses/kernel-debug.html test.pdf
 ```
 
 ### `pandoc`
