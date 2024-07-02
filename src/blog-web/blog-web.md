@@ -42,6 +42,51 @@ apt-get install pandoc -y
 
 [restart.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务。运行命令`while true; do bash restart.sh; sleep 90; done`不断检查。
 
+## 转pdf
+
+### `chrome`
+
+参考[《无头 Chrome 使用入门》](https://developer.chrome.com/blog/headless-chrome?hl=zh-cn)，`chrome`的路径可能在`/opt/google/chrome/chrome`。
+
+### `wkhtmltopdf`
+
+参考[linux.cn的《如何在 Linux 下将网页转换为 PDF 文件》](https://linux.cn/article-13928-1.html)
+
+### `pandoc`
+
+`man pandoc`中关于pdf的内容如下：
+```
+要生成PDF，请指定一个带有.pdf扩展名的输出文件：
+
+       pandoc test.txt -o test.pdf
+
+默认情况下，pandoc将使用LaTeX来创建PDF，这要求系统中安装了LaTeX引擎（请参见下面的--pdf-engine选项）。或者，pandoc也可以使用ConTeXt、roff ms或HTML作为中间格式。为此，请像之前一样指定一个带有.pdf扩展名的输出文件，但在命令行中添加--pdf-engine选项或使用-t context、-t html或-t ms。用于从中间格式生成PDF的工具可以使用--pdf-engine选项指定。
+
+你可以使用变量来控制PDF的样式，具体取决于使用的中间格式：请参阅LaTeX的变量、ConTeXt的变量、wkhtmltopdf的变量、ms的变量。当使用HTML作为中间格式时，可以使用--css选项来设置输出样式。
+
+要调试PDF的创建，查看中间表示形式可能会有帮助：不要使用-o test.pdf，而是使用例如-s -o test.tex来输出生成的LaTeX文件。然后你可以使用pdflatex test.tex来测试它。
+
+使用LaTeX时，需要以下包（它们包含在所有最近版本的TeX Live中）：amsfonts、amsmath、lm、unicode-math、ifxetex、ifluatex、listings（如果使用--listings选项）、fancyvrb、longtable、booktabs、graphicx（如果文档包含图片）、hyperref、xcolor、ulem、geometry（设置geometry变量）、setspace（使用linestretch）、以及babel（使用lang）。使用xelatex或lualatex作为PDF引擎需要fontspec。xelatex使用polyglossia（使用lang）、xecjk和bidi（设置dir变量）。如果设置了mathspec变量，xelatex将使用mathspec而不是unicode-math。如果可用，upquote和microtype包将被使用，如果csquotes变量或元数据字段设置为true，csquotes包将用于排版。natbib、biblatex、bibtex和biber包可以选择性地用于引用渲染。以下包如果存在，将用于提高输出质量，但pandoc不要求它们必须存在：upquote（用于直引号在verbatim环境中）、microtype（用于更好的间距调整）、parskip（用于更好的段间距）、xurl（用于更好的URL换行）、bookmark（用于更好的PDF书签）、以及footnotehyper或footnote（允许表格中的脚注）。
+```
+
+默认用的是`--pdf-engine pdflatex`，也可以指定其他的`--pdf-engine`，如果未安装，会提示以下内容，根据文档安装所需的软件：
+```
+pdflatex not found. Please select a different --pdf-engine or install pdflatex -- see also /usr/share/doc/pandoc/README.Debian
+```
+
+安装`texlive-xetex`相关软件：
+```sh
+sudo apt install texlive-xetex texlive-lang-chinese -y
+fc-list :lang=zh # 查看支持中文的字体
+```
+
+这时就可以转换了：
+```sh
+pandoc test.html --pdf-engine=xelatex -V CJKmainfont="AR PL UKai CN" -o test.pdf
+```
+
+但显示好像有点小问题，感兴趣的朋友可以再研究一下。
+
 # 个人域名后缀的邮箱
 
 是不是受够了在qq邮箱、foxmail邮箱、163邮箱注册邮箱时你的姓名全拼已经被抢注了，只能在后面加一些乱七八糟的后缀。你有了域名，加上腾讯企业邮箱（免费），就可以拥有一个类似 @chenxiaosong.com 结尾的邮箱了。
