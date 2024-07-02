@@ -59,6 +59,8 @@ wkhtmltopdf --enable-internal-links --enable-external-links test.html test.pdf
 wkhtmltopdf --enable-internal-links --enable-external-links https://chenxiaosong.com/courses/kernel-debug.html test.pdf
 ```
 
+但代码框无法左右滑动，暂时不知道怎么搞TODO，知道的小伙伴一定要告诉我。
+
 ### `pandoc`
 
 `man pandoc`中关于pdf的内容如下：
@@ -98,6 +100,8 @@ pandoc test.html --pdf-engine=xelatex -V CJKmainfont="AR PL UKai CN" -o test.pdf
 ```sh
 pandoc test.html --pdf-engine=wkhtmltopdf -o test.pdf
 ```
+
+这个和直接用`wkhtmltopdf`的效果好像是一毛一样。
 
 # 个人域名后缀的邮箱
 

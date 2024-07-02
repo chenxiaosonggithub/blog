@@ -113,6 +113,12 @@ shell界面路径名显示绝对路径，想换成只显示最后一个路径名
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 ```
 
+通过`sudo apt install ./xxxx.deb -y`安装的软件，卸载用以下命令：
+```sh
+sudo apt list --installed | grep wkhtmltox
+sudo apt purge wkhtmltox -y
+```
+
 # centos 9
 
 centos的开发软件生态比ubuntu还是稍微差一些，尤其是桌面系统。
