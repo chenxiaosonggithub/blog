@@ -61,7 +61,7 @@ wkhtmltopdf --enable-internal-links --enable-external-links https://chenxiaosong
 
 但代码框无法左右滑动，暂时不知道怎么搞TODO，知道的小伙伴一定要告诉我。
 
-用`apt`安装的软件转换的pdf，代码框里的代码会自动换行，但目录不能跳转。后续准备看一下[`wkhtmltopdf`的源码](https://github.com/wkhtmltopdf/wkhtmltopdf)。
+作为对比，用`apt`安装的`wkhtmltopdf`转换的pdf，代码框里的代码会自动换行，但目录不能跳转。后续准备看一下[`wkhtmltopdf`的源码](https://github.com/wkhtmltopdf/wkhtmltopdf)。
 
 ### `pandoc`
 
