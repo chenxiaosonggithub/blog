@@ -14,6 +14,10 @@
 
 [点击查看smb文件系统课程（持续更新中）](https://chenxiaosong.com/course/smb/smb.html)
 
+# 鸿蒙课程
+
+[点击查看鸿蒙课程(持续更新中）](https://chenxiaosong.com/course/harmony/harmony.html)
+
 # GNU/Linux课程
 
 [点击查看GNU/Linux课程（持续更新中）](https://chenxiaosong.com/course/gnu-linux/gnu-linux.html)
@@ -22,7 +26,7 @@
 
 [点击查看算法课程（持续更新中）](https://chenxiaosong.com/course/algorithm/algorithm.html)
 
-# Godot游戏开发
+# Godot游戏开发课程
 
 [点击查看Godot游戏开发课程（持续更新中）](https://chenxiaosong.com/course/godot/godot.html)
 
