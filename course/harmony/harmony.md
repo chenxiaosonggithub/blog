@@ -11,3 +11,5 @@
 
 # [OpenHarmony开发](https://chenxiaosong.com/course/harmony/openharmony.html)
 
+# [HarmonyOS NEXT系统](https://chenxiaosong.com/course/harmony/harmonyos-next.html)
+
