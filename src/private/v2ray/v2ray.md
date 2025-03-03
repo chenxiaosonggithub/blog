@@ -8,6 +8,8 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 
 配置文件参考[VMess-Websocket](https://github.com/v2fly/v2ray-examples/tree/master/VMess-Websocket)。
 
+如果你在华为的HarmonyOS NEXT的”卓易通“中安装的v2ray，需要把“跌由设置“中的”绕过局域网IP“取消勾选。
+
 # v2ray服务器安装与配置
 
 可以使用以下命令安装:
