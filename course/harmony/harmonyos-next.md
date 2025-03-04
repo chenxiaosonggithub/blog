@@ -17,7 +17,7 @@
 有些软件如“蓝信”、[“VLC”](https://get.videolan.org/vlc-android/)等不需要用[“Apktool M”](https://maximoff.su/apktool/?lang=en)处理而是可以直接在“卓易通”中安装。
 以下软件用[“Apktool M”](https://maximoff.su/apktool/?lang=en)处理后在“卓易通”中能安装但使用有问题:
 
-- 美团企业版: 无法登录，且只能安装华为安卓机“应用市场”导出的apk
+- 美团企业版: 无法登录，且只能安装华为安卓机“应用市场”导出的apk。不过可以在“美团”app中找到“企业版”的入口（我的 -> 企业服务）
 - 美团: 无法登录，登录过程中认证时找不到qq和微信
 - qq: 无法联网，无法登录
 
