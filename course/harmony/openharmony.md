@@ -1,4 +1,4 @@
-[点击这里跳转到陈孝松OpenHarmony贡献](https://chenxiaosong.com/course/harmony/contribution.html)。
+这里记录一下曾经[开发鸿蒙端云协同功能](https://chenxiaosong.com/course/harmony/contribution.html)的一些笔记。
 
 # 环境
 
