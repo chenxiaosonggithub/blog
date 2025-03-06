@@ -82,9 +82,15 @@ sudo useradd -s /bin/bash -d /home/test -m test # 新建用户test
 sudo userdel -r test # 删除用户test，-r选项代表同时删除用户的家目录和相关文件
 ```
 
-ssh密码输入界面要很久才出现的解决办法,修改`/etc/ssh/ssh_config`文件:
+修改ssh client的配置文件`/etc/ssh/ssh_config`:
 ```sh
+# ssh密码输入界面要很久才出现的解决办法
 GSSAPIAuthentication no # GSSAPI 通常用于支持 Kerberos 认证，提供一种安全且无缝的认证方式
+```
+
+修改ssh server的配置文件`/etc/ssh/sshd_config`:
+```sh
+AllowTcpForwarding yes # vscode连接服务器
 ```
 
 如果没有挂载`/tmp`目录，可以修改`/etc/fstab`文件:
