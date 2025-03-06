@@ -84,7 +84,7 @@ echo 1 > /proc/sys/kernel/sysrq
 echo c > /proc/sysrq-trigger
 ```
 
-关于vmcore的更详细内容，请查看[内核调试方法](https://chenxiaosong.com/course/kernel/debug.html)。
+关于vmcore的更详细内容，请查看[内核调试方法](https://chenxiaosong.com/course/kernel/debug.html#kdump-crash)。
 
 如果要让内核在hungtask或softlockup等情况触发panic，可以执行以下操作:
 ```sh
@@ -121,3 +121,4 @@ mount -t nfs -o noresvport ${server_ip}:/ /mnt
 请注意，使用非特权源端口挂载在一些场景下是不安全的（从server端的配置选项的字面意思`insecure`就能看出），尽量只在调试场景下使用。
 
 在我曾经定位过的nfs问题中，有碰到过路由器或交换机出于产品的某些原因，把小于1024的端口的数据包都给过滤了，当时就是使用非特权源端口挂载的方法排除其他可能性，最终定位出问题。
+

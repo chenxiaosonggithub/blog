@@ -356,7 +356,7 @@ ccflags-y += -DDEBUG
 ccflags-y += -DVERBOSE_DEBUG
 ```
 
-# `kdump`和`crash`
+# `kdump`和`crash` {#kdump-crash}
 
 <!-- https://github.com/gatieme/LDD-LinuxDeviceDrivers/blob/master/study/debug/tools/systemtap/01-install/README.md -->
 
