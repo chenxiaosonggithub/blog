@@ -28,13 +28,20 @@ update_md_sign() {
 	for ((index=0; index<${element_count}; index=$((index + ${count_per_line}))))
 	do
 		local src_file=${array[${index}]}
+		local title_name=$(basename "${src_file}" .md)
 
 		comm_rm_mid_lines "${begin_str}" "${end_str}" ${src_file}
 		comm_rm_line "${begin_str}" ${src_file}
 		comm_rm_line "${end_str}" ${src_file}
 		cat ${sign_file} >> ${src_file}.tmp
+		comm_rm_line "${begin_str}" ${src_file}.tmp
 		cat ${src_file} >> ${src_file}.tmp
-		mv ${src_file}.tmp ${src_file}
+
+		echo -e "${begin_str}" > ${src_file}
+		echo -e "# ${title_name}" >> ${src_file}
+		echo >> ${src_file}
+		cat ${src_file}.tmp >> ${src_file}
+		rm ${src_file}.tmp
 	done
 }
 
