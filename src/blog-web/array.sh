@@ -106,6 +106,7 @@ comm_array=(
 			1 1 course/nfs/issue/null-ptr-deref-in-nfs_ctx_key_to_expire.md ~ "nfs_ctx_key_to_expire()引用计数泄露和空指针解引用的问题"
 			1 1 course/nfs/issue/cthon-nfs-tests.md ~ "Connectathon NFS tests测试问题"
 			1 1 course/nfs/issue/4.19-nfs-soft-lockup-in-__rpc_execute.md ~ "4.19 __rpc_execute() soft lockup的问题"
+			1 1 course/nfs/issue/nfs-hung-task.md ~ "nfs hung task问题"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"

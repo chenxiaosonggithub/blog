@@ -26,3 +26,5 @@
 
 [4.19 __rpc_execute() soft lockup的问题](https://chenxiaosong.com/course/nfs/issue/4.19-nfs-soft-lockup-in-__rpc_execute.html)
 
+[nfs hung task问题](https://chenxiaosong.com/course/nfs/issue/nfs-hung-task.html)
+
