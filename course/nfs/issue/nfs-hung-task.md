@@ -2,9 +2,9 @@
 
 nfs client使用nfsv4.2挂载，[4.19内核 hung task日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfs-hung-task-log.txt)。
 
-# 调试
+# 构造复现
 
-nfs server的代码的修改如下:
+nfs server构造收到打开文件的请求后不回复的情况，代码修改如下:
 ```sh
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
