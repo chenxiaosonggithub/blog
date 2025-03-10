@@ -24,7 +24,7 @@
 
 # [nfs调试方法](https://chenxiaosong.com/course/nfs/debug.html)
 
-# [nfs多路径](https://chenxiaosong.com/course/nfs/-multipath.html)
+# [nfs多路径](https://chenxiaosong.com/course/nfs/multipath.html)
 
 # [nfs补丁分析](https://chenxiaosong.com/course/nfs/patch.html)
 
