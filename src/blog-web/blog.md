@@ -148,6 +148,8 @@ Linux内核加餐:
 
 [书法：左手练字](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/书法.md)
 
+[雅思备考笔记](https://chenxiaosong.com/src/IELTS/IELTS.html)
+
 # 翻译
 
 [点击查看翻译文章](https://chenxiaosong.com/src/blog-web/translation.html)
