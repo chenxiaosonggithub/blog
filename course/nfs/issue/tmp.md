@@ -48,27 +48,31 @@ mount | grep nfs
 nfs client测试命令:
 ```sh
 echo 3 > /proc/sys/vm/drop_caches
-time ls -l /mnt/test/ > /dev/null
+time ls -l /mnt/test/ > /dev/null & # 连续执行4次
 ```
 
 suse测试结果如下:
 ```sh
-real    2m10.909s
-user    0m0.483s
-sys     0m31.787s
+real    5m53.793s
+real    6m21.455s
+real    6m34.097s
+real    6m39.315s
 ```
 
+<!--
 suse内核替换为麒麟的4.19，测试结果如下:
 ```sh
 real    2m18.750s
 user    0m0.624s
 sys     0m35.437s
 ```
+-->
 
 麒麟系统上测试结果如下:
 ```sh
-real    2m38.525s
-user    0m0.487s
-sys     0m36.398s
+real    6m23.243s
+real    6m37.083s
+real    6m44.486s
+real    6m51.066s
 ```
 
