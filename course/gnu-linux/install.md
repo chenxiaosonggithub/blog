@@ -340,3 +340,9 @@ sudo dnf install docker-engine -y
 
 [ArcoLinux](https://arcolinux.com/)是[Arch Linux](https://archlinux.org/)的衍生发行版。
 
+## suse
+
+```sh
+systemctl stop SuSEfirewall2 # 关闭防火墙
+```
+
