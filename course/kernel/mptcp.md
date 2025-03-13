@@ -84,6 +84,7 @@ client:
 
 server端操作:
 ```sh
+ss -ieMl # 只显示mptcp协议的套接字
 ss -iaM # 查看socket状态
     # State   Recv-Q  Send-Q  Local Address:Port  Peer Address:Port
     # ESTAB   0       0       192.168.53.37:9734  192.168.53.1:36632
