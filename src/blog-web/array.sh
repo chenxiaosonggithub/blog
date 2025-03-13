@@ -254,8 +254,8 @@ comm_array=(
 		1 1 src/translation/qemu/qemu-networking-nat.md ~ "QEMU Documentation/Networking/NAT"
 		# systemtap
 		1 1 src/translation/systemtap/systemtap-readme.md ~ "systemtap README"
-	1 1 ../tmp/calligraphy/zhaomengfu/danbabei.md calligraphy/zhaomengfu/danbabei.html "胆巴碑译文"
-	1 1 ../tmp/calligraphy/zhaomengfu/chibifu.md calligraphy/zhaomengfu/chibifu.html "赤壁赋译文"
+	1 1 tmp/calligraphy/zhaomengfu/danbabei.md calligraphy/zhaomengfu/danbabei.html "胆巴碑译文"
+	1 1 tmp/calligraphy/zhaomengfu/chibifu.md calligraphy/zhaomengfu/chibifu.html "赤壁赋译文"
 	# no-index
 	1 1 src/private/v2ray/v2ray.md no-index/v2ray.html "v2ray代理服务器"
 	1 1 src/private/chatgpt/chatgpt.md no-index/chatgpt.html "注册ChatGPT"
