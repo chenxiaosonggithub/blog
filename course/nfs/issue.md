@@ -28,3 +28,5 @@
 
 [nfs hung task问题](https://chenxiaosong.com/course/nfs/issue/nfs-hung-task.html)
 
+[4.19内核执行ll时间比4.12内核(suse)长的问题](https://chenxiaosong.com/course/nfs/issue/4.19-ll-time-longer-than-suse-4.12.html)
+
