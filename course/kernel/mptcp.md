@@ -68,7 +68,7 @@ sysctl -w net.mptcp.enabled=1 # 如果上面命令检查没开，就执行这条
 dnf install mptcpd -y
 ```
 
-路径管理器:
+路径管理器（用户空间暂时不完善还在开发中）:
 ```sh
 /proc/sys/net/mptcp/pm_type # 0: 内核, 1: 用户空间
 ```
