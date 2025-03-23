@@ -8,7 +8,7 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 
 配置文件参考[VMess-Websocket](https://github.com/v2fly/v2ray-examples/tree/master/VMess-Websocket)。
 
-如果你在华为的HarmonyOS NEXT的”卓易通“中安装的v2ray，需要把“跌由设置“中的”绕过局域网IP“取消勾选，“绕过局域网域名”建议也取消勾选（但不确定有没影响哈），然后在“卓易通”和“出境易”中都能访问外网了。
+如果你在华为的HarmonyOS NEXT的”卓易通“中安装的v2ray，需要把“跌由设置“中的”绕过局域网IP“取消勾选，“绕过局域网域名”建议也取消勾选（但不确定有没影响哈），然后在“卓易通”和“出境易”中都能访问外网了。注意要先打开“卓易通”中的“搜应用”，才能在“出境易”中的浏览器中访问外网。
 
 # v2ray服务器安装与配置
 
