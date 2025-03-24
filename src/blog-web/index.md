@@ -15,7 +15,8 @@
 [只用键盘](https://chenxiaosong.com/picture/self-introduction/hhkb.jpg)不用鼠标，
 [五笔打字](https://chenxiaosong.com/src/wubi/wubi.html)，喜欢[写技术文档](https://chenxiaosong.com/blog)。
 
-自由软件的狂热者，能力一般的极客。现在麒麟软件从事**Linux内核**开发，工作内容全世界都看得到，[贡献过多个自由开源软件项目](https://chenxiaosong.com/contribution.html)。
+自由软件的狂热者，能力一般的极客。现在[麒麟软件从事**Linux内核**开发](https://mp.weixin.qq.com/s/SvGD_VmBDE67SLZ4MSvP3A)，
+工作内容全世界都看得到，[贡献过多个自由开源软件项目](https://chenxiaosong.com/contribution.html)。
 
 另外，多年前还从事过[**鸿蒙操作系统开发**](https://chenxiaosong.com/course/harmony/harmony.html) 、
 [**游戏开发**](https://chenxiaosong.com/course/godot/godot.html)，
