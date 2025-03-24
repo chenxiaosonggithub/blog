@@ -34,6 +34,9 @@
 
 # 环境
 
+Linux内核打开配置`CONFIG_SMB_SERVER`。
+
+安装用户态软件:
 ```sh
 apt install -y git gcc pkgconf autoconf automake libtool make meson ninja-build gawk libnl-3-dev libnl-genl-3-dev libglib2.0-dev
 dnf install -y git gcc pkgconf autoconf automake libtool make meson ninja-build gawk libnl3-devel glib2-devel
