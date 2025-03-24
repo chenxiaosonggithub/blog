@@ -77,6 +77,42 @@ sudo firewall-cmd --list-services # 查看已添加的service
 sudo systemctl restart smb.service		#（重启samba服务）
 ```
 
+## 源码安装samba（用户态smb server） {#build-samba-from-source}
+
+[参考文档: Build Samba from Source](https://wiki.samba.org/index.php/Build_Samba_from_Source)。
+
+```sh
+git clone https://gitlab.com/samba-team/devel/samba.git 
+cd samba/bootstrap/generated-dists/fedora41/ # fedora41可替换你使用的发行版
+./bootstrap.sh # 安装依赖软件，时间可能比较久
+cd ../../../
+./configure
+make -j`nproc`
+make install -j`nproc`
+export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
+```
+
+修改`/usr/lib/systemd/system/smb.service`（具体位置可以用`systemctl status smb`查看）:
+```sh
+ExecStart=/usr/local/samba/sbin/smbd ... # 原本是 /usr/sbin/smbd
+```
+
+创建配置文件:
+```sh
+cp /etc/samba/smb.conf /usr/local/samba/etc/smb.conf
+```
+
+需要特别注意的是要重新创建用户:
+```sh
+pdbedit -a -u root
+```
+
+启动服务:
+```sh
+systemctl daemon-reload
+systemctl restart smb.service
+```
+
 # smb客户端环境
 
 ## Linux客户端
