@@ -29,6 +29,11 @@ accommodate 为…提供住宿;容纳;为…提供空间
 break down（机器或车辆）出故障
 endure 忍耐;忍受
 have sth in common 有共同点
+approachable 友善的;易接近的
+struggling 艰难奋斗的；苦苦挣扎的
+assignment （尤指学习或工作方面的）任务，作业
+violin 小提琴
+cello 大提琴
 ```
 
 # 核心词汇精读精练高级篇
