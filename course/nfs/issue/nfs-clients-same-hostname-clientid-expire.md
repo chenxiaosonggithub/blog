@@ -129,6 +129,12 @@ No.     Time            Source          Destination   Protocol  Length  Info
 
 # 代码分析
 
+client端的clientid里含有hostname，如果加载nfs模块时没有指定模块参数`nfs4_unique_id`，也没有设置`/sys/fs/nfs/net/nfs_client/identifier`的值，那么clientid的值就只取决于hostname，如果多个client的hostname一样，那么这些client的clientid也都一样。
+
+如果多个client的clientid一样，那么在第二个client执行挂载时，server端代码执行到`nfsd4_create_session()`时，就会因为与前一个client的clientid一样，而执行`unhash_client_locked()`销毁所有的sessionid，然后再生成新的sessionid。
+
+接着，第一个client再执行任何请求时，server端代码`find_in_sessionid_hashtbl()`找不到sessionid，就会重新建立连接。
+
 client组装clientid的过程:
 ```c
 nfs4_proc_setclientid
@@ -167,9 +173,15 @@ nfsd
 // 生成sessionid
 nfsd4_proc_compound
   nfsd4_create_session
+    find_unconfirmed_client / find_confirmed_client
+      find_client_in_id_table
+    find_confirmed_client_by_name // name->data的值是clientid
+    mark_client_expired_locked
+      unhash_client_locked
+        list_del_init(&ses->se_hash)
     init_session
       gen_sessionid
-        sid->clientid = clp->cl_clientid // 主要是由clientid决定
+        sid->clientid = clp->cl_clientid
       idx = hash_sessionid
       list_add(&new->se_hash, &nn->sessionid_hashtbl[idx])
 ```
