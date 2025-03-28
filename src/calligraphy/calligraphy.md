@@ -1,10 +1,26 @@
 在我读高中时，买过两套书法的书: [《楷书/行书/草书字典》（黑龙江美术出版社）](https://gitee.com/chenxiaosonggitee/tmp/raw/master/calligraphy/book/book-01.jpg)和
 [《中华书法经典大全》（辽海出版社）](https://gitee.com/chenxiaosonggitee/tmp/raw/master/calligraphy/book/book-02.jpg)，准备用**左手**练习楷书，
-[左手练字的照片也准备发在这里记录一下](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字.md)，看看多久能练成。
+[左手练字的照片也准备发在这里记录一下](https://chenxiaosong.com/src/calligraphy/calligraphy.html)，看看多久能练成。
 
 # 左手练字
 
-- [点击这里查看我左手练字的照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字.md)
+- [点击这里查看我左手练字的照片](https://chenxiaosong.com/src/calligraphy/calligraphy.html)
+
+## 赵孟𫖯-楷书-道德经
+
+[点击这里查看我用左手练习的赵孟𫖯的《道德经》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-道德经.md)
+
+## 赵孟𫖯-楷书-胆巴碑
+
+[点击这里查看我用左手练习的赵孟𫖯的《胆巴碑》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-胆巴碑.md)
+
+## 赵孟𫖯-行书-赤壁赋
+
+[点击这里查看我用左手练习的赵孟𫖯的《赤壁赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)
+
+## 赵孟𫖯-行书-洛神赋
+
+[点击这里查看我用左手练习的赵孟𫖯的《洛神赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)
 
 # 楷书四大家
 

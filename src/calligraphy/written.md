@@ -1,6 +1,6 @@
 # 左手练字照片
 
-- [点击这里查看我左手练字的照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字.md)
+- [点击这里查看我左手练字的照片](https://chenxiaosong.com/src/calligraphy/calligraphy.html)。
 
 # 常用字
 
