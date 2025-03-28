@@ -259,8 +259,8 @@ comm_array=(
 	1 1 src/calligraphy/calligraphy.md ~ "书法: 左手练字"
 	1 1 tmp/calligraphy/zhaomengfu/danbabei.md calligraphy/zhaomengfu/danbabei.html "胆巴碑译文"
 	1 1 tmp/calligraphy/zhaomengfu/chibifu.md calligraphy/zhaomengfu/chibifu.html "赤壁赋译文"
-	1 1 tmp/calligraphy/zhaomengfu/chibifu.md calligraphy/zhaomengfu/luoshenfu.html "洛神赋译文"
-	1 1 tmp/calligraphy/zhaomengfu/chibifu.md calligraphy/zhaomengfu/jianzhuan.html "汲黯传译文"
+	1 1 tmp/calligraphy/zhaomengfu/luoshenfu.md calligraphy/zhaomengfu/luoshenfu.html "洛神赋译文"
+	1 1 tmp/calligraphy/zhaomengfu/jianzhuan.md calligraphy/zhaomengfu/jianzhuan.html "汲黯传译文"
 	1 1 src/calligraphy/written.md ~ "左手写过的字"
 	# no-index
 	1 1 src/private/v2ray/v2ray.md no-index/v2ray.html "v2ray代理服务器"
