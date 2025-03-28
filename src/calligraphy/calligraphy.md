@@ -1,16 +1,3 @@
-<!-- sign begin -->
-# 书法
-
-- 作者: 陈孝松
-- [主页: chenxiaosong.com](https://chenxiaosong.com/)
-- [哔哩哔哩教学视频: 陈孝松](https://chenxiaosong.com/video.html)
-- [课程: chenxiaosong.com/course](https://chenxiaosong.com/course.html)
-- [博客: chenxiaosong.com/blog](https://chenxiaosong.com/blog.html)
-- [贡献: chenxiaosong.com/contribution](https://chenxiaosong.com/contribution.html)
-- 邮箱: <chenxiaosong@chenxiaosong.com>
-- [QQ交流群: 544216206, 点击查看群介绍](https://chenxiaosong.com/q.html)
-
-<!-- sign end -->
 在我读高中时，买过两套书法的书: [《楷书/行书/草书字典》（黑龙江美术出版社）](https://gitee.com/chenxiaosonggitee/tmp/raw/master/calligraphy/book/book-01.jpg)和
 [《中华书法经典大全》（辽海出版社）](https://gitee.com/chenxiaosonggitee/tmp/raw/master/calligraphy/book/book-02.jpg)，准备用**左手**练习楷书，
 [左手练字的照片也准备发在这里记录一下](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字.md)，看看多久能练成。

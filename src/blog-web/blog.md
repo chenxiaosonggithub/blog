@@ -146,7 +146,7 @@ Linux内核加餐:
 
 [黑神话：悟空](https://chenxiaosong.com/src/game/black-myth-wukong.html)
 
-[书法：左手练字](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/书法.md)
+[书法: 左手练字](https://chenxiaosong.com/src/calligraphy/calligraphy.html)
 
 [雅思备考笔记](https://chenxiaosong.com/src/IELTS/IELTS.html)
 
