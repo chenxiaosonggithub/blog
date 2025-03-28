@@ -129,27 +129,54 @@ No.     Time            Source          Destination   Protocol  Length  Info
 
 # 代码分析
 
+client组装clientid的过程:
 ```c
-kthread
-  nfsd
-    svc_process
-      svc_process_common
-        nfsd_dispatch
-          nfsd4_proc_compound // proc->pc_func
+nfs4_proc_setclientid
+  nfs4_init_uniform_client_string / nfs4_init_nonuniform_client_string
+    nfs4_get_uniquifier
+      // 先查看是否有设置 /sys/fs/nfs/net/nfs_client/identifier
+      rcu_dereference(nn_clp->identifier);
+      // 再查看是否有设置模块参数nfs4_unique_id
+      strscpy(buf, nfs4_client_id_uniquifier, buflen);
+    // 和hostname组成唯一字符串
+    scnprintf(str, len, "Linux NFSv%u.%u %s/%s", ..., clp->cl_rpcclient->cl_nodename
 
-nfsd4_proc_compound
-  nfsd4_sequence // op->opdesc->op_func
-    find_in_sessionid_hashtbl
-      __find_in_sessionid_hashtbl
-        idx = hash_sessionid
+// hostname的设置
+rpc_create_xprt
+  rpc_new_client
+    rpc_clnt_set_nodename // nodename 就是 hostname
 
+// /sys/fs/nfs/net/nfs_client/identifier 的设置
+// fs/nfs/sysfs.c
+struct kobj_attribute nfs_netns_client_id = __ATTR(identifier,
+```
 
+server端查找和生成sessionid的过程:
+```c
+// 查找sessionid
+nfsd
+  svc_process
+    svc_process_common
+      nfsd_dispatch
+        nfsd4_proc_compound // proc->pc_func
+          nfsd4_sequence // op->opdesc->op_func
+            find_in_sessionid_hashtbl
+              __find_in_sessionid_hashtbl
+                idx = hash_sessionid
+
+// 生成sessionid
 nfsd4_proc_compound
   nfsd4_create_session
     init_session
+      gen_sessionid
+        sid->clientid = clp->cl_clientid // 主要是由clientid决定
       idx = hash_sessionid
       list_add(&new->se_hash, &nn->sessionid_hashtbl[idx])
+```
 
+server端销毁sessionid的过程:
+```c
+// 销毁sessionid
 nfsd4_proc_compound
   // 执行umount命令时，先执行到这里，再执行到unhash_client_locked
   nfsd4_destroy_session
