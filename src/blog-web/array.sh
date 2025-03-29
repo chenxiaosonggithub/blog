@@ -29,6 +29,7 @@ comm_array=(
 		1 1 course/kernel/interrupt.md ~ "中断"
 		1 1 course/kernel/syscall.md ~ "系统调用"
 		1 1 course/kernel/block.md ~ "块I/O层"
+		1 1 course/kernel/page-cache-writeback.md ~ "页缓存和页回写"
 		1 1 course/kernel/timer.md ~ "定时器"
 		1 1 course/kernel/bpf.md ~ "BPF"
 		1 1 course/kernel/sync.md ~ "内核同步"
