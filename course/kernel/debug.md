@@ -366,8 +366,9 @@ ccflags-y += -DVERBOSE_DEBUG
 ```sh
 git clone https://github.com/crash-utility/crash.git
 sudo apt-get install autoconf automake libtool texinfo -y
+sudo apt install libgmp-dev libmpfr-dev -y # 编译gdb需要
 cd crash
-make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好（如 http://ftp.gnu.org/gnu/gdb/gdb-10.2.tar.gz），放到相应的位置
+make -j64 # 如果下载gdb很慢，可以先在其他地方先下载好（如 http://ftp.gnu.org/gnu/gdb/gdb-xx.xx.tar.gz），放到相应的位置
 # make target=ARM64 -j64 # 交叉编译能解析arm64 vmcore的crash
 ```
 
