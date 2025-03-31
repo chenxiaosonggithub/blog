@@ -12,6 +12,10 @@
 
 [点击这里查看我用左手练习的赵孟𫖯的《胆巴碑》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-胆巴碑.md)
 
+## 赵孟𫖯-楷书-汲黯传
+
+[点击这里查看我用左手练习的赵孟𫖯的《汲黯传》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-汲黯传.md)
+
 ## 赵孟𫖯-行书-赤壁赋
 
 [点击这里查看我用左手练习的赵孟𫖯的《赤壁赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)
