@@ -4,20 +4,20 @@
 
 金字塔式存储体系如下，每一种存储器设备只和它相邻的存储设备打交道:
 ```sh
-                 / \
-                /   \
-               / Reg \ 寄存器(Register)
-              /-------\
-             /L1 Cache \ 又分成: 数据缓存（Instruction Cache）和 指令缓存（Data Cache）
-            /-----------\
-           /  L2 Cache   \
-          /---------------\
-         /    L3 Cache     \ 多个核共享一个L3缓存
-        /-------------------\
-       /      Memory         \ 这一章我们讲这一层
-      /-----------------------\
-     /        SSD HDD          \ Solid State Disk（Drive）、Hard Disk Drive
-    /---------------------------\
+             / \
+            /   \
+           / Reg \ 寄存器(Register)
+          /-------\
+         /L1 Cache \ 又分成: 数据缓存（Instruction Cache）和 指令缓存（Data Cache）
+        /-----------\
+       /  L2 Cache   \
+      /---------------\
+     /    L3 Cache     \ 多个核共享一个L3缓存
+    /-------------------\
+   /      Memory         \ 这一章我们讲这一层
+  /-----------------------\
+ /        SSD HDD          \ Solid State Disk（Drive）、Hard Disk Drive
+/---------------------------\
 ```
 
 从上到下容量递增、速度递减、价格递减。cpu高速缓存包括L1、L2、L3三层，使用静态随机存取存储器（Static Random-Access Memory）的芯片。
