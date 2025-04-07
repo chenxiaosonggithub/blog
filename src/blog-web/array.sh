@@ -110,7 +110,6 @@ comm_array=(
 			1 1 course/nfs/issue/nfs-hung-task.md ~ "nfs hung task问题"
 			1 1 course/nfs/issue/4.19-ll-time-longer-than-suse-4.12.md ~ "4.19内核执行ll时间比4.12内核(suse)长的问题"
 			1 1 course/nfs/issue/4.19-bug-in-nfs_unlock_request.md ~ "4.19内核nfs_unlock_request()报BUG()的问题"
-				1 1 tmp/nfs/4.19-bug-in-nfs_unlock_request-vmcore.md ~ "vmcore解析-4.19内核nfs_unlock_request()报BUG()的问题"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"
