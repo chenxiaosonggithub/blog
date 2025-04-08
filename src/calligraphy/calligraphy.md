@@ -16,6 +16,10 @@
 
 [点击这里查看我用左手练习的赵孟𫖯的《汲黯传》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-汲黯传.md)
 
+## 王羲之-行书-兰亭序
+
+[点击这里查看我用左手练习的王羲之的《兰亭序》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-王羲之-兰亭序.md)
+
 ## 赵孟𫖯-行书-赤壁赋
 
 [点击这里查看我用左手练习的赵孟𫖯的《赤壁赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)

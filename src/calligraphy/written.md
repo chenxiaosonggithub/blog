@@ -19,6 +19,8 @@
 
 参考: https://www.daodejing.org/
 
+赵孟頫（1254年10月22日－1322年7月29日）六十三岁时（公元1316年）所写。
+
 # 赤壁赋译文
 
 [点击这里查看白话译文](https://chenxiaosong.com/calligraphy/zhaomengfu/chibifu.html)
@@ -27,6 +29,8 @@
 
 [点击这里查看白话译文](https://chenxiaosong.com/calligraphy/zhaomengfu/danbabei.html)
 
+赵孟頫（1254年10月22日－1322年7月29日）六十三岁时（公元1316年）所写。
+
 # 洛神赋译文
 
 [点击这里查看白话译文](https://chenxiaosong.com/calligraphy/zhaomengfu/luoshenfu.html)
@@ -34,6 +38,8 @@
 # 汲黯传译文
 
 [点击这里查看白话译文](https://chenxiaosong.com/calligraphy/zhaomengfu/jianzhuan.html)
+
+赵孟頫（1254年10月22日－1322年7月29日）1320年所写。
 
 # 《楷书字典》
 
