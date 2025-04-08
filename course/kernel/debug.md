@@ -256,14 +256,15 @@ cd /sys/kernel/debug/tracing/
 cat available_filter_functions | grep ${kprobe_func_name}
 echo 1 > tracing_on
 
+echo "p:p_${kprobe_func_name} ${kprobe_func_name}" >> kprobe_events # 不打印函数参数
 # x86_64函数参数用到的寄存器: RDI, RSI, RDX, RCX, R8, R9
 # aarch64函数参数用到的寄存器: X0 ~ X7
 # f_mode 在 file 结构体中的偏移为 20, x32代表32位（4字节），注意 rdi 寄存器要写成 di
 echo "p:p_${kprobe_func_name} ${kprobe_func_name} err=+20(%di):x32" >> kprobe_events # x86_64
 echo "p:p_${kprobe_func_name} ${kprobe_func_name} err=+20(%x0):x32" >> kprobe_events # aarch64
 echo 1 > events/kprobes/p_${kprobe_func_name}/enable
-echo stacktrace > events/kprobes/p_${kprobe_func_name}/trigger
-echo '!stacktrace' > events/kprobes/p_${kprobe_func_name}/trigger
+echo stacktrace > events/kprobes/p_${kprobe_func_name}/trigger # 打印栈
+echo '!stacktrace' > events/kprobes/p_${kprobe_func_name}/trigger # 关闭栈
 echo 0 > events/kprobes/p_${kprobe_func_name}/enable
 echo "-:p_${kprobe_func_name}" >> kprobe_events
 
