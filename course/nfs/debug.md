@@ -122,3 +122,83 @@ mount -t nfs -o noresvport ${server_ip}:/ /mnt
 
 在我曾经定位过的nfs问题中，有碰到过路由器或交换机出于产品的某些原因，把小于1024的端口的数据包都给过滤了，当时就是使用非特权源端口挂载的方法排除其他可能性，最终定位出问题。
 
+# 调试脚本 {#script}
+
+## nfs client调试脚本 {#client-script}
+
+client脚本要和server脚本同时执行（如果server也要调试的话）。
+
+```sh
+mnt_point=/mnt/ # 修改为nfs挂载点
+log_time=60s # 日志收集时长
+log_dir=$(pwd)/dmesg-log/ # 日志保存目录
+net_interface=any # 网络接口，如果不确定就填any
+test_cmd="df ${mnt_point}" # 测试命令
+
+cap_file=$(pwd)/nfs_client.cap
+tcpdump_cmd="tcpdump --interface=${net_interface} --buffer-size=20480 -w ${cap_file}"
+
+echo "打开nfs日志开头"
+${tcpdump_cmd} &
+tcpdump_pid=$! # 记录pid
+echo "<1> nfs debug log begin: $(date)" > /dev/kmsg # 内核日志记录当前时间
+sync
+echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # 打开nfs日志
+echo 0x7fff > /proc/sys/sunrpc/rpc_debug # 打开rpc日志
+# echo 0x7fff > /proc/sys/sunrpc/nlm_debug # 如果需要定位nfsv3的NLM（网络锁管理协议），还要打开这个，但一般不涉及
+sleep 1s
+${test_cmd} & # 后台执行
+echo "等一段时间以产生足够多的日志"
+sleep ${log_time}
+echo 0 > /proc/sys/sunrpc/nfs_debug # 关闭
+echo 0 > /proc/sys/sunrpc/rpc_debug # 关闭
+# echo 0 > /proc/sys/sunrpc/nlm_debug
+sync
+echo "<1> nfs debug log end: $(date)" > /dev/kmsg # 内核日志记录当前时间
+kill -SIGINT ${tcpdump_pid} # 退出tcpdump
+sync
+sleep 5
+rm ${log_dir} -rf
+mkdir ${log_dir}
+cp /var/log/messages* ${log_dir}
+cp /var/log/dmesg* ${log_dir}
+mv ${cap_file} ${log_dir}
+echo "日志已保存到 ${log_dir}/ 目录下"
+```
+
+## nfs server调试脚本 {#server-script}
+
+server的脚本和client脚本同时执行。
+
+```sh
+log_time=60s # 日志收集时长
+log_dir=$(pwd)/dmesg-log/ # 日志保存目录
+net_interface=any # 网络接口，如果不确定就填any
+
+cap_file=$(pwd)/nfs_server.cap
+tcpdump_cmd="tcpdump --interface=${net_interface} --buffer-size=20480 -w ${cap_file}"
+
+echo "打开nfs日志开头"
+${tcpdump_cmd} &
+tcpdump_pid=$! # 记录pid
+echo "<1> nfsd debug log begin: $(date)" > /dev/kmsg # 内核日志记录当前时间
+sync
+echo 0x7FFF > /proc/sys/sunrpc/nfsd_debug # 打开nfsd日志
+echo 0x7fff > /proc/sys/sunrpc/rpc_debug # 打开rpc日志
+echo "等一段时间以产生足够多的日志"
+sleep ${log_time}
+echo 0 > /proc/sys/sunrpc/nfsd_debug # 关闭
+echo 0 > /proc/sys/sunrpc/rpc_debug # 关闭
+sync
+echo "<1> nfsd debug log end: $(date)" > /dev/kmsg # 内核日志记录当前时间
+kill -SIGINT ${tcpdump_pid} # 退出tcpdump
+sync
+sleep 5
+rm ${log_dir} -rf
+mkdir ${log_dir}
+cp /var/log/messages* ${log_dir}
+cp /var/log/dmesg* ${log_dir}
+mv ${cap_file} ${log_dir}
+echo "日志已保存到 ${log_dir}/ 目录下"
+```
+

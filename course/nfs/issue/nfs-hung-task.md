@@ -52,39 +52,5 @@ echo something > /mnt/file & # 会打印出pid 576
 
 # 调试 {#debug}
 
-```sh
-mnt_point=/mnt/ # 修改为nfs挂载点
-log_time=60s # 日志收集时长
-log_dir=$(pwd)/dmesg-log/ # 日志保存目录
-net_interface=any # 网络接口，如果不确定就填any
-test_cmd="df ${mnt_point}" # 测试命令
-
-cap_file=$(pwd)/nfs_client.cap
-tcpdump_cmd="tcpdump --interface=${net_interface} --buffer-size=20480 -w ${cap_file}"
-
-echo "打开nfs日志开头"
-${tcpdump_cmd} &
-tcpdump_pid=$!
-echo "<1> nfs debug log begin: $(date)" > /dev/kmsg # 内核日志记录当前时间
-sync
-echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # 打开nfs日志
-echo 0x7fff > /proc/sys/sunrpc/rpc_debug # 打开rpc日志
-sleep 1s
-${test_cmd} & # 后台执行
-echo "等一段时间以产生足够多的日志"
-sleep ${log_time}
-echo 0 > /proc/sys/sunrpc/nfs_debug # 关闭
-echo 0 > /proc/sys/sunrpc/rpc_debug # 关闭
-sync
-echo "<1> nfs debug log end: $(date)" > /dev/kmsg # 内核日志记录当前时间
-kill -SIGINT ${tcpdump_pid}
-sync
-sleep 5
-rm ${log_dir} -rf
-mkdir ${log_dir}
-cp /var/log/messages* ${log_dir}
-cp /var/log/dmesg* ${log_dir}
-mv ${cap_file} ${log_dir}
-echo "日志已保存到 ${log_dir}/ 目录下"
-```
+[参考《nfs client调试脚本》](https://chenxiaosong.com/course/nfs/debug.html#client-script)
 
