@@ -17,7 +17,10 @@
 
 # 道德经译文
 
-参考: https://www.daodejing.org/
+参考:
+
+- [电脑网页](https://www.daodejing.org/)
+- [手机网页](https://m.daodejing.org/)
 
 赵孟頫（1254年10月22日－1322年7月29日）六十三岁时（公元1316年）所写。
 
