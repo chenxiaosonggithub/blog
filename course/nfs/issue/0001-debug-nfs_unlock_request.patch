@@ -1,0 +1,108 @@
+From 1067a10b567193066339194622e9d0ed7cfad93a Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Date: Mon, 14 Apr 2025 08:33:35 +0000
+Subject: [PATCH] debug nfs_unlock_request()
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Change-Id: Id84311139a79424789d27abca754fdbafa936ea9
+---
+ fs/nfs/pagelist.c        | 26 ++++++++++++++++++++++++++
+ include/linux/nfs_page.h |  9 +++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
+index b38a780dc29b..dcd80b28cd6a 100644
+--- a/fs/nfs/pagelist.c
++++ b/fs/nfs/pagelist.c
+@@ -366,11 +366,30 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
+ 	req->wb_pgbase	= offset;
+ 	req->wb_bytes   = count;
+ 	req->wb_context = get_nfs_open_context(ctx);
++	req->wb_trace = kzalloc(sizeof(*(req->wb_trace)), GFP_KERNEL);
+ 	kref_init(&req->wb_kref);
+ 	nfs_page_group_init(req, last);
+ 	return req;
+ }
+ 
++static void nfs_debug_print_trace(struct nfs_page *req)
++{
++	if (req->wb_trace && req->wb_trace->trace_len) {
++		printk("%s:%d, pid:%d, comm:%s\n", __func__, __LINE__,
++		       req->wb_trace->pid, req->wb_trace->comm);
++		stack_trace_print(req->wb_trace->trace,
++				  req->wb_trace->trace_len, 2);
++	}
++}
++
++static void nfs_debug_save_trace(struct nfs_page *req)
++{
++	req->wb_trace->trace_len = stack_trace_save(req->wb_trace->trace, NFS_PAGE_MAX_TRACE, 2);
++	req->wb_trace->pid = current->pid;
++	strncpy(req->wb_trace->comm, current->comm, TASK_COMM_LEN);
++	// nfs_debug_print_trace(req); // 用于测试输出内容是否正确
++}
++
+ /**
+  * nfs_unlock_request - Unlock request and wake up sleepers.
+  * @req:
+@@ -378,9 +397,11 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
+ void nfs_unlock_request(struct nfs_page *req)
+ {
+ 	if (!NFS_WBACK_BUSY(req)) {
++		nfs_debug_print_trace(req);
+ 		printk(KERN_ERR "NFS: Invalid unlock attempted\n");
+ 		BUG();
+ 	}
++	nfs_debug_save_trace(req);
+ 	smp_mb__before_atomic();
+ 	clear_bit(PG_BUSY, &req->wb_flags);
+ 	smp_mb__after_atomic();
+@@ -411,6 +432,7 @@ static void nfs_clear_request(struct nfs_page *req)
+ 	struct page *page = req->wb_page;
+ 	struct nfs_open_context *ctx = req->wb_context;
+ 	struct nfs_lock_context *l_ctx = req->wb_lock_context;
++	struct nfs_page_trace *trace = req->wb_trace;
+ 
+ 	if (page != NULL) {
+ 		put_page(page);
+@@ -429,6 +451,10 @@ static void nfs_clear_request(struct nfs_page *req)
+ 		put_nfs_open_context(ctx);
+ 		req->wb_context = NULL;
+ 	}
++	if (trace) {
++		kfree(trace);
++		req->wb_trace = NULL;
++	}
+ }
+ 
+ /**
+diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
+index 5162fc1533c2..f773f6ec3acc 100644
+--- a/include/linux/nfs_page.h
++++ b/include/linux/nfs_page.h
+@@ -39,6 +39,14 @@ enum {
+ };
+ 
+ struct nfs_inode;
++#define NFS_PAGE_MAX_TRACE	32
++struct nfs_page_trace {
++	unsigned long trace[NFS_PAGE_MAX_TRACE];
++	unsigned int trace_len;
++	pid_t pid;
++	char comm[TASK_COMM_LEN];
++};
++
+ struct nfs_page {
+ 	struct list_head	wb_list;	/* Defines state of page: */
+ 	struct page		*wb_page;	/* page to read in/write out */
+@@ -53,6 +61,7 @@ struct nfs_page {
+ 	struct nfs_write_verifier	wb_verf;	/* Commit cookie */
+ 	struct nfs_page		*wb_this_page;  /* list of reqs for this page */
+ 	struct nfs_page		*wb_head;       /* head pointer for req list */
++	struct nfs_page_trace	*wb_trace;
+ };
+ 
+ struct nfs_pageio_descriptor;
+-- 
+2.34.1
+
