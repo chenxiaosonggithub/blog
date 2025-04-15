@@ -72,6 +72,14 @@ sudo apt install gcc-9-aarch64-linux-gnu -y # 指定版本的交叉编译软件
 mv /usr/bin/aarch64-linux-gnu-gcc /usr/bin/aarch64-linux-gnu-gcc.bak # 原来的版本重命名
 ln -s /usr/bin/aarch64-linux-gnu-gcc-9 /usr/bin/aarch64-linux-gnu-gcc # 指向特定版本
 ```
+
+编译rpm包所需软件:
+```sh
+dnf install git rsync rpm-build -y
+dnf install -y asciidoc audit-libs-devel binutils-devel elfutils-devel java-devel ncurses-devel newt-devel numactl-devel pciutils-devel perl-generators python3-docutils xmlto glibc-kernheaders kernel-headers
+dnf install -y java-1.8.0-*-devel
+```
+
 <!-- TODO: 源码安装crash, emacs -->
 
 <!-- public begin -->
