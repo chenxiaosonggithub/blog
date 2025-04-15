@@ -1,4 +1,4 @@
-From e70cdab4d3ed4b502ee27e265b9c1f6287648f1f Mon Sep 17 00:00:00 2001
+From 456f8bf1e6987815abd966991dd85cc34b6e13eb Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 Date: Tue, 15 Apr 2025 16:59:33 +0800
 Subject: [PATCH] debug nfs_unlock_request()
@@ -10,7 +10,7 @@ Change-Id: I6fa808c7e267a8021e17127bab7d9a229d921567
  1 file changed, 44 insertions(+)
 
 diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
-index b38a780dc29b..f20772d2b193 100644
+index b38a780dc29b..d2353c67107a 100644
 --- a/fs/nfs/pagelist.c
 +++ b/fs/nfs/pagelist.c
 @@ -26,6 +26,18 @@
@@ -44,8 +44,8 @@ index b38a780dc29b..f20772d2b193 100644
 +		trace = &nfs_debug_trace[i];
 +		if (req != trace->nfs_page)
 +			continue;
-+		printk("%s:%d, pid:%d, comm:%s, req:%px\n", __func__, __LINE__,
-+		       trace->pid, trace->comm, req);
++		printk("%s:%d, pid:%d, comm:%s, i:%d, req:%px\n", __func__, __LINE__,
++		       trace->pid, trace->comm, i, req);
 +		stack_trace_print(trace->line, trace->trace_len, 2);
 +	}
 +}
