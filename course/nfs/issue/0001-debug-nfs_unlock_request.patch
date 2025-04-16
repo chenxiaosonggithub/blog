@@ -17,7 +17,7 @@ index b38a780dc29b..d2353c67107a 100644
  
  #define NFSDBG_FACILITY		NFSDBG_PAGECACHE
  
-+#define NFS_TRACE_MAX_SIZE	10 // 栈的个数
++#define NFS_TRACE_MAX_SIZE	15 // 栈的个数
 +#define NFS_LINE_PER_STACK	32 // 每个栈最大的行数
 +struct nfs_debug_trace {
 +	unsigned long line[NFS_LINE_PER_STACK];
