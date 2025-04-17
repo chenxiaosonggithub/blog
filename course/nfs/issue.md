@@ -32,3 +32,5 @@
 
 [4.19内核nfs_unlock_request()报BUG()的问题](https://chenxiaosong.com/course/nfs/issue/4.19-bug-in-nfs_unlock_request.html)
 
+[sunrpc __rpc_execute()出现ERESTARTSYS的问题](https://chenxiaosong.com/course/nfs/issue/4.19-__rpc_execute-ERESTARTSYS.html)
+
