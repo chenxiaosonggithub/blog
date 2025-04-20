@@ -44,3 +44,7 @@
 
 赵孟頫（1254年10月22日－1322年7月29日）1320年所写。
 
+# 灵飞经译文
+
+[点击这里查看白话译文](https://chenxiaosong.com/calligraphy/lingfeijing.html)
+
