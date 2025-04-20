@@ -26,7 +26,7 @@
 
 ## 赵孟𫖯-行书-洛神赋
 
-[点击这里查看我用左手练习的赵孟𫖯的《洛神赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)
+[点击这里查看我用左手练习的赵孟𫖯的《洛神赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-洛神赋.md)
 
 # 楷书四大家
 
