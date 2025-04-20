@@ -265,6 +265,7 @@ comm_array=(
 	1 1 tmp/calligraphy/zhaomengfu/luoshenfu.md calligraphy/zhaomengfu/luoshenfu.html "洛神赋译文"
 	1 1 tmp/calligraphy/zhaomengfu/jianzhuan.md calligraphy/zhaomengfu/jianzhuan.html "汲黯传译文"
 	1 1 tmp/calligraphy/lingfeijing.md calligraphy/lingfeijing.html "灵飞经译文"
+	1 1 tmp/calligraphy/shengjiaoxu.md calligraphy/shengjiaoxu.html "圣教序译文"
 	1 1 src/calligraphy/written.md ~ "左手写过的字"
 	# no-index
 	1 1 src/private/v2ray/v2ray.md no-index/v2ray.html "v2ray代理服务器"

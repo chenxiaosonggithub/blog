@@ -48,3 +48,7 @@
 
 [点击这里查看白话译文](https://chenxiaosong.com/calligraphy/lingfeijing.html)
 
+# 圣教序译文
+
+[点击这里查看白话译文](https://chenxiaosong.com/calligraphy/shengjiaoxu.html)
+
