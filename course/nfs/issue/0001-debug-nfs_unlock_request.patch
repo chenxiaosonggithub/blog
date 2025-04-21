@@ -1,4 +1,4 @@
-From 456f8bf1e6987815abd966991dd85cc34b6e13eb Mon Sep 17 00:00:00 2001
+From 96c053af85c7a6a961f1dea4a09aa2c24b2cd88d Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 Date: Tue, 15 Apr 2025 16:59:33 +0800
 Subject: [PATCH] debug nfs_unlock_request()
@@ -10,22 +10,22 @@ Change-Id: I6fa808c7e267a8021e17127bab7d9a229d921567
  1 file changed, 44 insertions(+)
 
 diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
-index b38a780dc29b..d2353c67107a 100644
+index b38a780dc29b..91654894e322 100644
 --- a/fs/nfs/pagelist.c
 +++ b/fs/nfs/pagelist.c
 @@ -26,6 +26,18 @@
  
  #define NFSDBG_FACILITY		NFSDBG_PAGECACHE
  
-+#define NFS_TRACE_MAX_SIZE	15 // 栈的个数
++#define NFS_TRACE_MAX_SIZE	1024 // 栈的个数，消耗总内存 1024 * 288 = 288KB
 +#define NFS_LINE_PER_STACK	32 // 每个栈最大的行数
 +struct nfs_debug_trace {
-+	unsigned long line[NFS_LINE_PER_STACK];
-+	unsigned int trace_len;
-+	pid_t pid;
-+	char comm[TASK_COMM_LEN];
-+	struct nfs_page *nfs_page;
-+};
++	unsigned long line[NFS_LINE_PER_STACK]; // 8 * NFS_LINE_PER_STACK
++	unsigned int trace_len; // 4
++	pid_t pid; // 4
++	char comm[TASK_COMM_LEN]; // 16
++	struct nfs_page *nfs_page; // 8
++}; // 32 + 8 * NFS_LINE_PER_STACK = 288
 +
 +static struct nfs_debug_trace *nfs_debug_trace;
 +static atomic_t nfs_debug_trace_idx;
