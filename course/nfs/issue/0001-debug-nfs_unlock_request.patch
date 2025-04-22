@@ -1,109 +1,98 @@
-From 3f6e7d23661de923b08a6cd298e378789ddd2ffc Mon Sep 17 00:00:00 2001
+From 5a8ad995f0d32627f3919f68f25e7c2e52d26743 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
-Date: Mon, 14 Apr 2025 07:49:00 +0000
+Date: Tue, 15 Apr 2025 16:59:33 +0800
 Subject: [PATCH] debug nfs_unlock_request()
 
 Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
-Change-Id: I99805f2aa9ba4eeff7eb1ce2254b34865481281e
+Change-Id: I6fa808c7e267a8021e17127bab7d9a229d921567
 ---
- fs/nfs/pagelist.c        | 51 +++++++++++++++++++++++++++++++++++-----
- include/linux/nfs_page.h | 10 ++++----
- 2 files changed, 50 insertions(+), 11 deletions(-)
+ fs/nfs/pagelist.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
 diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
-index f1a7de54aa14..65a7c2450d17 100644
+index b38a780dc29b..6784ca4b6373 100644
 --- a/fs/nfs/pagelist.c
 +++ b/fs/nfs/pagelist.c
-@@ -372,22 +372,61 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
+@@ -26,6 +26,18 @@
+ 
+ #define NFSDBG_FACILITY		NFSDBG_PAGECACHE
+ 
++#define NFS_TRACE_MAX_SIZE	10240 // 栈的个数，消耗总内存 10240 * 288 = 2880KB
++#define NFS_LINE_PER_STACK	32 // 每个栈最大的行数
++struct nfs_debug_trace {
++	unsigned long line[NFS_LINE_PER_STACK]; // 8 * NFS_LINE_PER_STACK
++	unsigned int trace_len; // 4
++	pid_t pid; // 4
++	char comm[TASK_COMM_LEN]; // 16
++	struct nfs_page *nfs_page; // 8
++}; // 32 + 8 * NFS_LINE_PER_STACK = 288
++
++static struct nfs_debug_trace *nfs_debug_trace;
++static atomic_t nfs_debug_trace_idx;
+ static struct kmem_cache *nfs_page_cachep;
+ static const struct rpc_call_ops nfs_pgio_common_ops;
+ 
+@@ -371,6 +383,31 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
  	return req;
  }
  
-+#define TRACE_PRINT_TEST // 用于测试栈输出是否正常
-+#define PID_STR_LEN	8 // pid最大值4194304
-+#define TASK_INFO_STR_LEN	(PID_STR_LEN + 1 + TASK_COMM_LEN + 1)
-+
-+#define NFS_LINE_PER_STACK     32 // 每个栈最大的行数
-+static unsigned long stack_trace[NFS_LINE_PER_STACK];
-+static void nfs_debug_save_stack_trace(struct nfs_page *req)
++static void nfs_debug_print_trace(struct nfs_page *req)
 +{
-+	int curr_idx = (req->wb_trace->curr_buf_idx + 1) % NFS_PAGE_MAX_TASK;
-+	unsigned int trace_len;
-+
-+	req->wb_trace->curr_buf_idx = curr_idx;
-+	snprintf(req->wb_trace->buffer[curr_idx], PID_STR_LEN + TASK_COMM_LEN, "%*d,%*s,",
-+		 PID_STR_LEN, current->pid, TASK_COMM_LEN, current->comm);
-+	trace_len = stack_trace_save(stack_trace, NFS_LINE_PER_STACK, 2);
-+	stack_trace_snprint(req->wb_trace->buffer[curr_idx] + TASK_INFO_STR_LEN,
-+			    NFS_PAGE_TRACE_BUFFER_SIZE - TASK_INFO_STR_LEN, stack_trace,
-+			    trace_len, 2);
++	struct nfs_debug_trace *trace;
++	int i;
++	for (i = 0; i < NFS_TRACE_MAX_SIZE; i++) {
++		trace = &nfs_debug_trace[i];
++		if (req != trace->nfs_page)
++			continue;
++		printk("%s:%d, pid:%d, comm:%s, i:%d, req:%px\n", __func__, __LINE__,
++		       trace->pid, trace->comm, i, req);
++		stack_trace_print(trace->line, trace->trace_len, 2);
++	}
 +}
 +
-+static void nfs_debug_print_stack_trace(struct nfs_page *req)
++static void nfs_debug_save_trace(struct nfs_page *req)
 +{
-+	int buf_idx;
-+	int i;
-+	for (i = 0; i < NFS_PAGE_MAX_TASK; i++) {
-+		buf_idx = (req->wb_trace->curr_buf_idx + i) % NFS_PAGE_MAX_TASK;
-+		printk("%s\n", req->wb_trace->buffer[buf_idx]);
-+	}
++	int idx = atomic_add_return(1, &nfs_debug_trace_idx) % NFS_TRACE_MAX_SIZE;
++	struct nfs_debug_trace *trace = &nfs_debug_trace[idx];
++	trace->trace_len = stack_trace_save(trace->line, NFS_LINE_PER_STACK, 2);
++	trace->pid = current->pid;
++	strncpy(trace->comm, current->comm, TASK_COMM_LEN);
++	trace->nfs_page = req;
++	// nfs_debug_print_trace(req); // 用于测试输出内容是否正确
 +}
 +
  /**
   * nfs_unlock_request - Unlock request and wake up sleepers.
   * @req:
-  */
+@@ -378,9 +415,11 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
  void nfs_unlock_request(struct nfs_page *req)
  {
--	pid_t *pid = req->wb_trace->pid;
-+#ifdef TRACE_PRINT_TEST
-+	static int cnt = 0;
-+	cnt++;
-+#endif
-+
  	if (!NFS_WBACK_BUSY(req)) {
--		if (req->wb_trace->trace_len)
--			stack_trace_print(req->wb_trace->trace, req->wb_trace->trace_len, 2);
-+		nfs_debug_print_stack_trace(req);
++		nfs_debug_print_trace(req);
  		printk(KERN_ERR "NFS: Invalid unlock attempted\n");
  		BUG();
  	}
--	req->wb_trace->trace_len = stack_trace_save(req->wb_trace->trace, NFS_PAGE_MAX_TRACE, 2);
--	memmove(pid + 1, pid, (NFS_PAGE_MAX_TASK - 1) * sizeof(pid[0]));
--	pid[0] = current->pid;
-+
-+	nfs_debug_save_stack_trace(req);
-+#ifdef TRACE_PRINT_TEST
-+	if (cnt == 3) {
-+		nfs_debug_print_stack_trace(req);
-+		cnt = 0;
-+	}
-+#endif
-+
++	nfs_debug_save_trace(req);
  	smp_mb__before_atomic();
  	clear_bit(PG_BUSY, &req->wb_flags);
  	smp_mb__after_atomic();
-diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
-index ddc74dd3d6d9..1b83fc8aa607 100644
---- a/include/linux/nfs_page.h
-+++ b/include/linux/nfs_page.h
-@@ -39,12 +39,12 @@ enum {
- };
+@@ -1335,11 +1374,16 @@ int __init nfs_init_nfspagecache(void)
+ 	if (nfs_page_cachep == NULL)
+ 		return -ENOMEM;
  
- struct nfs_inode;
--#define NFS_PAGE_MAX_TRACE	64
--#define NFS_PAGE_MAX_TASK	5
-+
-+#define NFS_PAGE_MAX_TASK	3
-+#define NFS_PAGE_TRACE_BUFFER_SIZE	1024
- struct nfs_page_trace {
--	unsigned long trace[NFS_PAGE_MAX_TRACE];
--	unsigned int trace_len;
--	pid_t pid[NFS_PAGE_MAX_TASK];
-+	char buffer[NFS_PAGE_MAX_TASK][NFS_PAGE_TRACE_BUFFER_SIZE];
-+	int curr_buf_idx;
- };
++	nfs_debug_trace = kzalloc(sizeof(*nfs_debug_trace) * NFS_TRACE_MAX_SIZE, GFP_KERNEL);
++	if (!nfs_debug_trace)
++		return -ENOMEM;
++	atomic_set(&nfs_debug_trace_idx, 0);
+ 	return 0;
+ }
  
- struct nfs_page {
+ void nfs_destroy_nfspagecache(void)
+ {
++	kfree(nfs_debug_trace);
+ 	kmem_cache_destroy(nfs_page_cachep);
+ }
+ 
 -- 
 2.34.1
 
