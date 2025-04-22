@@ -28,6 +28,14 @@
 
 [点击这里查看我用左手练习的赵孟𫖯的《洛神赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-洛神赋.md)
 
+## 楷书-灵飞经
+
+[点击这里查看我用左手练习的《灵飞经》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-灵飞经.md)
+
+## 王羲之-行书-圣教序
+
+[点击这里查看我用左手练习的王羲之的《圣教序》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-王羲之-圣教序.md)
+
 # 楷书四大家
 
 [楷书四大家](https://baike.baidu.com/item/%E6%A5%B7%E4%B9%A6%E5%9B%9B%E5%A4%A7%E5%AE%B6):
