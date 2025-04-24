@@ -29,3 +29,6 @@
 [`3e2910c7e23b NFS: Improve warning message when locks are lost.`](https://chenxiaosong.com/course/nfs/patch/NFS-Improve-warning-message-when-locks-are-lost.html)
 
 [`600df3856f0b nfsd: Remove incorrect check in nfsd4_validate_stateid`](https://chenxiaosong.com/course/nfs/patch/nfsd-Remove-incorrect-check-in-nfsd4_validate_statei.html)
+
+[`patchset: Fix nfsv4.1 deadlock between nfs4_evict_inode() and nfs4_opendata_get_inode()`](https://chenxiaosong.com/course/nfs/patch/patchset-Fix-nfsv4.1-deadlock-between-nfs4_evict_inode-and-nfs4_opendata_get_inode.html)
+
