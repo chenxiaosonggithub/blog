@@ -171,7 +171,25 @@ sudo systemctl restart code-server@$USER
 
 有些格式的文件可能不会自动换行显示，可以勾选`View -> Word Wrap`。
 
-注意，和vscode客户端不一样，vscode server装插件时有些插件无法搜索到，这时就需要在[vscode网站](https://marketplace.visualstudio.com/vscode)下载`.vsix`文件，手动安装。
+注意，和vscode客户端不一样，vscode server装插件时有些插件无法搜索到，需要手动安装`.vsix`文件，
+但现在[vscode网站](https://marketplace.visualstudio.com/vscode)上已经无法下载`.vsix`文件了，需要通过源码编译。
+下面以[vscode-gnu-global插件](https://github.com/jaycetyle/vscode-gnu-global)
+（github仓库链接可在[vscode网站](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)上找到）为例说明编译过程:
+```sh
+# 先安装nodejs，用到node和npm命令
+wget https://nodejs.org/dist/v22.15.0/node-v22.15.0-linux-x64.tar.xz # 也可在 https://nodejs.org/zh-cn/download 获得其他版本的链接
+tar xvf node-v22.15.0-linux-x64.tar.xz # 可解压到指定路径
+cd node-v22.15.0-linux-x64/
+export PATH=$(pwd)/bin:$PATH # 这时就能找到node和npm命令了
+node -v
+npm -v
+# nodejs安装成功了，就可以开始编译打包.vsix文件了
+git clone https://github.com/jaycetyle/vscode-gnu-global.git
+cd vscode-gnu-global
+npm install # 安装信赖
+npm i vsce -g
+vsce package # 生成.vsix文件成功
+```
 
 <!-- public begin -->
 常用插件:
