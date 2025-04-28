@@ -34,3 +34,5 @@
 
 [sunrpc __rpc_execute()出现ERESTARTSYS的问题](https://chenxiaosong.com/course/nfs/issue/4.19-__rpc_execute-ERESTARTSYS.html)
 
+[4.19 nfs rdma协议不支持的问题](https://chenxiaosong.com/course/nfs/issue/4.19-rdma-not-supported.html)
+

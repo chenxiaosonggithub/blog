@@ -113,6 +113,7 @@ comm_array=(
 			1 1 course/nfs/issue/4.19-ll-time-longer-than-suse-4.12.md ~ "4.19内核执行ll时间比4.12内核(suse)长的问题"
 			1 1 course/nfs/issue/4.19-bug-in-nfs_unlock_request.md ~ "4.19内核nfs_unlock_request()报BUG()的问题"
 			1 1 course/nfs/issue/4.19-__rpc_execute-ERESTARTSYS.md ~ "sunrpc __rpc_execute()出现ERESTARTSYS的问题"
+			1 1 course/nfs/issue/4.19-rdma-not-supported.md ~ "4.19 nfs rdma协议不支持的问题"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"
@@ -171,7 +172,6 @@ comm_array=(
 	1 1 src/kernel/kprobe-scsi-data.md ~ "使用kprobe监控scsi的读写数据"
 	1 1 src/kernel/gio-to-mount.md ~ "gio执行慢的临时解决办法"
 	# nfs
-	1 1 src/nfs/4.19-rdma-not-supported.md ~ "4.19 rdma协议不支持的问题"
 	1 1 src/nfs/4.19-nfs-mount-hung.md ~ "4.19 nfs lazy umount 后无法挂载的问题"
 	1 1 src/nfs/unable-to-initialize-client-recovery-tracking.md ~ "重启nfs server后client打开文件卡顿很长时间的问题"
 	1 1 src/nfs/4.19-ltp-nfs-fail.md ~ "4.19 ltp nfs测试失败问题"

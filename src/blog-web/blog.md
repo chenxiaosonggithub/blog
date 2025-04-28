@@ -39,8 +39,6 @@ Linux内核加餐:
 
 [点击查看nfs文件系统课程（持续更新中）](https://chenxiaosong.com/course/nfs/nfs.html)
 
-[4.19 rdma协议不支持的问题](https://chenxiaosong.com/src/nfs/4.19-rdma-not-supported.html)
-
 [4.19 nfs lazy umount 后无法挂载的问题](https://chenxiaosong.com/src/nfs/4.19-nfs-mount-hung.html)
 
 [重启nfs server后client打开文件卡顿很长时间的问题](https://chenxiaosong.com/src/nfs/unable-to-initialize-client-recovery-tracking.html)
