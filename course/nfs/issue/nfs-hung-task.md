@@ -115,3 +115,8 @@ do_sys_open
 
 [参考《nfs client调试脚本》](https://chenxiaosong.com/course/nfs/debug.html#client-script)
 
+如果不想打开日志开头，只想看一下有多少个rpc任务在排队，可以只执行以下命令:
+```sh
+echo 0 > /proc/sys/sunrpc/rpc_debug
+```
+
