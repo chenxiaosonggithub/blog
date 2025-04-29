@@ -109,6 +109,10 @@ do_sys_open
           call_rwsem_down_write_failed
             rwsem_down_write_failed
               schedule // 让出cpu，超过120秒后报hung_task
+
+call_timeout
+  // 每个任务只会打印一次
+  printk(KERN_NOTICE "%s: server %s not responding, still trying\n"
 ```
 
 # 调试 {#debug}
