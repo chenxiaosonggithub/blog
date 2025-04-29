@@ -35,7 +35,7 @@ echo 0x0400 > /proc/sys/sunrpc/nfsd_debug # NFSDDBG_PNFS
 echo 0x0008 > /proc/sys/sunrpc/nlm_debug # NLMDBG_SVCLOCK
 ```
 
-# tcpdump抓包
+# tcpdump抓包 {#tcpdump}
 
 既然nfs涉及到网络，定位问题肯定也少不了网络抓包，甚至在绝大多数情况下，网络抓包能够比日志提供更有用更直观的信息，使用`tcpdump`工具抓包:
 ```sh
@@ -76,7 +76,7 @@ kill -SIGKILL <进程号>
 umount <挂载点>
 ```
 
-# 导出vmcore
+# 导出vmcore {#vmcore}
 
 在生产环境下，如果必须要快速恢复环境，且这个环境是可以接受重启系统，就可以尝试手动导出vmcore，vmcore中的信息有时对分析问题很有帮助:
 ```sh

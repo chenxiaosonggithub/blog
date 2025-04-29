@@ -327,7 +327,7 @@ int console_printk[4] = {
 
 `include/asm-generic/bug.h`文件中的`BUG_ON(condition)`当满足条件（`condition == true`）时会panic。`WARN_ON(condition)`当满足条件（`condition == true`）时不会panic，只会打印信息。
 
-## 动态打印
+## 动态打印 {#dynamic_print}
 
 打开配置`CONFIG_DYNAMIC_DEBUG`。
 
