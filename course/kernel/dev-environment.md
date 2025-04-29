@@ -176,7 +176,7 @@ sudo systemctl restart code-server@$USER
 下面以[vscode-gnu-global插件](https://github.com/jaycetyle/vscode-gnu-global)
 （github仓库链接可在[vscode网站](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)上找到）为例说明编译过程:
 ```sh
-# 先安装nodejs，用到node和npm命令
+# 先安装nodejs，包含编译插件需要用到的node和npm命令
 wget https://nodejs.org/dist/v22.15.0/node-v22.15.0-linux-x64.tar.xz # 也可在 https://nodejs.org/zh-cn/download 获得其他版本的链接
 tar xvf node-v22.15.0-linux-x64.tar.xz # 可解压到指定路径
 cd node-v22.15.0-linux-x64/
@@ -186,7 +186,7 @@ npm -v
 # nodejs安装成功了，就可以开始编译打包.vsix文件了
 git clone https://github.com/jaycetyle/vscode-gnu-global.git
 cd vscode-gnu-global
-npm install # 安装信赖
+npm install # 安装依赖
 npm i vsce -g
 vsce package # 生成.vsix文件成功
 ```
