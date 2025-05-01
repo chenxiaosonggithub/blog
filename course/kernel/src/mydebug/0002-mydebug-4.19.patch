@@ -1,0 +1,58 @@
+From dfd3f5d5bd985b33753be2fc5842edd022667474 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Thu, 1 May 2025 19:08:00 +0800
+Subject: [PATCH] mydebug: 4.19
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ Makefile          | 2 +-
+ mydebug/mydebug.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8df76f9b0712..acba740eb012 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1000,7 +1000,7 @@ endif
+ PHONY += prepare0
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ mydebug/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff --git a/mydebug/mydebug.c b/mydebug/mydebug.c
+index 8ed4dacce570..66cc0af17e0a 100644
+--- a/mydebug/mydebug.c
++++ b/mydebug/mydebug.c
+@@ -12,13 +12,14 @@
+  */
+ 
+ #include <linux/module.h>
+-#include <linux/device/class.h>
++#include <linux/device.h>
++#include <linux/sysfs.h>
+ #include <mydebug.h>
+ 
+ int mydebug_on_types = MYDEBUG_ON_PRINT;
+ 
+-static ssize_t debug_show(const struct class *class,
+-	const struct class_attribute *attr, char *buf)
++static ssize_t debug_show(struct class *class,
++	struct class_attribute *attr, char *buf)
+ {
+ 	ssize_t sz = 0;
+ 	int i, pos = 0;
+@@ -33,7 +34,7 @@ static ssize_t debug_show(const struct class *class,
+ 	return sz;
+ }
+ 
+-static ssize_t debug_store(const struct class *class, const struct class_attribute *attr,
++static ssize_t debug_store(struct class *class, struct class_attribute *attr,
+ 			   const char *buf, size_t len)
+ {
+ 	int i;
+-- 
+2.34.1
+
