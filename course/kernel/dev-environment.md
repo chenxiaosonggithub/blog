@@ -578,6 +578,7 @@ sync
 
 麒麟server 4.19安装内核rpm包的步骤:
 ```sh
+# 如果报错grub2-editenv: error: environment block too small.，就执行grub2-editenv create
 # kernel-devel-4.19.* kernel-headers-4.19.* 可不安装
 rpm -i kernel-4.19.* kernel-core-4.19.* kernel-modules-* --force
 cat /boot/grub2/grubenv # 查看默认启动项
