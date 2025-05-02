@@ -23,10 +23,10 @@ check_git() {
 	comm_check_repo ${code_path}/${repo} not_exist_repos not_clean_repos not_sync_repos ok_repos
 }
 
-check_git "blog"
-check_git "tmp"
-check_git "private-blog"
-check_git "private-tmp"
-check_git "myfs"
+. ${code_path}/blog/src/blog-web/repos.sh
 . ${code_path}/private-blog/script/check-gitee.sh
+for repo in ${repos_array[@]}
+do
+	check_git ${repo}
+done
 print_result
