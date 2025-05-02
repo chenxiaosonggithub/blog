@@ -24,7 +24,7 @@ check_git() {
 }
 
 . ${code_path}/blog/src/blog-web/repos.sh
-. ${code_path}/private-blog/script/check-gitee.sh
+. ${code_path}/private-blog/script/repos.sh
 for repo in ${repos_array[@]}
 do
 	check_git ${repo}
