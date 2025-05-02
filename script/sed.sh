@@ -35,9 +35,10 @@ sed_repo() {
 	done < <(printf "%s\n" "$(ls -1 -a)")
 }
 
-sed_repo "blog"
-sed_repo "tmp"
-sed_repo "private-blog"
-sed_repo "private-tmp"
-sed_repo "myfs"
+. ${code_path}/blog/src/blog-web/repos.sh
+. ${code_path}/private-blog/script/repos.sh
+for repo in ${repos_array[@]}
+do
+	sed_repo ${repo}
+done
 
