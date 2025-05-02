@@ -1,4 +1,4 @@
-# 内核态server搭建
+# 内核态server搭建 {#kernel-server-environment}
 
 ## 步骤
 
@@ -68,6 +68,42 @@ exportfs -auv # 全部删除
 - `/var/lib/nfs/etab`: 记录`/etc/exports`配置文件或`exportfs`命令分享出来的目录权限配置值。
 - `/var/lib/nfs/xtab`和`/var/lib/nfs/rmtab`: 记录客户端数据。
 
-# 用户态server搭建
+# 用户态server搭建 {#userspace-server-environment}
 
-[用户态nfs server: nfs-ganesha](https://github.com/nfs-ganesha/nfs-ganesha)。
+[点击这里查看用户态nfs server nfs-ganesha的github仓库](https://github.com/nfs-ganesha/nfs-ganesha)。
+
+以fedora为例，安装编译所需信赖软件:
+```sh
+dnf install -y librgw-devel userspace-rcu-devel libnsl2-devel
+```
+
+下载代码编译安装:
+```sh
+git clone --recursive https://github.com/nfs-ganesha/nfs-ganesha.git
+cd nfs-ganesha/
+git submodule update --init
+rm -rf build_dir; mkdir build_dir
+cd build_dir
+cmake ../src
+make -j`nproc`
+make install # 日志查看https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/ganesha-install-log.txt
+cp ../src/scripts/systemd/nfs-ganesha-lock.service.el8 /usr/lib/systemd/system/nfs-ganesha-lock.service
+cp ../src/scripts/systemd/nfs-ganesha.service.el7 /usr/lib/systemd/system/nfs-ganesha.service
+```
+
+配置文件可以参考[`config_samples`](https://github.com/nfs-ganesha/nfs-ganesha/tree/next/src/config_samples)。
+我使用了[`vfs.conf`](https://github.com/nfs-ganesha/nfs-ganesha/blob/next/src/config_samples/vfs.conf)。
+
+启动服务:
+```sh
+systemctl daemon-reload
+systemctl start nfs-ganesha
+```
+
+查看导出的目录:
+```sh
+showmount -e localhost
+```
+
+啥也看不到，为什么，哪里错了呢。
+
