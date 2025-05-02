@@ -1,4 +1,4 @@
-# 内核server搭建
+# 内核态server搭建
 
 请查看[smb server (ksmbd)](https://chenxiaosong.com/course/smb/ksmbd.html)。
 
