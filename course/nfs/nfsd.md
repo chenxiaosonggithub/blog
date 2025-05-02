@@ -84,7 +84,7 @@ cd nfs-ganesha/
 git submodule update --init
 rm -rf build_dir; mkdir build_dir
 cd build_dir
-cmake ../src
+cmake -DUSE_FSAL_VFS=ON ../src
 make -j`nproc`
 make install # 日志查看https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/ganesha-install-log.txt
 cp ../src/scripts/systemd/nfs-ganesha-lock.service.el8 /usr/lib/systemd/system/nfs-ganesha-lock.service
@@ -102,6 +102,7 @@ EXPORT
         Protocols = 3,4;
         Access_Type = RW;
         FSAL {
+                # ext4和xfs都可以写VFS
                 # todo: 怎么导出其他文件系统，比如tmpfs
                 Name = XFS;
         }
