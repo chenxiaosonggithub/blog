@@ -91,7 +91,7 @@ cp ../src/scripts/systemd/nfs-ganesha-lock.service.el8 /usr/lib/systemd/system/n
 cp ../src/scripts/systemd/nfs-ganesha.service.el7 /usr/lib/systemd/system/nfs-ganesha.service
 ```
 
-配置文件可以参考[`config_samples`](https://github.com/nfs-ganesha/nfs-ganesha/tree/next/src/config_samples)。
+配置文件的位置在`/etc/ganesha/ganesha.conf`，可以参考[`config_samples`](https://github.com/nfs-ganesha/nfs-ganesha/tree/next/src/config_samples)。
 我使用了[`vfs.conf`](https://github.com/nfs-ganesha/nfs-ganesha/blob/next/src/config_samples/vfs.conf)。
 
 启动服务:
