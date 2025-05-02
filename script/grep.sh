@@ -30,9 +30,10 @@ grep_repo() {
 	done < <(printf "%s\n" "$(ls -1 -a)")
 }
 
-grep_repo "blog"
-grep_repo "tmp"
-grep_repo "private-blog"
-grep_repo "private-tmp"
-grep_repo "myfs"
+. ${code_path}/blog/src/blog-web/repos.sh
+. ${code_path}/private-blog/script/repos.sh
+for repo in ${repos_array[@]}
+do
+	grep_repo ${repo}
+done
 
