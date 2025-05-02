@@ -72,7 +72,7 @@ exportfs -auv # 全部删除
 
 [nfs-ganesha的github仓库](https://github.com/nfs-ganesha/nfs-ganesha)。
 
-以fedora为例，安装编译所需信赖软件:
+以fedora为例，安装编译所需依赖软件:
 ```sh
 dnf install -y librgw-devel userspace-rcu-devel libnsl2-devel
 ```
@@ -91,8 +91,41 @@ cp ../src/scripts/systemd/nfs-ganesha-lock.service.el8 /usr/lib/systemd/system/n
 cp ../src/scripts/systemd/nfs-ganesha.service.el7 /usr/lib/systemd/system/nfs-ganesha.service
 ```
 
-配置文件的位置在`/etc/ganesha/ganesha.conf`，可以参考[`config_samples`](https://github.com/nfs-ganesha/nfs-ganesha/tree/next/src/config_samples)。
-我使用了[`vfs.conf`](https://github.com/nfs-ganesha/nfs-ganesha/blob/next/src/config_samples/vfs.conf)。
+配置文件的位置在`/etc/ganesha/ganesha.conf`，可以参考[`config_samples`](https://github.com/nfs-ganesha/nfs-ganesha/tree/next/src/config_samples)，
+下面示例的配置中`/tmp/s_test`挂载的是xfs文件系统:
+```sh
+EXPORT
+{
+        Export_Id = 12345;
+        Path = /tmp/s_test;
+        Pseudo = /;
+        Protocols = 3,4;
+        Access_Type = RW;
+        FSAL {
+                # todo: 怎么导出其他文件系统，比如tmpfs
+                Name = XFS;
+        }
+}
+
+NFSV4 {
+        # 作为设置 idmapper 程序的替代方法
+        Allow_Numeric_Owners = true;
+        Only_Numeric_Owners = true;
+}
+```
+
+如果要调试，可以加上以下配置:
+```sh
+LOG {
+        # Default log level for all components
+        Default_Log_Level = DEBUG;
+}
+```
+
+查看调试日志:
+```sh
+journalctl -u nfs-ganesha -b
+```
 
 启动服务:
 ```sh
@@ -105,5 +138,5 @@ systemctl start nfs-ganesha
 showmount -e localhost
 ```
 
-啥也看不到，为什么，哪里错了呢。
+然后就能正常挂载了。
 
