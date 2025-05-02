@@ -70,7 +70,7 @@ exportfs -auv # 全部删除
 
 # 用户态server搭建 {#userspace-server-environment}
 
-[点击这里查看用户态nfs server nfs-ganesha的github仓库](https://github.com/nfs-ganesha/nfs-ganesha)。
+[nfs-ganesha的github仓库](https://github.com/nfs-ganesha/nfs-ganesha)。
 
 以fedora为例，安装编译所需信赖软件:
 ```sh
