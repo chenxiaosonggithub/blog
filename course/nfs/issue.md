@@ -36,3 +36,5 @@
 
 [4.19 nfs rdma协议不支持的问题](https://chenxiaosong.com/course/nfs/issue/4.19-rdma-not-supported.html)
 
+[nfs-ganesha不支持导出tmpfs的问题](https://chenxiaosong.com/course/nfs/issue/ganesha-not-support-tmpfs.html)
+
