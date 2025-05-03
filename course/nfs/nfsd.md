@@ -92,7 +92,7 @@ cp ../src/scripts/systemd/nfs-ganesha.service.el7 /usr/lib/systemd/system/nfs-ga
 ```
 
 配置文件的位置在`/etc/ganesha/ganesha.conf`，可以参考[`config_samples`](https://github.com/nfs-ganesha/nfs-ganesha/tree/next/src/config_samples)，
-下面示例的配置中`/tmp/s_test`挂载的是xfs文件系统:
+下面示例的配置文件`/etc/ganesha/ganesha.conf`中`/tmp/s_test`挂载的是xfs文件系统:
 ```sh
 EXPORT
 {
@@ -115,7 +115,7 @@ NFSV4 {
 }
 ```
 
-如果要调试，可以加上以下配置:
+如果要调试，可以在`/etc/ganesha/ganesha.conf`加上以下配置:
 ```sh
 LOG {
         # Default log level for all components
@@ -123,15 +123,17 @@ LOG {
 }
 ```
 
-查看调试日志:
-```sh
-journalctl -u nfs-ganesha -b
-```
-
 启动服务:
 ```sh
 systemctl daemon-reload
 systemctl start nfs-ganesha
+```
+
+查看调试日志:
+```sh
+journalctl -u nfs-ganesha -b
+journalctl -u nfs-ganesha -b --no-pager > log.txt # 重定向到文件
+# rm -rf /var/log/journal/* # 日志太多可以清空
 ```
 
 查看导出的目录:
