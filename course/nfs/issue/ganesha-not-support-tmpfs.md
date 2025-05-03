@@ -27,20 +27,9 @@ journalctl -u nfs-ganesha -b --no-pager > tmpfs-log.txt
 May 03 13:09:20 localhost.localdomain nfs-ganesha[1263]: [main] populate_posix_file_systems :FSAL :DEBUG :Ignoring /tmp because type tmpfs
 ```
 
-# 解决
+# 补丁
 
-```sh
---- a/src/FSAL/localfs.c
-+++ b/src/FSAL/localfs.c
-@@ -945,8 +945,7 @@ int populate_posix_file_systems(const char *path)
-                    strcasecmp(mnt->mnt_type, "configfs") == 0 ||
-                    strcasecmp(mnt->mnt_type, "binfmt_misc") == 0 ||
-                    strcasecmp(mnt->mnt_type, "rpc_pipefs") == 0 ||
--                   strcasecmp(mnt->mnt_type, "vboxsf") == 0 ||
--                   strcasecmp(mnt->mnt_type, "tmpfs") == 0) {
-+                   strcasecmp(mnt->mnt_type, "vboxsf") == 0) {
-                        LogDebug(COMPONENT_FSAL, "Ignoring %s because type %s",
-                                 mnt->mnt_dir, mnt->mnt_type);
-                        continue;
-```
+回退补丁[`e21025367 Fixed GPFS create export issue during claim_posix_filesystem`](https://github.com/nfs-ganesha/nfs-ganesha/commit/e21025367)就能导出tmpfs。
+
+这个补丁是为了解决[export fails due to stale dev id entry in avl tree (issue with resolve_posix_filesystem())](https://github.com/nfs-ganesha/nfs-ganesha/issues/857)。
 
