@@ -386,6 +386,7 @@ int this_is_func(int arg0, int arg1)
                 printk("%s:%d, BIT(2)\n", __func__, __LINE__);
         }
         ...
+}
 ```
 
 # `kdump`和`crash` {#kdump-crash}
