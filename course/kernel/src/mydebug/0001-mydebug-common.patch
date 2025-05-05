@@ -1,15 +1,15 @@
-From 283bd780053d934cd9be4d0cbd9aef50e1a4172c Mon Sep 17 00:00:00 2001
+From a71e123aec00eb9e0eb6218b745ebdba9edcee34 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Thu, 1 May 2025 19:01:20 +0800
-Subject: [PATCH 1/2] mydebug: common
+Subject: [PATCH] mydebug: common
 
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 ---
  include/mydebug.h |   1 +
- mydebug/Makefile  |   9 +++++
- mydebug/mydebug.c | 101 ++++++++++++++++++++++++++++++++++++++++++++++
+ mydebug/Makefile  |   9 ++++
+ mydebug/mydebug.c | 102 ++++++++++++++++++++++++++++++++++++++++++++++
  mydebug/mydebug.h |  24 +++++++++++
- 4 files changed, 135 insertions(+)
+ 4 files changed, 136 insertions(+)
  create mode 120000 include/mydebug.h
  create mode 100644 mydebug/Makefile
  create mode 100644 mydebug/mydebug.c
@@ -40,10 +40,10 @@ index 000000000000..14a768de88b9
 +obj-y :=	mydebug.o
 diff --git a/mydebug/mydebug.c b/mydebug/mydebug.c
 new file mode 100644
-index 000000000000..8ed4dacce570
+index 000000000000..e9434f84a7e1
 --- /dev/null
 +++ b/mydebug/mydebug.c
-@@ -0,0 +1,101 @@
+@@ -0,0 +1,102 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (C) 2025
@@ -62,6 +62,7 @@ index 000000000000..8ed4dacce570
 +#include <mydebug.h>
 +
 +int mydebug_on_types = MYDEBUG_ON_PRINT;
++EXPORT_SYMBOL(mydebug_on_types);
 +
 +static ssize_t debug_show(const struct class *class,
 +	const struct class_attribute *attr, char *buf)
