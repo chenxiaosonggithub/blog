@@ -370,6 +370,8 @@ ccflags-y += -DVERBOSE_DEBUG
 cat /sys/class/mydebug-ctrl/debug # 开机时默认打开第0个开关
 echo 31 > /sys/class/mydebug-ctrl/debug # 打开第31个开关
 echo 32 > /sys/class/mydebug-ctrl/debug # 无效，总共32个开关（0 ~ 31）
+echo all > /sys/class/mydebug-ctrl/debug # 打开全部开头
+echo all > /sys/class/mydebug-ctrl/debug # 再执行一次就是关闭全部开头
 ```
 
 代码使用示例:
