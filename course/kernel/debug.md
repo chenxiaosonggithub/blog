@@ -357,6 +357,37 @@ ccflags-y += -DDEBUG
 ccflags-y += -DVERBOSE_DEBUG
 ```
 
+# `mydebug`模块 {#mydebug}
+
+为了方便调试，我自己写了一个[`mydebug`模块](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/mydebug)，
+4.19内核合入[`0001-mydebug-common.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0001-mydebug-common.patch)和
+[`0002-mydebug-4.19.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0002-mydebug-4.19.patch)，
+主线最新代码合入[`0001-mydebug-common.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0001-mydebug-common.patch)和
+[`0002-mydebug-mainline.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0002-mydebug-mainline.patch)。
+
+改变`/sys/class/mydebug-ctrl/debug`文件的值就能控制调试开关:
+```sh
+cat /sys/class/mydebug-ctrl/debug # 开机时默认打开第0个开关
+echo 31 > /sys/class/mydebug-ctrl/debug # 打开第31个开关
+echo 32 > /sys/class/mydebug-ctrl/debug # 无效，总共32个开关（0 ~ 31）
+```
+
+代码使用示例:
+```c
+...
+#include <mydebug.h>
+...
+int this_is_func(int arg0, int arg1)
+{
+        ...
+        mydebug_print("mydebug_print()\n");
+        if (mydebug_on_types & BIT(2)) {
+                ...
+                printk("%s:%d, BIT(2)\n", __func__, __LINE__);
+        }
+        ...
+```
+
 # `kdump`和`crash` {#kdump-crash}
 
 <!-- https://github.com/gatieme/LDD-LinuxDeviceDrivers/blob/master/study/debug/tools/systemtap/01-install/README.md -->
