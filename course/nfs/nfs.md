@@ -2,7 +2,7 @@
 
 [点击这里查看配套的教学视频](https://chenxiaosong.com/course/nfs/video.html)。
 
-参考网站:
+参考网站（繁体网站可以用[沉浸式翻译网页插件](https://immersivetranslate.com/zh-Hans/)）:
 
 - [鸟哥的Linux私房菜 简体 - "NFS服务器"章节](http://cn.linux.vbird.org/linux_server/#part3)
 - [鸟哥的Linux私房菜 繁体 - "NFS伺服器"](https://linux.vbird.org/linux_server/centos6/0330nfs.php)
