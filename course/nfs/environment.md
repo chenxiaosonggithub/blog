@@ -40,14 +40,14 @@ mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 
 三台机器，其中KDC全称Key Distribution Center:
 
-- kerberos KDC：kdc.book.vbird：192.168.53.37
-- NFS server：server.book.vbird：192.168.53.38
+- kerberos KDC：kdc.book.vbird：192.168.53.209
+- NFS server：server.book.vbird：192.168.53.210
 - NFS client：client.book.vbird：192.168.53.211
 
 三台机器都在`/etc/hosts`中添加以下内容:
 ```sh
-192.168.53.37      kdc.book.vbird          kdc
-192.168.53.38      server.book.vbird       server
+192.168.53.209     kdc.book.vbird          kdc
+192.168.53.210     server.book.vbird       server
 192.168.53.211     client.book.vbird       client
 ```
 
@@ -165,7 +165,7 @@ kadmin.local:  listprincs # 查看
 kadmin.local:  exit
 ```
 
-# nfs server
+## nfs server
 
 安装软件:
 ```sh
@@ -287,4 +287,15 @@ showmount -e server
 mount -t nfs -o sec=krb5p server.book.vbird:/ /mnt
 mount -t nfs -o sec=krb5p server:/ /mnt # 也可以不写完整的域名
 ```
+
+## Troubleshooting
+
+按照上面的步骤，没法挂载成功，慢慢折腾吧。
+
+```sh
+echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # 打开nfs日志
+echo 0x7fff > /proc/sys/sunrpc/rpc_debug # 打开rpc日志
+```
+
+
 
