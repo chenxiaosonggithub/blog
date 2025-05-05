@@ -23,6 +23,12 @@ exportfs -u *:/tmp/s_test # 删除
 
 执行脚本[nfs-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/nfs-svr-setup.sh)启动nfs server，其中，`rpcbind`（在服务文件`/lib/systemd/system/rpcbind.service`中）负责端口的对应工作（以前叫`portmap`），其他程序请查看`/lib/systemd/system/nfs-server.service`服务文件。
 
+查看支持的nfs版本:
+```sh
+cat /proc/fs/nfsd/versions
+# -2 +3 +4 +4.1 +4.2 # 加号表示支持，减号表示不支持
+```
+
 ## 软件和配置文件
 
 `/etc/exports`的配置格式如下:
