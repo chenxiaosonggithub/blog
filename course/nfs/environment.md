@@ -38,7 +38,7 @@ mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 
 参考[鸟哥《利用 kerberos 提供票據加密》](https://linux.vbird.org/events/kerberos.php)。
 
-三台机器:
+三台机器，其中KDC全称Key Distribution Center:
 
 - kerberos KDC：kdc.book.vbird：192.168.53.37
 - NFS server：server.book.vbird：192.168.53.38
@@ -51,7 +51,9 @@ mount -t nfs -o vers=4.0 ${server_ip}:/tmp/s_test /mnt # 或 tmp/s_test
 192.168.53.211     client.book.vbird       client
 ```
 
-## 设置KDC服务器
+## kerberos KDC
+
+### 设置KDC服务器
 
 安装软件:
 ```sh
@@ -138,8 +140,9 @@ kadmin:  listprincs # 执行有输出就是成功了
 kadmin:  exit
 ```
 
-## 建立 KDC 资料库的主机规则(principal)
+### 建立KDC数据库的主机规则(principal)
 
+在kerberos KDC环境上:
 ```sh
 kadmin.local
 # -randkey host/: 增加 KDC 用户端主机
@@ -154,7 +157,7 @@ kadmin.local:  listprincs # 查看刚刚添加的两个
 kadmin.local:  exit
 ```
 
-如果三个系统上都有一个`test`用户，还可以执行以下命令，但一般我们用不到:
+如果三个系统上都有一个`test`用户，还可以执行以下命令，但一般我们测试如果只用到`root`用户就不用执行以下命令:
 ```sh
 kadmin.local
 kadmin.local:  addprinc test # 要输入两次密码
@@ -162,15 +165,126 @@ kadmin.local:  listprincs # 查看
 kadmin.local:  exit
 ```
 
-## nfs server
+# nfs server
 
+安装软件:
+```sh
+yum install -y krb5-workstation pam_krb5
+```
+
+设置hostname:
 ```sh
 hostnamectl set-hostname server.book.vbird
 ```
 
-## nfs server
+从KDC复制配置文件:
+```sh
+scp kdc:/etc/krb5.conf /etc
+```
 
+登入 KDC 数据库，并建立本身的票据资料与 client 的票据资料:
+```sh
+kadmin # 要输入密码
+kadmin:  listprincs # 查看
+kadmin:  ktadd host/server.book.vbird@BOOK.VBIRD
+kadmin:  ktadd nfs/server.book.vbird@BOOK.VBIRD
+kadmin:  ktadd -k /root/client.keytab host/client.book.vbird@BOOK.VBIRD
+kadmin:  ktadd -k /root/client.keytab nfs/client.book.vbird@BOOK.VBIRD
+kadmin:  exit
+```
+
+这时，就多出了两个文件:
+```sh
+ll /etc/krb5.keytab /root/client.keytab
+# -rw------- 1 root root 336 May  5 15:28 /etc/krb5.keytab # 权限要是600
+# -rw------- 1 root root 336 May  5 15:28 /root/client.keytab
+```
+
+使用`klist`命令查看:
+```sh
+klist -k
+  # Keytab name: FILE:/etc/krb5.keytab
+  # KVNO Principal
+  # ---- --------------------------------------------------------------------------
+  #    2 host/server.book.vbird@BOOK.VBIRD
+  #    2 host/server.book.vbird@BOOK.VBIRD
+  #    2 nfs/server.book.vbird@BOOK.VBIRD
+  #    2 nfs/server.book.vbird@BOOK.VBIRD
+klist -t /root/client.keytab -k
+  # Keytab name: FILE:/root/client.keytab
+  # KVNO Timestamp           Principal
+  # ---- ------------------- ------------------------------------------------------
+  #    2 05/05/2025 15:28:08 host/client.book.vbird@BOOK.VBIRD
+  #    2 05/05/2025 15:28:08 host/client.book.vbird@BOOK.VBIRD
+  #    2 05/05/2025 15:28:14 nfs/client.book.vbird@BOOK.VBIRD
+  #    2 05/05/2025 15:28:14 nfs/client.book.vbird@BOOK.VBIRD
+```
+
+在`/etc/exports`文件中添加`sec=krb5p`:
+```sh
+/tmp/ *(rw,sec=krb5p,no_root_squash,fsid=0)
+/tmp/s_test/ *(rw,sec=krb5p,no_root_squash,fsid=1)
+/tmp/s_scratch *(rw,sec=krb5p,no_root_squash,fsid=2)
+```
+
+启动服务:
+```sh
+systemctl restart nfs-server
+systemctl status nfs-server 
+systemctl status rpc-gssd
+```
+
+查看导出的目录:
+```sh
+showmount -e localhost
+```
+
+## nfs client
+
+安装软件:
+```sh
+yum -y install krb5-workstation pam_krb5
+```
+
+设置hostname:
 ```sh
 hostnamectl set-hostname client.book.vbird
+```
+
+从另外两个环境复制文件，注意一定要先操作nfs server环境，不然复制个卵:
+```sh
+scp kdc:/etc/krb5.conf /etc # 从kdc复制
+scp server:/root/client.keytab /etc/krb5.keytab # 从nfs server复制
+ll -Z /etc/krb5.keytab # print any security context of each file
+```
+
+查看:
+```sh
+klist -k
+  # Keytab name: FILE:/etc/krb5.keytab
+  # KVNO Principal
+  # ---- --------------------------------------------------------------------------
+  #    2 host/client.book.vbird@BOOK.VBIRD
+  #    2 host/client.book.vbird@BOOK.VBIRD
+  #    2 nfs/client.book.vbird@BOOK.VBIRD
+  #    2 nfs/client.book.vbird@BOOK.VBIRD
+```
+
+启动服务（是否必需？）:
+```sh
+systemctl restart nfs-client.target
+systemctl enable nfs-client.target
+systemctl status rpc-gssd
+```
+
+查看nfs server的导出:
+```sh
+showmount -e server
+```
+
+挂载:
+```sh
+mount -t nfs -o sec=krb5p server.book.vbird:/ /mnt
+mount -t nfs -o sec=krb5p server:/ /mnt # 也可以不写完整的域名
 ```
 
