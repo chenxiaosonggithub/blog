@@ -22,7 +22,7 @@
 
 # [Parallel NFS (pNFS)](https://chenxiaosong.com/course/nfs/pnfs.html)
 
-# [nfs server(nfsd)](https://chenxiaosong.com/course/nfs/nfsd.html)
+# [nfs server](https://chenxiaosong.com/course/nfs/server.html)
 
 # [nfs调试方法](https://chenxiaosong.com/course/nfs/debug.html)
 

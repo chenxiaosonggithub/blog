@@ -1,6 +1,6 @@
 # nfs server环境
 
-[请查看《nfs server(nfsd)》](https://chenxiaosong.com/course/nfs/nfsd.html)
+[请查看《nfs server》](https://chenxiaosong.com/course/nfs/server.html)
 
 # nfs client环境
 
