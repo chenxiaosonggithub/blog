@@ -75,6 +75,7 @@
 - [046-fedora使用kdump和systemtap](https://www.bilibili.com/video/BV1dT421r7SB/)
 - [047-systemtap调试最新内核](https://www.bilibili.com/video/BV1Ez421q7yu/)
 - [加餐: 004-bpftrace](https://www.bilibili.com/video/BV1ej4sepEyr/)
+- [加餐: 007-mydebug调试模块（上）](https://www.bilibili.com/video/BV18gVkzXEbN/)
 
 # 内存管理
 
