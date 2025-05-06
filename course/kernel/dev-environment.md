@@ -479,7 +479,7 @@ make clean # 清除编译结果
 
 注意minix文件系统的`Makefile`中的`minix-objs`要改成`minix-y`。
 
-## 内核文档编译
+## 内核文档编译 {#kernel-doc-build}
 
 参考[简介 — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/translations/zh_CN/doc-guide/sphinx.html)。
 
