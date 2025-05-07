@@ -19,5 +19,5 @@ chmod 777 /tmp/s_scratch
 mkdir /tmp/test
 mkdir /tmp/scratch
 
-ksmbd.control --shutdown
-ksmbd.mountd
+systemctl restart ksmbd
+
