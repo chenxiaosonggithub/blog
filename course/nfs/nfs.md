@@ -18,7 +18,7 @@
 
 # [nfs环境](https://chenxiaosong.com/course/nfs/environment.html)
 
-# [nfs client数据结构](https://chenxiaosong.com/course/nfs/client.html)
+# [nfs client数据结构](https://chenxiaosong.com/course/nfs/client-data-structure.html)
 
 # [Parallel NFS (pNFS)](https://chenxiaosong.com/course/nfs/pnfs.html)
 
