@@ -85,7 +85,7 @@ sudo ksmbd.adduser --delete root # 删除用户
         path = /tmp/s_test
 ```
 
-执行脚本[ksmbd-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/ksmbd-svr-setup.sh)启动内核的ksmbd server。
+执行脚本[ksmbd-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/ksmbd-svr-setup.sh)启动内核的ksmbd server。
 
 ```sh
 sudo ksmbd.control --shutdown # 关闭
@@ -109,3 +109,4 @@ kthread
                     do_dentry_open
                       ext2_file_open
 ```
+

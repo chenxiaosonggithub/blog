@@ -52,7 +52,7 @@ pam password change = yes
     writeable = yes
 ```
 
-执行脚本[samba-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/samba-svr-setup.sh)启动用户态的samba server。
+执行脚本[samba-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/samba-svr-setup.sh)启动用户态的samba server。
 
 - `nmbd`用于管理工作组和NetBIOS name，通过UDP开启端口137和138解析名称。
 - `smbd`权限管理, 用于管理SAMBA主机共享的目录、文件和打印机等，通过TCP来传输数据，端口为139和445，ksmbd监听的端口是445。
