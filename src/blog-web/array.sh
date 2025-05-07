@@ -64,7 +64,7 @@ comm_array=(
 		1 1 course/nfs/video.md ~ "nfs课程配套视频"
 		1 1 course/nfs/introduction.md ~ "nfs简介"
 		1 1 course/nfs/environment.md ~ "nfs环境"
-		1 1 course/nfs/client.md ~ "nfs client数据结构和函数流程"
+		1 1 course/nfs/client.md ~ "nfs client数据结构"
 		1 1 course/nfs/pnfs.md ~ "Parallel NFS (pNFS)"
 		1 1 course/nfs/server.md ~ "nfs server"
 		1 1 course/nfs/debug.md ~ "nfs调试方法"
