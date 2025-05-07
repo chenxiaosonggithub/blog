@@ -1,6 +1,6 @@
 # 问题描述
 
-在我写[用户态nfs server搭建](https://chenxiaosong.com/course/nfs/server.html#userspace-server-environment)时，刚开始尝试导出的是`/tmp`目录，发现无法导出成功。
+在我写[用户态nfs server搭建](https://chenxiaosong.com/course/nfs/environment.html#userspace-server-environment)时，刚开始尝试导出的是`/tmp`目录，发现无法导出成功。
 
 也许最后可能定位出来不是一个问题，但把这个过程记录一下还是挺有意思的，至少可以熟悉一下nfs-ganesha的代码。
 

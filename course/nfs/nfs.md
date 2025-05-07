@@ -22,8 +22,6 @@
 
 # [Parallel NFS (pNFS)](https://chenxiaosong.com/course/nfs/pnfs.html)
 
-# [nfs server](https://chenxiaosong.com/course/nfs/server.html)
-
 # [nfs调试方法](https://chenxiaosong.com/course/nfs/debug.html)
 
 # [nfs多路径](https://chenxiaosong.com/course/nfs/multipath.html)
