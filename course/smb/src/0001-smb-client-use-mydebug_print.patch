@@ -1,13 +1,28 @@
-From 199c1fbc04f68e5185cfa3817b9389ae5f5e9de8 Mon Sep 17 00:00:00 2001
+From e20b14b049d091373e65c10cc0f196a2017b3543 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Wed, 7 May 2025 15:56:49 +0800
 Subject: [PATCH] smb/client: use mydebug_print()
 
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 ---
+ fs/smb/client/cifs_debug.c |  2 +-
  fs/smb/client/cifs_debug.h | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ fs/smb/client/transport.c  |  2 +-
+ 3 files changed, 17 insertions(+), 15 deletions(-)
 
+diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
+index e03c890de0a0..567425af3135 100644
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -30,7 +30,7 @@
+ void
+ cifs_dump_mem(char *label, void *data, int length)
+ {
+-	pr_debug("%s: dump of %d bytes of data at 0x%p\n", label, length, data);
++	cifs_info("%s: dump of %d bytes of data at 0x%p\n", label, length, data);
+ 	print_hex_dump(KERN_DEBUG, "", DUMP_PREFIX_OFFSET, 16, 4,
+ 		       data, length, true);
+ }
 diff --git a/fs/smb/client/cifs_debug.h b/fs/smb/client/cifs_debug.h
 index ce5cfd236fdb..6869fa66882e 100644
 --- a/fs/smb/client/cifs_debug.h
@@ -83,6 +98,19 @@ index ce5cfd236fdb..6869fa66882e 100644
  	}								\
  } while (0)
  
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index 266af17aa7d9..5c29b5327c0f 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -143,7 +143,7 @@ void __release_mid(struct kref *refcount)
+ 		trace_smb3_slow_rsp(smb_cmd, midEntry->mid, midEntry->pid,
+ 			       midEntry->when_sent, midEntry->when_received);
+ 		if (cifsFYI & CIFS_TIMER) {
+-			pr_debug("slow rsp: cmd %d mid %llu",
++			cifs_info("slow rsp: cmd %d mid %llu",
+ 				 midEntry->command, midEntry->mid);
+ 			cifs_info("A: 0x%lx S: 0x%lx R: 0x%lx\n",
+ 				  now - midEntry->when_alloc,
 -- 
 2.34.1
 
