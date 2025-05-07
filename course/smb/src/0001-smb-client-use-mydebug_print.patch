@@ -1,0 +1,88 @@
+From 199c1fbc04f68e5185cfa3817b9389ae5f5e9de8 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Wed, 7 May 2025 15:56:49 +0800
+Subject: [PATCH] smb/client: use mydebug_print()
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/client/cifs_debug.h | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
+
+diff --git a/fs/smb/client/cifs_debug.h b/fs/smb/client/cifs_debug.h
+index ce5cfd236fdb..6869fa66882e 100644
+--- a/fs/smb/client/cifs_debug.h
++++ b/fs/smb/client/cifs_debug.h
+@@ -33,6 +33,8 @@ extern int cifsFYI;
+ #endif
+ #define ONCE 8
+ 
++#include <mydebug.h>
++
+ /*
+  *	debug ON
+  *	--------
+@@ -53,7 +55,7 @@ extern int cifsFYI;
+ 
+ /* Information level messages, minor events */
+ #define cifs_info_func(ratefunc, fmt, ...)				\
+-	pr_info_ ## ratefunc(fmt, ##__VA_ARGS__)
++	mydebug_print(fmt, ##__VA_ARGS__)
+ 
+ #define cifs_info(fmt, ...)						\
+ 	cifs_info_func(ratelimited, fmt, ##__VA_ARGS__)
+@@ -62,12 +64,12 @@ extern int cifsFYI;
+ #define cifs_dbg_func(ratefunc, type, fmt, ...)				\
+ do {									\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+-		pr_debug_ ## ratefunc("%s: " fmt,			\
++		mydebug_print("%s: " fmt,				\
+ 				      __FILE__, ##__VA_ARGS__);		\
+ 	} else if ((type) & VFS) {					\
+-		pr_err_ ## ratefunc("VFS: " fmt, ##__VA_ARGS__);	\
+-	} else if ((type) & NOISY && (NOISY != 0)) {			\
+-		pr_debug_ ## ratefunc(fmt, ##__VA_ARGS__);		\
++		mydebug_print("VFS: " fmt, ##__VA_ARGS__);		\
++	} else {							\
++		mydebug_print(fmt, ##__VA_ARGS__);			\
+ 	}								\
+ } while (0)
+ 
+@@ -83,14 +85,14 @@ do {									\
+ do {									\
+ 	spin_lock(&server->srv_lock);					\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+-		pr_debug_ ## ratefunc("%s: \\\\%s " fmt,		\
++		mydebug_print("%s: \\\\%s " fmt,			\
+ 				      __FILE__, server->hostname,	\
+ 				      ##__VA_ARGS__);			\
+ 	} else if ((type) & VFS) {					\
+-		pr_err_ ## ratefunc("VFS: \\\\%s " fmt,			\
++		mydebug_print("VFS: \\\\%s " fmt,			\
+ 				    server->hostname, ##__VA_ARGS__);	\
+-	} else if ((type) & NOISY && (NOISY != 0)) {			\
+-		pr_debug_ ## ratefunc("\\\\%s " fmt,			\
++	} else {							\
++		mydebug_print("\\\\%s " fmt,				\
+ 				      server->hostname, ##__VA_ARGS__);	\
+ 	}								\
+ 	spin_unlock(&server->srv_lock);					\
+@@ -111,12 +113,12 @@ do {									\
+ 	if (tcon && tcon->tree_name)					\
+ 		tn = tcon->tree_name;					\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+-		pr_debug_ ## ratefunc("%s: %s "	fmt,			\
++		mydebug_print("%s: %s "	fmt,				\
+ 				      __FILE__, tn, ##__VA_ARGS__);	\
+ 	} else if ((type) & VFS) {					\
+-		pr_err_ ## ratefunc("VFS: %s " fmt, tn, ##__VA_ARGS__);	\
+-	} else if ((type) & NOISY && (NOISY != 0)) {			\
+-		pr_debug_ ## ratefunc("%s " fmt, tn, ##__VA_ARGS__);	\
++		mydebug_print("VFS: %s " fmt, tn, ##__VA_ARGS__);	\
++	} else {							\
++		mydebug_print("%s " fmt, tn, ##__VA_ARGS__);	\
+ 	}								\
+ } while (0)
+ 
+-- 
+2.34.1
+
