@@ -75,7 +75,7 @@ echo -n '+p' > control # 所有打印
 打上[`mydebug`模块](https://chenxiaosong.com/course/kernel/debug.html#mydebug)的补丁后，
 再打上补丁[`0001-smb-client-use-mydebug_print.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/0001-smb-client-use-mydebug_print.patch)。
 
-另外还会有一些动态打印（使用`pr_debug()`），所以还要打开动态打印的开关:
+另外可能还会有一些新增的动态打印（使用`pr_debug()`），可以用以下命令查看并打开动态打印:
 ```sh
 cd /sys/kernel/debug/dynamic_debug/
 echo 'module cifs +p' > control # 打开cifs模块所有动态打印
