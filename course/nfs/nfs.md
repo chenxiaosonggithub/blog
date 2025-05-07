@@ -32,4 +32,3 @@
 
 # [nfs社区贡献](https://chenxiaosong.com/course/nfs/mailing-list.html)
 
-# [nfs未分类的内容](https://chenxiaosong.com/course/nfs/other.html)

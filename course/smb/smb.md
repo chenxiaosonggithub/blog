@@ -31,7 +31,5 @@
 
 # [smb问题分析](https://chenxiaosong.com/course/smb/issue.html)
 
-# [smb未分类的内容](https://chenxiaosong.com/course/smb/other.html)
-
 # [smb社区贡献](https://chenxiaosong.com/course/smb/mailing-list.html)
 

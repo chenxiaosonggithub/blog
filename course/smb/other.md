@@ -201,3 +201,21 @@ gcc -o lock lock.c
 ./lock # client 1
 ./lock # client 2，这时会调用 SMB2_lock， server会调用 smb2_lock
 ```
+
+# ksmbd代码流程
+
+```c
+kthread
+  worker_thread
+    process_scheduled_works
+      process_one_work
+        handle_ksmbd_work
+          __handle_ksmbd_work
+            __process_request
+              smb2_open
+                dentry_open
+                  vfs_open
+                    do_dentry_open
+                      ext2_file_open
+```
+
