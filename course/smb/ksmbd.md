@@ -48,6 +48,20 @@ make
 sudo make install 
 ```
 
+可更改[`ksmbd-tools/tools/tools.c`](https://github.com/cifsd-team/ksmbd-tools/blob/master/tools/tools.c)文件里的日志等级:
+```sh
+--- a/tools/tools.c
++++ b/tools/tools.c
+@@ -24,7 +24,7 @@
+ #include "management/spnego.h"
+ #include "version.h"
+
+-int log_level = PR_INFO;
++int log_level = PR_DEBUG;
+ int ksmbd_health_status;
+ tool_main_fn *tool_main;
+```
+
 安装的二进制文件为`/usr/local/sbin/ksmbd.*`，配置文件例子`/usr/local/etc/ksmbd/ksmbd.conf.example`。
 
 以上是使用`autotools`编译，如果要使用`meson`编译，查看[ksmbd-tools README](https://chenxiaosong.com/src/translation/smb/ksmbd-tools-readme.html)。
@@ -89,7 +103,11 @@ sudo ksmbd.adduser --delete root # 删除用户
 
 ```sh
 sudo ksmbd.control --shutdown # 关闭
-sudo ksmbd.mountd # 启动
+sudo ksmbd.mountd # 启动，不会自动加载ksmbd.ko
+sudo systemctl start ksmbd.service # 会自动加载ksmbd.ko
+journalctl -u ksmbd -b # 查看服务的日志
+journalctl -u ksmbd -b --no-pager > log.txt # 查看服务的日志，重定向到文件
+# rm -rf /var/log/journal/* # 日志太多可以清空
 sudo mount -o user=root //127.0.0.1/TEST /mnt
 ```
 
