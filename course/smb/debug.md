@@ -40,6 +40,20 @@ ksmbd.control --debug=vfs
 ksmbd.control --debug= # 不加COMPONENT可以查看当前的状态
 ```
 
+在熟悉代码阶段，可以默认把日志开关全部打开:
+```sh
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -22,7 +22,7 @@
+ #include "crypto_ctx.h"
+ #include "auth.h"
+ 
+-int ksmbd_debug_types;
++int ksmbd_debug_types = KSMBD_DEBUG_ALL;
+ 
+ struct ksmbd_server_config server_conf;
+```
+
 ## client打印
 
 smb client打印函数有`cifs_dbg()`、`cifs_server_dbg()`、`cifs_tcon_dbg()`、`cifs_info()`，要打开配置`CONFIG_CIFS_DEBUG`才有效，打开`CONFIG_CIFS_DEBUG2`和`CONFIG_CIFS_DEBUG_DUMP_KEYS`能打印更多信息，以`cifs_dbg()`为例代码如下:
