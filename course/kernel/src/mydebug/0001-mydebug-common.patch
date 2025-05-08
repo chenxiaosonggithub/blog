@@ -1,4 +1,4 @@
-From 128cf8117361304e6b50bfb8c83e006431348dcd Mon Sep 17 00:00:00 2001
+From c19def2a4e3fcf4c2508bdca7bd169e52cb9d68a Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Thu, 1 May 2025 19:01:20 +0800
 Subject: [PATCH] mydebug: common
@@ -6,10 +6,10 @@ Subject: [PATCH] mydebug: common
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 ---
  include/mydebug.h |   1 +
- mydebug/Makefile  |   9 ++++
+ mydebug/Makefile  |   5 ++
  mydebug/mydebug.c | 129 ++++++++++++++++++++++++++++++++++++++++++++++
  mydebug/mydebug.h |  22 ++++++++
- 4 files changed, 161 insertions(+)
+ 4 files changed, 157 insertions(+)
  create mode 120000 include/mydebug.h
  create mode 100644 mydebug/Makefile
  create mode 100644 mydebug/mydebug.c
@@ -25,17 +25,13 @@ index 000000000000..ff6e546c7428
 \ No newline at end of file
 diff --git a/mydebug/Makefile b/mydebug/Makefile
 new file mode 100644
-index 000000000000..14a768de88b9
+index 000000000000..9d15ee3b565d
 --- /dev/null
 +++ b/mydebug/Makefile
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,5 @@
 +# SPDX-License-Identifier: GPL-2.0
 +#
 +# Makefile for the mydebug.
-+#
-+#  from
-+#
-+#  14 Sep 2000, Christoph Hellwig <hch@infradead.org>
 + 
 +obj-y :=	mydebug.o
 diff --git a/mydebug/mydebug.c b/mydebug/mydebug.c
