@@ -383,11 +383,13 @@ int this_is_func(int arg0, int arg1)
 {
         ...
         mydebug_print("mydebug_print()\n");
+        ...
         if (mydebug_on_types & BIT(2)) {
                 ...
                 printk("%s:%d, BIT(2)\n", __func__, __LINE__);
         }
         ...
+        mydebug_dump_stack(); // 在 /sys/kernel/debug/tracing/trace_pipe 文件查看栈
 }
 ```
 
