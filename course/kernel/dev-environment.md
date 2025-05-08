@@ -1010,7 +1010,12 @@ cat .text .data .bss # 输出各个段地址
 
 在gdb窗口中加载ko文件:
 ```sh
-add-symbol-file <ko文件位置> <text段地址> -s .data <data段地址> -s .bss <bss段地址>
+(gdb) add-symbol-file <ko文件位置> <text段地址> -s .data <data段地址> -s .bss <bss段地址>
+(gdb) info files # 也可用info target，查看添加的ko
+(gdb) remove-symbol-file /这里要写完整的绝对路径/linux/x86_64-build/fs/smb/client/cifs.ko
 ```
 
+可以在虚拟机中直接运行脚本获得要输入的完整gdb命令: [`bash add-symbol-file-full-cmd.sh`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/add-symbol-file-full-cmd.sh)。
+
 这时就能开心的对ko模块中的代码进行打断点之类的操作了。
+
