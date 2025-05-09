@@ -24,6 +24,8 @@ mount -o user=root //192.168.53.209/TEST /mnt
 
 # tcpdump抓包数据
 
+[点击这里下载抓包数据文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/mount/mount.cap)。
+
 ```sh
 No.     Time            Source          Destination    Protocol Length  Info
 6       10.392311       192.168.53.211  192.168.53.209  SMB2    310     Negotiate Protocol Request
