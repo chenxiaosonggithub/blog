@@ -992,11 +992,11 @@ gdb ./cifs.ko # ko文件或vmlinux
 (gdb) p &((struct cifsFileInfo *)0)->tlink
 ```
 
-`(struct cifsFileInfo *)0`: 这是将整数值 0 强制类型转换为指向 struct cifsFileInfo 类型的指针。这实际上是创建一个指向虚拟内存地址 0 的指针，该地址通常是无效的。这是一个计算偏移量的技巧，因为偏移量的计算不依赖于结构体的实际实例。
+`(struct cifsFileInfo *)0`: 这是将整数值 `0` 强制类型转换为指向 `struct cifsFileInfo` 类型的指针。这实际上是创建一个指向虚拟内存地址 `0` 的指针，该地址通常是无效的。这是一个计算偏移量的技巧，因为偏移量的计算不依赖于结构体的实际实例。
 
-`(0)->tlink`: 指向虚拟内存地址 0 的指针的成员`tlink`。
+`(0)->tlink`: 指向虚拟内存地址 `0` 的指针的成员`tlink`。
 
-`&(0)->tlink`: tlink的地址，也就是偏移量。
+`&(0)->tlink`: `tlink`的地址，也就是偏移量。
 
 ## ko模块代码调试
 
