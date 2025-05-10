@@ -76,7 +76,8 @@
 - [047-systemtap调试最新内核](https://www.bilibili.com/video/BV1Ez421q7yu/)
 - [加餐: 004-bpftrace](https://www.bilibili.com/video/BV1ej4sepEyr/)
 - [加餐: 007-mydebug调试模块（上）](https://www.bilibili.com/video/BV18gVkzXEbN/)
-- [加餐: 008-mydebug调试模块（下）](https://www.bilibili.com/video/BV1AzVtzqEHP/)
+- [加餐: 008-mydebug调试模块（中）](https://www.bilibili.com/video/BV1AzVtzqEHP/)
+- [加餐: 009-mydebug调试模块（下）-dump_stack()](https://www.bilibili.com/video/BV1YtVRzfEAX/)
 
 # 内存管理
 
