@@ -114,3 +114,18 @@ echo 3 > /proc/sys/vm/drop_caches
 cat /mnt/file
 ```
 
+# bcc
+
+安装:
+```sh
+apt install -y bpfcc-tools # debian
+dnf install -y bcc-tools bcc-doc # fedora
+```
+
+debian下例子所在路径`/usr/share/doc/bpfcc-tools/examples/`，fedora下例子所在路径`/usr/share/doc/bcc/examples/`。
+
+可以参考以下demo:
+
+- `tracing/hello_fields.py`: 执行到`clone()`系统调用时打印`Hello, World!`。
+- `tracing/task_switch.py`: 统计进程切换信息，如`task_switch[    0->  308]=20`表示从`0`号进程切换到`308`号进程发生了`20`次。
+
