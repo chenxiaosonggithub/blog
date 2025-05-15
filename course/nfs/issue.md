@@ -38,3 +38,5 @@
 
 [nfs-ganesha不支持导出tmpfs的问题](https://chenxiaosong.com/course/nfs/issue/ganesha-not-support-tmpfs.html)
 
+[umount nfs报错device is busy的问题](https://chenxiaosong.com/course/nfs/issue/nfs-umount-device-is-busy.html)
+

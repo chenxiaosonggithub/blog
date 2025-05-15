@@ -115,6 +115,7 @@ comm_array=(
 			1 1 course/nfs/issue/4.19-__rpc_execute-ERESTARTSYS.md ~ "sunrpc __rpc_execute()出现ERESTARTSYS的问题"
 			1 1 course/nfs/issue/4.19-rdma-not-supported.md ~ "4.19 nfs rdma协议不支持的问题"
 			1 1 course/nfs/issue/ganesha-not-support-tmpfs.md ~ "nfs-ganesha不支持导出tmpfs的问题"
+			1 1 course/nfs/issue/nfs-umount-device-is-busy.md ~ "umount nfs报错device is busy的问题"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"
