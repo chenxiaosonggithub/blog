@@ -10,7 +10,7 @@ qemu-system-x86_64 \
 -smp 16 \
 -m 4096 \
 -kernel ${MY_CODE_TOP_PATH}/$kernel_version/build/arch/x86/boot/bzImage \
--virtfs local,id=kmod_dev,path=${MY_TOP_PATH},readonly,mount_tag=9p,security_model=none \
+-virtfs local,id=kmod_dev,path=${MY_CODE_TOP_PATH},readonly,mount_tag=9p,security_model=none \
 -vga none \
 -nographic \
 -append "nokaslr console=ttyS0 root=/dev/vda rw kmemleak=on" \
