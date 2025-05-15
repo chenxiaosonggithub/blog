@@ -1,7 +1,8 @@
 obj-m += kprobe-df-long-time.o
+obj-m += kernel-open-file.o
 
-# ARCH=arm64
-# CROSS_COMPILE='aarch64-linux-gnu-'
+ARCH=x86_64
+CROSS_COMPILE=
 
 KDIR	:= /home/sonvhi/chenxiaosong/code/linux/x86_64-build
 PWD     := $(shell pwd)
