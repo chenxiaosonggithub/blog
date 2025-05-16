@@ -57,11 +57,17 @@ insmod kernel-open-file.ko
 ...
 ```
 
-这时我们就能得到一样的报错信息，且无法找到进程:
+这时我们卸载nfs挂载点就能得到一样的报错信息，且无法找到使用挂载点的进程:
 ```sh
 umount /mnt # umount.nfs: /mnt: device is busy
 lsof /mnt # 找不到进程
 fuser -m /mnt # 找不到进程
+```
+
+移除ko后，在内核关闭了文件，就能正常卸载nfs挂载点了:
+```sh
+rmmod kernel_open_file # 在内核中关闭文件
+umount /mnt # 正常卸载，不报错
 ```
 
 # `mmap()`可以找到进程 {#mmap-open-file}
