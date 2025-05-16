@@ -7,14 +7,35 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 
+#define DEBUG_FILE_NAME	"/mnt/dir/file"
+#define DEBUG_BUFFER_SIZE	4096
+
 static int __init kernel_open_file_init(void)
 {
-	struct file *filp = filp_open("/mnt/file", O_CREAT | O_RDWR, 0666);
+	ssize_t res;
+	char *buffer;
+
+	buffer = kzalloc(DEBUG_BUFFER_SIZE, GFP_KERNEL);
+	if (!buffer)
+		return -ENOMEM;
+
+	struct file *filp = filp_open(DEBUG_FILE_NAME, O_CREAT | O_RDWR, 0666);
 	if (IS_ERR(filp)) {
 		printk("%s:%d, open file fail\n", __func__, __LINE__);
 		return PTR_ERR(filp);
 	}
 	printk("%s:%d, open file success\n", __func__, __LINE__);
+
+	filp->f_pos = 0;
+	res = kernel_read(filp, buffer, DEBUG_BUFFER_SIZE, &filp->f_pos);
+	if (res < 0) {
+		printk("%s:%d, read fail\n", __func__, __LINE__);
+		return res;
+	}
+	printk("%s:%d, read success, data: %s\n", __func__, __LINE__, buffer);
+
+	kfree(buffer);
+
 	return 0;
 }
 
