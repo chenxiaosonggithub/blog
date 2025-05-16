@@ -13,8 +13,6 @@
 
 # 调试 {#debug}
 
-下面的操作要在虚拟机中验证，不要在生产环境中操作!!!
-
 挂载:
 ```sh
 mount -t nfs -o vers=3 localhost:/tmp /mnt
@@ -23,9 +21,26 @@ mount -t nfs -o vers=3 localhost:/tmp /mnt
 用以下命令打开nfs日志开关（参考[《nfs调试方法》](https://chenxiaosong.com/course/nfs/debug.html#log)）:
 ```sh
 echo 0xFFFF > /proc/sys/sunrpc/nfs_debug
+# echo 0 > /proc/sys/sunrpc/nfs_debug # 在生产环境中关闭日志请执行这个命令
 ```
 
-加载ko，打开并读文件`/mnt/dir/file`:
+kprobe抓进程信息:
+```sh
+kprobe_func_name=nfs_file_open
+cd /sys/kernel/debug/tracing/
+cat available_filter_functions | grep ${kprobe_func_name}
+echo 1 > tracing_on
+echo "p:p_${kprobe_func_name} ${kprobe_func_name}" >> kprobe_events
+echo 1 > events/kprobes/p_${kprobe_func_name}/enable
+echo stacktrace > events/kprobes/p_${kprobe_func_name}/trigger # 打印栈
+# echo '!stacktrace' > events/kprobes/p_${kprobe_func_name}/trigger # 关闭栈
+# echo 0 > events/kprobes/p_${kprobe_func_name}/enable
+# echo "-:p_${kprobe_func_name}" >> kprobe_events
+echo 0 > trace # 清除trace信息
+cat trace_pipe
+```
+
+加载ko，打开并读文件`/mnt/dir/file`，注意这个操作不要在生产环境中尝试:
 ```sh
 mkdir /mnt/dir -p
 echo something > /mnt/dir/file # 创建文件
