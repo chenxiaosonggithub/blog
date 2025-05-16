@@ -1,8 +1,8 @@
 # 问题描述
 
-卸载nfs挂载点时报错`device is busy`，但用`lsof | grep <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
+卸载nfsv3挂载点时报错`device is busy`，但用`lsof | grep <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
 
-# 内核打开文件 {#kernl-open-file}
+# 构造内核打开文件 {#kernl-open-file}
 
 在内核空间打开文件，用`lsof <挂载点>`和`fuser -m <挂载点>`无法找到进程。
 
@@ -11,7 +11,45 @@
 - [`kernel-open-file.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/kernel-open-file.c)
 - [`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/Makefile)
 
-# `mmap()`可以找到进程（没啥卵用，就是尝试一下）
+# 调试 {#debug}
+
+下面的操作要在虚拟机中验证，不要在生产环境中操作!!!
+
+挂载:
+```sh
+mount -t nfs -o vers=3 localhost:/tmp /mnt
+```
+
+用以下命令打开nfs日志开关（参考[《nfs调试方法》](https://chenxiaosong.com/course/nfs/debug.html#log)）:
+```sh
+echo 0xFFFF > /proc/sys/sunrpc/nfs_debug
+```
+
+加载ko，打开并读文件`/mnt/dir/file`:
+```sh
+mkdir /mnt/dir -p
+echo something > /mnt/dir/file # 创建文件
+echo 3 > /proc/sys/vm/drop_caches
+insmod kernel-open-file.ko
+```
+
+日志请查看[`nfs-umount-device-is-busy-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfs-umount-device-is-busy-log.txt):
+```sh
+...
+[  122.567308] NFS: open file(dir/file)
+...
+[  122.571219] NFS: read(dir/file, 4096@0)
+...
+```
+
+这时我们就能得到一样的报错信息，且无法找到进程:
+```sh
+umount /mnt # umount.nfs: /mnt: device is busy
+lsof /mnt # 找不到进程
+fuser -m /mnt # 找不到进程
+```
+
+# `mmap()`可以找到进程（没啥卵用，就是尝试一下） {#mmap-open-file}
 
 `mmap.c`:
 ```c
