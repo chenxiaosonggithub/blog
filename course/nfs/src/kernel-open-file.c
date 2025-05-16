@@ -10,6 +10,8 @@
 #define DEBUG_FILE_NAME	"/mnt/dir/file"
 #define DEBUG_BUFFER_SIZE	4096
 
+static struct file *filp;
+
 static int __init kernel_open_file_init(void)
 {
 	ssize_t res;
@@ -19,7 +21,7 @@ static int __init kernel_open_file_init(void)
 	if (!buffer)
 		return -ENOMEM;
 
-	struct file *filp = filp_open(DEBUG_FILE_NAME, O_CREAT | O_RDWR, 0666);
+	filp = filp_open(DEBUG_FILE_NAME, O_CREAT | O_RDWR, 0666);
 	if (IS_ERR(filp)) {
 		printk("%s:%d, open file fail\n", __func__, __LINE__);
 		return PTR_ERR(filp);
@@ -41,8 +43,11 @@ static int __init kernel_open_file_init(void)
 
 static void __exit kernel_open_file_exit(void)
 {
+	filp_close(filp, NULL);
+	printk("%s:%d, close file\n", __func__, __LINE__);
 }
 
 module_init(kernel_open_file_init)
 module_exit(kernel_open_file_exit)
 MODULE_LICENSE("GPL");
+
