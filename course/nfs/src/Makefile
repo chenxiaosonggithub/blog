@@ -1,5 +1,6 @@
 obj-m += kprobe-df-long-time.o
 obj-m += kernel-open-file.o
+obj-m += iterate-nfsv3-inodes.o
 
 ARCH=x86_64
 CROSS_COMPILE=
