@@ -57,10 +57,10 @@ static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
 		p->symbol_name, p->addr, (long)regs->pc, (long)regs->pstate);
 #endif
 	struct inode *inode = file_inode(file);
-	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias)
-		break;
-	pr_info("<%s> dir name:%s, ctx:0x%p\n",
-		p->symbol_name, tmp->d_name.name, ctx);
+	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
+		pr_info("<%s> dir name:%s, ctx:0x%p\n",
+			p->symbol_name, tmp->d_name.name, ctx);
+	}
 
 	/* A dump_stack() here will give a stack backtrace */
 	// 也可以用 dump_stack()

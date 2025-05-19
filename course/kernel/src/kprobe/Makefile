@@ -7,7 +7,7 @@ obj-m += kretprobe_example.o
 
 CROSS_COMPILE=''
 
-KDIR := /home/linux/code/linux/build
+KDIR := /home/sonvhi/chenxiaosong/code/linux/x86_64-build
 
 all:
 	make -C ${KDIR} M=`pwd`
