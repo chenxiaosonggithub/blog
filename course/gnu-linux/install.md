@@ -279,6 +279,16 @@ autoconf
 sudo vim /etc/selinux/config # centos9 改成 SELINUX=disabled
 ```
 
+# centos7
+
+```sh
+mv /etc/yum.repos.d/ /etc/yum.repos.d.bak
+mkdir -p /etc/yum.repos.d/
+curl -o /etc/yum.repos.d/Centos7-aliyun.repo https://mirrors.wlnmp.com/centos/Centos7-aliyun-x86_64.repo
+yum clean all
+yum makecache
+```
+
 ## 树莓派
 
 从[Operating system images](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit)下载“Raspberry Pi OS with desktop and recommended software”。
