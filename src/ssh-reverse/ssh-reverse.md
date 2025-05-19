@@ -113,3 +113,15 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 ```
 
 通过访问`chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
+
+# 向日葵和ToDesk
+
+如果不想自己搭建服务器，可以使用[向日葵](https://sunlogin.oray.com/download?categ=personal)和[ToDesk](https://www.todesk.com/download.html)。
+
+向日葵有[命令行版本](https://service.oray.com/question/11017.html)，但是要付费的，还不如自己买个服务器，下面以centos7为例说明安装过程:
+```sh
+yum install ./sunloginclientshell-10.1.1.28779.x86_64.rpm -y
+sudo /usr/local/sunlogin/bin/sunloginclient
+按F12 -> Bind, 登录向日葵账号密码
+```
+
