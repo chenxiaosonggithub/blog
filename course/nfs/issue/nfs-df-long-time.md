@@ -490,4 +490,5 @@ nfsv4在启用idmap的情况下，在解析`GETATTR`回复报文的`owner`和`gr
 
 ## nfsv3
 
-tcp层的`RST`报文和nfs无关，具体原因待定位。
+修复补丁`80d3c45fd765 SUNRPC: Fix possible autodisconnect during connect due to old last_used`。
+
