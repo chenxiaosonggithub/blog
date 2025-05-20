@@ -1,13 +1,13 @@
-From dfd3f5d5bd985b33753be2fc5842edd022667474 Mon Sep 17 00:00:00 2001
+From faa785e218b9aba41876f5a520369fbcbc521b12 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Thu, 1 May 2025 19:08:00 +0800
 Subject: [PATCH] mydebug: 4.19
 
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 ---
- Makefile          | 2 +-
- mydebug/mydebug.c | 9 +++++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ Makefile          |  2 +-
+ mydebug/mydebug.c | 12 ++++++++----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
 index 8df76f9b0712..acba740eb012 100644
@@ -23,19 +23,21 @@ index 8df76f9b0712..acba740eb012 100644
  vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
  		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
 diff --git a/mydebug/mydebug.c b/mydebug/mydebug.c
-index 8ed4dacce570..66cc0af17e0a 100644
+index dee1c13fd282..f591b86825cc 100644
 --- a/mydebug/mydebug.c
 +++ b/mydebug/mydebug.c
-@@ -12,13 +12,14 @@
+@@ -12,15 +12,16 @@
   */
  
  #include <linux/module.h>
 -#include <linux/device/class.h>
+ #include <linux/stacktrace.h>
 +#include <linux/device.h>
 +#include <linux/sysfs.h>
  #include <mydebug.h>
  
  int mydebug_on_types = MYDEBUG_ON_PRINT;
+ EXPORT_SYMBOL(mydebug_on_types);
  
 -static ssize_t debug_show(const struct class *class,
 -	const struct class_attribute *attr, char *buf)
@@ -44,7 +46,7 @@ index 8ed4dacce570..66cc0af17e0a 100644
  {
  	ssize_t sz = 0;
  	int i, pos = 0;
-@@ -33,7 +34,7 @@ static ssize_t debug_show(const struct class *class,
+@@ -35,7 +36,7 @@ static ssize_t debug_show(const struct class *class,
  	return sz;
  }
  
@@ -53,6 +55,23 @@ index 8ed4dacce570..66cc0af17e0a 100644
  			   const char *buf, size_t len)
  {
  	int i;
+@@ -76,6 +77,8 @@ struct class mydebug_ctrl_class = {
+ 	.class_groups	= mydebug_ctrl_class_groups,
+ };
+ 
++// 参考__save_stack_trace()的实现
++#if 0
+ #define MAX_LINES_PER_STACK	64 // 每个栈最大的行数
+ static unsigned long stack_lines[MAX_LINES_PER_STACK];
+ 
+@@ -101,6 +104,7 @@ void mydebug_dump_stack(void)
+ 	trace_printk("\n");
+ }
+ EXPORT_SYMBOL(mydebug_dump_stack);
++#endif
+ 
+ static int __init init_mydebug(void)
+ {
 -- 
 2.34.1
 
