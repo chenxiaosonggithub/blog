@@ -78,8 +78,9 @@ umount /mnt # 正常卸载，不报错
 ```c
 openat
   do_sys_open
-    fd_install
-      rcu_assign_pointer(fdt->fd[fd], file);
+    do_sys_openat2
+      fd_install
+        rcu_assign_pointer(fdt->fd[fd], file);
 ```
 
 在内核空间打开文件时，不会把文件描述符加到`fdtable`中，`fuser`和`lsof`无法遍历到文件描述符，所以无法找到打开文件的进程。
