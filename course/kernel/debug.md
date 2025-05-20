@@ -174,7 +174,7 @@ echo '*ext4*' >> set_ftrace_notrace # 包含ext4的函数
 echo > set_ftrace_notrace # 清空
 ```
 
-## `tracepoint`
+## `tracepoint` {#tracepoint}
 
 比如我们要打开`ext2_dio_read_iter()`函数的`ext2_dio_read_begin`的tracepoint:
 ```sh

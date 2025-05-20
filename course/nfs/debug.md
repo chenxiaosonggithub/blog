@@ -35,6 +35,8 @@ echo 0x0400 > /proc/sys/sunrpc/nfsd_debug # NFSDDBG_PNFS
 echo 0x0008 > /proc/sys/sunrpc/nlm_debug # NLMDBG_SVCLOCK
 ```
 
+注意最新主线代码的sunrpc中的`dprintk()`很多都移除了，可以使用tracepoint，tracepoint的使用请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#tracepoint)。
+
 # tcpdump抓包 {#tcpdump}
 
 既然nfs涉及到网络，定位问题肯定也少不了网络抓包，甚至在绝大多数情况下，网络抓包能够比日志提供更有用更直观的信息，使用`tcpdump`工具抓包:
