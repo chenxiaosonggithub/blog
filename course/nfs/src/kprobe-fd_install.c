@@ -7,6 +7,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/kprobes.h>
+#include <mydebug.h>
 
 #define DEBUG_FILE_NAME	"/mnt/dir/file"
 #define DEBUG_BUFFER_SIZE	4096
@@ -45,6 +46,7 @@ static int __kprobes handler_pre(struct kprobe *p, struct pt_regs *regs)
 	hlist_for_each_entry(tmp, &inode->i_dentry, d_u.d_alias) {
 		printk("%s:%d, file name:%s, comm:%s, pid:%d\n", __func__, __LINE__,
 		       tmp->d_name.name, current->comm, current->pid);
+		mydebug_dump_stack();
 	}
 
 	return 0;
