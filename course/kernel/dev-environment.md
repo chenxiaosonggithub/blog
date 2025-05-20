@@ -842,7 +842,7 @@ sudo dnf update vim-common vim-minimal -y
 注意fedora中账号密码输完后要用`ctrl+j`，不要用回车。
 <!-- public end -->
 
-# 使用GDB调试内核代码
+# 使用GDB调试内核代码 {#gdb}
 
 <!-- public begin -->
 我刚开始是做用户态开发的，习惯了利用gdb调试来理解那些写得不好的用户态代码，尤其是公司内部一些不开源的比狗屎还难看的用户态代码（当然其中也包括我自己写的狗屎一样的代码）。
