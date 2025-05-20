@@ -70,6 +70,20 @@ rmmod kernel_open_file # 在内核中关闭文件
 umount /mnt # 正常卸载，不报错
 ```
 
+# 代码分析
+
+系统调用的跟踪调试请查看[《文件系统延迟卸载》](https://chenxiaosong.com/src/filesystem/lazy-umount.html)。
+
+只有在用户空间打开文件时会把文件描述符放到`files_struct -> fdt`中:
+```c
+openat
+  do_sys_open
+    fd_install
+      rcu_assign_pointer(fdt->fd[fd], file);
+```
+
+在内核空间打开文件时，不会把文件描述符加到`fdtable`中，`fuser`和`lsof`无法遍历到文件描述符，所以无法找到打开文件的进程。
+
 # `mmap()`可以找到进程 {#mmap-open-file}
 
 下面的内容对你没啥卵用，不用看了。只是我吃饱撑的尝试一下，顺便再记录一下。
