@@ -61,7 +61,9 @@ sysctl net.core.rmem_max=xxx
 
 `umount <挂载点>`命令如果报错`device is busy`之类的信息，说明挂载点正在使用，可以使用以下命令查看使用挂载点的进程:
 ```sh
-lsof <挂载点>
+# +D：递归地列出指定目录下所有打开的文件
+lsof +D <挂载点>
+# -m：表示查询挂载点（而不仅仅是某个文件）
 fuser -m <挂载点>
 ```
 
