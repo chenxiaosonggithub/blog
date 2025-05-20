@@ -84,6 +84,9 @@ openat
 
 在内核空间打开文件时，不会把文件描述符加到`fdtable`中，`fuser`和`lsof`无法遍历到文件描述符，所以无法找到打开文件的进程。
 
+可以用[`kprobe-fd_install.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/kprobe-fd_install.c)调试，
+其中`mydebug_dump_stack()`相关的用法可以查看[《mydebug模块》](https://chenxiaosong.com/course/kernel/debug.html#mydebug)。
+
 # `mmap()`可以找到进程 {#mmap-open-file}
 
 下面的内容对你没啥卵用，不用看了。只是我吃饱撑的尝试一下，顺便再记录一下。
