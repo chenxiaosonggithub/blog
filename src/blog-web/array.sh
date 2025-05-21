@@ -68,6 +68,7 @@ comm_array=(
 		1 1 course/nfs/pnfs.md ~ "Parallel NFS (pNFS)"
 		1 1 course/nfs/debug.md ~ "nfs调试方法"
 		1 1 course/nfs/multipath.md ~ "nfs多路径"
+		1 1 course/nfs/openeuler-enfs.md ~ "openEuler的nfs+"
 		1 1 course/nfs/other.md ~ "nfs未分类的内容"
 		1 1 course/nfs/mailing-list.md ~ "nfs社区贡献"
 		1 1 course/nfs/patch.md ~ "nfs补丁分析"
