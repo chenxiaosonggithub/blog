@@ -82,3 +82,14 @@ write
                                     rpc_execute
 ```
 
+# 脚本
+
+跟踪以下函数:
+```c
+nfs_file_write
+rpc_execute
+call_start
+call_transmit
+call_decode
+```
+
