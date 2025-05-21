@@ -182,10 +182,11 @@ cd /sys/kernel/debug/tracing/
 echo nop > current_tracer
 echo 1 > tracing_on
 cat available_events  | grep ext2
-echo ext2:ext2_dio_read_begin > set_event
-# find events/ -name "*ext2*" # 也可以查找函数所在位置，比较慢
-# echo 1 > events/ext2/ext2_dio_read_begin/enable # 使能函数的tracepoint
-# echo ext2:* > set_event # 所有的ext2跟踪点
+echo ext2:ext2_dio_read_begin > set_event # 打开某个tracepoint
+echo ext2:* > set_event # 打开所有的ext2跟踪点
+# find events/ -name "*ext2*" # 也可以通过find查找tracepoint所在位置，比较慢
+# echo 1 > events/ext2/ext2_dio_read_begin/enable # 打开某个tracepoint
+# echo 1 > events/ext2/enable # 打开所有的ext2跟踪点
 
 fallocate -l 10M ~/image
 mkfs.ext2 -F image
