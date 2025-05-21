@@ -96,6 +96,26 @@ echo 'module cifs +p' > control # 打开cifs模块所有动态打印
 cat control | grep cifs
 ```
 
+# tracepoint
+
+除了日志，还可以打开tracepoint。tracepoint的使用请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#tracepoint)。
+
+```sh
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer
+echo 1 > tracing_on
+cat available_events  | grep cifs
+cat available_events  | grep smb
+ls events/*cifs* -d
+ls events/*smb* -d # 没有
+echo cifs:nfsd_cb_recall_done > set_event # 打开某个tracepoint
+echo cifs:* > set_event # 打开所有的cifs跟踪点
+# echo 1 > events/cifs/smb3_close_enter/enable # 打开某个tracepoint
+# echo 1 > events/cifs/enable # 打开所有的cifs跟踪点
+```
+
+注意目前（2025.05.21）smb server的代码还没有使用任何的tracepoint，但以后可能会用，你可以使用命令`grep -r trace_ fs/smb/server/`在内核仓库下确认。
+
 # tcpdump抓包
 
 请查看[《nfs调试方法》](https://chenxiaosong.com/course/nfs/debug.html#tcpdump)。

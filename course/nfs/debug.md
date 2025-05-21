@@ -35,7 +35,25 @@ echo 0x0400 > /proc/sys/sunrpc/nfsd_debug # NFSDDBG_PNFS
 echo 0x0008 > /proc/sys/sunrpc/nlm_debug # NLMDBG_SVCLOCK
 ```
 
-注意最新主线代码的sunrpc中的`dprintk()`很多都移除了，可以使用tracepoint，tracepoint的使用请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#tracepoint)。
+# tracepoint
+
+除了日志，还可以打开tracepoint，尤其是最新主线代码的sunrpc中的`dprintk()`很多都移除了，有些sunrpc相关信息也只能通过tracepoint查看了。tracepoint的使用请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#tracepoint)。
+
+```sh
+cd /sys/kernel/debug/tracing/
+echo nop > current_tracer
+echo 1 > tracing_on
+cat available_events  | grep nfs # nfs nfsd nfs_localio
+cat available_events  | grep rpc # rpcgss sunrpc
+ls events/*nfs* -d
+  # events/nfs  events/nfsd  events/nfs_localio
+ls events/*rpc* -d
+  # events/rpcgss  events/sunrpc
+echo nfsd:nfsd_cb_recall_done > set_event # 打开某个tracepoint
+echo rpcgss:* > set_event # 打开所有的rpcgss跟踪点
+# echo 1 > events/nfsd/nfsd_cb_recall_done/enable # 打开某个tracepoint
+# echo 1 > events/rpcgss/enable # 打开所有的rpcgss跟踪点
+```
 
 # tcpdump抓包 {#tcpdump}
 
