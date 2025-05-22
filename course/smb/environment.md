@@ -92,9 +92,9 @@ make install -j`nproc`
 export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
 ```
 
-修改`/usr/lib/systemd/system/smb.service`（具体位置可以用`systemctl status smb`查看）:
+更新`smb.service`（具体位置可以用`systemctl status smb`查看）:
 ```sh
-ExecStart=/usr/local/samba/sbin/smbd ... # 原本是 /usr/sbin/smbd
+cp ./packaging/systemd/smb.service.in /usr/lib/systemd/system/smb.service
 ```
 
 创建配置文件:
