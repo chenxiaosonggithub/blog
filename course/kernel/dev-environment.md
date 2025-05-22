@@ -842,6 +842,23 @@ sudo dnf update vim-common vim-minimal -y
 注意fedora中账号密码输完后要用`ctrl+j`，不要用回车。
 <!-- public end -->
 
+## 多个网卡 {#qemu-multi-nic}
+
+最方便的就是在virt-manager虚拟机中测试，在图形界面上添加多个网卡。
+
+qemu命令行启动虚拟机时，多个网卡的启动参数如下:
+```sh
+-net tap \
+-net nic,model=virtio,macaddr=00:11:22:33:44:06 \
+-net nic,model=virtio,macaddr=00:11:22:33:44:56 \
+```
+
+启动后，在虚拟机中用`ifconfig -a`可以看到另一个网卡`ens3`，debian还需要经过以下修改:
+```sh
+echo -e "auto ens3\niface ens3 inet dhcp" >> /etc/network/interfaces # ens3请换成你环境上的网卡名
+systemctl restart networking
+```
+
 # 使用GDB调试内核代码 {#gdb}
 
 <!-- public begin -->
