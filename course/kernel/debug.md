@@ -193,6 +193,7 @@ mkfs.ext2 -F image
 mount image /mnt
 echo 1234567890 > /mnt/file-in
 dd if=/mnt/file-in of=~/file-out iflag=direct bs=512 count=1 # bs不能随意指定
+echo 0 > trace # 清除trace信息
 cat trace_pipe
 ```
 

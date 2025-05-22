@@ -112,6 +112,8 @@ echo cifs:nfsd_cb_recall_done > set_event # 打开某个tracepoint
 echo cifs:* > set_event # 打开所有的cifs跟踪点
 # echo 1 > events/cifs/smb3_close_enter/enable # 打开某个tracepoint
 # echo 1 > events/cifs/enable # 打开所有的cifs跟踪点
+echo 0 > trace # 清除trace信息
+cat trace_pipe
 ```
 
 注意目前（2025.05.21）smb server的代码还没有使用任何的tracepoint，但以后可能会用，你可以使用命令`grep -r trace_ fs/smb/server/`在内核仓库下确认。

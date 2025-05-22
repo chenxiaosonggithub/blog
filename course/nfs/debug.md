@@ -53,6 +53,8 @@ echo nfsd:nfsd_cb_recall_done > set_event # 打开某个tracepoint
 echo rpcgss:* > set_event # 打开所有的rpcgss跟踪点
 # echo 1 > events/nfsd/nfsd_cb_recall_done/enable # 打开某个tracepoint
 # echo 1 > events/rpcgss/enable # 打开所有的rpcgss跟踪点
+echo 0 > trace # 清除trace信息
+cat trace_pipe
 ```
 
 # tcpdump抓包 {#tcpdump}
