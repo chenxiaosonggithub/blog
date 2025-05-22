@@ -86,7 +86,7 @@ git clone https://gitlab.com/samba-team/devel/samba.git
 cd samba/bootstrap/generated-dists/fedora41/ # fedora41可替换你使用的发行版
 ./bootstrap.sh # 安装依赖软件，时间可能比较久
 cd ../../../
-./configure
+./configure --with-systemd
 make -j`nproc`
 make install -j`nproc`
 export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
