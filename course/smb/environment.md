@@ -1,6 +1,6 @@
 # 内核态server搭建
 
-请查看[smb server (ksmbd)](https://chenxiaosong.com/course/smb/ksmbd.html)。
+请查看[smb server (ksmbd)](https://chenxiaosong.com/course/smb/ksmbd.html#environment)。
 
 # 用户态server搭建
 

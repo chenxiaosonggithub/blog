@@ -32,7 +32,7 @@
   - 7.5分[CVE-2023-32248](https://nvd.nist.gov/vuln/detail/CVE-2023-32248)
   - 7.5分[CVE-2023-32247](https://nvd.nist.gov/vuln/detail/CVE-2023-32247)
 
-# 环境
+# 环境 {#environment}
 
 Linux内核打开配置`CONFIG_SMB_SERVER`。
 
