@@ -99,7 +99,7 @@ ExecStart=/usr/local/samba/sbin/smbd ... # 原本是 /usr/sbin/smbd
 
 创建配置文件:
 ```sh
-cp /etc/samba/smb.conf /usr/local/samba/etc/smb.conf
+ln -s /etc/samba/smb.conf /usr/local/samba/etc/smb.conf
 ```
 
 需要特别注意的是要重新创建用户:
