@@ -84,6 +84,8 @@ write
 
 # 脚本
 
+bpftrace的使用请查看[《BPF》](https://chenxiaosong.com/course/kernel/bpf.html#bpftrace)。
+
 跟踪以下函数:
 ```c
 nfs_file_write
@@ -91,5 +93,226 @@ rpc_execute
 call_start
 call_transmit
 call_decode
+```
+
+[丁鹏龙](https://dingpenglong.com/)写的脚本:
+```sh
+#include <linux/fs.h>
+#include <linux/types.h>
+#include <linux/uio.h>
+#include <linux/sunrpc/clnt.h>   // RPC 相关头文件
+#include <linux/sunrpc/sched.h>  // struct rpc_task 定义
+
+BEGIN {
+    printf("Tracing nfs_file_write execution time... Hit Ctrl-C to end.\n");
+}
+
+////////////////////////////////////////////////////////////
+//                 NFS File Write 跟踪                    //
+////////////////////////////////////////////////////////////
+kprobe:nfs_file_write
+{
+    $iocb  = (struct kiocb *)arg0;
+    $file  = $iocb->ki_filp;
+    $dentry = $file->f_path.dentry;
+    $from  = (struct iov_iter *)arg1;
+
+    @filename_ptr[tid]  = $dentry->d_name.name;  // 存储文件名指针
+    @inode[tid]         = $file->f_inode->i_ino; // 存储 inode
+    @write_offset       = $iocb->ki_pos;
+    @write_length       = $from->count;
+    @start_time[tid]    = nsecs;                 // 记录起始时间
+
+    printf("%s, name:%-20s inode:%-8lu len:%-6d offset:%-8d time:%-20llu\n",
+           probe, str($dentry->d_name.name), $file->f_inode->i_ino,
+           @write_length, @write_offset, nsecs);
+}
+
+kretprobe:nfs_file_write
+{
+    $duration = nsecs - @start_time[tid];
+    $name_ptr = @filename_ptr[tid];
+    $ino      = @inode[tid];
+
+    printf("nfs_file_write - File: %-20s ", str($name_ptr));
+    printf("Inode: %-8lu ", $ino);
+    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
+           $duration / 1000000000,
+           ($duration % 1000000000) / 1000000,
+           ($duration % 1000000) / 1000,
+           $duration % 1000);
+
+    delete(@filename_ptr[tid]);
+    delete(@inode[tid]);
+    delete(@start_time[tid]);
+}
+
+////////////////////////////////////////////////////////////
+//                  RPC Execute 阶段                      //
+////////////////////////////////////////////////////////////
+kprobe:rpc_execute
+{
+    $task = (struct rpc_task *)arg0;
+    @rpc_task = $task;
+
+    // 检查是否为 NFSv3 WRITE 操作
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    @rpc_xid[tid]        = $task->tk_rqstp->rq_xid;  // 存储 RPC XID
+    @rpc_op[tid]         = $task->tk_msg.rpc_proc->p_name;  // RPC 操作名
+    @rpc_start_time[tid] = nsecs;
+
+    printf("rpc_execute START - XID:0x%08x OP:%-12s time:%-20llu\n",
+           @rpc_xid[tid], str(@rpc_op[tid]), nsecs);
+}
+
+kretprobe:rpc_execute
+{
+    $task = @rpc_task;
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    $duration = nsecs - @rpc_start_time[tid];
+    printf("rpc_execute END   - XID:0x%08x ", @rpc_xid[tid]);
+ 	printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
+           $duration / 1000000000,
+           ($duration % 1000000000) / 1000000,
+           ($duration % 1000000) / 1000,
+           $duration % 1000);
+
+    delete(@rpc_xid[tid]);
+    delete(@rpc_op[tid]);
+    delete(@rpc_start_time[tid]);
+}
+
+////////////////////////////////////////////////////////////
+//                  RPC Call 阶段                         //
+////////////////////////////////////////////////////////////
+kprobe:call_start
+{
+    $task = (struct rpc_task *)arg0;
+    @rpc_task = $task;
+
+    // 检查是否为 NFSv3 WRITE 操作
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    @call_xid[tid]        = $task->tk_rqstp->rq_xid;
+    @call_start_time[tid] = nsecs;
+    $proc_num             = $task->tk_msg.rpc_proc->p_proc;
+
+    printf("call_start    - XID:0x%08x Proc:%-4d time:%-20llu\n",
+           @call_xid[tid], $proc_num, nsecs);
+}
+
+kretprobe:call_start
+{
+    $task = @rpc_task;
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    $duration = nsecs - @call_start_time[tid];
+    printf("call_start    - XID:0x%08x ", @call_xid[tid]);
+    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
+           $duration / 1000000000,
+          ($duration % 1000000000) / 1000000,
+          ($duration % 1000000) / 1000,
+           $duration % 1000);
+
+    delete(@call_xid[tid]);
+    delete(@call_start_time[tid]);
+}
+
+kprobe:call_transmit
+{
+    $task = (struct rpc_task *)arg0;
+    @rpc_task = $task;
+
+    // 检查是否为 NFSv3 WRITE 操作
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    @transmit_xid[tid]        = $task->tk_rqstp->rq_xid;
+    @transmit_start_time[tid] = nsecs;
+
+    printf("call_transmit - XID:0x%08x time:%-20llu\n",
+           @transmit_xid[tid], nsecs);
+}
+
+kretprobe:call_transmit
+{
+    $task = @rpc_task;
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    $duration = nsecs - @transmit_start_time[tid];
+    printf("call_transmit - XID:0x%08x ", @transmit_xid[tid]);
+    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
+           $duration / 1000000000,
+          ($duration % 1000000000) / 1000000,
+          ($duration % 1000000) / 1000,
+           $duration % 1000);
+
+    delete(@transmit_xid[tid]);
+    delete(@transmit_start_time[tid]);
+}
+
+kprobe:call_decode
+{
+    $task = (struct rpc_task *)arg0;
+
+    // 检查是否为 NFSv3 WRITE 操作
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    @decode_xid[tid]        = $task->tk_rqstp->rq_xid;
+    @decode_start_time[tid] = nsecs;
+
+    printf("call_decode   - XID:0x%08x time:%-20llu\n",
+           @decode_xid[tid], nsecs);
+}
+
+kretprobe:call_decode
+{
+    $task = @rpc_task;
+    if ($task->tk_msg.rpc_proc->p_proc != 7) {
+        return;  // 非 WRITE 操作，直接返回
+    }
+
+    $duration = nsecs - @decode_start_time[tid];
+    printf("call_decode   - XID:0x%08x ", @decode_xid[tid]);
+    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
+           $duration / 1000000000,
+          ($duration % 1000000000) / 1000000,
+          ($duration % 1000000) / 1000,
+           $duration % 1000);
+
+    delete(@decode_xid[tid]);
+    delete(@decode_start_time[tid]);
+}
+
+END {
+    clear(@filename_ptr);
+    clear(@inode);
+    clear(@start_time);
+    clear(@rpc_xid);
+    clear(@rpc_task);
+    clear(@rpc_op);
+    clear(@rpc_start_time);
+    clear(@call_xid);
+    clear(@call_start_time);
+    clear(@transmit_xid);
+    clear(@transmit_start_time);
+    clear(@decode_xid);
+    clear(@decode_start_time);
+}
 ```
 

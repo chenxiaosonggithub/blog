@@ -8,7 +8,7 @@ BCC和bpftrace是可以提供高级语言编程支持的BPF前端。
 - bpftrace: 提供了专门用于创建BPF工具的高级语言支持。相比BCC，bpftrace更适合编写功能强大的单行程序、短小的脚本。
 - BCC（BPF Compiler Collection）: BPF编译器集合，最早用于开发BPF跟踪程序的高级框架，提供高级语言环境来实现用户端接口，如BPF程序、C语言、Python、Lua、C++。相比bpftrace，BCC更适合开发复杂的脚本和作为后台进程使用。[源码](https://github.com/iovisor/bcc)。
 
-# bpftrace
+# bpftrace {#bpftrace}
 
 [bpftrace源码](https://github.com/bpftrace/bpftrace)。
 
@@ -114,7 +114,7 @@ echo 3 > /proc/sys/vm/drop_caches
 cat /mnt/file
 ```
 
-# bcc
+# bcc {#bcc}
 
 安装:
 ```sh
