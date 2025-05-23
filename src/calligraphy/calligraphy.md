@@ -4,6 +4,19 @@
 
 # 左手练字
 
+## 赵孟𫖯-行书-赤壁赋
+
+[点击这里查看我用左手练习的赵孟𫖯的《赤壁赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)
+
+<!--
+## 王羲之-行书-兰亭序
+
+[点击这里查看我用左手练习的王羲之的《兰亭序》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-王羲之-兰亭序.md)
+
+## 赵孟𫖯-行书-洛神赋
+
+[点击这里查看我用左手练习的赵孟𫖯的《洛神赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-洛神赋.md)
+
 ## 赵孟𫖯-楷书-道德经
 
 [点击这里查看我用左手练习的赵孟𫖯的《道德经》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-道德经.md)
@@ -16,18 +29,6 @@
 
 [点击这里查看我用左手练习的赵孟𫖯的《汲黯传》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-汲黯传.md)
 
-## 王羲之-行书-兰亭序
-
-[点击这里查看我用左手练习的王羲之的《兰亭序》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-王羲之-兰亭序.md)
-
-## 赵孟𫖯-行书-赤壁赋
-
-[点击这里查看我用左手练习的赵孟𫖯的《赤壁赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-赤壁赋.md)
-
-## 赵孟𫖯-行书-洛神赋
-
-[点击这里查看我用左手练习的赵孟𫖯的《洛神赋》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-赵孟𫖯-洛神赋.md)
-
 ## 楷书-灵飞经
 
 [点击这里查看我用左手练习的《灵飞经》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-灵飞经.md)
@@ -35,6 +36,7 @@
 ## 王羲之-行书-圣教序
 
 [点击这里查看我用左手练习的王羲之的《圣教序》照片](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/左手练字-王羲之-圣教序.md)
+-->
 
 # 楷书四大家
 
