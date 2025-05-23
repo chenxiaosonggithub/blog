@@ -21,6 +21,8 @@ grep_repo() {
 	fi
 	cd "${repo_path}"
 
+	echo -e "\n${repo}:"
+
 	while IFS= read -r file; do
 		if [[ "${file}" == "." || "${file}" == ".." || \
 		      "${file}" == ".git" ]]; then
