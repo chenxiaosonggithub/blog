@@ -35,6 +35,27 @@ configfile $prefix/grub.cfg
 vim /etc/default/grub # GRUB_TIMEOUT=5
 ```
 
+# 网络唤醒（Wake-on-LAN） {wake-on-lan}
+
+技嘉Aorus主板bios打开`Settings -> Wake on LAN`。
+
+睡眠和唤醒的服务器上:
+```sh
+sudo apt-get install ethtool -y
+sudo ethtool enp67s0 | grep Wake-on
+  # Supports Wake-on: pumbg
+  # Wake-on: g # d为关闭g为开启
+sudo ethtool -s enp67s0 wol g # d为关闭g为开启
+sudo apt-get install pm-utils -y # pm-suspend
+sudo pm-suspend # 挂起
+```
+
+客户端:
+```sh
+sudo apt-get install wakeonlan -y
+wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
+```
+
 # virt-manager安装虚拟机
 
 `/etc/libvirt/qemu.conf`文件配置:
@@ -210,25 +231,6 @@ qemu-system-x86_64 \
 但arm64的麒麟桌面系统没法这样安装（但可在virt-manager中安装），暂时还没找到原因。
 
 可以在arm芯片的mac电脑中用vmware fusion安装arm64的ubuntu。
-
-# 网络唤醒（Wake-on-LAN） {wake-on-lan}
-
-睡眠和唤醒的服务器上:
-```sh
-sudo apt-get install ethtool -y
-sudo ethtool enp67s0 | grep Wake-on
-  # Supports Wake-on: pumbg
-  # Wake-on: g # d为关闭g为开启
-sudo ethtool -s enp67s0 wol g # d为关闭g为开启
-sudo apt-get install pm-utils -y # pm-suspend
-sudo pm-suspend # 挂起
-```
-
-客户端:
-```sh
-sudo apt-get install wakeonlan -y
-wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
-```
 
 # 我的常用软件
 
