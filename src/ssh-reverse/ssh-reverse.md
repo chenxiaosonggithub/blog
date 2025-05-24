@@ -123,11 +123,19 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 Linux安装请[点击这里查看文档](https://service.oray.com/question/11630.html):
 ```sh
+# 安装成功后会打印`SN: orayxxxx   Default password: admin`
 rpm -ivh phddns_5.3.0_amd64.rpm
 sudo dpkg -i phddns_5.3.0_amd64.deb
 ```
 
-安装成功后会打印`SN: orayxxxx   Default password: admin`，在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
+启动服务:
+```sh
+sudo phddns enable # 开机启动
+sudo phddns start # 启动
+sudo phddns status # 查看状态
+```
+
+在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
 # 向日葵和ToDesk
 
