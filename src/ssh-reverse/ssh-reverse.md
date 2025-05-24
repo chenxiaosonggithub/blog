@@ -114,9 +114,24 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 通过访问`chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
 
+# 花生壳
+
+如果不想自己搭建服务器，可以使用[花生壳](https://hsk.oray.com/)，[查看帮忙文档](https://service.oray.com/question/15507.html)。
+
+注意不能用`wget`命令下载（下载的文件错误），直接访问[centos](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.rpm)和[ubuntu](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.deb)
+下载链接（[版本号查看官网](https://hsk.oray.com/download)）在网页下载。
+
+Linux安装请[点击这里查看文档](https://service.oray.com/question/11630.html):
+```sh
+rpm -ivh phddns_5.3.0_amd64.rpm
+sudo dpkg -i phddns_5.3.0_amd64.deb
+```
+
+安装成功后会打印`SN: orayxxxx   Default password: admin`，在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
+
 # 向日葵和ToDesk
 
-如果不想自己搭建服务器，可以使用[向日葵](https://sunlogin.oray.com/download?categ=personal)和[ToDesk](https://www.todesk.com/download.html)。
+还可以使用[向日葵](https://sunlogin.oray.com/download?categ=personal)和[ToDesk](https://www.todesk.com/download.html)。
 
 向日葵有[命令行版本](https://service.oray.com/question/11017.html)，但是要付费的，还不如自己买个服务器，下面以centos7为例说明安装过程:
 ```sh
