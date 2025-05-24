@@ -56,6 +56,8 @@ sudo apt-get install wakeonlan -y
 wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
 ```
 
+还有个问题，服务器刚睡眠时可以唤醒，但睡眠时间长了就无法唤醒了，需进一步折腾。
+
 # virt-manager安装虚拟机
 
 `/etc/libvirt/qemu.conf`文件配置:
