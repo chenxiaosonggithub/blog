@@ -53,10 +53,11 @@ sudo pm-suspend # 挂起
 客户端:
 ```sh
 sudo apt-get install wakeonlan -y
-wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
+sudo arp -s 10.42.20.225 b4:2e:99:a8:55:9e # ARP缓存过期会导致无法唤醒
+sudo wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
+sudo arp -d 10.42.20.225 # 如果清除ARP缓存后无法唤醒
+arp | grep 225 # 这时就看不到ARP缓存
 ```
-
-还有个问题，服务器刚睡眠时可以唤醒，但睡眠时间长了就无法唤醒了，需进一步折腾。
 
 # virt-manager安装虚拟机
 
