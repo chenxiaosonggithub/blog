@@ -211,6 +211,25 @@ qemu-system-x86_64 \
 
 可以在arm芯片的mac电脑中用vmware fusion安装arm64的ubuntu。
 
+# 网络唤醒（Wake-on-LAN） {wake-on-lan}
+
+睡眠和唤醒的服务器上:
+```sh
+sudo apt-get install ethtool -y
+sudo ethtool enp67s0 | grep Wake-on
+  # Supports Wake-on: pumbg
+  # Wake-on: g # d为关闭g为开启
+sudo ethtool -s enp67s0 wol g # d为关闭g为开启
+sudo apt-get install pm-utils -y # pm-suspend
+sudo pm-suspend # 挂起
+```
+
+客户端:
+```sh
+sudo apt-get install wakeonlan -y
+wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
+```
+
 # 我的常用软件
 
 这是我的开发环境上的一些配置，方便自己的查阅
