@@ -137,6 +137,24 @@ sudo phddns status # 查看状态
 
 在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
+注意可能会断开，可以用以下脚本检查重启服务:
+```sh
+# 需要先执行 sudo -i
+while true
+do
+	phddns status | grep "Runstatus: OFFLINE"
+	if [ $? == 0 ]
+	then
+		echo `date` fail
+		phddns restart
+	else
+		echo `date` success
+	fi
+
+	sleep 60
+done
+```
+
 # 向日葵和ToDesk
 
 还可以使用[向日葵](https://sunlogin.oray.com/download?categ=personal)和[ToDesk](https://www.todesk.com/download.html)。
