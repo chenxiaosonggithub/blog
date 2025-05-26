@@ -1,4 +1,4 @@
-From bc9f08d192fb76ff4d7e3e2d7a48ae891197a81e Mon Sep 17 00:00:00 2001
+From cef012201f3d51e43898ce41c1c228328701edeb Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Thu, 1 May 2025 19:01:20 +0800
 Subject: [PATCH] mydebug: common
@@ -171,7 +171,7 @@ index 000000000000..dee1c13fd282
 +module_exit(exit_mydebug)
 diff --git a/mydebug/mydebug.h b/mydebug/mydebug.h
 new file mode 100644
-index 000000000000..24d35ecbcf23
+index 000000000000..aadb527960b7
 --- /dev/null
 +++ b/mydebug/mydebug.h
 @@ -0,0 +1,28 @@
@@ -194,7 +194,7 @@ index 000000000000..24d35ecbcf23
 +			pr_info("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__);		\
 +	} while (0)
 +
-+#define mydebug_print_with_bit(fmt, bit, ...)				\
++#define mydebug_print_with_bit(bit, fmt, ...)				\
 +	do {							\
 +		if (mydebug_on_types & BIT(bit))	\
 +			pr_info("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__);		\
