@@ -142,16 +142,14 @@ sudo phddns status # 查看状态
 # 需要先执行 sudo -i
 while true
 do
-	phddns status | grep "Runstatus: OFFLINE"
-	if [ $? == 0 ]
+	ssh -p xxxxx -o ConnectTimeout=3 -q xxx@xxxx.chenxiaosong.com exit
+	if [ $? != 0 ]
 	then
 		echo `date` fail
 		phddns restart
-	else
-		echo `date` success
 	fi
 
-	sleep 60
+	sleep 120
 done
 ```
 
