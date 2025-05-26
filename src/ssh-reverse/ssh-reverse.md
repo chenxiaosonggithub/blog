@@ -164,3 +164,7 @@ sudo /usr/local/sunlogin/bin/sunloginclient
 按F12 -> Bind, 登录向日葵账号密码
 ```
 
+# JuiceSSH
+
+安卓手机上远程登录可以使用[JuiceSSH](https://juicessh.com/changelog)。
+
