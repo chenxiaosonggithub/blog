@@ -1,4 +1,4 @@
-From c19def2a4e3fcf4c2508bdca7bd169e52cb9d68a Mon Sep 17 00:00:00 2001
+From bc9f08d192fb76ff4d7e3e2d7a48ae891197a81e Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Thu, 1 May 2025 19:01:20 +0800
 Subject: [PATCH] mydebug: common
@@ -8,8 +8,8 @@ Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
  include/mydebug.h |   1 +
  mydebug/Makefile  |   5 ++
  mydebug/mydebug.c | 129 ++++++++++++++++++++++++++++++++++++++++++++++
- mydebug/mydebug.h |  22 ++++++++
- 4 files changed, 157 insertions(+)
+ mydebug/mydebug.h |  28 ++++++++++
+ 4 files changed, 163 insertions(+)
  create mode 120000 include/mydebug.h
  create mode 100644 mydebug/Makefile
  create mode 100644 mydebug/mydebug.c
@@ -171,10 +171,10 @@ index 000000000000..dee1c13fd282
 +module_exit(exit_mydebug)
 diff --git a/mydebug/mydebug.h b/mydebug/mydebug.h
 new file mode 100644
-index 000000000000..f1fcd7a0ce4c
+index 000000000000..24d35ecbcf23
 --- /dev/null
 +++ b/mydebug/mydebug.h
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,28 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2025
@@ -191,6 +191,12 @@ index 000000000000..f1fcd7a0ce4c
 +#define mydebug_print(fmt, ...)				\
 +	do {							\
 +		if (mydebug_on_types & MYDEBUG_ON_PRINT)	\
++			pr_info("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__);		\
++	} while (0)
++
++#define mydebug_print_with_bit(fmt, bit, ...)				\
++	do {							\
++		if (mydebug_on_types & BIT(bit))	\
 +			pr_info("[%s:%d] " fmt, __func__, __LINE__, ##__VA_ARGS__);		\
 +	} while (0)
 +
