@@ -13,7 +13,6 @@ exportfs -r
 systemctl stop firewalld
 setenforce 0
 systemctl restart nfs-server.service
-systemctl restart rpcbind
 
 chmod 777 /tmp/s_test
 chmod 777 /tmp/s_scratch
