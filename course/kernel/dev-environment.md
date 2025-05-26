@@ -849,8 +849,8 @@ sudo dnf update vim-common vim-minimal -y
 qemu命令行启动虚拟机时，多个网卡的启动参数如下:
 ```sh
 -net tap \
--net nic,model=virtio,macaddr=00:11:22:33:44:06 \
--net nic,model=virtio,macaddr=00:11:22:33:44:56 \
+-net nic,model=virtio,macaddr=00:11:22:33:44:01 \
+-net nic,model=virtio,macaddr=00:11:22:33:44:61 \
 ```
 
 启动后，在虚拟机中用`ifconfig -a`可以看到另一个网卡`ens3`，debian还需要经过以下修改:
