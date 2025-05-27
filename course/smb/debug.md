@@ -82,42 +82,7 @@ log file = /usr/local/samba/var/log.%m
 
 `log level`的解析在`debug_parse_param()`函数中。
 
-打印函数堆栈用`log_stack_trace()`，比如要打印`smbd_parent_loop()`的调用栈，代码修改如下:
-```c
-diff --git a/source3/smbd/server.c b/source3/smbd/server.c
-index 1ad66ecbdba..fb265bccaa6 100644
---- a/source3/smbd/server.c
-+++ b/source3/smbd/server.c
-@@ -60,6 +60,7 @@
- #include "lib/global_contexts.h"
- #include "source3/lib/substitute.h"
- #include "lib/addrchange.h"
-+#include "lib/util/fault.h"
-
- #ifdef CLUSTER_SUPPORT
- #include "ctdb_protocol.h"
-@@ -1412,6 +1413,8 @@ static void smbd_parent_loop(struct tevent_context *ev_ctx,
-           for each incoming connection */
-        DEBUG(2,("waiting for connections\n"));
-
-+       log_stack_trace();
-+
-        ret = tevent_loop_wait(ev_ctx);
-        if (ret != 0) {
-                DEBUG(0, ("tevent_loop_wait failed: %d, %s, exiting\n",
-diff --git a/source3/wscript_build b/source3/wscript_build
-index 2870f1a704b..3df7d60eb8d 100644
---- a/source3/wscript_build
-+++ b/source3/wscript_build
-@@ -1137,6 +1137,7 @@ bld.SAMBA3_SUBSYSTEM('fd_handle',
- bld.SAMBA3_BINARY('smbd/smbd',
-                  source='smbd/server.c smbd/smbd_cleanupd.c',
-                  deps='''
-+                      smb-panic
-                       CMDLINE_S3
-                       smbd_base
-                       REG_FULL
-```
+打印函数堆栈用`log_stack_trace()`，比如打印`smbd_parent_loop()`的调用栈的补丁[`0001-dump-stack-of-smbd_parent_loop.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/0001-dump-stack-of-smbd_parent_loop.patch)。
 
 `/usr/local/samba/var/log.smbd`日志文件中的打印结果如下:
 ```sh
