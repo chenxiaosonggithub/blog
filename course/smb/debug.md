@@ -1,6 +1,6 @@
 # 打印
 
-## server打印
+## 内核态server打印
 
 smb server打印函数是`ksmbd_debug()`，相关代码如下:
 ```c
@@ -53,6 +53,36 @@ ksmbd.control --debug= # 不加COMPONENT可以查看当前的状态
  
  struct ksmbd_server_config server_conf;
 ```
+
+## 用户态server打印
+
+[用户态server仓库](https://gitlab.com/samba-team/samba)。
+
+修改配置文件`/etc/samba/smb.conf`:
+```sh
+[global]
+log level = 4
+# 日志文件路径（默认通常是/var/log/samba/）
+log file = /var/log/samba/log.%m
+```
+
+常用的几个`log level`有以下几个:
+```c
+#define DEBUG_ERR     DBGLVL_ERR     // 0      /* error conditions */
+#define DEBUG_WARNING DBGLVL_WARNING // 1      /* warning conditions */
+#define DEBUG_NOTICE  DBGLVL_NOTICE  // 3      /* normal, but significant, condition */
+#define DEBUG_INFO    DBGLVL_INFO    // 5      /* informational message */
+#define DEBUG_DEBUG   DBGLVL_DEBUG   // 10     /* debug-level message */
+```
+
+当然，代码中还有使用`DEBUG(11, ...)`、`DEBUG(15, ...)`、`DEBUG(18, ...)`、`DEBUG(19, ...)`等等，最大可用的`log level`为:
+```c
+#define MAX_DEBUG_LEVEL 1000
+```
+
+`log level`的解析在`debug_parse_param()`函数中。
+
+打印函数堆栈用`log_stack_trace()`，但我在`debug_parse_param()`函数中调用却无法编译成功，还要再折腾一下。
 
 ## client打印
 
