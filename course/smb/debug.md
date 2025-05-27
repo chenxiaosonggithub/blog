@@ -96,6 +96,8 @@ log file = /usr/local/samba/var/log.%m
    #5 _start + 0x25 [ip=0x405e95] [sp=0x7ffc42caf420]
 ```
 
+另外`log_stack_trace()`中的`backtrace_symbols()`没有和`free()`配套使用，注释中说是`free()`可能产生问题。
+
 ## client打印
 
 smb client打印函数有`cifs_dbg()`、`cifs_server_dbg()`、`cifs_tcon_dbg()`、`cifs_info()`，要打开配置`CONFIG_CIFS_DEBUG`才有效，打开`CONFIG_CIFS_DEBUG2`和`CONFIG_CIFS_DEBUG_DUMP_KEYS`能打印更多信息，以`cifs_dbg()`为例代码如下:
