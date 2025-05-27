@@ -62,8 +62,8 @@ ksmbd.control --debug= # 不加COMPONENT可以查看当前的状态
 ```sh
 [global]
 log level = 4
-# 日志文件路径（默认通常是/var/log/samba/）
-log file = /var/log/samba/log.%m
+# 日志文件路径
+log file = /usr/local/samba/var/log.%m
 ```
 
 常用的几个`log level`有以下几个:
@@ -82,7 +82,54 @@ log file = /var/log/samba/log.%m
 
 `log level`的解析在`debug_parse_param()`函数中。
 
-打印函数堆栈用`log_stack_trace()`，但我在`debug_parse_param()`函数中调用却无法编译成功，还要再折腾一下。
+打印函数堆栈用`log_stack_trace()`，比如要打印`smbd_parent_loop()`的调用栈，代码修改如下:
+```c
+diff --git a/source3/smbd/server.c b/source3/smbd/server.c
+index 1ad66ecbdba..fb265bccaa6 100644
+--- a/source3/smbd/server.c
++++ b/source3/smbd/server.c
+@@ -60,6 +60,7 @@
+ #include "lib/global_contexts.h"
+ #include "source3/lib/substitute.h"
+ #include "lib/addrchange.h"
++#include "lib/util/fault.h"
+
+ #ifdef CLUSTER_SUPPORT
+ #include "ctdb_protocol.h"
+@@ -1412,6 +1413,8 @@ static void smbd_parent_loop(struct tevent_context *ev_ctx,
+           for each incoming connection */
+        DEBUG(2,("waiting for connections\n"));
+
++       log_stack_trace();
++
+        ret = tevent_loop_wait(ev_ctx);
+        if (ret != 0) {
+                DEBUG(0, ("tevent_loop_wait failed: %d, %s, exiting\n",
+diff --git a/source3/wscript_build b/source3/wscript_build
+index 2870f1a704b..3df7d60eb8d 100644
+--- a/source3/wscript_build
++++ b/source3/wscript_build
+@@ -1137,6 +1137,7 @@ bld.SAMBA3_SUBSYSTEM('fd_handle',
+ bld.SAMBA3_BINARY('smbd/smbd',
+                  source='smbd/server.c smbd/smbd_cleanupd.c',
+                  deps='''
++                      smb-panic
+                       CMDLINE_S3
+                       smbd_base
+                       REG_FULL
+```
+
+`/usr/local/samba/var/log.smbd`日志文件中的打印结果如下:
+```sh
+[2025/05/27 22:06:24.110919,  0] ../../lib/util/fault.c:261(log_stack_trace)
+  BACKTRACE:
+   #0 log_stack_trace + 0x28 [ip=0x7f61f4a4098a] [sp=0x7ffc42cae650]
+   #1 smbd_parent_loop + 0x93 [ip=0x409d78] [sp=0x7ffc42caef50]
+   #2 main + 0x1a27 [ip=0x40ce2c] [sp=0x7ffc42caef80]
+   #3 __libc_start_call_main + 0x78 [ip=0x7f61f480f088] [sp=0x7ffc42caf320]
+   #4 __libc_start_main + 0x8b [ip=0x7f61f480f14b] [sp=0x7ffc42caf3c0]
+   #5 _start + 0x25 [ip=0x405e95] [sp=0x7ffc42caf420]
+```
 
 ## client打印
 
