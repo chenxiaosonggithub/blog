@@ -298,12 +298,21 @@ systemctl start drbd.service
 `drbd01`上:
 ```sh
 drbdadm -- --overwrite-data-of-peer primary all # primary host, 与secondary host（也就是 drbd02）同步
-drbdadm status # 看到 r0 role:Secondary, disk:UpToDate, peer role:Primary...
+drbdadm status
+  # r0 role:Primary
+  #   disk:UpToDate
+  #   peer role:Secondary
+  #     replication:Established peer-disk:UpToDate
 ```
 
 `drbd02`上查看进度:
 ```sh
 watch -n1 cat /proc/drbd # ctrl+c取消
+drbdadm status
+  # r0 role:Primary
+  #   disk:UpToDate
+  #   peer role:Secondary
+  #     replication:Established peer-disk:UpToDate
 ```
 
 `drbd01`上:
