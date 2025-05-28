@@ -104,8 +104,8 @@ server端操作:
 # -M: 显示 MPTCP 套接字。
 # -a: 显示监听和非监听套接字（对于 TCP，这意味着已建立的连接）。
 # -l: 仅显示监听套接字（默认情况下此类套接字被省略）。
-ss -ieMl # 只显示mptcp协议的套接字
-ss -iaM # 查看socket状态
+ss -ieMl # 只查看监听的mptcp套接字
+ss -iaM  # 查看监听的套接字和已建立的连接
     # State   Recv-Q  Send-Q  Local Address:Port  Peer Address:Port
     # ESTAB   0       0       192.168.53.37:9734  192.168.53.1:36632
     # LISTEN  0       5             0.0.0.0:9734       0.0.0.0:*
