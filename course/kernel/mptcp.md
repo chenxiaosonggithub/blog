@@ -141,6 +141,10 @@ insmod ./kernel-socket-server.ko
 insmod ./kernel-socket-client.ko
 ```
 
+# 内核中mptcp的应用
+
+[查看`kernel-create-socket.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/mptcp/kernel-create-socket.md)。
+
 #  疑问
 
 - 不修改应用，使用BPF来修改socket类型，用mptcpize？
