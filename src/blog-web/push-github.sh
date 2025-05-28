@@ -18,8 +18,9 @@ if [[ ! -d "${github_io_repo}" ]]; then
 fi
 
 cd ${code_path}/blog/
-git pull github master
-git push github master
+git push github master -f
+cd ${code_path}/tmp/
+git push github master -f
 
 bash ${code_path}/blog/src/blog-web/create-html.sh false this-arg-is-useless ${github_io_repo}
 cp ${code_path}/blog/src/blog-web/github-io-404.html ${github_io_repo}/404.html
