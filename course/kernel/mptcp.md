@@ -99,6 +99,11 @@ client:
 
 server端操作:
 ```sh
+# -i: 显示内部 TCP 信息。
+# -e: 显示详细的套接字信息。
+# -M: 显示 MPTCP 套接字。
+# -a: 显示监听和非监听套接字（对于 TCP，这意味着已建立的连接）。
+# -l: 仅显示监听套接字（默认情况下此类套接字被省略）。
 ss -ieMl # 只显示mptcp协议的套接字
 ss -iaM # 查看socket状态
     # State   Recv-Q  Send-Q  Local Address:Port  Peer Address:Port
