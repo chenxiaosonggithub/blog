@@ -17,7 +17,7 @@
 - [补丁文件](https://gitee.com/src-openeuler/kernel/tree/openEuler-20.03-LTS-SP4)
 - [support.huawei.com](https://support.huawei.com/supportindex/index)选择"企业技术支持"
 
-可以使用脚本[`create-enfs-patchset.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/create-enfs-patchset.sh)生成完整的补丁文件，[再打上我修改的补丁](https://gitee.com/chenxiaosonggitee/tmp/tree/master/nfs/enfs)。切换到`openEuler-1.0-LTS`分支，编译前打开配置`CONFIG_ENFS`，可能还要关闭配置`CONFIG_NET_VENDOR_NETRONOME`。
+可以使用脚本[`create-enfs-patchset.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/create-enfs-patchset.sh)生成完整的补丁文件，[再打上我修改的补丁](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs)。切换到`openEuler-1.0-LTS`分支，编译前打开配置`CONFIG_ENFS`，可能还要关闭配置`CONFIG_NET_VENDOR_NETRONOME`。
 
 挂载:
 ```sh
@@ -41,7 +41,7 @@ cat /proc/enfs/192.168.53.216_0/stat
 
 # 我修改的nfs+补丁
 
-[我修改的补丁请查看这里](https://gitee.com/chenxiaosonggitee/tmp/tree/master/nfs/enfs)。
+[我修改的补丁请查看这里](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs)。
 
 ```c
 // struct enfs_adapter_ops->owner 的引用计数参考
