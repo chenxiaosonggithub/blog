@@ -486,6 +486,13 @@ comm_check_pull_push() {
 	return 0
 }
 
+comm_push_github_repo() {
+	git remote -v | grep chenxiaosonggithub
+	if [ $? -eq 0 ]; then
+		git push github master -f
+	fi
+}
+
 comm_check_repo() {
 	local path=$1
 	shift; local is_push_github=$1
@@ -551,6 +558,8 @@ comm_check_repo() {
 		comm_echo "${repo}被包含到数组中"
 		tmp_repos_ref+=(${repo})
 	fi
+
+	comm_push_github_repo
 }
 
 comm_print_array() {
