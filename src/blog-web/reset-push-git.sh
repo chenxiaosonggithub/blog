@@ -23,4 +23,4 @@ reset_repo "tmp"
 reset_repo "private-blog"
 reset_repo "private-tmp"
 . ${code_path}/private-blog/others-blog/reset-gitee.sh
-bash ${code_path}/blog/src/blog-web/push-github.sh false
+bash ${code_path}/blog/src/blog-web/push-web.sh false
