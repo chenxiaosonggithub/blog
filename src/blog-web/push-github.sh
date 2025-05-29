@@ -5,6 +5,15 @@ github_io_repo=${code_path}/${user_name}.github.io/
 # 导入其他脚本
 . ${code_path}/blog/src/blog-web/common-lib.sh
 
+push_to_github() {
+	local repo=$1
+
+	cd ${code_path}/${repo}/
+	if [ $? -ne 0 ]; then
+		git push github master -f
+	fi
+}
+
 comm_create_params "false"
 
 is_new_repo=false
@@ -17,10 +26,9 @@ if [[ ! -d "${github_io_repo}" ]]; then
 	is_new_repo=true
 fi
 
-cd ${code_path}/blog/
-git push github master -f
-cd ${code_path}/tmp/
-git push github master -f
+push_to_github "blog"
+push_to_github "tmp"
+push_to_github "myfs"
 
 bash ${code_path}/blog/src/blog-web/create-html.sh false this-arg-is-useless ${github_io_repo}
 cp ${code_path}/blog/src/blog-web/github-io-404.html ${github_io_repo}/404.html
