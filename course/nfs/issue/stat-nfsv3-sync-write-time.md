@@ -80,6 +80,16 @@ write
                                     rpc_call_start
                                       task->tk_action = call_start
                                     rpc_execute
+
+call_transmit
+  xprt_transmit
+    xs_tcp_send_request
+      xs_sendpages
+        xs_send_kvec
+          kernel_sendmsg
+
+call_transmit -> call_decode : 104ms
+nfs_file_write -> rpc_execute : 100ms
 ```
 
 # 脚本
