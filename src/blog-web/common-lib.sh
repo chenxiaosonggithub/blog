@@ -569,8 +569,8 @@ comm_check_repo() {
 		tmp_repos_ref+=(${repo})
 	fi
 
+	comm_echo "is_push_github=${is_push_github}"
 	if [[ "${is_push_github}" == 1 && "${is_repo_ok}" == true ]]; then
-		comm_echo "is_push_github=" ${is_push_github}
 		comm_push_github_repo
 		local push_github_result=$?
 		if [[ "${push_github_result}" != 0 ]]; then
