@@ -20,13 +20,23 @@ print_result() {
 
 check_git() {
 	local repo=$1
-	comm_check_repo ${code_path}/${repo} not_exist_repos not_clean_repos not_sync_repos ok_repos
+	local is_push_github=$2
+	comm_check_repo \
+		${code_path}/${repo} \
+		${is_push_github} \
+		not_exist_repos \
+		not_clean_repos \
+		not_sync_repos \
+		ok_repos
 }
 
 . ${code_path}/blog/src/blog-web/repos.sh
 . ${code_path}/private-blog/script/repos.sh
-for repo in ${repos_array[@]}
-do
-	check_git ${repo}
+element_count="${#repos_array[@]}" # 总个数
+count_per_line=2
+for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
+	is_push_github=${repos_array[${index}]}
+	repo=${repos_array[${index}+1]}
+	check_git ${repo} ${is_push_github}
 done
 print_result

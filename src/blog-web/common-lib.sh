@@ -488,10 +488,11 @@ comm_check_pull_push() {
 
 comm_check_repo() {
 	local path=$1
-	local -n not_exist_repos_ref=$2
-	local -n not_clean_repos_ref=$3
-	local -n not_sync_repos_ref=$4
-	local -n ok_repos_ref=$5
+	shift; local is_push_github=$1
+	shift; local -n not_exist_repos_ref=$1
+	shift; local -n not_clean_repos_ref=$1
+	shift; local -n not_sync_repos_ref=$1
+	shift; local -n ok_repos_ref=$1
 
 	local -n tmp_repos_ref
 	local cmd_res=""
@@ -524,7 +525,7 @@ comm_check_repo() {
 	comm_echo "${repo} origin_commit: ${origin_commit}"
 	comm_echo "${repo} master_commit: ${master_commit}"
 
-	local is_include_repo=${is_repo_clean}
+	local is_include_repo=${is_repo_clean} # 有未提交的更改，已经包含到not_clean_repos_ref
 	if [ "${origin_commit}" == "${master_commit}" ]; then
 		comm_echo "${repo}不用push/pull"
 		tmp_repos_ref=ok_repos_ref
@@ -543,7 +544,7 @@ comm_check_repo() {
 		else
 			comm_echo "${repo}未push/pull，要手动处理"
 			tmp_repos_ref=not_sync_repos_ref
-			is_include_repo=true
+			is_include_repo=true # 未push/pull，即使有未提交，也包含到数组中
 		fi
 	fi
 	if [[ "${is_include_repo}" == "true" ]]; then
