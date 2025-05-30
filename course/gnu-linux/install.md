@@ -167,7 +167,7 @@ virt-install --virt-type kvm --name kylin-sp1-210528 --vcpus=4 --ram 4096 --cdro
 
 ### ubuntu
 
-Ubuntu 服务端 `Settings -> Sharing -> Screen Sharing -> 启用旧式vnc协议 -> 打开远程控制`。较新的Ubuntu（如24.04）无法用vnc，只能用RDP协议。
+Ubuntu 服务端 `Settings -> Sharing -> Screen Sharing -> 启用旧式vnc协议 -> 打开远程控制`。较新的Ubuntu（如24.04）无法用vnc，只能用RDP协议，位置是`设置 -> 系统 -> 桌面共享`。
 
 在客户端`Remmina`输入: `sonvhi-XPS-13-9305.local`(`hostname.local`)或 ip, 注意前面不能有`vnc://`，连接后点击`切换绽放模式`。
 
@@ -234,10 +234,6 @@ qemu-system-x86_64 \
 但arm64的麒麟桌面系统没法这样安装（但可在virt-manager中安装），暂时还没找到原因。
 
 可以在arm芯片的mac电脑中用vmware fusion安装arm64的ubuntu。
-
-# RDP远程桌面 {#rdp}
-
-ubuntu24.04没有vnc协议，只有rdp协议，`设置 -> 系统 -> 桌面共享`。
 
 # 我的常用软件
 
