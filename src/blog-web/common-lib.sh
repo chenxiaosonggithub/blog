@@ -522,8 +522,9 @@ comm_check_repo() {
 	shift; local -n not_exist_repos_ref=$1
 	shift; local -n not_clean_repos_ref=$1
 	shift; local -n not_sync_repos_ref=$1
-	shift; local -n ok_repos_ref=$1
+	shift; local -n gitee_ok_repos_ref=$1
 	shift; local -n github_not_push_repos_ref=$1
+	shift; local -n github_ok_repos_ref=$1
 
 	local -n tmp_repos_ref
 	local repo=$(basename "${path}")
@@ -557,7 +558,7 @@ comm_check_repo() {
 	cmd_res=$?
 	local is_repo_ok=${is_repo_clean}
 	if [[ "${cmd_res}" == 0 ]]; then
-		tmp_repos_ref=ok_repos_ref
+		tmp_repos_ref=gitee_ok_repos_ref
 	else
 		tmp_repos_ref=not_sync_repos_ref
 		is_include_repo=true # 未push/pull，即使有未提交，也包含到数组中
@@ -575,6 +576,8 @@ comm_check_repo() {
 		local push_github_result=$?
 		if [[ "${push_github_result}" != 0 ]]; then
 			github_not_push_repos_ref+=(${repo})
+		else
+			github_ok_repos_ref+=(${repo})
 		fi
 	fi
 }

@@ -8,16 +8,18 @@ MY_ECHO_DEBUG=0
 not_exist_repos=()
 not_clean_repos=()
 not_sync_repos=()
-ok_repos=()
+gitee_ok_repos=()
 github_not_push_repos=()
+github_ok_repos=()
 
 print_result() {
 	echo
 	comm_print_array "not_exist_repos[@]" "$(comm_yellow_color)" "不存在的仓库:" "${not_exist_repos[@]}" "$(comm_no_color)"
-	comm_print_array "ok_repos[@]" "$(comm_green_color)" "gitee全部搞定的仓库:" "${ok_repos[@]}"  "$(comm_no_color)"
+	comm_print_array "gitee_ok_repos[@]" "$(comm_green_color)" "gitee全部搞定的仓库:" "${gitee_ok_repos[@]}"  "$(comm_no_color)"
+	comm_print_array "github_ok_repos[@]" "$(comm_green_color)" "github全部搞定的仓库:" "${github_ok_repos[@]}"  "$(comm_no_color)"
 	comm_print_array "not_clean_repos[@]" "$(comm_red_color)" "未提交的仓库:" "${not_clean_repos[@]}" "$(comm_no_color)"
 	comm_print_array "not_sync_repos[@]" "$(comm_red_color)" "未push/pull的仓库:" "${not_sync_repos[@]}" "$(comm_no_color)"
-	comm_print_array "github_not_push_repos[@]" "$(comm_red_color)" "github未同步的仓库:" "${github_not_push_repos[@]}" "$(comm_no_color)"
+	comm_print_array "github_not_push_repos[@]" "$(comm_red_color)" "github未push的仓库:" "${github_not_push_repos[@]}" "$(comm_no_color)"
 }
 
 check_git() {
@@ -29,8 +31,9 @@ check_git() {
 		not_exist_repos \
 		not_clean_repos \
 		not_sync_repos \
-		ok_repos \
-		github_not_push_repos
+		gitee_ok_repos \
+		github_not_push_repos \
+		github_ok_repos
 }
 
 . ${code_path}/blog/src/blog-web/repos.sh
