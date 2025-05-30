@@ -164,6 +164,21 @@ sudo /usr/local/sunlogin/bin/sunloginclient
 按F12 -> Bind, 登录向日葵账号密码
 ```
 
+# 家里远程桌面到公司ubuntu24.04 {#remote-desktopl}
+
+ubuntu24.04没有vnc协议，只有rdp协议，位置是`设置 -> 系统 -> 桌面共享`。
+
+我是这样从家里的苹果电脑连接到公司的ubuntu24.04，macOS通过向日葵连接到virt-manager中的Windows11，Windows11通过“远程桌面连接”连接到ubuntu24.04。
+
+如果Virt-manager中的Windows11出问题（比如卡死），可以用以下命令在远程操作virt-manager:
+```sh
+virsh list # 本地活动虚拟机
+virsh list –all # 本地所有的虚拟机（活动的+不活动的）
+virsh shutdown Win11_24H2_Chinese_Simplified_x64 # 正常关闭虚拟机
+virsh destroy Win11_24H2_Chinese_Simplified_x64 # 强制关闭虚拟机
+virsh start Win11_24H2_Chinese_Simplified_x64 # 启动非活动虚拟机
+```
+
 # JuiceSSH
 
 安卓手机上远程登录可以使用[JuiceSSH](https://juicessh.com/changelog)。
