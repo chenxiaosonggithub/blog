@@ -105,224 +105,37 @@ call_transmit
 call_decode
 ```
 
-[丁鹏龙](https://dingpenglong.com/)写的脚本:
+[丁鹏龙](https://dingpenglong.com/)写的[bpftrace脚本](https://gitee.com/youcunhua/blog/tree/master/work/nfs/stat-nfsv3-sync-write-time)。
+
+抓到以下日志:
 ```sh
-#include <linux/fs.h>
-#include <linux/types.h>
-#include <linux/uio.h>
-#include <linux/sunrpc/clnt.h>   // RPC 相关头文件
-#include <linux/sunrpc/sched.h>  // struct rpc_task 定义
+kprobe:nfs_file_write, name:xxxx inode:1697123520 len:354    offset:132777   time:39290423881392412
+call_transmit start - XID:0xedc0ad03 OP:GETATTR      time:39290423881405002
+call_transmit start - XID:0xedc0ad03 OP:GETATTR      time:39290423982453372
+call_transmit start - XID:0xeec0ad03 OP:WRITE        time:39290423982494112
+call_transmit start - XID:0xeec0ad03 OP:WRITE        time:39290424084932650
+nfs_file_write - File: xxxx Inode: 1697123520 Duration: 0 s 203 ms 592 μs 488 ns
 
-BEGIN {
-    printf("Tracing nfs_file_write execution time... Hit Ctrl-C to end.\n");
-}
-
-////////////////////////////////////////////////////////////
-//                 NFS File Write 跟踪                    //
-////////////////////////////////////////////////////////////
-kprobe:nfs_file_write
-{
-    $iocb  = (struct kiocb *)arg0;
-    $file  = $iocb->ki_filp;
-    $dentry = $file->f_path.dentry;
-    $from  = (struct iov_iter *)arg1;
-
-    @filename_ptr[tid]  = $dentry->d_name.name;  // 存储文件名指针
-    @inode[tid]         = $file->f_inode->i_ino; // 存储 inode
-    @write_offset       = $iocb->ki_pos;
-    @write_length       = $from->count;
-    @start_time[tid]    = nsecs;                 // 记录起始时间
-
-    printf("%s, name:%-20s inode:%-8lu len:%-6d offset:%-8d time:%-20llu\n",
-           probe, str($dentry->d_name.name), $file->f_inode->i_ino,
-           @write_length, @write_offset, nsecs);
-}
-
-kretprobe:nfs_file_write
-{
-    $duration = nsecs - @start_time[tid];
-    $name_ptr = @filename_ptr[tid];
-    $ino      = @inode[tid];
-
-    printf("nfs_file_write - File: %-20s ", str($name_ptr));
-    printf("Inode: %-8lu ", $ino);
-    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
-           $duration / 1000000000,
-           ($duration % 1000000000) / 1000000,
-           ($duration % 1000000) / 1000,
-           $duration % 1000);
-
-    delete(@filename_ptr[tid]);
-    delete(@inode[tid]);
-    delete(@start_time[tid]);
-}
-
-////////////////////////////////////////////////////////////
-//                  RPC Execute 阶段                      //
-////////////////////////////////////////////////////////////
-kprobe:rpc_execute
-{
-    $task = (struct rpc_task *)arg0;
-    @rpc_task = $task;
-
-    // 检查是否为 NFSv3 WRITE 操作
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    @rpc_xid[tid]        = $task->tk_rqstp->rq_xid;  // 存储 RPC XID
-    @rpc_op[tid]         = $task->tk_msg.rpc_proc->p_name;  // RPC 操作名
-    @rpc_start_time[tid] = nsecs;
-
-    printf("rpc_execute START - XID:0x%08x OP:%-12s time:%-20llu\n",
-           @rpc_xid[tid], str(@rpc_op[tid]), nsecs);
-}
-
-kretprobe:rpc_execute
-{
-    $task = @rpc_task;
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    $duration = nsecs - @rpc_start_time[tid];
-    printf("rpc_execute END   - XID:0x%08x ", @rpc_xid[tid]);
- 	printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
-           $duration / 1000000000,
-           ($duration % 1000000000) / 1000000,
-           ($duration % 1000000) / 1000,
-           $duration % 1000);
-
-    delete(@rpc_xid[tid]);
-    delete(@rpc_op[tid]);
-    delete(@rpc_start_time[tid]);
-}
-
-////////////////////////////////////////////////////////////
-//                  RPC Call 阶段                         //
-////////////////////////////////////////////////////////////
-kprobe:call_start
-{
-    $task = (struct rpc_task *)arg0;
-    @rpc_task = $task;
-
-    // 检查是否为 NFSv3 WRITE 操作
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    @call_xid[tid]        = $task->tk_rqstp->rq_xid;
-    @call_start_time[tid] = nsecs;
-    $proc_num             = $task->tk_msg.rpc_proc->p_proc;
-
-    printf("call_start    - XID:0x%08x Proc:%-4d time:%-20llu\n",
-           @call_xid[tid], $proc_num, nsecs);
-}
-
-kretprobe:call_start
-{
-    $task = @rpc_task;
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    $duration = nsecs - @call_start_time[tid];
-    printf("call_start    - XID:0x%08x ", @call_xid[tid]);
-    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
-           $duration / 1000000000,
-          ($duration % 1000000000) / 1000000,
-          ($duration % 1000000) / 1000,
-           $duration % 1000);
-
-    delete(@call_xid[tid]);
-    delete(@call_start_time[tid]);
-}
-
-kprobe:call_transmit
-{
-    $task = (struct rpc_task *)arg0;
-    @rpc_task = $task;
-
-    // 检查是否为 NFSv3 WRITE 操作
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    @transmit_xid[tid]        = $task->tk_rqstp->rq_xid;
-    @transmit_start_time[tid] = nsecs;
-
-    printf("call_transmit - XID:0x%08x time:%-20llu\n",
-           @transmit_xid[tid], nsecs);
-}
-
-kretprobe:call_transmit
-{
-    $task = @rpc_task;
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    $duration = nsecs - @transmit_start_time[tid];
-    printf("call_transmit - XID:0x%08x ", @transmit_xid[tid]);
-    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
-           $duration / 1000000000,
-          ($duration % 1000000000) / 1000000,
-          ($duration % 1000000) / 1000,
-           $duration % 1000);
-
-    delete(@transmit_xid[tid]);
-    delete(@transmit_start_time[tid]);
-}
-
-kprobe:call_decode
-{
-    $task = (struct rpc_task *)arg0;
-
-    // 检查是否为 NFSv3 WRITE 操作
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    @decode_xid[tid]        = $task->tk_rqstp->rq_xid;
-    @decode_start_time[tid] = nsecs;
-
-    printf("call_decode   - XID:0x%08x time:%-20llu\n",
-           @decode_xid[tid], nsecs);
-}
-
-kretprobe:call_decode
-{
-    $task = @rpc_task;
-    if ($task->tk_msg.rpc_proc->p_proc != 7) {
-        return;  // 非 WRITE 操作，直接返回
-    }
-
-    $duration = nsecs - @decode_start_time[tid];
-    printf("call_decode   - XID:0x%08x ", @decode_xid[tid]);
-    printf("Duration: %ld s %ld ms %ld μs %ld ns\n",
-           $duration / 1000000000,
-          ($duration % 1000000000) / 1000000,
-          ($duration % 1000000) / 1000,
-           $duration % 1000);
-
-    delete(@decode_xid[tid]);
-    delete(@decode_start_time[tid]);
-}
-
-END {
-    clear(@filename_ptr);
-    clear(@inode);
-    clear(@start_time);
-    clear(@rpc_xid);
-    clear(@rpc_task);
-    clear(@rpc_op);
-    clear(@rpc_start_time);
-    clear(@call_xid);
-    clear(@call_start_time);
-    clear(@transmit_xid);
-    clear(@transmit_start_time);
-    clear(@decode_xid);
-    clear(@decode_start_time);
-}
+kprobe:nfs_file_write, name:xxxx inode:1697123520 len:353    offset:140530   time:39290435940709314
+call_transmit start - XID:0xfac1ad03 OP:GETATTR      time:39290435940720794
+call_transmit start - XID:0xfac1ad03 OP:GETATTR      time:39290436041499632
+call_transmit start - XID:0xfbc1ad03 OP:WRITE        time:39290436041541542
+call_transmit start - XID:0xfbc1ad03 OP:WRITE        time:39290436149645344
+nfs_file_write - File: xxxx Inode: 1697123520 Duration: 0 s 209 ms 7 μs 571 ns
 ```
+
+抓包数据过滤xid: `rpc.xid==0xxxxxxxxx`:
+```sh
+30203	812.505210	175.20.2.166	172.21.3.10	NFS	228	V3 GETATTR Call (Reply In 30207), FH: 0x073dd918
+30207	812.606206	172.21.3.10	175.20.2.166	NFS	184	V3 GETATTR Reply (Call In 30203)  Regular File mode: 0644 uid: 99999 gid: 88888
+30211	812.606325	175.20.2.166	172.21.3.10	NFS	860	V3 WRITE Call (Reply In 30215), FH: 0x073dd918 Offset: 131072 Len: 2059 FILE_SYNC
+30215	812.708700	172.21.3.10	175.20.2.166	NFS	232	V3 WRITE Reply (Call In 30211) Len: 2059 FILE_SYNC
+
+31483	824.564522	175.20.2.166	172.21.3.10	NFS	228	V3 GETATTR Call (Reply In 31487), FH: 0x073dd918
+31487	824.665249	172.21.3.10	175.20.2.166	NFS	184	V3 GETATTR Reply (Call In 31483)  Regular File mode: 0644 uid: 99999 gid: 88888
+31495	824.665386	175.20.2.166	172.21.3.10	NFS	1372	V3 WRITE Call (Reply In 31501), FH: 0x073dd918 Offset: 131072 Len: 9811 FILE_SYNC
+31501	824.773409	172.21.3.10	175.20.2.166	NFS	232	V3 WRITE Reply (Call In 31495) Len: 9811 FILE_SYNC
+```
+
+可以看到，write写请求前发送了getattr请求，200多ms都是nfs server端导致的。
 
