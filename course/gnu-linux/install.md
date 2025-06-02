@@ -153,6 +153,8 @@ PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 
 # VNC远程桌面 {#vnc}
 
+参考[鸟哥Linux私房菜](https://linux.vbird.org/linux_server/centos6/0310telnetssh.php#vnc)。
+
 <!--
 https://blog.csdn.net/u011795345/article/details/78681213
 https://cloud.tencent.com/developer/article/2148538
@@ -169,7 +171,7 @@ virt-install --virt-type kvm --name kylin-sp1-210528 --vcpus=4 --ram 4096 --cdro
 
 Ubuntu 服务端 `Settings -> Sharing -> Screen Sharing -> 启用旧式vnc协议 -> 打开远程控制`。较新的Ubuntu（如24.04）无法用vnc，只能用RDP协议，位置是`设置 -> 系统 -> 桌面共享`。
 
-在客户端`Remmina`输入: `sonvhi-XPS-13-9305.local`(`hostname.local`)或 ip, 注意前面不能有`vnc://`，连接后点击`切换绽放模式`。
+在客户端`Remmina`（`sudo apt install remmina -y`）输入: `sonvhi-XPS-13-9305.local`(`hostname.local`)或 ip, 注意前面不能有`vnc://`，连接后点击`切换绽放模式`。
 
 ### macOS
 
@@ -180,9 +182,17 @@ Ubuntu 服务端 `Settings -> Sharing -> Screen Sharing -> 启用旧式vnc协议
 
 客户端还可以使用[tightvnc](https://www.tightvnc.com/)，在[appstore安装Remote Ripple](https://remoteripple.com/download/)。鼠标功能支持不够（至少在连接ubuntu时）。
 
+### tigervnc
+
+```sh
+sudo apt install -y tigervnc-standalone-server
+sudo dnf install -y tigervnc-server
+```
+
 ### tightvnc
 
-Linux下的[tightvnc](https://www.tightvnc.com/)，客户端 xtightvncviewer, 服务端 tightvncserver。服务端 tightvncserver 启动后，客户端连接后画面一片灰，原因暂时不明，推荐使用上面系统自带的 vnc 软件。
+Linux下的[tightvnc](https://www.tightvnc.com/)，客户端 `xtightvncviewer`, 服务端 `tightvncserver`。
+服务端 tightvncserver 启动后，客户端连接后画面一片灰，原因暂时不明，推荐使用上面系统自带的 vnc 软件。
 
 ## QEMU+VNC安装系统
 
