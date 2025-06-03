@@ -97,7 +97,7 @@ Linux内核加餐:
 不能删除，以下视频里用到:
 009-反向ssh和内网穿透
 -->
-[反向ssh和内网穿透](https://chenxiaosong.com/src/ssh-reverse/ssh-reverse.html)
+[反向ssh和内网穿透](https://chenxiaosong.com/course/gnu-linux/ssh-reverse.html)
 
 <!--
 不能删除，以下视频里用到:

@@ -1,5 +1,3 @@
-[点击这里查看配套的教学视频](https://chenxiaosong.com/video.html)。
-
 现在有3台电脑:
 ```
 1. 局域网电脑 private-server
