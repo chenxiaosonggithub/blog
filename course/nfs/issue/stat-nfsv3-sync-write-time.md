@@ -105,7 +105,7 @@ call_transmit
 call_decode
 ```
 
-[丁鹏龙](https://dingpenglong.com/)写的[bpftrace脚本](https://gitee.com/youcunhua/blog/tree/master/work/nfs/stat-nfsv3-sync-write-time)。
+[丁鹏龙](https://dingpenglong.com/)写的[bpftrace脚本](https://gitee.com/youcunhua/blog/tree/master/work/nfs/issue/stat-nfsv3-sync-write-time)。
 
 抓到以下日志:
 ```sh
@@ -137,5 +137,5 @@ nfs_file_write - File: xxxx Inode: 1697123520 Duration: 0 s 209 ms 7 μs 571 ns
 31501	824.773409	172.21.3.10	175.20.2.166	NFS	232	V3 WRITE Reply (Call In 31495) Len: 9811 FILE_SYNC
 ```
 
-可以看到，write写请求前发送了getattr请求，200多ms都是nfs server端导致的。
+可以看到，`nfs_file_write()`函数中发送了write和getattr请求，write请求100+ms，getattr请求100+ms，耗时长是nfs server端导致的。
 
