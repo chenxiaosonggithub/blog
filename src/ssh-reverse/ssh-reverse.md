@@ -168,7 +168,8 @@ sudo /usr/local/sunlogin/bin/sunloginclient
 
 ubuntu24.04没有vnc协议，只有rdp协议，位置是`设置 -> 系统 -> 桌面共享`。
 
-我是这样从家里的苹果电脑连接到公司的ubuntu24.04，macOS通过向日葵连接到virt-manager中的Windows11，Windows11通过“远程桌面连接”连接到ubuntu24.04。
+我是从家里的苹果笑柄连接到公司的ubuntu24.04，macOS通过向日葵连接到virt-manager中的Windows11，Windows11通过“远程桌面连接”连接到ubuntu24.04。
+另外，通过[网络唤醒（Wake-on-LAN）](https://chenxiaosong.com/course/gnu-linux/install.html#wake-on-lan)另一台Linux。
 
 如果Virt-manager中的Windows11出问题（比如卡死），可以用以下命令在远程操作virt-manager:
 ```sh

@@ -35,7 +35,7 @@ configfile $prefix/grub.cfg
 vim /etc/default/grub # GRUB_TIMEOUT=5
 ```
 
-# 网络唤醒（Wake-on-LAN） {wake-on-lan}
+# 网络唤醒（Wake-on-LAN） {#wake-on-lan}
 
 技嘉Aorus主板bios打开`Settings -> Wake on LAN`。
 
