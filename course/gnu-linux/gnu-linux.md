@@ -10,3 +10,7 @@
 
 # [编辑器](https://chenxiaosong.com/course/gnu-linux/editor.html)
 
+# [如何拥有个人域名的网站和邮箱](https://chenxiaosong.com/course/gnu-linux/blog-web.html)
+
+# [反向ssh和内网穿透](https://chenxiaosong.com/course/gnu-linux/ssh-reverse.html)
+
