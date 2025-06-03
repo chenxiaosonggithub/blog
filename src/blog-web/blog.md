@@ -89,7 +89,7 @@ Linux内核加餐:
 015-搭建个人主页-github.io
 003-个人域名后缀的邮箱
 -->
-[如何拥有个人域名的网站和邮箱](https://chenxiaosong.com/src/blog-web/blog-web.html)
+[如何拥有个人域名的网站和邮箱](https://chenxiaosong.com/course/gnu-linux/blog-web.html)
 
 [Linux配置文件](https://chenxiaosong.com/src/linux-config/linux-config.html)
 

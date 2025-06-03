@@ -32,7 +32,7 @@
 
 # 怎么搭建类似的网站？
 
-搭建网站的开源框架有很多，我的网站是托管在github.io，可以参考博客文章[《如何拥有个人域名的网站和邮箱》](https://chenxiaosong.com/src/blog-web/blog-web.html)，我的网站现在还比较简陋，只能浏览网页，暂时没做后台管理系统。
+搭建网站的开源框架有很多，我的网站是托管在github.io，可以参考博客文章[《如何拥有个人域名的网站和邮箱》](https://chenxiaosong.com/course/gnu-linux/blog-web.html)，我的网站现在还比较简陋，只能浏览网页，暂时没做后台管理系统。
 
 # 怎么往内核社区发补丁？
 
