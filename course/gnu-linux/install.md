@@ -370,9 +370,14 @@ UTM安装时磁盘格式使用raw可能有以下问题（使用qcow2格式镜像
 swap分区可以分配稍大一些，剩下全给`/`，备份分区在虚拟机中就不分配了。注意要修改成不休眠，默认10分钟锁屏幕，15分钟进入休眠，utm虚拟机就无法唤醒了。
 -->
 
-基于openeuler的服务器麒麟系统用`qemu`命令行启动时，编辑网络用命令`nmtui`，网络接口名改成和`ifconfig`中一样的名，再`启用连接 -> 激活`。arm64版本无法用[VMware以及UTM等虚拟机安装](https://gitee.com/src-openeuler/kernel/issues/I7LDS2)，可以尝试用[EulerLauncher](https://gitee.com/openeuler/eulerlauncher/tree/master/docs)安装（还可以参考[openeuler文档中的EulerLauncher](https://gitee.com/openeuler/docs/tree/master/docs/zh/docs/EulerLauncher)）。
+基于openeuler的服务器麒麟系统用`qemu`命令行启动时，编辑网络用命令`nmtui`，网络接口名改成和`ifconfig`中一样的名，再`启用连接 -> 激活`。
+arm64版本无法用[VMware以及UTM等虚拟机安装](https://gitee.com/src-openeuler/kernel/issues/I7LDS2)，
+可以尝试用[EulerLauncher](https://gitee.com/openeuler/eulerlauncher/tree/master/docs)安装
+（还可以参考[openeuler文档中的EulerLauncher](https://gitee.com/openeuler/docs/tree/master/docs/zh/docs/EulerLauncher)）。
 
 一直提示“发现未认证应用执行”的解决办法，打开`/etc/default/grub`，修改为`GRUB_CMDLINE_LINUX_SECURITY="security="`，更新grub配置`sudo update-grub`，最后，重启系统。
+
+麒麟桌面系统如果想让屏幕不锁屏，除了在电源中要设置外，还要在屏保中设置。
 
 麒麟server v10安装软件:
 ```sh
