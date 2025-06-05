@@ -21,7 +21,7 @@ grep_repo() {
 	fi
 	cd "${repo_path}"
 
-	echo -e "\n${repo}:"
+	echo -e "$(comm_green_color)" "\n${repo}:" "$(comm_no_color)"
 
 	while IFS= read -r file; do
 		if [[ "${file}" == "." || "${file}" == ".." || \
@@ -34,8 +34,11 @@ grep_repo() {
 
 . ${code_path}/blog/src/blog-web/repos.sh
 . ${code_path}/private-blog/script/repos.sh
-for repo in ${repos_array[@]}
-do
+element_count="${#repos_array[@]}" # 总个数
+count_per_line=2
+for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
+	is_push_github=${repos_array[${index}]}
+	repo=${repos_array[${index}+1]}
 	grep_repo ${repo}
 done
 
