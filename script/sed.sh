@@ -6,12 +6,17 @@ MY_ECHO_DEBUG=0
 . ${code_path}/blog/src/blog-web/common-lib.sh
 
 # 检查参数
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
         echo "用法: bash $0 <被替换的老字符串> <替换的新字符串>"
         exit 1
 fi
 old_string=$1
 new_string=$2
+
+target_repo=""
+if [ $# -eq 3 ]; then
+	target_repo=$3
+fi
 
 sed_repo() {
 	local repo=$1
@@ -37,11 +42,16 @@ sed_repo() {
 
 . ${code_path}/blog/src/blog-web/repos.sh
 . ${code_path}/private-blog/script/repos.sh
-element_count="${#repos_array[@]}" # 总个数
-count_per_line=2
-for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
-	is_push_github=${repos_array[${index}]}
-	repo=${repos_array[${index}+1]}
-	sed_repo ${repo}
-done
+
+if [[ -z ${target_repo} ]]; then
+	element_count="${#repos_array[@]}" # 总个数
+	count_per_line=2
+	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
+		is_push_github=${repos_array[${index}]}
+		repo=${repos_array[${index}+1]}
+		sed_repo ${repo}
+	done
+else
+	sed_repo ${target_repo}
+fi
 
