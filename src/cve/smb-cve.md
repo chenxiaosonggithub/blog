@@ -386,3 +386,13 @@ sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-in-smb2_query_i
 ```
 
 [`git log fs/smb/client/cached_dir.c`](https://github.com/torvalds/linux/commits/master/fs/smb/client/cached_dir.c)
+
+# `CVE-2024-53179 343d7fe6df9e smb: client: fix use-after-free of signing key`
+
+[openeuler](https://www.openeuler.org/en/security/cve/detail/?cveId=CVE-2024-53179&packageName=kernel)
+
+因为主线代码文件夹经过了重命名`38c8a9a52082 smb: move client and server files to common directory fs/smb`，4.19要打上这个补丁，必须将`.patch`文件中的`smb/client`改成`cifs`:
+```sh
+sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-of-signing-key.patch
+```
+
