@@ -42,3 +42,5 @@
 
 [统计nfsv3同步写的时间](https://chenxiaosong.com/course/nfs/issue/stat-nfsv3-sync-write-time.html)
 
+[nfsd4_probe_callback()空指针解引用问题](https://chenxiaosong.com/course/nfs/issue/null-ptr-deref-in-nfsd4_probe_callback.html)
+
