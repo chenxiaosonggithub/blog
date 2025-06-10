@@ -67,6 +67,31 @@ struct pool_workqueue {
 1400         if (last_pool && last_pool != pwq->pool) { // pwq为NULL
 ```
 
+[再查看`__queue_work()`的反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md):
+```sh
+...
+0xffff000048110f74 <__queue_work+20>:	mov	x24, x1 # 将寄存器 x1 中的值复制到寄存器 x24 中
+...
+0xffff000048110f8c <__queue_work+44>:	ldr	w0, [x24,#256] # 从内存地址 x24 + 256 处加载 32 位数据 到寄存器 w0 中
+...
+0xffff000048110fdc <__queue_work+124>:	add	x1, x26, #0xb48 # 将寄存器 x26 的值与立即数 0xb48 相加，结果存入寄存器 x1
+...
+0xffff000048111000 <__queue_work+160>:	ldr	x19, [x24,x0,lsl #3] # 数组array地址: x24 + (x0 << 3), 访问以 8 字节为单位的数组array中，第 x0 个元素，然后把它的值存到 x19
+...
+```
+
+aarch64架构下整数参数使用的寄存器依次为: `x0~x7`，`__queue_work()`的第二个参数`struct workqueue_struct *wq`的值为`X24: ffff80042c343400`。
+
+再查看其中的`flags`成员的值:
+```sh
+crash> struct workqueue_struct ffff80042c343400 -x
+struct workqueue_struct {
+  ...
+  flags = 0xa0002, # WQ_UNBOUND == 2
+  ...
+}
+```
+
 # 代码分析
 
 ```c
@@ -82,6 +107,7 @@ svc_process
                   queue_work // include/linux/workqueue.h
                     queue_work_on
                       __queue_work
+                        if (wq->flags & WQ_UNBOUND) { // 条件满足
                         if (last_pool && last_pool != pwq->pool) { // pwq为NULL
 ```
 
