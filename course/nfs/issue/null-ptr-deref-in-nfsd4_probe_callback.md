@@ -113,6 +113,8 @@ svc_process
 
 # 补丁
 
+## 查找
+
 ```sh
 git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=nfsd4_run_cb 
 未合入 2025-03-10 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently Jeff Layton <jlayton@kernel.org>
@@ -136,3 +138,8 @@ git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --gr
 未合入 2024-03-01 e4469c6cc69b NFSD: Fix the NFSv4.1 CREATE_SESSION operation Chuck Lever <chuck.lever@oracle.com>
 ```
 
+其中最可能的补丁是`2025-03-10 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently Jeff Layton <jlayton@kernel.org>`。
+
+## 补丁分析
+
+[点击这里查看补丁分析](https://chenxiaosong.com/course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.html)。

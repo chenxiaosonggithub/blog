@@ -99,6 +99,8 @@ comm_array=(
 				"patchset: nfs_instantiate() might succeed leaving dentry negative unhashed"
 			1 1 course/nfs/patch/patchset-Fix-nfsv4.1-deadlock-between-nfs4_evict_inode-and-nfs4_opendata_get_inode.md ~
 				"patchset: Fix nfsv4.1 deadlock between nfs4_evict_inode() and nfs4_opendata_get_inode()"
+			1 1 course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.md ~
+				"patchset: nfsd: don't allow concurrent queueing of workqueue jobs"
 		1 1 course/nfs/issue.md ~ "nfs问题分析"
 			1 1 course/nfs/issue/nfs-clients-same-hostname-clientid-expire.md ~ "多个NFS客户端使用相同的hostname导致clientid过期"
 			1 1 course/nfs/issue/4.19-nfs-no-iterate_shared.md ~ "nfs没实现iterate_shared()导致的遍历目录无法并发问题"

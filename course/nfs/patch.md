@@ -32,3 +32,5 @@
 
 [`patchset: Fix nfsv4.1 deadlock between nfs4_evict_inode() and nfs4_opendata_get_inode()`](https://chenxiaosong.com/course/nfs/patch/patchset-Fix-nfsv4.1-deadlock-between-nfs4_evict_inode-and-nfs4_opendata_get_inode.html)
 
+[`patchset: nfsd: don't allow concurrent queueing of workqueue jobs`](https://chenxiaosong.com/course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.html)
+
