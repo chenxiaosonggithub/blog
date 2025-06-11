@@ -32,24 +32,25 @@ crash> mod -s sunrpc
 [查看崩溃的栈](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md):
 ```sh
 crash> bt
-#10 [ffff80043786fb50] __queue_work at ffff000048111010
-...
-#12 [ffff80043786fbf0] nfsd4_probe_callback at ffff000042a231e8 [nfsd]
+     PC: ffff000048111014  [__queue_work+180]
 ```
 
 [反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md):
 ```sh
-crash> dis -rl ffff000042a231e8
+crash> dis -l __queue_work
 ...
-/usr/src/debug/kernel-4.19.90/linux-4.19.90-52.39.v2207.ky10.aarch64/fs/nfsd/nfs4callback.c: 1214
-0xffff000042a231d8 <nfsd4_probe_callback+56>:   adrp    x1, 0xffff000042a55000 <nfsdstats+120>
-/usr/src/debug/kernel-4.19.90/linux-4.19.90-52.39.v2207.ky10.aarch64/./include/linux/workqueue.h: 533
-...
-
-crash> dis -rl ffff000048111010
+/usr/src/debug/kernel-4.19.90/linux-4.19.90-52.39.v2207.ky10.aarch64/kernel/workqueue.c: 577
+# unbound_pwq_by_node() -> rcu_dereference_raw()
+0xffff000048110ff8 <__queue_work+152>:	sxtw	x0, w0
+0xffff000048110ffc <__queue_work+156>:	add	x0, x0, #0x22
+/usr/src/debug/kernel-4.19.90/linux-4.19.90-52.39.v2207.ky10.aarch64/./include/linux/compiler.h: 310
+# rcu_dereference_raw() -> READ_ONCE() -> __READ_ONCE() -> __read_once_size()
+0xffff000048111000 <__queue_work+160>:	ldr	x19, [x24,x0,lsl #3] # pwq的值
 ...
 /usr/src/debug/kernel-4.19.90/linux-4.19.90-52.39.v2207.ky10.aarch64/kernel/workqueue.c: 1400
-0xffff000048111010 <__queue_work+176>:  cbnz    x0, 0xffff000048111100 <__queue_work+416>
+0xffff000048111010 <__queue_work+176>:	cbnz	x0, 0xffff000048111100 <__queue_work+416>
+# 将寄存器 X19 中的值作为内存地址，从该地址读取 64 位数据，并将其存入寄存器 X2
+0xffff000048111014 <__queue_work+180>:	ldr	x2, [x19] # 访问pwq->pool
 ```
 
 所以崩溃发生在`nfsd4_run_cb() -> queue_work() -> queue_work_on() -> __queue_work()`。
