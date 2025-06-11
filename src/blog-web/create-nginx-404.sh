@@ -31,8 +31,8 @@ parse_line() {
 			if [[ ${url} == *"${path}" ]]; then
 				continue # 一样的就不重定向
 			fi
-			echo "	location ${path} {" >> "${tmp_file}"
-			echo "		rewrite ^${path}\$ ${url};" >> "${tmp_file}"
+			echo "	location = ${path} {" >> "${tmp_file}"
+			echo "		return 301 ${url};" >> "${tmp_file}"
 			echo "	}" >> "${tmp_file}"
 		done
 		path_array=()
