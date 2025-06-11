@@ -174,9 +174,12 @@ __comm_create_html() {
 	if [[ ${is_replace_ip} == true ]]; then
 		comm_file_replace_ip ${dst_file} ${other_ip}
 	fi
+	# 在'<header'之后插入整个签名文件
 	if [[ ${is_sign} == 1 ]]; then
-		# 在'<header'之后插入整个签名文件
 		sed -i -e '/<header/r '${sign_html} ${dst_file}
+	elif [[ ${is_sign} == 2 ]]; then
+		local en_sign_html=${tmp_html_path}/en-sign.html
+		sed -i -e '/<header/r '${en_sign_html} ${dst_file}
 	fi
 
 	# cd ${src_path}
