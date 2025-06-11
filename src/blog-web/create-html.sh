@@ -39,12 +39,24 @@ my_exit() {
 }
 
 copy_files() {
+	local path=$1
+
+	local src_full_path=$(comm_tmp_src_path)/${path}
+	local dst_full_path=${tmp_html_path}/${path}
+	local dst_dir_path=$(dirname "${dst_full_path}")
+	mkdir -p ${dst_dir_path}
+	cp -rf ${src_full_path} ${dst_full_path}
+}
+
+copy_to_github_io() {
 	# css样式
-	cp ${src_path}/src/blog-web/stylesheet.css ${tmp_html_path}/
+	cp $(comm_tmp_src_path)/src/blog-web/stylesheet.css ${tmp_html_path}/
 	# 图片
-	cp ${src_path}/../tmp/picture/ ${tmp_html_path}/picture -rf
+	cp $(comm_tmp_src_path)/tmp/picture/ ${tmp_html_path}/picture -rf
 	# godot
-	cp ${src_path}/../tmp/godot/ ${tmp_html_path}/ -rf
+	cp $(comm_tmp_src_path)/tmp/godot/ ${tmp_html_path}/ -rf
+	# txt
+	copy_files tmp/btrfs/btrfs-forced-readonly-log.txt
 }
 
 # 局域网签名
@@ -75,6 +87,6 @@ comm_create_sign ${src_path}/src/blog-web/sign.md ${sign_html}
 comm_create_sign ${src_path}/src/blog-web/en-sign.md ${en_sign_html}
 update_lan_sign
 comm_create_html comm_array[@] $(comm_tmp_src_path) ${tmp_html_path} ${sign_html} ${is_replace_ip} ${other_ip}
-copy_files
+copy_to_github_io
 do_change_perm
 my_exit
