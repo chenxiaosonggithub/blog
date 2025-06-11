@@ -124,7 +124,9 @@ comm_array=(
 			1 1 course/nfs/issue/nfs-umount-device-is-busy.md ~ "umount nfs报错device is busy的问题"
 			1 1 course/nfs/issue/stat-nfsv3-sync-write-time.md ~ "统计nfsv3同步写的时间"
 			1 1 course/nfs/issue/null-ptr-deref-in-nfsd4_probe_callback.md ~ "nfsd4_probe_callback()空指针解引用问题"
-			1 2 tmp/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.md ~ "null-ptr-deref in nfsd4_probe_callback()"
+			1 2 tmp/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.md
+				en/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.html
+				"null-ptr-deref in nfsd4_probe_callback()"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"
