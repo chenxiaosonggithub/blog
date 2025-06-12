@@ -12,15 +12,20 @@ gitee_ok_repos=()
 github_not_push_repos=()
 github_ok_repos=()
 
-# return 0: push成功
+# return 0: push成功 或 已经是最新不用push
 # return 非0: push失败
 comm_push_github_repo() {
 	git remote -v | grep chenxiaosonggithub
-	if [ $? -eq 0 ]; then
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+	local origin_commit=$(git rev-parse origin/master)
+	local github_commit=$(git rev-parse github/master)
+	if [ "${origin_commit}" != "${github_commit}" ]; then
 		git push github master -f
 		return $?
 	fi
-	return 1
+	return 0
 }
 
 # 确认git仓库要采取的操作
