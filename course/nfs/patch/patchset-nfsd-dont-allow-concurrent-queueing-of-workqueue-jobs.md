@@ -58,11 +58,9 @@ rpc_call_async() 可能会失败（主要是由于内存分配失败）。如果
 ```
 在 nfsd4_run_cb 中，cl_cb_inflight 会在尝试将 cb_work 入队到 callback_wq 之前就被递增。这个计数可以在以下三种情况下递减：
 
-如果在 nfsd4_run_cb 中排队失败，则会相应地将该计数减一；
-
-当 cb_work 正在运行时，在 nfsd4_run_cb_work 的异常分支中通过调用 nfsd41_destroy_cb 将计数减一；
-
-在 rpc_task 的释放回调中减小计数——要么在 nfsd4_cb_probe_release 中直接调用 nfsd41_cb_inflight_end，要么在 nfsd4_cb_release 中调用 nfsd41_destroy_cb。
+- 如果在 nfsd4_run_cb 中排队失败，则会相应地将该计数减一；
+- 当 cb_work 正在运行时，在 nfsd4_run_cb_work 的异常分支中通过调用 nfsd41_destroy_cb 将计数减一；
+- 在 rpc_task 的释放回调中减小计数——要么在 nfsd4_cb_probe_release 中直接调用 nfsd41_cb_inflight_end，要么在 nfsd4_cb_release 中调用 nfsd41_destroy_cb。
 
 然而，在 nfsd4_cb_release 中，如果当前的 cb_work 需要重启，该计数并不会被减小，而是期望在 cb_work 真正运行时再做减少处理。如果此时排队失败，就会造成计数泄漏，最终导致 nfsd 服务无法退出，表现如下：
 
