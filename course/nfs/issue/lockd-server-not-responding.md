@@ -51,7 +51,7 @@ rw,relatime,vers=3,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,timeo=600
                                 locks_inode(file->f_file)->i_ino,
 ```
 
-# 用户态程序
+## 用户态程序
 
 `test.c`:
 ```c
@@ -89,6 +89,8 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ```
+
+## 测试步骤和结果
 
 ```sh
 mount -t nfs -o rw,relatime,vers=3,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,mountvers=3,mountproto=tcp,local_lock=none,_netdev localhost:/tmp /mnt
