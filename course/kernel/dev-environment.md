@@ -260,13 +260,16 @@ git name-rev <commit>
 ssh-keygen -f ~/.ssh/id_rsa_2
 # 创建配置文件
 cat <<EOF > ~/.ssh/config
-# 默认走这里
+# 10.42.20.225 改成本机的ip
+Host 10.42.20.225
+  HostName 10.42.20.225
+  User sonvhi
 Host github.com
   HostName github.com
   User git
   IdentityFile ~/.ssh/id_rsa
   IdentitiesOnly yes
-# 指定账号specifiedaccount
+# 指定账号: specifiedaccount
 Host github.com-specifiedaccount
   HostName github.com
   User git
