@@ -184,6 +184,8 @@ Ubuntu 服务端 `Settings -> Sharing -> Screen Sharing -> 启用旧式vnc协议
 
 ### tigervnc
 
+[TigerVNC](https://tigervnc.org/) 最初是基于 [TightVNC](https://www.tightvnc.com/)。
+
 ```sh
 sudo apt install -y tigervnc-standalone-server
 sudo dnf install -y tigervnc-server
