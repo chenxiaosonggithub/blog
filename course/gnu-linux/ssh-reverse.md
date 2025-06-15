@@ -166,7 +166,7 @@ sudo /usr/local/sunlogin/bin/sunloginclient
 
 # 家里远程桌面到公司ubuntu24.04 {#remote-desktopl}
 
-ubuntu24.04没有vnc协议，只有rdp协议，位置是`设置 -> 系统 -> 桌面共享`。
+ubuntu24.04没有vnc协议，只有rdp协议，位置是`设置 -> 系统 -> 桌面共享`，注意物理机上需要连接显示器才能远程桌面控制。
 
 我是从家里的苹果笑柄连接到公司的ubuntu24.04，macOS通过向日葵连接到virt-manager中的Windows11，Windows11通过“远程桌面连接”连接到ubuntu24.04。
 另外，通过[网络唤醒（Wake-on-LAN）](https://chenxiaosong.com/course/gnu-linux/install.html#wake-on-lan)另一台Linux。
