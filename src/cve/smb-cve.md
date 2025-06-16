@@ -410,3 +410,9 @@ sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-in-smb2_query_i
 sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-of-signing-key.patch
 ```
 
+其他厂商:
+
+- [红帽Red Hat Enterprise Linux 8 内核4.18未修复](https://access.redhat.com/security/cve/CVE-2024-53179)
+
+只有在启用签名的场景下才会触发此漏洞，影响范围有限。
+
