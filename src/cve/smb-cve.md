@@ -403,7 +403,7 @@ sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-in-smb2_query_i
 
 # `CVE-2024-53179 343d7fe6df9e smb: client: fix use-after-free of signing key`
 
-[CVE-2024-53179](https://nvd.nist.gov/vuln/detail/CVE-2024-53179)，[openeuler4.19未修复](https://www.openeuler.org/en/security/cve/detail/?cveId=CVE-2024-53179&packageName=kernel)
+[CVE-2024-53179](https://nvd.nist.gov/vuln/detail/CVE-2024-53179)。
 
 因为主线代码文件夹经过了重命名`38c8a9a52082 smb: move client and server files to common directory fs/smb`，4.19要打上这个补丁，必须将`.patch`文件中的`smb/client`改成`cifs`:
 ```sh
@@ -413,6 +413,7 @@ sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-of-signing-key.
 其他厂商:
 
 - [红帽Red Hat Enterprise Linux 8 内核4.18未修复](https://access.redhat.com/security/cve/CVE-2024-53179)
+- [openeuler4.19未修复](https://www.openeuler.org/en/security/cve/detail/?cveId=CVE-2024-53179&packageName=kernel)
 
 只有在启用签名的场景下才会触发此漏洞，影响范围有限。
 
