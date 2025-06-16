@@ -11,6 +11,7 @@
 - [kernel Documentation: `filesystem/nfs`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/nfs)
 - [kernel Documentation: `admin-guide/nfs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/nfs)
 - [nfs-utils](https://git.kernel.org/pub/scm/linux/kernel/git/rw/nfs-utils.git)
+- [Red Hat Documentation](https://docs.redhat.com/zh-cn/documentation/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-nfs)
 
 点击下面的标题跳转。
 
