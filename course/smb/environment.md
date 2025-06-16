@@ -133,7 +133,7 @@ nmblookup -S netbios_name
 ```
 
 挂载命令:
-```shell
+```sh
 getsebool -a | grep samba
 setsebool -P samba_enable_home_dirs=1
 # 选项: password=密码，iocharset=本机编码（如big5、utf8、cp950），codepage=远程主机编码
