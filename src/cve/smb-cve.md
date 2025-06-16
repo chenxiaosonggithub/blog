@@ -262,9 +262,23 @@ index 813d67b4a1a5..9f2c0733a4ae 100644
 
 # `CVE-2023-52434 af1689a9b770 smb: client: fix potential OOBs in smb2_parse_contexts()`
 
-[openeuler issue](https://gitee.com/src-openeuler/kernel/issues/I92HX8)
+[CVE-2023-52434](https://nvd.nist.gov/vuln/detail/cve-2023-52434)，[openeuler 4.19未修复](https://gitee.com/src-openeuler/kernel/issues/I92HX8)。
 
-在`smb2_parse_contexts()`中解引用create contexts时如果没有判断offsets和lengths的有效性，会发生访问越界。
+漏洞触发的条件:
+
+- SMB协议交互场景：当客户端（如mount.cifs）处理来自服务器的SMB2_CREATE_RSP响应时，若服务器返回恶意构造的创建上下文（Create Context）数据结构（如偏移量或长度字段非法），可能触发越界访问。
+- 典型操作：文件/目录打开（SMB2_open）、缓存目录操作（open_cached_dir）等涉及解析创建上下文的流程。
+
+只有在nfs client接收到恶意构造的创建上下文（Create Context）数据结构才会触发此漏洞，影响范围有限。
+
+在`smb2_parse_contexts()`中解引用create contexts时如果没有判断offsets和lengths的有效性，会发生访问越界。`smb2_parse_contexts()`函数引入的补丁是`89a5bfa350fa smb3: optimize open to not send query file internal info`，4.19要先合入大量的前置补丁才能合入这个cve补丁，合入风险大。
+
+其他友商的评分:
+
+- [红帽给5.9分](https://access.redhat.com/security/cve/cve-2023-52434)
+- [oracle给5.9分](https://linux.oracle.com/cve/CVE-2023-52434.html)
+- [suse给6.5分](https://www.suse.com/security/cve/CVE-2023-52434.html)
+- [ubuntu给Medium](https://ubuntu.com/security/CVE-2023-52434)
 
 ## 4.19合补丁
 
@@ -389,7 +403,7 @@ sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-in-smb2_query_i
 
 # `CVE-2024-53179 343d7fe6df9e smb: client: fix use-after-free of signing key`
 
-[openeuler](https://www.openeuler.org/en/security/cve/detail/?cveId=CVE-2024-53179&packageName=kernel)
+[CVE-2024-53179](https://nvd.nist.gov/vuln/detail/CVE-2024-53179)，[openeuler4.19未修复](https://www.openeuler.org/en/security/cve/detail/?cveId=CVE-2024-53179&packageName=kernel)
 
 因为主线代码文件夹经过了重命名`38c8a9a52082 smb: move client and server files to common directory fs/smb`，4.19要打上这个补丁，必须将`.patch`文件中的`smb/client`改成`cifs`:
 ```sh
