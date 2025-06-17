@@ -77,7 +77,9 @@ ln -s /usr/bin/aarch64-linux-gnu-gcc-9 /usr/bin/aarch64-linux-gnu-gcc # 指向�
 ```sh
 dnf install git rsync rpm-build -y
 dnf install -y asciidoc audit-libs-devel binutils-devel elfutils-devel java-devel ncurses-devel newt-devel numactl-devel pciutils-devel perl-generators python3-docutils xmlto glibc-kernheaders kernel-headers
-dnf install -y java-1.8.0-*-devel
+dnf install -y java-1.8.0-*-devel # 4.19内核
+dnf install -y dwarves # 麒麟服务器v10无法安装，要在公司内网下载rpm安装
+# rpm -i dwarves-1.25-1.ky10.x86_64.rpm  dwarves-debuginfo-1.25-1.ky10.x86_64.rpm  dwarves-debugsource-1.25-1.ky10.x86_64.rpm  libdwarves1-1.25-1.ky10.x86_64.rpm  libdwarves1-devel-1.25-1.ky10.x86_64.rpm # --force
 ```
 
 <!-- TODO: 源码安装crash, emacs -->
