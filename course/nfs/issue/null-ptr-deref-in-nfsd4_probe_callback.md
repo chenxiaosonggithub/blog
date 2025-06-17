@@ -154,6 +154,7 @@ git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --gr
 ```sh
 12357f1b2c8e nfsd: minor 4.1 callback cleanup
 2bbfed98a4d8 nfsd: Fix races between nfsd4_cb_release() and nfsd4_shutdown_callback()
+b95239ca4954 nfsd: make nfsd4_run_cb a bool return function
 ```
 
 4.19可不合的前置补丁:
