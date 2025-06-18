@@ -138,7 +138,7 @@ svc_process
                         if (last_pool && last_pool != pwq->pool) { // pwq为NULL
 ```
 
-`nfsd_startup_generic()`和`nfsd_shutdown_generic()`并发:
+`nfsd: last server has exited`短时间打印了两次，说明有两个进程同时执行到`nfsd_last_thread()`:
 ```c
 nfsd_startup_net
   nfsd_startup_generic
@@ -148,7 +148,6 @@ nfsd_startup_net
         callback_wq = alloc_ordered_workqueue()
 
 nfsd_last_thread
-  printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
   nfsd_shutdown_net
     nfs4_state_shutdown_net
       nfs4_state_destroy_net
@@ -164,14 +163,41 @@ nfsd_last_thread
             if (!(wq->flags & WQ_UNBOUND)) { // 条件不满足
             wq->dfl_pwq = NULL
             put_pwq_unlocked
+  printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
 ```
 
-# 相关补丁
-
+并发的场景如下:
 ```sh
-38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client
+   task A (cpu 1)    |   task B (cpu 2)     |   task C (cpu 3)
+---------------------|----------------------|---------------------------------
+nfsd_startup_generic | nfsd_startup_generic |
+  nfsd_users == 0    |  nfsd_users == 0     |
+  nfsd_users++       |  nfsd_users++        |
+  nfsd_users == 1    |                      |
+  ...                |                      |
+  callback_wq == xxx |                      |
+---------------------|----------------------|---------------------------------
+                     |                      | nfsd_shutdown_generic
+                     |                      |   nfsd_users == 1
+                     |                      |   --nfsd_users
+                     |                      |   nfsd_users == 0
+                     |                      |   ...
+                     |                      |   callback_wq == xxx
+                     |                      |   destroy_workqueue(callback_wq)
+---------------------|----------------------|---------------------------------
+                     |  nfsd_users == 1     |
+                     |  ...                 |
+                     |  callback_wq == yyy  |
 ```
 
+# 解决方案
+
+合入以下两个补丁:
+
+- `38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client`
+- [nfsd: convert the nfsd_users to atomic_t](https://lore.kernel.org/all/20250618104123.398603-1-chenxiaosong@chenxiaosong.com/)
+
+<!--
 # 不相关的补丁
 
 不相关的补丁就别看了，对你可能没啥卵用，只是记录一下。
@@ -226,4 +252,5 @@ e72f9bc006c0 NFSD: Add nfsd4_send_cb_offload()
 # 引入 nfsd4_do_async_copy （其中的部分代码独立成nfsd4_send_cb_offload）
 e0639dc5805a NFSD introduce async copy feature
 ```
+-->
 
