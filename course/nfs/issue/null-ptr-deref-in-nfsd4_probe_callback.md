@@ -20,9 +20,11 @@ LOAD AVERAGE: 4.08, 4.00, 3.83
        PANIC: "Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000"
 ```
 
-[点击这里查看日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
+[点击这里查看日志](https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
 
 # vmcore分析
+
+[详细的crash命令的输出请点击这里查看](https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
 
 ```sh
 rpm2cpio kernel-debuginfo-4.19.90-52.39.v2207.ky10.aarch64.rpm | cpio -div
@@ -31,13 +33,15 @@ crash> mod -s nfsd
 crash> mod -s sunrpc
 ```
 
-[查看崩溃的栈](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md):
+## 崩溃的地方
+
+查看崩溃的栈:
 ```sh
 crash> bt
      PC: ffff000048111014  [__queue_work+180]
 ```
 
-[反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md):
+反汇编:
 ```sh
 crash> dis -l __queue_work
 ...
@@ -70,7 +74,14 @@ struct pool_workqueue {
 1400         if (last_pool && last_pool != pwq->pool) { // pwq为NULL
 ```
 
-[再查看`__queue_work()`的反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md):
+## `callback_wq`
+
+```sh
+crash> rd callback_wq
+ffff000042a55a70:  ffff80010eb50600
+```
+
+再查看`__queue_work()`的反汇编:
 ```sh
 ...
 0xffff000048110f74 <__queue_work+20>:	mov	x24, x1 # 将寄存器 x1 中的值复制到寄存器 x24 中
@@ -85,6 +96,17 @@ struct pool_workqueue {
 
 aarch64架构下整数参数使用的寄存器依次为: `x0~x7`，`__queue_work()`的第二个参数`struct workqueue_struct *wq`的值为`X24: ffff80042c343400`。
 
+和当前的`callback_wq`的值不一样。
+
+```sh
+crash> struct workqueue_struct ffff80042c343400
+struct workqueue_struct {
+...
+  dfl_pwq = 0x0, 
+...
+```
+
+<!--
 再查看其中的`flags`成员的值:
 ```sh
 crash> struct workqueue_struct ffff80042c343400 -x
@@ -94,9 +116,11 @@ struct workqueue_struct {
   ...
 }
 ```
+-->
 
 # 代码分析
 
+在`__queue_work()`中发生空指针解引用:
 ```c
 svc_process
   svc_process_common
@@ -114,7 +138,43 @@ svc_process
                         if (last_pool && last_pool != pwq->pool) { // pwq为NULL
 ```
 
-# 补丁
+`nfsd_startup_generic()`和`nfsd_shutdown_generic()`并发:
+```c
+nfsd_startup_net
+  nfsd_startup_generic
+    nfsd_users++
+    nfs4_state_start
+      nfsd4_create_callback_queue
+        callback_wq = alloc_ordered_workqueue()
+
+nfsd_last_thread
+  printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
+  nfsd_shutdown_net
+    nfs4_state_shutdown_net
+      nfs4_state_destroy_net
+        destroy_client
+          __destroy_client
+            nfsd4_shutdown_callback
+              flush_workqueue               
+    nfsd_shutdown_generic  
+      --nfsd_users
+      nfs4_state_shutdown               
+        nfsd4_destroy_callback_queue    
+          destroy_workqueue(callback_wq)
+            if (!(wq->flags & WQ_UNBOUND)) { // 条件不满足
+            wq->dfl_pwq = NULL
+            put_pwq_unlocked
+```
+
+# 相关补丁
+
+```sh
+38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client
+```
+
+# 不相关的补丁
+
+不相关的补丁就别看了，对你可能没啥卵用，只是记录一下。
 
 ## 查找
 
@@ -141,11 +201,9 @@ git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --gr
 未合入 2024-03-01 e4469c6cc69b NFSD: Fix the NFSv4.1 CREATE_SESSION operation Chuck Lever <chuck.lever@oracle.com>
 ```
 
-其中最可能的补丁是`2025-03-10 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently Jeff Layton <jlayton@kernel.org>`。
+[`2025-03-10 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently Jeff Layton <jlayton@kernel.org>`补丁分析](https://chenxiaosong.com/course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.html)。
 
-## 补丁分析
-
-[点击这里查看补丁分析](https://chenxiaosong.com/course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.html)。
+这些补丁经过分析都不相关。
 
 ## 4.19合补丁
 
