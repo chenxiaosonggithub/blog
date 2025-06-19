@@ -153,6 +153,8 @@ write
                   nfs4_state_start
                     nfsd4_create_callback_queue
                       callback_wq = alloc_ordered_workqueue()
+                nfs4_state_start_net
+                  printk(KERN_INFO "NFSD: starting %ld-second grace period (net %x)\n"
 
 nfsd
   nfsd_destroy
@@ -176,7 +178,7 @@ nfsd
         printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
 ```
 
-并发的场景如下:
+如果有以下并发的场景，这个问题可能出现，但`nfsd_users`变量有`nfsd_mutex`锁保护，所以不会并发，具体讨论请查看[nfsd: convert the nfsd_users to atomic_t](https://lore.kernel.org/all/20250618104123.398603-1-chenxiaosong@chenxiaosong.com/):
 ```sh
    task A (cpu 1)    |   task B (cpu 2)     |   task C (cpu 3)
 ---------------------|----------------------|---------------------------------
@@ -202,10 +204,9 @@ nfsd_startup_generic | nfsd_startup_generic |
 
 # 解决方案
 
-合入以下两个补丁:
+合入以下补丁:
 
 - `38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client`
-- [nfsd: convert the nfsd_users to atomic_t](https://lore.kernel.org/all/20250618104123.398603-1-chenxiaosong@chenxiaosong.com/)
 
 <!--
 # 不相关的补丁
