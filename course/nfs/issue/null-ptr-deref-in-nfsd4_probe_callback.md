@@ -102,7 +102,7 @@ aarch64架构下整数参数使用的寄存器依次为: `x0~x7`，`__queue_work
 crash> struct workqueue_struct ffff80042c343400
 struct workqueue_struct {
 ...
-  dfl_pwq = 0x0, 
+  dfl_pwq = 0x0,
 ...
 ```
 
@@ -140,30 +140,40 @@ svc_process
 
 `nfsd: last server has exited`短时间打印了两次，说明有两个进程同时执行到`nfsd_last_thread()`:
 ```c
-nfsd_startup_net
-  nfsd_startup_generic
-    nfsd_users++
-    nfs4_state_start
-      nfsd4_create_callback_queue
-        callback_wq = alloc_ordered_workqueue()
+write
+  ksys_write
+    vfs_write
+      __vfs_write
+        nfsctl_transaction_write
+          write_threads
+            nfsd_svc
+              nfsd_startup_net
+                nfsd_startup_generic
+                  nfsd_users++
+                  nfs4_state_start
+                    nfsd4_create_callback_queue
+                      callback_wq = alloc_ordered_workqueue()
 
-nfsd_last_thread
-  nfsd_shutdown_net
-    nfs4_state_shutdown_net
-      nfs4_state_destroy_net
-        destroy_client
-          __destroy_client
-            nfsd4_shutdown_callback
-              flush_workqueue               
-    nfsd_shutdown_generic  
-      --nfsd_users
-      nfs4_state_shutdown               
-        nfsd4_destroy_callback_queue    
-          destroy_workqueue(callback_wq)
-            if (!(wq->flags & WQ_UNBOUND)) { // 条件不满足
-            wq->dfl_pwq = NULL
-            put_pwq_unlocked
-  printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
+nfsd
+  nfsd_destroy
+    svc_shutdown_net
+      nfsd_last_thread
+        nfsd_shutdown_net
+          nfs4_state_shutdown_net
+            nfs4_state_destroy_net
+              destroy_client
+                __destroy_client
+                  nfsd4_shutdown_callback
+                    flush_workqueue
+          nfsd_shutdown_generic
+            --nfsd_users
+            nfs4_state_shutdown
+              nfsd4_destroy_callback_queue
+                destroy_workqueue(callback_wq)
+                  if (!(wq->flags & WQ_UNBOUND)) { // 条件不满足
+                  wq->dfl_pwq = NULL
+                  put_pwq_unlocked
+        printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
 ```
 
 并发的场景如下:
@@ -205,7 +215,7 @@ nfsd_startup_generic | nfsd_startup_generic |
 ## 查找
 
 ```sh
-git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=nfsd4_run_cb 
+git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=nfsd4_run_cb
 未合入 2025-03-10 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently Jeff Layton <jlayton@kernel.org>
 未合入 2025-03-10 230ca758453c nfsd: put dl_stid if fail to queue dl_recall Li Lingfeng <lilingfeng3@huawei.com>
 未合入 2025-02-10 036ac2778f7b NFSD: fix hang in nfsd4_shutdown_callback Dai Ngo <dai.ngo@oracle.com>
