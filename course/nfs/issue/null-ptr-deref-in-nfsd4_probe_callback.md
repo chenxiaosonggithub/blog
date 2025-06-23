@@ -178,29 +178,16 @@ nfsd
         printk(KERN_WARNING "nfsd: last server has exited, flushing export cache\n")
 ```
 
-如果有以下并发的场景，这个问题可能出现，但`nfsd_users`变量有`nfsd_mutex`锁保护，所以不会并发，具体讨论请查看[nfsd: convert the nfsd_users to atomic_t](https://lore.kernel.org/all/20250618104123.398603-1-chenxiaosong@chenxiaosong.com/):
-```sh
-   task A (cpu 1)    |   task B (cpu 2)     |   task C (cpu 3)
----------------------|----------------------|---------------------------------
-nfsd_startup_generic | nfsd_startup_generic |
-  nfsd_users == 0    |  nfsd_users == 0     |
-  nfsd_users++       |  nfsd_users++        |
-  nfsd_users == 1    |                      |
-  ...                |                      |
-  callback_wq == xxx |                      |
----------------------|----------------------|---------------------------------
-                     |                      | nfsd_shutdown_generic
-                     |                      |   nfsd_users == 1
-                     |                      |   --nfsd_users
-                     |                      |   nfsd_users == 0
-                     |                      |   ...
-                     |                      |   callback_wq == xxx
-                     |                      |   destroy_workqueue(callback_wq)
----------------------|----------------------|---------------------------------
-                     |  nfsd_users == 1     |
-                     |  ...                 |
-                     |  callback_wq == yyy  |
-```
+如果`nfsd_startup_generic()`和`nfsd_shutdown_generic()`会并发，这个问题可能出现，但`nfsd_users`变量有`nfsd_mutex`锁保护，所以不会并发，具体讨论请查看[nfsd: convert the nfsd_users to atomic_t](https://lore.kernel.org/all/20250618104123.398603-1-chenxiaosong@chenxiaosong.com/)。
+
+# 相关邮件
+
+- [Chuck Lever <chuck.lever@oracle.com> `Re: [PATCH 2/3] nfsd: use kref and new mutex for global config management`](https://lore.kernel.org/all/00bac421-cef6-451d-b868-592ed34c15af@oracle.com/)
+- [NeilBrown <neilb@suse.de> `Re: [RFC PATCH] nfsd: convert the nfsd_users to atomic_t`](https://lore.kernel.org/all/175042051171.608730.8613669948428192921@noble.neil.brown.name/)
+
+# 补丁分析
+
+[`[PATCH 00/20 v3] SUNRPC: clean up server thread management`](https://chenxiaosong.com/course/nfs/patch/NFSD-Make-it-possible-to-use-svc_set_num_threads_syn.html)
 
 # 解决方案
 
