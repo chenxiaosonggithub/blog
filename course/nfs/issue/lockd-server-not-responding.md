@@ -323,6 +323,7 @@ wireshark用以下条件过滤数据包:
 - `tcp.srcport == 871 || tcp.dstport == 871`
 - `tcp.analysis.retransmission`: 重传
 
+`22:55:38`超时，可能在`22:54:38`左右发起sunrpc请求，但这时tcp连接正在断开，直到`22:56:17`tcp连接重新建立，`LOCK Call`成功发出，收到`LOCK Reply`时打印`lockd: server 11.73.24.85 0K`。
 ```sh
 No.	Time	Source	Destination	Protocol	Length	Info
 13388	2025-06-22 22:49:12.999433	11.8.68.71	11.73.24.85	TCP	66	[TCP Keep-Alive] 871 → 2052 [ACK] Seq=1296 Ack=241 Win=65280 Len=0 TSval=1220605896 TSecr=1453532233
