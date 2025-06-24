@@ -2,7 +2,12 @@
 
 4.19内核打印:
 ```sh
-lockd: server xx.xx.xx.xx not responding, still trying
+grep -r "not responding"
+messages:Jun 15 11:51:38 xxxxxxxx kernel: [9386449.117162] lockd: server xx.xx.xx.xx not responding, still trying
+messages:Jun 16 13:22:47 xxxxxxxx kernel: [9478316.107045] lockd: server xx.xx.xx.xx not responding, timed out
+messages:Jun 19 02:22:38 xxxxxxxx kernel: [9697905.032077] lockd: server xx.xx.xx.xx not responding, still trying
+messages:Jun 19 03:50:47 xxxxxxxx kernel: [9703193.915722] lockd: server xx.xx.xx.xx not responding, timed out
+messages:Jun 19 06:22:05 xxxxxxxx kernel: [9712271.571929] lockd: server xx.xx.xx.xx not responding, still trying
 ```
 
 挂载参数:
@@ -269,5 +274,17 @@ fcntl
 
 # 抓包数据分析
 
-wireshark过滤条件: `tcp.srcport == 111 || tcp.dstport == 111`。
+`tcp.completeness`字段的每一位:
+
+- 0x01 (1): 看到 SYN (连接发起)
+- 0x02 (2): 看到 SYN-ACK (连接响应)
+- 0x04 (4): 看到最终的握手 ACK (连接建立完成)
+- 0x08 (8): 看到正常的 FIN (连接开始关闭)
+- 0x10 (16): 看到 RST (连接被重置)
+
+wireshark用以下条件过滤数据包:
+
+- `tcp.srcport == 111 || tcp.dstport == 111`
+- `tcp.completeness == 3`: 只看到了 SYN 和 SYN-ACK，没有看到建立连接的最终 ACK（连接可能建立失败，或 ACK 丢失未被捕获）
+
 
