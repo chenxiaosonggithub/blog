@@ -353,3 +353,10 @@ No.	Time	Source	Destination	Protocol	Length	Info
 17566	2025-06-22 22:56:18.001690	11.73.24.85	11.8.68.71	NLM	106	V4 LOCK Reply (Call In 17564)
 ```
 
+正常的四次挥手流程如下:
+```sh
+[FIN, ACK] # 这个 ACK 是对历史数据的确认，与挥手本身无关
+[FIN, ACK] # 第 2 步（ACK） 和 第 3 步（FIN） 被合并为一个报文
+[ACK]
+```
+
