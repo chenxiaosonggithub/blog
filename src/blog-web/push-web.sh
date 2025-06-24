@@ -41,4 +41,4 @@ git branch -m master # 确保分支名为master
 git push origin master -f
 
 # others blog
-bash ${code_path}/private-blog/others-blog/push-github.sh "${is_new_repo}"
+# bash ${code_path}/private-blog/others-blog/push-github.sh "${is_new_repo}"
