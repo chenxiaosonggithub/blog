@@ -274,7 +274,7 @@ fcntl
                     nlmclnt_async_call // 用户态进程退出时执行到这里
 ```
 
-# 抓包数据分析
+# 抓包数据分析 {#tcpdump}
 
 `tcp.completeness`字段的每一位:
 
@@ -284,7 +284,7 @@ fcntl
 - 0x08 (8): 看到正常的 FIN (连接开始关闭)
 - 0x10 (16): 看到 RST (连接被重置)
 
-## 0619
+## 0619 {#0619}
 
 wireshark用以下条件过滤数据包:
 
@@ -305,7 +305,7 @@ No.	Time	Source	Destination	Protocol	Length	Info
 75216	2025-06-19 02:22:38.755191	215.2.21.62	215.1.39.124	TCP	74	[TCP Retransmission] 111 → 33306 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=1196424531 TSecr=504648252 WS=128
 ```
 
-## 0622
+## 0622 {#0622}
 
 wireshark用以下条件过滤数据包:
 
