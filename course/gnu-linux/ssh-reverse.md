@@ -51,9 +51,21 @@ vim /etc/ssh/sshd_config # GatewayPorts yes
 systemctl restart sshd # 重启ssh
 ```
 
-在private-server上执行[`link.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/link.sh)脚本
-将[`ssh-reverse.service`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/ssh-reverse.service)
-链接到`/lib/systemd/system/ssh-reverse.service`。
+在private-server上创建`/lib/systemd/system/ssh-reverse.service`。
+```sh
+[Unit]
+Description=ssh reverse
+StartLimitIntervalSec=0
+
+[Service]
+Type=forking
+ExecStart=autossh -M 55556 -Nf -R 55555:localhost:22 root@chenxiaosong.com
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+```
 
 private-server 在`/etc/bashrc`或`/etc/bash.bashrc`(通过`/etc/profile`查看到底是哪个文件)中添加:
 ```shell
@@ -91,7 +103,27 @@ ssh -p 55555 sonvhi@chenxiaosong.com
 
 有时会因为网络波动出现无法远程连接，可以在private-server上使用脚本监测，当监测到无法连接时，重启服务。
 
-执行以下命令，运行[`monitor-ssh.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/monitor-ssh.sh)脚本:
+`monitor-ssh.sh`脚本:
+```sh
+# 在 root 下执行 ssh-copy-id -p 55555 chenxiaosong.com
+# 在 root 下执行本脚本 bash monitor-ssh.sh
+log_path=/tmp
+while true
+do
+        ssh -p 55555 -o ConnectTimeout=2 -q sonvhi@hz.chenxiaosong.com exit
+        if [ $? != 0 ]
+        then
+                echo `date` > ${log_path}/ssh-monitor-fail.log
+                systemctl restart ssh-reverse.service
+        else
+                echo `date` > ${log_path}/ssh-monitor-success.log
+        fi
+
+        sleep 30
+done
+```
+
+执行以下命令:
 ```sh
 mkdir -p /home/sonvhi/chenxiaosong/monitor-ssh
 # 因为要不断写日志，所以挂载一个tmpfs，避免写入磁盘，否则会降低磁盘寿命
@@ -114,7 +146,11 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 通过访问`chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
 
-# 花生壳
+# 内网穿透商业软件
+
+当然我使用的是能白嫖的免费版。
+
+## 花生壳
 
 如果不想自己搭建服务器，可以使用[花生壳](https://hsk.oray.com/)，[查看帮忙文档](https://service.oray.com/question/15507.html)。
 
@@ -153,9 +189,9 @@ do
 done
 ```
 
-# cpolar
+## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)
 
-花生壳免费版的可能会出问题，可以使用[cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)代替:
+花生壳免费版的可能会出问题，可以使用cpolar代替:
 ```sh
 sudo apt-get update -y
 sudo apt-get install curl -y
@@ -168,18 +204,22 @@ sudo systemctl start cpolar
 
 访问[localhost:9200](http://localhost:9200/)并登录邮箱账号，[创建隧道localhost:9200/#/tunnels/create](http://localhost:9200/#/tunnels/create)，[在线隧道列表localhost:9200/#/status/online](http://localhost:9200/#/status/online)查看，或在[cpolar网官](https://dashboard.cpolar.com/status)查看。
 
-# 向日葵和ToDesk
+## [网云穿](https://blog.xiaomy.net/archives/4.html)
 
-还可以使用[向日葵](https://sunlogin.oray.com/download?categ=personal)和[ToDesk](https://www.todesk.com/download.html)。
-
-向日葵有[命令行版本](https://service.oray.com/question/11017.html)，但是要付费的（还不如自己买个服务器，当然更推荐用花生壳），下面以centos7为例说明安装过程:
 ```sh
-yum install ./sunloginclientshell-10.1.1.28779.x86_64.rpm -y
-sudo /usr/local/sunlogin/bin/sunloginclient
-按F12 -> Bind, 登录向日葵账号密码
+wget https://down.xiaomy.net/linux/wyc_linux_64
+chmod -R 777 ./wyc_linux_64
+./wyc_linux_64
 ```
 
-# 家里远程桌面到公司ubuntu24.04 {#remote-desktopl}
+# 远程桌面
+
+远程桌面软件:
+
+- [向日葵](https://sunlogin.oray.com/download?categ=personal)，有[命令行版本](https://service.oray.com/question/11017.html)（要付费，还不如自己买个服务器，当然更推荐用花生壳）
+- [ToDesk](https://www.todesk.com/download.html)
+
+# 家里远程桌面到公司ubuntu24.04 {#remote-desktop}
 
 ubuntu24.04没有vnc协议，只有rdp协议，位置是`设置 -> 系统 -> 桌面共享`，注意物理机上需要连接显示器才能远程桌面控制。
 
