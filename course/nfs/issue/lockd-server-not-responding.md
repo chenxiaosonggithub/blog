@@ -284,7 +284,7 @@ fcntl
 - 0x08 (8): 看到正常的 FIN (连接开始关闭)
 - 0x10 (16): 看到 RST (连接被重置)
 
-## 0619 {#tcpdump-0619}
+## 6月19日 {#tcpdump-0619}
 
 wireshark用以下条件过滤数据包:
 
@@ -292,7 +292,14 @@ wireshark用以下条件过滤数据包:
 - `tcp.completeness == 3`: 只看到了 SYN 和 SYN-ACK，没有看到建立连接的最终 ACK（连接可能建立失败，或 ACK 丢失未被捕获）
 - `tcp.analysis.retransmission`: 重传
 
-`02:21:34 ~ 02:22:38`一分钟左右的时间，tcp连接没有建立:
+正常的三次握手流程如下:
+```sh
+[SYN] # synchronous，client端主动发
+[SYN, ACK] # server端回复
+[ACK] # client端确认
+```
+
+`02:21:34 ~ 02:22:38`一分钟左右的时间，tcp连接没有建立，nfs server回复了`[SYN, ACK]`且又重传了一次，nfs client没回复:
 ```sh
 No.	Time	Source	Destination	Protocol	Length	Info
 74132	2025-06-19 02:21:34.136390	215.1.39.124	215.2.21.62	TCP	74	33306 → 111 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=504648252 TSecr=0 WS=128
@@ -305,14 +312,32 @@ No.	Time	Source	Destination	Protocol	Length	Info
 75216	2025-06-19 02:22:38.755191	215.2.21.62	215.1.39.124	TCP	74	[TCP Retransmission] 111 → 33306 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=1196424531 TSecr=504648252 WS=128
 ```
 
-## 0622 {#tcpdump-0622}
+## 6月22日 {#tcpdump-0622}
 
-wireshark用以下条件过滤数据包:
+wireshark可用以下条件过滤数据包:
 
 - `tcp.srcport == 871 || tcp.dstport == 871`
 - `tcp.analysis.retransmission`: 重传
 
-`22:55:38`超时，可能在`22:54:38`左右发起sunrpc请求，但这时tcp连接正在断开，直到`22:56:17`tcp连接重新建立，`LOCK Call`成功发出，收到`LOCK Reply`时打印`lockd: server 11.73.24.85 0K`。
+正常的四次挥手流程如下:
+```sh
+[FIN, ACK] # 这个 ACK 是对历史数据的确认，与挥手本身无关
+[FIN, ACK] # 第 2 步（ACK） 和 第 3 步（FIN） 被合并为一个报文
+[ACK]
+```
+根据以下日志:
+```sh
+Jun 22 22:55:38 xxxxxxxxxx kernel:[9263358.933594]lockd: server 11.73.24.85 not responding, still trying
+```
+
+日志中在`22:55:38`超时，可能在`22:54:38`左右发起sunrpc请求，但这时tcp连接正在断开。
+
+再根据以下日志:
+```sh
+Jun 22 22:56:18 xxxxxxxxxx kernel:[9263398.655377]lockd: server 11.73.24.85 0K
+```
+
+nfs client收到`LOCK Reply`时打印上面的日志`lockd: server 11.73.24.85 0K`，分析抓包数据可以看出，直到`22:56:17`tcp连接重新建立，`LOCK Call`成功发出。
 
 `22:53:13 ~ 22:56:17`期间，nfs client不断重传`[FIN, ACK]`数据包，nfs server没回复，所以问题出在nfs server端。
 ```sh
@@ -331,12 +356,5 @@ No.	Time	Source	Destination	Protocol	Length	Info
 17564	2025-06-22 22:56:17.960048	11.8.68.71	11.73.24.85	NLM	290	V4 LOCK Call (Reply In 17566) FH:0xe7823382 svid:224744 pos:0-0
 17565	2025-06-22 22:56:17.960290	11.73.24.85	11.8.68.71	TCP	66	2052 → 871 [ACK] Seq=1 Ack=225 Win=65024 Len=0 TSval=1454018688 TSecr=1221030851
 17566	2025-06-22 22:56:18.001690	11.73.24.85	11.8.68.71	NLM	106	V4 LOCK Reply (Call In 17564)
-```
-
-正常的四次挥手流程如下:
-```sh
-[FIN, ACK] # 这个 ACK 是对历史数据的确认，与挥手本身无关
-[FIN, ACK] # 第 2 步（ACK） 和 第 3 步（FIN） 被合并为一个报文
-[ACK]
 ```
 
