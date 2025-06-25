@@ -323,14 +323,15 @@ wireshark可用以下条件过滤数据包:
 ```sh
 [FIN, ACK] # 这个 ACK 是对历史数据的确认，与挥手本身无关
 [FIN, ACK] # 第 2 步（ACK） 和 第 3 步（FIN） 被合并为一个报文
-[ACK]
+[ACK] # 挥手完成
 ```
+
 根据以下日志:
 ```sh
 Jun 22 22:55:38 xxxxxxxxxx kernel:[9263358.933594]lockd: server 11.73.24.85 not responding, still trying
 ```
 
-日志中在`22:55:38`超时，可能在`22:54:38`左右发起sunrpc请求，但这时tcp连接正在断开。
+日志中在`22:55:38`超时，推测出在`22:54:38`左右发起sunrpc请求，但这时tcp连接正在断开。
 
 再根据以下日志:
 ```sh
