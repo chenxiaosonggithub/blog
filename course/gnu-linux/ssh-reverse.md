@@ -153,11 +153,26 @@ do
 done
 ```
 
+# cpolar
+
+花生壳免费版的可能会出问题，可以使用[cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)代替:
+```sh
+sudo apt-get update -y
+sudo apt-get install curl -y
+curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo bash
+cpolar version
+cpolar authtoken xxxxxxx # https://dashboard.cpolar.com/auth
+sudo systemctl enable cpolar
+sudo systemctl start cpolar
+```
+
+访问[localhost:9200](http://localhost:9200/)并登录邮箱账号，[创建隧道localhost:9200/#/tunnels/create](http://localhost:9200/#/tunnels/create)，[在线隧道列表localhost:9200/#/status/online](http://localhost:9200/#/status/online)查看，或在[cpolar网官](https://dashboard.cpolar.com/status)查看。
+
 # 向日葵和ToDesk
 
 还可以使用[向日葵](https://sunlogin.oray.com/download?categ=personal)和[ToDesk](https://www.todesk.com/download.html)。
 
-向日葵有[命令行版本](https://service.oray.com/question/11017.html)，但是要付费的，还不如自己买个服务器，下面以centos7为例说明安装过程:
+向日葵有[命令行版本](https://service.oray.com/question/11017.html)，但是要付费的（还不如自己买个服务器，当然更推荐用花生壳），下面以centos7为例说明安装过程:
 ```sh
 yum install ./sunloginclientshell-10.1.1.28779.x86_64.rpm -y
 sudo /usr/local/sunlogin/bin/sunloginclient
