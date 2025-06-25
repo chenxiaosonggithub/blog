@@ -58,7 +58,7 @@ Description=ssh reverse
 StartLimitIntervalSec=0
 
 [Service]
-Type=forking
+Type=simple
 ExecStart=autossh -M 55556 -Nf -R 55555:localhost:22 root@chenxiaosong.com
 Restart=always
 RestartSec=1
@@ -173,22 +173,6 @@ sudo phddns status # 查看状态
 
 在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
-注意可能会断开，可以用以下脚本检查重启服务:
-```sh
-# 需要先执行 sudo -i
-while true
-do
-	ssh -p xxxxx -o ConnectTimeout=3 -q xxx@xxxx.chenxiaosong.com exit
-	if [ $? != 0 ]
-	then
-		echo `date` fail
-		phddns restart
-	fi
-
-	sleep 120
-done
-```
-
 ## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)
 
 花生壳免费版的可能会出问题，可以使用cpolar代替:
@@ -207,9 +191,50 @@ sudo systemctl start cpolar
 ## [网云穿](https://blog.xiaomy.net/archives/4.html)
 
 ```sh
+cd /home/sonvhi/chenxiaosong/sw
 wget https://down.xiaomy.net/linux/wyc_linux_64
 chmod -R 777 ./wyc_linux_64
-./wyc_linux_64
+```
+
+创建`/lib/systemd/system/wangyunchuan.service`:
+```sh
+[Unit]
+Description=wangyunchuan
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+# token访问: https://i.xiaomy.net/#/tunnel
+ExecStart=/home/sonvhi/chenxiaosong/sw/wyc_linux_64 -token=xxxxxxxxx
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+```
+
+再启动服务:
+```sh
+sudo systemctl restart wangyunchuan.service
+sudo systemctl status wangyunchuan.service # 查看状态
+```
+
+## 监控
+
+注意因为网络故障或其他原因连接可能会断开，可以用以下脚本检查重启服务:
+```sh
+# 需要先执行 sudo -i
+while true
+do
+	ssh -p xxxxx -o ConnectTimeout=3 -q xxx@xxxx.chenxiaosong.com exit
+	if [ $? != 0 ]
+	then
+		echo `date` fail
+		phddns restart
+	fi
+
+	sleep 300
+done
 ```
 
 # 远程桌面
