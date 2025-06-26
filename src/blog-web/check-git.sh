@@ -149,13 +149,16 @@ comm_check_repo() {
 	fi
 
 	comm_echo "is_push_github=${is_push_github}"
-	if [[ "${is_push_github}" == 1 && "${is_repo_ok}" == true ]]; then
+	if [[ "${is_push_github}" == 1 ]]; then
 		comm_push_github_repo
 		local push_github_result=$?
-		if [[ "${push_github_result}" != 0 ]]; then
-			github_not_push_repos_ref+=(${repo})
-		else
-			github_ok_repos_ref+=(${repo})
+		# gitee搞定后再判断github
+		if [[ "${is_repo_ok}" == true ]]; then
+			if [[ "${push_github_result}" != 0 ]]; then
+				github_not_push_repos_ref+=(${repo})
+			else
+				github_ok_repos_ref+=(${repo})
+			fi
 		fi
 	fi
 }
