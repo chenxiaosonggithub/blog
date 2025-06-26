@@ -164,6 +164,12 @@ ps -e -o pid,ppid,cmd | grep fork
 
 一个多线程的程序，所有线程形成一个线程组，线程组中的第一个线程为线程组的pid， 这个第一个线程叫主线程，也就是调用`pthread_create()`的线程，`struct task_struct`中的`tgid`表示线程组中主线程的pid，`getpid()`系统调用获得的就是这个值。
 
+在用户空间，线程id用以下方式获取:
+```c
+#include <sys/syscall.h> // 用于 SYS_gettid
+pid_t tid = syscall(SYS_gettid);
+```
+
 ## 创建线程
 
 线程是和其他进程共享某些资源（如地址空间等）的进程，创建线程:
