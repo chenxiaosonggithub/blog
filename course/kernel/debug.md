@@ -243,12 +243,12 @@ echo 0 > tracing_on
 cat trace_pipe | less
 ```
 
-# `kprobe`
+# `kprobe` {#kprobe}
 
 - [Documentation/trace](https://github.com/torvalds/linux/tree/master/Documentation/trace)
 - [csdn luckyapple1028](https://blog.csdn.net/luckyapple1028?type=blog)
 
-## `kprobe trace`
+## `kprobe trace` {#kprobe-trace}
 
 kprobe的使用如下:
 ```sh
@@ -284,7 +284,7 @@ echo 0 > trace # 清除trace信息
 cat trace_pipe
 ```
 
-## 插入`kprobe`模块
+## 插入`kprobe`模块 {#kprobe-module}
 
 参考
 <!-- public begin -->
