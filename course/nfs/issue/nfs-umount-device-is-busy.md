@@ -1,8 +1,30 @@
 # 问题描述
 
-卸载nfsv3挂载点时报错`device is busy`，但用`lsof | grep <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
+卸载nfsv3挂载点时报错`device is busy`，但用`lsof <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
 
-# 构造内核打开文件 {#kernl-open-file}
+# 用户态快速打开关闭文件 {#userspace-open-file-short-time}
+
+挂载:
+```sh
+mount -t nfs -o vers=3 localhost:/tmp /mnt
+```
+
+在用户态通过创建两个线程，不断打开又关闭文件，编译运行[`thread-open-file-short-time.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/thread-open-file-short-time.c):
+```sh
+gcc -o thread-open-file-short-time thread-open-file-short-time.c -lpthread
+./thread-open-file-short-time
+```
+
+这时无法卸载nfs，且用`lsof <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程:
+```sh
+umount /mnt # umount.nfs: /mnt: device is busy
+lsof /mnt # 找不到进程
+fuser -m /mnt # 找不到进程
+```
+
+# 内核打开文件 {#kernl-open-file}
+
+## 构造
 
 在内核空间打开文件，用`lsof <挂载点>`和`fuser -m <挂载点>`无法找到进程。
 
@@ -11,7 +33,7 @@
 - [`kernel-open-file.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/kernel-open-file.c)
 - [`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/Makefile)
 
-# 调试 {#debug}
+## 调试 {#debug}
 
 挂载:
 ```sh
@@ -70,7 +92,7 @@ rmmod kernel_open_file # 在内核中关闭文件
 umount /mnt # 正常卸载，不报错
 ```
 
-# 代码分析
+## 代码分析
 
 系统调用的跟踪调试请查看[《文件系统延迟卸载》](https://chenxiaosong.com/src/filesystem/lazy-umount.html)。
 
