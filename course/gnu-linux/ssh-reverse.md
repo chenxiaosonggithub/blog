@@ -181,7 +181,7 @@ sudo apt-get update -y
 sudo apt-get install curl -y
 curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo bash
 cpolar version
-cpolar authtoken xxxxxxx # https://dashboard.cpolar.com/auth
+cpolar authtoken xxxxxxx # token访问: https://dashboard.cpolar.com/auth
 sudo systemctl enable cpolar
 sudo systemctl start cpolar
 ```
