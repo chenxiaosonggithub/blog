@@ -8,8 +8,8 @@ Jun 19 02:22:38 xxxxxxxxxx kernel: [9697905.032077] lockd: server 215.2.21.62 no
 Jun 19 03:50:47 xxxxxxxxxx kernel: [9703193.915722] lockd: server 215.2.21.62 not responding, timed out
 Jun 19 06:22:05 xxxxxxxxxx kernel: [9712271.571929] lockd: server 215.2.21.62 not responding, still trying
 # 另一个环境日志, 0622
-Jun 22 22:55:38 xxxxxxxxxx kernel:[9263358.933594]lockd: server 11.73.24.85 not responding, still trying
-Jun 22 22:56:18 xxxxxxxxxx kernel:[9263398.655377]lockd: server 11.73.24.85 0K
+Jun 22 22:55:38 xxxxxxxxxx kernel: [9263358.933594] lockd: server 11.73.24.85 not responding, still trying
+Jun 22 22:56:18 xxxxxxxxxx kernel: [9263398.655377] lockd: server 11.73.24.85 0K
 ```
 
 挂载参数:
