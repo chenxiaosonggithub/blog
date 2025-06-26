@@ -2,6 +2,30 @@
 
 卸载nfsv3挂载点时报错`device is busy`，但用`lsof <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
 
+# 调试
+
+用以下命令打开nfs日志开关（参考[《nfs调试方法》](https://chenxiaosong.com/course/nfs/debug.html#log)）:
+```sh
+echo 0xFFFF > /proc/sys/sunrpc/nfs_debug
+# echo 0 > /proc/sys/sunrpc/nfs_debug # 在生产环境中关闭日志请执行这个命令
+```
+
+kprobe抓进程信息（参考[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug#kprobe)）:
+```sh
+kprobe_func_name=nfs_file_open # 或者 nfs_file_read
+cd /sys/kernel/debug/tracing/
+cat available_filter_functions | grep ${kprobe_func_name}
+echo 1 > tracing_on
+echo "p:p_${kprobe_func_name} ${kprobe_func_name}" >> kprobe_events
+echo 1 > events/kprobes/p_${kprobe_func_name}/enable
+echo stacktrace > events/kprobes/p_${kprobe_func_name}/trigger # 打印栈
+# echo '!stacktrace' > events/kprobes/p_${kprobe_func_name}/trigger # 关闭栈
+# echo 0 > events/kprobes/p_${kprobe_func_name}/enable
+# echo "-:p_${kprobe_func_name}" >> kprobe_events
+echo 0 > trace # 清除trace信息
+cat trace_pipe
+```
+
 # 用户态快速打开关闭文件 {#userspace-open-file-short-time}
 
 挂载:
@@ -22,6 +46,16 @@ lsof /mnt # 找不到进程
 fuser -m /mnt # 找不到进程
 ```
 
+用上面的kprobe trace抓到以下信息:
+```sh
+thread-open-fil-956   [010] ....  7723.365916: p_nfs_file_open: (nfs_file_open+0x0/0x60 [nfs])
+```
+
+`956`是线程id，用以下命令查看完整的进程名:
+```sh
+ps -eLf | grep 956
+```
+
 # 内核打开文件 {#kernl-open-file}
 
 ## 构造
@@ -33,33 +67,9 @@ fuser -m /mnt # 找不到进程
 - [`kernel-open-file.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/kernel-open-file.c)
 - [`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/Makefile)
 
-## 调试 {#debug}
-
 挂载:
 ```sh
 mount -t nfs -o vers=3 localhost:/tmp /mnt
-```
-
-用以下命令打开nfs日志开关（参考[《nfs调试方法》](https://chenxiaosong.com/course/nfs/debug.html#log)）:
-```sh
-echo 0xFFFF > /proc/sys/sunrpc/nfs_debug
-# echo 0 > /proc/sys/sunrpc/nfs_debug # 在生产环境中关闭日志请执行这个命令
-```
-
-kprobe抓进程信息:
-```sh
-kprobe_func_name=nfs_file_open
-cd /sys/kernel/debug/tracing/
-cat available_filter_functions | grep ${kprobe_func_name}
-echo 1 > tracing_on
-echo "p:p_${kprobe_func_name} ${kprobe_func_name}" >> kprobe_events
-echo 1 > events/kprobes/p_${kprobe_func_name}/enable
-echo stacktrace > events/kprobes/p_${kprobe_func_name}/trigger # 打印栈
-# echo '!stacktrace' > events/kprobes/p_${kprobe_func_name}/trigger # 关闭栈
-# echo 0 > events/kprobes/p_${kprobe_func_name}/enable
-# echo "-:p_${kprobe_func_name}" >> kprobe_events
-echo 0 > trace # 清除trace信息
-cat trace_pipe
 ```
 
 加载ko，打开并读文件`/mnt/dir/file`，注意这个操作不要在生产环境中尝试:
