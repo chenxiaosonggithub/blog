@@ -120,6 +120,7 @@ openat
 可以用[`kprobe-fd_install.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/kprobe-fd_install.c)调试，
 其中`mydebug_dump_stack()`相关的用法可以查看[《mydebug模块》](https://chenxiaosong.com/course/kernel/debug.html#mydebug)。
 
+<!--
 # `mmap()`可以找到进程 {#mmap-open-file}
 
 下面的内容对你没啥卵用，不用看了。只是我吃饱撑的尝试一下，顺便再记录一下。
@@ -195,4 +196,5 @@ fuser -m <挂载点> # 能找到进程
 ```
 
 说了不用看了，你还看。
+-->
 
