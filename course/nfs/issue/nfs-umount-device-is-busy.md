@@ -1,6 +1,6 @@
 # 问题描述
 
-卸载nfsv3挂载点时报错`device is busy`，但用`lsof <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
+卸载nfsv3挂载点时报错`device is busy`，但用`lsof +D <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程。
 
 # 调试
 
@@ -39,10 +39,10 @@ gcc -o thread-open-file-short-time thread-open-file-short-time.c -lpthread
 ./thread-open-file-short-time
 ```
 
-这时无法卸载nfs，且用`lsof <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程:
+这时无法卸载nfs，且用`lsof +D <挂载点>`和`fuser -m <挂载点>`都无法找到使用挂载点的进程:
 ```sh
 umount /mnt # umount.nfs: /mnt: device is busy
-lsof /mnt # 找不到进程
+lsof +D /mnt # 找不到进程
 fuser -m /mnt # 找不到进程
 ```
 
@@ -60,7 +60,7 @@ ps -eLf | grep 956
 
 ## 构造
 
-在内核空间打开文件，用`lsof <挂载点>`和`fuser -m <挂载点>`无法找到进程。
+在内核空间打开文件，用`lsof +D <挂载点>`和`fuser -m <挂载点>`无法找到进程。
 
 源码文件如下:
 
@@ -92,7 +92,7 @@ insmod kernel-open-file.ko
 这时我们卸载nfs挂载点就能得到一样的报错信息，且无法找到使用挂载点的进程:
 ```sh
 umount /mnt # umount.nfs: /mnt: device is busy
-lsof /mnt # 找不到进程
+lsof +D /mnt # 找不到进程
 fuser -m /mnt # 找不到进程
 ```
 
@@ -115,7 +115,7 @@ openat
         rcu_assign_pointer(fdt->fd[fd], file);
 ```
 
-在内核空间打开文件时，不会把文件描述符加到`fdtable`中，`fuser`和`lsof`无法遍历到文件描述符，所以无法找到打开文件的进程。
+在内核空间打开文件时，不会把文件描述符加到`fdtable`中，`fuser -m`和`lsof +D`无法遍历到文件描述符，所以无法找到打开文件的进程。
 
 可以用[`kprobe-fd_install.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/kprobe-fd_install.c)调试，
 其中`mydebug_dump_stack()`相关的用法可以查看[《mydebug模块》](https://chenxiaosong.com/course/kernel/debug.html#mydebug)。
@@ -190,7 +190,7 @@ int main(int argc, char *argv[]) {
 ```sh
 gcc -o mmap mmap.c
 ./mmap &
-lsof <挂载点> # 能找到进程
+lsof +D <挂载点> # 能找到进程
 fuser -m <挂载点> # 能找到进程
 ```
 
