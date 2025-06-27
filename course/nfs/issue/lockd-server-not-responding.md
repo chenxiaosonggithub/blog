@@ -108,7 +108,7 @@ nfs client会不断重发请求，直到用户态退出进程。
 -    test_lock(fd, F_WRLCK, 0, 100);
 -    
 +    printf("开始休眠，请在server端执行 ifconfig ens2 down\n");
-+    sleep(15);
++    sleep(5);
 +    printf("休眠结束，将发送lock请求\n");
 +
      // 设置写锁 (锁定前100字节)
@@ -116,15 +116,57 @@ nfs client会不断重发请求，直到用户态退出进程。
      if (set_lock(fd, F_WRLCK, 0, 100) == -1) {
 ```
 
-测试步骤:
+client端操作:
 ```sh
 # client和server不在同一个环境
 mount -t nfs -o rw,relatime,vers=3,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,mountvers=3,mountproto=tcp,local_lock=none,_netdev 192.168.53.40:/tmp /mnt
+tcpdump --interface=any --buffer-size=20480 -w out.cap
 gcc -o nfs-lock nfs-lock.c
-./nfs-lock /mnt/file &
+date && ./nfs-lock /mnt/file & # Fri Jun 27 19:41:39 CST 2025
+```
 
+server端操作:
+```sh
+# 执行完 ./nfs-lock /mnt/file 后立刻输入
+ifconfig ens2 down
+# 当client端打印still trying后，再执行下面命令
+ifconfig ens2 up
+```
+
+如果是要再次测试，可以手动断开tcp连接:
+```sh
 netstat -tunap | grep ESTABLISHED
 apt install -y dsniff
+tcpkill -i ens2 host 192.168.53.40 and port 40115 and port 40115 # server ip port
+```
+
+`dmesg -T`日志:
+```sh
+[Fri Jun 27 19:42:45 2025] lockd: server 192.168.53.40 not responding, still trying
+[Fri Jun 27 19:43:59 2025] lockd: server 192.168.53.40 OK
+```
+
+执行`nfs-lock /mnt/file`命令的时间是`19:41:39`，5秒后`19:41:44` `LOCK Call`的sunrpc请求尝试发出（但未发出），`still trying`的打印大约在60+秒后`19:42:45`。
+
+抓包数据如下，`19:41:44` `LOCK Call`的sunrpc请求尝试发出（但未发出），但这时和server端的`40115`端口的tcp连接还没建立，所以先发出tcp的`SYN`包，但server端的网络关闭，tcp连接一直无法建立，直到`19:42:59` server端网络重新打开，tcp连接才建立成功，紧接着`LOCK Call`的sunrpc请求成功发出，直到`19:43:59` `LOCK Reply`的回复收到才打印`server 192.168.53.40 OK`。
+
+```sh
+No.	Time	Source	Destination	Protocol	Length	Info	src port	dst port
+11	2025-06-27 19:41:44.044159	192.168.53.214	192.168.53.40	TCP	80	740 → 40115 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3154905536 TSecr=0 WS=128	740	40115
+15	2025-06-27 19:41:45.107047	192.168.53.214	192.168.53.40	TCP	80	[TCP Retransmission] 740 → 40115 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3154906599 TSecr=0 WS=128	740	40115
+18	2025-06-27 19:41:47.155016	192.168.53.214	192.168.53.40	TCP	80	[TCP Retransmission] 740 → 40115 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3154908647 TSecr=0 WS=128	740	40115
+22	2025-06-27 19:41:54.258986	192.168.53.214	192.168.53.214	ICMP	108	Destination unreachable (Host unreachable)	740	40115
+...
+76	2025-06-27 19:42:46.163028	192.168.53.214	192.168.53.214	ICMP	108	Destination unreachable (Host unreachable)	740	40115
+99	2025-06-27 19:42:59.796646	192.168.53.214	192.168.53.40	TCP	80	740 → 40115 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3154981288 TSecr=0 WS=128	740	40115
+102	2025-06-27 19:42:59.796807	192.168.53.40	192.168.53.214	TCP	80	40115 → 740 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=3137856369 TSecr=3154981288 WS=128	40115	740
+103	2025-06-27 19:42:59.796819	192.168.53.214	192.168.53.40	TCP	72	740 → 40115 [ACK] Seq=1 Ack=1 Win=64256 Len=0 TSval=3154981289 TSecr=3137856369	740	40115
+104	2025-06-27 19:42:59.796902	192.168.53.214	192.168.53.40	NLM	248	V4 LOCK Call (Reply In 171) FH:0x3c289931 svid:6 pos:0-100	740	40115
+105	2025-06-27 19:42:59.797089	192.168.53.40	192.168.53.214	TCP	72	40115 → 740 [ACK] Seq=1 Ack=177 Win=65024 Len=0 TSval=3137856370 TSecr=3154981289	40115	740
+166	2025-06-27 19:43:41.779024	192.168.53.214	192.168.53.40	NLM	248	[RPC retransmission of #104]V4 LOCK Call (Reply In 171) FH:0x3c289931 svid:6 pos:0-100	740	40115
+168	2025-06-27 19:43:41.779729	192.168.53.40	192.168.53.214	TCP	72	40115 → 740 [ACK] Seq=1 Ack=353 Win=64896 Len=0 TSval=3137898352 TSecr=3155023271	40115	740
+171	2025-06-27 19:43:59.990884	192.168.53.40	192.168.53.214	NLM	112	V4 LOCK Reply (Call In 104) NLM_DENIED_NOLOCKS	40115	740
+172	2025-06-27 19:43:59.990927	192.168.53.214	192.168.53.40	TCP	72	740 → 40115 [ACK] Seq=353 Ack=41 Win=64256 Len=0 TSval=3155041483 TSecr=3137916563	740	40115
 ```
 
 # 代码分析
