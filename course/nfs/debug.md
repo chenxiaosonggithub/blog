@@ -89,6 +89,8 @@ lsof +D <挂载点>
 fuser -m <挂载点>
 ```
 
+可能的原因请查看[《umount nfs报错device is busy的问题》](https://chenxiaosong.com/course/nfs/issue/nfs-umount-device-is-busy.html)。
+
 如果找到的使用挂载点的进程非常重要，kill这些进程会导致重大问题，可以使用以下命令延迟卸载，会导致挂载点在后台被卸载，而不会强制终止进程:
 ```sh
 umount --lazy <挂载点>
