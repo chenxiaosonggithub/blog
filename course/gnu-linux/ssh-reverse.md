@@ -150,9 +150,9 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 当然我使用的是能白嫖的免费版。
 
-## 花生壳
+## [花生壳](https://service.oray.com/question/15507.html)（域名和端口固定）
 
-如果不想自己搭建服务器，可以使用[花生壳](https://hsk.oray.com/)，[查看帮忙文档](https://service.oray.com/question/15507.html)。
+如果不想自己搭建服务器，可以使用[花生壳](https://hsk.oray.com/)。
 
 注意不能用`wget`命令下载（下载的文件错误），直接访问[centos](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.rpm)和[ubuntu](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.deb)
 下载链接（[版本号查看官网](https://hsk.oray.com/download)）在网页下载。
@@ -173,22 +173,7 @@ sudo phddns status # 查看状态
 
 在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
-## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)
-
-花生壳免费版的可能会出问题，可以使用cpolar代替:
-```sh
-sudo apt-get update -y
-sudo apt-get install curl -y
-curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo bash
-cpolar version
-cpolar authtoken xxxxxxx # token访问: https://dashboard.cpolar.com/auth
-sudo systemctl enable cpolar
-sudo systemctl start cpolar
-```
-
-访问[localhost:9200](http://localhost:9200/)并登录邮箱账号，[创建隧道localhost:9200/#/tunnels/create](http://localhost:9200/#/tunnels/create)，[在线隧道列表localhost:9200/#/status/online](http://localhost:9200/#/status/online)查看，或在[cpolar网官](https://dashboard.cpolar.com/status)查看。
-
-## [网云穿](https://blog.xiaomy.net/archives/4.html)
+## [网云穿](https://blog.xiaomy.net/archives/4.html)（域名和端口固定）
 
 ```sh
 cd /home/sonvhi/chenxiaosong/sw
@@ -215,8 +200,59 @@ WantedBy=multi-user.target
 
 再启动服务:
 ```sh
+sudo systemctl daemon-reload
+sudo systemctl enable wangyunchuan.service
 sudo systemctl restart wangyunchuan.service
 sudo systemctl status wangyunchuan.service # 查看状态
+```
+
+## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)（域名和端口不固定）
+
+花生壳免费版的可能会出问题，可以使用cpolar代替:
+```sh
+sudo apt-get update -y
+sudo apt-get install curl -y
+curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo bash
+cpolar version
+cpolar authtoken xxxxxxx # token访问: https://dashboard.cpolar.com/auth
+sudo systemctl enable cpolar
+sudo systemctl start cpolar
+```
+
+访问[localhost:9200](http://localhost:9200/)并登录邮箱账号，[创建隧道localhost:9200/#/tunnels/create](http://localhost:9200/#/tunnels/create)，[在线隧道列表localhost:9200/#/status/online](http://localhost:9200/#/status/online)查看，或在[cpolar网官](https://dashboard.cpolar.com/status)查看。
+
+## [natapp](https://natapp.cn/article/natapp_newbie)（域名和端口不固定）
+
+```sh
+cd /home/sonvhi/chenxiaosong/sw
+# https://natapp.cn/#download
+wget https://download.natapp.cn/assets/downloads/clients/2_4_0/natapp_linux_amd64/natapp
+chmod -R 777 ./natapp
+```
+
+创建`/lib/systemd/system/natapp.service`:
+```sh
+[Unit]
+Description=natapp
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+# token访问: https://natapp.cn/tunnel/lists
+ExecStart=/home/sonvhi/chenxiaosong/sw/natapp -authtoken=xxxxxxxxx
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+```
+
+再启动服务:
+```sh
+sudo systemctl daemon-reload
+sudo systemctl enable natapp.service
+sudo systemctl restart natapp.service
+sudo systemctl status natapp.service # 查看状态
 ```
 
 ## 监控
@@ -229,7 +265,7 @@ do
 	ssh -p xxxxx -o ConnectTimeout=3 -q xxx@xxxx.chenxiaosong.com exit
 	if [ $? != 0 ]
 	then
-		echo `date` fail
+		echo `date` xxx fail
 		phddns restart
 	fi
 
