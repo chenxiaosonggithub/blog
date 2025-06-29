@@ -175,6 +175,8 @@ sudo phddns status # 查看状态
 
 ## [网云穿](https://blog.xiaomy.net/archives/4.html)（域名和端口固定）
 
+[免费版每个月需要手动激活才可使用](https://xiaomy.net/pay?type=0)。
+
 ```sh
 cd /home/sonvhi/chenxiaosong/sw
 wget https://down.xiaomy.net/linux/wyc_linux_64
