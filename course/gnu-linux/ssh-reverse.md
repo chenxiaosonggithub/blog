@@ -152,7 +152,7 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 ## [花生壳](https://service.oray.com/question/15507.html)（域名和端口固定）
 
-如果不想自己搭建服务器，可以使用[花生壳](https://hsk.oray.com/)。
+[免费版限1GB/月](https://hsk.oray.com/price#personal)。
 
 注意不能用`wget`命令下载（下载的文件错误），直接访问[centos](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.rpm)和[ubuntu](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.deb)
 下载链接（[版本号查看官网](https://hsk.oray.com/download)）在网页下载。
@@ -175,7 +175,7 @@ sudo phddns status # 查看状态
 
 ## [网云穿](https://blog.xiaomy.net/archives/4.html)（域名和端口固定）
 
-[免费版每个月需要手动激活才可使用](https://xiaomy.net/pay?type=0)。
+[免费版每个月需要手动激活才可使用，每月1g 流量](https://xiaomy.net/pay?type=0)。
 
 ```sh
 cd /home/sonvhi/chenxiaosong/sw
