@@ -185,15 +185,12 @@ nfsd
 - [Chuck Lever <chuck.lever@oracle.com> `Re: [PATCH 2/3] nfsd: use kref and new mutex for global config management`](https://lore.kernel.org/all/00bac421-cef6-451d-b868-592ed34c15af@oracle.com/)
 - [NeilBrown <neilb@suse.de> `Re: [RFC PATCH] nfsd: convert the nfsd_users to atomic_t`](https://lore.kernel.org/all/175042051171.608730.8613669948428192921@noble.neil.brown.name/)
 
-# 补丁分析
-
-[`[PATCH 00/20 v3] SUNRPC: clean up server thread management`](https://chenxiaosong.com/course/nfs/patch/NFSD-Make-it-possible-to-use-svc_set_num_threads_syn.html)
-
 # 解决方案
 
 合入以下补丁:
 
-- `38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client`
+- [`[PATCH 38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client`](https://lore.kernel.org/all/171200183231.5439.7855646322906072619.stgit@klimt.1015granger.net/)
+- [`[PATCH 00/20 v3] SUNRPC: clean up server thread management`](https://chenxiaosong.com/course/nfs/patch/NFSD-Make-it-possible-to-use-svc_set_num_threads_syn.html)
 
 <!--
 # 不相关的补丁
