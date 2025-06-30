@@ -19,19 +19,26 @@ nfsd 与其他服务不同的原因在于 nfsd 线程可以在调用 svc_set_num
 
 相关邮件:
 
-- [NeilBrown <neilb@suse.de> `Re: [RFC PATCH] nfsd: convert the nfsd_users to atomic_t`](https://lore.kernel.org/all/175042051171.608730.8613669948428192921@noble.neil.brown.name/)
+- [NeilBrown <neilb@suse.de> `Re: [RFC PATCH] nfsd: convert the nfsd_users to atomic_t`](https://lore.kernel.org/all/175042051171.608730.8613669948428192921@noble.neil.brown.name/):
+```sh
+我能找到的此崩溃的唯一可能原因是，在调用 nfsd_shutdown_net() 和随后调用 nfsd_shutdown_generic() 时，nfsd 线程仍在运行，从而导致工作队列被销毁。
+这些线程都会收到 SIGKILL 信号，但没有任何机制去等待它们执行完毕。
+这一点在提交
+Commit: 3409e4f1e8f2 ("NFSD: Make it possible to use svc_set_num_threads_sync")
+中得到了修正：在同步模式下，线程会被同步地停止，因此可以确保在移除工作队列之前，所有线程都已经停止运行。
+```
 
 前置补丁:
 
 - 4.19可不合: `[PATCH 07/10] 97ad4031e295 nfsd4: add a client info file`](https://lore.kernel.org/all/1556201060-7947-8-git-send-email-bfields@redhat.com/)
-- [`c6c7f2a84da4 nfsd: Ensure knfsd shuts down when the "nfsd" pseudofs is unmounted`](https://lore.kernel.org/all/20210313210847.569041-1-trondmy@kernel.org/)
-- [`[PATCH 01/20] 89b24336f03a NFSD: handle error better in write_ports_addfd()`](https://lore.kernel.org/all/163816148551.32298.1997321981162233125.stgit@noble.brown/)
-- [`[PATCH 02/20] df5e49c880ea SUNRPC: change svc_get() to return the svc.`](https://lore.kernel.org/all/163816148552.32298.18413679797079617436.stgit@noble.brown/)
-- [`[PATCH v2] c20106944eb6 NFSD: Keep existing listeners on portlist error`](https://lore.kernel.org/all/547ee3794ac9678bc20ccb6ec35ba0fca5fe92f2.1633540771.git.bcodding@redhat.com/)
-- [`[PATCH 03/20] 8c62d12740a1 SUNRPC/NFSD: clean up get/put functions.`](https://lore.kernel.org/all/163816148553.32298.12054000235093970423.stgit@noble.brown/)
-- [`[PATCH 04/20] ec52361df99b SUNRPC: stop using ->sv_nrthreads as a refcount`](https://lore.kernel.org/all/163816148554.32298.8307258870002897708.stgit@noble.brown/)
+- [`c6c7f2a84da4 nfsd: Ensure knfsd shuts down when the "nfsd" pseudofs is unmounted`](https://lore.kernel.org/all/20210313210847.569041-1-trondmy@kernel.org/): `/proc/fs/nfsd`卸载时确保所有`nfsd`线程全部停止
+- [`[PATCH 01/20] 89b24336f03a NFSD: handle error better in write_ports_addfd()`](https://lore.kernel.org/all/163816148551.32298.1997321981162233125.stgit@noble.brown/): 确保`nfsd_serv`刚创建时才销毁
+- [`[PATCH 02/20] df5e49c880ea SUNRPC: change svc_get() to return the svc.`](https://lore.kernel.org/all/163816148552.32298.18413679797079617436.stgit@noble.brown/): 让`svc_get()`有返回值
+- [`[PATCH v2] c20106944eb6 NFSD: Keep existing listeners on portlist error`](https://lore.kernel.org/all/547ee3794ac9678bc20ccb6ec35ba0fca5fe92f2.1633540771.git.bcodding@redhat.com/): 如果已经存在sockets就只是减少计数，不调用`nfsd_destroy()`
+- [`[PATCH 03/20] 8c62d12740a1 SUNRPC/NFSD: clean up get/put functions.`](https://lore.kernel.org/all/163816148553.32298.12054000235093970423.stgit@noble.brown/): 重构`svc_destroy()`和`nfsd_destroy()`
+- [`[PATCH 04/20] ec52361df99b SUNRPC: stop using ->sv_nrthreads as a refcount`](https://lore.kernel.org/all/163816148554.32298.8307258870002897708.stgit@noble.brown/): `sv_nrthreads`只作为线程计数，新增`sv_refcnt`作为引用计数
 - 4.19可不合: [`[PATCH v2 2/3] e567b98ce9a4 nfsd: protect concurrent access to nfsd stats counters`](https://lore.kernel.org/all/20210106075236.4184-3-amir73il@gmail.com/)
-- [`[PATCH 05/20] 9b6c8c9bebcc nfsd: make nfsd_stats.th_cnt atomic_t`](https://lore.kernel.org/all/163816148555.32298.5422275287728622222.stgit@noble.brown/)
-- [`[PATCH 06/20] 2a36395fac3b SUNRPC: use sv_lock to protect updates to sv_nrthreads.`](https://lore.kernel.org/all/163816148556.32298.17419698380488869158.stgit@noble.brown/)
-- [`[PATCH 07/20] 9d3792aefdcd NFSD: narrow nfsd_mutex protection in nfsd thread`](https://lore.kernel.org/all/163816148556.32298.7308512506129152207.stgit@noble.brown/)
+- [`[PATCH 05/20] 9b6c8c9bebcc nfsd: make nfsd_stats.th_cnt atomic_t`](https://lore.kernel.org/all/163816148555.32298.5422275287728622222.stgit@noble.brown/): 把`nfsd_stats.th_cnt`变成原子变量
+- [`[PATCH 06/20] 2a36395fac3b SUNRPC: use sv_lock to protect updates to sv_nrthreads.`](https://lore.kernel.org/all/163816148556.32298.17419698380488869158.stgit@noble.brown/): 对`sv_nrthreads`加锁
+- [`[PATCH 07/20] 9d3792aefdcd NFSD: narrow nfsd_mutex protection in nfsd thread`](https://lore.kernel.org/all/163816148556.32298.7308512506129152207.stgit@noble.brown/): 缩小`nfsd_mutex`加锁的范围
 
