@@ -189,7 +189,9 @@ nfsd
 
 合入以下补丁:
 
-- [`[PATCH 38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client`](https://lore.kernel.org/all/171200183231.5439.7855646322906072619.stgit@klimt.1015granger.net/)
+- [`[PATCH v2 1/5] 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently`](https://chenxiaosong.com/course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.html): 增加一个flag防止nfsd4_callback工作队列并发
+- [`[PATCH 38f080f3cd19 NFSD: Move callback_wq into struct nfs4_client`](https://lore.kernel.org/all/171200183231.5439.7855646322906072619.stgit@klimt.1015granger.net/): 原本只有一个工作队列callback_wq，改成让每个nfs4_client结构体都有一个工作队列
+  - 可不合引入`__free_client()`的补丁: `59f8e91b75ec nfsd4: use reference count to free client`
 - [`[PATCH 00/20 v3] SUNRPC: clean up server thread management`](https://chenxiaosong.com/course/nfs/patch/NFSD-Make-it-possible-to-use-svc_set_num_threads_syn.html)
 
 <!--
