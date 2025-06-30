@@ -181,6 +181,7 @@ comm_array=(
 		1 1 course/gnu-linux/ssh-reverse.md ~ "反向ssh和内网穿透"
 		1 1 course/gnu-linux/blog-web.md ~ "如何拥有个人域名的网站和邮箱"
 		1 1 course/gnu-linux/docker.md ~ "Docker安装与使用"
+		1 1 course/gnu-linux/git.md ~ "git分布式版本控制系统"
 	0 1 course/harmony/harmony.md ~ "鸿蒙课程"
 		1 1 course/harmony/contribution.md ~ "陈孝松OpenHarmony贡献"
 		1 1 course/harmony/openharmony.md ~ "OpenHarmony开发"
