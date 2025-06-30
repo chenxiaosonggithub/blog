@@ -29,7 +29,7 @@ nfsd4_callback 工作队列任务的作用是将背道通道（backchannel）的
 ```sh
 12357f1b2c8e nfsd: minor 4.1 callback cleanup
 2bbfed98a4d8 nfsd: Fix races between nfsd4_cb_release() and nfsd4_shutdown_callback()
-b95239ca4954 nfsd: make nfsd4_run_cb a bool return function
+b95239ca4954 nfsd: make nfsd4_run_cb a bool return function: 把nfsd4_run_cb函数改成有返回值
 ```
 
 4.19可不合的前置补丁:
