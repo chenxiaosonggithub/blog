@@ -225,27 +225,5 @@ git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --gr
 [`2025-03-10 1054e8ffc5c4 nfsd: prevent callback tasks running concurrently Jeff Layton <jlayton@kernel.org>`补丁分析](https://chenxiaosong.com/course/nfs/patch/patchset-nfsd-dont-allow-concurrent-queueing-of-workqueue-jobs.html)。
 
 这些补丁经过分析都不相关。
-
-## 4.19合补丁
-
-前置补丁:
-
-```sh
-12357f1b2c8e nfsd: minor 4.1 callback cleanup
-2bbfed98a4d8 nfsd: Fix races between nfsd4_cb_release() and nfsd4_shutdown_callback()
-b95239ca4954 nfsd: make nfsd4_run_cb a bool return function
-```
-
-4.19可不合的前置补丁:
-```sh
-# 引入 nfs4_cb_getattr
-c5967721e106 NFSD: handle GETATTR conflict with write delegation
-# 引入 deleg_reaper
-44df6f439a17 NFSD: add delegation reaper to react to low memory condition
-# 引入 nfsd4_send_cb_offload
-e72f9bc006c0 NFSD: Add nfsd4_send_cb_offload()
-# 引入 nfsd4_do_async_copy （其中的部分代码独立成nfsd4_send_cb_offload）
-e0639dc5805a NFSD introduce async copy feature
-```
 -->
 
