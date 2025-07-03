@@ -30,17 +30,24 @@ Commit: 3409e4f1e8f2 ("NFSD: Make it possible to use svc_set_num_threads_sync")
 
 前置补丁:
 
-- 4.19可不合: `[PATCH 07/10] 97ad4031e295 nfsd4: add a client info file`](https://lore.kernel.org/all/1556201060-7947-8-git-send-email-bfields@redhat.com/)
 - [`c6c7f2a84da4 nfsd: Ensure knfsd shuts down when the "nfsd" pseudofs is unmounted`](https://lore.kernel.org/all/20210313210847.569041-1-trondmy@kernel.org/): `/proc/fs/nfsd`卸载时确保所有`nfsd`线程全部停止
+  - 前置补丁, 4.19可不合: `[PATCH 07/10] 97ad4031e295 nfsd4: add a client info file`](https://lore.kernel.org/all/1556201060-7947-8-git-send-email-bfields@redhat.com/)
 - [`[PATCH 01/20] 89b24336f03a NFSD: handle error better in write_ports_addfd()`](https://lore.kernel.org/all/163816148551.32298.1997321981162233125.stgit@noble.brown/): 确保`nfsd_serv`刚创建时才销毁
 - [`[PATCH 02/20] df5e49c880ea SUNRPC: change svc_get() to return the svc.`](https://lore.kernel.org/all/163816148552.32298.18413679797079617436.stgit@noble.brown/): 让`svc_get()`有返回值
-- [`[PATCH v2] c20106944eb6 NFSD: Keep existing listeners on portlist error`](https://lore.kernel.org/all/547ee3794ac9678bc20ccb6ec35ba0fca5fe92f2.1633540771.git.bcodding@redhat.com/): 如果已经存在sockets就只是减少计数，不调用`nfsd_destroy()`
 - [`[PATCH 03/20] 8c62d12740a1 SUNRPC/NFSD: clean up get/put functions.`](https://lore.kernel.org/all/163816148553.32298.12054000235093970423.stgit@noble.brown/): 重构`svc_destroy()`和`nfsd_destroy()`
+  - 前置补丁: [`[PATCH v2] c20106944eb6 NFSD: Keep existing listeners on portlist error`](https://lore.kernel.org/all/547ee3794ac9678bc20ccb6ec35ba0fca5fe92f2.1633540771.git.bcodding@redhat.com/): 如果已经存在sockets就只是减少计数，不调用`nfsd_destroy()`
 - [`[PATCH 04/20] ec52361df99b SUNRPC: stop using ->sv_nrthreads as a refcount`](https://lore.kernel.org/all/163816148554.32298.8307258870002897708.stgit@noble.brown/): `sv_nrthreads`只作为线程计数，新增`sv_refcnt`作为引用计数
   - 后续修复补丁: [`[PATCH 1/5] 2a501f55cd64 nfsd: call nfsd_last_thread() before final nfsd_put()`](https://lore.kernel.org/all/20231215010030.7580-2-neilb@suse.de/)
-    - 前置补丁可不合: `9f28a971ee9f nfsd: separate nfsd_last_thread() from nfsd_put()`
-- 4.19可不合: [`[PATCH v2 2/3] e567b98ce9a4 nfsd: protect concurrent access to nfsd stats counters`](https://lore.kernel.org/all/20210106075236.4184-3-amir73il@gmail.com/)
+    - 前置补丁: [`[PATCH 05/12] 9f28a971ee9f nfsd: separate nfsd_last_thread() from nfsd_put()`](https://lore.kernel.org/all/20230731064839.7729-6-neilb@suse.de/): 
+      - 前置补丁, 4.19可不合: `87cdd8641c8a SUNRPC: Remove svo_shutdown method`
+      - 前置补丁, 4.19可不合: `c7d7ec8f043e SUNRPC: Remove svc_shutdown_net()`
+      - 后续修复补丁: [`[PATCH] 88956eabfdea NFSD: fix possible oops when nfsd/pool_stats is closed.`](https://lore.kernel.org/all/169448190063.19905.9707641304438290692@noble.neil.brown.name/)
+    - 后续修复补丁: [`[PATCH] 64e6304169f1 nfsd: drop the nfsd_put helper`](https://lore.kernel.org/all/20240103-nfsd-fixes-v1-1-4f4f9d7edd0d@kernel.org/)
 - [`[PATCH 05/20] 9b6c8c9bebcc nfsd: make nfsd_stats.th_cnt atomic_t`](https://lore.kernel.org/all/163816148555.32298.5422275287728622222.stgit@noble.brown/): 把`nfsd_stats.th_cnt`变成原子变量
+  - 前置补丁, 4.19可不合: [`[PATCH v2 2/3] e567b98ce9a4 nfsd: protect concurrent access to nfsd stats counters`](https://lore.kernel.org/all/20210106075236.4184-3-amir73il@gmail.com/)
 - [`[PATCH 06/20] 2a36395fac3b SUNRPC: use sv_lock to protect updates to sv_nrthreads.`](https://lore.kernel.org/all/163816148556.32298.17419698380488869158.stgit@noble.brown/): 对`sv_nrthreads`加锁
 - [`[PATCH 07/20] 9d3792aefdcd NFSD: narrow nfsd_mutex protection in nfsd thread`](https://lore.kernel.org/all/163816148556.32298.7308512506129152207.stgit@noble.brown/): 缩小`nfsd_mutex`加锁的范围
+- [`[PATCH 09/20] 3ebdbe5203a8 SUNRPC: discard svo_setup and rename svc_set_num_threads_sync()`](https://lore.kernel.org/all/163816148558.32298.2182168040527421256.stgit@noble.brown/): 函数改名为`svc_set_num_threads()`
+- [`[PATCH 10/20] d057cfec4940 NFSD: simplify locking for network notifier.`](https://lore.kernel.org/all/163816148559.32298.4434140851292696444.stgit@noble.brown/): 使用自旋锁`nfsd_notifier_lock`
+  - 前置补丁（修改`nfsd_reset_versions()`），4.19可不合: `e333f3bbefe3 nfsd: Allow containers to set supported nfs versions`
 
