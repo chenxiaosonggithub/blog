@@ -173,41 +173,6 @@ sudo phddns status # 查看状态
 
 在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
-## [网云穿](https://blog.xiaomy.net/archives/4.html)（域名和端口固定）
-
-[免费版每个月需要手动激活才可使用，每月1g 流量](https://xiaomy.net/pay?type=0)。
-
-```sh
-cd /home/sonvhi/chenxiaosong/sw
-wget https://down.xiaomy.net/linux/wyc_linux_64
-chmod -R 777 ./wyc_linux_64
-```
-
-创建`/lib/systemd/system/wangyunchuan.service`:
-```sh
-[Unit]
-Description=wangyunchuan
-StartLimitIntervalSec=0
-
-[Service]
-Type=simple
-# token访问: https://i.xiaomy.net/#/tunnel
-ExecStart=/home/sonvhi/chenxiaosong/sw/wyc_linux_64 -token=xxxxxxxxx
-Restart=always
-RestartSec=1
-
-[Install]
-WantedBy=multi-user.target
-```
-
-再启动服务:
-```sh
-sudo systemctl daemon-reload
-sudo systemctl enable wangyunchuan.service
-sudo systemctl restart wangyunchuan.service
-sudo systemctl status wangyunchuan.service # 查看状态
-```
-
 ## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)（域名和端口不固定）
 
 花生壳免费版的可能会出问题，可以使用cpolar代替:
@@ -257,6 +222,41 @@ sudo systemctl daemon-reload
 sudo systemctl enable natapp.service
 sudo systemctl restart natapp.service
 sudo systemctl status natapp.service # 查看状态
+```
+
+## [网云穿](https://blog.xiaomy.net/archives/4.html)（域名和端口固定，但免费版只能用7天，如果要充钱可以考虑用）
+
+[免费版每个月需要手动激活才可使用，每月1g 流量(但实际免费版只能用7天)](https://xiaomy.net/pay?type=0)。
+
+```sh
+cd /home/sonvhi/chenxiaosong/sw
+wget https://down.xiaomy.net/linux/wyc_linux_64
+chmod -R 777 ./wyc_linux_64
+```
+
+创建`/lib/systemd/system/wangyunchuan.service`:
+```sh
+[Unit]
+Description=wangyunchuan
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+# token访问: https://i.xiaomy.net/#/tunnel
+ExecStart=/home/sonvhi/chenxiaosong/sw/wyc_linux_64 -token=xxxxxxxxx
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
+```
+
+再启动服务:
+```sh
+sudo systemctl daemon-reload
+sudo systemctl enable wangyunchuan.service
+sudo systemctl restart wangyunchuan.service
+sudo systemctl status wangyunchuan.service # 查看状态
 ```
 
 ## 监控
