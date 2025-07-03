@@ -104,7 +104,7 @@ umount /mnt # 正常卸载，不报错
 
 ## 代码分析
 
-系统调用的跟踪调试请查看[《文件系统延迟卸载》](https://chenxiaosong.com/src/filesystem/lazy-umount.html)。
+系统调用的跟踪调试请查看[《文件系统延迟卸载》](https://chenxiaosong.com/course/kernel/fs.html#lazy-umount)。
 
 只有在用户空间打开文件时会把文件描述符放到`files_struct -> fdt`中:
 ```c

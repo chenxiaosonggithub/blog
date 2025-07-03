@@ -71,8 +71,6 @@ Linux内核加餐:
 
 [tmpfs不断写导致oom的问题](https://chenxiaosong.com/src/filesystem/tmpfs-oom.html)
 
-[文件系统延迟卸载](https://chenxiaosong.com/src/filesystem/lazy-umount.html)
-
 # Linux环境
 
 <!--
