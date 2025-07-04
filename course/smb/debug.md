@@ -166,3 +166,23 @@ cat trace_pipe
 
 请查看[《nfs调试方法》](https://chenxiaosong.com/course/nfs/debug.html#tcpdump)。
 
+# client端重连
+
+在测试和复现bug时，我们需要构造client端重连的场景。
+
+client挂载指定`-o echo_interval=1`（默认是`60`秒）:
+```sh
+mount -t cifs -o echo_interval=1 //192.168.53.211/TEST /mnt
+```
+
+server端操作:
+```sh
+# 方法1: 停掉网卡
+ifconfig ens2 up # client会打印: CIFS: VFS: \\192.168.53.211 has not responded in 3 seconds. Reconnecting...
+# 方法2: 也可以直接停掉服务
+systemctl stop smb.service # 用户态samba
+systemctl stop ksmbd.service # 内核态ksmbd
+```
+
+`server_unresponsive()`中判断当server端`3 * server->echo_interval`时间不回复时，打印`has not responded in %lu seconds. Reconnecting...`。
+
