@@ -392,8 +392,13 @@ int this_is_func(int arg0, int arg1)
                 printk("%s:%d, BIT(2)\n", __func__, __LINE__);
         }
         ...
-        mydebug_dump_stack(); // 在 /sys/kernel/debug/tracing/trace_pipe 文件查看栈
+        mydebug_dump_stack();
 }
+```
+
+`mydebug_dump_stack()`打印的函数调用栈不会输出到`dmesg`中（因为函数调用栈内容太多，怕淹没其他打印信息），可以在 `/sys/kernel/debug/tracing/trace_pipe` 文件查看:
+```sh
+cat /sys/kernel/debug/tracing/trace_pipe
 ```
 
 # `kdump`和`crash` {#kdump-crash}
