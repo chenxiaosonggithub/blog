@@ -63,6 +63,15 @@ pandoc用于将markdown或rst（ReStructuredText）格式文件转换成html。
 
 具体的命令可以参考[`create-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/blog-web/create-html.sh)，脚本里写了详细的说明。
 
+## sphinx
+
+参考[Sphinx documentation](https://www.sphinx-doc.org/en/master/)。
+
+```sh
+sudo apt-get install python3-sphinx -y
+pip install --upgrade myst-parser # https://www.sphinx-doc.org/en/master/usage/markdown.html
+```
+
 ## 脚本
 
 先设置环境变量:
