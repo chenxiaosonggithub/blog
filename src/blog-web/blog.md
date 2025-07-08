@@ -146,7 +146,7 @@ Linux内核加餐:
 
 [雅思备考笔记](https://chenxiaosong.com/src/IELTS/IELTS.html)
 
-[菜谱](https://chenxiaosong.com/recipe/recipe.html)
+[菜谱](https://chenxiaosong.com/src/recipe/recipe.html)
 
 # 翻译
 
