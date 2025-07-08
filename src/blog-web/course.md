@@ -2,6 +2,10 @@
 
 在这里郑重承诺一下，课程里的每一个字，我都是用键盘一字一句的敲出来，绝对不会复制粘贴，引用其他朋友原话的内容我也会标明出处，欢迎各位朋友的监督。
 
+# 课程配套视频
+
+[点击这里查看课程配套的教学视频](https://chenxiaosong.com/video.html)
+
 # Linux内核课程
 
 [点击查看Linux内核课程（持续更新中）](https://chenxiaosong.com/course/kernel/kernel.html)
@@ -29,10 +33,6 @@
 # Godot游戏开发课程
 
 [点击查看Godot游戏开发课程（持续更新中）](https://chenxiaosong.com/course/godot/godot.html)
-
-# 课程配套视频
-
-[点击这里查看课程配套的教学视频](https://chenxiaosong.com/video.html)
 
 # 参考书籍
 
