@@ -37,9 +37,10 @@ Commit: 3409e4f1e8f2 ("NFSD: Make it possible to use svc_set_num_threads_sync")
 - [`[PATCH 03/20] 8c62d12740a1 SUNRPC/NFSD: clean up get/put functions.`](https://lore.kernel.org/all/163816148553.32298.12054000235093970423.stgit@noble.brown/): 重构`svc_destroy()`和`nfsd_destroy()`
   - 前置补丁: [`[PATCH v2] c20106944eb6 NFSD: Keep existing listeners on portlist error`](https://lore.kernel.org/all/547ee3794ac9678bc20ccb6ec35ba0fca5fe92f2.1633540771.git.bcodding@redhat.com/): 如果已经存在sockets就只是减少计数，不调用`nfsd_destroy()`
 - [`[PATCH 04/20] ec52361df99b SUNRPC: stop using ->sv_nrthreads as a refcount`](https://lore.kernel.org/all/163816148554.32298.8307258870002897708.stgit@noble.brown/): `sv_nrthreads`只作为线程计数，新增`sv_refcnt`作为引用计数
-  - 后续修复补丁: [`[PATCH 1/5] 2a501f55cd64 nfsd: call nfsd_last_thread() before final nfsd_put()`](https://lore.kernel.org/all/20231215010030.7580-2-neilb@suse.de/)
+  - 后续修复补丁: [`[PATCH 1/5] 2a501f55cd64 nfsd: call nfsd_last_thread() before final nfsd_put()`](https://lore.kernel.org/all/20231215010030.7580-2-neilb@suse.de/): 失败时调用`nfsd_last_thread()`
     - 前置补丁: [`[PATCH 05/12] 9f28a971ee9f nfsd: separate nfsd_last_thread() from nfsd_put()`](https://lore.kernel.org/all/20230731064839.7729-6-neilb@suse.de/): 从`nfsd_put()`中分离出函数`nfsd_last_thread()`
       - 前置补丁: [`[PATCH v2 3/8] 87cdd8641c8a SUNRPC: Remove svo_shutdown method`](https://lore.kernel.org/all/164511393711.1361.3789898013043466921.stgit@klimt.1015granger.net/): 删除结构体的`.svo_shutdown()`，在使用的地方直接调用函数
+      - 前置补丁: [`[PATCH v2 4/8] 352ad31448fe SUNRPC: Rename svc_create_xprt()`](https://lore.kernel.org/all/164511394380.1361.15753264922295129414.stgit@klimt.1015granger.net/): 函数重命名成`svc_xprt_create()`
       - 前置补丁: [`[PATCH v2 6/8] c7d7ec8f043e SUNRPC: Remove svc_shutdown_net()`](https://lore.kernel.org/all/164511395701.1361.2321498517172060697.stgit@klimt.1015granger.net/): `svc_shutdown_net()`换成`svc_xprt_destroy_all()`
       - 前置补丁（头文件`nfsd.h`）, 4.19可不合: `73598a0cfb21 nfsd: don't allocate the versions array.`
       - 后续修复补丁: [`[PATCH] 88956eabfdea NFSD: fix possible oops when nfsd/pool_stats is closed.`](https://lore.kernel.org/all/169448190063.19905.9707641304438290692@noble.neil.brown.name/): 修复可能的空指针解引用
