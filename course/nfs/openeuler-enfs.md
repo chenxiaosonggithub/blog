@@ -41,7 +41,11 @@ cat /proc/enfs/192.168.53.216_0/stat
 
 # 我修改的nfs+补丁
 
-[我修改的补丁请查看这里](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs)。
+我修改的补丁:
+
+- [4.19内核](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs/4.19)
+- [6.6内核]:
+  - [fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
 
 ```c
 // struct enfs_adapter_ops->owner 的引用计数参考
