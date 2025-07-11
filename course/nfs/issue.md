@@ -46,3 +46,5 @@
 
 [nfsv3 NLM请求超时的问题](https://chenxiaosong.com/course/nfs/issue/lockd-server-not-responding.html)
 
+[openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
+

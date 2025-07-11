@@ -130,6 +130,7 @@ comm_array=(
 				en/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.html
 				"null-ptr-deref in nfsd4_probe_callback()"
 			1 1 course/nfs/issue/lockd-server-not-responding.md ~ "nfsv3 NLM请求超时的问题"
+			1 1 course/nfs/issue/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"
