@@ -72,8 +72,8 @@ crash> dis -l xprt_switch_get
 0xffffffff81fa318a <xprt_switch_get+26>:        mov    0x4(%rbx),%edx # 将内存地址 %rbx + 4 处的 32 位值加载到寄存器 %edx 中
 ```
 
-x86_64下整数参数使用的寄存器依次为: RDI，RSI，RDX，RCX，R8，R9，所以`xprt_switch_get()`的第一个参数是`%rdi`，而从`bt`输出中可以看到`RBX: 0000000000000100`，
-再结合`xps_kref`的偏移:
+x86_64下整数参数使用的寄存器依次为: RDI，RSI，RDX，RCX，R8，R9，所以`xprt_switch_get()`的第一个参数是`%rdi`，
+通过`mov %rdi,%rbx`把值赋给`%rbx`，而从`bt`输出中可以看到`RBX: 0000000000000100`，再结合`xps_kref`的偏移:
 ```sh
 crash> struct rpc_xprt_switch -o
 struct rpc_xprt_switch {
