@@ -50,7 +50,7 @@ echo -e "auto ens3\niface ens3 inet dhcp" >> /etc/network/interfaces
 systemctl restart networking
 ```
 
-qemu命令行启动虚拟机可以参考[《内核开发环境》](https://chenxiaosong.com/course/kernel/dev-environment.html)。
+qemu命令行启动虚拟机可以参考[《内核开发环境》](https://chenxiaosong.com/course/kernel/environment.html)。
 
 ## mptcp相关命令
 

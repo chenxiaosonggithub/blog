@@ -18,7 +18,7 @@ comm_array=(
 	0 1 course/kernel/kernel.md ~ "Linux内核课程"
 		1 1 course/kernel/video.md ~ "Linux内核课程配套视频"
 		1 1 course/kernel/introduction.md ~ "内核简介"
-		1 1 course/kernel/dev-environment.md ~ "内核开发环境"
+		1 1 course/kernel/environment.md ~ "内核开发环境"
 		1 1 course/kernel/book.md ~ "内核书籍推荐"
 		1 1 course/kernel/community.md ~ "内核社区"
 		1 1 course/kernel/test.md ~ "内核测试工具"

@@ -2,7 +2,7 @@
 
 # 多个网卡环境
 
-请查看[《内核开发环境》](https://chenxiaosong.com/course/kernel/dev-environment.html#qemu-multi-nic)
+请查看[《内核开发环境》](https://chenxiaosong.com/course/kernel/environment.html#qemu-multi-nic)
 
 # 主线`nconnect`挂载选项
 

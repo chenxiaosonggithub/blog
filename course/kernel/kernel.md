@@ -10,7 +10,7 @@
 
 # [内核简介](https://chenxiaosong.com/course/kernel/introduction.html)
 
-# [内核开发环境](https://chenxiaosong.com/course/kernel/dev-environment.html)
+# [内核开发环境](https://chenxiaosong.com/course/kernel/environment.html)
 
 # [内核书籍推荐](https://chenxiaosong.com/course/kernel/book.html)
 

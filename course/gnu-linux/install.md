@@ -1,6 +1,6 @@
 在GNU/Linux发行版的选择上，我们这里是学习的目的，所以就选用能体验最新特性的[Ubuntu](https://ubuntu.com/download)和[Fedora](https://fedoraproject.org/)，都是每年发布两个版本。
 
-与Linux内核开发相关的请查看[内核开发环境](https://chenxiaosong.com/course/kernel/dev-environment.html)。
+与Linux内核开发相关的请查看[内核开发环境](https://chenxiaosong.com/course/kernel/environment.html)。
 
 # 启动配置
 
