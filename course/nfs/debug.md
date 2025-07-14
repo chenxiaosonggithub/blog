@@ -150,6 +150,7 @@ mount -t nfs -o noresvport ${server_ip}:/ /mnt
 
 # 问题定位步骤 {#step}
 
+- 查询挂载参数: `mount | grep nfs`，用于分析代码或复现
 - tcpdump抓包: `tcpdump --interface=<网络接口> --buffer-size=20480 -w out.cap`，如果不确定`<网络接口>`可填`any`
 - nfs client打开日志开关:
   - `echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # NFSDBG_ALL`
