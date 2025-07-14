@@ -175,7 +175,8 @@ mnt_point=/mnt/ # 修改为nfs挂载点
 log_time=60s # 日志收集时长
 log_dir=$(pwd)/dmesg-log/ # 日志保存目录
 net_interface=any # 网络接口，如果不确定就填any
-test_cmd="strace -o strace.txt -f -v -s 4096 -tt -T df ${mnt_point}" # 测试命令，用strace跟踪系统调用
+strace_file=$(pwd)/strace.txt
+test_cmd="strace -o ${strace_file} -f -v -s 4096 -tt -T df ${mnt_point}" # 测试命令，用strace跟踪系统调用
 
 cap_file=$(pwd)/nfs_client.cap
 tcpdump_cmd="tcpdump --interface=${net_interface} --buffer-size=20480 -w ${cap_file}"
@@ -205,6 +206,7 @@ mkdir ${log_dir}
 cp /var/log/messages* ${log_dir}
 cp /var/log/dmesg* ${log_dir}
 mv ${cap_file} ${log_dir}
+mv ${strace_file} ${log_dir}
 echo "日志已保存到 ${log_dir}/ 目录下"
 ```
 
