@@ -18,3 +18,5 @@
 
 # [编辑器](https://chenxiaosong.com/course/gnu-linux/editor.html)
 
+# [shell和shell脚本](https://chenxiaosong.com/course/gnu-linux/shell.html)
+
