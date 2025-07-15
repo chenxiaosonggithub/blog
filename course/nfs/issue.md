@@ -48,3 +48,5 @@
 
 [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
 
+[nfsv3挂载卡在nlmclnt_init()的问题](https://chenxiaosong.com/course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.html)
+
