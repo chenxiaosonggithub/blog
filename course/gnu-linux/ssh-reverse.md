@@ -188,6 +188,11 @@ sudo systemctl start cpolar
 
 访问[localhost:9200](http://localhost:9200/)并登录邮箱账号，[创建隧道localhost:9200/#/tunnels/create](http://localhost:9200/#/tunnels/create)，[在线隧道列表localhost:9200/#/status/online](http://localhost:9200/#/status/online)查看，或在[cpolar网官](https://dashboard.cpolar.com/status)查看。
 
+cpolar的域名和端口不固定，可以使用以下脚本获取域名和端口然后ssh:
+
+- 获取cpolar的status网页: [`cpolar-get-status-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/cpolar-get-status-html.sh)
+- 获取ssh命令: [`cpolar-get-ssh-cmd.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/cpolar-get-ssh-cmd.sh)
+
 ## [natapp](https://natapp.cn/article/natapp_newbie)（域名和端口不固定，两天自动删除，不建议用）
 
 免费型隧道有效期2天，到期后自动删除，这还玩个毛，还是别用了。
