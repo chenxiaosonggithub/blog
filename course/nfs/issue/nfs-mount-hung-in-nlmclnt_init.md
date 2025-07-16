@@ -70,9 +70,9 @@ for pid in $pids; do
 done
 ```
 
-找到两种栈:
+找到以下几种栈:
 ```sh
-cat /proc/23462/stack
+cat /proc/23462/task/23462/stack
 [<0>] nfs_free_server+0x22/0x90 [nfs]
 [<0>] nfs_kill_super+0x2b/0x40 [nfs]
 [<0>] deactivate_locked_super+0x3f/0x70
@@ -82,7 +82,7 @@ cat /proc/23462/stack
 [<0>] do_syscall_64+0x1a3/0x1d0
 [<0>] entry_SYSCALL_64_after_hwframe+0x44/0xa9
 
-cat /proc/65384/stack
+cat /proc/65384/task/65384/stack
 [<0>] nlmclnt_init+0x1d/0xa0 [lockd]
 [<0>] nfs_start_lockd+0xd7/0x110 [nfs]
 [<0>] nfs_init_server+0x1a1/0x2d0 [nfs]
@@ -97,8 +97,27 @@ cat /proc/65384/stack
 [<0>] __x64_sys_mount+0x21/0x30 
 [<0>] do_syscall_64+0x5b/0x1d0
 [<0>] entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+cat /proc/17310/task/17310/stack
+[<0>] lockd_up+0x14b/0x350 [lockd]
+[<0>] nfs_start_lockd+0xd7/0x110 [nfs]
+[<0>] nfs_init_server+0x1a1/0x2d0 [nfs]
+[<0>] nfs_create_server+0x57/0x1b0 [nfs]
+[<0>] nfs3_create_server+0xb/0x30 [nfsv3]
+[<0>] nfs_try_mount+0x14f/0x2c0 [nfs]
+[<0>] nfs_fs_mount+0x627/0xdc0 [nfs]
+[<0>] mount_fs+0x35/0x160
+[<0>] vfs_kern_mount.part.28+0x54/0x120
+[<0>] do_mount+0x5c2/0xc60    
+[<0>] ksys_mount+0x80/0xd0
+[<0>] __x64_sys_mount+0x21/0x30
+[<0>] do_syscall_64+0x5b/0x1d0
+[<0>] entry_SYSCALL_64_after_hwframe+0x44/0xa9
 ```
 
+没搜索到`reclaimer()`的栈。
+
+解析:
 ```sh
 rpm2cpio kernel-debuginfo-4.19.90-24.4.v2101.ky10.x86_64.rpm | cpio -div
 ./scripts/faddr2line usr/lib/debug/lib/modules/4.19.90-24.4.v2101.ky10.x86_64/kernel/fs/lockd/lockd.ko.debug nlmclnt_init+0x1d/0xa0
@@ -114,18 +133,21 @@ rpm2cpio kernel-debuginfo-4.19.90-24.4.v2101.ky10.x86_64.rpm | cpio -div
 # 代码分析
 
 ```c
-mount
-  ksys_mount
-    do_mount
-      vfs_kern_mount
-        mount_fs
-          nfs_fs_mount
-            nfs_try_mount
-              nfs3_create_server
-                nfs_create_server
-                  nfs_init_server
-                    nfs_start_lockd
-                      nlmclnt_init
-                        lockd_up // 等待锁释放
+// 进程 17310
+nfs_init_server
+  nfs_start_lockd
+    nlmclnt_init
+      lockd_up
+        mutex_lock(&nlmsvc_mutex) // 持有锁
+        lockd_up_net // 发生错误
+        lockd_unregister_notifiers
+          wait_event(nlm_ntf_wq, atomic_read(&nlm_ntf_refcnt) == 0);
+
+// 进程 65384
+nfs_init_server
+  nfs_start_lockd
+    nlmclnt_init
+      lockd_up
+        mutex_lock(&nlmsvc_mutex) // 等待进程 17310 释放锁
 ```
 
