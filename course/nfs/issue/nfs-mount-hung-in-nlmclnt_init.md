@@ -141,7 +141,11 @@ nfs_init_server
         mutex_lock(&nlmsvc_mutex) // 持有锁
         lockd_up_net // 发生错误
         lockd_unregister_notifiers
-          wait_event(nlm_ntf_wq, atomic_read(&nlm_ntf_refcnt) == 0);
+          // 休眠直到 nlm_ntf_refcnt == 0
+          // 当前 nlm_ntf_refcnt 值为 1
+          wait_event(nlm_ntf_wq, atomic_read(&nlm_ntf_refcnt) == 0)
+        lockd_start_svc // nlm_ntf_refcnt增加，未执行到
+          atomic_inc(&nlm_ntf_refcnt)
 
 // 进程 65384
 nfs_init_server
@@ -149,5 +153,22 @@ nfs_init_server
     nlmclnt_init
       lockd_up
         mutex_lock(&nlmsvc_mutex) // 等待进程 17310 释放锁
+```
+
+# 补丁
+
+```sh
+2018-10-22 84df9525b0c2 Linux 4.19 Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=nlm_ntf_refcnt
+git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=nlm_ntf_wq
+  # 2021-12-13 5a8a7ff57421 lockd: simplify management of network status notifiers NeilBrown <neilb@suse.de>
+  # 2018-03-19 554faf281988 lockd: make nlm_ntf_refcnt and nlm_ntf_wq static Colin Ian King <colin.king@canonical.com>
+git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=lockd_unregister_notifiers
+  # 2017-11-07 dc3033e16c59 lockd: double unregister of inetaddr notifiers Vasily Averin <vvs@virtuozzo.com>
+git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --grep=lockd_up
+  # 2021-12-13 865b674069e0 lockd: introduce lockd_put() NeilBrown <neilb@suse.de>
+  # 2021-12-13 b73a2972041b lockd: move lockd_start_svc() call into lockd_create_svc() NeilBrown <neilb@suse.de>
+  # 2021-12-13 5a8a7ff57421 lockd: simplify management of network status notifiers NeilBrown <neilb@suse.de>
 ```
 
