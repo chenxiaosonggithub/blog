@@ -1,6 +1,6 @@
 # 问题描述
 
-测试复现时代码的提交是`4467208a8b55 !17003  net_sched: red: fix a race in __red_change()`。
+测试复现时所用的代码版本是`4467208a8b55 !17003  net_sched: red: fix a race in __red_change()`。
 
 环境信息:
 ```sh
@@ -111,5 +111,12 @@ enfs_delete_clnt_shard_cache
 
 nfs_alloc_client
   try_module_get(clp->cl_nfs_mod->owner)
+
+nfs_create_multi_path_client
+  nfs_multipath_client_info_init(&client->cl_multipath_data, ...) // ops->client_info_free
+    *enfs_info = kzalloc()
+
+nfs_free_multi_path_client
+  nfs_multipath_client_info_free // ops->client_info_free
 ```
 
