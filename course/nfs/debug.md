@@ -102,9 +102,16 @@ kill -SIGKILL <进程号>
 umount <挂载点>
 ```
 
-# 导出vmcore {#vmcore}
+# crash分析vmcore {#crash-vmcore}
 
-在生产环境下，如果必须要快速恢复环境，且这个环境是可以接受重启系统，就可以尝试手动导出vmcore，vmcore中的信息有时对分析问题很有帮助:
+vmcore中的信息有时对分析问题很有帮助。
+
+如果能保留问题环境，先尝试在线调试vmcore:
+```sh
+crash vmlinux # 在线调试，vmcore是/proc/kcore
+```
+
+在生产环境下，如果必须要快速恢复环境，且这个环境是可以接受重启系统，就可以尝试手动导出vmcore:
 ```sh
 echo 1 > /proc/sys/kernel/sysrq
 echo c > /proc/sysrq-trigger
