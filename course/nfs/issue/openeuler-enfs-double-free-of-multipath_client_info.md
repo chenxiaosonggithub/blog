@@ -4,9 +4,9 @@
 ```sh
 list_add corruption. prev->next should be next (ffff88813bbf2ca8), but was ffff888102e348b0. (prev=ffff888102e348b0).
 WARNING: CPU: 7 PID: 419 at lib/list_debug.c:32 __list_add_valid_or_report+0x95/0xc0
-
+...
 RIP: 0010:__list_add_valid_or_report+0x95/0xc0
-
+...
 Call Trace:
  <TASK>
  insert_work+0x42/0x80
