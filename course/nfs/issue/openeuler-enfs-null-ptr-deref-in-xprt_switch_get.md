@@ -97,5 +97,19 @@ shard_update_loop // 在enfs_shard_init创建线程
             atomic_read
               raw_atomic_read
                 arch_atomic_read
+
+nfs_multipath_client_info_free
+  nfs_multipath_client_info_free_work // INIT_WORK(&clp_info->work
+
+// 挂载时
+enfs_insert_clnt_root
+  list_add_tail(&info->next
+
+// 卸载时
+enfs_delete_clnt_shard_cache
+  list_del(&info->next)
+
+nfs_alloc_client
+  try_module_get(clp->cl_nfs_mod->owner)
 ```
 
