@@ -50,3 +50,5 @@
 
 [nfsv3挂载卡在nlmclnt_init()的问题](https://chenxiaosong.com/course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.html)
 
+[openEuler的multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-double-free-of-multipath_client_info.html)
+
