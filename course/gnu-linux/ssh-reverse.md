@@ -150,9 +150,9 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 当然我使用的是能白嫖的免费版。
 
-## [花生壳](https://service.oray.com/question/15507.html)（域名和端口固定）
+## [花生壳](https://service.oray.com/question/15507.html)
 
-[免费版限1GB/月](https://hsk.oray.com/price#personal)。
+[免费版限1GB/月](https://hsk.oray.com/price#personal)，域名和端口固定。
 
 注意不能用`wget`命令下载（下载的文件错误），直接访问[centos](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.rpm)和[ubuntu](https://dl.oray.com/hsk/linux/phddns_5.3.0_amd64.deb)
 下载链接（[版本号查看官网](https://hsk.oray.com/download)）在网页下载。
@@ -173,9 +173,9 @@ sudo phddns status # 查看状态
 
 在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
-## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)（域名和端口不固定）
+## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)
 
-花生壳免费版的可能会出问题，可以使用cpolar代替:
+曾经我遇到过花生壳免费版的出问题不能用，就临时用了cpolar，注意cpolar域名和端口不固定:
 ```sh
 sudo apt-get update -y
 sudo apt-get install curl -y
