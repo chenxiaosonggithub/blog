@@ -87,36 +87,76 @@ struct rpc_xprt_switch {
 
 # 代码分析
 
+第一次挂载后，创建的`clnt_uuid_info`放到链表中，这时如果把`enfs`模块给移除了，再进行卸载nfs时就不会执行到`enfs_release_rpc_clnt()`，
+`clnt_uuid_info`就不会从链表中删除。
+
+第二次挂载后，内核线程`shard_update_loop()`就会遍历到第一次挂载时创建的`clnt_uuid_info`，就会发生use-after-free了。
+
 ```c
+// 挂载时
+nfs3_create_server
+  nfs_create_server
+    nfs_init_server
+      nfs_get_client
+        nfs_init_client
+          nfs_create_multi_path_client
+            // 应该和nfs_alloc_client()一样，在client初始化后调用try_module_get()持有模块引用计数
+            nfs_multipath_router_get // 执行完这里后模块引用计数为1
+            nfs_multipath_client_info_init // ops->client_info_free
+              nfs_multipath_client_mount_info_init
+            nfs_multipath_router_put // 执行完这里后模块引用计数又变为0了
+    nfs_probe_fsinfo
+      nfs3_proc_fsinfo
+        do_proc_fsinfo
+          nfs3_rpc_wrapper
+            rpc_call_sync
+              rpc_run_task
+                rpc_execute
+                  __rpc_execute
+                    call_start
+                      rpc_task_set_transport
+                        rpc_multipath_ops_set_transport
+                          enfs_set_transport
+                            shard_set_transport
+                              get_uuid_from_task
+                                enfs_insert_clnt_root
+                                  // 加入到链表中
+                                  list_add_tail(&info->next,
+
+// 卸载时
+nfs_free_server
+  rpc_shutdown_client
+    rpc_multipath_ops_releas_clnt
+      /*
+       * 如果已经执行了modprobe -r enfs
+       * 就不会调用enfs_release_rpc_clnt()
+       * clnt_uuid_info还在链表中
+       */
+      rpc_multipath_ops_get
+      enfs_release_rpc_clnt
+        enfs_delete_clnt_shard_cache
+          list_del(&info->next)
+  nfs_put_client
+    nfs_free_client
+      nfs_free_multi_path_client
+        nfs_multipath_client_info_free // ops->client_info_free
+      // 应该在这里释放模块引用计数
+
+// 再次挂载后60s
 shard_update_loop // 在enfs_shard_init创建线程
+  enfs_timeout_ms(..., interval_ms == 60s)
   query_update_all_clnt
+    /*
+     * 这里会遍历到上次挂载创建的clnt_uuid_info
+     * 发生use-after-free
+     */
+    list_for_each_entry(info,
     shard_update_work
       xprt_switch_get
         kref_get_unless_zero
           refcount_inc_not_zero
             atomic_read
               raw_atomic_read
-                arch_atomic_read
-
-nfs_multipath_client_info_free
-  nfs_multipath_client_info_free_work // INIT_WORK(&clp_info->work
-
-// 挂载时
-enfs_insert_clnt_root
-  list_add_tail(&info->next
-
-// 卸载时
-enfs_delete_clnt_shard_cache
-  list_del(&info->next)
-
-nfs_alloc_client
-  try_module_get(clp->cl_nfs_mod->owner)
-
-nfs_create_multi_path_client
-  nfs_multipath_client_info_init(&client->cl_multipath_data, ...) // ops->client_info_free
-    *enfs_info = kzalloc()
-
-nfs_free_multi_path_client
-  nfs_multipath_client_info_free // ops->client_info_free
+                arch_atomic_read // panic的栈跑到这里
 ```
 
