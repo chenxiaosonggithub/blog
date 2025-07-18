@@ -60,6 +60,8 @@ mount -t nfs -o vers=3,localaddrs=192.168.53.57~192.168.53.214,remoteaddrs=192.1
 
 # 代码分析
 
+在`nfs_multipath_client_mount_info_init()`中构造内存分配失败，由于`->cl_multipath_data`释放后指针未置空，重复释放导致panic。
+
 ```c
 vfs_get_tree
   nfs_get_tree
