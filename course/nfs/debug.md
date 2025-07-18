@@ -19,6 +19,8 @@ dprintk(fmt, ...)
     printk(KERN_DEFAULT fmt, ##__VA_ARGS__);
 ```
 
+当然也可直接调用`dfprintk()`、`dfprintk_cont()`、`dfprintk_rcu()`、`dfprintk_rcu_cont()`。
+
 以下是打开全部日志的命令，注意这将会打印大量日志，请先把`/var/log/messages*`复制保存到其他位置，避免错误日志被覆盖:
 ```sh
 echo 0xFFFF > /proc/sys/sunrpc/nfs_debug # NFSDBG_ALL
