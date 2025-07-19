@@ -52,3 +52,5 @@
 
 [openEuler的multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-double-free-of-multipath_client_info.html)
 
+[openEuler的nfs+挂载和移除模块并发的问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-race-between-mount-and-remove-module.html)
+
