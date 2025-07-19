@@ -132,7 +132,7 @@ comm_array=(
 			1 1 course/nfs/issue/lockd-server-not-responding.md ~ "nfsv3 NLM请求超时的问题"
 			1 1 course/nfs/issue/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
 			1 1 course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.md ~ "nfsv3挂载卡在nlmclnt_init()的问题"
-			1 1 course/nfs/issue/openeuler-enfs-double-free-of-multipath_client_info.md ~ "openEuler的multipath_client_info double free的问题"
+			1 1 course/nfs/issue/openeuler-enfs-double-free-of-multipath_client_info.md ~ "openEuler的nfs+ multipath_client_info double free的问题"
 			1 1 course/nfs/issue/openeuler-enfs-race-between-mount-and-remove-module.md ~ "openEuler的nfs+挂载和移除模块并发的问题"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
