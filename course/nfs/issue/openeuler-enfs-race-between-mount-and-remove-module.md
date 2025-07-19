@@ -30,3 +30,40 @@ sleep 10
 mount | grep nfs # 看不到nfs+相关的挂载选项
 ```
 
+# 代码分析
+
+只有在`enfs_parse_mount_options()`中会自动加载`enfs`模块，如果在初始化客户端（`nfs_create_multi_path_client()`函数）之前
+执行了`modprobe -r enfs`移除了模块，就无法初始化多路径客户端，因为这时找不到`enfs`模块，也不会自动加载`enfs`模块。
+
+```c
+mount
+  path_mount
+    do_new_mount
+      parse_monolithic_mount_data
+        nfs_fs_context_parse_monolithic
+          nfs23_parse_monolithic
+            generic_parse_monolithic
+              vfs_parse_monolithic_sep
+                vfs_parse_fs_string
+                  vfs_parse_fs_param
+                    nfs_fs_context_parse_param
+                      enfs_parse_mount_options
+                        nfs_multipath_router_get // 这里加载enfs模块成功
+                        nfs_multipath_parse_options // 解析enfs挂载参数成功
+      vfs_get_tree
+        nfs_get_tree
+          nfs_try_get_tree
+            nfs_try_mount_request
+              nfs3_create_server
+                nfs_create_server
+                  nfs_init_server
+                    nfs_get_client
+                      nfs_init_client
+                        nfs_create_multi_path_client
+                          /*
+                           * 如果在这之前执行了 modprobe -r enfs
+                           * 在这里就会因为找不到模块而初始化cient失败
+                           */
+                          nfs_multipath_router_get // 持有模块引用计数
+```
+
