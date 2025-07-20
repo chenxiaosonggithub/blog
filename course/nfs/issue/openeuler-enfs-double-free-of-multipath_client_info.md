@@ -93,3 +93,7 @@ vfs_get_tree
                           // clp->cl_multipath_data 不为 NULL，就发生double free了
 ```
 
+# 解决方案
+
+[fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
+

@@ -67,3 +67,7 @@ mount
                           nfs_multipath_router_get // 持有模块引用计数
 ```
 
+# 解决方案
+
+[fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
+
