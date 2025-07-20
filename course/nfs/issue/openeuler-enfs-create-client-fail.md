@@ -1,6 +1,6 @@
 # 问题描述
 
-[openEuler的nfs+](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)的挂载和`modprobe -r enfs`并行执行时，nfs+没挂载成功，nfs+的功能无法使用。
+[openEuler的nfs+](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)的挂载和`modprobe -r enfs`并行执行时，nfs+ client未初始化，nfs+的功能无法使用。
 
 # 构造复现
 
@@ -13,7 +13,7 @@
                 return 0;
  
 +       printk("delay begin\n");
-+       mdelay(10 * 1000);
++       mdelay(5 * 1000);
 +       printk("delay end\n");
 +
         ops = nfs_multipath_router_get();
@@ -26,7 +26,7 @@
 mount -t nfs -o vers=3,localaddrs=192.168.53.57~192.168.53.214,remoteaddrs=192.168.53.68~192.168.53.225 192.168.53.225:/tmp/s_test /mnt/ &
 sleep 1
 modprobe -r enfs
-sleep 10
+sleep 5
 mount | grep nfs # 看不到nfs+相关的挂载选项
 ```
 
