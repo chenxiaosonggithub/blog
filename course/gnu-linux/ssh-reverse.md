@@ -48,7 +48,8 @@ sudo apt install openssh-server -y
 public-server上做如下更改:
 ```shell
 vim /etc/ssh/sshd_config # GatewayPorts yes
-systemctl restart sshd # 重启ssh
+systemctl restart sshd # fedora
+systemctl restart ssh # ubuntu
 ```
 
 在private-server上创建`/lib/systemd/system/ssh-reverse.service`。

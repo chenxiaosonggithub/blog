@@ -160,3 +160,7 @@ shard_update_loop // 在enfs_shard_init创建线程
                 arch_atomic_read // panic的栈跑到这里
 ```
 
+# 解决方案
+
+[fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
+
