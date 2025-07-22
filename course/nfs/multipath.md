@@ -1,4 +1,6 @@
-分析了[openeuler不成熟的nfs+](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)并帮助华为修复了几个问题后，对内核社区主线代码的多路径特性感兴趣了，准备整理一篇文章，顺便看看能不能在sunrpc模块发点补丁，用`git log --oneline --date=short --format="%an <%ae> %cd %h %s" net/sunrpc/`命令查看发现不友好的Trond Myklebust不是主要贡献者。
+分析了[openeuler的nfs+](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)并帮助华为修复了几个问题后，
+对内核社区主线代码的多路径特性感兴趣了，准备整理一篇文章，顺便看看能不能在sunrpc模块发点补丁，
+用`git log --oneline --date=short --format="%an <%ae> %cd %h %s" net/sunrpc/`命令查看发现不友好的Trond Myklebust不是主要贡献者。
 
 # 多个网卡环境
 

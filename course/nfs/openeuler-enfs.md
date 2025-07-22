@@ -58,7 +58,25 @@ get_nfs_version
   request_module
 ```
 
-# nfs+代码分析
+# 调试日志功能
+
+<!-- git diff 搜索: dprintk|dfprintk|enfs_log_ -->
+
+使用到的打印函数:
+```c
+dprintk
+dfprintk
+enfs_log_debug
+```
+
+# 代码分析
+
+```c
+nfs_rename flag overlayfs
+```
+
+<!--
+# 以前的代码分析（4.19）
 
 [pull request](https://gitee.com/src-openeuler/kernel/pulls?assignee_id=&author_id=&label_ids=&label_text=&milestone_id=&priority=&project_id=src-openeuler%2Fkernel&project_type=&scope=&search=enfs&single_label_id=&single_label_text=&sort=closed_at+desc&status=merged&target_project=&tester_id=)和[补丁文件](https://gitee.com/src-openeuler/kernel/tree/openEuler-20.03-LTS-SP4)。
 
@@ -219,3 +237,5 @@ service interruption caused by a single link failure.
 The eNFS compilation option and makefile are added. By default, the eNFS
 compilation is performed.
 ```
+-->
+
