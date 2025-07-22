@@ -46,10 +46,7 @@
 
 [nfsv3 NLM请求超时的问题](https://chenxiaosong.com/course/nfs/issue/lockd-server-not-responding.html)
 
-[openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
-
 [nfsv3挂载卡在nlmclnt_init()的问题](https://chenxiaosong.com/course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.html)
 
-[openEuler的nfs+ multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-double-free-of-multipath_client_info.html)
+[openEuler的nfs+问题分析](https://chenxiaosong.com/course/nfs/openeuler-enfs.html#issue)
 
-[openEuler的nfs+初始化enfs client失败的问题](https://chenxiaosong.com/course/nfs/issue/openeuler-enfs-create-client-fail.html)

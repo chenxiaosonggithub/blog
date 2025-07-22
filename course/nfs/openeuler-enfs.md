@@ -21,7 +21,7 @@
 
 挂载:
 ```sh
-modprobe enfs # 经过我的修改已经能自动加载了
+modprobe enfs
 mount -t nfs -o localaddrs=192.168.53.40~192.168.53.53,remoteaddrs=192.168.53.215~192.168.53.216 192.168.53.216:/s_test /mnt/
 ```
 
@@ -57,6 +57,12 @@ struct nfs_client
 get_nfs_version
   request_module
 ```
+
+# 问题分析 {#issue}
+
+- [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
+- [openEuler的nfs+ multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html)
+- [openEuler的nfs+初始化enfs client失败的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html)
 
 # 调试日志功能
 
