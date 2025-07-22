@@ -37,6 +37,24 @@ echo 0x0400 > /proc/sys/sunrpc/nfsd_debug # NFSDDBG_PNFS
 echo 0x0008 > /proc/sys/sunrpc/nlm_debug # NLMDBG_SVCLOCK
 ```
 
+写`/proc/sys/sunrpc/rpc_debug`文件时会打印出很多rpc任务:
+```sh
+-pid- flgs status -client- --rqstp- -timeout ---ops--
+57533 4201      0 159b39a4   (null)        0 43ff7b9f nfsv4 WRITE a:rpc_prepare_task [sunrpc] q:ForeChannel Slot table
+```
+
+相关代码流程如下:
+```c
+proc_dodebug
+  // 只有写 rpc_debug 文件才会打印rpc任务
+  if (strcmp(table->procname, "rpc_debug") == 0)
+  rpc_show_tasks
+    list_for_each_entry(clnt, &sn->all_clients,
+    list_for_each_entry(task, &clnt->cl_tasks, // 存在任务才会打印
+    rpc_show_header
+    rpc_show_task
+```
+
 # tracepoint
 
 除了日志，还可以打开tracepoint，尤其是最新主线代码的sunrpc中的`dprintk()`很多都移除了，有些sunrpc相关信息也只能通过tracepoint查看了。tracepoint的使用请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#tracepoint)。
