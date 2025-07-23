@@ -2,7 +2,10 @@
 
 # 日志 {#log}
 
-发生问题时，报错日志肯定是很有用的信息，大部分发行版都会把日志放在`/var/log/messages*`文件中，默认情况下，nfs只会打印错误信息。但有些时候，我们需要一些调试日志信息，这时就要打开nfs和rpc的调试开关。几个打印相关的宏定义是`dprintk()`、`dprintk_cont()`、`dprintk_rcu()`、`dprintk_rcu_cont`，下面以`dprintk()`为例讲一下这个宏定义的展开:
+发生问题时，报错日志肯定是很有用的信息，大部分发行版都会把日志放在`/var/log/messages*`文件中，默认情况下，nfs只会打印错误信息。
+但有些时候，我们需要一些调试日志信息，这时就要打开nfs和rpc的调试开关。注意要使用调试开关的功能，编译时需要打开配置`CONFIG_SUNRPC_DEBUG`。
+
+几个打印相关的宏定义是`dprintk()`、`dprintk_cont()`、`dprintk_rcu()`、`dprintk_rcu_cont`，下面以`dprintk()`为例讲一下这个宏定义的展开:
 ```c
 // include/linux/sunrpc/debug.h
 dprintk(fmt, ...)
