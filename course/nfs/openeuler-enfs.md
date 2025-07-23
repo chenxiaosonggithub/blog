@@ -66,13 +66,19 @@ get_nfs_version
 
 # 调试日志功能
 
-<!-- git diff 搜索: dprintk|dfprintk|enfs_log_ -->
+<!--
+git diff 搜索: dprintk|dfprintk|pr_info|pr_err|pr_debug
+vim 搜索: dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
+grep: grep -E dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
+-->
 
 使用到的打印函数:
 ```c
 dprintk
 dfprintk
 enfs_log_debug
+enfs_log_info
+enfs_log_error
 ```
 
 # 代码分析
