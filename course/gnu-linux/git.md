@@ -107,3 +107,34 @@ Conflicts:
 git format-patch -3 --cover-letter --stat=300,200
 ```
 
+# `git stash` {#stash}
+
+```sh
+# 保存已跟踪文件在工作目录和暂存区的所有修改
+git stash save "描述信息"
+# 也保存未跟踪的文件
+git stash save "描述信息" -u # --include-untracked
+# 保存被忽略的文件（通常不建议）
+git stash save "描述信息" -a # --all
+# 列出
+git stash list
+# 恢复指定的 stash，不会自动删除这个 stash
+git stash apply stash@{n}
+# 恢复暂存状态（就是哪些已经执行过git add）
+git stash apply stash@{n} --index
+# 恢复栈顶的 stash（最近保存的 stash@{0}），这个 stash 会从栈中删除
+git stash pop
+# 删除 stash
+git stash drop stash@{n}
+# 清空整个 stash 栈（删除所有 stash）
+git stash clear
+# 显示简略diff（相当于git show --stat）
+git stash show stash@{n}
+# 显示完整diff（patch格式）
+git stash show -p stash@{n}
+# 创建一个名为 new-branch-name 的新分支
+# 然后在这个新分支上应用指定的 stash@{n}（相当于 apply）
+# 如果应用成功，会自动删除这个 stash
+git stash branch new-branch-name stash@{n}
+```
+
