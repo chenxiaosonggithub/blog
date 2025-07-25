@@ -8,6 +8,12 @@
 - [openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
 - [openEuler/kernel: fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
 - [openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
+<!--
+搜索日志函数:
+  - git diff 搜索: dprintk|dfprintk|pr_info|pr_err|pr_debug
+  - vim 搜索: dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
+  - grep: grep -E dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
+-->
 
 # 问题分析 {#issue}
 
@@ -52,40 +58,12 @@ cat /proc/enfs/192.168.53.216_0/path
 cat /proc/enfs/192.168.53.216_0/stat
 ```
 
-# 调试日志功能
-
-<!--
-git diff 搜索: dprintk|dfprintk|pr_info|pr_err|pr_debug
-vim 搜索: dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
-grep: grep -E dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
--->
-
-使用到的打印函数:
-```c
-dprintk
-dfprintk
-enfs_log_debug
-enfs_log_info
-enfs_log_error
-```
-
-# 代码分析
-
-```c
-// struct enfs_adapter_ops->owner 的引用计数参考
-struct nfs_client
-  struct nfs_subversion * cl_nfs_mod
-    struct module *owner
-
-// nfs_multipath_router_get 修改参考
-get_nfs_version
-  request_module
-
-nfs_rename flag overlayfs
-```
-
 <!--
 # todo
+
+```c
+nfs_rename flag overlayfs
+```
 
 # 以前的代码分析（4.19）
 
