@@ -102,7 +102,8 @@ nfs3_create_server
           nfs_create_multi_path_client
             // 应该和nfs_alloc_client()一样，在client初始化后调用try_module_get()持有模块引用计数
             nfs_multipath_router_get // 执行完这里后模块引用计数为1
-            nfs_multipath_client_info_init // ops->client_info_free
+              // 应该在这里加载模块，参考get_nfs_version()
+            nfs_multipath_client_info_init // ops->client_info_init
               nfs_multipath_client_mount_info_init
             nfs_multipath_router_put // 执行完这里后模块引用计数又变为0了
     nfs_probe_fsinfo
