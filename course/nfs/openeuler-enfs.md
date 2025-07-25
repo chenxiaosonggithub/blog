@@ -6,7 +6,6 @@
 # 我的贡献
 
 - [openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
-- [openEuler/kernel: fix some panic bugs and memory leak of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
 - [openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
 <!--
 搜索日志函数:
@@ -14,6 +13,7 @@
   - vim 搜索: dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
   - grep: grep -E dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
 -->
+- [openEuler/kernel: fix some panic bugs and memory leak bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
 
 # 问题分析 {#issue}
 
