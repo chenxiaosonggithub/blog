@@ -1,4 +1,4 @@
-本文档翻译自`sched-eevdf.rst <https://github.com/torvalds/linux/blob/master/Documentation/doc-guide/kernel-doc.rst>`_，翻译时文件的最新提交是`23a0bc28515934ed081169257f5b76167f07df4a doc-guide: kernel-doc: document Returns: spelling <https://github.com/torvalds/linux/blob/23a0bc28515934ed081169257f5b76167f07df4a/Documentation/doc-guide/kernel-doc.rst>`_。大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自`kernel-doc.rst <https://github.com/torvalds/linux/blob/master/Documentation/doc-guide/kernel-doc.rst>`_，翻译时文件的最新提交是`23a0bc28515934ed081169257f5b76167f07df4a doc-guide: kernel-doc: document Returns: spelling <https://github.com/torvalds/linux/blob/23a0bc28515934ed081169257f5b76167f07df4a/Documentation/doc-guide/kernel-doc.rst>`_。大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 .. title:: Kernel-doc 注释
 
