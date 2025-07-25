@@ -176,3 +176,25 @@ void *idr_find(const struct idr *idr, unsigned long id)
 int idr_for_each(const struct idr *idr,
                 int (*fn)(int id, void *p, void *data), void *data)
 ```
+
+# list
+
+```c
+/**
+ * list_for_each_entry  -  遍历给定类型的链表，注意不能从链表中删除
+ * @pos:    用作循环游标的类型指针
+ * @head:   链表的头结点
+ * @member: 结构体中 list_head 成员的名称
+ */
+#define list_for_each_entry(pos, head, member) 
+
+/**
+ * list_for_each_entry_safe - 安全地遍历给定类型的链表，可在遍历时删除链表条目
+ * @pos:    用作循环游标的类型指针
+ * @n:      用作临时存储的另一个类型指针
+ * @head:   链表的头结点
+ * @member: 结构体中 list_head 成员的名称
+ */
+#define list_for_each_entry_safe(pos, n, head, member)
+```
+
