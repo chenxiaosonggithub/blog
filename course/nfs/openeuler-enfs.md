@@ -3,6 +3,17 @@
 
 - 在进行文件操作时 eNFS 将 IO 通过 RoundRobin 方式负载均衡到多条链路上以提升性能（当前版本负载均衡只支持 NFS V3）
 -->
+# 我的贡献
+
+- [openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
+- [openEuler/kernel: fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
+- [openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
+
+# 问题分析 {#issue}
+
+- [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
+- [openEuler的nfs+ multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html)
+- [openEuler的nfs+初始化enfs client失败的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html)
 
 # 多个网卡环境
 
@@ -17,7 +28,9 @@
 - [补丁文件](https://gitee.com/src-openeuler/kernel/tree/openEuler-20.03-LTS-SP4)
 - [support.huawei.com](https://support.huawei.com/supportindex/index)选择"企业技术支持"
 
-可以使用脚本[`create-enfs-patchset.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/create-enfs-patchset.sh)生成完整的补丁文件，[再打上我修改的补丁](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs)。切换到`openEuler-1.0-LTS`分支，编译前打开配置`CONFIG_ENFS`，可能还要关闭配置`CONFIG_NET_VENDOR_NETRONOME`。
+6.6内核可直接切换到[`OLK-6.6`分支](https://gitee.com/openeuler/kernel/tree/OLK-6.6/)。
+
+4.19内核可以使用脚本[`create-enfs-patchset.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/create-enfs-patchset.sh)生成完整的补丁文件，[再打上我修改的补丁](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs-4.19-patch)。切换到`openEuler-1.0-LTS`分支，编译前打开配置`CONFIG_ENFS`，可能还要关闭配置`CONFIG_NET_VENDOR_NETRONOME`。
 
 挂载:
 ```sh
@@ -39,31 +52,6 @@ cat /proc/enfs/192.168.53.216_0/path
 cat /proc/enfs/192.168.53.216_0/stat
 ```
 
-# 我修改的nfs+补丁
-
-我修改的补丁:
-
-- [4.19内核](https://github.com/chenxiaosonggithub/tmp/tree/master/nfs/enfs-4.19-patch)
-- 6.6内核:
-  - [fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
-
-```c
-// struct enfs_adapter_ops->owner 的引用计数参考
-struct nfs_client
-  struct nfs_subversion * cl_nfs_mod
-    struct module *owner
-
-// nfs_multipath_router_get 修改参考
-get_nfs_version
-  request_module
-```
-
-# 问题分析 {#issue}
-
-- [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
-- [openEuler的nfs+ multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html)
-- [openEuler的nfs+初始化enfs client失败的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html)
-
 # 调试日志功能
 
 <!--
@@ -84,6 +72,15 @@ enfs_log_error
 # 代码分析
 
 ```c
+// struct enfs_adapter_ops->owner 的引用计数参考
+struct nfs_client
+  struct nfs_subversion * cl_nfs_mod
+    struct module *owner
+
+// nfs_multipath_router_get 修改参考
+get_nfs_version
+  request_module
+
 nfs_rename flag overlayfs
 ```
 
