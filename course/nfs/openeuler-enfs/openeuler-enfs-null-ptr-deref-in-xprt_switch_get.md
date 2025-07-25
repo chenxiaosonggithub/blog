@@ -160,6 +160,20 @@ shard_update_loop // 在enfs_shard_init创建线程
                 arch_atomic_read // panic的栈跑到这里
 ```
 
+# 代码修改
+
+`fs/nfs/enfs/shard_route.c`只有以下函数在其他文件中有调用:
+```c
+int enfs_shard_init(void)
+void enfs_shard_exit(void)
+int enfs_delete_clnt_shard_cache(struct rpc_clnt *clnt)
+void enfs_print_uuid(struct enfs_file_uuid *file_uuid)
+void shard_set_transport(struct rpc_task *task, struct rpc_clnt *clnt)
+int enfs_debug_match_cmd(char *str, size_t len)
+void enfs_query_xprt_shard(struct rpc_clnt *clnt, struct rpc_xprt *xprt)
+struct shard_view_ctrl *enfs_shard_ctrl_init(void)
+```
+
 # 解决方案
 
 [fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
