@@ -134,6 +134,7 @@ comm_array=(
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.md ~ "openEuler的nfs+ multipath_client_info double free的问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.md ~ "openEuler的nfs+初始化enfs client失败的问题"
+			1 1 course/nfs/openeuler-enfs/openeuler-enfs-refactor.md ~ "openEuler的nfs+代码重构"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"

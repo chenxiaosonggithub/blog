@@ -20,6 +20,7 @@
 - [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
 - [openEuler的nfs+ multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html)
 - [openEuler的nfs+初始化enfs client失败的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html)
+- [openEuler的nfs+代码重构](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-refactor.html)
 
 # 多个网卡环境
 
@@ -62,6 +63,8 @@ cat /proc/enfs/192.168.53.216_0/stat
 # todo
 
 ```c
+enfs_recovery_nlm_lock // 嵌套太多层
+
 nfs_rename flag overlayfs
 ```
 
