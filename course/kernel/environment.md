@@ -22,6 +22,7 @@
 <!-- public end -->
 
 - [VirtualBox](https://www.virtualbox.org/)。首先在[VirtualBox下载界面](https://www.virtualbox.org/wiki/Downloads)下载对应平台的安装包，比如如果要在Windows系统下安装VirtualBox，点击**Windows hosts**下载安装包。VirtualBox的安装过程很简单，只需根据安装提示操作即可。VirtualBox安装完成后，下载**VirtualBox 7.0.14 Oracle VM VirtualBox Extension Pack**安装插件（`管理 -> 工具 -> 扩展包管理器`），启动虚拟机后，`设备 -> 安装增强功能` 会挂载一个iso文件，把整个文件夹复制出来，执行`./autorun.sh`脚本，就能使用增强功能了，如自动调整屏幕大小和屏幕分辨率选项增加等。[arm芯片的版本](https://isapplesiliconready.com/app/Virtualbox)好像只有[7.0.8版本](https://download.virtualbox.org/virtualbox/7.0.8/)才有。
+  - 报错`VirtualBox can't operate in VMX root mode.(VERR_VMX_IN_VMX_ROOT_MODE).`: 执行`sudo modprobe -r kvm_intel`（`sudo lsmod | grep kvm`查找）重新开启虚拟机既可。
 - [VMware](https://www.vmware.com/)。[下载点击这篇文章](https://blogs.vmware.com/teamfusion/2024/05/fusion-pro-now-available-free-for-personal-use.html)，注册登录账号，下载时的信息填写类似`Address 1: 1ONE, City: SACRAMENTO, Postal code: 942030001, Country/Territory: United States, State or province: California`。安装过程很简单，只需根据提示操作即可。
 <!-- public begin -->
 Linux下安装VMware时需要注意的是`/tmp`目录的挂载不能在`/etc/fstab`文件中指定`noexec`，还需要安装gcc较新的版本（如`VMware-Workstation-Full-17.5.1-23298084.x86_64.bundle`在ubuntu2204下安装时要安装gcc12，默认安装的是gcc11）。桥接配置在`Edit -> Virtual Network Editor`。
