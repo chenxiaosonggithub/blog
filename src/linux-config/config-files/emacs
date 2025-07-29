@@ -9,7 +9,10 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(global-linum-mode) ;; 显示行号
+;; 兼容 Emacs 新旧版本的行号显示
+(if (version< emacs-version "26.1")
+    (global-linum-mode t)  ; 旧版 Emacs
+  (global-display-line-numbers-mode t))  ; 新版 Emacs
 (setq linum-format "%d ") ;; 行号后加个空格
 (setq column-number-mode t) ;; 显示列号
 (setq make-backup-files nil) ;; 保存时不创建备份文件
