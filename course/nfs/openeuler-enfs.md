@@ -64,6 +64,8 @@ cat /proc/enfs/192.168.53.216_0/stat
 
 ```c
 enfs_recovery_nlm_lock // 嵌套太多层
+enfs_choose_shard_xport // 嵌套太多层
+enfs_update_fsshard // 内存泄露？
 
 nfs_rename flag overlayfs
 ```
