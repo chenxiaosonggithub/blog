@@ -20,9 +20,10 @@ apt install bridge-utils iptables dnsmasq net-tools -y # 陈孝松添加
 
 注意要安装`net-tools`，否则虚拟机启动无法获取ip。
 
-将`qemu-ifup`脚本从此wiki复制到`/etc/qemu-ifup`，并确保该文件具有执行权限。
+将`qemu-ifup`脚本从此wiki复制到`etc/qemu-ifup`（apt安装是`etc/qemu-ifup`），并确保该文件具有执行权限。
 ```sh
-chmod 755 /etc/qemu-ifup
+chmod 755 etc/qemu-ifup # 源码安装
+chmod 755 /etc/qemu-ifup # apt安装
 ```
 
 现在使用tap网络配置启动qemu，并将您的虚拟机配置为使用DHCP。它们应该获得有效的IP地址并能够访问网络。
