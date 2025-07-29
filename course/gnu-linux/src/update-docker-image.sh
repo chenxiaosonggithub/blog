@@ -1,13 +1,22 @@
-docker_name=workspace-ubuntu2204
-image_repository=workspace-ubuntu
-image_tag=22.04
+docker_name=workspace-ubuntu2404
+image_name=workspace-ubuntu:24.04
+echo "正在运行的容器:"
 docker ps -a # 查看容器
+echo -e "\n停止容器${docker_name}..."
 docker stop ${docker_name} # 停止容器
+echo -e "\n把${docker_name}.tar重命名成${docker_name}.tar.bak，避免覆盖..."
 mv ${docker_name}.tar ${docker_name}.tar.bak # 重命名备份
+echo -e "\n导出容器${docker_name}..."
 docker export ${docker_name} > ${docker_name}.tar # 导出容器
+echo -e "\n删除容器${docker_name}..."
 docker rm ${docker_name} # 删除容器
+echo -e "\n请确认容器${docker_name}是否删除成功:"
 docker ps -a # 查看容器是否删除成功
-docker image rm ${image_repository}:${image_tag} # 删除镜像
+echo -e "\n删除镜像${image_name}..."
+docker image rm ${image_name} # 删除镜像
+echo -e "\n请确认镜像${image_name}是否删除成功:"
 docker image ls # 查看镜像是否删除成功
-cat ${docker_name}.tar | docker import - ${image_repository}:${image_tag} # 导入镜像
+echo -e "\n导入镜像${image_name}..."
+cat ${docker_name}.tar | docker import - ${image_name} # 导入镜像
+echo -e "\n请确认镜像${image_name}是否导入成功:"
 docker image ls # 查看镜像是否导入成功
