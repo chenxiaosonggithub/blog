@@ -59,3 +59,11 @@ ps auxww
 ps -eLf
 ```
 
+# `export`
+
+曾经遇到过一个坑，配置`http_proxy`和`https_proxy`时，前面没加`export`，proxy怎么都用不了。所以在这里记录一下`export`命令的笔记。
+
+`http_proxy=http://10.42.20.221:7890`作用的是当前shell，子进程不可见，只是设置一个临时变量。
+
+而`export https_proxy=http://10.42.20.221:7890`作用范围是当前shell+子进程，一般影响外部工具的环境配置就要在前面加`export`。
+
