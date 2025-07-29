@@ -142,7 +142,8 @@ service ssh restart # docker 中不能使用 systemctl 启动 ssh
 ## 其他软件
 
 ```sh
-apt install bash-completion -y # 为了解决docker 中git不会自动补全, 要执行 source /usr/share/bash-completion/completions/git（一般放到.bash_profile中）
+apt install bash-completion -y # 为了解决docker 中git不会自动补全, 要执行 source /usr/share/bash-completion/completions/git（一般放到.bashrc中）
+echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
 apt install sudo -y # 不安装的话会提示bash: sudo: command not found
 ```
 
