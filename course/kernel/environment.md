@@ -229,6 +229,8 @@ git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linu
 
 也可以在[/pub/linux/kernel/](https://mirrors.edge.kernel.org/pub/linux/kernel/)下载某个版本代码的压缩包。
 
+如果系统上的时间不对，可能要执行`find . -type f -exec touch {} +`。
+
 ## 编译步骤
 
 建议新建一个`build`目录，把所有的编译输出存放在这个目录下，注意
