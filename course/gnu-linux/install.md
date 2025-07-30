@@ -315,7 +315,7 @@ autoconf
 sudo vim /etc/selinux/config # centos9 改成 SELINUX=disabled
 ```
 
-# centos7
+## centos7
 
 ```sh
 mv /etc/yum.repos.d/ /etc/yum.repos.d.bak
