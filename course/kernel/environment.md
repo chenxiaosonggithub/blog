@@ -698,9 +698,9 @@ echo "stty rows 54 cols 229" > stty.sh
 
 当启用了9p文件系统，就可以把宿主机的modules目录（当然也可以是其他任何目录）共享给虚拟机，
 具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本
-[`mod-cfg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mod-cfg.sh)
+[`mod-cfg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
 （直接运行`bash mod-cfg.sh`可以查看使用帮助）挂载和链接模块目录。也可以用
-[`parse-cmdline.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/parse-cmdline.sh)
+[`parse-cmdline.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
 解析`/proc/cmdline`中的参数。
 
 root免密登录，`/etc/ssh/sshd_config`（注意不是`ssh_config`） 修改以下内容:
@@ -912,7 +912,7 @@ cat .text .data .bss # 输出各个段地址
 (gdb) remove-symbol-file /这里要写完整的绝对路径/linux/x86_64-build/fs/smb/client/cifs.ko
 ```
 
-可以在虚拟机中直接运行脚本获得要输入的完整gdb命令: [`bash add-symbol-file-full-cmd.sh`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/add-symbol-file-full-cmd.sh)。
+可以在虚拟机中直接运行脚本获得要输入的完整gdb命令: [`bash add-symbol-file-full-cmd.sh`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/script/add-symbol-file-full-cmd.sh)。
 
 这时就能开心的对ko模块中的代码进行打断点之类的操作了。
 

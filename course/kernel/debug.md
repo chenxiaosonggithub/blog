@@ -77,7 +77,7 @@ tar xvf linux-6.8.5.tar.xz
 
 内核编译时打开[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)中的配置。虚拟机中执行脚本
 <!-- public begin -->
-[`mod-cfg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mod-cfg.sh)
+[`mod-cfg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
 <!-- public end -->
 <!-- private begin -->
 `src/mod-cfg.sh`
