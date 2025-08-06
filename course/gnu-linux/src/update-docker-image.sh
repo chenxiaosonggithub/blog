@@ -1,11 +1,13 @@
 docker_name=workspace-ubuntu2404
 image_name=workspace-ubuntu:24.04
+if [ -f "${docker_name}.tar" ]; then
+    echo "请将${docker_name}.tar重命名再运行此脚本"
+    exit 1
+fi
 echo "正在运行的容器:"
 docker ps -a # 查看容器
 echo -e "\n停止容器${docker_name}..."
 docker stop ${docker_name} # 停止容器
-echo -e "\n把${docker_name}.tar重命名成${docker_name}.tar.bak，避免覆盖..."
-mv ${docker_name}.tar ${docker_name}.tar.bak # 重命名备份
 echo -e "\n导出容器${docker_name}..."
 docker export ${docker_name} > ${docker_name}.tar # 导出容器
 echo -e "\n删除容器${docker_name}..."
