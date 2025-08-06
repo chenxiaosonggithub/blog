@@ -15,3 +15,9 @@
 	helper = store
 [color]
 	ui = auto
+[safe]
+	directory = /home/sonvhi/chenxiaosong/code/blog
+	directory = /home/sonvhi/chenxiaosong/code/tmp
+	directory = /home/sonvhi/chenxiaosong/code/myfs
+	directory = /home/sonvhi/chenxiaosong/code/private-blog
+	directory = /home/sonvhi/chenxiaosong/code/private-tmp
