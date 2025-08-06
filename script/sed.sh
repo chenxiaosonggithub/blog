@@ -32,6 +32,13 @@ sed_repo() {
 		      "${file}" == ".git" ]]; then
 			continue
 		fi
+
+		grep -rHnT "${old_string}" "${file}"
+		local grep_res=$?
+		if [[ "${grep_res}" -ne 0 ]]; then
+			continue
+		fi
+
 		if [ -f "${file}" ]; then
 			sed -i "s|${old_string}|${new_string}|g" "${file}"
 		elif [ -d "${file}" ]; then
