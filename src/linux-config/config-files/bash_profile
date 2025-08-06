@@ -32,3 +32,5 @@ function title() {
 
 stty -ixon # 搜索历史命令，ctrl + s不锁屏
 source /usr/share/bash-completion/completions/git # docker中要先安装 apt install bash-completion -y
+# 只显示最后一个路径名分量
+PS1="${PS1//\\w\\$/\\W\\$}"

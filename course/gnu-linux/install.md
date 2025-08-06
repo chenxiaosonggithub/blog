@@ -151,6 +151,11 @@ shell界面路径名显示绝对路径，想换成只显示最后一个路径名
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ ' # \w改成\W
 ```
 
+但tmux启动的窗口只修改上述地方不够，要在`~/.bashrc`和`~/.bash_profile`最后加上以下语句:
+```sh
+PS1="${PS1//\\w\\$/\\W\\$}"
+```
+
 # VNC远程桌面 {#vnc}
 
 参考[鸟哥Linux私房菜](https://linux.vbird.org/linux_server/centos6/0310telnetssh.php#vnc)。
