@@ -13,5 +13,5 @@ qemu-system-aarch64 \
 -net tap \
 -drive file=aarch64-bullseye.qcow2,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device virtio-blk,drive=root,id=d_root \
--append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on" \
+-append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on kernel_version=${kernel_version}" \
 -nographic \
