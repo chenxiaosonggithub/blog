@@ -60,6 +60,11 @@ EOF
 git remote set-url origin git@github.com-specifiedaccount:specifiedaccount/repo-name.git
 ```
 
+如果报错`Bad owner or permissions on ~/.ssh/config`，需要修改文件权限:
+```sh
+chown $(whoami):$(id -gn) ~/.ssh/config
+```
+
 # `cherry-pick`或`am` {#cherry-pick-or-am}
 
 `cherry-pick`多个`commit`:
