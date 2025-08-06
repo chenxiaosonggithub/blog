@@ -8,7 +8,10 @@ Linux下一切皆文件，所有的配置选项也都是文件。
 
 所以，脚本一键搞定是多么的寂寞，哦不对，是多么的重要。
 
-把我的[个人笔记仓库](https://github.com/chenxiaosonggithub/blog)clone到本地，进入到目录[`src/linux-config`](https://github.com/chenxiaosonggithub/blog/tree/master/src/linux-config)，执行脚本[`link-config.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/link-config.sh)创建软链接到代码仓库里的配置文件，执行脚本[`src/linux-config/copy.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/copy.sh)复制配置文件到家目录下。
+把我的[个人笔记仓库](https://github.com/chenxiaosonggithub/blog)clone到本地，
+进入到目录[`linux-config`](https://github.com/chenxiaosonggithub/blog/tree/master/src/linux-config)，
+执行脚本[`copy-to.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/copy-to.sh)
+复制配置文件到家目录下。
 
 # .bash_profile
 
