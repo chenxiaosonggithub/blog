@@ -148,7 +148,7 @@ sudo vi /etc/fstab # 在/etc/fstab最后一行添加 /swapfile  none  swap  sw  
 
 shell界面路径名显示绝对路径，想换成只显示最后一个路径名分量, `~/.bashrc`文件修改以下变量:
 ```sh
-PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ ' # \w改成\W
 ```
 
 # VNC远程桌面 {#vnc}
