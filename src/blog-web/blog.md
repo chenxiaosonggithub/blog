@@ -89,8 +89,6 @@ Linux内核加餐:
 -->
 [如何拥有个人域名的网站和邮箱](https://chenxiaosong.com/course/gnu-linux/blog-web.html)
 
-[Linux配置文件](https://chenxiaosong.com/src/linux-config/linux-config.html)
-
 <!--
 不能删除，以下视频里用到:
 009-反向ssh和内网穿透

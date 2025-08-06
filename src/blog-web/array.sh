@@ -188,6 +188,7 @@ comm_array=(
 		1 1 course/gnu-linux/docker.md ~ "Docker安装与使用"
 		1 1 course/gnu-linux/git.md ~ "git分布式版本控制系统"
 		1 1 course/gnu-linux/shell.md ~ "shell和shell脚本"
+		1 1 course/gnu-linux/config.md ~ "GNU/Linux配置文件"
 	0 1 course/harmony/harmony.md ~ "鸿蒙课程"
 		1 1 course/harmony/contribution.md ~ "陈孝松OpenHarmony贡献"
 		1 1 course/harmony/openharmony.md ~ "OpenHarmony开发"
@@ -216,7 +217,6 @@ comm_array=(
 	1 1 src/cve/smb-cve.md ~ "smb cve"
 	1 1 src/cve/others-cve.md ~ "未分类的cve"
 	# Linux环境
-	1 1 src/linux-config/linux-config.md ~ "Linux配置文件"
 	1 1 src/macos/qemu-kvm-install-macos.md ~ "QEMU/KVM安装macOS系统"
 	1 1 src/userspace-environment/ghostwriter-makdown.md ~ "ghostwriter: 一款makdown编辑器"
 	1 1 src/userspace-environment/mosquitto-mqtt.md ~ "使用mosquitto搭建MQTT服务器"

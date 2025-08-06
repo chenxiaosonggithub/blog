@@ -20,3 +20,5 @@
 
 # [shell和shell脚本](https://chenxiaosong.com/course/gnu-linux/shell.html)
 
+# [GNU/Linux配置文件](https://chenxiaosong.com/src/linux-config/linux-config.html)
+

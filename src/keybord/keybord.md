@@ -2,7 +2,7 @@
 
 # Linux
 
-xmodmap是Linux桌面系统用于更改键位分布的软件，具体查看[《Linux配置文件》](https://chenxiaosong.com/src/linux-config/linux-config.html)中有关xmodmap配置相关的章节。
+xmodmap是Linux桌面系统用于更改键位分布的软件，具体查看[《GNU/Linux配置文件》](https://chenxiaosong.com/course/gnu-linux/config.html)中有关xmodmap配置相关的章节。
 
 # macOS
 
@@ -34,3 +34,4 @@ v1版本的配置: [autohotkey-v1.1.ahk](https://github.com/chenxiaosonggithub/b
 更改键位方法: 访问[ydkb.io](https://ydkb.io/)网站，左上角选择"HHKB BLE"，然后根据右下方"HHKB BLE刷机说明"里的文档进行操作。
 
 蓝牙出问题，可以尝试[清除配对信息按键 LShift+RShift+LCtrl+R](https://ydkb.io/help/#/ble-series/troubleshooting)。
+
