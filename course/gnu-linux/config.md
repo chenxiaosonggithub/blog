@@ -9,66 +9,66 @@ Linux下一切皆文件，所有的配置选项也都是文件。
 所以，脚本一键搞定是多么的寂寞，哦不对，是多么的重要。
 
 把我的[个人笔记仓库](https://github.com/chenxiaosonggithub/blog)clone到本地，
-进入到目录[`linux-config`](https://github.com/chenxiaosonggithub/blog/tree/master/src/linux-config)，
-执行脚本[`copy-to.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/copy-to.sh)
+进入到目录[`config-file`](https://github.com/chenxiaosonggithub/blog/tree/master/course/gnu-linux/src/config-file)，
+执行脚本[`cp-to.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/cp-to.sh)
 复制配置文件到家目录下。
 
-# .bash_profile
+# `.bash_profile`
 
 .bash_profile 是一个用于配置用户的 Bash shell 环境的文件。它通常位于用户的主目录（$HOME）下。当用户登录到系统时，Bash shell 会尝试执行 .bash_profile 文件中包含的命令和设置。这使得用户能够自定义其 shell 环境和行为。
 
-具体请查看[`.bash_profile`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/bash_profile)。
+具体请查看[`.bash_profile`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/bash_profile)。
 
-# .emacs
+# `.emacs`
 
 配置我最喜欢的编辑器emacs，配合着gtags，然后用hhkb键盘看内核代码，真的没有比这更爽的事情了。
 
-具体请查看[`.emacs`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/emacs)。
+具体请查看[`.emacs`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/emacs)。
 
-# .gitconfig
+# `.gitconfig`
 
 当没有配置时，无法进行git的提交。
 
 配置名字和邮箱:
-```shell
+```sh
 git config --global user.name "ChenXiaoSong"
 git config --global user.email "chenxiaosongemail@foxmail.com"
 ```
 
-具体请查看[`.gitconfig`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/gitconfig)。
+具体请查看[`.gitconfig`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/gitconfig)。
 
-# .origin_xmodmap.txt 和 .xmodmap.txt
+# `.origin_xmodmap.txt` 和 `.xmodmap.txt`
 
 xmodmap是Linux桌面系统用于更改键位分布的软件。
 
-[`.origin_xmodmap.txt`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/origin_xmodmap.txt)是用于还原我当年买的xps13笔记本的键位布局，[`.xmodmap.txt`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/xmodmap.txt)是用于xps13的键位更改，符合我的个人习惯。
+[`.origin_xmodmap.txt`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/origin_xmodmap.txt)是用于还原我当年买的xps13笔记本的键位布局，[`.xmodmap.txt`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/xmodmap.txt)是用于xps13的键位更改，符合我的个人习惯。
 
 使用的方法是:
-```shell
+```sh
 xmodmap .origin_xmodmap.txt # 还原，需要点时间
 xmodmap .xmodmap.txt
 ```
 
 帮助命令:
-```shell
+```sh
 xmodmap -h
 xmodmap -pm # 打印修饰键
 xmodmap -pke # 除修饰键外的其他键
 ```
 
-# .set_proxy.sh
+# `.set_proxy.sh`
 
 用于设置代理或取消代理。
 
-```shell
+```sh
 # 注意要用<点号>，而不能用 bash .set_proxy.sh
 . .set_proxy.sh 1 # 设置代理
 . .set_proxy.sh 0 # 取消代理
 ```
 
-具体请查看[`.set_proxy.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/set_proxy.sh)。
+具体请查看[`.set_proxy.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/set_proxy.sh)。
 
-# .tmux.conf
+# `.tmux.conf`
 
 Tmux（缩写自"Terminal Multiplexer"）是一个在命令行界面下运行的终端复用工具，我主要是用tmux的会话附加和分离功能，在一个Tmux会话中分离，然后重新附加，这意味着可以从一个终端窗口断开，然后在另一个终端窗口中继续工作，或者甚至在断开后重新连接。
 
@@ -84,12 +84,12 @@ sudo apt install tmux -y
 
 如果已经运行了tmux，要重新加载配置，在终端中输入`tmux source-file ~/.tmux.conf`，使新的prefix设置生效。
 
-具体请查看[`.tmux.conf`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/tmux.conf)。
+具体请查看[`.tmux.conf`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/tmux.conf)。
 
 要查看终端的所有输出，可以使用`tmux copy-mode`。
 
-# .vimrc
+# `.vimrc`
 
 vim就是方便小巧，是Linux下最常用的编辑器了，以前我挺喜欢用的，现在我更多的是用emacs看代码。
 
-具体请查看[`.vimrc`](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/vimrc)。
+具体请查看[`.vimrc`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/vimrc)。

@@ -6,7 +6,7 @@ fi
 
 for element in ${array[@]}
 do
-	src=$PWD/config-files/$element
+	src=$PWD/$element
 	dst=$dst_dir/.$element
 
 	echo $src

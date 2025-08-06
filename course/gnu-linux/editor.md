@@ -6,7 +6,7 @@
 
 ## vim配置
 
-配置文件 `~/.vimrc` ，可以参考[我的配置文件](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/vimrc)
+配置文件 `~/.vimrc` ，可以参考[我的配置文件](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/vimrc)
 
 加载其他的.vimrc，在~/.vimrc中加入以下内容:
 
@@ -145,7 +145,7 @@ firefox浏览器 **Add-ons -> Extensions -> Find more add-ons -> Vimium-FF** 。
 
 ## 安装与配置
 
-我使用的配置文件[.emacs](https://github.com/chenxiaosonggithub/blog/blob/master/src/linux-config/config-files/emacs)。
+我使用的配置文件[.emacs](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/config-file/emacs)。
 
 ```
 M-x package-refresh-contents 刷新包存储库中可用的包内容
