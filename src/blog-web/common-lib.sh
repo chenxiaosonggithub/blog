@@ -537,7 +537,7 @@ comm_tmp_params_file() {
 }
 
 comm_defaut_local_ip() {
-	echo "10.42.20.221"
+	echo "10.42.20.206"
 }
 
 comm_delete_params() {
