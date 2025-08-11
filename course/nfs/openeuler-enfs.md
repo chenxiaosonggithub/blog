@@ -14,6 +14,7 @@
   - grep: grep -E dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
 -->
 - [openEuler/kernel: fix some panic bugs and memory leak bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
+- [openEuler/kernel: fix some issues after removing enfs module while nfs is in use](https://gitee.com/openeuler/kernel/pulls/17479/commits)
 
 # 问题分析 {#issue}
 
