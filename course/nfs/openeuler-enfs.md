@@ -1,7 +1,18 @@
 <!--
-疑问:
+# 疑问
 
 - 在进行文件操作时 eNFS 将 IO 通过 RoundRobin 方式负载均衡到多条链路上以提升性能（当前版本负载均衡只支持 NFS V3）
+
+# todo
+
+```c
+get_view_table和create_view_table不明确
+enfs_recovery_nlm_lock // 嵌套太多层
+enfs_choose_shard_xport // 嵌套太多层
+enfs_update_fsshard // 内存泄露？
+
+nfs_rename flag overlayfs
+```
 -->
 # 我的贡献
 
@@ -61,16 +72,6 @@ cat /proc/enfs/192.168.53.216_0/stat
 ```
 
 <!--
-# todo
-
-```c
-enfs_recovery_nlm_lock // 嵌套太多层
-enfs_choose_shard_xport // 嵌套太多层
-enfs_update_fsshard // 内存泄露？
-
-nfs_rename flag overlayfs
-```
-
 # 以前的代码分析（4.19）
 
 [pull request](https://gitee.com/src-openeuler/kernel/pulls?assignee_id=&author_id=&label_ids=&label_text=&milestone_id=&priority=&project_id=src-openeuler%2Fkernel&project_type=&scope=&search=enfs&single_label_id=&single_label_text=&sort=closed_at+desc&status=merged&target_project=&tester_id=)和[补丁文件](https://gitee.com/src-openeuler/kernel/tree/openEuler-20.03-LTS-SP4)。
