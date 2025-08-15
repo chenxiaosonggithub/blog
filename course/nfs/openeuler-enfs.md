@@ -16,16 +16,7 @@ nfs_rename flag overlayfs
 -->
 # 我的贡献
 
-- [2025年07月04日 21:25: openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
-- [2025年07月26日 17:30: openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
-<!--
-搜索日志函数:
-  - git diff 搜索: dprintk|dfprintk|pr_info|pr_err|pr_debug
-  - vim 搜索: dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
-  - grep: grep -E dprintk\|dfprintk\|pr_info\|pr_err\|pr_debug
--->
-- [2025年08月02日 16:47: openEuler/kernel: fix some panic bugs and memory leak bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
-- [openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
+[点击这里查看我的openEuler nfs+贡献](https://chenxiaosong.com/enfs-contribution.html)。
 
 # 问题分析 {#issue}
 
