@@ -111,3 +111,10 @@ so_count是三个不同计数的总和。
 
 [openeuler issue](https://gitee.com/src-openeuler/kernel/issues/IAR4FS)
 
+# `CVE-2024-53216 f8c989a0c89a nfsd: release svc_expkey/svc_export with rcu_work`
+
+- [openeuler仓库的issue](https://gitee.com/openeuler/kernel/issues/IBBK3A)
+- [src-openeuler仓库的cve issue](https://gitee.com/src-openeuler/kernel/issues/IBEAER)
+
+此cve只会在nfsd服务停止和export删除等执行频率很小的操作时才会低概率发生。目前openeuler的4.19和5.10都未合入。
+
