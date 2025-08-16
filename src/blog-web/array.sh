@@ -295,6 +295,5 @@ comm_array=(
 	1 1 tmp/calligraphy/shengjiaoxu.md calligraphy/shengjiaoxu.html "圣教序译文"
 	1 1 src/calligraphy/written.md ~ "左手写过的字"
 	# no-index
-	1 1 src/private/proxy/v2ray.md no-index/v2ray.html "v2ray代理服务器"
-	1 1 src/private/proxy/chatgpt.md no-index/chatgpt.html "注册ChatGPT"
+	1 1 src/private/proxy/proxy.md no-index/proxy.html "代理服务器"
 )

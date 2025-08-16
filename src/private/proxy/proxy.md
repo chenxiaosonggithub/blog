@@ -1,6 +1,18 @@
-作为程序员，使用google搜索当然是必不可少的，如果使用百度搜索在绝大多数情况下只会得到一些广告。
+# 注册ChatGPT
 
-本文档的编写目的是为了下次重新搭建代理服务器时的查询。
+我的chatgpt账号是在2023年初注册了，以下方法不确定现在是否可用。
+
+在[chatgpt网站](https://openai.com/gpt-4)点击“Try on ChatGPT Plus”按钮，用邮件箱注册账号（国内邮箱不确定是否可以注册，如果不能可以使用gmail注册），短信激活使用[sms-activate](https://sms-activate.org)提供的短信激活服务，用支付宝充值一美元左右，在网站左下角点击“OpenAI”，选择“美国（物理)”，购买就可以使用短信激活服务，好像有时效限制，所以要尽快使用。
+
+以上步骤完成，就可以尽情使用chatgpt学习和工作，还有赚钱。
+
+# 谷歌上网助手（Ghelper） {#ghelper}
+
+建议使用chrome浏览器的“谷歌上网助手”，可以在chrome的web store搜索“Ghelper”或“谷歌上网助手”安装插件，也可以在[Ghelper网站](https://ghelper.net/)上下载插件安装。购买VIP时，注意新注册的Ghelper账号无法使用支付宝支付，要把支付链接尾部替换成 `options.html?/pay/1/alipay`。如果无法访问某些网站，可以在“Select Server”中切换。
+
+[点击这里查看客户端代理](chrome-extension://nonmafimegllfoonjgplbabhmgfanaka/options.html?/options/subscribe)。
+
+# v2ray代理服务器 {#v2ray}
 
 v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 
@@ -10,7 +22,7 @@ v2ray的github项目为[v2ray-core](https://github.com/v2fly/v2ray-core)。
 
 如果你在华为的HarmonyOS NEXT的”卓易通“中安装的v2ray，需要把“跌由设置“中的”绕过局域网IP“取消勾选，“绕过局域网域名”建议也取消勾选（但不确定有没影响哈），然后在“卓易通”和“出境易”中都能访问外网了。注意要先打开“卓易通”中的“搜应用”，才能在“出境易”中的浏览器中访问外网。
 
-# v2ray服务器安装与配置
+## v2ray服务器安装与配置
 
 可以使用以下命令安装:
 
@@ -45,7 +57,7 @@ User=sonvhi # 修改成当前用户名
 ...
 ```
 
-# linux系统客户端安装与配置
+## linux系统客户端安装与配置
 
 可以使用以下命令安装:
 
@@ -74,7 +86,7 @@ sudo systemctl restart v2ray
 
 打开 设置 -> Network -> Manual -> HTTP proxy / HTTPS Proxy 127.0.0.1 1081
 
-# macOS系统客户端安装与配置
+## macOS系统客户端安装与配置
 
 在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载macOS的安装包, 如[v2ray-macos-arm64-v8a.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-macos-arm64-v8a.zip)。
 
@@ -96,13 +108,13 @@ sudo systemctl restart v2ray
 
 配置所连接网络的代理`Server: localhost, Port: 1081`。
 
-# 安卓客户端安装与配置
+## 安卓客户端安装与配置
 
 下载v2ray的[安卓安装包](https://github.com/2dust/v2rayNG/releases)，并新建与服务器对应的配置。
 
 [点击这里查看配置信息](https://chenxiaosong.com/picture/v2ray-android.jpeg)。
 
-# Windows系统客户端安装与配置
+## Windows系统客户端安装与配置
 
 在[项目的Releases](https://github.com/v2fly/v2ray-core/releases)界面选择一个版本下载Windows的安装包, 如[v2ray-windows-64-v8a.zip-v5.4.1](https://github.com/v2fly/v2ray-core/releases/download/v5.4.1/v2ray-windows-64.zip)
 
