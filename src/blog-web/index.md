@@ -35,6 +35,12 @@
 
 现在麒麟软件从事 **Linux内核** 开发。
 
+# 自由软件贡献
+
+[点击查看我的自由软件贡献: chenxiaosong.com/contribution](https://chenxiaosong.com/contribution.html)
+
+除了Linux内核和鸿蒙操作系统的贡献外，还贡献过LoRaWAN、KDE的ghostwriter等项目。
+
 # 专利和论文
 
 [点击这里查看我写的专利和论文](https://chenxiaosong.com/patent-paper.html)
@@ -56,12 +62,6 @@
 [点击查看具体的文章: chenxiaosong.com/blog](https://chenxiaosong.com/blog)
 
 我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开。我的笔记没有什么高大上的内容，只是记录自己学到的一些知识点，当然如果能对其他热爱技术的朋友有所启发，我就更开心了。
-
-# 自由软件贡献
-
-[点击查看我的自由软件贡献: chenxiaosong.com/contribution](https://chenxiaosong.com/contribution.html)
-
-除了Linux内核和鸿蒙操作系统的贡献外，还贡献过LoRaWAN、KDE的ghostwriter等项目。
 
 # 自行车骑行
 
