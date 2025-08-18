@@ -12,6 +12,8 @@ enfs_choose_shard_xport // 嵌套太多层
 enfs_update_fsshard // 内存泄露？
 
 nfs_rename flag overlayfs
+
+使用kprobe在原nfs代码插入enfs，参考 HAVE_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
 ```
 -->
 # 我的贡献
