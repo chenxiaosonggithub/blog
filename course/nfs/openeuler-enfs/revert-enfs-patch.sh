@@ -35,8 +35,10 @@ e6faa11b2905 # nfs: use dfprintk() to debug enfs
 2b5eae5c990f # sunrpc, nfs: fix build errors when CONFIG_SUNRPC_ENFS=m && CONFIG_ENFS=m && CONFIG_NFS=y
 53806d18641c # nfs: fix build errors when CONFIG_ENFS=m && CONFIG_NFS_FS=y
 f4f81ee1ead7 # nfs: fix enfs mount failure when CONFIG_ENFS=y
+# [[OLK-6.6]fix enfs bug](https://gitee.com/openeuler/kernel/pulls/16775/commits)
 ae72360a5e6b # fix review issue
 9ef9b8c08d76 # fix enfs bug
+# [[OLK-6.6][eNFS]add nfs feature to support multipath](https://gitee.com/openeuler/kernel/pulls/16028/commits)
 18e360871c3f # add enfs feature
 )
 

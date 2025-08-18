@@ -1,18 +1,5 @@
 [点击这里查看openEuler的nfs+的使用](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)。
 
-<!--
-# 华为补丁
-
-## [[OLK-6.6][eNFS]add nfs feature to support multipath](https://gitee.com/openeuler/kernel/pulls/16028/commits)
-
-- [18e360871c3f add enfs feature](https://gitee.com/openeuler/kernel/commit/18e360871c3f648ecb0d8cc9b23fd4268a64c17f)
-
-## [[OLK-6.6]fix enfs bug](https://gitee.com/openeuler/kernel/pulls/16775/commits)
-
-- [9ef9b8c08d76 fix enfs bug](https://gitee.com/openeuler/kernel/commit/9ef9b8c08d762983f8b1f94deb6b115d2967c497)
-- [ae72360a5e6b fix review issue](https://gitee.com/openeuler/kernel/commit/ae72360a5e6b462d14e5ea7befcbedce629ff2c3)
--->
-
 # [openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
 
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix memory leak of shard_view_ctrl when removing nfs module](https://gitee.com/openeuler/kernel/commit/068e87b7ffc2d168cedd409e48e262b8dc0b9017)
