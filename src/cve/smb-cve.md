@@ -417,3 +417,13 @@ sed -i 's/smb\/client/cifs/g' 0001-smb-client-fix-use-after-free-of-signing-key.
 
 只有在启用签名的场景下才会触发此漏洞，影响范围有限。
 
+# CVE-2025-22077
+
+```sh
+5b888c0b217d Revert "smb: client: Fix netns refcount imbalance causing leaks and use-after-free"
+95d2b9f693ff Revert "smb: client: fix TCP timers deadlock after rmmod"
+0bb2f7a1ad1f net: Fix null-ptr-deref by sock_lock_init_class_and_name() and rmmod.
+```
+
+万恶之源问题的修复补丁: [0bb2f7a1ad1f net: Fix null-ptr-deref by sock_lock_init_class_and_name() and rmmod.](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=0bb2f7a1ad1f11d861f58e5ee5051c8974ff9569), [邮件列表](https://lore.kernel.org/all/2025050125-CVE-2025-23143-6019@gregkh/)
+
