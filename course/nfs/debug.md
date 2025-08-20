@@ -191,8 +191,8 @@ mount -t nfs -o noresvport ${server_ip}:/ /mnt
   - `echo 0x7FFF > /proc/sys/sunrpc/nfsd_debug # NFSDDBG_ALL`
   - `echo 0x7fff > /proc/sys/sunrpc/nlm_debug # NLMDBG_ALL, 如果需要定位nfsv3的NLM（网络锁管理协议），还要打开这个，但一般不涉及`
 - 跟踪系统调用: `strace -o strace.txt -f -v -s 4096 -tt -T <这里填上要测试的命令>`
-- 以上步骤可用下面章节的“调试脚本”自动完成
-- 如果可以接受重启系统，就可以尝试手动导出vmcore，具体方法查看上面的vmcore章节
+- 以上步骤可用[下面章节的“调试脚本”](https://chenxiaosong.com/course/nfs/debug.html#script)自动完成
+- 如果可以接受重启系统，就可以尝试手动导出vmcore，具体方法查看[上面的“crash分析vmcore“](https://chenxiaosong.com/course/nfs/debug.html#crash-vmcore)
 
 # 调试脚本 {#script}
 
