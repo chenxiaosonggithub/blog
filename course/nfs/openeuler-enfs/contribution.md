@@ -1,6 +1,6 @@
 [点击这里查看openEuler的nfs+的使用](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)。
 
-# [openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
+# [2025年08月15日 openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
 
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix memory leak of shard_view_ctrl when removing nfs module](https://gitee.com/openeuler/kernel/commit/068e87b7ffc2d168cedd409e48e262b8dc0b9017)
 - <span style="color:red">bugfix: </span>[nfs/enfs: set CONFIG_SUNRPC_ENFS=y by default](https://gitee.com/openeuler/kernel/commit/0b85eddf5ae7ab0cf1aec485e0e2fbd13b38ff1b)
@@ -12,7 +12,7 @@
 - [nfs/enfs: remove enfs_init() and enfs_fini()](https://gitee.com/openeuler/kernel/commit/5c582afec12819031e40ac56ad6f77adccfde048)
 - [nfs/enfs: make some functions static in enfs_multipath_client.c](https://gitee.com/openeuler/kernel/commit/bc954e6ba5c80f2f7fafde7cd2eb818628421786)
 
-# [openEuler/kernel: fix some panic bugs and memory leak bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
+# [2025年08月02日 openEuler/kernel: fix some panic bugs and memory leak bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
 
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix null-ptr-deref in shard_update_work()](https://gitee.com/openeuler/kernel/commit/b29f941d7c6454ae39e85a23d8a004f47b274505)
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix double free of multipath_client_info](https://gitee.com/openeuler/kernel/commit/d6f01631a69cbca08be0157a09f30a93283c50d4)
@@ -31,7 +31,7 @@
 - [nfs/enfs: remove enfs_uuid_debug in shard_route.c](https://gitee.com/openeuler/kernel/commit/11caad69b1bff61d4b809a8126e866cfab81e34e)
 - [nfs/enfs: remove unnecessary shard_should_stop in shard_route.c](https://gitee.com/openeuler/kernel/commit/0f58edce86117b769f8e675a2265336676c780c1)
 
-# [openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
+# [2025年07月26日 openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
 
 <!--
 搜索日志函数:
@@ -48,7 +48,7 @@
 - [nfs/enfs: use enfs_log_info() instead of pr_info() in enfs](https://gitee.com/openeuler/kernel/commit/de09a3d1076cccbce3970d3ee1008c6f6101e9b8)
 - [nfs/enfs: use enfs_log_error() instead of pr_err() in enfs](https://gitee.com/openeuler/kernel/commit/69ccb9f7620d556dc3cd02572d34b145564d8591)
 
-# [openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
+# [2025年07月04日 openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
 
 - <span style="color:red">bugfix: </span>[nfs: fix enfs mount failure when CONFIG_ENFS=y](https://gitee.com/openeuler/kernel/commit/f4f81ee1ead7362e5bb0b6b2fdebb3049cbaa76e)
 - <span style="color:red">bugfix: </span>[nfs: fix build errors when CONFIG_ENFS=m && CONFIG_NFS_FS=y](https://gitee.com/openeuler/kernel/commit/53806d18641c15b833cd6f4f7c540c3018099d7f)
