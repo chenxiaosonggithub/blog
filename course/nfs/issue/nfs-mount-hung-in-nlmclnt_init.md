@@ -132,6 +132,7 @@ rpm2cpio kernel-debuginfo-4.19.90-24.4.v2101.ky10.x86_64.rpm | cpio -div
 
 # 代码分析
 
+进程`17310`在`lockd_up_net()`中发生错误，在`lockd_unregister_notifiers()`中一直休眠:
 ```c
 // 进程 17310
 nfs_init_server
@@ -146,7 +147,10 @@ nfs_init_server
           wait_event(nlm_ntf_wq, atomic_read(&nlm_ntf_refcnt) == 0)
         lockd_start_svc // nlm_ntf_refcnt增加，未执行到
           atomic_inc(&nlm_ntf_refcnt)
+```
 
+进程 `65384`以及其他执行到`nfs_init_server()`的进程都在`lockd_up()`中等待进程 17310 释放锁:
+```c
 // 进程 65384
 nfs_init_server
   nfs_start_lockd
@@ -171,4 +175,8 @@ git log origin/master --oneline --date=short --format="%cd %h %s %an <%ae>" --gr
   # 2021-12-13 b73a2972041b lockd: move lockd_start_svc() call into lockd_create_svc() NeilBrown <neilb@suse.de>
   # 2021-12-13 5a8a7ff57421 lockd: simplify management of network status notifiers NeilBrown <neilb@suse.de>
 ```
+
+<!--
+[`[PATCH 00/20 v3] SUNRPC: clean up server thread management`](https://chenxiaosong.com/course/nfs/patch/NFSD-Make-it-possible-to-use-svc_set_num_threads_syn.html)
+-->
 
