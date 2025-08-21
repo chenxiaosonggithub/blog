@@ -72,6 +72,7 @@ vim删除某个重复的栈:
 
 # 代码分析
 
+在`sget_userns()`中，如果指定不一样的挂载选项时（比如加了`soft`），会生成新的超级块；而如果挂载选项和其他挂载点一样，就会尝试获取已有的超级块，但其他挂载点对应的同一超级块的锁已经被其他进程持有，所以就出现hung住的情况:
 ```c
 mount
   ksys_mount
@@ -90,8 +91,9 @@ mount
                           nfs_init_client
                 nfs_fs_mount_common
                   sget_userns
-                    grab_super
-                      down_write
+                    grab_super // 当挂载选项一样时，尝试获取已有的超级块
+                      down_write // 其他挂载点对应的同一超级块的锁已经被其他进程持有
+                    alloc_super // 只有挂载选项不同时，才会分配新的超级块
 
 nfs_parse_mount_options
   mnt->flags |= NFS_MOUNT_SOFT; // soft
