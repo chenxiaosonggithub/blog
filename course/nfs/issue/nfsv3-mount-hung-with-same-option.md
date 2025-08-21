@@ -96,7 +96,33 @@ mount
                       down_write // 其他挂载点对应的同一超级块的锁已经被其他进程持有
                     alloc_super // 只有挂载选项不同时，才会分配新的超级块
 
+wb_workfn
+  wb_writeback
+    __writeback_inodes_wb
+      trylock_super(sb)
+        down_read_trylock(&sb->s_umount) // 持有超级块写锁
+      writeback_sb_inodes
+        __writeback_single_inode
+          do_writepages
+            nfs_writepages
+              write_cache_pages
+                nfs_writepages_callback
+                  nfs_do_writepage
+                    nfs_release_request
+                      nfs_free_request
+                        __put_nfs_open_context
+                          dput
+                            dentry_kill
+                              __dentry_kill
+                                evict
+                                  inode_wait_for_writeback
+
 nfs_parse_mount_options
   mnt->flags |= NFS_MOUNT_SOFT; // soft
   mnt->acregmin = mnt->acregmax = mnt->acdirmin = mnt->acdirmax = option; // actimeo
 ```
+
+# 规避方案
+
+默认选项值`acregmin=3,acregmax=60,acdirmin=30,acdirmax=60`，只需要更改其中一个选项，如`acdirmax=59`就能在挂载时生成新的超级块，从而挂载成功。
+
