@@ -581,7 +581,7 @@ crash> mod -d <module name> # 删除
 启动`crash`:
 ```sh
 crash vmlinux vmcore
-crash vmlinux # 在线调试，vmcore是/proc/kcore
+crash vmlinux # 在线调试，vmcore是/proc/kcore，注意这个文件无法复制
 ```
 
 `help`命令:
