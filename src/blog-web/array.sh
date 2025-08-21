@@ -130,6 +130,7 @@ comm_array=(
 				"null-ptr-deref in nfsd4_probe_callback()"
 			1 1 course/nfs/issue/lockd-server-not-responding.md ~ "nfsv3 NLM请求超时的问题"
 			1 1 course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.md ~ "nfsv3挂载卡在nlmclnt_init()的问题"
+			1 1 course/nfs/issue/nfsv3-mount-fail-without-soft-actimeo.md ~ "nfsv3不带soft或actimeo选项挂载失败"
 		1 1 course/nfs/openeuler-enfs.md ~ "openEuler的nfs+"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.md ~ "openEuler的nfs+ multipath_client_info double free的问题"
