@@ -30,5 +30,5 @@
 - [nfsd4_probe_callback()空指针解引用问题](https://chenxiaosong.com/course/nfs/issue/null-ptr-deref-in-nfsd4_probe_callback.html)
 - [nfsv3 NLM请求超时的问题](https://chenxiaosong.com/course/nfs/issue/lockd-server-not-responding.html)
 - [nfsv3挂载卡在nlmclnt_init()的问题](https://chenxiaosong.com/course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.html)
-- [nfsv3不带soft或actimeo选项挂载失败](https://chenxiaosong.com/course/nfs/issue/nfsv3-mount-fail-without-soft-actimeo.html)
+- [nfsv3不带soft或actimeo选项挂载hung住的问题](https://chenxiaosong.com/course/nfs/issue/nfsv3-mount-hung-with-same-option.html)
 
