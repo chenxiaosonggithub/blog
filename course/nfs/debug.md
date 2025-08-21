@@ -279,3 +279,38 @@ mv ${cap_file} ${log_dir}
 echo "日志已保存到 ${log_dir}/ 目录下"
 ```
 
+## 获取所有线程的栈 {#get-all_stack}
+
+用以下脚本保存所有线程的栈:
+```sh
+output_file=stacks.txt
+# grep_string="mount" # 进程关键字
+# full_cmd_result=$(ps aux | grep "${grep_string}" | grep -v "grep ${grep_string}") # 过滤关键字
+full_cmd_result=$(ps aux | sed '1d') # 所有进程，输出要删除第一行标题行
+pids=$(echo "${full_cmd_result}" | awk '{print $2}')
+> ${output_file} # 清空
+
+if [ -z "$pids" ]; then
+    echo "没有找到进程"
+    exit 0
+fi
+
+echo "找到以下进程：" >> ${output_file}
+echo "${full_cmd_result}" >> ${output_file}
+
+echo -e "\n获取进程栈信息：" >> ${output_file}
+for pid in $pids; do
+    if [ -d "/proc/$pid" ]; then
+        # 遍历该进程的所有线程
+        for task in /proc/$pid/task/*; do
+            tid=$(basename "$task")  # 提取线程ID
+            echo -e "\n=============== 进程 $pid 线程 $tid $(echo -n "$(</proc/$pid/task/$tid/comm)") 栈信息 ===============" >> ${output_file}
+            sudo cat /proc/$pid/task/$tid/stack >> ${output_file}
+            echo "=======================================================" >> ${output_file}
+        done
+    else
+        echo "进程 $pid 已退出" >> ${output_file}
+    fi
+done
+```
+
