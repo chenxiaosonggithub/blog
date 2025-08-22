@@ -556,6 +556,19 @@ echo 0 > /proc/sys/kernel/hung_task_panic
 cat /proc/sys/kernel/softlockup_panic # 查看
 ```
 
+可以用以下命令在线导出vmcore（但不确定是否会有问题）:
+```sh
+# -c： 启用压缩。它使用 zlib 或 lzo 等压缩算法来压缩转储文件中的数据，从而显著减小最终生成的 vmcore 文件的大小。
+# -d 31： 指定要过滤掉（不保存） 的内存页类型。这个数字是“dump level”，它是不同位掩码值的组合（通过按位或操作组合）。
+#     1： 过滤掉所有的零页（充满零的内存页）。
+#     2： 过滤掉所有的缓存页（Cache pages）。
+#     4： 过滤掉所有的用户进程数据页（User data pages）。
+#     8： 过滤掉所有的空闲页（Free pages）。
+#    16： 过滤掉大部分用于存储内核模块代码和调试信息的内存页（Huge pages, 具体看版本）。
+#    31 = 1 + 2 + 4 + 8 + 16。这意味着它会过滤掉上述所有类型的内存页，只保留最重要的内核数据结构。这是最激进的过滤级别，能生成最小的转储文件，通常足以进行崩溃原因分析（如查看崩溃时的进程列表、内核堆栈跟踪等）。
+makedumpfile -c -d 31 /proc/kcore vmcore
+```
+
 `x86_64`启动`crash`:
 ```sh
 crash vmlinux vmcore
