@@ -100,7 +100,7 @@ wb_workfn
   wb_writeback
     __writeback_inodes_wb
       trylock_super(sb)
-        down_read_trylock(&sb->s_umount) // 持有超级块写锁
+        down_read_trylock(&sb->s_umount) // 持有超级块读锁
       writeback_sb_inodes
         __writeback_single_inode
           do_writepages
