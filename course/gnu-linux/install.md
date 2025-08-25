@@ -53,11 +53,11 @@ sudo pm-suspend # 挂起
 客户端:
 ```sh
 sudo apt-get install wakeonlan -y
-# ip可以不填，验证过了换成其他任何ip都可以
-sudo arp -s 10.42.20.225 b4:2e:99:a8:55:9e # ARP缓存过期会导致无法唤醒
-sudo wakeonlan -i 10.42.20.225 b4:2e:99:a8:55:9e # 唤醒
-sudo arp -d 10.42.20.225 # 如果清除ARP缓存后无法唤醒
-arp | grep 225 # 这时就看不到ARP缓存
+# 验证过了换成其他ip（10.42.20.225）都可以，但最好是正确的ip
+sudo arp -s 10.42.20.210 b4:2e:99:a8:55:9e # ARP缓存过期会导致无法唤醒
+sudo wakeonlan -i 10.42.20.210 b4:2e:99:a8:55:9e # 唤醒
+sudo arp -d 10.42.20.210 # 如果清除ARP缓存后无法唤醒
+arp | grep 210 # 这时就看不到ARP缓存
 ```
 
 # virt-manager安装虚拟机
