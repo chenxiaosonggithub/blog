@@ -58,6 +58,10 @@ proc_dodebug
     rpc_show_task
 ```
 
+### `mydebug`模块打印
+
+请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#mydebug)。
+
 # tracepoint
 
 除了日志，还可以打开tracepoint，尤其是最新主线代码的sunrpc中的`dprintk()`很多都移除了，有些sunrpc相关信息也只能通过tracepoint查看了。tracepoint的使用请查看[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#tracepoint)。
