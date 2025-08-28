@@ -3,9 +3,9 @@
 - [uthash主页](https://troydhanson.github.io/uthash/)
 - [uthash github](https://github.com/troydhanson/uthash)
 - 头文件`uthash.h`: [github](https://github.com/troydhanson/uthash/blob/master/src/uthash.h)
-- [key为int类型时uthash的示例](https://github.com/chenxiaosonggithub/blog/blob/master/course/algorithm/src/hash-table/int-key-uthash.c)
-- [key为char指针类型时uthash的示例](https://github.com/chenxiaosonggithub/blog/blob/master/course/algorithm/src/hash-table/char-ptr-key-uthash.c)
-- [key为char数组类型时uthash的示例](https://github.com/chenxiaosonggithub/blog/blob/master/course/algorithm/src/hash-table/char-array-key-uthash.c)
+- [key为int类型时uthash的示例](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/algorithm/src/hash-table/int-key-uthash.c)
+- [key为char指针类型时uthash的示例](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/algorithm/src/hash-table/char-ptr-key-uthash.c)
+- [key为char数组类型时uthash的示例](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/algorithm/src/hash-table/char-array-key-uthash.c)
 
 注意在leetcode中使用uthash，`head_table`在每个用例执行时都要初始化为`NULL`，因为全局变量和静态变量的初始化只会执行一次。
 
