@@ -1,6 +1,6 @@
 我的大部分工作都是和开源社区打交道，所以我的笔记也都可以公开。我的笔记没有什么高大上的内容，只是记录自己学到的一些知识点，当然如果能对其他热爱技术的朋友有所启发，我就更开心了。
 
-博客内容还在完善和整理中，更多的内容可以查看我的博客的[GitHub仓库](https://github.com/chenxiaosonggithub/blog)。
+博客内容还在完善和整理中，更多的内容可以查看我的博客的[GitHub仓库](https://github.com/chenxiaosonggithub/blog)或[gitee仓库](https://gitee.com/chenxiaosonggitee/blog)。
 
 我的博客网页只是简单的内容展示，如果要进行关键字搜索，可以在[GitHub仓库上搜索](https://github.com/search?q=repo%3Achenxiaosonggithub%2Fblog+&type=code)。
 

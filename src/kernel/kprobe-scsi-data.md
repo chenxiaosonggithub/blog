@@ -26,9 +26,9 @@ dd if=wrong-1page of=/dev/sda2 bs=1 seek=184557568 count=3 # 写第3个错误的
 echo 3 > /proc/sys/vm/drop_caches
 ```
 
-使用[`kprobe-scsi.c`](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel/kprobe-scsi.c)来检测`scsi_dispatch_cmd`（写）和`scsi_finish_command`（读）函数中的数据，与预期的数据内容比较，查看内核日志看看是否能正确识别出错误数据。
+使用[`kprobe-scsi.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel/kprobe-scsi.c)来检测`scsi_dispatch_cmd`（写）和`scsi_finish_command`（读）函数中的数据，与预期的数据内容比较，查看内核日志看看是否能正确识别出错误数据。
 
-[`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/src/kernel/Makefile)。
+[`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/kernel/Makefile)。
 
 再把`file`文件内容变成正确的，再查看内核日志:
 ```sh
