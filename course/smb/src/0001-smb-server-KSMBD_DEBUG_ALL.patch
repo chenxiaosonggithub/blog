@@ -1,0 +1,42 @@
+From 71bd1e4e5131cf2da2f5ab9d5ab9ae514d3166ef Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Thu, 8 May 2025 15:12:45 +0800
+Subject: [PATCH] smb/server: KSMBD_DEBUG_ALL
+
+And ksmbd_debug() print func and line.
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/server/glob.h   | 2 +-
+ fs/smb/server/server.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/smb/server/glob.h b/fs/smb/server/glob.h
+index 4ea187af2348..0b7a3765df93 100644
+--- a/fs/smb/server/glob.h
++++ b/fs/smb/server/glob.h
+@@ -39,7 +39,7 @@ extern int ksmbd_debug_types;
+ #define ksmbd_debug(type, fmt, ...)				\
+ 	do {							\
+ 		if (ksmbd_debug_types & KSMBD_DEBUG_##type)	\
+-			pr_info(fmt, ##__VA_ARGS__);		\
++			pr_info("[%s:%d] " fmt, __func__, __LINE__,  ##__VA_ARGS__); \
+ 	} while (0)
+ 
+ #define UNICODE_LEN(x)		((x) * 2)
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index ab533c602987..fc2b6936f59d 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -22,7 +22,7 @@
+ #include "crypto_ctx.h"
+ #include "auth.h"
+ 
+-int ksmbd_debug_types;
++int ksmbd_debug_types = KSMBD_DEBUG_ALL;
+ 
+ struct ksmbd_server_config server_conf;
+ 
+-- 
+2.34.1
+

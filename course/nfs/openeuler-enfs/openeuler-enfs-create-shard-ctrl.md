@@ -1,0 +1,43 @@
+# 代码分析
+
+```c
+mount
+  path_mount
+    do_new_mount
+      vfs_get_tree
+        nfs_get_tree
+          nfs_try_get_tree
+            nfs_try_mount_request
+              nfs3_create_server
+                nfs_create_server
+                  nfs_probe_fsinfo
+                    nfs3_proc_fsinfo
+                      do_proc_fsinfo
+                        nfs3_rpc_wrapper
+                          rpc_call_sync
+                            rpc_run_task
+                              rpc_execute
+                                __rpc_execute
+                                  call_start
+                                    rpc_task_set_transport
+                                      rpc_multipath_ops_set_transport
+                                        enfs_set_transport
+                                          shard_set_transport
+                                            get_uuid_from_task
+            nfs_get_tree_common
+              nfs_get_root
+                nfs3_proc_get_root
+                  do_proc_get_root
+                    nfs3_rpc_wrapper
+                      rpc_call_sync
+                        rpc_run_task
+                          rpc_execute
+                            __rpc_execute
+                              call_start
+                                rpc_task_set_transport
+                                  rpc_multipath_ops_set_transport
+                                    enfs_set_transport
+                                      shard_set_transport
+                                        get_uuid_from_task
+```
+

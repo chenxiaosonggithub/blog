@@ -1,0 +1,98 @@
+From 5a8ad995f0d32627f3919f68f25e7c2e52d26743 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Date: Tue, 15 Apr 2025 16:59:33 +0800
+Subject: [PATCH] debug nfs_unlock_request()
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Change-Id: I6fa808c7e267a8021e17127bab7d9a229d921567
+---
+ fs/nfs/pagelist.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+
+diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
+index b38a780dc29b..6784ca4b6373 100644
+--- a/fs/nfs/pagelist.c
++++ b/fs/nfs/pagelist.c
+@@ -26,6 +26,18 @@
+ 
+ #define NFSDBG_FACILITY		NFSDBG_PAGECACHE
+ 
++#define NFS_TRACE_MAX_SIZE	10240 // 栈的个数，消耗总内存 10240 * 288 = 2880KB
++#define NFS_LINE_PER_STACK	32 // 每个栈最大的行数
++struct nfs_debug_trace {
++	unsigned long line[NFS_LINE_PER_STACK]; // 8 * NFS_LINE_PER_STACK
++	unsigned int trace_len; // 4
++	pid_t pid; // 4
++	char comm[TASK_COMM_LEN]; // 16
++	struct nfs_page *nfs_page; // 8
++}; // 32 + 8 * NFS_LINE_PER_STACK = 288
++
++static struct nfs_debug_trace *nfs_debug_trace;
++static atomic_t nfs_debug_trace_idx;
+ static struct kmem_cache *nfs_page_cachep;
+ static const struct rpc_call_ops nfs_pgio_common_ops;
+ 
+@@ -371,6 +383,31 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
+ 	return req;
+ }
+ 
++static void nfs_debug_print_trace(struct nfs_page *req)
++{
++	struct nfs_debug_trace *trace;
++	int i;
++	for (i = 0; i < NFS_TRACE_MAX_SIZE; i++) {
++		trace = &nfs_debug_trace[i];
++		if (req != trace->nfs_page)
++			continue;
++		printk("%s:%d, pid:%d, comm:%s, i:%d, req:%px\n", __func__, __LINE__,
++		       trace->pid, trace->comm, i, req);
++		stack_trace_print(trace->line, trace->trace_len, 2);
++	}
++}
++
++static void nfs_debug_save_trace(struct nfs_page *req)
++{
++	int idx = atomic_add_return(1, &nfs_debug_trace_idx) % NFS_TRACE_MAX_SIZE;
++	struct nfs_debug_trace *trace = &nfs_debug_trace[idx];
++	trace->trace_len = stack_trace_save(trace->line, NFS_LINE_PER_STACK, 2);
++	trace->pid = current->pid;
++	strncpy(trace->comm, current->comm, TASK_COMM_LEN);
++	trace->nfs_page = req;
++	// nfs_debug_print_trace(req); // 用于测试输出内容是否正确
++}
++
+ /**
+  * nfs_unlock_request - Unlock request and wake up sleepers.
+  * @req:
+@@ -378,9 +415,11 @@ nfs_create_request(struct nfs_open_context *ctx, struct page *page,
+ void nfs_unlock_request(struct nfs_page *req)
+ {
+ 	if (!NFS_WBACK_BUSY(req)) {
++		nfs_debug_print_trace(req);
+ 		printk(KERN_ERR "NFS: Invalid unlock attempted\n");
+ 		BUG();
+ 	}
++	nfs_debug_save_trace(req);
+ 	smp_mb__before_atomic();
+ 	clear_bit(PG_BUSY, &req->wb_flags);
+ 	smp_mb__after_atomic();
+@@ -1335,11 +1374,16 @@ int __init nfs_init_nfspagecache(void)
+ 	if (nfs_page_cachep == NULL)
+ 		return -ENOMEM;
+ 
++	nfs_debug_trace = kzalloc(sizeof(*nfs_debug_trace) * NFS_TRACE_MAX_SIZE, GFP_KERNEL);
++	if (!nfs_debug_trace)
++		return -ENOMEM;
++	atomic_set(&nfs_debug_trace_idx, 0);
+ 	return 0;
+ }
+ 
+ void nfs_destroy_nfspagecache(void)
+ {
++	kfree(nfs_debug_trace);
+ 	kmem_cache_destroy(nfs_page_cachep);
+ }
+ 
+-- 
+2.34.1
+

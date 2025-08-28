@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <title>Page Not Found</title>
+</head>
+<body>
+  <script>
+    const path = window.location.pathname;
+
+    if (path === "/baidunetdisk") {
+      // 博客里用到
+      window.location.href = "https://pan.baidu.com/s/12hDXdKdIE4-ggjcS7-88lw?pwd=1234";
+    } else if (path === "/bili") {
+      // 博客里用到，还有CSDN
+      window.location.href = "https://space.bilibili.com/351970900";
+    } else if (path === "/tmp/btrfs-forced-readonly-log.txt") {
+      // https://lore.kernel.org/all/tencent_0D3574DAB98883D88196B3F24D2D379D7D0A@qq.com/
+      window.location.href = "https://chenxiaosong.com/tmp/btrfs/btrfs-forced-readonly-log.txt";
+    } else if (path === "/courses/nfs/patches/CVE-2022-24448.html") {
+      // https://gitee.com/openeuler/kernel/issues/IB6FR2
+      // https://gitee.com/openeuler/kernel/issues/IB6DNK
+      window.location.href = "https://chenxiaosong.com/course/nfs/patch/CVE-2022-24448.html";
+    } else if (path === "/src/nfs/4.19-null-ptr-deref-in-nfs_updatepage.html") {
+      // https://gitee.com/openeuler/kernel/issues/IAJ2ZJ
+      window.location.href = "https://chenxiaosong.com/course/nfs/issue/4.19-null-ptr-deref-in-nfs_updatepage.html";
+    } else if (path === "/linux/chenxiaosong.com.html") {
+      // http://tangyouling.com/linux-environment/website-construction.html
+      window.location.href = "https://chenxiaosong.com/course/gnu-linux/blog-web.html";
+    } else if (path === "/en/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.html") {
+      // https://lore.kernel.org/all/64E3DD4D765DEAD1+87aeb2d4-3732-4e57-ada6-098dbf0a7feb@chenxiaosong.com/
+      window.location.href = "https://chenxiaosong.com/en/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.html";
+    } else if (path === "/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html") {
+      // https://gitee.com/openeuler/kernel/issues/ICN6OQ
+      window.location.href = "https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html";
+    } else if (path === "/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html") {
+      // https://gitee.com/openeuler/kernel/issues/ICN6OQ
+      window.location.href = "https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html";
+    } else if (path === "/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html") {
+      window.location.href = "https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html";
+    } else {
+      // 其他路径重定向到主页
+      window.location.href = "/";
+    }
+  </script>
+</body>
+</html>
+

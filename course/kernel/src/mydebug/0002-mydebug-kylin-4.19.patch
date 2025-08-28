@@ -1,0 +1,61 @@
+From 8b1d79d318fc1f72a065c89f5d921415bb1a5646 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Thu, 1 May 2025 19:08:00 +0800
+Subject: [PATCH] mydebug: kylin 4.19
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Change-Id: I43ff8b7811db90c7b1850bf4a1fb823d86d0007a
+---
+ Makefile          | 2 +-
+ mydebug/mydebug.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e7046d17eb92..62280e9b9b52 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1049,7 +1049,7 @@ endif
+ PHONY += prepare0
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ mydebug/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff --git a/mydebug/mydebug.c b/mydebug/mydebug.c
+index dee1c13fd282..6f4287e9d1f0 100644
+--- a/mydebug/mydebug.c
++++ b/mydebug/mydebug.c
+@@ -12,15 +12,16 @@
+  */
+ 
+ #include <linux/module.h>
+-#include <linux/device/class.h>
+ #include <linux/stacktrace.h>
++#include <linux/device.h>
++#include <linux/sysfs.h>
+ #include <mydebug.h>
+ 
+ int mydebug_on_types = MYDEBUG_ON_PRINT;
+ EXPORT_SYMBOL(mydebug_on_types);
+ 
+-static ssize_t debug_show(const struct class *class,
+-	const struct class_attribute *attr, char *buf)
++static ssize_t debug_show(struct class *class,
++	struct class_attribute *attr, char *buf)
+ {
+ 	ssize_t sz = 0;
+ 	int i, pos = 0;
+@@ -35,7 +36,7 @@ static ssize_t debug_show(const struct class *class,
+ 	return sz;
+ }
+ 
+-static ssize_t debug_store(const struct class *class, const struct class_attribute *attr,
++static ssize_t debug_store(struct class *class, struct class_attribute *attr,
+ 			   const char *buf, size_t len)
+ {
+ 	int i;
+-- 
+2.34.1
+

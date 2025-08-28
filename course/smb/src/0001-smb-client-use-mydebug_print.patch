@@ -1,0 +1,116 @@
+From e20b14b049d091373e65c10cc0f196a2017b3543 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Wed, 7 May 2025 15:56:49 +0800
+Subject: [PATCH] smb/client: use mydebug_print()
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/client/cifs_debug.c |  2 +-
+ fs/smb/client/cifs_debug.h | 28 +++++++++++++++-------------
+ fs/smb/client/transport.c  |  2 +-
+ 3 files changed, 17 insertions(+), 15 deletions(-)
+
+diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
+index e03c890de0a0..567425af3135 100644
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -30,7 +30,7 @@
+ void
+ cifs_dump_mem(char *label, void *data, int length)
+ {
+-	pr_debug("%s: dump of %d bytes of data at 0x%p\n", label, length, data);
++	cifs_info("%s: dump of %d bytes of data at 0x%p\n", label, length, data);
+ 	print_hex_dump(KERN_DEBUG, "", DUMP_PREFIX_OFFSET, 16, 4,
+ 		       data, length, true);
+ }
+diff --git a/fs/smb/client/cifs_debug.h b/fs/smb/client/cifs_debug.h
+index ce5cfd236fdb..6869fa66882e 100644
+--- a/fs/smb/client/cifs_debug.h
++++ b/fs/smb/client/cifs_debug.h
+@@ -33,6 +33,8 @@ extern int cifsFYI;
+ #endif
+ #define ONCE 8
+ 
++#include <mydebug.h>
++
+ /*
+  *	debug ON
+  *	--------
+@@ -53,7 +55,7 @@ extern int cifsFYI;
+ 
+ /* Information level messages, minor events */
+ #define cifs_info_func(ratefunc, fmt, ...)				\
+-	pr_info_ ## ratefunc(fmt, ##__VA_ARGS__)
++	mydebug_print(fmt, ##__VA_ARGS__)
+ 
+ #define cifs_info(fmt, ...)						\
+ 	cifs_info_func(ratelimited, fmt, ##__VA_ARGS__)
+@@ -62,12 +64,12 @@ extern int cifsFYI;
+ #define cifs_dbg_func(ratefunc, type, fmt, ...)				\
+ do {									\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+-		pr_debug_ ## ratefunc("%s: " fmt,			\
++		mydebug_print("%s: " fmt,				\
+ 				      __FILE__, ##__VA_ARGS__);		\
+ 	} else if ((type) & VFS) {					\
+-		pr_err_ ## ratefunc("VFS: " fmt, ##__VA_ARGS__);	\
+-	} else if ((type) & NOISY && (NOISY != 0)) {			\
+-		pr_debug_ ## ratefunc(fmt, ##__VA_ARGS__);		\
++		mydebug_print("VFS: " fmt, ##__VA_ARGS__);		\
++	} else {							\
++		mydebug_print(fmt, ##__VA_ARGS__);			\
+ 	}								\
+ } while (0)
+ 
+@@ -83,14 +85,14 @@ do {									\
+ do {									\
+ 	spin_lock(&server->srv_lock);					\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+-		pr_debug_ ## ratefunc("%s: \\\\%s " fmt,		\
++		mydebug_print("%s: \\\\%s " fmt,			\
+ 				      __FILE__, server->hostname,	\
+ 				      ##__VA_ARGS__);			\
+ 	} else if ((type) & VFS) {					\
+-		pr_err_ ## ratefunc("VFS: \\\\%s " fmt,			\
++		mydebug_print("VFS: \\\\%s " fmt,			\
+ 				    server->hostname, ##__VA_ARGS__);	\
+-	} else if ((type) & NOISY && (NOISY != 0)) {			\
+-		pr_debug_ ## ratefunc("\\\\%s " fmt,			\
++	} else {							\
++		mydebug_print("\\\\%s " fmt,				\
+ 				      server->hostname, ##__VA_ARGS__);	\
+ 	}								\
+ 	spin_unlock(&server->srv_lock);					\
+@@ -111,12 +113,12 @@ do {									\
+ 	if (tcon && tcon->tree_name)					\
+ 		tn = tcon->tree_name;					\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+-		pr_debug_ ## ratefunc("%s: %s "	fmt,			\
++		mydebug_print("%s: %s "	fmt,				\
+ 				      __FILE__, tn, ##__VA_ARGS__);	\
+ 	} else if ((type) & VFS) {					\
+-		pr_err_ ## ratefunc("VFS: %s " fmt, tn, ##__VA_ARGS__);	\
+-	} else if ((type) & NOISY && (NOISY != 0)) {			\
+-		pr_debug_ ## ratefunc("%s " fmt, tn, ##__VA_ARGS__);	\
++		mydebug_print("VFS: %s " fmt, tn, ##__VA_ARGS__);	\
++	} else {							\
++		mydebug_print("%s " fmt, tn, ##__VA_ARGS__);	\
+ 	}								\
+ } while (0)
+ 
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index 266af17aa7d9..5c29b5327c0f 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -143,7 +143,7 @@ void __release_mid(struct kref *refcount)
+ 		trace_smb3_slow_rsp(smb_cmd, midEntry->mid, midEntry->pid,
+ 			       midEntry->when_sent, midEntry->when_received);
+ 		if (cifsFYI & CIFS_TIMER) {
+-			pr_debug("slow rsp: cmd %d mid %llu",
++			cifs_info("slow rsp: cmd %d mid %llu",
+ 				 midEntry->command, midEntry->mid);
+ 			cifs_info("A: 0x%lx S: 0x%lx R: 0x%lx\n",
+ 				  now - midEntry->when_alloc,
+-- 
+2.34.1
+

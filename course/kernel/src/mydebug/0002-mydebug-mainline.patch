@@ -1,0 +1,25 @@
+From faf818d40476474e66b7cb9ecca9e132e04f0296 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Thu, 1 May 2025 19:01:35 +0800
+Subject: [PATCH 2/2] mydebug: mainline
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ Kbuild | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Kbuild b/Kbuild
+index f327ca86990c..fa9b81702f3b 100644
+--- a/Kbuild
++++ b/Kbuild
+@@ -84,6 +84,7 @@ obj-y			+= kernel/
+ obj-y			+= certs/
+ obj-y			+= mm/
+ obj-y			+= fs/
++obj-y			+= mydebug/
+ obj-y			+= ipc/
+ obj-y			+= security/
+ obj-y			+= crypto/
+-- 
+2.34.1
+

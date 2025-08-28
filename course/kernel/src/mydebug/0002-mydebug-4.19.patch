@@ -1,0 +1,101 @@
+From 319e10522598427b350852f576b207aed91f5a41 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Thu, 1 May 2025 19:08:00 +0800
+Subject: [PATCH] mydebug: 4.19
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ Makefile          |  2 +-
+ mydebug/mydebug.c | 33 ++++++++++++++++++++-------------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8df76f9b0712..acba740eb012 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1000,7 +1000,7 @@ endif
+ PHONY += prepare0
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ mydebug/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff --git a/mydebug/mydebug.c b/mydebug/mydebug.c
+index dee1c13fd282..9e1c971cd8a7 100644
+--- a/mydebug/mydebug.c
++++ b/mydebug/mydebug.c
+@@ -12,15 +12,16 @@
+  */
+ 
+ #include <linux/module.h>
+-#include <linux/device/class.h>
+ #include <linux/stacktrace.h>
++#include <linux/device.h>
++#include <linux/sysfs.h>
+ #include <mydebug.h>
+ 
+ int mydebug_on_types = MYDEBUG_ON_PRINT;
+ EXPORT_SYMBOL(mydebug_on_types);
+ 
+-static ssize_t debug_show(const struct class *class,
+-	const struct class_attribute *attr, char *buf)
++static ssize_t debug_show(struct class *class,
++	struct class_attribute *attr, char *buf)
+ {
+ 	ssize_t sz = 0;
+ 	int i, pos = 0;
+@@ -35,7 +36,7 @@ static ssize_t debug_show(const struct class *class,
+ 	return sz;
+ }
+ 
+-static ssize_t debug_store(const struct class *class, const struct class_attribute *attr,
++static ssize_t debug_store(struct class *class, struct class_attribute *attr,
+ 			   const char *buf, size_t len)
+ {
+ 	int i;
+@@ -79,25 +80,31 @@ struct class mydebug_ctrl_class = {
+ #define MAX_LINES_PER_STACK	64 // 每个栈最大的行数
+ static unsigned long stack_lines[MAX_LINES_PER_STACK];
+ 
+-static void mydebug_stack_trace_print(const unsigned long *entries,
+-				      unsigned int nr_entries,
+-				      int spaces)
++void mydebug_print_stack_trace(struct stack_trace *trace, int spaces)
+ {
+-	unsigned int i;
++	int i;
+ 
+-	if (WARN_ON(!entries))
++	if (WARN_ON(!trace->entries))
+ 		return;
+ 
+-	for (i = 0; i < nr_entries; i++)
+-		trace_printk("%*c%pS\n", 1 + spaces, ' ', (void *)entries[i]);
++	for (i = 0; i < trace->nr_entries; i++)
++		trace_printk("%*c%pS\n", 1 + spaces, ' ', (void *)trace->entries[i]);
+ }
+ 
+ void mydebug_dump_stack(void)
+ {
+ 	unsigned int trace_len;
+-	trace_len = stack_trace_save(stack_lines, MAX_LINES_PER_STACK, 0);
++	struct stack_trace trace;
++
++	trace.max_entries = MAX_LINES_PER_STACK;
++	trace.nr_entries = 0;
++	trace.entries = stack_lines;
++	trace.skip = 0;
++	save_stack_trace(&trace);
++	trace_len = trace.nr_entries;
++
+ 	trace_printk("comm:%s, pid:%d\n", current->comm, current->pid);
+-	mydebug_stack_trace_print(stack_lines, trace_len, 0);
++	mydebug_print_stack_trace(&trace, 0);
+ 	trace_printk("\n");
+ }
+ EXPORT_SYMBOL(mydebug_dump_stack);
+-- 
+2.34.1
+
