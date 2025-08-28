@@ -31,9 +31,9 @@ docker run \
 
 # qemu环境使用
 
-- [`mptcp-client.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mptcp/mptcp-client.c)
-- [`mptcp-server.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mptcp/mptcp-server.c)
-- [`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mptcp/Makefile)
+- [`mptcp-client.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mptcp/mptcp-client.c)
+- [`mptcp-server.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mptcp/mptcp-server.c)
+- [`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mptcp/Makefile)
 
 ## qemu虚拟机
 
@@ -135,9 +135,9 @@ ip mptcp endpoint add 192.168.53.210 dev ens2 subflow
 
 # 内核态socket
 
-- [`kernel-socket-client.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/kernel-socket/kernel-socket-client.c)
-- [`kernel-socket-server.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/kernel-socket/kernel-socket-server.c)
-- [`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/kernel-socket/Makefile)
+- [`kernel-socket-client.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/kernel-socket/kernel-socket-client.c)
+- [`kernel-socket-server.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/kernel-socket/kernel-socket-server.c)
+- [`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/kernel-socket/Makefile)
 
 测试步骤:
 ```sh
@@ -148,7 +148,7 @@ insmod ./kernel-socket-client.ko
 
 # 内核中mptcp的应用
 
-[查看`kernel-create-socket.md`](https://github.com/chenxiaosonggithub/tmp/blob/master/mptcp/kernel-create-socket.md)。
+[查看`kernel-create-socket.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/mptcp/kernel-create-socket.md)。
 
 #  疑问
 

@@ -77,7 +77,7 @@ tar xvf linux-6.8.5.tar.xz
 
 内核编译时打开[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)中的配置。虚拟机中执行脚本
 <!-- public begin -->
-[`mod-cfg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
+[`mod-cfg.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
 <!-- public end -->
 <!-- private begin -->
 `src/mod-cfg.sh`
@@ -288,7 +288,7 @@ cat trace_pipe
 
 参考
 <!-- public begin -->
-[kprobes](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/kprobe)
+[kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/kprobe)
 <!-- public end -->
 <!-- private begin -->
 `src/kprobe`
@@ -362,11 +362,11 @@ ccflags-y += -DVERBOSE_DEBUG
 
 # `mydebug`模块 {#mydebug}
 
-为了方便调试，我自己写了一个[`mydebug`模块](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/mydebug)，
-4.19内核合入[`0001-mydebug-common.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mydebug/0001-mydebug-common.patch)和
-[`0002-mydebug-4.19.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mydebug/0002-mydebug-4.19.patch)，
-主线最新代码合入[`0001-mydebug-common.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mydebug/0001-mydebug-common.patch)和
-[`0002-mydebug-mainline.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/mydebug/0002-mydebug-mainline.patch)。
+为了方便调试，我自己写了一个[`mydebug`模块](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/mydebug)，
+4.19内核合入[`0001-mydebug-common.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0001-mydebug-common.patch)和
+[`0002-mydebug-4.19.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0002-mydebug-4.19.patch)，
+主线最新代码合入[`0001-mydebug-common.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0001-mydebug-common.patch)和
+[`0002-mydebug-mainline.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/mydebug/0002-mydebug-mainline.patch)。
 
 改变`/sys/class/mydebug-ctrl/debug`文件的值就能控制调试开关:
 ```sh

@@ -22,7 +22,7 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站:
 CLA 协议是开源贡献协议，用于规范贡献者的权利及义务。贡献者在贡献openEuler社区前，需要[签署CLA](https://clasign.osinfra.cn/sign/gitee_openeuler-1611298811283968340)，[签署流程](https://www.openeuler.org/zh/blog/2022-11-25-cla/CLA%E7%AD%BE%E7%BD%B2%E6%B5%81%E7%A8%8B.html)。如果你是以公司邮箱贡献，且公司已经签了CLA，你应该选择“法人贡献者登记”；如果你是以个人邮箱贡献，选择“签署个人CLA”。注意仓库下`.git/config`或`~/.gitconfig`中的邮箱配置要求必须是签署了CLA的邮箱，用`git log --pretty=fuller`可以查看commit的邮箱。
 
 [Kernel SIG | openEuler Kernel 补丁合入规范](https://my.oschina.net/openeuler/blog/5949607)，可以在上游[主线仓库](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git)或[stable仓库](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git)路径下用
-[脚本`create-openeuler-git-msg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/create-openeuler-git-msg.sh)
+[脚本`create-openeuler-git-msg.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/create-openeuler-git-msg.sh)
 生成openEuler补丁需要的格式。
 
 注意openEuler门禁会检查修改前后的kabi变化，如果想自己本地检查，可以对比修改前后的`vmlinux.symvers`和`Module.symvers`。
@@ -79,7 +79,7 @@ openEuler的LTS有kabi白名单，使用脚本[`check-kabi`](https://gitee.com/s
 
 你可以通过[bugzilla](https://bugzilla.kernel.org/)或[syzbot](https://syzkaller.appspot.com/upstream)发现内核bug，也可以通过阅读内核代码发现bug或进行重构。
 <!-- public begin -->
-或者可以用[`calc-func-lines.sh`脚本](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/script/calc-func-lines.sh)
+或者可以用[`calc-func-lines.sh`脚本](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/script/calc-func-lines.sh)
 <!-- public end -->
 <!-- private begin -->
 或者可以用`src/script/calc-func-lines.sh`脚本
@@ -187,7 +187,7 @@ foxmail(qq)邮箱`~/.gitconfig`:
 git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@example.com file1.patch file2.patch
 ```
 
-可以使用脚本[`get-maintainer-email.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/get-maintainer-email.sh)来获取邮箱:
+可以使用脚本[`get-maintainer-email.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/get-maintainer-email.sh)来获取邮箱:
 ```sh
 git format-patch -1 1aee9158bc97
 bash get-maintainer-email.sh fs/nfs/ fs/nfsd fs/nfs_common 0001-nfsd-lock_rename-needs-both-directories-to-live-on-t.patch

@@ -56,7 +56,7 @@ sudo apt update
 sudo apt install make gcc flex bison libncurses-dev libelf-dev libssl-dev -y
 ```
 
-内核[x86_64-config](https://github.com/chenxiaosonggithub/tmp/blob/master/config/x86_64-config)文件还要打开以下配置:
+内核[x86_64-config](https://gitee.com/chenxiaosonggitee/tmp/blob/master/config/x86_64-config)文件还要打开以下配置:
 ```sh
 # Debug info for symbolization.
 CONFIG_DEBUG_INFO_DWARF4=y
@@ -364,7 +364,7 @@ MOUNT_OPTIONS="-o acl,user_xattr"
 
 ### nfs
 
-先执行[`bash nfs-svr-setup.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/nfs-svr-setup.sh)启动nfs server。
+先执行[`bash nfs-svr-setup.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/nfs-svr-setup.sh)启动nfs server。
 
 创建`local.config`配置文件:
 ```sh
