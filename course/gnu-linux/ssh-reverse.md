@@ -191,8 +191,8 @@ sudo systemctl start cpolar
 
 cpolar的域名和端口不固定，可以使用以下脚本获取域名和端口然后ssh:
 
-- 获取cpolar的status网页: [`cpolar-get-status-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/cpolar-get-status-html.sh)
-- 获取ssh命令: [`cpolar-get-ssh-cmd.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/cpolar-get-ssh-cmd.sh)
+- 获取cpolar的status网页: [`cpolar-get-status-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/cpolar-get-status-html.sh)
+- 获取ssh命令: [`cpolar-get-ssh-cmd.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/cpolar-get-ssh-cmd.sh)
 
 ## 其他
 

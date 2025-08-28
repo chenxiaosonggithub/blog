@@ -27,7 +27,7 @@ Nginx（发音同「engine X」）是异步框架的网页服务器，也可以�
 
 在[阿里云](https://yundun.console.aliyun.com/?p=cas#/certExtend/free/cn-hangzhou)购买免费SSL证书，再点击“创建证书”，点击“状态”栏中的感叹号，然后根据提示添加域名解析记录，注意证书签发后有效期为3个月。
 
-将[`nginx-config`](https://github.com/chenxiaosonggithub/blog/blob/master/src/blog-web/nginx-config)复制到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
+将[`nginx-config`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/nginx-config)复制到`/etc/nginx/sites-enabled/default`，具体的配置选项的解释请查看配置文件的具体内容。
 
 重启nginx服务:
 ```sh
@@ -61,7 +61,7 @@ rstcheck file
 
 pandoc用于将markdown或rst（ReStructuredText）格式文件转换成html。
 
-具体的命令可以参考[`create-html.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/blog-web/create-html.sh)，脚本里写了详细的说明。
+具体的命令可以参考[`create-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/create-html.sh)，脚本里写了详细的说明。
 
 ## sphinx
 
@@ -80,7 +80,7 @@ export MY_TOP_PATH=/your/top/path
 export MY_CODE_TOP_PATH=${MY_TOP_PATH}/code/
 ```
 
-[`restart.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/src/blog-web/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务:
+[`restart.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务:
 ```sh
 bash src/blog-web/restart.sh
 ```

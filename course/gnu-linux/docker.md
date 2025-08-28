@@ -92,7 +92,7 @@ docker run --name rm-workspace --hostname rm-workspace --rm -itd -v /home/sonvhi
 docker exec -it rm-workspace bash # 启动bash，退出bash后不会导致容器停止
 ```
 
-启动脚本[`start-docker.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/start-docker.sh)。
+启动脚本[`start-docker.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/start-docker.sh)。
 
 ## 更新镜像
 
@@ -110,7 +110,7 @@ docker image ls # 查看镜像是否删除成功
 cat workspace-ubuntu\:22.04.tar | docker import - workspace-ubuntu\:22.04 # 导入镜像
 ```
 
-脚本[`update-docker-image.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/gnu-linux/src/update-docker-image.sh)。
+脚本[`update-docker-image.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/update-docker-image.sh)。
 
 ## 中文支持
 
