@@ -25,7 +25,7 @@ smbpasswd root # 修改密码，不显示密码
 smbpasswd -n root # 设置成没密码, 但挂载时好像还是需要密码，以后再看为什么吧
 ```
 
-编辑[`/etc/samba/smb.conf`](https://github.com/chenxiaosonggithub/tmp/blob/master/smb/smb.conf)配置文件（不区分大小写），具体参数用法查看`man 5 smb.conf`:
+编辑[`/etc/samba/smb.conf`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/smb.conf)配置文件（不区分大小写），具体参数用法查看`man 5 smb.conf`:
 ```sh
 [global]
 # 注意注释要单独一行，不能加在配置内容后面
@@ -52,7 +52,7 @@ pam password change = yes
     writeable = yes
 ```
 
-执行脚本[samba-svr-setup.sh](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/samba-svr-setup.sh)启动用户态的samba server。
+执行脚本[samba-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/samba-svr-setup.sh)启动用户态的samba server。
 
 - `nmbd`用于管理工作组和NetBIOS name，通过UDP开启端口137和138解析名称。
 - `smbd`权限管理, 用于管理SAMBA主机共享的目录、文件和打印机等，通过TCP来传输数据，端口为139和445，ksmbd监听的端口是445。

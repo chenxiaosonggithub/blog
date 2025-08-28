@@ -38,7 +38,7 @@
 
 麒麟arm64系统下无法用`kprobe trace`，内核配置`CONFIG_TRACING`没打开。也没法用`systemtap`。
 
-使用`kretprobe`模块代码，[`kretprobe_smb.c`](https://github.com/chenxiaosonggithub/blog/blob/master/src/smb/kretprobe_smb.c)和[`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/src/smb/Makefile):
+使用`kretprobe`模块代码，[`kretprobe_smb.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/smb/kretprobe_smb.c)和[`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/smb/Makefile):
 ```sh
 make -j`nproc`
 insmod ./kretprobe_smb.ko func="compound_send_recv" # compound_send_recv可替换为其他函数名

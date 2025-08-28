@@ -82,7 +82,7 @@ log file = /usr/local/samba/var/log.%m
 
 `log level`的解析在`debug_parse_param()`函数中。
 
-打印函数堆栈用`log_stack_trace()`，比如打印`smbd_parent_loop()`的调用栈的补丁[`0001-dump-stack-of-smbd_parent_loop.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/0001-dump-stack-of-smbd_parent_loop.patch)。
+打印函数堆栈用`log_stack_trace()`，比如打印`smbd_parent_loop()`的调用栈的补丁[`0001-dump-stack-of-smbd_parent_loop.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/0001-dump-stack-of-smbd_parent_loop.patch)。
 
 `/usr/local/samba/var/log.smbd`日志文件中的打印结果如下:
 ```sh
@@ -131,7 +131,7 @@ echo -n '+p' > control # 所有打印
 
 但在熟悉代码阶段，一个调试打印这么折腾还限制打印次数，对熟悉代码肯定不友好，所以我在熟悉代码阶段用的是[`mydebug`模块](https://chenxiaosong.com/course/kernel/debug.html#mydebug)，
 打上[`mydebug`模块](https://chenxiaosong.com/course/kernel/debug.html#mydebug)的补丁后，
-再打上补丁[`0001-smb-client-use-mydebug_print.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/0001-smb-client-use-mydebug_print.patch)。
+再打上补丁[`0001-smb-client-use-mydebug_print.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/0001-smb-client-use-mydebug_print.patch)。
 
 另外可能还会有一些新增的动态打印（使用`pr_debug()`），可以用以下命令查看并打开动态打印:
 ```sh
