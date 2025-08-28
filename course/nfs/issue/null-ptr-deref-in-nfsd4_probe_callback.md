@@ -20,11 +20,11 @@ LOAD AVERAGE: 4.08, 4.00, 3.83
        PANIC: "Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000"
 ```
 
-[点击这里查看日志](https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
+[点击这里查看日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
 
 # vmcore分析
 
-[详细的crash命令的输出请点击这里查看](https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
+[详细的crash命令的输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md)。
 
 ```sh
 rpm2cpio kernel-debuginfo-4.19.90-52.39.v2207.ky10.aarch64.rpm | cpio -div

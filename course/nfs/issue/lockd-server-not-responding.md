@@ -59,7 +59,7 @@ rw,relatime,vers=3,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,timeo=600
                                 locks_inode(file->f_file)->i_ino,
 ```
 
-用户态程序[`nfs-lock.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/nfs-lock.c)。
+用户态程序[`nfs-lock.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/nfs-lock.c)。
 
 测试步骤:
 ```sh
@@ -95,7 +95,7 @@ nfs client会不断重发请求，直到用户态退出进程。
 
 ## 构造tcp连接断开 {#reproduce-tcp-disconnect}
 
-[`nfs-lock.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/nfs-lock.c)修改如下:
+[`nfs-lock.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/nfs-lock.c)修改如下:
 ```sh
 --- a/course/nfs/src/nfs-lock.c
 +++ b/course/nfs/src/nfs-lock.c
