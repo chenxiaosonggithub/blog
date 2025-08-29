@@ -4,6 +4,7 @@ MY_ECHO_DEBUG=0
 
 # 导入其他脚本
 . ${code_path}/blog/src/blog-web/common-lib.sh
+. ~/.set_proxy.sh 1
 
 is_sync_github=true
 if [ $# -ge 1 ]; then

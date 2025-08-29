@@ -4,6 +4,7 @@ user_name=chenxiaosonggithub
 github_io_repo=${code_path}/${user_name}.github.io/
 # 导入其他脚本
 . ${code_path}/blog/src/blog-web/common-lib.sh
+. ~/.set_proxy.sh 1
 
 comm_create_params "false"
 
