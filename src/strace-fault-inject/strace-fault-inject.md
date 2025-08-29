@@ -1,6 +1,6 @@
 # 源码安装 strace
 
-下载[strace/strace](https://github.com/strace/strace)代码，然后打上补丁[`fault-inject: inject memory allocate failed error`](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/0001-fault-inject-inject-memory-allocate-failed-error.patch)。
+下载[strace/strace](https://github.com/strace/strace)代码，然后打上补丁[`fault-inject: inject memory allocate failed error`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/strace-fault-inject/0001-fault-inject-inject-memory-allocate-failed-error.patch)。
 
 编译命令如下:
 ```sh
@@ -12,7 +12,7 @@ make
 
 # 内核修改
 
-内核代码打上补丁[src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch)，内核配置选项增加文件[src/strace-fault-inject/fault-inject-config.txt](https://github.com/chenxiaosonggithub/blog/blob/master/src/strace-fault-inject/fault-inject-config.txt)中的内容。
+内核代码打上补丁[src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/strace-fault-inject/0001-fault-inject-always-print-the-stack.patch)，内核配置选项增加文件[src/strace-fault-inject/fault-inject-config.txt](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/strace-fault-inject/fault-inject-config.txt)中的内容。
 
 # 测试
 

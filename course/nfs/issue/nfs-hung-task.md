@@ -1,6 +1,6 @@
 # 问题描述
 
-nfs client使用nfsv4.2挂载，[4.19内核 hung task日志](https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/nfs-hung-task-log.txt)。
+nfs client使用nfsv4.2挂载，[4.19内核 hung task日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfs-hung-task-log.txt)。
 
 # 4.19构造复现
 

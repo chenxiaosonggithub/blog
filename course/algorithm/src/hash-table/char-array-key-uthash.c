@@ -5,7 +5,7 @@
  * Copyright (C) 2025.01.20 ChenXiaoSong <chenxiaosong@chenxiaosong.com>
  */
 #include <stdio.h>
-// 如果访问不了github，uthash.h头文件也可以在这里下载: https://github.com/chenxiaosonggithub/tmp/blob/master/algorithm/uthash.h
+// 如果访问不了github，uthash.h头文件也可以在这里下载: https://gitee.com/chenxiaosonggitee/tmp/blob/master/algorithm/uthash.h
 #include "../../../../../tmp/algorithm/uthash.h"
 
 struct hash_table {

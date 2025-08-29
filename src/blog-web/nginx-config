@@ -93,7 +93,7 @@ server {
 	# 网页重定向
 	# location /tmp/btrfs-forced-readonly-log.txt {
 	# 	# permanent（永久） 或 redirect（临时）, 默认 redirect
-	# 	rewrite ^/tmp/btrfs-forced-readonly-log.txt$ https://github.com/chenxiaosonggithub/tmp/blob/master/btrfs/btrfs-forced-readonly-log.txt;
+	# 	rewrite ^/tmp/btrfs-forced-readonly-log.txt$ https://gitee.com/chenxiaosonggitee/tmp/blob/master/btrfs/btrfs-forced-readonly-log.txt;
 	# }
 
 	# 转发

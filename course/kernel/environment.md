@@ -151,7 +151,7 @@ curl -fsSL https://code-server.dev/install.sh | sh
 ```
 
 <!-- public begin -->
-[安装过程中输出的提示信息](https://github.com/chenxiaosonggithub/tmp/blob/master/kernel/code-server-install-log.txt)。
+[安装过程中输出的提示信息](https://gitee.com/chenxiaosonggitee/tmp/blob/master/kernel/code-server-install-log.txt)。
 <!-- public end -->
 
 或者下载[对应系统的安装包](https://github.com/coder/code-server/releases)。
@@ -233,7 +233,7 @@ git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linu
 
 建议新建一个`build`目录，把所有的编译输出存放在这个目录下，注意
 <!-- public begin -->
-[`.config`](https://github.com/chenxiaosonggithub/tmp/blob/master/config/x86_64-config)
+[`.config`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/config/x86_64-config)
 <!-- public end -->
 <!-- private begin -->
 `src/x86_64/config`
@@ -429,7 +429,7 @@ make O=build SPHINXOPTS=-v htmldocs -j`nproc` # -v 获得更详细的输出。
 
 - 降低编译优化等级，默认的内核编译优化等级太高，用GDB调试时不太方便，有些函数语句被优化了，无法打断点，这时就要降低编译优化等级。做好的虚拟机中已经打上了降低编译优化等级的补丁。
 <!-- public begin -->
-比如`x86_64`架构下可以在[`x86_64`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/x86_64)目录下选择对应版本的补丁，更多详细的内容请查看GDB调试相关的章节。
+比如`x86_64`架构下可以在[`x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/x86_64)目录下选择对应版本的补丁，更多详细的内容请查看GDB调试相关的章节。
 <!-- public end -->
 - `dump_stack()`输出的栈全是问号的解决办法。如果你使用`dump_stack()`输出的栈全是问号，可以 revert 补丁 `f1d9a2abff66 x86/unwind/orc: Don't skip the first frame for inactive tasks`。主线已经有补丁做了 revert: `230db82413c0 x86/unwind/orc: Fix unreliable stack dump with gcov`。
 <!-- public begin -->
@@ -492,25 +492,25 @@ QEMU: quick emulation，高速度、跨平台的开源模拟器，能模拟x86�
 
 测试编译好的内核我们不直接用发行版的iso镜像安装的系统，而是使用脚本生成比较小的镜像（不含有图形界面）。
 <!-- public begin -->
-进入目录[`kernel`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel)，
+进入目录[`kernel`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel)，
 <!-- public end -->
 选择相应的cpu架构，如
 <!-- public begin -->
-[`x86_64`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/x86_64)
+[`x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/x86_64)
 <!-- public end -->
 <!-- private begin -->
 `src/x86_64`
 <!-- private end -->
 目录。执行
 <!-- public begin -->
-[`create-raw.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/x86_64/create-raw.sh)
+[`create-raw.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/x86_64/create-raw.sh)
 <!-- public end -->
 <!-- private begin -->
 `create-raw.sh`
 <!-- private end -->
 生成raw格式的镜像，这个脚本会调用到
 <!-- public begin -->
-[`create-debian.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/create-debian.sh)
+[`create-debian.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/create-debian.sh)
 <!-- public end -->
 <!-- private begin -->
 `src/create-debian.sh`
@@ -527,21 +527,21 @@ qemu-img convert -p -f raw -O qcow2 image.raw image.qcow2
 
 再执行脚本
 <!-- public begin -->
-[`link-scripts.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/link-scripts.sh)
+[`link-scripts.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/link-scripts.sh)
 <!-- public end -->
 <!-- private begin -->
 `src/link-scripts.sh`
 <!-- private end -->
 把脚本链接到相应的目录，执行
 <!-- public begin -->
-[`update-base.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/x86_64/update-base.sh)
+[`update-base.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/x86_64/update-base.sh)
 <!-- public end -->
 <!-- private begin -->
 `update-base.sh`
 <!-- private end -->
 启动虚拟机更新镜像（如再安装一些额外的软件），镜像更新完后关闭虚拟机，再执行
 <!-- public begin -->
-[`create-qcow2.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/x86_64/create-qcow2.sh)
+[`create-qcow2.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/x86_64/create-qcow2.sh)
 <!-- public end -->
 <!-- private begin -->
 `create-qcow2.sh`
@@ -698,9 +698,9 @@ echo "stty rows 54 cols 229" > stty.sh
 
 当启用了9p文件系统，就可以把宿主机的modules目录（当然也可以是其他任何目录）共享给虚拟机，
 具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本
-[`mod-cfg.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
+[`mod-cfg.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
 （直接运行`bash mod-cfg.sh`可以查看使用帮助）挂载和链接模块目录。也可以用
-[`parse-cmdline.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
+[`parse-cmdline.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
 解析`/proc/cmdline`中的参数。
 
 root免密登录，`/etc/ssh/sshd_config`（注意不是`ssh_config`） 修改以下内容:
@@ -771,7 +771,7 @@ CONFIG_RANDOMIZE_BASE = n # 关闭地址随机化
 
 可以使用
 <!-- public begin -->
-我常用的[x86_64的内核配置文件](https://github.com/chenxiaosonggithub/tmp/blob/master/config/x86_64-config)。
+我常用的[x86_64的内核配置文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/config/x86_64-config)。
 <!-- public end -->
 <!-- private begin -->
 `src/x86_64/config`
@@ -784,7 +784,7 @@ gcc的编译选项`O1`优化等级不需要修改就可以编译通过。`O0`优
 <!-- public end -->
 `Og`优化等级经过修改可以编译通过，`x86_64`合入目录
 <!-- public begin -->
-[`course/kernel/src/x86_64`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/x86_64)
+[`course/kernel/src/x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/x86_64)
 <!-- public end -->
 <!-- private begin -->
 `src/x86_64`
@@ -912,7 +912,7 @@ cat .text .data .bss # 输出各个段地址
 (gdb) remove-symbol-file /这里要写完整的绝对路径/linux/x86_64-build/fs/smb/client/cifs.ko
 ```
 
-可以在虚拟机中直接运行脚本获得要输入的完整gdb命令: [`bash add-symbol-file-full-cmd.sh`](https://github.com/chenxiaosonggithub/blog/tree/master/course/kernel/src/script/add-symbol-file-full-cmd.sh)。
+可以在虚拟机中直接运行脚本获得要输入的完整gdb命令: [`bash add-symbol-file-full-cmd.sh`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/script/add-symbol-file-full-cmd.sh)。
 
 这时就能开心的对ko模块中的代码进行打断点之类的操作了。
 

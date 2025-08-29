@@ -4,7 +4,13 @@
 ```sh
 mount -t nfs -o vers=3,localaddrs=192.168.53.209~192.168.53.46,remoteaddrs=192.168.53.210~192.168.53.47 192.168.53.210:/tmp/s_test /mnt/
 modprobe -r enfs
-modprobe enfs # 报错 nfs: server 192.168.53.210 not responding, timed out
+modprobe enfs
+# nfs: server 10.42.43.92 not responding, timed out
+# ...
+# enfs:[pm_set_path_state]The xprt localip{192.168.53.209} remoteip{10.42.43.93} path state change from {1} to {2}.
+# enfs:[pm_set_path_state]The xprt localip{192.168.53.46} remoteip{10.42.43.92} path state change from {1} to {2}.
+# enfs:[pm_set_path_state]The xprt localip{192.168.53.209} remoteip{10.42.43.92} path state change from {1} to {2}.
+# enfs:[pm_set_path_state]The xprt localip{192.168.53.46} remoteip{10.42.43.93} path state change from {1} to {2}.
 ```
 
 <!--

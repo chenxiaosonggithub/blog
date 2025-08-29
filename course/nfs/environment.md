@@ -23,7 +23,7 @@ exportfs -i -o fsid=148252,no_root_squash,rw *:/tmp/s_test # 添加
 exportfs -u *:/tmp/s_test # 删除
 ```
 
-执行脚本[nfs-svr-setup.sh](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/nfs-svr-setup.sh)启动nfs server，其中，`rpcbind`（在服务文件`/lib/systemd/system/rpcbind.service`中）负责端口的对应工作（以前叫`portmap`），其他程序请查看`/lib/systemd/system/nfs-server.service`服务文件。
+执行脚本[nfs-svr-setup.sh](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/nfs-svr-setup.sh)启动nfs server，其中，`rpcbind`（在服务文件`/lib/systemd/system/rpcbind.service`中）负责端口的对应工作（以前叫`portmap`），其他程序请查看`/lib/systemd/system/nfs-server.service`服务文件。
 
 查看支持的nfs版本:
 ```sh
@@ -94,7 +94,7 @@ rm -rf build_dir; mkdir build_dir
 cd build_dir
 cmake -DUSE_FSAL_VFS=ON ../src
 make -j`nproc`
-make install # 日志查看https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/ganesha-install-log.txt
+make install # 日志查看https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/ganesha-install-log.txt
 cp ../src/scripts/systemd/nfs-ganesha-lock.service.el8 /usr/lib/systemd/system/nfs-ganesha-lock.service
 cp ../src/scripts/systemd/nfs-ganesha.service.el7 /usr/lib/systemd/system/nfs-ganesha.service
 ```

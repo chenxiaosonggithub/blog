@@ -33,7 +33,7 @@ cat trace_pipe
 mount -t nfs -o vers=3 localhost:/tmp /mnt
 ```
 
-在用户态通过创建两个线程，不断打开又关闭文件，编译运行[`thread-open-file-short-time.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/thread-open-file-short-time.c):
+在用户态通过创建两个线程，不断打开又关闭文件，编译运行[`thread-open-file-short-time.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/thread-open-file-short-time.c):
 ```sh
 gcc -o thread-open-file-short-time thread-open-file-short-time.c -lpthread
 ./thread-open-file-short-time
@@ -64,8 +64,8 @@ ps -eLf | grep 956
 
 源码文件如下:
 
-- [`kernel-open-file.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/kernel-open-file.c)
-- [`Makefile`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/Makefile)
+- [`kernel-open-file.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/kernel-open-file.c)
+- [`Makefile`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/Makefile)
 
 挂载:
 ```sh
@@ -80,7 +80,7 @@ echo 3 > /proc/sys/vm/drop_caches
 insmod kernel-open-file.ko
 ```
 
-日志请查看[`nfs-umount-device-is-busy-log.txt`](https://github.com/chenxiaosonggithub/tmp/blob/master/nfs/nfs-umount-device-is-busy-log.txt):
+日志请查看[`nfs-umount-device-is-busy-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfs-umount-device-is-busy-log.txt):
 ```sh
 ...
 [  122.567308] NFS: open file(dir/file)
@@ -117,7 +117,7 @@ openat
 
 在内核空间打开文件时，不会把文件描述符加到`fdtable`中，`fuser -m`和`lsof +D`无法遍历到文件描述符，所以无法找到打开文件的进程。
 
-可以用[`kprobe-fd_install.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/nfs/src/kprobe-fd_install.c)调试，
+可以用[`kprobe-fd_install.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/kprobe-fd_install.c)调试，
 其中`mydebug_dump_stack()`相关的用法可以查看[《mydebug模块》](https://chenxiaosong.com/course/kernel/debug.html#mydebug)。
 
 <!--
