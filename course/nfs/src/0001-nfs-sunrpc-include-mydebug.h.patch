@@ -1,0 +1,25 @@
+From c90f6490e34ecc4740f7076fbba3fbb4e6b02cd5 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Fri, 29 Aug 2025 10:59:57 +0800
+Subject: [PATCH] nfs, sunrpc: include mydebug.h
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ include/linux/sunrpc/debug.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/linux/sunrpc/debug.h b/include/linux/sunrpc/debug.h
+index f6aeed07fe04..6930ec5cc1ef 100644
+--- a/include/linux/sunrpc/debug.h
++++ b/include/linux/sunrpc/debug.h
+@@ -10,6 +10,7 @@
+ #define _LINUX_SUNRPC_DEBUG_H_
+ 
+ #include <uapi/linux/sunrpc/debug.h>
++#include <mydebug.h>
+ 
+ /*
+  * Debugging macros etc
+-- 
+2.43.0
+
