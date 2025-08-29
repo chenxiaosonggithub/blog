@@ -122,6 +122,44 @@ nfs_parse_mount_options
   mnt->acregmin = mnt->acregmax = mnt->acdirmin = mnt->acdirmax = option; // actimeo
 ```
 
+# 构造
+
+```c
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <string.h>
+
+int main() {
+    const char *filename = "/mnt/file"; // NFS文件路径
+    const char *data = "hello\n";       // 要写入的数据
+
+    // 打开文件（如果不存在则创建，只写模式）
+    int fd = open(filename, O_CREAT | O_WRONLY, 0644);
+    if (fd == -1) {
+        // 错误处理：无法打开文件
+        return 1;
+    }
+
+    // 计算数据长度并写入文件
+    ssize_t bytes_written = write(fd, data, strlen(data));
+    if (bytes_written == -1) {
+        // 错误处理：写入失败
+        close(fd);
+        return 1;
+    }
+
+    // 无限循环，保持程序运行且不关闭文件
+    while (1) {
+        sleep(1); // 每秒休眠一次，减少CPU占用
+    }
+
+    // 关闭文件
+    close(fd);
+    return 0;
+}
+```
+
 # 规避方案
 
 默认选项值`acregmin=3,acregmax=60,acdirmin=30,acdirmax=60`，只需要更改其中一个选项，如`acdirmax=59`就能在挂载时生成新的超级块，从而挂载成功。
