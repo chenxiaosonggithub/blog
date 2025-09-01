@@ -16,12 +16,20 @@ mount
                         nfs3_rpc_wrapper
                           rpc_call_sync
                             rpc_run_task
+                              rpc_task_set_client
+                                rpc_task_set_transport
+                                  rpc_multipath_ops_set_transport
+                                    enfs_set_transport // mops->set_transport
+                                      shard_set_transport
+                                        get_uuid_from_task
+                                          // 这里task->tk_msg.rpc_proc为空
+                              rpc_task_set_rpc_message // 直到这里才设置task->tk_msg.rpc_proc
                               rpc_execute
                                 __rpc_execute
                                   call_start
                                     rpc_task_set_transport
                                       rpc_multipath_ops_set_transport
-                                        enfs_set_transport
+                                        enfs_set_transport // mops->set_transport
                                           shard_set_transport
                                             get_uuid_from_task
             nfs_get_tree_common
