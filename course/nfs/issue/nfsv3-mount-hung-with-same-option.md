@@ -71,6 +71,20 @@ vim删除某个重复的栈:
 =======================================================
 ```
 
+```sh
+rpm2cpio kernel-debuginfo-4.19.90-23.16.v2101.ky10.x86_64.rpm | cpio -div
+
+./klinux-4.19/scripts/faddr2line usr/lib/debug/lib/modules/4.19.90-23.16.v2101.ky10.x86_64/kernel/fs/nfs/nfs.ko.debug nfs_release_request+0x59/0x80
+nfs_release_request+0x59/0x80:
+nfs_page_group_destroy at /usr/src/debug/kernel-4.19.90/linux-4.19.90-23.16.v2101.ky10.x86_64/fs/nfs/pagelist.c:314
+(inlined by) kref_put at /usr/src/debug/kernel-4.19.90/linux-4.19.90-23.16.v2101.ky10.x86_64/./include/linux/kref.h:70
+(inlined by) nfs_release_request at /usr/src/debug/kernel-4.19.90/linux-4.19.90-23.16.v2101.ky10.x86_64/fs/nfs/pagelist.c:458
+
+./klinux-4.19/scripts/faddr2line usr/lib/debug/lib/modules/4.19.90-23.16.v2101.ky10.x86_64/kernel/fs/nfs/nfs.ko.debug nfs_do_writepage+0x1bf/0x2d0
+nfs_do_writepage+0x1bf/0x2d0:
+nfs_do_writepage at /usr/src/debug/kernel-4.19.90/linux-4.19.90-23.16.v2101.ky10.x86_64/fs/nfs/write.c:679
+```
+
 # 代码分析
 
 在`sget_userns()`中，如果指定不一样的挂载选项时（比如加了`soft`），会生成新的超级块；而如果挂载选项和其他挂载点一样，就会尝试获取已有的超级块，但其他挂载点对应的同一超级块的锁已经被其他进程持有，所以就出现hung住的情况:
