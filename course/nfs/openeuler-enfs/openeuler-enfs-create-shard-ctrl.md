@@ -11,7 +11,7 @@ mount
               nfs3_create_server
                 nfs_create_server
                   nfs_probe_fsinfo
-                    nfs3_proc_fsinfo
+                    nfs3_proc_fsinfo // clp->rpc_ops->fsinfo
                       do_proc_fsinfo
                         nfs3_rpc_wrapper
                           rpc_call_sync
@@ -39,5 +39,23 @@ mount
                                     enfs_set_transport
                                       shard_set_transport
                                         get_uuid_from_task
+
+// 遍历nfs_server
+list_for_each_entry(pos, &nn->nfs_volume_list, master_link)
+
+vfs_kern_mount
+  fs_context_for_mount
+    alloc_fs_context
+      nfs_init_fs_context // fc->fs_type->init_fs_context
+        ctx->mntfh = nfs_alloc_fhandle();
+        fc->fs_private = ctx
+        fc->ops = &nfs_fs_context_ops
+  put_fs_context
+    nfs_fs_context_free // fc->ops->free(fc)
+      nfs_free_fhandle(ctx->mntfh)
+
+nfs3_xdr_enc_getattr3args
+
+nfs3_xdr_dec_fsinfo3res
 ```
 
