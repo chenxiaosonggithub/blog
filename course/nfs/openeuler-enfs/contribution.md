@@ -1,5 +1,7 @@
 [点击这里查看openEuler的nfs+的使用](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)。
 
+# [openEuler/kernel: fix some issues of enfs](https://gitee.com/openeuler/kernel/pulls/17898/commits)
+
 # [2025年08月15日 openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
 
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix memory leak of shard_view_ctrl when removing nfs module](https://gitee.com/openeuler/kernel/commit/068e87b7ffc2d168cedd409e48e262b8dc0b9017)
