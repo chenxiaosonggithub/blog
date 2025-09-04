@@ -85,6 +85,41 @@ nfs_do_writepage+0x1bf/0x2d0:
 nfs_do_writepage at /usr/src/debug/kernel-4.19.90/linux-4.19.90-23.16.v2101.ky10.x86_64/fs/nfs/write.c:679
 ```
 
+`nfs_do_writepage`内联了太多函数，所以要[查看反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfsv3-mount-hung-with-same-option-vmcore.md):
+```sh
+# fs/nfs/write.c: 674 if (ret == -EAGAIN) {
+0xffffffffc08b2600 <nfs_do_writepage+0x1a0>:	cmp    $0xfffffff5,%r14d
+0xffffffffc08b2604 <nfs_do_writepage+0x1a4>:	je     0xffffffffc08b2671 <nfs_do_writepage+0x211>
+# fs/nfs/write.c: 679 return ret;
+0xffffffffc08b2606 <nfs_do_writepage+0x1a6>:	pop    %rbx
+0xffffffffc08b2607 <nfs_do_writepage+0x1a7>:	mov    %r14d,%eax
+0xffffffffc08b260a <nfs_do_writepage+0x1aa>:	pop    %rbp
+0xffffffffc08b260b <nfs_do_writepage+0x1ab>:	pop    %r12
+0xffffffffc08b260d <nfs_do_writepage+0x1ad>:	pop    %r13
+0xffffffffc08b260f <nfs_do_writepage+0x1af>:	pop    %r14
+0xffffffffc08b2611 <nfs_do_writepage+0x1b1>:	pop    %r15
+0xffffffffc08b2613 <nfs_do_writepage+0x1b3>:	retq   
+# fs/nfs/write.c: 663 nfs_page_async_flush() nfs_write_error_remove_page(req);
+0xffffffffc08b2614 <nfs_do_writepage+0x1b4>:	mov    %rbp,%rdi # x86_64下整数参数使用的寄存器依次为: RDI，RSI，RDX，RCX，R8，R9
+# fs/nfs/write.c: 664 nfs_page_async_flush() return 0;
+0xffffffffc08b2617 <nfs_do_writepage+0x1b7>:	xor    %r14d,%r14d # 最终效果是将 %r14d 寄存器的值设置为零
+# fs/nfs/write.c: 663 nfs_page_async_flush() nfs_write_error_remove_page(req);
+0xffffffffc08b261a <nfs_do_writepage+0x1ba>:	callq  0xffffffffc08b1580 <nfs_write_error_remove_page>
+# fs/nfs/write.c: 679 return ret;
+0xffffffffc08b261f <nfs_do_writepage+0x1bf>:	mov    %r14d,%eax # 返回值放在eax
+0xffffffffc08b2622 <nfs_do_writepage+0x1c2>:	pop    %rbx
+0xffffffffc08b2623 <nfs_do_writepage+0x1c3>:	pop    %rbp
+0xffffffffc08b2624 <nfs_do_writepage+0x1c4>:	pop    %r12
+0xffffffffc08b2626 <nfs_do_writepage+0x1c6>:	pop    %r13
+0xffffffffc08b2628 <nfs_do_writepage+0x1c8>:	pop    %r14
+0xffffffffc08b262a <nfs_do_writepage+0x1ca>:	pop    %r15
+0xffffffffc08b262c <nfs_do_writepage+0x1cc>:	retq   
+...
+# fs/nfs/write.c: 675 redirty_page_for_writepage(wbc, page);
+0xffffffffc08b2671 <nfs_do_writepage+0x211>:	mov    %rbx,%rsi
+0xffffffffc08b2674 <nfs_do_writepage+0x214>:	mov    %r13,%rdi
+```
+
 # 代码分析
 
 在`sget_userns()`中，如果指定不一样的挂载选项时（比如加了`soft`），会生成新的超级块；而如果挂载选项和其他挂载点一样，就会尝试获取已有的超级块，但其他挂载点对应的同一超级块的锁已经被其他进程持有，所以就出现hung住的情况:
@@ -122,14 +157,16 @@ wb_workfn
               write_cache_pages
                 nfs_writepages_callback
                   nfs_do_writepage
-                    nfs_release_request
-                      nfs_free_request
-                        __put_nfs_open_context
-                          dput
-                            dentry_kill
-                              __dentry_kill
-                                evict
-                                  inode_wait_for_writeback
+                    nfs_page_async_flush
+                      nfs_write_error_remove_page
+                        nfs_release_request
+                          nfs_free_request
+                            __put_nfs_open_context
+                              dput
+                                dentry_kill
+                                  __dentry_kill
+                                    evict
+                                      inode_wait_for_writeback
 
 nfs_parse_mount_options
   mnt->flags |= NFS_MOUNT_SOFT; // soft
