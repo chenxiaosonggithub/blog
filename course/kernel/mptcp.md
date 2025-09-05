@@ -38,20 +38,7 @@ docker run \
 
 ## qemu虚拟机
 
-qemu命令行启动虚拟机时，多个网卡的启动参数如下:
-```sh
--net tap \
--net nic,model=virtio,macaddr=00:11:22:33:44:06 \
--net nic,model=virtio,macaddr=00:11:22:33:44:56 \
-```
-
-启动后，在虚拟机中用`ifconfig -a`可以看到另一个网卡`ens3`，debian使用以下命令:
-```sh
-echo -e "auto ens3\niface ens3 inet dhcp" >> /etc/network/interfaces
-systemctl restart networking
-```
-
-qemu命令行启动虚拟机可以参考[《内核开发环境》](https://chenxiaosong.com/course/kernel/environment.html)。
+qemu命令行启动虚拟机可以参考[《内核开发环境》](https://chenxiaosong.com/course/kernel/environment.html#qemu-multi-nic)。
 
 ## mptcp相关命令
 
