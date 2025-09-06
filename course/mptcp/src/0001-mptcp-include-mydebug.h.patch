@@ -1,0 +1,25 @@
+From 600f28ee64f47a278541eeee09a079330368ba69 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Sat, 6 Sep 2025 22:49:08 +0800
+Subject: [PATCH] mptcp: include mydebug.h
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ include/net/mptcp.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/net/mptcp.h b/include/net/mptcp.h
+index f7263fe2a2e4..3ff6b49a56ff 100644
+--- a/include/net/mptcp.h
++++ b/include/net/mptcp.h
+@@ -11,6 +11,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/tcp.h>
+ #include <linux/types.h>
++#include <mydebug.h>
+ 
+ struct mptcp_info;
+ struct mptcp_sock;
+-- 
+2.43.0
+
