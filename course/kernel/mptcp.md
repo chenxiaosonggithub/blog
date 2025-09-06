@@ -1,3 +1,7 @@
+<!--
+gtags识别不到net_aligned_data
+-->
+
 mptcp的maintainer之一Geliang Tang <tanggeliang@kylinos.cn>是我们麒麟软件的，因调研mptcp和smb、nfs结合的可能性接触了这一模块。
 
 # 资料
