@@ -255,6 +255,8 @@ CONFIG_BLK_DEV_SD
 CONFIG_BLK_DEV_NVME
 ```
 
+如果想减少编译时间，可以尝试关闭`CONFIG_DEBUG_KERNEL`。
+
 <!-- public begin -->
 ```sh
 rm build -rf && mkdir build
@@ -311,6 +313,21 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=aarch64-build modules -j`npro
 mkdir -p aarch64-build/boot && make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=aarch64-build install INSTALL_PATH=boot -j`nproc`
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=aarch64-build modules_install INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=mod -j`nproc`
 ```
+
+## llvm编译
+
+参考[使用 Clang/LLVM 构建 Linux](https://docs.kernel.org/translations/zh_CN/kbuild/llvm.html)。
+
+```sh
+sudo apt install -y lld clang ccache llvm
+
+make LLVM=1 CC="ccache clang" O=x86_64-build olddefconfig -j`nproc` && \
+make LLVM=1 CC="ccache clang" O=x86_64-build bzImage -j`nproc` && \
+make LLVM=1 CC="ccache clang" O=x86_64-build modules -j`nproc` && \
+make LLVM=1 CC="ccache clang" O=x86_64-build modules_install INSTALL_MOD_PATH=mod -j`nproc`
+```
+
+相比gcc，llvm好像更慢。
 
 ## 可能的编译问题
 
