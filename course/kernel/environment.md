@@ -269,8 +269,9 @@ cp ../tmp/config/x86_64-config build/.config
 make O=build menuconfig # 交互式地配置内核的编译选项，.config文件放在build目录下
 make O=build olddefconfig -j`nproc`
 make O=build bzImage -j`nproc` # x86_64
+make LD=ld.lld O=build bzImage -j`nproc` # 可以试试用ld.lld链接加快速度
 make O=build Image -j`nproc` # aarch64，比如2020年末之后的arm芯片的苹果电脑上vmware fusion安装的ubuntu
-make O=build modules -j`nproc`
+make LD=ld.lld O=build modules -j`nproc` # 如果上面的bzImage或Image加了LD=ld.lld，这里也要加
 mkdir -p build/boot && make O=build install INSTALL_PATH=boot -j`nproc`
 # INSTALL_MOD_STRIP=1代表不含调试信息，不写INSTALL_MOD_STRIP=1代表含有调试信息
 make O=build modules_install INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=mod -j`nproc`
