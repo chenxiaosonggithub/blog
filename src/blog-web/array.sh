@@ -34,7 +34,6 @@ comm_array=(
 		1 1 course/kernel/bpf.md ~ "BPF"
 		1 1 course/kernel/sync.md ~ "内核同步"
 		1 1 course/kernel/network.md ~ "网络"
-		1 1 course/kernel/mptcp.md ~ "MPTCP"
 		1 1 course/kernel/patch.md ~ "内核补丁分析"
 			# 我写的补丁
 			1 1 course/kernel/patch/xfs-fix-NULL-pointer-dereference-in-xfs_getbmap.md ~
@@ -63,6 +62,7 @@ comm_array=(
 
 		# issue
 			1 1 course/kernel/issue/drbd-mptcp.md ~ "drbd支持mptcp"
+	0 1 course/mptcp/mptcp.md ~ "MPTCP"
 	0 1 course/nfs/nfs.md ~ "nfs文件系统"
 		1 1 course/nfs/video.md ~ "nfs课程配套视频"
 		1 1 course/nfs/introduction.md ~ "nfs简介"

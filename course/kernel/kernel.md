@@ -34,8 +34,6 @@
 
 # [页缓存和页回写](https://chenxiaosong.com/course/kernel/page-cache-writeback.html)
 
-# [MPTCP](https://chenxiaosong.com/course/kernel/mptcp.html)
-
 # [内核补丁分析](https://chenxiaosong.com/course/kernel/patch.html)
 
 <!--

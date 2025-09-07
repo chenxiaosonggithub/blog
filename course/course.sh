@@ -80,4 +80,5 @@ create_full_course_md "algorithm"
 create_full_course_md "godot"
 create_full_course_md "gnu-linux"
 create_full_course_md "harmony"
+create_full_course_md "mptcp"
 
