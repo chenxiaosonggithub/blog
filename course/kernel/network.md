@@ -6,6 +6,21 @@
 
 [可以试试《Linux程序设计（第4版）》的代码例子](https://gitee.com/chenxiaosonggitee/tmp/tree/master/book-src/beginning-linux-programming-4th-edition/780470147627-code-ch15/chapter15)。至于用户态的使用，这里就不介绍了，感兴趣的朋友可以查看《Linux程序设计（第4版）》和《UNIX环境高级编程（第3版）》，[点击这里从百度网盘下载pdf电子书](https://chenxiaosong.com/baidunetdisk)。
 
+```sh
+# fedora无法安装
+apt install xinetd -y # debian
+```
+
+`/etc/xinetd.d/daytime`配置文件修改如下:
+```sh
+  disable         = no
+```
+
+重启服务
+```sh
+killall -HUP xinetd
+```
+
 # 网络设备驱动
 
 参考《Linux设备驱动开发详解：基于最新的Linux 4.0内核》。
