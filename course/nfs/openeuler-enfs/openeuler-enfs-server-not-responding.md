@@ -13,6 +13,13 @@ modprobe enfs
 # enfs:[pm_set_path_state]The xprt localip{192.168.53.46} remoteip{10.42.43.93} path state change from {1} to {2}.
 ```
 
+在`e96d124d2a24 (HEAD) !16573  Backport 6.6.64-6.6.72 LTS`（我的第一个提交之前）不只有以上错误，还会不断打印以下错误:
+```sh
+[   33.459480] enfs:[query_and_update_shard]update lsId err:-22.
+[   34.475287] nfs: server 10.42.43.92 not responding, timed out
+[   34.482117] ENFS: get fsInfo failed -22.
+```
+
 <!--
 # 调试
 
