@@ -16,13 +16,13 @@ apt install drbd-utils -y
 两台机器上分别设置hostname:
 ```sh
 hostnamectl set-hostname drbd01.chenxiaosong.com # 192.168.53.209
-hostnamectl set-hostname drbd02.chenxiaosong.com # 192.168.53.211
+hostnamectl set-hostname drbd02.chenxiaosong.com # 192.168.53.210
 ```
 
 两台机器都在`/etc/hosts`中添加以下内容:
 ```sh
 192.168.53.209     drbd01.chenxiaosong.com       drbd01
-192.168.53.211     drbd02.chenxiaosong.com       drbd02
+192.168.53.210     drbd02.chenxiaosong.com       drbd02
 ```
 
 两台机器的`/etc/drbd.conf`配置文件如下（参考`/usr/share/doc/drbd-utils/drbd.conf.example`）:
@@ -42,14 +42,14 @@ resource r0 {
         # 要写完整的域名，只写 drbd01 有问题
         on drbd01.chenxiaosong.com {
                 device /dev/drbd0;
-                disk /dev/sdb1;
-                address 192.168.0.1:7788;
+                disk /dev/sda;
+                address 192.168.53.209:7788;
                 meta-disk internal;
         }
         on drbd02.chenxiaosong.com {
                 device /dev/drbd0;
-                disk /dev/sdb1;
-                address 192.168.0.2:7788;
+                disk /dev/sda;
+                address 192.168.53.210:7788;
                 meta-disk internal;
         }
 }
@@ -57,6 +57,7 @@ resource r0 {
 
 两台机器上都执行以下命令:
 ```sh
+wipefs -a /dev/sda
 drbdadm create-md r0
 systemctl start drbd.service
 ```
@@ -137,12 +138,12 @@ LISTEN  3       5       192.168.53.209:7788       0.0.0.0:*
 再用`ss -iaM`命令查看:
 ```sh
 State     Recv-Q   Send-Q    Local Address:Port      Peer Address:Port
-FIN-WAIT  0        0        192.168.53.209:33097   192.168.53.211:7788
-FIN-WAIT  0        0        192.168.53.209:54917   192.168.53.211:7788
+FIN-WAIT  0        0        192.168.53.209:33097   192.168.53.210:7788
+FIN-WAIT  0        0        192.168.53.209:54917   192.168.53.210:7788
 ESTAB     960      0        192.168.53.209:7788     192.168.53.1:58511
-FIN-WAIT  0        0        192.168.53.209:39051   192.168.53.211:7788
-FIN-WAIT  0        0        192.168.53.209:38833   192.168.53.211:7788
-ESTAB     0        0        192.168.53.209:51037   192.168.53.211:7788
+FIN-WAIT  0        0        192.168.53.209:39051   192.168.53.210:7788
+FIN-WAIT  0        0        192.168.53.209:38833   192.168.53.210:7788
+ESTAB     0        0        192.168.53.209:51037   192.168.53.210:7788
 LISTEN    1        5        192.168.53.209:7788           0.0.0.0:*
 ```
 
