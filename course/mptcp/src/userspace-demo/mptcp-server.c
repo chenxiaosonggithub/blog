@@ -11,10 +11,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#ifndef IPPROTO_MPTCP
-#define IPPROTO_MPTCP 262
-#endif
-
 int main()
 {
 	int server_sockfd, client_sockfd;
@@ -24,7 +20,7 @@ int main()
 	int result;
 	fd_set readfds, testfds;
 
-	/*  Create and name a socket for the server.  */
+/*  Create and name a socket for the server.  */
 
 	server_sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_MPTCP);
 
@@ -35,25 +31,25 @@ int main()
 
 	bind(server_sockfd, (struct sockaddr *)&server_address, server_len);
 
-	/*  Create a connection queue and initialize readfds to handle input from server_sockfd.  */
+/*  Create a connection queue and initialize readfds to handle input from server_sockfd.  */
 
 	listen(server_sockfd, 5);
 
 	FD_ZERO(&readfds);
 	FD_SET(server_sockfd, &readfds);
 
-	/*  Now wait for clients and requests.
-		Since we have passed a null pointer as the timeout parameter, no timeout will occur.
-		The program will exit and report an error if select returns a value of less than 1.  */
+/*  Now wait for clients and requests.
+	Since we have passed a null pointer as the timeout parameter, no timeout will occur.
+	The program will exit and report an error if select returns a value of less than 1.  */
 
 	while(1) {
-		char data;
+		char ch;
 		int fd;
 		int nread;
 
 		testfds = readfds;
 
-		// printf("server waiting\n");
+		printf("server waiting\n");
 		result = select(FD_SETSIZE, &testfds, (fd_set *)0, 
 			(fd_set *)0, (struct timeval *) 0);
 
@@ -62,14 +58,14 @@ int main()
 			exit(1);
 		}
 
-		/*  Once we know we've got activity,
-			we find which descriptor it's on by checking each in turn using FD_ISSET.  */
+/*  Once we know we've got activity,
+	we find which descriptor it's on by checking each in turn using FD_ISSET.  */
 
 		for(fd = 0; fd < FD_SETSIZE; fd++) {
 			if(FD_ISSET(fd,&testfds)) {
 
-				/*  If the activity is on server_sockfd, it must be a request for a new connection
-					and we add the associated client_sockfd to the descriptor set.  */
+/*  If the activity is on server_sockfd, it must be a request for a new connection
+	and we add the associated client_sockfd to the descriptor set.  */
 
 				if(fd == server_sockfd) {
 					client_len = sizeof(client_address);
@@ -79,9 +75,9 @@ int main()
 					printf("adding client on fd %d\n", client_sockfd);
 				}
 
-				/*  If it isn't the server, it must be client activity.
-					If close is received, the client has gone away and we remove it from the descriptor set.
-					Otherwise, we 'serve' the client as in the previous examples.  */
+/*  If it isn't the server, it must be client activity.
+	If close is received, the client has gone away and we remove it from the descriptor set.
+	Otherwise, we 'serve' the client as in the previous examples.  */
 
 				else {
 					ioctl(fd, FIONREAD, &nread);
@@ -93,12 +89,12 @@ int main()
 					}
 
 					else {
-						result = read(fd, &data, 1);
+						result = read(fd, &ch, 1);
 						if (result) {
-							printf("receive data from client = %d\n", data);
-							data++;
+							printf("receive data from client = %d\n", ch);
+							ch++;
 							sleep(1);
-							write(fd, &data, 1);
+							write(fd, &ch, 1);
 						}
 					}
 				}
