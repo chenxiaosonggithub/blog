@@ -1,0 +1,26 @@
+From 64688f139a5cc10b39e8c27742ba9e9b5e347d82 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Tue, 9 Sep 2025 16:57:38 +0800
+Subject: [PATCH] drbd: include mydebug.h
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ include/linux/drbd.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/linux/drbd.h b/include/linux/drbd.h
+index 5468a2399d48..829a944bdf9a 100644
+--- a/include/linux/drbd.h
++++ b/include/linux/drbd.h
+@@ -38,6 +38,8 @@
+ 
+ #endif
+ 
++#include <mydebug.h>
++
+ enum drbd_io_error_p {
+ 	EP_PASS_ON, /* FIXME should the better be named "Ignore"? */
+ 	EP_CALL_HELPER,
+-- 
+2.43.0
+
