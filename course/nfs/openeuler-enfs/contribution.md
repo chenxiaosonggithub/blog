@@ -1,6 +1,13 @@
 [点击这里查看openEuler的nfs+的使用](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)。
 
-# [openEuler/kernel: fix some issues of enfs](https://gitee.com/openeuler/kernel/pulls/17898/commits)
+# [openEuler/kernel: fix some issues and optimize performance of enfs](https://gitee.com/openeuler/kernel/pulls/17898/commits)
+
+- <span style="color:red">performance: </span>[sunrpc: do not set enfs transport in rpc_task_set_client()](https://gitee.com/openeuler/kernel/commit/24f295baf843a8d506ea8ff7c14f9435b8f9a62b)
+- <span style="color:red">performance: </span>[nfs/enfs: get rpc procedure number from rpc_procinfo in get_uuid_from_task()](https://gitee.com/openeuler/kernel/commit/0e7a7ac732578ca804d5d81b26ef88869669d5a6)
+- <span style="color:red">bugfix: </span>[nfs/enfs: introduce is_enfs_debug()](https://gitee.com/openeuler/kernel/commit/0fbb6e383e6818e7f24f90388d061f020f9640b0)
+- <span style="color:red">bugfix: </span>[nfs/enfs: fix finding root uuid issue](https://gitee.com/openeuler/kernel/commit/96155a2ffed0ef662cfb6f30c9eaf575d19c9cc0)
+- [nfs/enfs: fix some cleanup issues](https://gitee.com/openeuler/kernel/commit/22519a440ab80af2f3c8530aec7a4a1b3c9892ea)
+- [nfs/enfs: remove duplicate definitions](https://gitee.com/openeuler/kernel/commit/960de6c02b85577e9b2851bcf1ef42a8c4b5376f)
 
 # [2025年08月15日 openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
 
