@@ -731,6 +731,7 @@ PermitEmptyPasswords yes
 <!-- public begin -->
 曾经使用过fedora发行版，这里记录一下fedora的一些笔记。进入fedora虚拟机后:
 ```sh
+vim /etc/fstab # 删除 /boot/efi 一行
 # fedora 启动的时候等待: A start job is running for /dev/zram0，解决办法: 删除 zram 的配置文件
 mv /usr/lib/systemd/zram-generator.conf /usr/lib/systemd/zram-generator.conf.bak
 # fedora26 安装 vim 前，先升级
