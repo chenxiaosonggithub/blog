@@ -1,6 +1,8 @@
 [点击这里查看openEuler的nfs+的使用](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)。
 
-# [openEuler/kernel: enfs: fix some bugs and optimize performance](https://gitee.com/openeuler/kernel/pulls/17898/commits)
+# [openEuler/kernel: enfs: recreate shard info when re-adding enfs module](https://gitee.com/openeuler/kernel/pulls/17973/commits)
+
+# [2025年09月12日 openEuler/kernel: enfs: fix some bugs and optimize performance](https://gitee.com/openeuler/kernel/pulls/17898/commits)
 
 - <span style="color:red">performance: </span>[sunrpc: do not set enfs transport in rpc_task_set_client()](https://gitee.com/openeuler/kernel/commit/24f295baf843a8d506ea8ff7c14f9435b8f9a62b)
 - <span style="color:red">performance: </span>[nfs/enfs: get rpc procedure number from rpc_procinfo in get_uuid_from_task()](https://gitee.com/openeuler/kernel/commit/0e7a7ac732578ca804d5d81b26ef88869669d5a6)
