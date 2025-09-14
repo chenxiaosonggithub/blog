@@ -8,6 +8,8 @@
 
 点击下面的标题跳转。
 
+# [我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)
+
 # [内核简介](https://chenxiaosong.com/course/kernel/introduction.html)
 
 # [内核开发环境](https://chenxiaosong.com/course/kernel/environment.html)
