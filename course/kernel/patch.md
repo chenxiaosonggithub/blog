@@ -1,32 +1,18 @@
 本文章列出一些内核补丁的分析，有些是我写的，有些是我定位问题时遇到的。
 
+# 我写的补丁
+
+[点击这里查看我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)。
+
 # NFS（网络文件系统）
 
 [点击这里查看NFS相关补丁](https://chenxiaosong.com/course/nfs/patch.html)
 
+<!--
 # SMB(CIFS)文件系统
 
 [点击这里查看SMB相关补丁](https://chenxiaosong.com/course/smb/patch.html)
-
-# 我写的补丁
-
-[点击查看kernel.org网站上我的Linux内核邮件列表](https://lore.kernel.org/all/?q=chenxiaosong)
-
-[点击查看kernel.org网站上我的Linux内核仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈）
-
-我写的补丁，除了上面的模块外，其他模块还有以下补丁。
-
-[`001c179c4e26 xfs: fix NULL pointer dereference in xfs_getbmap()`](https://chenxiaosong.com/course/kernel/patch/xfs-fix-NULL-pointer-dereference-in-xfs_getbmap.html)
-
-[`84ec758fb2daa configfs: fix a race in configfs_{,un}register_subsystem()`](https://chenxiaosong.com/course/kernel/patch/configfs-fix-a-race-in-configfs_-un-register_subsyst.html)
-
-[`f7e942b5bb35d btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()`](https://lore.kernel.org/all/20221116142354.1228954-3-chenxiaosong2@huawei.com/)
-
-[`a4c853af0c511 btrfs: add might_sleep() annotations`](https://lore.kernel.org/all/20221116142354.1228954-2-chenxiaosong2@huawei.com/)
-
-[`1b513f613731e ntfs: fix BUG_ON in ntfs_lookup_inode_by_name()`](https://lore.kernel.org/all/20220809064730.2316892-1-chenxiaosong2@huawei.com/)
-
-[CVE-2023-26607](https://nvd.nist.gov/vuln/detail/CVE-2023-26607): [`38c9c22a85aee ntfs: fix use-after-free in ntfs_ucsncmp()`](https://lore.kernel.org/all/20220709064511.3304299-1-chenxiaosong2@huawei.com/)（还有其他人的修复补丁）
+-->
 
 # 调度
 

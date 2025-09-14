@@ -36,6 +36,7 @@ comm_array=(
 		1 1 course/kernel/network.md ~ "网络"
 		1 1 course/kernel/patch.md ~ "内核补丁分析"
 			# 我写的补丁
+			1 1 course/kernel/contribution.md ~ "陈孝松Linux内核贡献"
 			1 1 course/kernel/patch/xfs-fix-NULL-pointer-dereference-in-xfs_getbmap.md ~
 				"001c179c4e26d xfs: fix NULL pointer dereference in xfs_getbmap()"
 			1 1 course/kernel/patch/configfs-fix-a-race-in-configfs_-un-register_subsyst.md ~
@@ -59,7 +60,6 @@ comm_array=(
 				"c186f0887fe7 ext4: fix use-after-free in ext4_search_dir"
 			1 1 course/kernel/patch/refactor-of-__ext4_fill_super.md ~
 				"some refactor of __ext4_fill_super()"
-
 		# issue
 			1 1 course/kernel/issue/drbd-mptcp.md ~ "drbd支持mptcp"
 	0 1 course/mptcp/mptcp.md ~ "MPTCP"
@@ -149,7 +149,7 @@ comm_array=(
 		1 1 course/smb/other.md ~ "smb未分类的内容"
 		1 1 course/smb/mailing-list.md ~ "smb社区贡献"
 			1 1 course/smb/patch/other-patch.md ~ "社区补丁"
-		1 1 course/smb/patch.md ~ "smb补丁分析"
+		# 1 1 course/smb/patch.md ~ "smb补丁分析"
 			# 我写的补丁
 			1 1 course/smb/patch/CVE-2024-46742.md ~ "CVE-2024-46742"
 			# 其他人的补丁

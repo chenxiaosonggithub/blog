@@ -15,6 +15,8 @@
 
 点击下面的标题跳转。
 
+# [我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)
+
 # [smb简介](https://chenxiaosong.com/course/smb/introduction.html)
 
 # [smb环境](https://chenxiaosong.com/course/smb/environment.html)
@@ -25,7 +27,7 @@
 
 # [smb调试方法](https://chenxiaosong.com/course/smb/debug.html)
 
-# [smb补丁分析](https://chenxiaosong.com/course/smb/patch.html)
+<!-- # [smb补丁分析](https://chenxiaosong.com/course/smb/patch.html) -->
 
 # [smb代码重构](https://chenxiaosong.com/course/smb/refactor.html)
 

@@ -6,13 +6,7 @@
 
 # Linux内核贡献 {#linux-kernel}
 
-[点击查看kernel.org网站上我的Linux内核邮件列表](https://lore.kernel.org/all/?q=chenxiaosong)
-
-[点击查看kernel.org网站上我的Linux内核仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈）
-
-Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
-
-主要从事的方向是**文件系统**（nfs，smb等），贡献过40+个文件系统相关内核补丁（截止2024年09月），修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
+[点击这里查看我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)。
 
 # 鸿蒙操作系统贡献 {#openharmony}
 
