@@ -9,9 +9,9 @@ struct my_info {
 	int data;
 };
 
-struct workqueue_struct *my_wq;
+static struct workqueue_struct *my_wq;
 
-struct my_info *info;
+static struct my_info *info;
 
 static void my_workfn(struct work_struct *work)
 {
