@@ -1,5 +1,7 @@
 [点击这里查看openEuler的nfs+的使用](https://chenxiaosong.com/course/nfs/openeuler-enfs.html)。
 
+nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公司共同参与开发的特性，对 Linux 内核原生 NFS 进行增强，通过多链路等技术很好的解决原生 NFS 客户端在性能和可靠性方面存在的一些不足，极大提升业务的性能与稳定性。
+
 # [openEuler/kernel: enfs: recreate shard info when re-adding enfs module](https://gitee.com/openeuler/kernel/pulls/17973/commits)
 
 # [2025年09月12日 openEuler/kernel: enfs: fix some bugs and optimize performance](https://gitee.com/openeuler/kernel/pulls/17898/commits)
