@@ -34,13 +34,12 @@ comm_array=(
 		1 1 course/kernel/bpf.md ~ "BPF"
 		1 1 course/kernel/sync.md ~ "内核同步"
 		1 1 course/kernel/network.md ~ "网络"
+		1 1 course/kernel/contribution.md ~ "陈孝松Linux内核贡献"
+			1 1 course/kernel/my-patch/configfs-fix-a-race-in-configfs_-un-register_subsyst.md ~
+				"84ec758fb2da configfs: fix a race in configfs_{,un}register_subsystem()"
 		1 1 course/kernel/patch.md ~ "内核补丁分析"
-			# 我写的补丁
-			1 1 course/kernel/contribution.md ~ "陈孝松Linux内核贡献"
 			1 1 course/kernel/patch/xfs-fix-NULL-pointer-dereference-in-xfs_getbmap.md ~
 				"001c179c4e26d xfs: fix NULL pointer dereference in xfs_getbmap()"
-			1 1 course/kernel/patch/configfs-fix-a-race-in-configfs_-un-register_subsyst.md ~
-				"84ec758fb2da configfs: fix a race in configfs_{,un}register_subsystem()"
 			# 调度
 			1 1 course/kernel/patch/sched-EEVDF-and-latency-nice-and-or-slice-attr.md ~
 				"sched: EEVDF and latency-nice and/or slice-attr"
