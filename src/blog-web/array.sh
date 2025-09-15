@@ -41,6 +41,7 @@ comm_array=(
 				"001c179c4e26d xfs: fix NULL pointer dereference in xfs_getbmap()"
 			1 1 course/kernel/my-patch/CVE-2022-24448.md ~ "CVE-2022-24448"
 			1 1 course/kernel/my-patch/nfs-handle-writeback-errors-incorrectly.md ~ "NFS回写错误处理不正确的问题"
+			1 1 course/kernel/my-patch/CVE-2024-46742.md ~ "CVE-2024-46742"
 		1 1 course/kernel/patch.md ~ "内核补丁分析"
 			# 调度
 			1 1 course/kernel/patch/sched-EEVDF-and-latency-nice-and-or-slice-attr.md ~
@@ -148,8 +149,6 @@ comm_array=(
 		1 1 course/smb/mailing-list.md ~ "smb社区贡献"
 			1 1 course/smb/patch/other-patch.md ~ "社区补丁"
 		# 1 1 course/smb/patch.md ~ "smb补丁分析"
-			# 我写的补丁
-			1 1 course/smb/patch/CVE-2024-46742.md ~ "CVE-2024-46742"
 			# 其他人的补丁
 			1 1 course/smb/patch/cifs-Fix-in-error-types-returned-for-out-of-credit-s.md ~
 				"7de0394801da cifs: Fix in error types returned for out-of-credit situations."
