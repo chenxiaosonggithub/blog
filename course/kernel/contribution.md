@@ -1,4 +1,4 @@
-# Linux内核上游（Upstream）贡献 {#upstream}
+# Linux内核上游（Upstream）mainline仓库贡献 {#mainline}
 
 [点击查看kernel.org网站上我的Linux内核邮件列表](https://lore.kernel.org/all/?q=chenxiaosong)
 
@@ -53,6 +53,15 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 - [KVM: SVM: fix doc warnings](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=02ffbe6351f5c88337143bcbc649832ded7445c0)
 - [Smack: fix doc warning](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fe6bde732be8c4711a878b11491d9a2749b03909)
 - [perf: qcom: Remove redundant dev_err call in qcom_l3_cache_pmu_probe()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5ca54404e68de8560ca15e8d0e6b625fd05ceeaf)
+
+# Linux内核上游（Upstream）其他贡献 {#upstream-other}
+
+除了mainline仓库的补丁外，还有以下补丁:
+
+- stable仓库linux-4.19.y分支: [VFS: Fix memory leak caused by concurrently mounting fs with subtype](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-4.19.y&id=8033f109be4a1d5b466284e8ab9119c04f2a334b)，[2021年11月2日提的补丁](https://lore.kernel.org/all/20211102142206.3972465-1-chenxiaosong2@huawei.com/)，[到半年后2022年5月13日才合入stable仓库linux-4.19.y分支](https://lore.kernel.org/all/20220513142228.347780404@linuxfoundation.org/)。
+- 邮件列表: 补丁集: [NFS回写错误处理不正确的问题](https://chenxiaosong.com/course/nfs/patch/nfs-handle-writeback-errors-incorrectly.html)（未合入主线）
+- 邮件列表: [[PATCH 4.19] NFS: fix null-ptr-deref in nfs_inode_add_request()](https://lore.kernel.org/all/20241209085410.601489-1-chenxiaosong@chenxiaosong.com/)
+
 
 # openEuler的nfs多路径（nfs+）贡献 {#openeuler-enfs}
 

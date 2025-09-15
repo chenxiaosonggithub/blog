@@ -2,11 +2,6 @@
 
 [点击这里查看我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)。
 
-除了主线的补丁外，还有以下补丁:
-
-- 补丁集: [NFS回写错误处理不正确的问题](https://chenxiaosong.com/course/nfs/patch/nfs-handle-writeback-errors-incorrectly.html)（未合入主线）
-- [[PATCH 4.19] NFS: fix null-ptr-deref in nfs_inode_add_request()](https://lore.kernel.org/all/20241209085410.601489-1-chenxiaosong@chenxiaosong.com/)
-
 # 其他人的补丁
 
 - [`e28ce90083f0 xprtrdma: kmalloc rpcrdma_ep separate from rpcrdma_xprt`](https://chenxiaosong.com/course/nfs/patch/xprtrdma-kmalloc-rpcrdma_ep-separate-from-rpcrdma_xp.html)

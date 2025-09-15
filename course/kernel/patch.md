@@ -4,10 +4,6 @@
 
 [点击这里查看我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)。
 
-除了主线的补丁外，还有以下补丁:
-
-- [linux-4.19.y分支 VFS: Fix memory leak caused by concurrently mounting fs with subtype](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-4.19.y&id=8033f109be4a1d5b466284e8ab9119c04f2a334b)，[2021年11月2日提的补丁](https://lore.kernel.org/all/20211102142206.3972465-1-chenxiaosong2@huawei.com/)，[到半年后2022年5月13日才合入](https://lore.kernel.org/all/20220513142228.347780404@linuxfoundation.org/)。
-
 # NFS（网络文件系统）
 
 [点击这里查看NFS相关补丁](https://chenxiaosong.com/course/nfs/patch.html)
