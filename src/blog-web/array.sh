@@ -40,6 +40,7 @@ comm_array=(
 			1 1 course/kernel/my-patch/xfs-fix-NULL-pointer-dereference-in-xfs_getbmap.md ~
 				"001c179c4e26d xfs: fix NULL pointer dereference in xfs_getbmap()"
 			1 1 course/kernel/my-patch/CVE-2022-24448.md ~ "CVE-2022-24448"
+			1 1 course/kernel/my-patch/nfs-handle-writeback-errors-incorrectly.md ~ "NFS回写错误处理不正确的问题"
 		1 1 course/kernel/patch.md ~ "内核补丁分析"
 			# 调度
 			1 1 course/kernel/patch/sched-EEVDF-and-latency-nice-and-or-slice-attr.md ~
@@ -74,8 +75,6 @@ comm_array=(
 		1 1 course/nfs/other.md ~ "nfs未分类的内容"
 		1 1 course/nfs/mailing-list.md ~ "nfs社区贡献"
 		1 1 course/nfs/patch.md ~ "nfs补丁分析"
-			# 我写的补丁
-			1 1 course/nfs/patch/nfs-handle-writeback-errors-incorrectly.md ~ "NFS回写错误处理不正确的问题"
 			# 其他人的补丁
 			1 1 course/nfs/patch/xprtrdma-kmalloc-rpcrdma_ep-separate-from-rpcrdma_xp.md ~
 				"e28ce90083f0 xprtrdma: kmalloc rpcrdma_ep separate from rpcrdma_xprt"

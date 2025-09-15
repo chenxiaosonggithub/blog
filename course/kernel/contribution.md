@@ -59,7 +59,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 除了mainline仓库的补丁外，还有以下补丁:
 
 - stable仓库linux-4.19.y分支: [VFS: Fix memory leak caused by concurrently mounting fs with subtype](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-4.19.y&id=8033f109be4a1d5b466284e8ab9119c04f2a334b)，[2021年11月2日提的补丁](https://lore.kernel.org/all/20211102142206.3972465-1-chenxiaosong2@huawei.com/)，[到半年后2022年5月13日才合入stable仓库linux-4.19.y分支](https://lore.kernel.org/all/20220513142228.347780404@linuxfoundation.org/)。
-- 邮件列表: 补丁集: [NFS回写错误处理不正确的问题](https://chenxiaosong.com/course/nfs/patch/nfs-handle-writeback-errors-incorrectly.html)（未合入主线）
+- 邮件列表: 补丁集: [NFS回写错误处理不正确的问题](https://chenxiaosong.com/course/kernel/my-patch/nfs-handle-writeback-errors-incorrectly.html)（未合入主线）
 - 邮件列表: [[PATCH 4.19] NFS: fix null-ptr-deref in nfs_inode_add_request()](https://lore.kernel.org/all/20241209085410.601489-1-chenxiaosong@chenxiaosong.com/)
 
 
