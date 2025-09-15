@@ -1,4 +1,10 @@
 enfs_patch_array=(
+	960de6c02b85 # nfs/enfs: remove duplicate definitions
+	22519a440ab8 # nfs/enfs: fix some cleanup issues
+	96155a2ffed0 # nfs/enfs: fix finding root uuid issue
+	0fbb6e383e68 # nfs/enfs: introduce is_enfs_debug()
+	0e7a7ac73257 # nfs/enfs: get rpc procedure number from rpc_procinfo in get_uuid_from_task()
+	24f295baf843 # sunrpc: do not set enfs transport in rpc_task_set_client()
 	bc954e6ba5c8 # nfs/enfs: make some functions static in enfs_multipath_client.c
 	5c582afec128 # nfs/enfs: remove enfs_init() and enfs_fini()
 	c591cbd93842 # nfs/enfs: format get_ip_to_str() in shard_route.c
