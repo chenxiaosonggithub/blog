@@ -1,6 +1,7 @@
 . ~/.top-path
 kernel_version=linux
 
+read stty_rows stty_cols < <(stty size)
 qemu-system-aarch64 \
 -smp 8 \
 -m 4096 \
@@ -13,5 +14,5 @@ qemu-system-aarch64 \
 -net tap \
 -drive file=aarch64-bullseye.qcow2,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device virtio-blk,drive=root,id=d_root \
--append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on kernel_version=${kernel_version}" \
+-append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on kernel_version=${kernel_version} stty_rows=${stty_rows} stty_cols=${stty_cols}" \
 -nographic \
