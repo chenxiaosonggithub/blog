@@ -20,6 +20,8 @@ modprobe enfs
 [   34.482117] ENFS: get fsInfo failed -22.
 ```
 
+创建配置文件`/etc/enfs/config.ini`设置`path_detect_timeout=10`后不报错。
+
 <!--
 # 调试
 
@@ -151,4 +153,8 @@ nfsd
       svc_send
         svc_tcp_sendto // xprt->xpt_ops->xpo_sendto
 ```
+
+# 解决方案
+
+[请查看pr](https://gitee.com/openeuler/kernel/pulls/17973/commits)。
 
