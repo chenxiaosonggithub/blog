@@ -1471,6 +1471,23 @@ struct vm_area_struct {
 - DATA段: 静态初始化的数据，所以有初值的全局变量（不为0）和static变量在data区。`vm_flags`为`VM_READ`和`VM_WRITE`。
 - BSS段: Block Started by Symbol，通常是指用来存放程序中**未初始化或初始化为0**的全局变量的一块内存区域，在程序载入时由内核清0。`vm_flags`为`VM_READ`和`VM_WRITE`。
 
+```c
+int global_var = 100;           // 已初始化的全局变量 -> .data段
+static int static_global = 200; // 已初始化的静态全局变量 -> .data段
+
+int uninit_global;              // 未初始化的全局变量，默认为0 -> .bss段
+static int static_uninit;       // 未初始化的静态全局变量，默认为0 -> .bss段
+int zero_global = 0;            // 初始化为0的全局变量 -> .bss段
+
+void func()
+{
+        static int static_local_uninit;    // 未初始化的静态局部变量，默认为0 -> .bss段
+        static int static_zero_local = 0;  // 初始化为0的静态局部变量 -> .bss段
+
+        static int static_local = 300;     // 已初始化的静态局部变量 -> .data段
+}
+```
+
 ## VMA操作
 
 `vm_area_struct`中的`vm_ops`字段:
