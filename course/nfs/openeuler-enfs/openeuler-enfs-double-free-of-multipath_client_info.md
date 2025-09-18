@@ -95,5 +95,5 @@ vfs_get_tree
 
 # 解决方案
 
-[fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
+[请查看pr](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
 

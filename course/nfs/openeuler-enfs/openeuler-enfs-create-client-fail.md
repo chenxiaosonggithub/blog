@@ -69,5 +69,5 @@ mount
 
 # 解决方案
 
-[fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
+暂时不解决这个问题。
 

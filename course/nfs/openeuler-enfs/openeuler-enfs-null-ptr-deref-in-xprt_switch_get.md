@@ -177,5 +177,5 @@ struct shard_view_ctrl *enfs_shard_ctrl_init(void)
 
 # 解决方案
 
-[fix some panic bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
+[请查看pr](https://gitee.com/openeuler/kernel/pulls/17205/commits)。
 

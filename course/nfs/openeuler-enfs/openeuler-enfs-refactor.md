@@ -9,7 +9,9 @@
 - `lif_head`: 在`enfs_update_lif_info()`（函数未被调用）中加入链表，没有释放内存
 - `ls_head`: 在`update_ls_info()`中加入链表，没有释放内存
 
-# 宏定义`DEFINE_CLEAR_LIST_FUNC`
+[点击这里查看重构补丁](https://gitee.com/openeuler/kernel/commit/2d5981287b67cc1a5d9231bff267f90001251ba3)。
+
+# 宏定义`DEFINE_PARSE_FH_FUNC`
 
 用以下脚本删除函数的一些公共内容（注意脚本执行后还需要手动再处理一下）:
 ```sh
@@ -35,3 +37,6 @@ del_common_str() {
 
 del_common_str
 ```
+
+[点击这里查看重构补丁](https://gitee.com/openeuler/kernel/commit/341daeb30f7a89cce5b355a537c49064ccd6a0cf)。
+
