@@ -1,3 +1,12 @@
+# 需求描述
+
+执行以下操作后重新生成shard信息:
+```sh
+mount -t nfs -o vers=3,localaddrs=192.168.53.209~192.168.53.52,remoteaddrs=10.42.43.92~10.42.43.93 10.42.43.92:/enfs-test /mnt/
+modprobe -r enfs
+modprobe enfs
+```
+
 # 代码分析
 
 ```c
@@ -58,4 +67,8 @@ nfs3_xdr_enc_getattr3args
 
 nfs3_xdr_dec_fsinfo3res
 ```
+
+# 实现
+
+[请查看pr](https://gitee.com/openeuler/kernel/pulls/17973/commits)。
 
