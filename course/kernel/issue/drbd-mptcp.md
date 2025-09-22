@@ -1,3 +1,7 @@
+<!--
+https://patchwork.kernel.org/project/mptcp/cover/cover.1747904572.git.tanggeliang@kylinos.cn/
+-->
+
 DRBD 类似磁盘阵列的RAID 1（镜像），只不过 RAID 1 是在同一台电脑内，而 DRBD 是透过网络。
 
 准备试试让DRBD支持mptcp。
