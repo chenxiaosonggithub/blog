@@ -43,7 +43,10 @@ mount
                                             get_uuid_from_task
                                               insert_and_update_shard
                                                 query_and_update_shard
+                                                  dorado_query_fs_shard // 请求成功
                                                   dorado_query_lsId
+                                                    // TODO: 这里为什么失败
+                                                    dorado_extend_op // 返回错误 EINVAL
             nfs_get_tree_common
               nfs_get_root
                 nfs3_proc_get_root
