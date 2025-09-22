@@ -17,6 +17,18 @@
 # 代码分析
 
 ```c
-struct rpc_xprt 中的 connect_cookie
+struct rpc_xprt
+  connect_cookie
+
+pm_set_path_state
+
+struct enfs_xprt_context
+
+pm_ping_routine // kthread_run(pm_ping_routine,
+  enfs_get_config_path_detect_interval // 获取间隔时长
+  pm_ping_loop_sunrpc_net
+    pm_ping_loop_rpclnt
+      rpc_clnt_iterate_for_each_xprt
+        pm_ping_execute_xprt_test // fn
 ```
 
