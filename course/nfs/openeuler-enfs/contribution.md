@@ -4,6 +4,18 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 
 # [openEuler/kernel: enfs: recreate shard info when re-adding enfs module](https://gitee.com/openeuler/kernel/pulls/17973/commits)
 
+- <span style="color:red">feature: </span>[nfs/enfs: recreate shard info when re-adding enfs module](https://gitee.com/openeuler/kernel/commit/3eff42cc990fb66648283a71256dcf0633480228)
+- <span style="color:red">bugfix: </span>[nfs/enfs: reload config when re-adding enfs module](https://gitee.com/openeuler/kernel/commit/20c45d430e4d5b965283a58848d316a38b3b0c80)
+- <span style="color:red">bugfix: </span>[nfs/enfs: fix possible memory leak in exten_call.c](https://gitee.com/openeuler/kernel/commit/ea92710a897e539d856cac6397ac30df7c94b734)
+- [nfs/enfs: free memory uniformly at the end of function in exten_call.c](https://gitee.com/openeuler/kernel/commit/ddc7b6b3aacaba3713a33fcf8f9271a4c775be55)
+- <span style="color:red">bugfix: </span>[nfs/enfs: fix possible null-ptr-deref in exten_call.c](https://gitee.com/openeuler/kernel/commit/6e3d6a8531235d40963e62390ba1bfd552148e3f)
+- <span style="color:red">bugfix: </span>[nfs/enfs: handle error returned by NfsExtendProcInfoExtendEncode()](https://gitee.com/openeuler/kernel/commit/a9fd2ee77bcc1fd05626d0fe79d029a4bd2df6c2)
+- [nfs/enfs: return more nuanced error in NfsExtendProcInfoExtendEncode() and NfsExtendProcInfoExtendDecode()](https://gitee.com/openeuler/kernel/commit/8c951e3e2e009b1d12229c409dd62c2db7f51121)
+- [nfs/enfs: remove redundant flush_workqueue() before destroy_workqueue()](https://gitee.com/openeuler/kernel/commit/fe9b7a8cafb6f8adae5a6624a9161848e7b4b2ec)
+- [nfs/enfs: remove lookupcache_workq_lock](https://gitee.com/openeuler/kernel/commit/dd8f79a41963a64982a0996741330d7329703745)
+- [nfs/enfs: remove ping_execute_workq_lock](https://gitee.com/openeuler/kernel/commit/4fa6818602889cc4ba3af99b73805a309f516ea2)
+- [nfs/enfs: remove enfs_tp_common.h](https://gitee.com/openeuler/kernel/commit/99ed1d6c31b7c995a78ae5c6867eb74cc194cc54)
+
 # [2025年09月12日 openEuler/kernel: enfs: fix some bugs and optimize performance](https://gitee.com/openeuler/kernel/pulls/17898/commits)
 
 - <span style="color:red">performance: </span>[sunrpc: do not set enfs transport in rpc_task_set_client()](https://gitee.com/openeuler/kernel/commit/24f295baf843a8d506ea8ff7c14f9435b8f9a62b)
