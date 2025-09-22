@@ -62,6 +62,7 @@ enfs_multipath_init
   pm_ping_init
     pm_ping_start
       pm_ping_routine // kthread_run(pm_ping_routine,
+        enfs_get_config_path_detect_interval // 获取间隔时长
         pm_ping_loop_sunrpc_net
           pm_ping_loop_rpclnt
             rpc_clnt_iterate_for_each_xprt
