@@ -418,3 +418,7 @@ index d3de3b7f1..4be0bcc6f 100644
         fi
 ```
 
+# KUnit
+
+- [KUnit - Linux Kernel Unit Testing](https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html)
+
