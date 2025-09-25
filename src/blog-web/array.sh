@@ -62,9 +62,9 @@ comm_array=(
 				"c186f0887fe7 ext4: fix use-after-free in ext4_search_dir"
 			1 1 course/kernel/patch/refactor-of-__ext4_fill_super.md ~
 				"some refactor of __ext4_fill_super()"
-		# issue
-			1 1 course/kernel/issue/drbd-mptcp.md ~ "drbd支持mptcp"
 	0 1 course/mptcp/mptcp.md ~ "MPTCP"
+		# issue
+			1 1 course/mptcp/issue/drbd-mptcp.md ~ "drbd支持mptcp"
 	0 1 course/nfs/nfs.md ~ "nfs文件系统"
 		1 1 course/nfs/video.md ~ "nfs课程配套视频"
 		1 1 course/nfs/introduction.md ~ "nfs简介"

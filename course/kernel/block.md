@@ -240,7 +240,7 @@ Noop只做了合并的操作，适用于“寻址”代价小或没有代价的�
 
 # drbd {#drbd}
 
-请查看[《drbd支持mptcp》](https://chenxiaosong.com/course/kernel/issue/drbd-mptcp.html)。
+请查看[《drbd支持mptcp》](https://chenxiaosong.com/course/mptcp/issue/drbd-mptcp.html)。
 
 <!-- ing begin -->
 # mq-deadline

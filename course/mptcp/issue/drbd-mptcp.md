@@ -160,3 +160,11 @@ LISTEN    1        5        192.168.53.209:7788           0.0.0.0:*
 
 还需要进一步定位。
 
+# 代码分析
+
+```c
+drbd_recv
+  drbd_recv_short
+  drbd_err(connection, "sock_recvmsg returned %d\n", rv)
+```
+
