@@ -138,6 +138,7 @@ comm_array=(
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-refactor.md ~ "openEuler的nfs+代码重构"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-server-not-responding.md ~ "openEuler的nfs+报错not responding的问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-recreate-shard-info.md ~ "openEuler的nfs+重新插入enfs模块时生成shard信息的功能"
+			1 1 course/nfs/openeuler-enfs/enfs-unstable-link-state.md ~ "openEuler的nfs+增加亚健康连接状态"
 	0 1 course/smb/smb.md ~ "smb文件系统"
 		1 1 course/smb/video.md ~ "smb课程配套视频"
 		1 1 course/smb/introduction.md ~ "smb简介"

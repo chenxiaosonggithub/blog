@@ -24,6 +24,9 @@ pm_set_path_state
 
 struct enfs_xprt_context
 
+enfs_alloc_xprt_ctx
+  ctx = kzalloc // 初始化为0
+
 pm_ping_routine // kthread_run(pm_ping_routine,
   enfs_get_config_path_detect_interval // 获取间隔时长
   pm_ping_loop_sunrpc_net
