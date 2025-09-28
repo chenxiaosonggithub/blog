@@ -135,7 +135,7 @@ comm_array=(
 			1 1 course/nfs/openeuler-enfs/enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
 			1 1 course/nfs/openeuler-enfs/enfs-double-free-of-multipath_client_info.md ~ "openEuler的nfs+ multipath_client_info double free的问题"
 			1 1 course/nfs/openeuler-enfs/enfs-create-client-fail.md ~ "openEuler的nfs+初始化enfs client失败的问题"
-			1 1 course/nfs/openeuler-enfs/openeuler-enfs-refactor.md ~ "openEuler的nfs+代码重构"
+			1 1 course/nfs/openeuler-enfs/enfs-refactor.md ~ "openEuler的nfs+代码重构"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-server-not-responding.md ~ "openEuler的nfs+报错not responding的问题"
 			1 1 course/nfs/openeuler-enfs/enfs-recreate-shard-info.md ~ "openEuler的nfs+重新插入enfs模块时生成shard信息的功能"
 			1 1 course/nfs/openeuler-enfs/enfs-unstable-link-state.md ~ "openEuler的nfs+增加亚健康连接状态"
