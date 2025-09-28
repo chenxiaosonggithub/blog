@@ -132,7 +132,7 @@ comm_array=(
 			1 1 course/nfs/issue/nfsv3-mount-hung-with-same-option.md ~ "nfsv3选项一样时挂载hung住的问题"
 		1 1 course/nfs/openeuler-enfs.md ~ "openEuler的nfs+"
 			1 1 course/nfs/openeuler-enfs/contribution.md enfs-contribution.html "陈孝松openEuler nfs+贡献"
-			1 1 course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
+			1 1 course/nfs/openeuler-enfs/enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.md ~ "openEuler的nfs+ multipath_client_info double free的问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.md ~ "openEuler的nfs+初始化enfs client失败的问题"
 			1 1 course/nfs/openeuler-enfs/openeuler-enfs-refactor.md ~ "openEuler的nfs+代码重构"

@@ -24,7 +24,7 @@ nfs_rename flag overlayfs
 
 # 问题分析 {#issue}
 
-- [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get.html)
+- [openEuler的nfs+ xprt_switch_get()空指针解引用问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/enfs-null-ptr-deref-in-xprt_switch_get.html)
 - [openEuler的nfs+ multipath_client_info double free的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-double-free-of-multipath_client_info.html)
 - [openEuler的nfs+初始化enfs client失败的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-create-client-fail.html)
 - [openEuler的nfs+报错not responding的问题](https://chenxiaosong.com/course/nfs/openeuler-enfs/openeuler-enfs-server-not-responding.html)
