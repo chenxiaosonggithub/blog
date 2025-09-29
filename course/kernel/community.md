@@ -97,7 +97,8 @@ openEuler的LTS有kabi白名单，使用脚本[`check-kabi`](https://gitee.com/s
 <!-- public end -->
 。修改代码时要参考[Linux内核代码风格](https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html#cn-codingstyle)。
 
-注意commit message每行长度不超过 72 个字符。
+脚本[`checkpatch.pl`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/checkpatch.pl)中建议，
+代码每行最多100个字符（`$max_line_length = 100`），commit message每行长度最多 75 个字符（`length($line) > 75`）。
 
 `git commit`命令之后，使用以下命令会生成补丁文件:
 ```shell
