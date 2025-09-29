@@ -6,6 +6,8 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 
 # [2025年09月25日 openEuler/kernel: enfs: recreate shard info when re-adding enfs module](https://gitee.com/openeuler/kernel/pulls/17973/commits)
 
+改动 440 行。<!-- 15+355+537+314+61+440 = 1722 -->
+
 - <span style="color:red">feature: </span>[nfs/enfs: recreate shard info when re-adding enfs module](https://gitee.com/openeuler/kernel/commit/01f8a9007306f71ce2f9d1642d0de754b976c353)
 - <span style="color:red">bugfix: </span>[nfs/enfs: reload config when re-adding enfs module](https://gitee.com/openeuler/kernel/commit/c83bfa180d2e2a0b9f1a39cc641b4b4839f5d8b3)
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix possible memory leak in exten_call.c](https://gitee.com/openeuler/kernel/commit/b31506834cd780cb0574b0d48c85cffabf73e6ca)
@@ -21,6 +23,8 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 
 # [2025年09月12日 openEuler/kernel: enfs: fix some bugs and optimize performance](https://gitee.com/openeuler/kernel/pulls/17898/commits)
 
+改动 61 行。<!-- 15+355+537+314+61 -->
+
 - <span style="color:red">performance: </span>[sunrpc: do not set enfs transport in rpc_task_set_client()](https://gitee.com/openeuler/kernel/commit/24f295baf843a8d506ea8ff7c14f9435b8f9a62b)
 - <span style="color:red">performance: </span>[nfs/enfs: get rpc procedure number from rpc_procinfo in get_uuid_from_task()](https://gitee.com/openeuler/kernel/commit/0e7a7ac732578ca804d5d81b26ef88869669d5a6)
 - <span style="color:red">bugfix: </span>[nfs/enfs: introduce is_enfs_debug()](https://gitee.com/openeuler/kernel/commit/0fbb6e383e6818e7f24f90388d061f020f9640b0)
@@ -29,6 +33,8 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 - [nfs/enfs: remove duplicate definitions](https://gitee.com/openeuler/kernel/commit/960de6c02b85577e9b2851bcf1ef42a8c4b5376f)
 
 # [2025年08月15日 openEuler/kernel: fix some bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17479/commits)
+
+改动 314 行。<!-- 15+355+537+314 -->
 
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix memory leak of shard_view_ctrl when removing nfs module](https://gitee.com/openeuler/kernel/commit/068e87b7ffc2d168cedd409e48e262b8dc0b9017)
 - <span style="color:red">bugfix: </span>[nfs/enfs: set CONFIG_SUNRPC_ENFS=y by default](https://gitee.com/openeuler/kernel/commit/0b85eddf5ae7ab0cf1aec485e0e2fbd13b38ff1b)
@@ -41,6 +47,8 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 - [nfs/enfs: make some functions static in enfs_multipath_client.c](https://gitee.com/openeuler/kernel/commit/bc954e6ba5c80f2f7fafde7cd2eb818628421786)
 
 # [2025年08月02日 openEuler/kernel: fix some panic bugs and memory leak bugs of enfs](https://gitee.com/openeuler/kernel/pulls/17205/commits)
+
+改动 537 行。<!-- 15+355+537 -->
 
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix null-ptr-deref in shard_update_work()](https://gitee.com/openeuler/kernel/commit/b29f941d7c6454ae39e85a23d8a004f47b274505)
 - <span style="color:red">bugfix: </span>[nfs/enfs: fix double free of multipath_client_info](https://gitee.com/openeuler/kernel/commit/d6f01631a69cbca08be0157a09f30a93283c50d4)
@@ -61,6 +69,8 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 
 # [2025年07月26日 openEuler/kernel: unify log function usage of enfs](https://gitee.com/openeuler/kernel/pulls/17266/commits)
 
+改动 355 行。<!-- 15+355 -->
+
 <!--
 搜索日志函数:
   - git diff 搜索: dprintk|dfprintk|pr_info|pr_err|pr_debug
@@ -77,6 +87,8 @@ nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公�
 - [nfs/enfs: use enfs_log_error() instead of pr_err() in enfs](https://gitee.com/openeuler/kernel/commit/69ccb9f7620d556dc3cd02572d34b145564d8591)
 
 # [2025年07月04日 openEuler/kernel: fix some build errors of enfs](https://gitee.com/openeuler/kernel/pulls/16891/commits)
+
+改动 15 行。
 
 - <span style="color:red">bugfix: </span>[nfs: fix enfs mount failure when CONFIG_ENFS=y](https://gitee.com/openeuler/kernel/commit/f4f81ee1ead7362e5bb0b6b2fdebb3049cbaa76e)
 - <span style="color:red">bugfix: </span>[nfs: fix build errors when CONFIG_ENFS=m && CONFIG_NFS_FS=y](https://gitee.com/openeuler/kernel/commit/53806d18641c15b833cd6f4f7c540c3018099d7f)
