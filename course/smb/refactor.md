@@ -204,3 +204,30 @@ smb2_compound_op
 # `smb2_lock()`重构
 
 这个函数也挺长挺复杂，有353行（7535-7181）。
+
+# 2025年凑数补丁
+
+## `ksmbd_decode_ntlmssp_auth_blob()`: `arc4_setkey()`和`arc4_crypt()`是否必须？
+
+```c
+smb2_sess_setup
+  ntlm_authenticate
+    ksmbd_decode_ntlmssp_auth_blob
+    set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD) // 发生错误时
+```
+
+## 重复定义
+
+发现gtags没法找到`ksmbd_conn_handler_loop()`的定义，是gtags的bug，有空去修一下。
+
+- server文件: fs/smb/server/glob.h, fs/smb/server/smb2pdu.h, fs/smb/server/smb_common.h
+- client文件: fs/smb/client/cifspdu.h, fs/smb/client/smb2pdu.h, fs/smb/client/cifsglob.h, fs/smb/client/smb2glob.h
+
+重复的定义:
+
+- file_both_directory_info, FILE_BOTH_DIRECTORY_INFO
+- file_id_full_dir_info, SEARCH_ID_FULL_DIR_INFO
+- FILE_FULL_DIRECTORY_INFO, file_full_directory_info
+- FILE_DIRECTORY_INFO, file_directory_info
+- smb2_posix_info
+
