@@ -223,11 +223,28 @@ smb2_sess_setup
 - server文件: fs/smb/server/glob.h, fs/smb/server/smb2pdu.h, fs/smb/server/smb_common.h
 - client文件: fs/smb/client/cifspdu.h, fs/smb/client/smb2pdu.h, fs/smb/client/cifsglob.h, fs/smb/client/smb2glob.h
 
-重复的定义:
 
-- file_both_directory_info, FILE_BOTH_DIRECTORY_INFO
-- file_id_full_dir_info, SEARCH_ID_FULL_DIR_INFO
-- FILE_FULL_DIRECTORY_INFO, file_full_directory_info
-- FILE_DIRECTORY_INFO, file_directory_info
 - smb2_posix_info
+
+### cifspdu.h
+
+- file access permission bits: SET_FILE_READ_RIGHTS, SET_FILE_WRITE_RIGHTS
+- SMB frame definitions: NEGOTIATE_REQ, NEGOTIATE_RSP, smb_negotiate_req, smb_negotiate_rsp
+- FILE_SYSTEM_ATTRIBUTE_INFO, filesystem_attribute_info
+- FILE_SYSTEM_DEVICE_INFO, filesystem_device_info
+- FILE_SYSTEM_INFO, filesystem_info
+- FILE_DIRECTORY_INFO, file_directory_info
+- FILE_FULL_DIRECTORY_INFO, file_full_directory_info
+- FILE_BOTH_DIRECTORY_INFO, file_both_directory_info
+- SEARCH_ID_FULL_DIR_INFO, file_id_full_dir_info
+- FILE_SYSTEM_POSIX_INFO, filesystem_posix_info
+
+### cifsglob.h
+
+- done SMB1_VERSION_STRING, ..., SMB311_VERSION_STRING
+- done CIFS_DEFAULT_IOSIZE, 只有client用到
+- SMB1_PROTO_NUMBER
+- done smb_version_values
+- get_rfc1002_len, get_rfc1002_length
+- inc_rfc1001_len
 
