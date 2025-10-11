@@ -223,20 +223,23 @@ smb2_sess_setup
 - server文件: fs/smb/server/glob.h, fs/smb/server/smb2pdu.h, fs/smb/server/smb_common.h
 - client文件: fs/smb/client/cifspdu.h, fs/smb/client/smb2pdu.h, fs/smb/client/cifsglob.h, fs/smb/client/smb2glob.h
 
-
-- smb2_posix_info
-
 ### cifspdu.h
 
-- file access permission bits: SET_FILE_READ_RIGHTS, SET_FILE_WRITE_RIGHTS
+- SMB flag definitions: SMBFLG_CANONICAL_PATH_FORMAT 暂没找到
+- SMB flag2 definitions: SMBFLG2_KNOWS_LONG_NAMES 暂没找到
+- SMB command codes: SMB_COM_CREATE_DIRECTORY, 有些对不上: [MS-CIFS](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cifs/5cd5747f-fe0b-40a6-89d0-d67f751f8232)
+- MAX_CIFS_SMALL_BUFFER_SIZE 暂没找到
+- File Attribute flags: ATTR_READONLY, ATTR_WRITE_THROUGH, 找到一部分: [MS-SMB](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/65e0c225-5925-44b0-8104-6b91339c709f)
+- smb_hdr: SecuritySignature, [MS-SMB](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/3c0848a6-efe9-47c2-b57a-f7e8217150b9)
+- file access permission bits: FILE_READ_DATA, [MS-SMB 2.2.1.4.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/27f99d29-7784-4684-b6dd-264e9025b286)
 - SMB frame definitions: NEGOTIATE_REQ, NEGOTIATE_RSP, smb_negotiate_req, smb_negotiate_rsp
-- FILE_SYSTEM_ATTRIBUTE_INFO, filesystem_attribute_info
-- FILE_SYSTEM_DEVICE_INFO, filesystem_device_info
-- FILE_SYSTEM_INFO, filesystem_info
-- FILE_DIRECTORY_INFO, file_directory_info
-- FILE_FULL_DIRECTORY_INFO, file_full_directory_info
-- FILE_BOTH_DIRECTORY_INFO, file_both_directory_info
-- SEARCH_ID_FULL_DIR_INFO, file_id_full_dir_info
+- FILE_SYSTEM_ATTRIBUTE_INFO, filesystem_attribute_info, FileSystemNameLen, FS-FSCC 2.5.1
+- FILE_SYSTEM_DEVICE_INFO, filesystem_device_info, MS-CIFS 2.2.8.2.5
+- FILE_SYSTEM_INFO, filesystem_info, MS-CIFS 2.2.8.2.4
+- FILE_DIRECTORY_INFO, file_directory_info, MS-CIFS 2.2.8.1.4
+- FILE_FULL_DIRECTORY_INFO, file_full_directory_info, MS-CIFS 2.2.8.1.5
+- FILE_BOTH_DIRECTORY_INFO, file_both_directory_info, MS-CIFS 2.2.8.1.7
+- SEARCH_ID_FULL_DIR_INFO, file_id_full_dir_info, MS-SMB 2.2.8.1.2
 - FILE_SYSTEM_POSIX_INFO, filesystem_posix_info
 
 ### cifsglob.h
@@ -254,14 +257,17 @@ smb2_sess_setup
   - [MS-SMB2 2.2.13.2.11](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/5e361a29-81a7-4774-861d-f290ea53a00e)
   - [MS-SMB2 2.2.13.2.12](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/a6d418a7-d2db-47c9-a1c7-5802222ad678)
   - [MS-SMB2 2.2.14.2.12](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/48c1049f-25a4-4f23-9a57-11ddd72ce985)
-- srv_copychunk:
+- todo srv_copychunk:
   - [MS-SMB2 2.2.31.1.1 ](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/676ae4b4-6758-4930-9f73-f0853fcad081)
   - [MS-SMB 2.2.7.2.1.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/e4e20182-7c71-4755-b638-bb75ff1c06ca)
-- copychunk_ioctl_req: [MS-SMB2 2.2.31.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/1c91ae61-46ad-4953-805f-afc06ce4c70b)
-- copychunk_ioctl_rsp: [MS-SMB2 2.2.32.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/80d85df3-a4dc-4418-ac7e-93dd67e423e9)
+- todo copychunk_ioctl_req: [MS-SMB2 2.2.31.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/1c91ae61-46ad-4953-805f-afc06ce4c70b)
+- todo copychunk_ioctl_rsp: [MS-SMB2 2.2.32.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/80d85df3-a4dc-4418-ac7e-93dd67e423e9)
 - RSS_CAPABLE, RDMA_CAPABLE: [MS-SMB2 2.2.32.5](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/fcd862d1-1b85-42df-92b1-e103199f531f)
 - INTERNETWORK, INTERNETWORKV6: [MS-SMB2 2.2.32.5.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/4b77102f-769f-414d-b137-47cabfe8be8f)
 - network_interface_info_ioctl_rsp: [MS-SMB2 2.2.32.5](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/fcd862d1-1b85-42df-92b1-e103199f531f)
 - iface_info_ipv4, smb_sockaddr_in: [MS-SMB2 2.2.32.5.1.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/b5bf4d52-55ed-4e6a-94b8-b7b129aa98de)
 - iface_info_ipv6, smb_sockaddr_in6: [MS-SMB2 2.2.32.5.1.2](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/98a4f647-7ed2-4417-b922-91cd29f35902)
+- todo: smb2_file_network_open_info, smb2_file_ntwrk_info
+- todo: create_posix_rsp
+- todo: smb2_posix_info
 
