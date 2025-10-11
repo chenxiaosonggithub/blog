@@ -248,3 +248,20 @@ smb2_sess_setup
 - done get_rfc1002_len, get_rfc1002_length
 - done SMB1_PROTO_NUMBER
 
+### smb2pdu.h
+
+- SMB2_DHANDLE_FLAG_PERSISTENT:
+  - [MS-SMB2 2.2.13.2.11](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/5e361a29-81a7-4774-861d-f290ea53a00e)
+  - [MS-SMB2 2.2.13.2.12](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/a6d418a7-d2db-47c9-a1c7-5802222ad678)
+  - [MS-SMB2 2.2.14.2.12](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/48c1049f-25a4-4f23-9a57-11ddd72ce985)
+- srv_copychunk:
+  - [MS-SMB2 2.2.31.1.1 ](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/676ae4b4-6758-4930-9f73-f0853fcad081)
+  - [MS-SMB 2.2.7.2.1.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/e4e20182-7c71-4755-b638-bb75ff1c06ca)
+- copychunk_ioctl_req: [MS-SMB2 2.2.31.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/1c91ae61-46ad-4953-805f-afc06ce4c70b)
+- copychunk_ioctl_rsp: [MS-SMB2 2.2.32.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/80d85df3-a4dc-4418-ac7e-93dd67e423e9)
+- RSS_CAPABLE, RDMA_CAPABLE: [MS-SMB2 2.2.32.5](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/fcd862d1-1b85-42df-92b1-e103199f531f)
+- INTERNETWORK, INTERNETWORKV6: [MS-SMB2 2.2.32.5.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/4b77102f-769f-414d-b137-47cabfe8be8f)
+- network_interface_info_ioctl_rsp: [MS-SMB2 2.2.32.5](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/fcd862d1-1b85-42df-92b1-e103199f531f)
+- iface_info_ipv4, smb_sockaddr_in: [MS-SMB2 2.2.32.5.1.1](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/b5bf4d52-55ed-4e6a-94b8-b7b129aa98de)
+- iface_info_ipv6, smb_sockaddr_in6: [MS-SMB2 2.2.32.5.1.2](https://learn.microsoft.com/zh-cn/openspecs/windows_protocols/ms-smb2/98a4f647-7ed2-4417-b922-91cd29f35902)
+
