@@ -243,8 +243,8 @@ smb2_sess_setup
 
 - done SMB1_VERSION_STRING, ..., SMB311_VERSION_STRING
 - done CIFS_DEFAULT_IOSIZE, 只有client用到
-- SMB1_PROTO_NUMBER
+- done inc_rfc1001_len
 - done smb_version_values
-- get_rfc1002_len, get_rfc1002_length
-- inc_rfc1001_len
+- done get_rfc1002_len, get_rfc1002_length
+- done SMB1_PROTO_NUMBER
 
