@@ -141,6 +141,28 @@ git format-patch --subject-prefix="PATCH resend,v2" -3 commit号 --cover-letter
 vim 0000-cover-letter.patch
 ```
 
+## `@linux.dev`邮箱
+
+- [linux.dev mailbox hosting](https://korg.docs.kernel.org/linuxdev.html)
+
+发送邮件到`helpdesk@kernel.org`:
+```sh
+Subject: chenxiaosong.chenxiaosong@linux.dev account request
+
+Full name: [ChenXiaoSong ChenXiaoSong]
+Canonical address: [chenxiaosong@kylinos.cn]
+
+Reasons for needing this account:
+
+Emails sent from the address I’m currently using are often not received by others, which greatly affects my communication with the community.
+
+My Linux kernel contributions:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong
+
+My communication records with Kernel Mailing Lists:
+https://lore.kernel.org/all/?q=chenxiaosong
+```
+
 ## 邮箱配置
 
 - 163邮箱配置: 默认情况下，163邮箱只能在网页和网易邮箱大师登录。如果要用git通过163邮箱发送邮件则需要对163邮箱进行配置。在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除）。
