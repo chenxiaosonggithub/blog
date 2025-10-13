@@ -7,7 +7,7 @@
 
 - nfs client maintainer: Steve French <sfrench@samba.org>，友好
 - nfs server maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好
-- [nfs client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary)
+- [nfs client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary), [for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)
 - [nfs server maintainer的仓库](https://github.com/namjaejeon/ksmbd)
 
 获取supporter、reviewer、maintainer、open list、moderated list的邮箱:
