@@ -225,7 +225,7 @@ git log -p --oneline <提交1>..<提交n>
 
 发邮件:
 ```sh
-git send-email --to=stfrench@microsoft.com,metze@samba.org,pali@kernel.org,linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,senozhatsky@chromium.org,tom@talpey.com,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,bharathsm@microsoft.com,christophe.jaillet@wanadoo.fr,zhangguodong@kylinos.cn --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org
+git send-email --to=linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,senozhatsky@chromium.org,tom@talpey.com,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,bharathsm@microsoft.com,christophe.jaillet@wanadoo.fr --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org --in-reply-to=20251014071917.3004573-1-chenxiaosong.chenxiaosong@linux.dev 00* # --suppress-cc=all --in-reply-to=xxx --no-thread
 ```
 
 发现gtags没法找到`ksmbd_conn_handler_loop()`的定义，是gtags的bug，有空去修一下。
@@ -237,10 +237,10 @@ git send-email --to=stfrench@microsoft.com,metze@samba.org,pali@kernel.org,linki
 
 - SMB flag definitions: SMBFLG_CANONICAL_PATH_FORMAT 暂没找到
 - SMB flag2 definitions: SMBFLG2_KNOWS_LONG_NAMES 暂没找到
-- SMB command codes: SMB_COM_CREATE_DIRECTORY, 有些对不上: [MS-CIFS](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cifs/5cd5747f-fe0b-40a6-89d0-d67f751f8232)
+- SMB command codes: SMB_COM_CREATE_DIRECTORY, 有些对不上: [MS-CIFS 2.2.4](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cifs/5cd5747f-fe0b-40a6-89d0-d67f751f8232)
 - MAX_CIFS_SMALL_BUFFER_SIZE 暂没找到
-- File Attribute flags: ATTR_READONLY, ATTR_WRITE_THROUGH, 找到一部分: [MS-SMB](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/65e0c225-5925-44b0-8104-6b91339c709f)
-- smb_hdr: SecuritySignature, [MS-SMB](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/3c0848a6-efe9-47c2-b57a-f7e8217150b9)
+- File Attribute flags: ATTR_READONLY, ATTR_WRITE_THROUGH, 找到一部分: [MS-SMB 2.2.1.2.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/65e0c225-5925-44b0-8104-6b91339c709f)
+- smb_hdr: SecuritySignature, [MS-SMB 2.2.3.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/3c0848a6-efe9-47c2-b57a-f7e8217150b9)
 - file access permission bits: FILE_READ_DATA, [MS-SMB 2.2.1.4.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/27f99d29-7784-4684-b6dd-264e9025b286)
 - SMB frame definitions: NEGOTIATE_REQ, NEGOTIATE_RSP, smb_negotiate_req, smb_negotiate_rsp
 - FILE_SYSTEM_ATTRIBUTE_INFO, filesystem_attribute_info, FileSystemNameLen, FS-FSCC 2.5.1
