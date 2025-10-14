@@ -65,7 +65,6 @@ iter_dir() {
 if [ -f "$input_file_or_dir" ]; then
 	# 是文件就直接解析
 	calc_func_lines  $input_file_or_dir
-	exit 1
 elif [ -d "$input_file_or_dir" ]; then
 	# 是目录就遍历
 	iter_dir $input_file_or_dir
