@@ -141,9 +141,9 @@ git format-patch --subject-prefix="PATCH resend,v2" -3 commit号 --cover-letter
 vim 0000-cover-letter.patch
 ```
 
-## `@linux.dev`邮箱
+## `@linux.dev`邮箱申请
 
-- [linux.dev mailbox hosting](https://korg.docs.kernel.org/linuxdev.html)
+- 参考[linux.dev mailbox hosting](https://korg.docs.kernel.org/linuxdev.html)
 
 发送邮件到`helpdesk@kernel.org`:
 ```sh
@@ -186,6 +186,17 @@ thunderbird有个快捷键`k`，会忽略话题，不小心按下后邮件就会
 安装软件:
 ```sh
 sudo apt install git-email -y
+```
+
+`@linux.dev`邮箱`~/.gitconfig`:
+```sh
+[sendemail]
+        from = chenxiaosong.chenxiaosong@linux.dev
+        smtpserver = smtp.migadu.com
+        smtpuser = chenxiaosong.chenxiaosong@linux.dev
+        smtpencryption = ssl
+        smtppass = 此处填写密码
+        smtpserverport = 465
 ```
 
 163邮箱`~/.gitconfig`:
