@@ -223,6 +223,11 @@ smb2_sess_setup
 git log -p --oneline <提交1>..<提交n>
 ```
 
+发邮件:
+```sh
+git send-email --to=stfrench@microsoft.com,metze@samba.org,pali@kernel.org,linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,senozhatsky@chromium.org,tom@talpey.com,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,bharathsm@microsoft.com,zhangguodong@kylinos.cn,christophe.jaillet@wanadoo.fr --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org
+```
+
 发现gtags没法找到`ksmbd_conn_handler_loop()`的定义，是gtags的bug，有空去修一下。
 
 - server文件: fs/smb/server/glob.h, fs/smb/server/smb2pdu.h, fs/smb/server/smb_common.h
