@@ -2,13 +2,15 @@
 
 [点击查看kernel.org网站上我的Linux内核邮件列表](https://lore.kernel.org/all/?q=chenxiaosong)
 
-[点击查看kernel.org网站上我的Linux内核上游仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=chenxiaosong)（加载需要一丢丢时间哈，可以直接查看下面列出的补丁链接）
+[点击查看kernel.org网站上我的Linux内核上游仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈，可以直接查看下面列出的补丁链接）
 
 Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件），在内核社区里可以让我这个小菜鸟直接和世上最顶尖的程序员交流。
 
 主要从事的方向是**文件系统**（nfs，smb等），修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
 
 下面按时间顺序列出所有的补丁，最新的补丁放在前面。
+
+- [[PATCH v3 00/22] smb: fix some bugs, move duplicate definitions to common header file](https://lore.kernel.org/all/20251014071917.3004573-1-chenxiaosong.chenxiaosong@linux.dev/)
 
 - [smb: add comment to STATUS_MCA_OCCURED](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e2fcd3fa0351ea2133d1238fcc6a9f140c52d36f)
 - [smb: move SMB2 Status code to common header file](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=78181a5504a401e421e65d0257a33f904e0e7c29)
