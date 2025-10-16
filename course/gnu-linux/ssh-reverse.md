@@ -147,11 +147,11 @@ ssh -N -R 3306:localhost:3306 -R 6379:localhost:6379 -R 5001:localhost:5001 -R 5
 
 通过访问`chenxiaosong.com`的`22222`端口就能访问到内网mysql的`3306`端口。
 
-# 内网穿透商业软件
+# 内网穿透商业软件 {#commercial-sw}
 
 当然我使用的是能白嫖的免费版。
 
-## [花生壳](https://service.oray.com/question/15507.html)
+## [花生壳](https://service.oray.com/question/15507.html) {#oray}
 
 [免费版限1GB/月](https://hsk.oray.com/price#personal)，域名和端口固定。
 
@@ -174,7 +174,7 @@ sudo phddns status # 查看状态
 
 在[贝锐花生壳管理 - 设备列表](https://console.hsk.oray.com/zh/device)添加设备。
 
-## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series)
+## [cpolar](https://www.cpolar.com/blog/cpolar-quick-start-tutorial-ubuntu-series) {#cpolar}
 
 曾经我遇到过花生壳免费版的出问题不能用，就临时用了cpolar，注意cpolar域名和端口不固定:
 ```sh
@@ -194,7 +194,7 @@ cpolar的域名和端口不固定，可以使用以下脚本获取域名和端�
 - 获取cpolar的status网页: [`cpolar-get-status-html.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/cpolar-get-status-html.sh)
 - 获取ssh命令: [`cpolar-get-ssh-cmd.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/cpolar-get-ssh-cmd.sh)
 
-## 其他
+## 其他 {#other-commercial-sw}
 
 以下几个不建议用:
 
