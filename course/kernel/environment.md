@@ -88,7 +88,8 @@ dnf install -y dwarves # 麒麟服务器v10无法安装，要在公司内网下�
 <!-- public begin -->
 ## docker环境 {#docker-env}
 
-除了在vmware虚拟机中搭建开发环境，还可以在docker中搭建开发环境。注意qemu的权限配置[请参考后面的“qemu配置”相关的章节](https://chenxiaosong.com/course/kernel/environment.html#qemu-config)。
+除了在vmware虚拟机中搭建开发环境（性能损失很多），还可以在docker中搭建开发环境，docker的性能损失可以忽略不计。
+注意qemu的权限配置[请参考后面的“qemu配置”相关的章节](https://chenxiaosong.com/course/kernel/environment.html#qemu-config)。
 
 ### NAT模式
 
