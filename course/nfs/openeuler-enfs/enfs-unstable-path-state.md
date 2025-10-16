@@ -18,14 +18,14 @@
 
 ```c
 struct rpc_xprt
-  connect_cookie
+  connect_cookie // 重连时这个值会变
 
-pm_set_path_state
+pm_set_path_state // 设置状态
 
-struct enfs_xprt_context
+struct enfs_xprt_context // 通过 xprt_get_reserve_context() 获取
 
 enfs_alloc_xprt_ctx
-  ctx = kzalloc // 初始化为0
+  ctx = kzalloc // struct enfs_xprt_context 初始化为0
 
 pm_ping_routine // kthread_run(pm_ping_routine,
   enfs_get_config_path_detect_interval // 获取间隔时长
