@@ -86,7 +86,7 @@ dnf install -y dwarves # 麒麟服务器v10无法安装，要在公司内网下�
 <!-- TODO: 源码安装crash, emacs -->
 
 <!-- public begin -->
-## docker环境
+## docker环境 {#docker-env}
 
 除了在vmware虚拟机中搭建开发环境，还可以在docker中搭建开发环境。注意qemu的权限配置[请参考后面的“qemu配置”相关的章节](https://chenxiaosong.com/course/kernel/environment.html#qemu-config)。
 
@@ -102,7 +102,7 @@ qemu命令行的网络参数修改成（`model`和`macaddr`可以自己指定）
 
 注意在虚拟机中，不要手动配置ip，要运行`systemctl restart networking.service`自动获取ip地址（可能还需要修改`/etc/network/interfaces`）。
 
-### 桥接模式（TODO）
+### 桥接模式（TODO, 网络暂时还有问题）
 
 宿主机中桥接模式配置:
 ```sh
