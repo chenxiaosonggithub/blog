@@ -2,7 +2,7 @@
 
 nfs+（Enhanced NFS，简称 eNFS），是华为提出的，麒麟软件等公司共同参与开发的特性，对 Linux 内核原生 NFS 进行增强，通过多链路等技术很好的解决原生 NFS 客户端在性能和可靠性方面存在的一些不足，极大提升业务的性能与稳定性。
 
-# [openEuler/kernel: enfs: add new path state PM_STATE_UNSTABLE](https://gitee.com/openeuler/kernel/pulls/18249/commits)
+# [2025年10月16日 openEuler/kernel: enfs: add new path state PM_STATE_UNSTABLE](https://gitee.com/openeuler/kernel/pulls/18249/commits)
 
 - <span style="color:red">feature: </span>[nfs/enfs: introduce enum PM_STATE_UNSTABLE](https://gitee.com/openeuler/kernel/commit/9220b0cf32cfb5c0f0eb8777298a77875d896267)
 - <span style="color:red">feature: </span>[nfs/enfs: set PM_STATE_UNSTABLE if path is unstable](https://gitee.com/openeuler/kernel/commit/e961e79037beaa80d7709dd8ae2bf682263ce537)
