@@ -10,7 +10,7 @@
 - [Main Page - Linux NFS](https://linux-nfs.org/wiki/index.php/Main_Page)
 - [kernel Documentation: `filesystem/nfs`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/nfs)
 - [kernel Documentation: `admin-guide/nfs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/nfs)
-- [nfs-utils](https://git.kernel.org/pub/scm/linux/kernel/git/rw/nfs-utils.git)
+- [nfs-utils](https://git.linux-nfs.org/?p=steved/nfs-utils.git)（[另外kernel.org上的仓库很久没更新了](https://git.kernel.org/pub/scm/linux/kernel/git/rw/nfs-utils.git)，现在也索引不到了）
 - [Red Hat Documentation](https://docs.redhat.com/zh-cn/documentation/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-nfs)
 
 点击下面的标题跳转。
