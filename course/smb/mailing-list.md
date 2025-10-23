@@ -18,15 +18,11 @@
 ```sh
 ./scripts/get_maintainer.pl fs/smb/server/
 ./scripts/get_maintainer.pl fs/smb/client/
-./scripts/get_maintainer.pl fs/smb/common/
-./scripts/get_maintainer.pl fs/smb/Makefile
-./scripts/get_maintainer.pl fs/smb/Kconfig
-./scripts/get_maintainer.pl fs/smb/
 ```
 
 发送补丁:
 ```sh
-git send-email --to=linkinjeon@kernel.org,sfrench@samba.org,stfrench@microsoft.com,pc@manguebit.com,sprasad@microsoft.com,dhowells@redhat.com,senozhatsky@chromium.org,tom@talpey.com,ronniesahlberg@gmail.com,bharathsm@microsoft.com --cc=chenxiaosong@kylinos.cn,chenxiaosong@chenxiaosong.com,linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org 00* # samba-technical@lists.samba.org要订阅才能发送成功
+git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org 00* # samba-technical@lists.samba.org要订阅才能发送成功
 ```
 
 # smb server补丁统计
