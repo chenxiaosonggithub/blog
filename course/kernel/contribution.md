@@ -11,6 +11,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 下面按时间顺序列出所有的补丁，最新的补丁放在前面。
 
+- [[PATCH v2 0/6] smb/server: fix return values of smb2_0_server_cmds proc](https://lore.kernel.org/all/20251017104613.3094031-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH v3 00/22] smb: fix some bugs, move duplicate definitions to common header file](https://lore.kernel.org/all/20251014071917.3004573-1-chenxiaosong.chenxiaosong@linux.dev/)
 
 - [smb: add comment to STATUS_MCA_OCCURED](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e2fcd3fa0351ea2133d1238fcc6a9f140c52d36f)
