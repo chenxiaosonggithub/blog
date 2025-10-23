@@ -290,3 +290,7 @@ git send-email --to=linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,s
 git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org  00*
 ```
 
+## todo
+
+- krb5_authenticate, ntlm_authenticate, binding_session:
+
