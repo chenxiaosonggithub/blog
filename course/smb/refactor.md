@@ -225,7 +225,7 @@ git log -p --oneline <提交1>..<提交n>
 
 发邮件:
 ```sh
-git send-email --to=linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,senozhatsky@chromium.org,tom@talpey.com,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,bharathsm@microsoft.com,christophe.jaillet@wanadoo.fr --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org --in-reply-to=20251014071917.3004573-1-chenxiaosong.chenxiaosong@linux.dev 00* # --suppress-cc=all --in-reply-to=xxx --no-thread
+git send-email --to=linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,senozhatsky@chromium.org,tom@talpey.com,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,bharathsm@microsoft.com,christophe.jaillet@wanadoo.fr --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org  00* # --suppress-cc=all --in-reply-to=xxx --no-thread
 ```
 
 发现gtags没法找到`ksmbd_conn_handler_loop()`的定义，是gtags的bug，有空去修一下。
@@ -281,4 +281,12 @@ git send-email --to=linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,s
 - resume_key_req, resume_key_ioctl_rsp, MS-SMB2 2.2.32.3
 - todo: create_posix_rsp
 - todo: smb2_posix_info
+
+## 返回值
+
+- smb2_0_server_cmds
+
+```sh
+git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org  00*
+```
 
