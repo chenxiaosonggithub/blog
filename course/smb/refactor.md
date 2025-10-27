@@ -225,7 +225,7 @@ git log -p --oneline <提交1>..<提交n>
 
 发邮件:
 ```sh
-git send-email --to=linkinjeon@kernel.org,smfrench@gmail.com,sfrench@samba.org,senozhatsky@chromium.org,tom@talpey.com,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,bharathsm@microsoft.com,christophe.jaillet@wanadoo.fr --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org  00* # --suppress-cc=all --in-reply-to=xxx --no-thread
+git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org,christophe.jaillet@wanadoo.fr --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org  00* # --suppress-cc=all --in-reply-to=xxx --no-thread
 ```
 
 发现gtags没法找到`ksmbd_conn_handler_loop()`的定义，是gtags的bug，有空去修一下。
