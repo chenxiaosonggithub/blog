@@ -239,6 +239,10 @@ foxmail(qq)邮箱`~/.gitconfig`:
 ```shell
 # --to是主送，--cc是抄送
 git send-email --to=to1@example.com,to2@example.com --cc=cc1@example.com,cc2@example.com file1.patch file2.patch
+
+# 如果补丁集只发送一部分，剩下未发送的补丁用以下选项
+# 其中 identifier 是尖括号中的内容: In-Reply-To: <20251027071316.3468472-1-chenxiaosong.chenxiaosong@linux.dev>
+git send-email ... --in-reply-to=identifier --no-thread # --suppress-cc=all
 ```
 
 可以使用脚本[`get-maintainer-email.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/get-maintainer-email.sh)来获取邮箱:
