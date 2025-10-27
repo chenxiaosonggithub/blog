@@ -12,8 +12,11 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 下面按时间顺序列出所有的补丁，最新的补丁放在前面。
 
 - [[PATCH v2 0/6] smb/server: fix return values of smb2_0_server_cmds proc](https://lore.kernel.org/all/20251017104613.3094031-1-chenxiaosong.chenxiaosong@linux.dev/)
-- [[PATCH v3 00/22] smb: fix some bugs, move duplicate definitions to common header file](https://lore.kernel.org/all/20251014071917.3004573-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH v4 00/24] smb: move duplicate definitions to common header file](https://lore.kernel.org/all/20251027071316.3468472-1-chenxiaosong.chenxiaosong@linux.dev/)
 
+- [smb: move some duplicate definitions to common/cifsglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d877470b59910b5c50383d634dda3782386bba51)
+- [smb/server: fix possible refcount leak in smb2_sess_setup()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=379510a815cb2e64eb0a379cb62295d6ade65df0)
+- [smb/server: fix possible memory leak in smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6fced056d2cc8d01b326e6fcfabaacb9850b71a4)
 - [smb: add comment to STATUS_MCA_OCCURED](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e2fcd3fa0351ea2133d1238fcc6a9f140c52d36f)
 - [smb: move SMB2 Status code to common header file](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=78181a5504a401e421e65d0257a33f904e0e7c29)
 - [smb: move some duplicate definitions to common/smbacl.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b51174da743b6b7cd87c02e882ebe60dcb99f8bf)
