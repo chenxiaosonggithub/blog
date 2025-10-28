@@ -1,4 +1,21 @@
 enfs_patch_array=(
+	b46237072d12 # nfs/enfs: cleanups in pm_set_path_state()
+	456df8f077c4 # nfs/enfs: prefer normal rpc transport over unstable one
+	1c9eb515727c # nfs/enfs: introduce reconnect time KUnit tests
+	e961e79037be # nfs/enfs: set PM_STATE_UNSTABLE if path is unstable
+	9220b0cf32cf # nfs/enfs: introduce enum PM_STATE_UNSTABLE
+	9b3a7b07e0df # nfs/enfs: remove duplicate EOPNOTSUPP definition
+	5797e07079ce # nfs/enfs: remove enfs_tp_common.h
+	2ce743a252aa # nfs/enfs: remove ping_execute_workq_lock
+	8f2393a3b9b0 # nfs/enfs: remove lookupcache_workq_lock
+	6887a78ae29e # nfs/enfs: remove redundant flush_workqueue() before destroy_workqueue()
+	965d05feb591 # nfs/enfs: return more nuanced error in NfsExtendProcInfoExtendEncode() and NfsExtendProcInfoExtendDecode()
+	d2f0e013f9f8 # nfs/enfs: handle error returned by NfsExtendProcInfoExtendEncode()
+	ba6ad67f35cf # nfs/enfs: fix possible null-ptr-deref in exten_call.c
+	b6300d7bb68a # nfs/enfs: free memory uniformly at the end of function in exten_call.c
+	b31506834cd7 # nfs/enfs: fix possible memory leak in exten_call.c
+	c83bfa180d2e # nfs/enfs: reload config when re-adding enfs module
+	01f8a9007306 # nfs/enfs: recreate shard info when re-adding enfs module
 	960de6c02b85 # nfs/enfs: remove duplicate definitions
 	22519a440ab8 # nfs/enfs: fix some cleanup issues
 	96155a2ffed0 # nfs/enfs: fix finding root uuid issue
