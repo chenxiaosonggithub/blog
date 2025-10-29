@@ -5,11 +5,11 @@
 
 # 社区
 
-- nfs client maintainer: Steve French <sfrench@samba.org>，友好
-- nfs server maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好
-- [nfs client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary),
+- smb client maintainer: Steve French <sfrench@samba.org>，友好
+- smb server maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好
+- [smb client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary): `https://git.samba.org/sfrench/cifs-2.6.git`,
 [for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)
-- [nfs server maintainer的仓库](https://git.samba.org/?p=ksmbd.git;a=summary),
+- [smb server maintainer的仓库](https://git.samba.org/?p=ksmbd.git;a=summary): `https://git.samba.org/ksmbd.git`,
 [github仓库（现在好像不更新了）](https://github.com/namjaejeon/ksmbd),
 [ksmbd-for-next-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next-next),
 [for-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/for-next)
