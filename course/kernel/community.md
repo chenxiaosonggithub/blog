@@ -135,6 +135,9 @@ git format-patch --subject-prefix="PATCH resend,v2" -1
 # 从指定的commit号数向前3个，共生成3个补丁
 git format-patch --subject-prefix="PATCH resend,v2" -3 <commit号>
 
+# 生成从 A 到 B 之间（不含A，含B）的所有提交的补丁
+git format-patch <commit-A>..<commit-B>
+
 # 生成补丁集
 git format-patch --subject-prefix="PATCH resend,v2" -3 commit号 --cover-letter
 # 编辑0000-cover-letter.patch, 可参考patchwork上其他补丁的写法
