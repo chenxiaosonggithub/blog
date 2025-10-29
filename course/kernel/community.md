@@ -179,7 +179,21 @@ https://lore.kernel.org/all/?q=chenxiaosong
 
 thunderbird有个快捷键`k`，会忽略话题，不小心按下后邮件就会不再显示，可以在`查看 -> 话题`里勾选`已忽略话题`，就能看到不小心按下`k`而不显示的邮件。
 
-还有，不建议订阅内核任何模块的邮件列表，因为太多了，一旦订阅邮箱基本就爆了，可以在[邮件列表网站](https://lore.kernel.org/)上选择对应的模块在线浏览，如果需要回复，可以把邮件下载下来保存成文件，然后用thunderbird打开文件，然后就可以回复了。如果实在要订阅，可以访问[vger.kernel.org](https://subspace.kernel.org/vger.kernel.org.html)和[linux-kernel mailing list FAQ](http://vger.kernel.org/lkml/)。
+还有，不建议订阅内核任何模块的邮件列表，因为太多了，一旦订阅邮箱基本就爆了，可以在[邮件列表网站](https://lore.kernel.org/)上选择对应的模块在线浏览，
+如果需要回复，可以把邮件下载下来保存成文件，然后用thunderbird打开文件，然后就可以回复了。如果实在要订阅，可以访问
+[vger.kernel.org](https://subspace.kernel.org/vger.kernel.org.html)和[linux-kernel mailing list FAQ](http://vger.kernel.org/lkml/)。
+
+### thunderbird安卓客户端
+
+[从github下载](https://github.com/thunderbird/thunderbird-android/releases)。
+
+纯文本格式和签名设置:
+
+- 进入 "Settings"
+- 点击账户名
+- 点击 "Sending mail"
+- 点击 "Message Format"，选择 "Plain Text"
+- 点击 "Composition defaults" 设置签名
 
 ## git发送邮件
 
