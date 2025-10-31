@@ -27,4 +27,5 @@ smb的协议文档有以下几个版本:
 # 其他协议
 
 - [[MS-FSCC]: File System Control Codes](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc)
+- [[MS-ERREF]: Windows Error Codes](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref)
 
