@@ -39,12 +39,24 @@ my_exit() {
 }
 
 copy_files() {
-	local path=$1
+	local src_path=$1
+	local dst_path=${src_path}
+	local is_dst_dir=false
+	if [ $# -ge 2 ]; then
+		dst_path=$2
+	fi
+	if [ $# -ge 3 ]; then
+		is_dst_dir=$3
+	fi
 
-	local src_full_path=$(comm_tmp_src_path)/${path}
-	local dst_full_path=${tmp_html_path}/${path}
-	local dst_dir_path=$(dirname "${dst_full_path}")
-	mkdir -p ${dst_dir_path}
+	local src_full_path=$(comm_tmp_src_path)/${src_path}
+	local dst_full_path=${tmp_html_path}/${dst_path}
+	local dst_dir_path=$(dirname "${dst_full_path}") # 上一线目录
+	if [[ "${is_dst_dir}" == true ]]; then
+		mkdir -p ${dst_full_path}
+	else
+		mkdir -p ${dst_dir_path}
+	fi
 	cp -rf ${src_full_path} ${dst_full_path}
 }
 
@@ -57,6 +69,8 @@ copy_to_github_io() {
 	cp $(comm_tmp_src_path)/tmp/godot/ ${tmp_html_path}/ -rf
 	# txt
 	copy_files tmp/btrfs/btrfs-forced-readonly-log.txt
+	# smb3-posix-spec
+	copy_files tmp/smb/smb3-posix-spec/*.html tmp/smb/smb3-posix-spec/ true
 }
 
 # 局域网签名
