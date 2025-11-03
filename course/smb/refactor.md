@@ -207,15 +207,6 @@ smb2_compound_op
 
 # 2025年凑数补丁
 
-## `ksmbd_decode_ntlmssp_auth_blob()`: `arc4_setkey()`和`arc4_crypt()`是否必须？
-
-```c
-smb2_sess_setup
-  ntlm_authenticate
-    ksmbd_decode_ntlmssp_auth_blob
-    set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD) // 发生错误时
-```
-
 ## 重复定义
 
 列出每个提交的修改:
@@ -233,55 +224,6 @@ git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,l
 - server文件: fs/smb/server/glob.h, fs/smb/server/smb2pdu.h, fs/smb/server/smb_common.h
 - client文件: fs/smb/client/cifspdu.h, fs/smb/client/smb2pdu.h, fs/smb/client/cifsglob.h, fs/smb/client/smb2glob.h
 
-### cifspdu.h
-
-- SMB flag definitions: SMBFLG_CANONICAL_PATH_FORMAT 暂没找到
-- SMB flag2 definitions: SMBFLG2_KNOWS_LONG_NAMES 暂没找到
-- SMB command codes: SMB_COM_CREATE_DIRECTORY, 有些对不上: [MS-CIFS 2.2.4](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cifs/5cd5747f-fe0b-40a6-89d0-d67f751f8232)
-- MAX_CIFS_SMALL_BUFFER_SIZE 暂没找到
-- File Attribute flags: ATTR_READONLY, ATTR_WRITE_THROUGH, 找到一部分: [MS-SMB 2.2.1.2.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/65e0c225-5925-44b0-8104-6b91339c709f)
-- smb_hdr: SecuritySignature, [MS-SMB 2.2.3.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/3c0848a6-efe9-47c2-b57a-f7e8217150b9)
-- file access permission bits: FILE_READ_DATA, [MS-SMB 2.2.1.4.1](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smb/27f99d29-7784-4684-b6dd-264e9025b286)
-- SMB frame definitions: NEGOTIATE_REQ, NEGOTIATE_RSP, smb_negotiate_req, smb_negotiate_rsp
-- FILE_SYSTEM_ATTRIBUTE_INFO, filesystem_attribute_info, FileSystemNameLen, FS-FSCC 2.5.1
-- FILE_SYSTEM_DEVICE_INFO, filesystem_device_info, MS-CIFS 2.2.8.2.5
-- FILE_SYSTEM_INFO, filesystem_info, MS-CIFS 2.2.8.2.4
-- FILE_DIRECTORY_INFO, file_directory_info, MS-CIFS 2.2.8.1.4
-- FILE_FULL_DIRECTORY_INFO, file_full_directory_info, MS-CIFS 2.2.8.1.5
-- FILE_BOTH_DIRECTORY_INFO, file_both_directory_info, MS-CIFS 2.2.8.1.7
-- SEARCH_ID_FULL_DIR_INFO, file_id_full_dir_info, MS-SMB 2.2.8.1.2
-- FILE_SYSTEM_POSIX_INFO, filesystem_posix_info
-
-### cifsglob.h
-
-- done SMB1_VERSION_STRING, ..., SMB311_VERSION_STRING
-- done CIFS_DEFAULT_IOSIZE, 只有client用到
-- done inc_rfc1001_len
-- done smb_version_values
-- done get_rfc1002_len, get_rfc1002_length
-- done SMB1_PROTO_NUMBER
-
-### smb2pdu.h
-
-- SMB2_DHANDLE_FLAG_PERSISTENT:
-  - MS-SMB2 2.2.13.2.11
-  - MS-SMB2 2.2.13.2.12
-  - MS-SMB2 2.2.14.2.12
-- srv_copychunk:
-  - MS-SMB2 2.2.31.1.1
-  - MS-SMB 2.2.7.2.1.1
-- copychunk_ioctl_req: MS-SMB2 2.2.31.1
-- copychunk_ioctl_rsp: MS-SMB2 2.2.32.1
-- RSS_CAPABLE, RDMA_CAPABLE: MS-SMB2 2.2.32.5
-- INTERNETWORK, INTERNETWORKV6: MS-SMB2 2.2.32.5.1
-- network_interface_info_ioctl_rsp: MS-SMB2 2.2.32.5
-- iface_info_ipv4, smb_sockaddr_in: MS-SMB2 2.2.32.5.1.1
-- iface_info_ipv6, smb_sockaddr_in6: MS-SMB2 2.2.32.5.1.2
-- smb2_file_network_open_info, smb2_file_ntwrk_info, MS-FSCC 2.4.34
-- resume_key_req, resume_key_ioctl_rsp, MS-SMB2 2.2.32.3
-- todo: create_posix_rsp
-- todo: smb2_posix_info
-
 ## 返回值
 
 - smb2_0_server_cmds
@@ -292,5 +234,18 @@ git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,l
 
 ## todo
 
-- krb5_authenticate, ntlm_authenticate, binding_session:
+### 重复定义
 
+- todo: create_posix_rsp
+- todo: smb2_posix_info
+
+### krb5_authenticate, ntlm_authenticate, binding_session:
+
+### `ksmbd_decode_ntlmssp_auth_blob()`: `arc4_setkey()`和`arc4_crypt()`是否必须？
+
+```c
+smb2_sess_setup
+  ntlm_authenticate
+    ksmbd_decode_ntlmssp_auth_blob
+    set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD) // 发生错误时
+```
