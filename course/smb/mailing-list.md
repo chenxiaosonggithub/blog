@@ -29,30 +29,36 @@ git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,l
 
 smb client很早进入内核，就不统计了。这里统计一下2021.03.16进入内核的smb server的补丁贡献者，列出贡献超过一个补丁的贡献者。
 
-截止2024.12.28，smb server模块我总共贡献8个补丁，后续多投入社区，多贡献补丁，同时review一些代码。
-
-现在（2024.12.28）的目录`fs/smb/server`统计:
+现在（2025.11.03）的目录`fs/smb/server`统计:
 ```sh
 # 还要显示邮件可以用 --format='%aN <%aE>'
 # --follow 对目录其实没啥卵用，但还是习惯的写了
 git log --follow --format='%aN <%aE>' fs/smb/server/ | sort | uniq -c | sort -nr
-    125 Namjae Jeon <linkinjeon@kernel.org>
-      7 Marios Makassikis <mmakassikis@freebox.fr>
-      7 ChenXiaoSong <chenxiaosong@kylinos.cn> # 这是我
-      6 Thorsten Blum <thorsten.blum@linux.dev>
+    173 Namjae Jeon <linkinjeon@kernel.org>
+     90 Stefan Metzmacher <metze@samba.org>
+     10 NeilBrown <neil@brown.name>
+      9 Thorsten Blum <thorsten.blum@linux.dev>
+      8 Marios Makassikis <mmakassikis@freebox.fr>
+      7 ChenXiaoSong <chenxiaosong@kylinos.cn>   # 这是我
+      7 Al Viro <viro@zeniv.linux.org.uk>  
       6 Jeff Layton <jlayton@kernel.org>
-      3 Yang Li <yang.lee@linux.alibaba.com>
-      3 Steve French <stfrench@microsoft.com>
-      3 Hobin Woo <hobin.woo@samsung.com>
+      5 Norbert Szetei <norbert@doyensec.com>
+      5 Christian Brauner <brauner@kernel.org>
+      4 Steve French <stfrench@microsoft.com>
+      4 Sean Heelan <seanheelan@gmail.com>     
+      3 ZhangGuoDong <zhangguodong@kylinos.cn>
+      3 Yang Li <yang.lee@linux.alibaba.com>   
+      3 Hobin Woo <hobin.woo@samsung.com>      
       3 Gustavo A. R. Silva <gustavoars@kernel.org>
+      3 Dr. David Alan Gilbert <linux@treblig.org>
       2 Randy Dunlap <rdunlap@infradead.org>
       2 Lu Hongfei <luhongfei@vivo.com>
       2 Kuan-Ting Chen <h3xrabbit@gmail.com>
       2 Jordy Zomer <jordyzomer@google.com>
       2 Fedor Pchelkin <pchelkin@ispras.ru>
-      2 Dr. David Alan Gilbert <linux@treblig.org>
+      2 Eric Biggers <ebiggers@google.com>
+      2 Dan Carpenter <dan.carpenter@linaro.org>
       2 Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-      2 Al Viro <viro@zeniv.linux.org.uk>
 ```
 
 `checkout`到`38c8a9a52082 smb: move client and server files to common directory fs/smb`（2023.05.21）之前的记录:
