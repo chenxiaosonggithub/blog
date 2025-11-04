@@ -2,7 +2,7 @@
 
 请看[github上的issue](https://github.com/namjaejeon/ksmbd/issues/495#issuecomment-3473472265)。
 
-与maintainer的其他沟通内容:
+与maintainer Steve French的其他沟通内容:
 ```
 I am also very interested in the work to improve the VFS to allow
 filesystems, especially cifs.ko (client) to support change notify
@@ -45,6 +45,8 @@ SMB3.1.1 over QUIC.
 
 # 复现步骤
 
+环境搭建请查看[《smb环境》](https://chenxiaosong.com/course/smb/environment.html)。
+
 smb server在虚拟机中，要让外部的windows系统能访问到，需要[内网穿透](https://chenxiaosong.com/course/gnu-linux/ssh-reverse.html):
 ```sh
 # 其中10.42.20.210是windows能访问到的地址，且这个系统上的445端口不能被占用（就是没有启动smb server）
@@ -78,7 +80,35 @@ echo something > /tmp/s_test/file # 在server端执行
 
 # samba代码分析
 
+samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)
+
 ```c
-change_notify_reply
+main
+  smbd_parent_loop
+    _tevent_loop_wait
+      std_event_loop_wait
+        tevent_common_loop_wait
+          _tevent_loop_once
+            std_event_loop_once
+              epoll_event_loop_once
+                epoll_event_loop
+                  tevent_common_invoke_fd_handler
+                    smbd_accept_connection
+                      smbd_process
+                        _tevent_loop_wait
+                          std_event_loop_wait
+                            tevent_common_loop_wait
+                              _tevent_loop_once
+                                std_event_loop_once
+                                  epoll_event_loop_once
+                                    epoll_event_loop
+                                      tevent_common_invoke_fd_handler
+                                        smbd_smb2_connection_handler
+                                          smbd_smb2_io_handler
+                                            smbd_smb2_advance_incoming
+                                              smbd_smb2_request_dispatch
+                                                smbd_smb2_request_process_notify
+                                                  smbd_smb2_notify_send
+                                                    change_notify_reply
 ```
 
