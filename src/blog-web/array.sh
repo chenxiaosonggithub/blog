@@ -124,9 +124,6 @@ comm_array=(
 			1 1 course/nfs/issue/nfs-umount-device-is-busy.md ~ "umount nfs报错device is busy的问题"
 			1 1 course/nfs/issue/stat-nfsv3-sync-write-time.md ~ "统计nfsv3同步写的时间"
 			1 1 course/nfs/issue/null-ptr-deref-in-nfsd4_probe_callback.md ~ "nfsd4_probe_callback()空指针解引用问题"
-			1 2 tmp/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.md
-				en/nfs/en-null-ptr-deref-in-nfsd4_probe_callback.html
-				"null-ptr-deref in nfsd4_probe_callback()"
 			1 1 course/nfs/issue/lockd-server-not-responding.md ~ "nfsv3 NLM请求超时的问题"
 			1 1 course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.md ~ "nfsv3挂载卡在nlmclnt_init()的问题"
 			1 1 course/nfs/issue/nfsv3-mount-hung-with-same-option.md ~ "nfsv3选项一样时挂载hung住的问题"
@@ -296,4 +293,8 @@ comm_array=(
 	1 1 tmp/calligraphy/lingfeijing.md calligraphy/lingfeijing.html "灵飞经译文"
 	1 1 tmp/calligraphy/shengjiaoxu.md calligraphy/shengjiaoxu.html "圣教序译文"
 	1 1 src/calligraphy/written.md ~ "左手写过的字"
+	# 英文网页
+	1 2 tmp/en/null-ptr-deref-in-nfsd4_probe_callback.md
+		en/null-ptr-deref-in-nfsd4_probe_callback.html
+		"null-ptr-deref in nfsd4_probe_callback()"
 )
