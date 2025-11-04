@@ -92,10 +92,29 @@ make install -j`nproc`
 export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
 ```
 
-更新`smb.service`（具体位置可以用`systemctl status smb`查看）:
+更新`/usr/lib/systemd/system/smb.service`，具体位置可以用`systemctl status smb`查看:
 ```sh
-cp ./packaging/systemd/smb.service.in /usr/lib/systemd/system/smb.service
+[Unit]
+Description=Samba SMB Daemon
+Documentation=man:smbd(8) man:samba(7) man:smb.conf(5)
+Wants=network-online.target
+After=network.target network-online.target nmb.service winbind.service
+
+[Service]
+Type=notify
+PIDFile=/run/smbd.pid
+LimitNOFILE=16384
+EnvironmentFile=-/etc/sysconfig/samba
+ExecStart=/usr/local/samba/sbin/smbd --foreground --no-process-group $SMBDOPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+LimitCORE=infinity
+Environment=KRB5CCNAME=FILE:/run/samba/krb5cc_samba
+
+[Install]
+WantedBy=multi-user.target
 ```
+
+不能直接复制`./packaging/systemd/smb.service.in`，现在要设置环境变量的值了。
 
 创建配置文件:
 ```sh
