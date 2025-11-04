@@ -16,7 +16,7 @@
 
 # 调试
 
-打开调试开头，修改`/etc/samba/smb.conf`:
+打开调试开关，修改`/etc/samba/smb.conf`:
 ```sh
 [global]
 log level = 4
