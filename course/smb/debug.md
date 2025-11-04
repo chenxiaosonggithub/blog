@@ -67,7 +67,7 @@ log level = 4
 log file = /usr/local/samba/var/log.%m
 ```
 
-常用的几个`log level`有以下几个:
+可使用`DBG_ERR()`、`DBG_DEBUG()`等宏定义打印调试信息。常用的几个`log level`有以下几个:
 ```c
 #define DEBUG_ERR     DBGLVL_ERR     // 0      /* error conditions */
 #define DEBUG_WARNING DBGLVL_WARNING // 1      /* warning conditions */
