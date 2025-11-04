@@ -1,0 +1,1 @@
+[smbtorture](https://github.com/namjaejeon/ksmbd/blob/master/.github/workflows/c-cpp.yml)测试durable handles。
