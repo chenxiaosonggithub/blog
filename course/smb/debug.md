@@ -54,13 +54,14 @@ ksmbd.control --debug= # 不加COMPONENT可以查看当前的状态
  struct ksmbd_server_config server_conf;
 ```
 
-## 用户态server打印
+## 用户态server打印 {#samba-print}
 
 [用户态server仓库](https://gitlab.com/samba-team/samba)。
 
 修改配置文件`/etc/samba/smb.conf`:
 ```sh
 [global]
+# 默认是0
 log level = 4
 # 日志文件路径
 log file = /usr/local/samba/var/log.%m
