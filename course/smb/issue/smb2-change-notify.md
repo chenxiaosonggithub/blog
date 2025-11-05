@@ -1,3 +1,5 @@
+[与社区交流的英文网页](https://chenxiaosong.com/en/smb2-change-notify.html)。
+
 # 需求描述
 
 请看[github上的issue](https://github.com/namjaejeon/ksmbd/issues/495#issuecomment-3473472265)。
