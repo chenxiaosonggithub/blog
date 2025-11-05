@@ -6,6 +6,8 @@ code {
   white-space: break-spaces;
   background-color: rgba(175,184,193,0.2);
   // border-radius: 6px;
+  /* display: block时背景色占用一行，inline-block时背景色只占用文字部分 */
+  display: inline-block;
 }
 
 /* 引用样式 */
