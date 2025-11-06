@@ -12,7 +12,7 @@ filesystems, especially cifs.ko (client) to support change notify
 etc).  It will be very useful.
 翻译:
 我也对改进 VFS 的工作非常感兴趣，
-这样文件系统——尤其是 cifs.ko（客户端）——就能支持 change notify（更改通知） 功能，
+这样文件系统（尤其是客户端的 cifs.ko）就能支持 change notify（更改通知） 功能，
 而无需使用 ioctl 或特定于 SMB 客户端的工具（如 smbinfo 等）。
 这将会非常有用。
 
@@ -229,7 +229,7 @@ FILE_ACTION_TUNNELLED_ID_COLLISION
 
 samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)
 
-```c
+<!--
 main
   smbd_parent_loop
     _tevent_loop_wait
@@ -254,8 +254,11 @@ main
                                           smbd_smb2_io_handler
                                             smbd_smb2_advance_incoming
                                               smbd_smb2_request_dispatch
-                                                smbd_smb2_request_process_notify
-                                                  smbd_smb2_notify_send
-                                                    change_notify_reply
+-->
+```c
+smbd_smb2_request_dispatch
+  smbd_smb2_request_process_notify
+    smbd_smb2_notify_send
+      change_notify_reply
 ```
 
