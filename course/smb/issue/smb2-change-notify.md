@@ -94,15 +94,24 @@ SMB2 CHANGE_NOTIFY 请求数据包由客户端发送，用于请求获取目录�
 ```c
 struct smb2_change_notify_req {
   struct smb2_hdr hdr;
-  __le16  StructureSize; // 客户端 必须 将该字段设置为 32，表示请求结构体的大小（不包含 SMB2 头）
-  __le16  Flags; // 指示该操作必须如何处理的标志。此字段必须为 0，或以下取值之一： SMB2_WATCH_TREE
-  __le32  OutputBufferLength; // 服务器在 SMB2 CHANGE_NOTIFY Response（见章节 2.2.36）中允许返回的最大字节数。
+  // 客户端 必须 将该字段设置为 32，表示请求结构体的大小（不包含 SMB2 头）
+  __le16  StructureSize;
+  // 指示该操作必须如何处理的标志。此字段必须为 0，或以下取值之一： SMB2_WATCH_TREE
+  __le16  Flags;
+  // 服务器在 SMB2 CHANGE_NOTIFY Response（见章节 2.2.36）中允许返回的最大字节数。
+  __le32  OutputBufferLength;
   struct {
     __u64   PersistentFileId; /* 不透明字节序 */
     __u64   VolatileFileId; /* 不透明字节序 */
   } fid; // 用于监控变化的目录的 SMB2_FILEID 标识符
-  __le32  CompletionFilter; // 指定要监控的变更类型。可以选择多个触发条件。在这种情况下，只要满足任意一个条件，客户端就会收到变更通知，并且 CHANGE_NOTIFY 操作会完成。该字段 必须（MUST） 使用以下值来构造： FILE_NOTIFY_CHANGE_FILE_NAME ... FILE_NOTIFY_CHANGE_STREAM_WRITE
-  __u32   Reserved; // 此字段 不得使用（MUST NOT），并且 必须保留（MUST be reserved）。客户端 必须（MUST） 将该字段设置为 0，服务器在接收时 必须（MUST） 忽略该字段。
+  // 指定要监控的变更类型。可以选择多个触发条件。
+  // 在这种情况下，只要满足任意一个条件，客户端就会收到变更通知，并且 CHANGE_NOTIFY 操作会完成。
+  // 该字段 必须（MUST） 使用以下值来构造：
+  // FILE_NOTIFY_CHANGE_FILE_NAME ... FILE_NOTIFY_CHANGE_STREAM_WRITE
+  __le32  CompletionFilter;
+  // 此字段 不得使用（MUST NOT），并且 必须保留（MUST be reserved）。
+  // 客户端 必须（MUST） 将该字段设置为 0，服务器在接收时 必须（MUST） 忽略该字段。
+  __u32   Reserved;
 } __packed;
 
 // Flags
@@ -129,8 +138,13 @@ SMB2 FILEID 用来表示对一个文件的打开（操作）。
 
 ```c
 struct {
-  __u64   PersistentFileId; // 当连接断开后重新连接时，该文件句柄依然保持持久存在，如 3.3.5.9.7 节所述。服务器 必须（MUST） 在 SMB2 CREATE Response（见 2.2.14 节）中返回该文件句柄。
-  __u64   VolatileFileId; // 当连接断开后重新连接时，该文件句柄可能会发生变化，如 3.3.5.9.7 节所述。服务器 必须（MUST） 在 SMB2 CREATE Response（见 2.2.14 节）中返回该文件句柄。此值 不得（MUST NOT） 发生变化，除非执行了重新连接操作。此值在同一会话范围内必须唯一，用于区分所有易失性句柄。
+  // 当连接断开后重新连接时，该文件句柄依然保持持久存在，如 3.3.5.9.7 节所述。
+  // 服务器 必须（MUST） 在 SMB2 CREATE Response（见 2.2.14 节）中返回该文件句柄。
+  __u64   PersistentFileId;
+  // 当连接断开后重新连接时，该文件句柄可能会发生变化，如 3.3.5.9.7 节所述。
+  // 服务器 必须（MUST） 在 SMB2 CREATE Response（见 2.2.14 节）中返回该文件句柄。
+  // 此值 不得（MUST NOT） 发生变化，除非执行了重新连接操作。此值在同一会话范围内必须唯一，用于区分所有易失性句柄。
+  __u64   VolatileFileId;
 } fid; // 用于监控变化的目录的 SMB2_FILEID 标识符
 ```
 
@@ -142,10 +156,16 @@ SMB2 CHANGE_NOTIFY 响应数据包由服务器发送，用于传输客户端 SMB
 ```c
 struct smb2_change_notify_rsp {
   struct smb2_hdr hdr;
-  __le16  StructureSize; // 服务器 必须 将该字段设置为 9，以表示请求结构体的大小（不包括头部）。无论实际发送的请求中 Buffer[] 的长度是多少，服务器 都必须 将该字段设置为该值。
-  __le16  OutputBufferOffset; // 从 SMB2 头部起始位置到返回的更改信息的偏移量（以字节为单位）
-  __le32  OutputBufferLength; // 返回的更改信息的长度（以字节为单位）
-  __u8    Buffer[]; // 一个可变长度的缓冲区，包含响应中返回的更改信息，其内容由 OutputBufferOffset 和 OutputBufferLength 字段描述。该字段是一个 FILE_NOTIFY_INFORMATION 结构体数组，如 [MS-FSCC] 第 2.7.1 节所指定。
+  // 服务器 必须 将该字段设置为 9，以表示请求结构体的大小（不包括头部）。
+  // 无论实际发送的请求中 Buffer[] 的长度是多少，服务器 都必须 将该字段设置为该值。
+  __le16  StructureSize;
+  // 从 SMB2 头部起始位置到返回的更改信息的偏移量（以字节为单位）
+  __le16  OutputBufferOffset;
+  // 返回的更改信息的长度（以字节为单位）
+  __le32  OutputBufferLength; 
+  // 一个可变长度的缓冲区，包含响应中返回的更改信息，其内容由 OutputBufferOffset 和 OutputBufferLength 字段描述。
+  // 该字段是一个 FILE_NOTIFY_INFORMATION 结构体数组，如 [MS-FSCC] 第 2.7.1 节所指定。
+  __u8    Buffer[];
 } __packed;
 ```
 
@@ -156,11 +176,49 @@ FILE_NOTIFY_INFORMATION 结构体包含客户端被通知的更改信息。该�
 ```c
 /* response contains array of the following structures */
 struct file_notify_information {
+  // 该字段表示从本结构体起始位置到下一个 FILE_NOTIFY_INFORMATION 结构体的偏移量（以字节为单位）。
+  // 如果不存在后续结构体，则 NextEntryOffset 字段 必须 为 0。
+  // NextEntryOffset 必须 始终是 4 的整数倍。FileName 数组 必须 填充至从结构体起始位置算起的下一个 4 字节对齐边界。
   __le32 NextEntryOffset;
+  // 文件上发生的更改。该字段 必须 包含以下值之一。FILE_ACTION_ADDED ... FILE_ACTION_TUNNELLED_ID_COLLISION
+  // 如果两个或更多文件被重命名，则每个文件重命名对应的 FILE_NOTIFY_INFORMATION 条目 必须在此响应中连续出现，
+  // 以便客户端能够正确对应旧名称和新名称。
   __le32 Action;
+  // FileName 字段中文件名的长度（以字节为单位）。
   __le32 FileNameLength;
+  // 一个包含已更改文件名称的 Unicode 字符串。
   __u8  FileName[];
 } __packed;
+
+// 文件被添加，FileName 包含新文件名。仅当重命名操作改变了文件所在目录时才会发送此通知。
+// 客户端还将收到一个 FILE_ACTION_REMOVED 通知。如果文件在同一目录内被重命名，则不会收到此通知。
+FILE_ACTION_ADDED
+// 文件被删除，FileName 包含旧文件名。仅当重命名操作改变了文件所在目录时才会发送此通知。
+// 客户端还将收到一个 FILE_ACTION_ADDED 通知。如果文件在同一目录内被重命名，则不会收到此通知。
+FILE_ACTION_REMOVED
+// 文件被修改。可以是文件数据或属性的更改。
+FILE_ACTION_MODIFIED
+// 文件被重命名，FileName 包含旧文件名。仅当重命名操作未改变文件所在目录时才会发送此通知。
+// 客户端还将收到一个 FILE_ACTION_RENAMED_NEW_NAME 通知。如果文件被重命名到不同目录，则不会收到此通知。
+FILE_ACTION_RENAMED_OLD_NAME
+// 文件被重命名，FileName 包含新文件名。仅当重命名操作未改变文件所在目录时才会发送此通知。
+// 客户端还将收到一个 FILE_ACTION_RENAMED_OLD_NAME 通知。如果文件被重命名到不同目录，则不会收到此通知。
+FILE_ACTION_RENAMED_NEW_NAME
+// 文件被添加到命名流中。
+FILE_ACTION_ADDED_STREAM
+// 文件从命名流中被移除。
+FILE_ACTION_REMOVED_STREAM
+// 文件被修改。可以是文件数据或属性的更改。
+FILE_ACTION_MODIFIED_STREAM
+// 由于所引用的文件被删除，对象 ID 被移除。
+// 仅当被监控的目录是特殊目录 \$Extend\$ObjId:$O:$INDEX_ALLOCATION 时才会发送此通知。
+FILE_ACTION_REMOVED_BY_DELETE
+// 尝试将对象 ID 信息“隧道”到正在创建或重命名的文件失败，因为该对象 ID 已被同一卷上的其他文件使用。
+// 仅当被监控的目录是特殊目录 \$Extend\$ObjId:$O:$INDEX_ALLOCATION 时才会发送此通知。
+FILE_ACTION_ID_NOT_TUNNELLED
+// 尝试将对象 ID 信息“隧道”到正在重命名的文件失败，因为该文件已存在对象 ID。
+// 仅当被监控的目录是特殊目录 \$Extend\$ObjId:$O:$INDEX_ALLOCATION 时才会发送此通知。
+FILE_ACTION_TUNNELLED_ID_COLLISION
 ```
 
 # tcpdump抓包分析
