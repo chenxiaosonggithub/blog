@@ -83,7 +83,8 @@ echo something > /tmp/s_test/file # 在server端执行
 
 # smb协议分析
 
-[MS-SMB2](https://learn.microsoft.com/pdf?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fopenspecs%2Fwindows_protocols%2Fms-smb2%2Ftoc.json)。
+- [MS-SMB2](https://learn.microsoft.com/pdf?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fopenspecs%2Fwindows_protocols%2Fms-smb2%2Ftoc.json)
+- [MS-FSCC](https://learn.microsoft.com/pdf?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fopenspecs%2Fwindows_protocols%2Fms-fscc%2Ftoc.json)
 
 ## MS-SMB2 2.2.35 SMB2 CHANGE_NOTIFY Request
 
@@ -140,11 +141,25 @@ SMB2 CHANGE_NOTIFY 响应数据包由服务器发送，用于传输客户端 SMB
 
 ```c
 struct smb2_change_notify_rsp {
-        struct smb2_hdr hdr;
-        __le16  StructureSize; // 服务器 必须 将该字段设置为 9，以表示请求结构体的大小（不包括头部）。无论实际发送的请求中 Buffer[] 的长度是多少，服务器 都必须 将该字段设置为该值。
-        __le16  OutputBufferOffset; // 从 SMB2 头部起始位置到返回的更改信息的偏移量（以字节为单位）
-        __le32  OutputBufferLength; // 返回的更改信息的长度（以字节为单位）
-        __u8    Buffer[]; // 一个可变长度的缓冲区，包含响应中返回的更改信息，其内容由 OutputBufferOffset 和 OutputBufferLength 字段描述。该字段是一个 FILE_NOTIFY_INFORMATION 结构体数组，如 [MS-FSCC] 第 2.7.1 节所指定。
+  struct smb2_hdr hdr;
+  __le16  StructureSize; // 服务器 必须 将该字段设置为 9，以表示请求结构体的大小（不包括头部）。无论实际发送的请求中 Buffer[] 的长度是多少，服务器 都必须 将该字段设置为该值。
+  __le16  OutputBufferOffset; // 从 SMB2 头部起始位置到返回的更改信息的偏移量（以字节为单位）
+  __le32  OutputBufferLength; // 返回的更改信息的长度（以字节为单位）
+  __u8    Buffer[]; // 一个可变长度的缓冲区，包含响应中返回的更改信息，其内容由 OutputBufferOffset 和 OutputBufferLength 字段描述。该字段是一个 FILE_NOTIFY_INFORMATION 结构体数组，如 [MS-FSCC] 第 2.7.1 节所指定。
+} __packed;
+```
+
+## MS-FSCC 2.7.1 FILE_NOTIFY_INFORMATION
+
+FILE_NOTIFY_INFORMATION 结构体包含客户端被通知的更改信息。该结构体由以下内容组成。
+
+```c
+/* response contains array of the following structures */
+struct file_notify_information {
+  __le32 NextEntryOffset;
+  __le32 Action;
+  __le32 FileNameLength;
+  __u8  FileName[];
 } __packed;
 ```
 
