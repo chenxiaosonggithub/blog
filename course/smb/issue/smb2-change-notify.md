@@ -73,6 +73,8 @@ net use \\10.42.20.210\test /delete
 net use * /delete
 ```
 
+可能还需要删除凭据，打开"控制面板"（Win+R然后输入control），"用户账户" -> "凭据管理器" -> "管理Windows凭据"，点击条目展开，然后点击 "删除" 。
+
 测试步骤如下:
 ```sh
 # /tmp/s_test是smb server导出的目录
@@ -223,7 +225,14 @@ FILE_ACTION_TUNNELLED_ID_COLLISION
 
 # tcpdump抓包分析
 
+在虚拟机中使用以下命令抓包:
+```sh
+tcpdump --interface=any -w smb-server.pcap
+```
 
+在wireshark中打开，用`smb2.cmd == 15`过滤。
+
+[抓包数据请查看`20251107-1016/tcpdump.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/change-notify/20251107-1016/tcpdump.md)。
 
 # samba代码分析
 
