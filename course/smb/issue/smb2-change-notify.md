@@ -223,6 +223,19 @@ FILE_ACTION_ID_NOT_TUNNELLED
 FILE_ACTION_TUNNELLED_ID_COLLISION
 ```
 
+# MS-SMB2 2.2.1 SMB2 Packet Header
+
+SMB2 数据包头（也称 SMB2 Header） 是所有 SMB2 协议请求和响应的头部。
+该头部有两种变体：
+
+- ASYNC
+- SYNC
+
+如果 Flags 中设置了 SMB2_FLAGS_ASYNC_COMMAND 位，则使用 SMB2 Packet Header - ASYNC（见 2.2.1.1 节）。这种头部格式用于服务器异步处理请求时的响应，如 3.3.4.2、3.3.4.3、3.3.4.4 和 3.2.5.1.5 节所述。
+对于已经收到临时响应（interim response）的请求，SMB2 CANCEL 请求 必须 使用这种格式，如 3.2.4.24 和 3.3.5.16 节所述。
+
+如果 Flags 中未设置 SMB2_FLAGS_ASYNC_COMMAND 位，则使用 SMB2 Packet Header - SYNC（见 2.2.1.2 节）。
+
 # tcpdump抓包分析
 
 在虚拟机中使用以下命令抓包:
