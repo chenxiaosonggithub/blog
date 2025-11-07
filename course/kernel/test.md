@@ -244,7 +244,7 @@ sudo yum install btrfs-progs exfatprogs f2fs-tools ocfs2-tools xfsdump \
 
 源码编译安装:
 ```sh
-git clone git://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git
+git clone https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git
 cd xfstests-dev
 make -j`nproc`
 sudo make install
