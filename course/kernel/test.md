@@ -346,13 +346,13 @@ external_file 参数是一个路径，指向一个包含要排除的测试列表
 
 创建`local.config`配置文件:
 ```sh
-TEST_DEV=/dev/sda
-TEST_DIR=/tmp/test
-SCRATCH_DEV=/dev/sdb
-SCRATCH_MNT=/tmp/scratch
-FSTYP=ext4
-MKFS_OPTIONS="-b 4096"
-MOUNT_OPTIONS="-o acl,user_xattr"
+export TEST_DEV=/dev/sda
+export TEST_DIR=/tmp/test
+export SCRATCH_DEV=/dev/sdb
+export SCRATCH_MNT=/tmp/scratch
+export FSTYP=ext4
+export MKFS_OPTIONS="-b 4096"
+export MOUNT_OPTIONS="-o acl,user_xattr"
 ```
 
 测试命令:
@@ -368,12 +368,12 @@ MOUNT_OPTIONS="-o acl,user_xattr"
 
 创建`local.config`配置文件:
 ```sh
-TEST_DEV=localhost:/s_test
-TEST_DIR=/tmp/test
-SCRATCH_DEV=localhost:/s_scratch
-SCRATCH_MNT=/tmp/scratch
-FSTYP=nfs
-MOUNT_OPTIONS="-o vers=4.2"
+export TEST_DEV=localhost:/s_test
+export TEST_DIR=/tmp/test
+export SCRATCH_DEV=localhost:/s_scratch
+export SCRATCH_MNT=/tmp/scratch
+export FSTYP=nfs
+export MOUNT_OPTIONS="-o vers=4.2"
 ```
 
 测试命令:
@@ -382,6 +382,10 @@ MOUNT_OPTIONS="-o vers=4.2"
 ./check nfs/001
 ./check -g generic/dir # 组查看tests/generic/group.list
 ```
+
+## 调试脚本
+
+在脚本前面加上"set -x"。
 
 # ltp
 
