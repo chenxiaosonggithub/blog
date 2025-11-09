@@ -27,6 +27,8 @@
 
 # [smb调试方法](https://chenxiaosong.com/course/smb/debug.html)
 
+# [smb测试方法](https://chenxiaosong.com/en/smb-test.html)（全英文）
+
 <!-- # [smb补丁分析](https://chenxiaosong.com/course/smb/patch.html) -->
 
 # [smb代码重构](https://chenxiaosong.com/course/smb/refactor.html)
