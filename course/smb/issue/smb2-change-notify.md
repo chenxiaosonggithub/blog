@@ -274,9 +274,18 @@ tcpdump --interface=any -w smb-server.pcap
 
 在wireshark中打开，用`smb2.cmd == 15`过滤。
 
-抓包数据的分析请查看：
+## 20251110-2016
 
-  - [20251110-2016](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/change-notify/20251110-2016/samba.md)
+详细抓包数据请查看[20251110-2016](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/change-notify/20251110-2016/samba.md)。
+
+Windows client进入`dir/`目录时:
+
+  - client请求`20:17:29.666 Create Request;Notify Request No.239`
+  - server回复`20:17:29.668 Notify Response, Error: STATUS_PENDING No.244 [Response to: 239]`
+
+server端执行`touch dir/file1`时:
+
+  - server端回复`20:17:54.095 Notify Response No.285 [Response to: 239]`
 
 # samba代码分析
 
