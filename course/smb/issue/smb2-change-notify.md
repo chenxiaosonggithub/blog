@@ -164,7 +164,7 @@ struct smb2_change_notify_rsp {
   // 从 SMB2 头部起始位置到返回的更改信息的偏移量（以字节为单位）
   __le16  OutputBufferOffset;
   // 返回的更改信息的长度（以字节为单位）
-  __le32  OutputBufferLength; 
+  __le32  OutputBufferLength;
   // 一个可变长度的缓冲区，包含响应中返回的更改信息，其内容由 OutputBufferOffset 和 OutputBufferLength 字段描述。
   // 该字段是一个 FILE_NOTIFY_INFORMATION 结构体数组，如 [MS-FSCC] 第 2.7.1 节所指定。
   __u8    Buffer[];
@@ -223,6 +223,35 @@ FILE_ACTION_ID_NOT_TUNNELLED
 FILE_ACTION_TUNNELLED_ID_COLLISION
 ```
 
+# MS-SMB2 2.2.13 SMB2 CREATE Request
+
+SMB2 CREATE 请求数据包由客户端发送，用于请求创建文件或访问文件。
+如果目标是命名管道或打印机，服务器 必须 创建一个新文件。
+
+该请求由一个 SMB2 数据包头组成（如 2.2.1 节所述），后面跟随该请求结构体。
+
+```c
+struct smb2_create_req {
+  struct smb2_hdr hdr;
+  __le16 StructureSize;   /* Must be 57 */
+  __u8   SecurityFlags;
+  __u8   RequestedOplockLevel;
+  __le32 ImpersonationLevel;
+  __le64 SmbCreateFlags;
+  __le64 Reserved;
+  __le32 DesiredAccess;
+  __le32 FileAttributes;
+  __le32 ShareAccess;
+  __le32 CreateDisposition;
+  __le32 CreateOptions;
+  __le16 NameOffset;
+  __le16 NameLength;
+  __le32 CreateContextsOffset;
+  __le32 CreateContextsLength;
+  __u8   Buffer[];
+} __packed;
+```
+
 # MS-SMB2 2.2.1 SMB2 Packet Header
 
 SMB2 数据包头（也称 SMB2 Header） 是所有 SMB2 协议请求和响应的头部。
@@ -245,42 +274,15 @@ tcpdump --interface=any -w smb-server.pcap
 
 在wireshark中打开，用`smb2.cmd == 15`过滤。
 
-[抓包数据请查看`20251107-1016/tcpdump.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/change-notify/20251107-1016/tcpdump.md)。
+详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#tcpdump)。
 
 # samba代码分析
 
-samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)
+samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)。
 
-<!--
-main
-  smbd_parent_loop
-    _tevent_loop_wait
-      std_event_loop_wait
-        tevent_common_loop_wait
-          _tevent_loop_once
-            std_event_loop_once
-              epoll_event_loop_once
-                epoll_event_loop
-                  tevent_common_invoke_fd_handler
-                    smbd_accept_connection
-                      smbd_process
-                        _tevent_loop_wait
-                          std_event_loop_wait
-                            tevent_common_loop_wait
-                              _tevent_loop_once
-                                std_event_loop_once
-                                  epoll_event_loop_once
-                                    epoll_event_loop
-                                      tevent_common_invoke_fd_handler
-                                        smbd_smb2_connection_handler
-                                          smbd_smb2_io_handler
-                                            smbd_smb2_advance_incoming
-                                              smbd_smb2_request_dispatch
--->
-```c
-smbd_smb2_request_dispatch
-  smbd_smb2_request_process_notify
-    smbd_smb2_notify_send
-      change_notify_reply
-```
+用`NT_STATUS_V()`得到错误码的值，但好像打印出来是个很大的负数，可以用`get_nt_error_c_code()`转换成字符串。
+
+详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#samba-code)。
+
+# ksmbd代码分析
 

@@ -1,5 +1,19 @@
-src_path=/tmp/9p/samba/
-dst_path=/root/code/samba/
+vm_path=/root/code/samba/
+pm_path=/tmp/9p/samba/ # physical machine path
+
+if [ $# -ne 1 ]; then
+	echo "Usage: $0 \${is src path vm}"
+	exit 1
+fi
+
+
+if [[ $1 == 1 ]]; then
+	src_path=${vm_path}
+	dst_path=${pm_path}
+else
+	dst_path=${vm_path}
+	src_path=${pm_path}
+fi
 
 if [[ ! -d "${src_path}" ]]; then
 	echo "源目录不存在"

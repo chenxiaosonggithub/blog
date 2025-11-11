@@ -90,6 +90,9 @@ cd ../../../
 make -j`nproc`
 make install -j`nproc`
 export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
+
+# 只编译安装 smbd
+make -j`nproc` bin/smbd && rm -rf /usr/local/samba/sbin/smbd; cp bin/smbd /usr/local/samba/sbin/smbd
 ```
 
 更新`/usr/lib/systemd/system/smb.service`，具体位置可以用`systemctl status smb`查看:
