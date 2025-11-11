@@ -289,7 +289,11 @@ server端执行`touch dir/file1`时:
 
 # samba代码分析
 
-samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)
+samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)。
+
+注意有些代码是编译生成的（比如错误码`NT_STATUS_PENDING`的定义），查看完整的代码要先执行编译过程。
+
+用`NT_STATUS_V()`得到错误码的值，但好像打印出来是个很大的负数，可以用`get_nt_error_c_code()`转换成字符串。
 
 <!--
 main
@@ -322,5 +326,17 @@ smbd_smb2_request_dispatch
   smbd_smb2_request_process_notify
     smbd_smb2_notify_send
       change_notify_reply
+        // NT_STATUS_OK 和 NT_STATUS_CANCELLED 走这里
+    smbd_smb2_request_pending_queue // 如果没有要通知的内容，就启动定时器
+
+// 触发定时器
+smbd_smb2_request_pending_timer
+  // NT_STATUS_PENDING 在这里回复
+```
+
+# ksmbd代码分析
+
+```c
+
 ```
 
