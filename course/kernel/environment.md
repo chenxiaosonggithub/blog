@@ -711,9 +711,21 @@ qemu启动后，按快捷键`ctrl+a c`（先按`ctrl+a`松开后再按`c`）再�
 在系统启动界面登录进去后（而不是以ssh登录），默认的窗口大小不会自动调整，需要手动调整:
 ```sh
 stty size # 可以先在其他窗口查看大小
-echo "stty rows 54 cols 229" > stty.sh
-. stty.sh
+stty rows 54 cols 229
 ```
+
+<!--
+动态调整窗口大小还没调通:
+
+内核打开配置 CONFIG_VIRTIO_CONSOLE
+
+qemu命令:
+-device virtio-serial-pci \
+-chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
+-device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0
+
+systemctl restart qemu-guest-agent
+-->
 
 当启用了9p文件系统，就可以把宿主机的modules目录（当然也可以是其他任何目录）共享给虚拟机，
 具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本
