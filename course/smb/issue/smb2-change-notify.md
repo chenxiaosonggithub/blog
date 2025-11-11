@@ -323,7 +323,17 @@ main
 -->
 ```c
 smbd_smb2_request_dispatch
+  smbd_smb2_request_process_create
+    smbd_smb2_create_send
+      smbd_smb2_create_finish
+        // 保存fsp，后续调用 file_fsp_smb2 时直接返回
+        smb2req->compat_chain_fsp = smb1req->chain_fsp
+
+smbd_smb2_request_dispatch
   smbd_smb2_request_process_notify
+    file_fsp_smb2
+      // persistent_id 和 volatile_id 为 -1 时，直接返回
+      return smb2req->compat_chain_fsp
     smbd_smb2_notify_send
       change_notify_create
       if (change_notify_fsp_has_changes(fsp) // 有变化
@@ -335,8 +345,9 @@ smbd_smb2_request_dispatch
 // 触发定时器
 smbd_smb2_request_pending_timer
   // NT_STATUS_PENDING 在这里回复
+  // smb2_hdr 的 Command 就是 SMB2_HDR_OPCODE
 
-// Windows 退出目录取消监听
+// Windows 退出目录则取消监听
 smbd_smb2_request_dispatch
   smbd_smb2_request_process_cancel
     _tevent_req_cancel
