@@ -325,13 +325,42 @@ main
 smbd_smb2_request_dispatch
   smbd_smb2_request_process_notify
     smbd_smb2_notify_send
-      change_notify_reply
-        // NT_STATUS_OK 和 NT_STATUS_CANCELLED 走这里
+      change_notify_create
+      if (change_notify_fsp_has_changes(fsp) // 有变化
+      change_notify_reply // 立刻通知
+        // NT_STATUS_OK
+      change_notify_add_request // 暂时没有变化，排队
     smbd_smb2_request_pending_queue // 如果没有要通知的内容，就启动定时器
 
 // 触发定时器
 smbd_smb2_request_pending_timer
   // NT_STATUS_PENDING 在这里回复
+
+// Windows 退出目录取消监听
+smbd_smb2_request_dispatch
+  smbd_smb2_request_process_cancel
+    _tevent_req_cancel
+      smbd_smb2_notify_cancel
+        smbd_notify_cancel_by_smbreq
+          smbd_notify_cancel_by_map
+            change_notify_reply
+              // NT_STATUS_CANCELLED
+
+// 文件变化通知
+tevent_common_invoke_fd_handler
+  messaging_dgm_read_handler
+    messaging_dgm_recv
+      msg_dgm_ref_recv
+        messaging_recv_cb
+          messaging_dispatch_rec
+            messaging_dispatch_classic
+              notify_handler
+                notify_callback
+                  files_forall
+                    notify_fsp_cb
+                      notify_fsp
+                        change_notify_reply
+                          // NT_STATUS_OK
 ```
 
 # ksmbd代码分析
