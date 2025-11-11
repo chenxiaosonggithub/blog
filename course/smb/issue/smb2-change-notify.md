@@ -274,18 +274,7 @@ tcpdump --interface=any -w smb-server.pcap
 
 在wireshark中打开，用`smb2.cmd == 15`过滤。
 
-## 20251110-2016
-
-详细抓包数据请查看[20251110-2016](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/change-notify/20251110-2016/samba.md)。
-
-Windows client进入`dir/`目录时:
-
-  - client请求`20:17:29.666 Create Request;Notify Request No.239`
-  - server回复`20:17:29.668 Notify Response, Error: STATUS_PENDING No.244 [Response to: 239]`
-
-server端执行`touch dir/file1`时:
-
-  - server端回复`20:17:54.095 Notify Response No.285 [Response to: 239]`
+详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#tcpdump)。
 
 # samba代码分析
 
@@ -295,88 +284,7 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 用`NT_STATUS_V()`得到错误码的值，但好像打印出来是个很大的负数，可以用`get_nt_error_c_code()`转换成字符串。
 
-<!--
-main
-  smbd_parent_loop
-    _tevent_loop_wait
-      std_event_loop_wait
-        tevent_common_loop_wait
-          _tevent_loop_once
-            std_event_loop_once
-              epoll_event_loop_once
-                epoll_event_loop
-                  tevent_common_invoke_fd_handler
-                    smbd_accept_connection
-                      smbd_process
-                        _tevent_loop_wait
-                          std_event_loop_wait
-                            tevent_common_loop_wait
-                              _tevent_loop_once
-                                std_event_loop_once
-                                  epoll_event_loop_once
-                                    epoll_event_loop
-                                      tevent_common_invoke_fd_handler
-                                        smbd_smb2_connection_handler
-                                          smbd_smb2_io_handler
-                                            smbd_smb2_advance_incoming
-                                              smbd_smb2_request_dispatch
--->
-```c
-smbd_smb2_request_dispatch
-  smbd_smb2_request_process_create
-    smbd_smb2_create_send
-      smbd_smb2_create_finish
-        // 保存fsp，后续调用 file_fsp_smb2 时直接返回
-        smb2req->compat_chain_fsp = smb1req->chain_fsp
-
-smbd_smb2_request_dispatch
-  smbd_smb2_request_process_notify
-    file_fsp_smb2
-      // persistent_id 和 volatile_id 为 -1 时，直接返回
-      return smb2req->compat_chain_fsp
-    smbd_smb2_notify_send
-      change_notify_create
-      if (change_notify_fsp_has_changes(fsp) // 有变化
-      change_notify_reply // 立刻通知
-        // NT_STATUS_OK
-      change_notify_add_request // 暂时没有变化，排队
-    smbd_smb2_request_pending_queue // 如果没有要通知的内容，就启动定时器
-
-// 触发定时器
-smbd_smb2_request_pending_timer
-  // NT_STATUS_PENDING 在这里回复
-  // smb2_hdr 的 Command 就是 SMB2_HDR_OPCODE
-
-// Windows 退出目录则取消监听
-smbd_smb2_request_dispatch
-  smbd_smb2_request_process_cancel
-    _tevent_req_cancel
-      smbd_smb2_notify_cancel
-        smbd_notify_cancel_by_smbreq
-          smbd_notify_cancel_by_map
-            change_notify_reply
-              // NT_STATUS_CANCELLED
-
-// 文件变化通知
-tevent_common_invoke_fd_handler
-  messaging_dgm_read_handler
-    messaging_dgm_recv
-      msg_dgm_ref_recv
-        messaging_recv_cb
-          messaging_dispatch_rec
-            messaging_dispatch_classic
-              notify_handler
-                notify_callback
-                  files_forall
-                    notify_fsp_cb
-                      notify_fsp
-                        change_notify_reply
-                          // NT_STATUS_OK
-```
+详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#samba-code)。
 
 # ksmbd代码分析
-
-```c
-
-```
 
