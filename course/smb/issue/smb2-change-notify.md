@@ -280,8 +280,6 @@ tcpdump --interface=any -w smb-server.pcap
 
 samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)。
 
-注意有些代码是编译生成的（比如错误码`NT_STATUS_PENDING`的定义），查看完整的代码要先执行编译过程。
-
 用`NT_STATUS_V()`得到错误码的值，但好像打印出来是个很大的负数，可以用`get_nt_error_c_code()`转换成字符串。
 
 详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#samba-code)。
