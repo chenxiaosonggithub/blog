@@ -60,7 +60,7 @@ sudo arp -d 10.42.20.210 # 如果清除ARP缓存后无法唤醒
 arp | grep 210 # 这时就看不到ARP缓存
 ```
 
-# virt-manager安装虚拟机
+# virt-manager安装虚拟机 {#virt-manager}
 
 `/etc/libvirt/qemu.conf`文件配置:
 ```sh
@@ -69,6 +69,22 @@ group = "libvirt"
 ```
 
 注意麒麟桌面系统v10的virt-manager图形显示协议要用vnc。
+
+## virtiofs共享目录
+
+先关闭虚拟机并进入虚拟机设置:
+
+- "内存" -> 勾选"Enable shared memory"
+- "添加硬件" -> "文件系统"
+  - "驱动程序: virtiofs"
+  - "源路径: /home/sonvhi/chenxiaosong/"
+  - "目标路径: virtiofs（也可以取其他名字）"
+
+然后启动虚拟机，输入挂载命令:
+
+```sh
+sudo mount -t virtiofs virtiofs chenxiaosong/ # 其中第二个virtiofs是目标路径
+```
 
 ## `virt-manager`安装`aarch64`系统
 
