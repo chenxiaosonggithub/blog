@@ -1,6 +1,7 @@
 <!-- sign begin -->
 - 作者: 陈孝松
-- [主页: chenxiaosong.com](https://chenxiaosong.com/)
+- [中文主页: chenxiaosong.com](https://chenxiaosong.com/)
+- [英文主页: chenxiaosong.com/en](https://chenxiaosong.com/en)
 - [哔哩哔哩教学视频: 陈孝松](https://chenxiaosong.com/video.html)
 - [课程: chenxiaosong.com/course](https://chenxiaosong.com/course.html)
 - [博客: chenxiaosong.com/blog](https://chenxiaosong.com/blog.html)
