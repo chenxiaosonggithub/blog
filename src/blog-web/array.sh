@@ -293,7 +293,8 @@ comm_array=(
 	1 1 tmp/calligraphy/lingfeijing.md calligraphy/lingfeijing.html "灵飞经译文"
 	1 1 tmp/calligraphy/shengjiaoxu.md calligraphy/shengjiaoxu.html "圣教序译文"
 	1 1 src/calligraphy/written.md ~ "左手写过的字"
-	# 英文网页
+	# 英文网页，第二列的"2"代表使用英文签名
+	1 2 en/index.md ~ "陈孝松(ChenXiaoSong) Homepage"
 	1 2 en/null-ptr-deref-in-nfsd4_probe_callback.md ~ "null-ptr-deref in nfsd4_probe_callback()"
 	1 2 en/smb2-change-notify.md ~ "SMB2 CHANGE_NOTIFY feature"
 	1 2 en/smb-test.md ~ "How to Test SMB"

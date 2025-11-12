@@ -22,7 +22,11 @@ bash ${code_path}/blog/src/blog-web/create-html.sh false this-arg-is-useless ${g
 cp ${code_path}/blog/src/blog-web/github-io-404.html ${github_io_repo}/404.html
 cp ${code_path}/blog/src/blog-web/github-io-README.md ${github_io_repo}/README.md
 echo "chenxiaosong.com" > ${github_io_repo}/CNAME
-comm_generate_index "${github_io_repo}" "" "${github_io_repo}"
+ls_array=( # index.html有内容的路径，需要生成ls.html
+	""
+	"en"
+)
+comm_generate_index "${github_io_repo}" "" "${github_io_repo}" ls_array[@]
 
 cd ${github_io_repo}
 if [[ "${is_new_repo}" == true ]]; then

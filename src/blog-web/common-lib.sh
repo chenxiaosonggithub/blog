@@ -390,16 +390,22 @@ comm_generate_index() {
 	local dir="$1"
 	local parent_dir="$2"
 	local start_dir="$3"
+	local ls_array=("${!4}") # 使用间接引用来接收数组，调用的地方 comm_generate_index ... ls_array[@]
 
-	local title=${dir/$start_dir/} # 干掉前缀
-	title="${title:-top}"
-	local html_name
+	local title=${dir/$start_dir/} # 干掉前缀，得到: /course/nfs
+	local relative_path=${title#/} # 得到: course/nfs
+	title="${title:-top}" # 如果为空则赋值: top
+	local html_name="index.html"
 
-	if [ -n "${parent_dir}" ]; then
-		html_name="index.html"
-	else
-		html_name="ls.html"
-	fi
+	local element_count="${#ls_array[@]}" # 总个数
+	local count_per_line=1
+	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
+		local ls_path=${ls_array[${index}]}
+		if [[ "${relative_path}" == "${ls_path}" ]]; then
+			html_name="ls.html"
+			break
+		fi
+	done
 	# 生成 index.html 文件
 	local index_file="${dir}/${html_name}"
 	{
@@ -437,7 +443,7 @@ comm_generate_index() {
 	# 递归生成子目录的 index.html
 	for subdir in "${dir}"/*; do
 		if [ -d "${subdir}" ]; then
-			comm_generate_index "${subdir}" "${dir}" "${start_dir}"
+			comm_generate_index "${subdir}" "${dir}" "${start_dir}" ls_array[@]
 		fi
 	done
 }
