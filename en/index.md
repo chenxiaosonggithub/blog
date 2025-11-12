@@ -4,7 +4,7 @@ If you can read Chinese, or are willing to use a translation tool, [you can clic
 
 I am Chinese, my Chinese name is 陈孝松.
 
-If you haven't seen me yet, [you can click here to check out my handsome photo](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/陈孝松照片.md) ^_^
+If you haven't seen me yet, [you can click here to check out my handsome photos](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/gitee-md/陈孝松照片.md) ^_^
 
 Contact Information:
 
