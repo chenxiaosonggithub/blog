@@ -59,4 +59,4 @@ update_common_src() {
 	rm ${src_file}.tmp
 }
 
-update_md_sign "${code_path}/blog/src/gitee-md/"
+update_md_sign "${code_path}/tmp/git-repo-md/"
