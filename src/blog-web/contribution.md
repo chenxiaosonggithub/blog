@@ -1,12 +1,12 @@
 这里列出我所有的自由软件项目贡献。
 
-# openEuler的nfs多路径（nfs+） {#openeuler-enfs}
-
-[点击这里查看我的openEuler nfs+贡献](https://chenxiaosong.com/enfs-contribution.html)。
-
 # Linux内核贡献 {#linux-kernel}
 
 [点击这里查看我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)。
+
+# openEuler的nfs多路径（nfs+） {#openeuler-enfs}
+
+[点击这里查看我的openEuler nfs+贡献](https://chenxiaosong.com/enfs-contribution.html)。
 
 # 鸿蒙操作系统贡献 {#openharmony}
 
