@@ -298,4 +298,5 @@ comm_array=(
 	1 2 en/null-ptr-deref-in-nfsd4_probe_callback.md ~ "null-ptr-deref in nfsd4_probe_callback()"
 	1 2 en/smb2-change-notify.md ~ "SMB2 CHANGE_NOTIFY feature"
 	1 2 en/smb-test.md ~ "How to Test SMB"
+	1 2 en/smb-test-20251109.md ~ "SMB Test Results on 2025-11-09"
 )
