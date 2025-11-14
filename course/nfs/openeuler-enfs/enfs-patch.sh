@@ -1,3 +1,18 @@
+openeuler_path=/home/sonvhi/chenxiaosong/code/openeuler-kernel
+openeuler_patch_path=${openeuler_path}/enfs-patch/
+
+if [ $# -ne 1 ]; then
+	echo "用法: bash $0 <revert/format-patch>"
+	exit 1
+fi
+
+if [[ ! -d "${openeuler_path}" ]]; then
+	echo "openeuler内核仓库不存在"
+	exit
+fi
+
+operation=$1
+
 enfs_patch_array=(
 	b46237072d12 # nfs/enfs: cleanups in pm_set_path_state()
 	456df8f077c4 # nfs/enfs: prefer normal rpc transport over unstable one
@@ -65,7 +80,7 @@ enfs_patch_array=(
 	18e360871c3f # add enfs feature
 )
 
-revert_enfs() {
+enfs_revert() {
 	local element_count="${#enfs_patch_array[@]}"
 	local count_per_line=1
 	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
@@ -79,5 +94,28 @@ revert_enfs() {
 	done
 }
 
-revert_enfs
+enfs_format_patch() {
+	local element_count="${#enfs_patch_array[@]}"
+
+	mkdir ${openeuler_patch_path}
+	cd ${openeuler_patch_path}
+	local count_per_line=1
+	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
+		local commit=${enfs_patch_array[${index}]}
+		git format-patch -1 ${commit} --stdout > ${commit}.patch
+	done
+}
+
+case "${operation}" in
+"revert")
+	enfs_revert
+	;;
+"format-patch")
+	enfs_format_patch
+	;;
+*)
+	echo "operation is wrong"
+	exit
+;;
+esac
 
