@@ -29,7 +29,7 @@ and web development (Vue).
 
 [Click here to see my free software contributions: chenxiaosong.com/contribution](https://chenxiaosong.com/contribution.html).
 
-Besides contributions to the Linux kernel and HarmonyOS, I have also contributed to projects such as LoRaWAN and KDE's Ghostwriter.
+Besides contributions to the Linux kernel and HarmonyOS, I have also contributed to projects such as LoRaWAN and KDE ghostwriter.
 
 # Blog
 
