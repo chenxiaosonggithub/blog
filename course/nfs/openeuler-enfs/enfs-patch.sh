@@ -95,10 +95,11 @@ enfs_revert() {
 }
 
 enfs_format_patch() {
-	local element_count="${#enfs_patch_array[@]}"
-
+	rm ${openeuler_patch_path} -rf
 	mkdir ${openeuler_patch_path}
 	cd ${openeuler_patch_path}
+
+	local element_count="${#enfs_patch_array[@]}"
 	local count_per_line=1
 	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
 		local commit=${enfs_patch_array[${index}]}
