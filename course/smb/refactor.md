@@ -6,6 +6,41 @@
 
 函数参数是结构体请参考`nfs4_run_open_task()`。
 
+# todo
+
+## 重复定义
+
+`smb2pdu.h`:
+
+- todo: create_posix_rsp
+- todo: smb2_posix_info
+
+`cifspdu.h`:
+
+- CIFS_ENCPWD_SIZE
+- CIFS_CPHTXT_SIZE
+- CIFS_CRYPTO_KEY_SIZE
+- CIFS_AUTH_RESP_SIZE
+- CIFS_HMAC_MD5_HASH_SIZE
+- CIFS_NTHASH_SIZE
+- CREATE_TREE_CONNECTION
+- CREATE_OPTION_READONLY
+- CREATE_OPTION_SPECIAL
+- ntlmv2_resp
+- COMPRESSION_FORMAT_NONE, COMPRESSION_FORMAT_LZNT1
+
+## krb5_authenticate, ntlm_authenticate, binding_session:
+
+## `ksmbd_decode_ntlmssp_auth_blob()`: `arc4_setkey()`和`arc4_crypt()`是否必须？
+
+```c
+smb2_sess_setup
+  ntlm_authenticate
+    ksmbd_decode_ntlmssp_auth_blob
+    set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD) // 发生错误时
+```
+
+
 # 已经提交到社区的补丁
 
 [`[PATCH] ksmbd: remove duplicate SMB2 Oplock levels definitions`](https://lore.kernel.org/all/20240619161753.385508-1-chenxiaosong@chenxiaosong.com/)
@@ -232,20 +267,3 @@ git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,l
 git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org  00*
 ```
 
-## todo
-
-### 重复定义
-
-- todo: create_posix_rsp
-- todo: smb2_posix_info
-
-### krb5_authenticate, ntlm_authenticate, binding_session:
-
-### `ksmbd_decode_ntlmssp_auth_blob()`: `arc4_setkey()`和`arc4_crypt()`是否必须？
-
-```c
-smb2_sess_setup
-  ntlm_authenticate
-    ksmbd_decode_ntlmssp_auth_blob
-    set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD) // 发生错误时
-```
