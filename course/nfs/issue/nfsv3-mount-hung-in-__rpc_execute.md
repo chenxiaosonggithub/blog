@@ -1,5 +1,6 @@
 # 问题描述
 
+nfsv3挂载hung住没响应:
 ```
 root      351771  0.0  0.0 214144  1132 pts/1    S+   11:06   0:00 mount -t nfs -o vers=3 ${server_ip}:/svr/export /root/test1
 root      351772  0.0  0.0  77644 66332 pts/1    D+   11:06   0:00 /sbin/mount.nfs ${server_ip}:/svr/export /root/test1 -o rw,vers=3
@@ -33,9 +34,28 @@ root      351772  0.0  0.0  77644 66332 pts/1    D+   11:06   0:00 /sbin/mount.n
 =======================================================
 ```
 
+[抓包数据请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfsv3-mount-hung-in-__rpc_execute-tcpdump.md)。
+
+# 调试
+
+编译需要打上补丁`1d489151e9f9 objtool: Don't fail on missing symbol table`和`0001-fix-multiple-definition-of-__force_order.patch`（这个补丁只针对麒麟，没有公开）。
+
 # 代码分析
 
 ```c
-
+nfs3_create_server
+  nfs_create_server
+    nfs_probe_fsinfo
+      nfs3_proc_fsinfo
+        do_proc_fsinfo
+          nfs3_rpc_wrapper
+            rpc_call_sync
+              rpc_run_task
+                __rpc_execute
+                  rpc_wait_bit_killable
 ```
+
+# 解决方案
+
+类似的问题[《sunrpc __rpc_execute()出现ERESTARTSYS的问题》](https://chenxiaosong.com/course/nfs/issue/4.19-__rpc_execute-ERESTARTSYS.html)
 
