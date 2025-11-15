@@ -219,3 +219,14 @@ kthread
                       ext2_file_open
 ```
 
+# `struct smb3_fs_vol_info`
+
+- MS-CIFS 2.2.8.2.3 SMB_QUERY_FS_VOLUME_INFO
+- MS-FSCC 2.5.9 FileFsVolumeInformation
+
+client端结构体`smb3_fs_vol_info`，server端结构体`filesystem_vol_info`。
+
+```c
+
+```
+
