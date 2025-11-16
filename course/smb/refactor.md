@@ -10,12 +10,12 @@
 
 ## 重复定义
 
-`smb2pdu.h`:
+### `smb2pdu.h`
 
 - todo: create_posix_rsp
 - todo: smb2_posix_info
 
-`cifspdu.h`:
+### `cifspdu.h`:
 
 - CIFS_ENCPWD_SIZE
 - CIFS_CPHTXT_SIZE
@@ -28,6 +28,10 @@
 - CREATE_OPTION_SPECIAL
 - ntlmv2_resp
 - COMPRESSION_FORMAT_NONE, COMPRESSION_FORMAT_LZNT1
+
+### `cifsglob.h`
+
+- ntlmssp_auth
 
 ## krb5_authenticate, ntlm_authenticate, binding_session:
 
