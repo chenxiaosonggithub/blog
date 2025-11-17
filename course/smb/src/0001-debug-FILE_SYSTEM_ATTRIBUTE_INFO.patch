@@ -1,0 +1,76 @@
+From c539b67e67d253cc5aa2dadf3ad7ce9ec0cdad6e Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Mon, 17 Nov 2025 15:03:57 +0800
+Subject: [PATCH] debug FILE_SYSTEM_ATTRIBUTE_INFO
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/client/cifssmb.c | 6 ++++++
+ fs/smb/client/smb2pdu.c | 9 +++++++--
+ fs/smb/server/smb2pdu.c | 3 +++
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 257a6beb4b7d..ee2dc3487bd7 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -4857,6 +4857,8 @@ CIFSSMBQFSAttributeInfo(const unsigned int xid, struct cifs_tcon *tcon)
+ 			/* BB also check if enough bytes returned */
+ 			rc = -EIO;	/* bad smb */
+ 		} else {
++			unsigned int len = sizeof(FILE_SYSTEM_ATTRIBUTE_INFO);
++			char *fs_name_buf;
+ 			__u16 data_offset = le16_to_cpu(pSMBr->t2.DataOffset);
+ 			response_data =
+ 			    (FILE_SYSTEM_ATTRIBUTE_INFO
+@@ -4864,6 +4866,10 @@ CIFSSMBQFSAttributeInfo(const unsigned int xid, struct cifs_tcon *tcon)
+ 				 data_offset);
+ 			memcpy(&tcon->fsAttrInfo, response_data,
+ 			       sizeof(FILE_SYSTEM_ATTRIBUTE_INFO));
++			fs_name_buf = (char *)response_data + len;
++			printk("%s:%d, len: %d, FileSystemNameLen:%d, %c%c%c%c\n", __func__, __LINE__,
++				len, tcon->fsAttrInfo.FileSystemNameLen,
++				fs_name_buf[0], fs_name_buf[2], fs_name_buf[4], fs_name_buf[6]);
+ 		}
+ 	}
+ 	cifs_buf_release(pSMB);
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index ef2c6ac500f7..b7092d786315 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -6025,11 +6025,16 @@ SMB2_QFS_attr(const unsigned int xid, struct cifs_tcon *tcon,
+ 	if (rc)
+ 		goto qfsattr_exit;
+ 
+-	if (level == FS_ATTRIBUTE_INFORMATION)
++	if (level == FS_ATTRIBUTE_INFORMATION) {
++		unsigned int len = min_t(unsigned int, rsp_len, min_len);
++		char *fs_name_buf = (char *)rsp + offset + len;
+ 		memcpy(&tcon->fsAttrInfo, offset
+ 			+ (char *)rsp, min_t(unsigned int,
+ 			rsp_len, min_len));
+-	else if (level == FS_DEVICE_INFORMATION)
++		printk("%s:%d, len: %d, FileSystemNameLen:%d, %c%c%c%c\n", __func__, __LINE__, len,
++			tcon->fsAttrInfo.FileSystemNameLen,
++			fs_name_buf[0], fs_name_buf[2], fs_name_buf[4], fs_name_buf[6]);
++	} else if (level == FS_DEVICE_INFORMATION)
+ 		memcpy(&tcon->fsDevInfo, offset
+ 			+ (char *)rsp, sizeof(FILE_SYSTEM_DEVICE_INFO));
+ 	else if (level == FS_SECTOR_SIZE_INFORMATION) {
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 1c8935f61150..3a871b98744b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5516,6 +5516,9 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 		info->FileSystemNameLen = cpu_to_le32(len);
+ 		sz = sizeof(FILE_SYSTEM_ATTRIBUTE_INFO) + len;
+ 		rsp->OutputBufferLength = cpu_to_le32(sz);
++		printk("%s:%d, len: %d, %c%c%c%c\n", __func__, __LINE__, info->FileSystemNameLen,
++			info->FileSystemName[0], info->FileSystemName[1], info->FileSystemName[2],
++			info->FileSystemName[3]);
+ 		break;
+ 	}
+ 	case FS_VOLUME_INFORMATION:
+-- 
+2.43.0
+
