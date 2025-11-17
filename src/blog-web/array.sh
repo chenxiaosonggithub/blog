@@ -302,4 +302,5 @@ comm_array=(
 	1 2 tmp/smb/test/20251109/README.md en/smb-test-20251109.html "SMB Test Results on 2025-11-09"
 	1 2 tmp/smb/test/20251113/README.md en/smb-test-20251113.html "SMB Test Results on 2025-11-13"
 	1 2 tmp/smb/test/20251116/README.md en/smb-test-20251116.html "SMB Test Results on 2025-11-16"
+	1 2 tmp/smb/test/20251117/README.md en/smb-test-20251117.html "SMB Test Results on 2025-11-17"
 )
