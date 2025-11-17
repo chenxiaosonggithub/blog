@@ -1,4 +1,4 @@
-From c539b67e67d253cc5aa2dadf3ad7ce9ec0cdad6e Mon Sep 17 00:00:00 2001
+From 852d234b66edba6a206c379269d23544ea34e609 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Date: Mon, 17 Nov 2025 15:03:57 +0800
 Subject: [PATCH] debug FILE_SYSTEM_ATTRIBUTE_INFO
@@ -11,7 +11,7 @@ Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
  3 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 257a6beb4b7d..ee2dc3487bd7 100644
+index 257a6beb4b7d..743ce6610eee 100644
 --- a/fs/smb/client/cifssmb.c
 +++ b/fs/smb/client/cifssmb.c
 @@ -4857,6 +4857,8 @@ CIFSSMBQFSAttributeInfo(const unsigned int xid, struct cifs_tcon *tcon)
@@ -28,14 +28,14 @@ index 257a6beb4b7d..ee2dc3487bd7 100644
  			memcpy(&tcon->fsAttrInfo, response_data,
  			       sizeof(FILE_SYSTEM_ATTRIBUTE_INFO));
 +			fs_name_buf = (char *)response_data + len;
-+			printk("%s:%d, len: %d, FileSystemNameLen:%d, %c%c%c%c\n", __func__, __LINE__,
-+				len, tcon->fsAttrInfo.FileSystemNameLen,
++			printk("%s:%d, struct size:%d, FileSystemNameLen:%d, %c%c%c%c\n",
++				__func__, __LINE__, len, tcon->fsAttrInfo.FileSystemNameLen,
 +				fs_name_buf[0], fs_name_buf[2], fs_name_buf[4], fs_name_buf[6]);
  		}
  	}
  	cifs_buf_release(pSMB);
 diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index ef2c6ac500f7..b7092d786315 100644
+index ef2c6ac500f7..c6621ba8a7a0 100644
 --- a/fs/smb/client/smb2pdu.c
 +++ b/fs/smb/client/smb2pdu.c
 @@ -6025,11 +6025,16 @@ SMB2_QFS_attr(const unsigned int xid, struct cifs_tcon *tcon,
@@ -44,14 +44,14 @@ index ef2c6ac500f7..b7092d786315 100644
  
 -	if (level == FS_ATTRIBUTE_INFORMATION)
 +	if (level == FS_ATTRIBUTE_INFORMATION) {
-+		unsigned int len = min_t(unsigned int, rsp_len, min_len);
-+		char *fs_name_buf = (char *)rsp + offset + len;
++		unsigned int copy_len = min_t(unsigned int, rsp_len, min_len);
++		char *fs_name_buf = (char *)rsp + offset + copy_len;
  		memcpy(&tcon->fsAttrInfo, offset
  			+ (char *)rsp, min_t(unsigned int,
  			rsp_len, min_len));
 -	else if (level == FS_DEVICE_INFORMATION)
-+		printk("%s:%d, len: %d, FileSystemNameLen:%d, %c%c%c%c\n", __func__, __LINE__, len,
-+			tcon->fsAttrInfo.FileSystemNameLen,
++		printk("%s:%d, copy_len: %d, FileSystemNameLen:%d, %c%c%c%c\n", __func__, __LINE__,
++			copy_len, tcon->fsAttrInfo.FileSystemNameLen,
 +			fs_name_buf[0], fs_name_buf[2], fs_name_buf[4], fs_name_buf[6]);
 +	} else if (level == FS_DEVICE_INFORMATION)
  		memcpy(&tcon->fsDevInfo, offset
