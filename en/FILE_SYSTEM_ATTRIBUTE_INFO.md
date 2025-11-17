@@ -1,12 +1,12 @@
 # Patches to be tested
 
-todo
+- [smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h]()
 
 # Test results
 
-After applying the debug patch
+After applying the above patches and the debug patch
 [`0001-debug-FILE_SYSTEM_ATTRIBUTE_INFO.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/0001-debug-FILE_SYSTEM_ATTRIBUTE_INFO.patch)
-to the kernel code, debug it using the following steps.
+to the kernel code, test it using the following steps.
 
 Both `FileSystemNameLen` and `FileSystemName` in `FILE_SYSTEM_ATTRIBUTE_INFO` are correct.
 
