@@ -1,6 +1,6 @@
 # Patches to be tested
 
-- [smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h](https://github.com/chenxiaosonggithub/tmp/tree/master/smb/patch/smb-move-duplicate-definitions-to-common-header-file)
+- [smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h](https://lore.kernel.org/all/20251117112838.473051-1-chenxiaosong.chenxiaosong@linux.dev/)
 
 # Test results
 
