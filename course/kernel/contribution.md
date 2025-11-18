@@ -12,7 +12,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 下面按时间顺序列出所有的补丁，最新的补丁放在前面。
 
 - [[PATCH v2 0/6] smb/server: fix return values of smb2_0_server_cmds proc](https://lore.kernel.org/all/20251017104613.3094031-1-chenxiaosong.chenxiaosong@linux.dev/)
-- [[PATCH v8 0/1] smb: move duplicate definitions to common header file](https://lore.kernel.org/all/20251116065213.282598-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH v9 0/1] smb: move duplicate definitions to common header file](https://lore.kernel.org/linux-cifs/20251117112838.473051-1-chenxiaosong.chenxiaosong@linux.dev/)
 
 - [smb: move some duplicate definitions to common/cifsglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d877470b59910b5c50383d634dda3782386bba51)
 - [smb/server: fix possible refcount leak in smb2_sess_setup()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=379510a815cb2e64eb0a379cb62295d6ade65df0)
