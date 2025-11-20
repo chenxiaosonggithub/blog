@@ -1,0 +1,63 @@
+From 27ac7ed477198d6648e16998b961880446f149c5 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Thu, 20 Nov 2025 15:29:03 +0800
+Subject: [PATCH] debug nfs reuseport
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ net/sunrpc/clnt.c     | 2 --
+ net/sunrpc/xprtsock.c | 4 ++++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 8ca354ecfd02..e22c451095de 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -601,8 +601,6 @@ struct rpc_clnt *rpc_create(struct rpc_create_args *args)
+ 	if (args->flags & RPC_CLNT_CREATE_NONPRIVPORT)
+ 		xprt->resvport = 0;
+ 	xprt->reuseport = 0;
+-	if (args->flags & RPC_CLNT_CREATE_REUSEPORT)
+-		xprt->reuseport = 1;
+ 
+ 	clnt = rpc_create_xprt(args, xprt);
+ 	if (IS_ERR(clnt) || args->nconnect <= 1)
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 3aa987e7f072..9ed775265f14 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -1764,6 +1764,7 @@ static void xs_reset_srcport(struct sock_xprt *transport)
+ 
+ static void xs_set_srcport(struct sock_xprt *transport, struct socket *sock)
+ {
++	transport->xprt.reuseport = 0;
+ 	if (transport->srcport == 0 && transport->xprt.reuseport)
+ 		transport->srcport = xs_sock_getport(sock);
+ }
+@@ -1848,6 +1849,7 @@ static int xs_bind(struct sock_xprt *transport, struct socket *sock)
+ 		err = kernel_bind(sock, (struct sockaddr *)&myaddr,
+ 				transport->xprt.addrlen);
+ 		if (err == 0) {
++			transport->xprt.reuseport = 0;
+ 			if (transport->xprt.reuseport)
+ 				transport->srcport = port;
+ 			break;
+@@ -1952,6 +1954,7 @@ static struct socket *xs_create_sock(struct rpc_xprt *xprt,
+ 	}
+ 	xs_reclassify_socket(family, sock);
+ 
++	reuseport = 0;
+ 	if (reuseport)
+ 		sock_set_reuseport(sock->sk);
+ 
+@@ -2258,6 +2261,7 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
+ 
+ 	if (sock == NULL)
+ 		return;
++	xprt->reuseport = 0;
+ 	if (!xprt->reuseport) {
+ 		xs_close(xprt);
+ 		return;
+-- 
+2.43.0
+
