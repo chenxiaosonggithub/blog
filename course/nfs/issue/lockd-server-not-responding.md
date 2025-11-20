@@ -365,5 +365,49 @@ No.	Time	Source	Destination	Protocol	Length	Info
 - [红帽知识库](https://access.redhat.com/solutions/2979751)（需要登录红帽账号）
 - [NFSv4.1: Don't rebind to the same source port when reconnecting to the server](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e6237b6feb37582fbd6bd7a8336d1256a6b4b4f9)
 
-经过修改代码的在本地环境的调试，nfsv3也可以修改成在重连时使用不同的端口，但是修改后风险未知，所有厂商的nfsv3也都没这样修改。
+在本地环境调试，挂载后在client端抓包，在server端使用`ifconfig xxx down`断开网络两分钟。
+
+tcpdump抓包调试，wireshark查看过滤`tcp.port == 2049`。
+
+## 不复用源端口
+
+打上补丁[`0001-debug-nfs-reuseport.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/0001-debug-nfs-reuseport.patch)，
+从抓包数据可以看出，网络重连后，使用了新的端口。
+
+```sh
+...
+No.	Time	Source	src port	Destination	dst port	Protocol	Length	Info
+90	2025-11-20 16:24:02.008962	192.168.53.210	2049	192.168.53.209	952	NFS	212	V3 WRITE Reply (Call In 89) Len: 6 FILE_SYNC
+91	2025-11-20 16:24:02.049141	192.168.53.209	952	192.168.53.210	2049	TCP	72	952 → 2049 [ACK] Seq=1329 Ack=1325 Win=64512 Len=0 TSval=571464737 TSecr=497207948
+112	2025-11-20 16:25:02.032133	192.168.53.209	952	192.168.53.210	2049	TCP	72	[TCP Keep-Alive] 952 → 2049 [ACK] Seq=1328 Ack=1325 Win=64512 Len=0 TSval=571524720 TSecr=497207948
+159	2025-11-20 16:26:07.568137	192.168.53.209		192.168.53.209		ICMP	100	Destination unreachable (Host unreachable)
+204	2025-11-20 16:26:54.257998	192.168.53.209	952	192.168.53.210	2049	NFS	172	V3 GETATTR Call, FH: 0xda686b37
+205	2025-11-20 16:26:54.258354	192.168.53.210	2049	192.168.53.209	952	TCP	66	2049 → 952 [RST] Seq=1325 Win=0 Len=0
+206	2025-11-20 16:26:54.258567	192.168.53.209	857	192.168.53.210	2049	TCP	80	857 → 2049 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=571636946 TSecr=0 WS=512
+207	2025-11-20 16:26:54.258828	192.168.53.210	2049	192.168.53.209	857	TCP	80	2049 → 857 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=497380206 TSecr=571636946 WS=512
+208	2025-11-20 16:26:54.258863	192.168.53.209	857	192.168.53.210	2049	TCP	72	857 → 2049 [ACK] Seq=1 Ack=1 Win=64512 Len=0 TSval=571636946 TSecr=497380206
+209	2025-11-20 16:26:54.258896	192.168.53.209	857	192.168.53.210	2049	NFS	172	V3 GETATTR Call (Reply In 211), FH: 0xda686b37
+...
+```
+
+## 复用端口
+
+不修改代码时，nfsv3默认网络重连后，会用原来的端口。
+
+```sh
+No.	Time	Source	src port	Destination	dst port	Protocol	Length	Info
+152	2025-11-20 16:16:25.248966	192.168.53.209	826	192.168.53.210	2049	TCP	72	[TCP Keep-Alive] 826 → 2049 [ACK] Seq=1428 Ack=1413 Win=64512 Len=0 TSval=830543040 TSecr=3397017515
+176	2025-11-20 16:17:28.736966	192.168.53.209		192.168.53.209		ICMP	100	Destination unreachable (Host unreachable)
+217	2025-11-20 16:17:31.845194	192.168.53.209	826	192.168.53.210	2049	NFS	172	V3 GETATTR Call, FH: 0xda686b37
+218	2025-11-20 16:17:31.845550	192.168.53.210	2049	192.168.53.209	826	TCP	66	2049 → 826 [RST] Seq=1413 Win=0 Len=0
+219	2025-11-20 16:17:31.845771	192.168.53.209	826	192.168.53.210	2049	TCP	80	[TCP Port numbers reused] 826 → 2049 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=830609636 TSecr=0 WS=512
+220	2025-11-20 16:17:31.846054	192.168.53.210	2049	192.168.53.209	826	TCP	80	2049 → 826 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=3397144596 TSecr=830609636 WS=512
+221	2025-11-20 16:17:31.846079	192.168.53.209	826	192.168.53.210	2049	TCP	72	826 → 2049 [ACK] Seq=1 Ack=1 Win=64512 Len=0 TSval=830609637 TSecr=3397144596
+222	2025-11-20 16:17:31.846120	192.168.53.209	826	192.168.53.210	2049	NFS	172	V3 GETATTR Call (Reply In 224), FH: 0xda686b37
+```
+
+## 结论
+
+经过修改内核代码的在本地环境的调试，证明在最简单的使用场景下nfsv3也可以修改成在网络重连时不复用源端口，但是不能确定是否会影响一些复杂的使用场景。
+目前所有厂商的nfsv3也都和上游社区保持一致，在网络重连时复用源端口。
 
