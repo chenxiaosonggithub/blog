@@ -569,3 +569,32 @@ comm_get_param() {
 	cat "$(comm_tmp_params_file)" | jq ".${key}"
 }
 
+# 在第一个匹配的行后面插入文件内容
+comm_ins_file_once() {
+	local target_line=$1
+	local ins_file=$2
+	local dst_file=$3
+	local line_number=$(grep -n "${target_line}" ${dst_file} | head -1 | cut -d: -f1)
+	sed -i -e "${line_number}r ${ins_file}" ${dst_file}
+}
+
+# 将第一个匹配的行替换成文件内容
+comm_replace_line_with_file_once() {
+	local target_line=$1
+	local ins_file=$2
+	local dst_file=$3
+	local line_number=$(grep -n "${target_line}" ${dst_file} | head -1 | cut -d: -f1)
+	comm_ins_file_once "${target_line}" "${ins_file}" "${dst_file}"
+	sed -i "${line_number}d" ${dst_file}
+}
+
+# 将所有匹配的行替换成文件内容
+comm_replace_line_with_file() {
+	local target_line=$1
+	local ins_file=$2
+	local dst_file=$3
+
+	# "d;}" 中的 d 如果去掉，就不删除${target_str}, 效果和comm_ins_file_once一样
+	sed -i -e "/${target_line}/ {r ${ins_file}" -e "d;}" ${dst_file}
+}
+
