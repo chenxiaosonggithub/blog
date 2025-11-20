@@ -2,7 +2,7 @@ openeuler_path=/home/sonvhi/chenxiaosong/code/openeuler-kernel
 openeuler_patch_path=${openeuler_path}/enfs-patch/
 
 if [ $# -ne 1 ]; then
-	echo "用法: bash $0 <revert/format-patch>"
+	echo "用法: bash $0 <revert/format-patch/no-action>"
 	exit 1
 fi
 
@@ -113,6 +113,8 @@ case "${operation}" in
 	;;
 "format-patch")
 	enfs_format_patch
+	;;
+"no-action")
 	;;
 *)
 	echo "operation is wrong"
