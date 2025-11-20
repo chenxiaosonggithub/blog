@@ -21,6 +21,7 @@
 
 - [电脑网页](https://www.daodejing.org/)
 - [手机网页](https://m.daodejing.org/)
+- [繁体字](https://chenxiaosong.com/calligraphy/zhaomengfu/daodejing.html)
 
 赵孟頫（1254年10月22日－1322年7月29日）六十三岁时（公元1316年）所写。
 
