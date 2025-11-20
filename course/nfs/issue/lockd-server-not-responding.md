@@ -360,3 +360,10 @@ No.	Time	Source	Destination	Protocol	Length	Info
 9572	2025-08-25 01:13:36.043050	11.73.24.85	11.8.68.71	NLM	106	V4 LOCK Reply (Call In 9570)
 ```
 
+# 重连机制 {#reconnect-mechanism}
+
+- [红帽知识库](https://access.redhat.com/solutions/2979751)（需要登录红帽账号）
+- [NFSv4.1: Don't rebind to the same source port when reconnecting to the server](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e6237b6feb37582fbd6bd7a8336d1256a6b4b4f9)
+
+经过修改代码的在本地环境的调试，nfsv3也可以修改成在重连时使用不同的端口，但是修改后风险未知，所有厂商的nfsv3也都没这样修改。
+
