@@ -72,6 +72,31 @@ cat /proc/enfs/192.168.53.216_0/path
 cat /proc/enfs/192.168.53.216_0/stat
 ```
 
+# 测试
+
+```sh
+dnf install -y java-latest-openjdk
+# dnf install -y java-1.8.0-openjdk # jdk 8
+```
+
+[下载Vdbench](https://www.oracle.com/downloads/server-storage/vdbench-downloads.html)。
+
+`vdbench_8k_io`配置文件:
+```sh
+create_anchors=yes
+# 最新的jdk版本不支持这个参数
+# messsagescan=no
+
+fsd=fsd1,anchor=/mnt/,depth=2,width=2,files=20,size=1m
+fwd=fwd1,fsd=fsd*,fileio=random,fileselect=random,openflags=o_direct
+# rd=rd1,fwd=fwd*,fwdrate=max,xfersize=8k,format=yes,operation=(write,read,getattr),elapsed=120000,interval=1,threads=64
+rd=rd1,fwd=fwd*,fwdrate=max,xfersize=128k,format=restart,operation=(write),elapsed=120000,interval=1,threads=64
+```
+
+```sh
+./vdbench -f vdbench_8k_io
+```
+
 <!--
 # 以前的代码分析（4.19）
 
