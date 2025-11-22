@@ -276,7 +276,7 @@ make LD=ld.lld O=build modules -j`nproc` # 如果上面的bzImage或Image加了L
 mkdir -p build/boot && make O=build install INSTALL_PATH=boot -j`nproc`
 # INSTALL_MOD_STRIP=1代表不含调试信息，不写INSTALL_MOD_STRIP=1代表含有调试信息
 make O=build modules_install INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=mod -j`nproc`
-make O=build INSTALL_MOD_STRIP=1 tar-pkg -j`nproc` # 将boot/和ko打包成.tar
+make O=build INSTALL_MOD_STRIP=1 tar-pkg -j`nproc` # 编译并将boot/和ko打包成.tar
 ```
 
 在`x86_64`下，如果是交叉编译其他架构，`ARCH`的值为`arch/`目录下相应的架构，编译命令是:
