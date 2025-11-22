@@ -61,7 +61,7 @@ mount -t nfs -o localaddrs=192.168.53.40~192.168.53.53,remoteaddrs=192.168.53.21
 如果没有创建`/etc/enfs/config.ini`，会报错`failed to open file:/etc/enfs/config.ini err:-2`，配置文件请参考[eNFS 使用指南](https://docs.openeuler.org/zh/docs/20.03_LTS_SP4/docs/eNFS/enfs%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html)。只需要在nfs client端支持enfs就可以，`/etc/enfs/config.ini`默认配置如下:
 ```sh
 path_detect_interval=10 # 路径连通探测周期，单位 ： 秒
-path_detect_timeout=10 # 路径连通探测消息越野时间，单位 ： 秒
+path_detect_timeout=10 # 路径连通探测消息超时时间，单位 ： 秒
 multipath_timeout=0 # 选择其他路径达到的文件操作的超时阈值，0表示使用 mount 命令指定的 timeo 参数，不使用 eNFS 模块的配置，单位 ： 秒。
 multipath_disable=0 # 启用 eNFS 特性
 ```
