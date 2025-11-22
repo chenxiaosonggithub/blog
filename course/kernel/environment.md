@@ -471,10 +471,12 @@ sync
 
 # ubuntu，麒麟desktop
 mkinitramfs -o /boot/initrd.img-xxx xxx # 生成`initrd.img`，其中`xxx`为内核版本
-update-grub
 # 麒麟桌面系统要在把`grub.cfg`新生成的启动项里的`security=kysec`改成`security= `（注意后面有空格）
 vim /boot/grub/grub.cfg # x86
+  # GRUB_TIMEOUT_STYLE=menu
+  # GRUB_TIMEOUT=30
 vim /boot/efi/boot/grub/grub.cfg # arm64
+update-grub
 sync
 ```
 
