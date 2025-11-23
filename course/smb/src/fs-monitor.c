@@ -56,66 +56,71 @@ static void print_fh(struct file_handle *fh)
 
 }
 
+static void handle_fs_error(struct fanotify_event_metadata *event)
+{
+	int off;
+	struct fanotify_event_info_header *info;
+	struct fanotify_event_info_error *err;
+	struct fanotify_event_info_fid *fid;
+
+	if (event->mask != FAN_FS_ERROR) {
+		printf("unexpected FAN MARK: %llx\n",
+						(unsigned long long)event->mask);
+		goto next_event;
+	}
+
+	if (event->fd != FAN_NOFD) {
+		printf("Unexpected fd (!= FAN_NOFD)\n");
+		goto next_event;
+	}
+
+	printf("FAN_FS_ERROR (len=%d)\n", event->event_len);
+
+	for (off = sizeof(*event) ; off < event->event_len;
+	     off += info->len) {
+		info = (struct fanotify_event_info_header *)
+			((char *) event + off);
+
+		switch (info->info_type) {
+		case FAN_EVENT_INFO_TYPE_ERROR:
+			err = (struct fanotify_event_info_error *) info;
+
+			printf("\tGeneric Error Record: len=%d\n",
+			       err->hdr.len);
+			printf("\terror: %d\n", err->error);
+			printf("\terror_count: %d\n", err->error_count);
+			break;
+
+		case FAN_EVENT_INFO_TYPE_FID:
+			fid = (struct fanotify_event_info_fid *) info;
+
+			printf("\tfsid: %x%x\n",
+#if defined(__GLIBC__)
+			       fid->fsid.val[0], fid->fsid.val[1]);
+#else
+			       fid->fsid.__val[0], fid->fsid.__val[1]);
+#endif
+			print_fh((struct file_handle *) &fid->handle);
+			break;
+
+		default:
+			printf("\tUnknown info type=%d len=%d:\n",
+			       info->info_type, info->len);
+		}
+	}
+next_event:
+	printf("---\n\n");
+}
+
 static void handle_notifications(char *buffer, int len)
 {
 	struct fanotify_event_metadata *event =
 		(struct fanotify_event_metadata *) buffer;
-	struct fanotify_event_info_header *info;
-	struct fanotify_event_info_error *err;
-	struct fanotify_event_info_fid *fid;
-	int off;
 
 	for (; FAN_EVENT_OK(event, len); event = FAN_EVENT_NEXT(event, len)) {
 		printf("event_len:%d, vers:%d, metadata_len:%d, mask:%lx, fd:%d, pid:%d\n", event->event_len, event->vers, event->metadata_len, event->mask, event->fd, event->pid);
-#if 0
-		if (event->mask != FAN_FS_ERROR) {
-			printf("unexpected FAN MARK: %llx\n",
-							(unsigned long long)event->mask);
-			goto next_event;
-		}
-
-		if (event->fd != FAN_NOFD) {
-			printf("Unexpected fd (!= FAN_NOFD)\n");
-			goto next_event;
-		}
-
-		printf("FAN_FS_ERROR (len=%d)\n", event->event_len);
-
-		for (off = sizeof(*event) ; off < event->event_len;
-		     off += info->len) {
-			info = (struct fanotify_event_info_header *)
-				((char *) event + off);
-
-			switch (info->info_type) {
-			case FAN_EVENT_INFO_TYPE_ERROR:
-				err = (struct fanotify_event_info_error *) info;
-
-				printf("\tGeneric Error Record: len=%d\n",
-				       err->hdr.len);
-				printf("\terror: %d\n", err->error);
-				printf("\terror_count: %d\n", err->error_count);
-				break;
-
-			case FAN_EVENT_INFO_TYPE_FID:
-				fid = (struct fanotify_event_info_fid *) info;
-
-				printf("\tfsid: %x%x\n",
-#if defined(__GLIBC__)
-				       fid->fsid.val[0], fid->fsid.val[1]);
-#else
-				       fid->fsid.__val[0], fid->fsid.__val[1]);
-#endif
-				print_fh((struct file_handle *) &fid->handle);
-				break;
-
-			default:
-				printf("\tUnknown info type=%d len=%d:\n",
-				       info->info_type, info->len);
-			}
-		}
-next_event:
-		printf("---\n\n");
-#endif
+		if (event->mask == FAN_FS_ERROR)
+			handle_fs_error(event);
 	}
 }
 
