@@ -83,3 +83,26 @@ SMB2_QFS_attr()
 }
 ``` 
 
+<!--
+```c
+SMB2_QFS_attr
+  max_len = sizeof(struct smb3_fs_vol_info) + MAX_VOL_LABEL_LEN
+  min_len = sizeof(struct smb3_fs_vol_info)
+  build_qfs_info_req(iov, outbuf_len = max_len)
+    smb2_plain_req_init(smb2_command = SMB2_QUERY_INFO, ..., request_buf = req, &total_len)
+      __smb2_plain_req_init
+        *request_buf = cifs_buf_get()
+          ret_buf = mempool_alloc(cifs_req_poolp, ...) // 申请一块足够大的内存
+    iov->iov_base = req
+  rqst.rq_iov = &iov
+  cifs_send_recv(..., &rqst, ..., resp_iov = &rsp_iov)
+    // todo
+  free_qfs_info_req(&iov)
+  rsp = rsp_iov.iov_base
+
+cifs_init_request_bufs
+  cifs_req_cachep = kmem_cache_create_usercopy(4*4096 + 204) // CIFSMaxBufSize = CIFS_MAX_MSGSIZE
+  cifs_req_poolp = cifs_req_poolp = mempool_create_slab_pool(4, cifs_req_cachep) // cifs_min_rcv = CIFS_MIN_RCV_POOL
+```
+-->
+
