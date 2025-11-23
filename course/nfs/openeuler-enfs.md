@@ -77,6 +77,8 @@ cat /proc/enfs/192.168.53.216_0/stat
 ```sh
 dnf install -y java-latest-openjdk
 # dnf install -y java-1.8.0-openjdk # jdk 8
+apt install -y openjdk-25-jdk-headless # ubuntu24.04最新的jdk版本，headless代表无图形界面版本
+# apt install -y openjdk-8-jdk-headless # jdk 8
 ```
 
 [下载Vdbench](https://www.oracle.com/downloads/server-storage/vdbench-downloads.html)。
