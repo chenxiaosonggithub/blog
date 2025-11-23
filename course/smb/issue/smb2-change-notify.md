@@ -286,3 +286,7 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 # ksmbd代码分析
 
+# fanotify
+
+- [`fs-monitor.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/fs-monitor.c)
+
