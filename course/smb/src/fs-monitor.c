@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 		errx(1, "fanotify_init");
 
 
-	uint64_t event_mask = FAN_MODIFY;
+	uint64_t event_mask = FAN_ACCESS;
 	if (fanotify_mark(fd, FAN_MARK_ADD|FAN_MARK_FILESYSTEM,
 			  event_mask, AT_FDCWD, argv[1])) {
 		errx(1, "fanotify_mark");
