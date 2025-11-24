@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * Copy from kernel samples/fanotify/fs-monitor.c
- * Copyright 2021, Collabora Ltd.
+ * Copyright (C) 2024
+ * ChenXiaoSong (chenxiaosong@chenxiaosong.com)
+ *
+ *  from
+ *
+ *  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/samples/fanotify/fs-monitor.c
+ *
+ *  Copyright 2021, Collabora Ltd.
  */
 
 #define _GNU_SOURCE

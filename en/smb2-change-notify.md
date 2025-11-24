@@ -266,3 +266,34 @@ messaging_dispatch_classic
               // reply NT_STATUS_OK
 ```
 
+# fanotify {#fanotify}
+
+[Click here to view userspace fanotify usage examples `fs-monitor.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/fs-monitor.c):
+```sh
+gcc -o fs-monitor fs-monitor.c
+./fs-monitor /path/to/file
+```
+
+When reading a file:
+```c
+read
+  ksys_read
+    vfs_read
+      fanotify_read
+        add_wait_queue // wait here
+        copy_event_to_user
+
+vfs_read / __kernel_read
+  fsnotify_access
+    fsnotify_file
+      fsnotify_path
+        fsnotify_parent
+          __fsnotify_parent
+            fsnotify
+              send_to_group
+                fanotify_handle_event
+                  fsnotify_insert_event
+                    // wake up the wait queue in fanotify_read()
+                    wake_up(&group->notification_waitq)
+```
+

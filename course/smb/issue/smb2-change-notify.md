@@ -288,5 +288,5 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 # fanotify
 
-- [`fs-monitor.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/smb/src/fs-monitor.c)
+详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#fanotify)。
 
