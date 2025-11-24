@@ -118,9 +118,13 @@ static void handle_notifications(char *buffer, int len)
 		(struct fanotify_event_metadata *) buffer;
 
 	for (; FAN_EVENT_OK(event, len); event = FAN_EVENT_NEXT(event, len)) {
-		printf("event_len:%d, vers:%d, metadata_len:%d, mask:%lx, fd:%d, pid:%d\n", event->event_len, event->vers, event->metadata_len, event->mask, event->fd, event->pid);
-		if (event->mask == FAN_FS_ERROR)
+		printf("event_len:%d, vers:%d, metadata_len:%d, mask:%lx, fd:%d, pid:%d\n",
+		       event->event_len, event->vers, event->metadata_len, event->mask, event->fd, event->pid);
+		switch (event->mask) {
+		case FAN_FS_ERROR:
 			handle_fs_error(event);
+			break;
+		}
 	}
 }
 
