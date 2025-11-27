@@ -8,6 +8,11 @@ nfsv3占用缓存太多。
 
 # 虚拟机中调试 {#vm-debug}
 
+挂载:
+```sh
+mount -t nfs -o vers=3 192.168.53.209:/tmp/s_test /mnt
+```
+
 用户态程序`test.c`:
 ```c
 #include <stdio.h>
@@ -51,6 +56,7 @@ int main() {
 ```sh
 gcc test.c
 ./a.out &
+cd /mnt # 进入挂载点
 ```
 
 参考[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#kdump-crash)在虚拟机中导出vmcore。
@@ -79,6 +85,14 @@ crash> struct address_space.i_mmap 0xffff888104e061b8
     },
     rb_leftmost = 0x0
   },
-```
 
+crash> foreach files -R mnt
+PID: 710      TASK: ffff888110e13380  CPU: 1    COMMAND: "bash"
+ROOT: /    CWD: /mnt 
+
+PID: 1027     TASK: ffff888110e119c0  CPU: 9    COMMAND: "a.out"
+ROOT: /    CWD: /root 
+ FD       FILE            DENTRY           INODE       TYPE PATH
+  3 ffff88810a8f8c00 ffff8881004840c0 ffff888104e06048 REG  /mnt/file
+```
 
