@@ -31,4 +31,5 @@
 - [nfsv3 NLM请求超时的问题](https://chenxiaosong.com/course/nfs/issue/lockd-server-not-responding.html)
 - [nfsv3挂载卡在nlmclnt_init()的问题](https://chenxiaosong.com/course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.html)
 - [nfsv3选项一样时挂载hung住的问题](https://chenxiaosong.com/course/nfs/issue/nfsv3-mount-hung-with-same-option.html)
+- [nfsv3缓存占用太多的问题](https://chenxiaosong.com/course/nfs/issue/nfsv3-cannot-drop-cache.html)
 

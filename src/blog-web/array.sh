@@ -127,6 +127,7 @@ comm_array=(
 			1 1 course/nfs/issue/lockd-server-not-responding.md ~ "nfsv3 NLM请求超时的问题"
 			1 1 course/nfs/issue/nfs-mount-hung-in-nlmclnt_init.md ~ "nfsv3挂载卡在nlmclnt_init()的问题"
 			1 1 course/nfs/issue/nfsv3-mount-hung-with-same-option.md ~ "nfsv3选项一样时挂载hung住的问题"
+			1 1 course/nfs/issue/nfsv3-cannot-drop-cache.md ~ "nfsv3缓存占用太多的问题"
 		1 1 course/nfs/openeuler-enfs.md ~ "openEuler的nfs+"
 			1 1 course/nfs/openeuler-enfs/contribution.md enfs-contribution.html "陈孝松openEuler nfs+贡献"
 			1 1 course/nfs/openeuler-enfs/enfs-null-ptr-deref-in-xprt_switch_get.md ~ "openEuler的nfs+ xprt_switch_get()空指针解引用问题"
