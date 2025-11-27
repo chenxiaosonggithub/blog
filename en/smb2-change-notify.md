@@ -114,7 +114,7 @@ systemctl restart smbd.service # debian
 systemctl restart smb.service # fedora
 ```
 
-# Windows environment
+# Windows environment {#win-env}
 
 `10.42.20.210` is the IP address of the SMB server.
 

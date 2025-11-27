@@ -47,6 +47,8 @@ SMB3.1.1 over QUIC.
 
 # 复现步骤
 
+详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#win-env)。
+
 环境搭建请查看[《smb环境》](https://chenxiaosong.com/course/smb/environment.html)。
 
 smb server在虚拟机中，要让外部的windows系统能访问到，需要[内网穿透](https://chenxiaosong.com/course/gnu-linux/ssh-reverse.html):
@@ -54,23 +56,6 @@ smb server在虚拟机中，要让外部的windows系统能访问到，需要[�
 # 其中10.42.20.210是windows能访问到的地址，且这个系统上的445端口不能被占用（就是没有启动smb server）
 # 192.168.53.209是虚拟机的ip，注意换成localhost用默认走ipv6
 ssh -R 10.42.20.210:445:192.168.53.209:445 root@10.42.20.210
-```
-
-windows挂载:
-```sh
-# windows不区分大小写，TEST和test都可以
-\\10.42.20.210\test
-```
-
-用户态和内核态的smb server切换时，windows可能会挂载不上，这时需要在windows上打开PowerShell执行以下命令:
-```sh
-# 查看现有连接
-net use
-# 删除特定连接
-net use \\10.42.20.210\IPC$ /delete
-net use \\10.42.20.210\test /delete
-# 删除所有连接，不建议用
-net use * /delete
 ```
 
 可能还需要删除凭据，打开"控制面板"（Win+R然后输入control），"用户账户" -> "凭据管理器" -> "管理Windows凭据"，点击条目展开，然后点击 "删除" 。
