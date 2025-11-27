@@ -717,6 +717,12 @@ crash> list -s super_block.s_blocksize_bits,s_maxbytes -h 0xffff888005462800
 crash> list -h 0xffff888005462800 | wc -l # 链表长度
 ```
 
+`files`查看文件:
+```sh
+crash> files 1027 # pid为1027进程打开的文件
+crash> foreach files -R mnt # 打开路径名中包含mnt的文件的所有进程
+```
+
 ## 例子1
 
 构造一个空指针访问的场景:
