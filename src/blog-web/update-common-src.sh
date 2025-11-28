@@ -39,14 +39,15 @@ update_md_file_sign() {
 }
 
 update_md_sign() {
-	local md_dir=$1
+	local md_file_or_dir=$1
 	local array=()
 
-	if [[ -f "${md_dir}" ]]; then
+	if [[ -f "${md_file_or_dir}" ]]; then
+		update_md_file_sign "${md_file_or_dir}"
 		return
 	fi
 
-	scan_md array "${md_dir}"
+	scan_md array "${md_file_or_dir}"
 
 	local element_count="${#array[@]}" # 总个数
 	local count_per_line=1
