@@ -19,12 +19,12 @@ mount -o user=root //192.168.53.209/TEST /mnt
 
 调试日志开关的使用请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html)。
 
-- [ksmbd挂载日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/mount/ksmbd-log.txt)
-- [client挂载日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/mount/client-log.txt)
+- [ksmbd挂载日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/smb/mount/ksmbd-log.txt)
+- [client挂载日志](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/smb/mount/client-log.txt)
 
 # tcpdump抓包数据
 
-[点击这里下载抓包数据文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/mount/mount.cap)。
+[点击这里下载抓包数据文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/smb/mount/mount.cap)。
 
 ```sh
 No.     Time            Source          Destination    Protocol Length  Info

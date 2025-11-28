@@ -140,8 +140,8 @@ net use * /delete
 
 ## samba 20251110-2016
 
-[The full capture file can be found on GitHub](https://github.com/chenxiaosonggithub/tmp/blob/master/smb/change-notify/20251110-2016/samba.md)
-([or on gitee](https://gitee.com/chenxiaosonggitee/tmp/blob/master/smb/change-notify/20251110-2016/samba.md)).
+[The full capture file can be found on GitHub](https://github.com/chenxiaosonggithub/tmp/blob/master/gnu-linux/smb/change-notify/20251110-2016/samba.md)
+([or on gitee](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/smb/change-notify/20251110-2016/samba.md)).
 
 Windows "File Explorer" enter root directory of smb server:
 
