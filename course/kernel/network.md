@@ -4,7 +4,7 @@
 
 套接字（socket）是一种通信机制，让两台机器的开发工作可以跨网络进行。
 
-[可以试试《Linux程序设计（第4版）》的代码例子](https://gitee.com/chenxiaosonggitee/tmp/tree/master/book-src/beginning-linux-programming-4th-edition/780470147627-code-ch15/chapter15)。至于用户态的使用，这里就不介绍了，感兴趣的朋友可以查看《Linux程序设计（第4版）》和《UNIX环境高级编程（第3版）》，[点击这里从百度网盘下载pdf电子书](https://chenxiaosong.com/baidunetdisk)。
+[可以试试《Linux程序设计（第4版）》的代码例子](https://gitee.com/chenxiaosonggitee/tmp/tree/master/gnu-linux/book-src/beginning-linux-programming-4th-edition/780470147627-code-ch15/chapter15)。至于用户态的使用，这里就不介绍了，感兴趣的朋友可以查看《Linux程序设计（第4版）》和《UNIX环境高级编程（第3版）》，[点击这里从百度网盘下载pdf电子书](https://chenxiaosong.com/baidunetdisk)。
 
 ```sh
 # fedora无法安装
