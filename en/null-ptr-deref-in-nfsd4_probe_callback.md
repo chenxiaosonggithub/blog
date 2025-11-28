@@ -51,7 +51,7 @@ crash> dmesg
 
 # Analysis from vmcore
 
-[Click here to view the complete vmcore information](https://github.com/chenxiaosonggithub/tmp/blob/master/linux/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md).
+[Click here to view the complete vmcore information](https://github.com/chenxiaosonggithub/tmp/blob/master/gnu-linux/nfs/null-ptr-deref-in-nfsd4_probe_callback-vmcore.md).
 
 ## `dmesg`
 

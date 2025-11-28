@@ -80,7 +80,7 @@ echo 3 > /proc/sys/vm/drop_caches
 insmod kernel-open-file.ko
 ```
 
-日志请查看[`nfs-umount-device-is-busy-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/nfs/nfs-umount-device-is-busy-log.txt):
+日志请查看[`nfs-umount-device-is-busy-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfs-umount-device-is-busy-log.txt):
 ```sh
 ...
 [  122.567308] NFS: open file(dir/file)

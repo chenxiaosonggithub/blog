@@ -94,7 +94,7 @@ rm -rf build_dir; mkdir build_dir
 cd build_dir
 cmake -DUSE_FSAL_VFS=ON ../src
 make -j`nproc`
-make install # 日志查看https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/nfs/ganesha-install-log.txt
+make install # 日志查看https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/ganesha-install-log.txt
 cp ../src/scripts/systemd/nfs-ganesha-lock.service.el8 /usr/lib/systemd/system/nfs-ganesha-lock.service
 cp ../src/scripts/systemd/nfs-ganesha.service.el7 /usr/lib/systemd/system/nfs-ganesha.service
 ```

@@ -152,7 +152,7 @@ curl -fsSL https://code-server.dev/install.sh | sh
 ```
 
 <!-- public begin -->
-[安装过程中输出的提示信息](https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/kernel/code-server-install-log.txt)。
+[安装过程中输出的提示信息](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/kernel/code-server-install-log.txt)。
 <!-- public end -->
 
 或者下载[对应系统的安装包](https://github.com/coder/code-server/releases)。
