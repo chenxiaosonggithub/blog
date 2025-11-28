@@ -1,6 +1,6 @@
 # 问题描述
 
-`dmesg`中报warning，请查看[`dmesg-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs/xfs-shutdown-fs/dmesg-log.txt)。其他报`Corruption of in-memory data detected.  Shutting down filesystem`的时刻分别为`8507581.813487, 9013282.995965, 142392.165592, 153722.596734`（复现一次，多次重新挂载触发）。
+`dmesg`中报warning，请查看[`dmesg-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/xfs/xfs-shutdown-fs/dmesg-log.txt)。其他报`Corruption of in-memory data detected.  Shutting down filesystem`的时刻分别为`8507581.813487, 9013282.995965, 142392.165592, 153722.596734`（复现一次，多次重新挂载触发）。
 
 ```sh
 cat sos_commands/scsi/lsscsi 
@@ -27,7 +27,7 @@ xfs_repair -n dm.img 2>&1 | tee xfs_repair-log.txt
 
 <!-- 镜像在百度网盘中 xfs-shutdown-fs-image.metadump.zip -->
 
-日志[`xfs_repair-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs/xfs-shutdown-fs/xfs_repair-log.txt)中:
+日志[`xfs_repair-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/xfs/xfs-shutdown-fs/xfs_repair-log.txt)中:
 ```sh
 agf_freeblks 3997090, counted 4111777 in ag 0
 agf_longest 14556, counted 14846 in ag 0
@@ -58,7 +58,7 @@ xfs_logprint -n dm.img > xfs_logprint-n-log.txt # 不尝试解释日志数据，
 xfs_logprint dm.img > xfs_logprint-log.txt # 解释日志数据和日志头信息
 ```
 
-[xfs_logprint-log.txt](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs/xfs-shutdown-fs/xfs_logprint-log.txt)中有如下日志:
+[xfs_logprint-log.txt](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/xfs/xfs-shutdown-fs/xfs_logprint-log.txt)中有如下日志:
 ```sh
 cycle: 230651	version: 2		lsn: 230651,154624	tail_lsn: 230651,147968
 length of Log Record: 258048	prev offset: 154112		num ops: 69
@@ -73,7 +73,7 @@ level BNO: 2  CNT: 2
 1st: 0  last: 5  cnt: 6  freeblks: 4111777  longest: 14846
 ```
 
-[xfs_logprint-n-log.txt](https://gitee.com/chenxiaosonggitee/tmp/blob/master/xfs/xfs-shutdown-fs/xfs_logprint-n-log.txt)中有如下日志:
+[xfs_logprint-n-log.txt](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/xfs/xfs-shutdown-fs/xfs_logprint-n-log.txt)中有如下日志:
 ```sh
 cycle: 230651	version: 2		lsn: 230651,154624	tail_lsn: 230651,147968
 length of Log Record: 258048	prev offset: 154112		num ops: 69
