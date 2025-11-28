@@ -234,7 +234,7 @@ git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linu
 
 建议新建一个`build`目录，把所有的编译输出存放在这个目录下，注意
 <!-- public begin -->
-[`.config`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/config/x86_64-config)
+[`.config`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/kernel-config/x86_64-config)
 <!-- public end -->
 <!-- private begin -->
 `src/x86_64/config`
@@ -261,7 +261,7 @@ CONFIG_BLK_DEV_NVME
 <!-- public begin -->
 ```sh
 rm build -rf && mkdir build
-cp ../tmp/config/x86_64-config build/.config
+cp ../tmp/gnu-linux/kernel-config/x86_64-config build/.config
 ```
 <!-- public end -->
 
@@ -292,10 +292,10 @@ make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- O=build Image
 <!-- public begin -->
 ```sh
 rm x86_64-build -rf && mkdir x86_64-build
-cp ../tmp/config/x86_64-config x86_64-build/.config
+cp ../tmp/gnu-linux/kernel-config/x86_64-config x86_64-build/.config
 
 rm aarch64-build -rf && mkdir aarch64-build
-cp ../tmp/config/aarch64-config aarch64-build/.config
+cp ../tmp/gnu-linux/kernel-config/aarch64-config aarch64-build/.config
 ```
 <!-- public end -->
 ```sh
@@ -805,7 +805,7 @@ CONFIG_RANDOMIZE_BASE = n # 关闭地址随机化
 
 可以使用
 <!-- public begin -->
-我常用的[x86_64的内核配置文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/config/x86_64-config)。
+我常用的[x86_64的内核配置文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/kernel-config/x86_64-config)。
 <!-- public end -->
 <!-- private begin -->
 `src/x86_64/config`
