@@ -30,7 +30,7 @@ smb的协议文档有以下几个版本:
 - [[MS-ERREF]: Windows Error Codes](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref)
 - [[MS-SMBD]: SMB2 Remote Direct Memory Access (RDMA) Transport Protocol](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smbd)
 - [SMB3 POSIX Extensions Specification的gitlab仓库](https://gitlab.com/samba-team/smb3-posix-spec)（gitlab比samba.org上的更新: [`https://git.samba.org/slow/smb3_posix_spec.git`](https://git.samba.org/?p=slow/smb3_posix_spec.git;a=shortlog)），以下是我自己编译的html和pdf:
-  - smb3_posix_extensions: [html](https://chenxiaosong.com/tmp/smb/smb3-posix-spec/smb3_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/smb/smb3-posix-spec/smb3_posix_extensions.pdf)
-  - fsa_posix_extensions: [html](https://chenxiaosong.com/tmp/smb/smb3-posix-spec/fsa_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/smb/smb3-posix-spec/fsa_posix_extensions.pdf)
-  - fscc_posix_extensions: [html](https://chenxiaosong.com/tmp/smb/smb3-posix-spec/fscc_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/smb/smb3-posix-spec/fscc_posix_extensions.pdf)
+  - smb3_posix_extensions: [html](https://chenxiaosong.com/tmp/gnu-linux/smb/smb3-posix-spec/smb3_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/gnu-linux/smb/smb3-posix-spec/smb3_posix_extensions.pdf)
+  - fsa_posix_extensions: [html](https://chenxiaosong.com/tmp/gnu-linux/smb/smb3-posix-spec/fsa_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/gnu-linux/smb/smb3-posix-spec/fsa_posix_extensions.pdf)
+  - fscc_posix_extensions: [html](https://chenxiaosong.com/tmp/gnu-linux/smb/smb3-posix-spec/fscc_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/gnu-linux/smb/smb3-posix-spec/fscc_posix_extensions.pdf)
 

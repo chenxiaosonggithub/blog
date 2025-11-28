@@ -70,7 +70,7 @@ copy_to_github_io() {
 	# txt
 	copy_files tmp/gnu-linux/btrfs/btrfs-forced-readonly-log.txt
 	# smb3-posix-spec
-	copy_files tmp/smb/smb3-posix-spec/*.html tmp/smb/smb3-posix-spec/ true
+	copy_files tmp/gnu-linux/smb/smb3-posix-spec/*.html tmp/gnu-linux/smb/smb3-posix-spec/ true
 }
 
 # 局域网签名
