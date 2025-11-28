@@ -4,44 +4,56 @@ code_path=${MY_CODE_TOP_PATH}
 # 导入其他脚本
 . ${code_path}/blog/src/blog-web/common-lib.sh
 
-scan_gitee_md() {
-	local -n file_array=$1 # 不能命名成array
+scan_md() {
+	local -n array_ref=$1 # 不能命名成array
+	local md_dir=$2
+
 	md_dir="${md_dir%/}/" # 确保目录末尾有 /
 	# 使用 find 命令查找所有 .md 文件并将结果存储到 array 数组中
 	while IFS= read -r md_file; do
 		# md_file=${md_file/$md_dir} # 干掉前缀
-		file_array+=(${md_file})
+		array_ref+=(${md_file})
 	done < <(find ${md_dir} -type f -name "*.md")
+}
+
+update_md_file_sign() {
+	local src_file=$1
+
+	local sign_file=${code_path}/blog/src/blog-web/sign.md
+	local begin_str='<!-- sign begin -->'
+	local end_str='<!-- sign end -->'
+	local title_name=$(basename "${src_file}" .md)
+
+	comm_rm_mid_lines "${begin_str}" "${end_str}" ${src_file}
+	comm_rm_line "${begin_str}" ${src_file}
+	comm_rm_line "${end_str}" ${src_file}
+	cat ${sign_file} >> ${src_file}.tmp
+	comm_rm_line "${begin_str}" ${src_file}.tmp
+	cat ${src_file} >> ${src_file}.tmp
+
+	echo -e "${begin_str}" > ${src_file}
+	echo -e "# ${title_name}" >> ${src_file}
+	echo >> ${src_file}
+	cat ${src_file}.tmp >> ${src_file}
+	rm ${src_file}.tmp
 }
 
 update_md_sign() {
 	local md_dir=$1
 	local array=()
 
-	scan_gitee_md array
+	if [[ -f "${md_dir}" ]]; then
+		return
+	fi
 
-	local sign_file=${code_path}/blog/src/blog-web/sign.md
-	local begin_str='<!-- sign begin -->'
-	local end_str='<!-- sign end -->'
+	scan_md array "${md_dir}"
+
 	local element_count="${#array[@]}" # 总个数
 	local count_per_line=1
 	for ((index=0; index<${element_count}; index=$((index + ${count_per_line}))))
 	do
 		local src_file=${array[${index}]}
-		local title_name=$(basename "${src_file}" .md)
-
-		comm_rm_mid_lines "${begin_str}" "${end_str}" ${src_file}
-		comm_rm_line "${begin_str}" ${src_file}
-		comm_rm_line "${end_str}" ${src_file}
-		cat ${sign_file} >> ${src_file}.tmp
-		comm_rm_line "${begin_str}" ${src_file}.tmp
-		cat ${src_file} >> ${src_file}.tmp
-
-		echo -e "${begin_str}" > ${src_file}
-		echo -e "# ${title_name}" >> ${src_file}
-		echo >> ${src_file}
-		cat ${src_file}.tmp >> ${src_file}
-		rm ${src_file}.tmp
+		update_md_file_sign "${src_file}"
 	done
 }
 
