@@ -66,7 +66,7 @@ copy_to_github_io() {
 	# 图片
 	cp $(comm_tmp_src_path)/tmp/picture/ ${tmp_html_path}/picture -rf
 	# godot
-	cp $(comm_tmp_src_path)/tmp/godot/ ${tmp_html_path}/ -rf
+	cp $(comm_tmp_src_path)/tmp/gnu-linux/godot/ ${tmp_html_path}/ -rf
 	# txt
 	copy_files tmp/gnu-linux/btrfs/btrfs-forced-readonly-log.txt
 	# smb3-posix-spec
