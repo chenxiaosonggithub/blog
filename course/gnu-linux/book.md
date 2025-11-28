@@ -14,7 +14,7 @@
   - [伺服器篇](https://linux.vbird.org/linux_server/)
 - [简体首页](http://cn.linux.vbird.org/)
 
-繁体字看不懂？没事，常用的繁体字并不多，[点击这里查看我整理的常用繁体字](https://chenxiaosong.com/src/calligraphy/written.html)。
+繁体字看不懂？没事，常用的繁体字并不多，[点击这里查看我整理的常用繁体字](https://chenxiaosong.com/calligraphy/written.html)。
 
 ## 简略目录
 
