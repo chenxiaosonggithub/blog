@@ -1,4 +1,4 @@
-本文档翻译自`sched-eevdf.rst <https://gitee.com/chenxiaosonggitee/tmp/blob/master/kernel/sched-eevdf-origin.rst>`_，翻译时此文档未合入主线，还在next仓库里，当时next仓库里的最新提交是``602bce7e5edeb docs: scheduler: Start documenting the EEVDF scheduler``。大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
+本文档翻译自`sched-eevdf.rst <https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/kernel/sched-eevdf-origin.rst>`_，翻译时此文档未合入主线，还在next仓库里，当时next仓库里的最新提交是``602bce7e5edeb docs: scheduler: Start documenting the EEVDF scheduler``。大部分借助于ChatGPT翻译，仅作为我个人的参考，如果你想查阅，建议看英文文档，因为我不确定我记录的中文翻译是否完整和正确。
 
 "最早可用虚拟截止时间优先" (EEVDF) 首次在1995年的一篇科学出版物中被提出 [1]。Linux内核在版本6.6中开始向EEVDF过渡（作为2024年的一个新选项），放弃了早期的完全公平调度器 (CFS)，转而采用了由Peter Zijlstra在2023年提出的EEVDF版本 [2-4]。更多关于CFS的信息可以在 Documentation/scheduler/sched-design-CFS.rst 中找到。
 
