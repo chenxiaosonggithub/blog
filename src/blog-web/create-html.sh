@@ -68,7 +68,7 @@ copy_to_github_io() {
 	# godot
 	cp $(comm_tmp_src_path)/tmp/godot/ ${tmp_html_path}/ -rf
 	# txt
-	copy_files tmp/btrfs/btrfs-forced-readonly-log.txt
+	copy_files tmp/gnu-linux/btrfs/btrfs-forced-readonly-log.txt
 	# smb3-posix-spec
 	copy_files tmp/smb/smb3-posix-spec/*.html tmp/smb/smb3-posix-spec/ true
 }
