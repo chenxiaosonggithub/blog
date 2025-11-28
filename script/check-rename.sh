@@ -19,6 +19,7 @@ if [[ "${rename_repo}" != "blog" ]]; then
 fi
 
 bash ${code_path}/blog/script/grep.sh ${prefix_str}${origin_dir}
+bash ${code_path}/blog/script/grep.sh "(/${origin_dir}/"
 bash ${code_path}/blog/script/grep.sh /${rename_repo}/raw/master/${origin_dir}
 bash ${code_path}/blog/script/grep.sh /${rename_repo}/blob/master/${origin_dir}
 bash ${code_path}/blog/script/grep.sh /${rename_repo}/tree/master/${origin_dir}
