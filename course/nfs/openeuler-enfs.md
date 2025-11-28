@@ -48,7 +48,7 @@ nfs_rename flag overlayfs
 6.6内核可直接切换到[`OLK-6.6`分支](https://gitee.com/openeuler/kernel/tree/OLK-6.6/)。
 
 4.19内核切换到`openEuler-1.0-LTS`分支，可以使用脚本[`create-enfs-patchset.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/create-enfs-patchset.sh)生成完整的补丁文件，
-[再打上我修改的补丁](https://gitee.com/chenxiaosonggitee/tmp/tree/master/nfs/enfs-4.19-patch)，
+[再打上我修改的补丁](https://gitee.com/chenxiaosonggitee/tmp/tree/master/linux/nfs/enfs-4.19-patch)，
 也可以直接用[我的仓库kernel-enfs](https://gitee.com/chenxiaosonggitee/kernel-enfs/tree/openEuler-1.0-LTS/)。
 编译前打开配置`CONFIG_ENFS`，可能还要关闭配置`CONFIG_NET_VENDOR_NETRONOME`。
 

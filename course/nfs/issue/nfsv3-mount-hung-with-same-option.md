@@ -85,7 +85,7 @@ nfs_do_writepage+0x1bf/0x2d0:
 nfs_do_writepage at /usr/src/debug/kernel-4.19.90/linux-4.19.90-23.16.v2101.ky10.x86_64/fs/nfs/write.c:679
 ```
 
-`nfs_do_writepage`内联了太多函数，所以要[查看反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfsv3-mount-hung-with-same-option-vmcore.md):
+`nfs_do_writepage`内联了太多函数，所以要[查看反汇编](https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/nfs/nfsv3-mount-hung-with-same-option-vmcore.md):
 ```sh
 # fs/nfs/write.c: 674 if (ret == -EAGAIN) {
 0xffffffffc08b2600 <nfs_do_writepage+0x1a0>:	cmp    $0xfffffff5,%r14d

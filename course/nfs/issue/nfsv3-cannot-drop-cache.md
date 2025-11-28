@@ -4,7 +4,7 @@ nfsv3占用缓存太多。
 
 # vmcore解析
 
-请查看[`nfs-cannot-drop-cache-vmcore.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfs-cannot-drop-cache-vmcore.md)。
+请查看[`nfs-cannot-drop-cache-vmcore.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/nfs/nfs-cannot-drop-cache-vmcore.md)。
 
 # 虚拟机中调试 {#vm-debug}
 

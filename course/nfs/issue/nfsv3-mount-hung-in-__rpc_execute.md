@@ -34,7 +34,7 @@ root      351772  0.0  0.0  77644 66332 pts/1    D+   11:06   0:00 /sbin/mount.n
 =======================================================
 ```
 
-[抓包数据请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/nfsv3-mount-hung-in-__rpc_execute-tcpdump.md)。
+[抓包数据请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/nfs/nfsv3-mount-hung-in-__rpc_execute-tcpdump.md)。
 
 # 调试
 

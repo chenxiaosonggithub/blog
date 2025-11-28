@@ -105,7 +105,7 @@ call_transmit
 call_decode
 ```
 
-[丁鹏龙](https://dingpenglong.com/)写的[bpftrace脚本](https://gitee.com/chenxiaosonggitee/tmp/tree/master/nfs/dingpenglong-stat-nfsv3-sync-write-time)。
+[丁鹏龙](https://dingpenglong.com/)写的[bpftrace脚本](https://gitee.com/chenxiaosonggitee/tmp/tree/master/linux/nfs/dingpenglong-stat-nfsv3-sync-write-time)。
 
 抓到以下日志:
 ```sh

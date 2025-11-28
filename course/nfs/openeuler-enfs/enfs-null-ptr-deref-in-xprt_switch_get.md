@@ -51,7 +51,7 @@ mount -t nfs -o vers=3,localaddrs=192.168.53.57~192.168.53.214,remoteaddrs=192.1
 
 # vmcore解析
 
-[更详细的输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/nfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get-vmcore.md)。
+[更详细的输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/linux/nfs/openeuler-enfs-null-ptr-deref-in-xprt_switch_get-vmcore.md)。
 
 ```sh
 crash> dis -l xprt_switch_get
