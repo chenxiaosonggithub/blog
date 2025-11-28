@@ -27,6 +27,8 @@ sed_repo() {
 	fi
 	cd "${repo_path}"
 
+	echo -e "$(comm_green_color)" "\n${repo}:" "$(comm_no_color)"
+
 	while IFS= read -r file; do
 		if [[ "${file}" == "." || "${file}" == ".." || \
 		      "${file}" == ".git" ]]; then
