@@ -142,6 +142,8 @@ Linux内核加餐:
 
 [书法: 左手练字](https://chenxiaosong.com/calligraphy/calligraphy.html)
 
+[我每天坚持做的事](https://chenxiaosong.com/daily-task.html)
+
 [雅思备考笔记](https://chenxiaosong.com/src/IELTS/IELTS.html)
 
 [菜谱](https://chenxiaosong.com/src/recipe/recipe.html)
