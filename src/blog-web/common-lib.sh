@@ -421,18 +421,25 @@ comm_generate_index() {
 		fi
 
 		# 遍历目录中的内容，输出每个文件或目录的链接
+		# 先遍历目录
 		for entry in "${dir}"/*; do
 			local entry_name=$(basename "$entry")
+			if [[ ! -d "$entry" ]]; then
+				continue
+			fi
+			echo "<a href=\"${entry_name}/\">${entry_name}/</a>"
+		done
+		# 再遍历文件
+		for entry in "${dir}"/*; do
+			local entry_name=$(basename "$entry")
+			if [[ ! -f "$entry" ]]; then
+				continue
+			fi
 			if [ "${entry_name}" = "${html_name}" ]; then
 				# 自己还显示个啥呢
 				continue
-			elif [ -d "$entry" ]; then
-				# 目录
-				echo "<a href=\"${entry_name}/\">${entry_name}/</a>"
-			elif [ -f "$entry" ]; then
-				# 文件
-				echo "<a href=\"${entry_name}\">${entry_name}</a>"
 			fi
+			echo "<a href=\"${entry_name}\">${entry_name}</a>"
 		done
 
 		# 输出文件尾
