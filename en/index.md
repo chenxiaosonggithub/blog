@@ -13,7 +13,7 @@ Contact Information:
 
 Hobbies: [Cycling](https://www.strava.com/athletes/chenxiaosong),
 [GNU/Linux operating system](https://chenxiaosong.com/course.html),
-[left-hand calligraphy](https://chenxiaosong.com/src/calligraphy/calligraphy.html),
+[left-hand calligraphy](https://chenxiaosong.com/calligraphy/calligraphy.html),
 [using only the keyboard](https://chenxiaosong.com/picture/self-introduction/hhkb.jpg) without a mouse,
 [Five Strokes](https://chenxiaosong.com/src/wubi/wubi.html), and [I enjoy writing technical documentation](https://chenxiaosong.com/blog).
 

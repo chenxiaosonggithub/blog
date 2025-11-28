@@ -11,7 +11,7 @@
 - 如果需要微信号和手机号的朋友可以通过上面的邮箱和QQ交流群联系我
 
 爱好: [自行车骑行](https://www.strava.com/athletes/chenxiaosong)，[Linux操作系统](https://chenxiaosong.com/course.html)，
-[书法（左手练字）](https://chenxiaosong.com/src/calligraphy/calligraphy.html)。
+[书法（左手练字）](https://chenxiaosong.com/calligraphy/calligraphy.html)。
 [只用键盘](https://chenxiaosong.com/picture/self-introduction/hhkb.jpg)不用鼠标，
 [五笔打字](https://chenxiaosong.com/src/wubi/wubi.html)，喜欢[写技术文档](https://chenxiaosong.com/blog)。
 

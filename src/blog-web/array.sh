@@ -286,7 +286,7 @@ comm_array=(
 		# systemtap
 		1 1 src/translation/systemtap/systemtap-readme.md ~ "systemtap README"
 	# 书法
-	1 1 src/calligraphy/calligraphy.md ~ "书法: 左手练字"
+	1 1 tmp/calligraphy/calligraphy.md calligraphy/calligraphy.html "书法: 左手练字"
 	1 1 tmp/calligraphy/zhaomengfu/daodejing.md calligraphy/zhaomengfu/daodejing.html "道德经译文"
 	1 1 tmp/calligraphy/zhaomengfu/danbabei.md calligraphy/zhaomengfu/danbabei.html "胆巴碑译文"
 	1 1 tmp/calligraphy/zhaomengfu/chibifu.md calligraphy/zhaomengfu/chibifu.html "赤壁赋译文"
