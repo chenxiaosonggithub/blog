@@ -17,7 +17,7 @@ mptcp的maintainer之一Geliang Tang <tanggeliang@kylinos.cn>是我们麒麟软�
 - [mptcp-upstream-virtme-docker](https://github.com/multipath-tcp/mptcp-upstream-virtme-docker), [github virtme-ng](https://github.com/arighi/virtme-ng), [gitcode virtme-ng](https://gitcode.com/gh_mirrors/vi/virtme-ng)
 - [开发中的特性](https://github.com/multipath-tcp/mptcp_net-next/projects?query=is%3Aopen), [MPTCP Upstream: Future](https://github.com/orgs/multipath-tcp/projects/1/views/1)
 - [mptcp-hello](https://github.com/mptcp-apps/mptcp-hello/)
-- [补丁数统计](https://gitee.com/chenxiaosonggitee/tmp/blob/master/mptcp/code-stat.md)
+- [补丁数统计](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/mptcp/code-stat.md)
 
 # docker环境使用
 
@@ -140,7 +140,7 @@ insmod ./kernel-socket-client.ko
 
 # 内核中mptcp的应用
 
-[查看`kernel-create-socket.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/mptcp/kernel-create-socket.md)。
+[查看`kernel-create-socket.md`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/mptcp/kernel-create-socket.md)。
 
 #  疑问
 

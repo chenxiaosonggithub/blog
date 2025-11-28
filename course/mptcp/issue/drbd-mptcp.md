@@ -132,7 +132,7 @@ cat /mnt/file
 
 # 调试
 
-启动drbd服务后，报错的日志[`drbd-mptcp-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/mptcp/drbd-mptcp-log.txt)。
+启动drbd服务后，报错的日志[`drbd-mptcp-log.txt`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/mptcp/drbd-mptcp-log.txt)。
 
 用`ss -ieMl`命令查看:
 ```sh

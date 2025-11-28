@@ -93,7 +93,7 @@ static void __exit socket_client_exit(void)
 {
 	if (task) {
 		// 如果没调用kthread_stop()，会发生panic
-		// https://gitee.com/chenxiaosonggitee/tmp/blob/master/mptcp/kernel-socket-panic-log.txt
+		// https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/mptcp/kernel-socket-panic-log.txt
 		kthread_stop(task);
 		task = NULL;
 	}
