@@ -19,9 +19,6 @@
 
 ### `smb2pdu.h`
 
-- todo: create_posix_rsp
-- todo: smb2_posix_info, POSIX Extensions to MS-FSCC 2.3.1.1
-
 ### `cifspdu.h`:
 
 - CIFS_ENCPWD_SIZE
