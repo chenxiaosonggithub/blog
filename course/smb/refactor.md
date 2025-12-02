@@ -8,12 +8,19 @@
 
 # todo
 
+## 加引用
+
+- FILE_NO_SHARE, FILE_SHARE_READ
+  - MS-SMB2 2.2.13
+  - MS-CIFS 2.2.4.64.1
+  - MS-CIFS 2.2.7.1.1
+
 ## 重复定义
 
 ### `smb2pdu.h`
 
 - todo: create_posix_rsp
-- todo: smb2_posix_info
+- todo: smb2_posix_info, POSIX Extensions to MS-FSCC 2.3.1.1
 
 ### `cifspdu.h`:
 
@@ -23,8 +30,11 @@
 - CIFS_AUTH_RESP_SIZE
 - CIFS_HMAC_MD5_HASH_SIZE
 - CIFS_NTHASH_SIZE
-- CREATE_TREE_CONNECTION
-- CREATE_OPTION_READONLY, CREATE_OPTION_SPECIAL, 文档搜索 FILE_DIRECTORY_FILE
+- CREATE_TREE_CONNECTION, CREATE_OPTION_READONLY, CREATE_OPTION_SPECIAL
+  - 文档搜索 FILE_DIRECTORY_FILE
+  - MS-SMB2 2.2.13
+  - MS-CIFS 2.2.4.64.1
+  - MS-CIFS 2.2.7.1.1
 - ntlmv2_resp
 - COMPRESSION_FORMAT_NONE, COMPRESSION_FORMAT_LZNT1
 
