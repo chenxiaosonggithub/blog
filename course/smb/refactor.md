@@ -17,6 +17,11 @@
 
 ## 重复定义
 
+## `nterr.h`
+
+- NT_STATUS_OK
+- nt_err_code_struct
+
 ### `smb2pdu.h`
 
 ### `cifspdu.h`:
