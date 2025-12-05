@@ -55,9 +55,8 @@ setup_ntlmv2_rsp
 # 社区交流
 
 ```sh
-git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org,chenxiaosong@chenxiaosong.com  00*
+git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org,liuzhengyuan@kylinos.cn,huhai@kylinos.cn,liuyun01@kylinos.cn  00*
 ```
 
-- [version 1](https://lore.kernel.org/linux-cifs/20251204045818.2590727-1-chenxiaosong.chenxiaosong@linux.dev/)
-
+- [version 3](https://lore.kernel.org/linux-cifs/20251205132536.2703110-1-chenxiaosong.chenxiaosong@linux.dev/)
 
