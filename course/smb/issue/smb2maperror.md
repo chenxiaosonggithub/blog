@@ -64,6 +64,11 @@ git diff fs/smb/server/nterr.h > nterr.diff
 
 [`nterr.diff`差异内容](https://gitee.com/chenxiaosonggitee/tmp/tree/master/gnu-linux/smb/patch/diff-nterr)。
 
+- nt_errs,              nt_err_num,          struct nt_err_code_struct, __u32 nt_errcode
+- mapping_table_ERRDOS, errdos_num,          struct smb_to_posix_error, __u16 smb_err
+- mapping_table_ERRSRV, errsrv_num,          struct smb_to_posix_error, __u16 smb_err
+- ntstatus_to_dos_map,  ntstatus_to_dos_num, struct ntstatus_to_dos,    __u32 ntstatus
+
 # 社区交流
 
 ```sh
