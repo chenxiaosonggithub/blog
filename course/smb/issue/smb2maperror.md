@@ -1,4 +1,4 @@
-# 开发过程笔记
+# smb2maperror
 
 查看数组是否只读:
 ```sh
@@ -51,6 +51,18 @@ setup_ntlmv2_rsp
         cifs_md4_init
 ```
 
+# nterr
+
+脚本:
+```sh
+sed -i "s/ (0x/ 0x/g" fs/smb/server/nterr.h
+sed -i "s/)$//g" fs/smb/server/nterr.h
+git add fs/smb/server/nterr.h
+cp fs/smb/client/nterr.h fs/smb/server/nterr.h
+git diff fs/smb/server/nterr.h > nterr.diff
+```
+
+[`nterr.diff`差异内容](https://gitee.com/chenxiaosonggitee/tmp/tree/master/gnu-linux/smb/patch/diff-nterr)。
 
 # 社区交流
 

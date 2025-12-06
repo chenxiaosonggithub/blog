@@ -17,62 +17,6 @@
 
 ## 重复定义
 
-## `nterr.h`
-
-- NT_STATUS_OK
-- nt_err_code_struct
-
-脚本:
-```sh
-sed -i "s/ (0x/ 0x/g" fs/smb/server/nterr.h
-sed -i "s/)$//g" fs/smb/server/nterr.h
-git add fs/smb/server/nterr.h
-cp fs/smb/client/nterr.h fs/smb/server/nterr.h
-git diff fs/smb/server/nterr.h > nterr.diff
-```
-
-`nterr.diff`差异内容如下:
-```sh
-diff --git a/fs/smb/server/nterr.h b/fs/smb/server/nterr.h
-index 0ffe17d0636c..0853fcc8589f 100644
---- a/fs/smb/server/nterr.h
-+++ b/fs/smb/server/nterr.h
-@@ -12,13 +12,20 @@
- #ifndef _NTERR_H
- #define _NTERR_H
-
-+struct nt_err_code_struct {
-+       char *nt_errstr;
-+       __u32 nt_errcode;
-+};
-+
-+extern const struct nt_err_code_struct nt_errs[];
-+
- /* Win32 Status codes. */
- #define NT_STATUS_MORE_ENTRIES         0x0105
- #define NT_ERROR_INVALID_PARAMETER     0x0057
- #define NT_ERROR_INSUFFICIENT_BUFFER   0x007a
- #define NT_STATUS_1804                 0x070c
- #define NT_STATUS_NOTIFY_ENUM_DIR      0x010c
--#define NT_STATUS_INVALID_LOCK_RANGE   0xC0000000 | 0x01a1
-+
- /*
-  * Win32 Error codes extracted using a loop in smbclient then printing a netmon
-  * sniff to a file.
-@@ -536,8 +543,7 @@
- #define NT_STATUS_TOO_MANY_LINKS 0xC0000000 | 0x0265
- #define NT_STATUS_QUOTA_LIST_INCONSISTENT 0xC0000000 | 0x0266
- #define NT_STATUS_FILE_IS_OFFLINE 0xC0000000 | 0x0267
--#define NT_STATUS_NETWORK_SESSION_EXPIRED  0xC0000000 | 0x035c
-+#define NT_STATUS_NOT_A_REPARSE_POINT 0xC0000000 | 0x0275
- #define NT_STATUS_NO_SUCH_JOB 0xC0000000 | 0xEDE)     /* scheduler */
--#define NT_STATUS_NO_PREAUTH_INTEGRITY_HASH_OVERLAP 0xC0000000 | 0x5D0000
--#define NT_STATUS_PENDING 0x00000103
-+
- #endif                         /* _NTERR_H */
-
-```
-
 ### `smb2pdu.h`
 
 ### `cifspdu.h`:
