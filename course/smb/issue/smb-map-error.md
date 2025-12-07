@@ -69,6 +69,17 @@ git diff fs/smb/server/nterr.h > nterr.diff
 - mapping_table_ERRSRV, errsrv_num,          struct smb_to_posix_error, __u16 smb_err
 - ntstatus_to_dos_map,  ntstatus_to_dos_num, struct ntstatus_to_dos,    __u32 ntstatus
 
+```sh
+[  156.606314] nt_errs_check_search, nt_err_num:514, cmp_count:9
+[  156.608775]     ok 5 nt_errs_check_search
+[  156.608861] ntstatus_to_dos_map_check_search, ntstatus_to_dos_num:524, cmp_count:9
+[  156.611840]     ok 6 ntstatus_to_dos_map_check_search
+[  156.611917] mapping_table_ERRDOS_check_search, errdos_num:38, cmp_count:5
+[  156.614627]     ok 7 mapping_table_ERRDOS_check_search
+[  156.614726] mapping_table_ERRSRV_check_search, errsrv_num:36, cmp_count:5
+[  156.617709]     ok 8 mapping_table_ERRSRV_check_search
+```
+
 # 社区交流
 
 ```sh
