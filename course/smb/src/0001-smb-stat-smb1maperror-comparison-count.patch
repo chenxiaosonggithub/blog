@@ -1,0 +1,60 @@
+From bb4dd4fe7ee03966b3cdbdf5deeb0a307459041d Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Sun, 7 Dec 2025 21:25:21 +0800
+Subject: [PATCH] smb: stat smb1maperror comparison count
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/client/netmisc.c      |  3 +++
+ fs/smb/client/netmisc_test.c | 14 +++++++-------
+ 2 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/fs/smb/client/netmisc.c b/fs/smb/client/netmisc.c
+index defc6f7e77f7..75cdf7a22f9c 100644
+--- a/fs/smb/client/netmisc.c
++++ b/fs/smb/client/netmisc.c
+@@ -25,11 +25,14 @@
+ #include "cifs_debug.h"
+ #include "nterr.h"
+ 
++static int cmp_count = 0;
++
+ /* Define a comparison function for ascending order. */
+ #define DEFINE_CMP_FUNC(__struct_name, __field)				\
+ static int cmp_ ## __struct_name(const void *_a, const void *_b)	\
+ {									\
+ 	const struct __struct_name *a = _a, *b = _b;			\
++	cmp_count++;							\
+ 									\
+ 	if (a->__field < b->__field)					\
+ 		return -1;						\
+diff --git a/fs/smb/client/netmisc_test.c b/fs/smb/client/netmisc_test.c
+index 32d6d47357f1..e772625b6681 100644
+--- a/fs/smb/client/netmisc_test.c
++++ b/fs/smb/client/netmisc_test.c
+@@ -41,15 +41,15 @@ DEFINE_CHECK_SORT_FUNC(mapping_table_ERRSRV, errsrv_num, smb_err);
+ 				 __array, __num)			\
+ static void __array ## _check_search(struct kunit *test)		\
+ {									\
+-	unsigned int i;							\
+ 	struct __struct_name expect, *result;				\
+ 									\
+-	for (i = 0; i < __num; i++) {					\
+-		expect = __array[i];					\
+-		result = search_in_ ## __array(expect.__field);		\
+-		KUNIT_EXPECT_PTR_NE(test, NULL, result);		\
+-		test_cmp_ ## __struct_name(test, &expect, result);	\
+-	}								\
++	cmp_count = 0;							\
++	expect = __array[__num - 1];					\
++	result = search_in_ ## __array(expect.__field);			\
++	KUNIT_EXPECT_PTR_NE(test, NULL, result);			\
++	test_cmp_ ## __struct_name(test, &expect, result);		\
++	printk("%s_check_search, %s:%d, cmp_count:%d\n",		\
++	       #__array, #__num, __num, cmp_count);			\
+ }
+ 
+ static void test_cmp_nt_err_code_struct(struct kunit *test,
+-- 
+2.43.0
+
