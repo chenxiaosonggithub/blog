@@ -69,6 +69,7 @@ git diff fs/smb/server/nterr.h > nterr.diff
 - mapping_table_ERRSRV, errsrv_num,          struct smb_to_posix_error, __u16 smb_err
 - ntstatus_to_dos_map,  ntstatus_to_dos_num, struct ntstatus_to_dos,    __u32 ntstatus
 
+打印查看比较次数:
 ```sh
 [  156.606314] nt_errs_check_search, nt_err_num:514, cmp_count:9
 [  156.608775]     ok 5 nt_errs_check_search
