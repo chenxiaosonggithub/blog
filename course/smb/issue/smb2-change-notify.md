@@ -43,6 +43,13 @@ signing, etc that are well documented
 And Metze could probably help with the minor changes needed to support
 SMB3.1.1 over QUIC.
 翻译: 而 Metze 可能可以协助完成支持 SMB3.1.1 over QUIC 所需的一些小改动。
+
+Would be awesome to fix inotify in the vfs layer to work with network fs (since cifs.ko already supports change notify)
+翻译: 如果能在 VFS 层修复 inotify，使其支持网络文件系统就太好了（因为 cifs.ko 已经支持 change notify）。
+
+Have you seen this article from my presentation a few years ago at
+LSF/MM summit? https://lwn.net/Articles/896055/
+翻译: 你有没有看到我几年前在 LSF/MM 峰会上演讲时写的这篇文章？ https://lwn.net/Articles/896055/
 ```
 
 # 复现步骤
