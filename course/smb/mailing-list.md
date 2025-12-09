@@ -6,7 +6,15 @@
 # 社区
 
 - smb client maintainer: Steve French <sfrench@samba.org>，友好
+  - 所在时区比中国时间晚10小时，中国早上9点时他晚上7点
+<!--
+我早上20251209-0910发的补丁，他回复时显示的是20251208-7:11 PM，比中国时间晚10小时
+-->
 - smb server maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好
+  - 在韩国，所在时区比中国时间早1小时，中国早上9点时他早上10点
+<!--
+我20251204-1258发的补丁（他收到时可能是1300），他回复时显示的是20251204-1400，比中国时间早1小时
+-->
 - [smb client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary): `https://git.samba.org/sfrench/cifs-2.6.git`,
 [for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)
 - [smb server maintainer的仓库](https://git.samba.org/?p=ksmbd.git;a=summary): `https://git.samba.org/ksmbd.git`,
