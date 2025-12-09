@@ -64,7 +64,7 @@ sudo systemctl stop ksmbd
 sudo ksmbd.mountd -n -C ~/smb-test/ksmbd.conf -P ~/smb-test/ksmbdpwd.db &
 ```
 
-# xfstests
+# xfstests {#xfstests}
 
 [Please refer to xfstests-dev/README](https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git/tree/README).
 
@@ -100,7 +100,7 @@ export SCRATCH_MNT=/mnt/2
 
 We can use [`xfstests.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/test/xfstests.sh) to test.
 
-# smbtorture
+# smbtorture {#smbtorture}
 
 Build `smbtorture` from source:
 ```sh
