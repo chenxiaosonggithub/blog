@@ -307,4 +307,5 @@ comm_array=(
 	1 2 tmp/gnu-linux/smb/test/20251113/README.md en/smb-test-20251113.html "SMB Test Results on 2025-11-13"
 	1 2 tmp/gnu-linux/smb/test/20251116/README.md en/smb-test-20251116.html "SMB Test Results on 2025-11-16"
 	1 2 tmp/gnu-linux/smb/test/20251117/README.md en/smb-test-20251117.html "SMB Test Results on 2025-11-17"
+	1 2 tmp/gnu-linux/smb/patch/README.md en/smb-patch.html "SMB Patches to Be Reviewed"
 )
