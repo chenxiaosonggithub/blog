@@ -72,7 +72,7 @@ update_common_src() {
 	rm ${src_file}.tmp
 }
 
-update_md_sign "${code_path}/blog/src/blog-web/陈孝松照片.md"
+update_md_sign "${code_path}/tmp/picture/self-introduction/陈孝松照片.md"
 update_md_sign "${code_path}/tmp/daily-task/left-hand-calligraphy/markdown/"
 update_md_sign "${code_path}/tmp/calligraphy/markdown/"
 
