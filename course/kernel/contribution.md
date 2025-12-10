@@ -11,13 +11,45 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 下面按时间顺序列出所有的补丁，最新的补丁放在前面。
 
+## 2025年
+
 - [[PATCH v4 00/10] smb: improve search speed of SMB2 maperror](https://lore.kernel.org/linux-cifs/20251206151826.2932970-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 00/30] smb: improve search speed of SMB1 maperror](https://lore.kernel.org/linux-cifs/20251208062100.3268777-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 00/13 smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20251209011020.3270989-1-chenxiaosong.chenxiaosong@linux.dev/)
 
+- [smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4a2a49f7df48147529158a092edfde1597d12f3)
+- [smb: move create_durable_reconn to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5003ad718af7705d6a519445a897843fac88167a)
+- [smb: fix some warnings reported by scripts/checkpatch.pl](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e7e60e8bfcc5bfff0dc40a3b8ab275a4da6990a0)
+- [smb: do some cleanups](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=95e8c1bfa56ebbc243779ee23782b30744da02f6)
+- [smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=464b913993a14b539e978db10c755bb202ab14ed)
+- [smb: move some duplicate struct definitions to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d7edd3892d97e6746e30f36f4f13f887ec4d80ed)
+- [mb: move list of FileSystemAttributes to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=84d8d4cf8873b4a9da0d76e9ba9d94ec88311cfd)
+- [smb: move SMB_NEGOTIATE_REQ to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d8ac9879182a1e1f3b97d166f5ba5e2f1b3e8535)
+- [smb: move some duplicate definitions to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1172d8598499a006d172bb24bebaa3fdc99064a8)
+- [smb: move create_durable_rsp_v2 to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=96721fd292264d712b7b9a51752ab87de5035db4)
+- [smb: move create_durable_handle_reconnect_v2 to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=81a45de432c6c7d82821fb09cb9fc1cf58629f3a)
+- [smb: move create_durable_req_v2 to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=833a75fc9ecc3856a52223d8c245e52703e0a9f1)
+- [smb: move MAX_CIFS_SMALL_BUFFER_SIZE to common/smbglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=884a1d4e9c09b4a0dbe748890bdd48aac8e5a6b6)
+- [smb/client: fix CAP_BULK_TRANSFER value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4a7f9607803203fe637c12b4ffce9973d85ee169)
+- [smb: move resume_key_ioctl_rsp to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9c98f5eec877976dad1179149038a4b164e236b1)
+- [smb: move copychunk definitions to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cc26f593dc193567bdb059a6ffde58e627a44f65)
+- [smb: move smb_sockaddr_in and smb_sockaddr_in6 to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7844d50ca239f0788e732608820f7026cb0cc8fb)
+- [smb: move SMB1_PROTO_NUMBER to common/smbglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cd311445d9f5510979f6e9f4344178b9f5a4d981)
+- [smb: move get_rfc1002_len() to common/smbglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=36c31540cf5279262bfd148d8537cd04866499f2)
+- [smb: move smb_version_values to common/smbglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=34cf191bb6a349dc88ec2c4f6355fe006ac669e0)
+- [smb: rename common/cifsglob.h to common/smbglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=94b955167e3b11372e314f45f4b2fbf4f92493b9)
+- [smb/server: update some misguided comment of smb2_0_server_cmds proc](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7d9f51d36b6c24e02b8a379cbaf1a273511ed403)
+- [smb/server: fix return value of smb2_oplock_break()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a3c4445fdbbb83aa94ea1778717ef57006164814)
+- [smb/server: fix return value of smb2_ioctl()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=269df046c1e15ab34fa26fd90db9381f022a0963)
+- [smb/server: fix return value of smb2_query_dir()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=dafe22bc676d4fcb1ccb193c8cc3dda57942509d)
+- [smb/server: fix return value of smb2_notify()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d1a30b9ddc3d4c0e38666bd166d51863cb39f1c4)
+- [smb/server: fix return value of smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c5b462e35373a68a5a7954f5e00383998cc7fe92)
 - [smb: move some duplicate definitions to common/cifsglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d877470b59910b5c50383d634dda3782386bba51)
 - [smb/server: fix possible refcount leak in smb2_sess_setup()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=379510a815cb2e64eb0a379cb62295d6ade65df0)
 - [smb/server: fix possible memory leak in smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6fced056d2cc8d01b326e6fcfabaacb9850b71a4)
+
+## 2024年
+
 - [smb: add comment to STATUS_MCA_OCCURED](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e2fcd3fa0351ea2133d1238fcc6a9f140c52d36f)
 - [smb: move SMB2 Status code to common header file](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=78181a5504a401e421e65d0257a33f904e0e7c29)
 - [smb: move some duplicate definitions to common/smbacl.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b51174da743b6b7cd87c02e882ebe60dcb99f8bf)
@@ -32,7 +64,13 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 - [smb/server: fix return value of smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2186a116538a715b20e15f84fdd3545e5fe0a39b)（[邮件列表](https://lore.kernel.org/all/20240822082101.391272-2-chenxiaosong@chenxiaosong.com/)）
 - [ksmbd: remove duplicate SMB2 Oplock levels definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ac5399d48616644cb6ddfe39f8babe807d5f5cbd)
 - [NFSv4, NFSD: move enum nfs_cb_opnum4 to include/linux/nfs4.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=52e89100754b2e888cb63bf2d19e65d809497cd6)
+
+## 2023年
+
 - [CVE-2023-53061](https://nvd.nist.gov/vuln/detail/CVE-2023-53061): [ksmbd: fix possible refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2624b445544ffc1472ccabfb6ec867c199d4c95c)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20230302135804.2583061-1-chenxiaosong2@huawei.com/)）
+
+## 2022年
+
 - [NFSv4.x: Fail client initialisation if state manager thread can't run](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b4e4f66901658fae0614dea5bf91062a5387eda7)（这个补丁是maintainer剽窃我的，[我的补丁请查看这里](https://lore.kernel.org/linux-nfs/20221112073055.1024799-1-chenxiaosong2@huawei.com/)）
 - [NFSv4: check FMODE_EXEC from open context mode in nfs4_opendata_access()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d564d2c4c2445cb0972453933dc87c2dcaac8597)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/CVE-2022-24448.html)）
 - [CVE-2022-24448](https://nvd.nist.gov/vuln/detail/CVE-2022-24448): [NFS: make sure open context mode have FMODE_EXEC when file open for exec](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6f1c1d95dc93b52a8ef9cc1f3f610c2d5e6b217b)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/CVE-2022-24448.html)）
@@ -56,6 +94,9 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 - [CVE-2022-24448](https://nvd.nist.gov/vuln/detail/CVE-2022-24448): [NFSv4: fix open failure with O_ACCMODE flag](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b243874f6f9568b2daf1a00e9222cacdc15e159c)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/CVE-2022-24448.html)）
 - [CVE-2022-24448](https://nvd.nist.gov/vuln/detail/CVE-2022-24448): [Revert "NFSv4: Handle the special Linux file open access mode"](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ab0fc21bc7105b54bafd85bd8b82742f9e68898a)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/CVE-2022-24448.html)）
 - [CVE-2022-48931](https://nvd.nist.gov/vuln/detail/CVE-2022-48931): [configfs: fix a race in configfs_{,un}register_subsystem()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=84ec758fb2daa236026506868c8796b0500c047d)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/configfs-fix-a-race-in-configfs_-un-register_subsyst.html)）
+
+## 2021年
+
 - [apparmor: fix doc warning](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=aa4ceed7c3276852031a3e3d6fa767ff1858831f)
 - [nfs_common: fix doc warning](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5823e40055166cdf959a77e7b5fe75998b0b9b1f)
 - [tomoyo: fix doc warnings](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=98eaa63e96273de075f3ce4eac0f18b33d28b84c)
