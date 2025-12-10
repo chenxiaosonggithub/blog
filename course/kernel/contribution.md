@@ -17,6 +17,11 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 - [[PATCH 00/30] smb: improve search speed of SMB1 maperror](https://lore.kernel.org/linux-cifs/20251208062100.3268777-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 00/13 smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20251209011020.3270989-1-chenxiaosong.chenxiaosong@linux.dev/)
 
+- [smb/client: update some SMB2 status strings](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d8f52650b24d9018dfb65d2c60e17636b077e63e)
+- [smb/client: add two elements to smb2_error_map_table array](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d159702c9492de46cc1b39b3d83fd0c8a6bdb829)
+- [smb: rename to STATUS_SMB_NO_PREAUTH_INTEGRITY_HASH_OVERLAP](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=523ecd976632523006c1b442e0eba4fe3c4f7e0c)
+- [smb/client: remove unused elements from smb2_error_map_table array](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bf80d1517dc847eb7b4d8b3c14bfe6ed48fa27ae)
+- [smb/client: reduce loop count in map_smb2_to_linux_error() by half](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6c1eb31ecb97c07b4a880d59b3a83665359def36)
 - [smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4a2a49f7df48147529158a092edfde1597d12f3)
 - [smb: move create_durable_reconn to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5003ad718af7705d6a519445a897843fac88167a)
 - [smb: fix some warnings reported by scripts/checkpatch.pl](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e7e60e8bfcc5bfff0dc40a3b8ab275a4da6990a0)
