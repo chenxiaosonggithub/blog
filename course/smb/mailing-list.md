@@ -20,7 +20,7 @@
 - [smb server maintainer的仓库](https://git.samba.org/?p=ksmbd.git;a=summary): `https://git.samba.org/ksmbd.git`,
 [github仓库（现在好像不更新了）](https://github.com/namjaejeon/ksmbd),
 [ksmbd-for-next-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next-next),
-[for-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/for-next)
+[ksmbd-for-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next)
 
 获取supporter、reviewer、maintainer、open list、moderated list的邮箱:
 ```sh
