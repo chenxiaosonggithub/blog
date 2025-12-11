@@ -103,6 +103,8 @@ ROOT: /    CWD: /root
 
 ## 查看文件缓存
 
+https://mirrors.tuna.tsinghua.edu.cn/epel/8/Everything/x86_64/Packages/v/vmtouch-1.3.1-1.el8.x86_64.rpm
+
 ```sh
 mount_point=/mnt
 export size_threshold_mb=100
