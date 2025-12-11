@@ -20,10 +20,12 @@ mount -t nfs -o vers=3 192.168.53.209:/tmp/s_test /mnt
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main() {
     const char *filename = "/mnt/file";
-    char buffer[4096];
+    int buf_size = 100 * 1024 * 1024; // 读100M
+    char *buffer = malloc(buf_size);
     ssize_t bytes_read;
     
     // 打开文件
@@ -37,10 +39,10 @@ int main() {
     
     // 读取并显示文件前4096字节
     lseek(fd, 0, SEEK_SET);
-    bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+    bytes_read = read(fd, buffer, buf_size - 1);
     if (bytes_read > 0) {
         buffer[bytes_read] = '\0';
-        printf("文件前 %zd 字节:\n%s\n", bytes_read, buffer);
+        printf("读了 %zd 字节:\n", bytes_read);
     }
     // 无限循环等待
     while (1) {
@@ -55,31 +57,36 @@ int main() {
 
 编译运行:
 ```sh
+dd if=/dev/random of=/mnt/file bs=1M count=1024
+echo 3 > /proc/sys/vm/drop_caches
 gcc test.c
 ./a.out &
 cd /mnt # 进入挂载点
 ```
+
+## vmcore解析
 
 参考[《内核调试方法》](https://chenxiaosong.com/course/kernel/debug.html#kdump-crash)在虚拟机中导出vmcore。
 
 vmcore解析如下:
 ```sh
 crash> ps | grep a.out
-     1027     710   7  ffff888110e119c0  IN   0.0     2548     1508  a.out
-crash> files 1027
-PID: 1027     TASK: ffff888110e119c0  CPU: 7    COMMAND: "a.out"
+      966     703   7  ffff888011fe4d40  IN   2.0   104952   104032  a.out
+
+crash> files 966
+PID: 966      TASK: ffff888011fe4d40  CPU: 7    COMMAND: "a.out"
 ROOT: /    CWD: /root
  FD       FILE            DENTRY           INODE       TYPE PATH
   ...
-  3 ffff88810a8f8c00 ffff8881004840c0 ffff888104e06048 REG  /mnt/file
+  3 ffff888006b21740 ffff88810430e600 ffff888112352ec8 REG  /mnt/file
 
-crash> struct inode.i_mapping ffff888104e06048
-  i_mapping = 0xffff888104e061b8,
+crash> struct inode.i_mapping ffff888112352ec8
+  i_mapping = 0xffff888112353038,
 
-crash> struct address_space.nrpages 0xffff888104e061b8
-  nrpages = 4, # 有预读，4个page
+crash> struct address_space.nrpages 0xffff888112353038
+  nrpages = 25728, # 执行完 echo 3 > /proc/sys/vm/drop_caches 后为 0
 
-crash> struct address_space.i_mmap 0xffff888104e061b8
+crash> struct address_space.i_mmap 0xffff888112353038
   i_mmap = {
     rb_root = {
       rb_node = 0x0
@@ -88,12 +95,27 @@ crash> struct address_space.i_mmap 0xffff888104e061b8
   },
 
 crash> foreach files -R mnt
-PID: 710      TASK: ffff888110e13380  CPU: 1    COMMAND: "bash"
-ROOT: /    CWD: /mnt 
-
-PID: 1027     TASK: ffff888110e119c0  CPU: 9    COMMAND: "a.out"
+PID: 966      TASK: ffff888011fe4d40  CPU: 7    COMMAND: "a.out"
 ROOT: /    CWD: /root 
  FD       FILE            DENTRY           INODE       TYPE PATH
-  3 ffff88810a8f8c00 ffff8881004840c0 ffff888104e06048 REG  /mnt/file
+  3 ffff888006b21740 ffff88810430e600 ffff888112352ec8 REG  /mnt/file
+```
+
+## 查看文件缓存
+
+```sh
+mount_point=/mnt
+export size_threshold_mb=100
+
+find ${mount_point} -type f -print0 | xargs -0 -n1 -P16 sh -c '
+    for file do
+        out=$(vmtouch -v "$file")
+        pages=$(echo "$out" | awk "/Resident Pages:/ {print \$3}" | cut -d/ -f1)
+        mb=$((pages*4096/1024/1024))
+        if [ "$mb" -gt ${size_threshold_mb} ]; then
+            echo "$file Cached_MB=${mb}"
+        fi
+    done
+  ' sh
 ```
 
