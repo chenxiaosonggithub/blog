@@ -50,8 +50,8 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 - [smb/server: fix return value of smb2_notify()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d1a30b9ddc3d4c0e38666bd166d51863cb39f1c4)
 - [smb/server: fix return value of smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c5b462e35373a68a5a7954f5e00383998cc7fe92)
 - [smb: move some duplicate definitions to common/cifsglob.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d877470b59910b5c50383d634dda3782386bba51)
-- [smb/server: fix possible refcount leak in smb2_sess_setup()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=379510a815cb2e64eb0a379cb62295d6ade65df0)
-- [smb/server: fix possible memory leak in smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6fced056d2cc8d01b326e6fcfabaacb9850b71a4)
+- [CVE-2025-40285](https://nvd.nist.gov/vuln/detail/CVE-2025-40285): [smb/server: fix possible refcount leak in smb2_sess_setup()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=379510a815cb2e64eb0a379cb62295d6ade65df0)
+- [CVE-2025-40286](https://nvd.nist.gov/vuln/detail/CVE-2025-40286): [smb/server: fix possible memory leak in smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6fced056d2cc8d01b326e6fcfabaacb9850b71a4)
 
 ## 2024年
 
