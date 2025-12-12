@@ -6,10 +6,39 @@ nfsv3的文件占用缓存太多。
 
 详细的crash输出请查看以下链接:
 
-- [`20251105 vmcore分析`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251105.md)
-- [`20251202 vmcore分析`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251202.md)
+## 20251105 vmcore分析
 
+[详细的crash输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251105.md)。
 
+占用缓存最多的inode地址为`0xffff8dc8f6cb4380`，找出超级块地址:
+```sh
+crash> struct inode.i_sb 0xffff8dc8f6cb4380
+  i_sb = 0xffff8df33b6a5800,
+```
+
+在挂载信息中找不到这个超级块地址:
+```sh
+crash> mount | grep ffff8df33b6a5800
+```
+
+根据以下在虚拟机中验证可知，在导出vmcore之前，环境已经执行过`umount -l`。
+
+## 20251202 vmcore分析
+
+[详细的crash输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251202.md)。
+
+占用缓存最多的inode地址为`0xffff9d9eeca42da0`，找出超级块地址:
+```sh
+crash> struct inode.i_sb 0xffff9d9eeca42da0
+  i_sb = 0xffff9dae81c1d000,
+```
+
+在挂载信息中找不到这个超级块地址:
+```sh
+crash> mount | grep 0xffff9dae81c1d000
+```
+
+根据以下在虚拟机中验证可知，在导出vmcore之前，环境已经执行过`umount -l`。
 
 # 虚拟机中调试 {#vm-debug}
 
@@ -38,10 +67,10 @@ cd /mnt # 进入挂载点
 查看地址空间中有`25728`个page，每个page有4K大小，总共`100M`:
 ```sh
 crash> struct address_space.nrpages 0xffff88810437dd38
-  nrpages = 25728, # 执行完 echo 3 > /proc/sys/vm/drop_caches 后为 0
+  nrpages = 25728, # 执行完 echo 3 > /proc/sys/vm/drop_caches 后 nrpages 为 0
 ```
 
-执行`umount -l`后重新再`mount`（挂载参数一样，路径可以不同），`mount`命令输出中包含inode所在的super block，`files`命令也可以找到:
+执行`umount -l`后重新再`mount`（挂载参数一样，路径可以不同），`mount`命令输出中包含inode所在的super block，`files`命令也可以找到打开这个文件的进程:
 ```sh
 crash> mount | grep ffff88812ae61800
 ffff8881002ce880 ffff88812ae61800 nfs    192.168.53.209:/tmp/s_test /mnt
@@ -53,7 +82,7 @@ ROOT: /    CWD: /root
   3 ffff88800ee72a80 ffff888004e1c000 ffff88810437dbc8 REG  /mnt/file
 ```
 
-执行`umount -l`后重新再`mount`（挂载参数不同），`mount`命令输出中不包含inode所在的super block，`files`命令也找不到:
+执行`umount -l`后重新再`mount`（挂载参数不同），`mount`命令输出中不包含inode所在的super block，`files`命令也找不到打开文件的进程:
 ```sh
 crash> mount | grep ffff88812ae61800 # 找不到
 crash> foreach files -R mnt # 没有找到
