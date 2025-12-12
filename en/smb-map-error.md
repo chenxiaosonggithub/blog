@@ -6,7 +6,7 @@ Hi David,
 
 Did you use a script to update these macros? If so, could you put it in the commit message? I'm concerned that manual edits might introduce typos.
 
-Just like the shell commands I used in this patch: https://lore.kernel.org/linux-cifs/20251208062100.3268777-7-chenxiaosong.chenxiaosong@linux.dev/
+Just like the shell commands I used in this patch: [[PATCH 06/30] smb/client: add parentheses to NT error code definitions containing bitwise OR operator](https://lore.kernel.org/linux-cifs/20251208062100.3268777-7-chenxiaosong.chenxiaosong@linux.dev/)
 
 Of course, your changes would require a more complex script.
 
