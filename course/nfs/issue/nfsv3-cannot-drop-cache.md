@@ -1,6 +1,6 @@
 # 问题描述
 
-nfsv3的文件占用缓存太多。
+nfsv3的文件占用缓存太多，使用`echo 3 > /proc/sys/vm/drop_caches`命令依然无法释放缓存。
 
 # 20251105 vmcore分析
 
@@ -52,7 +52,7 @@ fffffae836418f40 ad9063d000 ffff9d9eeca42f10  54e470e  2 197ffffc000102a error,u
 
 # 构造复现 {#reproduce}
 
-合入补丁[0001-reproduce-4.19-null-ptr-deref-in-nfs_updatepage.patch](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/0001-reproduce-4.19-null-ptr-deref-in-nfs_updatepage.patch)。
+合入补丁[0001-reproduce-4.19-nfsv3-cannot-drop-cache.patch](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/0001-reproduce-4.19-nfsv3-cannot-drop-cache.patch)。
 
 ```sh
 mount -t nfs -o vers=3 192.168.53.211:/tmp/s_test /mnt
