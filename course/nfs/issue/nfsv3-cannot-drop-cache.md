@@ -104,6 +104,23 @@ find ${mount_point} -type f -print0 | xargs -0 -n1 -P16 sh -c '
   ' sh
 ```
 
+# 尝试构造
+
+```sh
+mount -t nfs -o vers=3 192.168.53.211:/tmp/s_test /mnt
+```
+
+测试步骤:
+```sh
+echo something > something
+echo something_else > something_else
+echo something_else_again > something_else_again
+# 为什么不直接用 echo something > /mnt/file 呢，因为用ps无法查看到echo进程
+cat something > /mnt/file &
+cat something_else > /mnt/file &
+cat something_else_again > /mnt/file &
+```
+
 # 代码分析 {#code-analysis}
 
 page设置private的地方:
@@ -114,8 +131,14 @@ nfs_inode_add_request
 
 page清除private的地方:
 ```c
-nfs_inode_remove_request
-  ClearPagePrivate(head->wb_page);
+nfs_write_error_remove_page
+  // 在这里打印出inode地址
+  req->wb_context->dentry->d_inode
+  // 合入 6fbda89b257f NFS: Replace custom error reporting mechanism with generic one
+  // 合入 06c9fdf3b9f1 NFS: On fatal writeback errors, we need to call nfs_inode_remove_request()
+  // 才会执行以下函数
+  nfs_inode_remove_request
+    ClearPagePrivate(head->wb_page);
 ```
 
 # 补丁
