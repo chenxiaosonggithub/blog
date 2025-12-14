@@ -104,3 +104,30 @@ find ${mount_point} -type f -print0 | xargs -0 -n1 -P16 sh -c '
   ' sh
 ```
 
+# 代码分析 {#code-analysis}
+
+page设置private的地方:
+```c
+nfs_inode_add_request
+  SetPagePrivate(req->wb_page);
+```
+
+page清除private的地方:
+```c
+nfs_inode_remove_request
+  ClearPagePrivate(head->wb_page);
+```
+
+# 补丁
+
+```sh
+git log --grep=nfs_inode_remove_request --oneline --date=short --format="%cd %h %s %an <%ae>"
+# 2025-08-19 76d2e3890fb1 NFS: Fix a race when updating an existing write Trond Myklebust <trond.myklebust@hammerspace.com>
+# 2024-07-08 b571cfcb9dca nfs: don't reuse partially completed requests in nfs_lock_and_join_requests Christoph Hellwig <hch@lst.de>
+# 2023-10-11 6a6d4644ce93 NFS: Fix potential oops in nfs_inode_remove_request() Scott Mayhew <smayhew@redhat.com>
+# 2023-09-28 dd1b2026323a nfs: decrement nrequests counter before releasing the req Jeff Layton <jlayton@kernel.org>
+# 2020-01-15 b8946d7bfb94 NFS: Revalidate the file mapping on all fatal writeback errors Trond Myklebust <trondmy@gmail.com>
+# 2019-10-02 33ea5aaa87cd nfs: Fix nfsi->nrequests count error on nfs_inode_remove_request ZhangXiaoxu <zhangxiaoxu5@huawei.com>
+# 2019-08-19 06c9fdf3b9f1 NFS: On fatal writeback errors, we need to call nfs_inode_remove_request() Trond Myklebust <trond.myklebust@hammerspace.com>
+```
+
