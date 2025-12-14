@@ -19,6 +19,13 @@ crash> mount | grep ffff8df33b6a5800
 
 根据以下在虚拟机中验证可知，在导出vmcore之前，环境已经执行过`umount -l`。
 
+查看第一个page，可以看到private标记没有清除:
+```sh
+crash> kmem ffffc7b0a71abc40
+      PAGE         PHYSICAL      MAPPING       INDEX CNT FLAGS
+ffffc7b0a71abc40 19c6af1000 ffff8db67005d210     3773  2 17ffffc000102a error,uptodate,lru,private
+```
+
 # 20251202 vmcore分析
 
 [详细的crash输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251202.md)。
@@ -36,7 +43,46 @@ crash> mount | grep ffff9dae81c1d000
 
 根据以下在虚拟机中验证可知，在导出vmcore之前，环境已经执行过`umount -l`。
 
-# 虚拟机中调试 {#vm-debug}
+查看第一个page，可以看到private标记没有清除:
+```sh
+crash> kmem fffffae836418f40
+      PAGE         PHYSICAL      MAPPING       INDEX CNT FLAGS
+fffffae836418f40 ad9063d000 ffff9d9eeca42f10  54e470e  2 197ffffc000102a error,uptodate,lru,private
+```
+
+# 构造复现 {#reproduce}
+
+合入补丁[0001-reproduce-4.19-null-ptr-deref-in-nfs_updatepage.patch](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/nfs/src/0001-reproduce-4.19-null-ptr-deref-in-nfs_updatepage.patch)。
+
+```sh
+mount -t nfs -o vers=3 192.168.53.211:/tmp/s_test /mnt
+```
+
+测试步骤:
+```sh
+echo something > something
+echo something_else > something_else
+echo something_else_again > something_else_again
+# 为什么不直接用 echo something > /mnt/file 呢，因为用ps无法查看到echo进程
+cat something > /mnt/file &
+cat something_else > /mnt/file &
+cat something_else_again > /mnt/file &
+```
+
+## vmcore解析
+
+[详细的crash命令输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-reproduce.md)。
+
+我们看到page的flags中的private没有清除:
+```sh
+crash> kmem ffffea000434e4c0
+      PAGE       PHYSICAL      MAPPING       INDEX CNT FLAGS
+ffffea000434e4c0 10d393000 ffff8881037967f0        0  3 17ffffc000102b locked,error,uptodate,lru,private
+```
+
+执行完`echo 3 > /proc/sys/vm/drop_caches`后，还是一样。
+
+# 正常情况调试 {#normal-debug}
 
 挂载:
 ```sh
@@ -102,23 +148,6 @@ find ${mount_point} -type f -print0 | xargs -0 -n1 -P16 sh -c '
         fi
     done
   ' sh
-```
-
-# 尝试构造
-
-```sh
-mount -t nfs -o vers=3 192.168.53.211:/tmp/s_test /mnt
-```
-
-测试步骤:
-```sh
-echo something > something
-echo something_else > something_else
-echo something_else_again > something_else_again
-# 为什么不直接用 echo something > /mnt/file 呢，因为用ps无法查看到echo进程
-cat something > /mnt/file &
-cat something_else > /mnt/file &
-cat something_else_again > /mnt/file &
 ```
 
 # 代码分析 {#code-analysis}
@@ -190,8 +219,11 @@ nfs_pageio_error_cleanup
 nfs_pageio_resend
 ```
 
-# 补丁
+# 解决方案
 
+回退补丁[14bebe3c90b3 NFS: Don't interrupt file writeout due to fatal errors](https://lore.kernel.org/all/20190407175912.23528-20-trond.myklebust@hammerspace.com/)。
+
+<!--
 ```sh
 git log --grep=nfs_inode_remove_request --oneline --date=short --format="%cd %h %s %an <%ae>"
 # 2025-08-19 76d2e3890fb1 NFS: Fix a race when updating an existing write Trond Myklebust <trond.myklebust@hammerspace.com>
@@ -202,4 +234,5 @@ git log --grep=nfs_inode_remove_request --oneline --date=short --format="%cd %h 
 # 2019-10-02 33ea5aaa87cd nfs: Fix nfsi->nrequests count error on nfs_inode_remove_request ZhangXiaoxu <zhangxiaoxu5@huawei.com>
 # 2019-08-19 06c9fdf3b9f1 NFS: On fatal writeback errors, we need to call nfs_inode_remove_request() Trond Myklebust <trond.myklebust@hammerspace.com>
 ```
+-->
 
