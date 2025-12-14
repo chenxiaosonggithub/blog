@@ -2,11 +2,7 @@
 
 nfsv3的文件占用缓存太多。
 
-# vmcore解析
-
-详细的crash输出请查看以下链接:
-
-## 20251105 vmcore分析
+# 20251105 vmcore分析
 
 [详细的crash输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251105.md)。
 
@@ -23,7 +19,7 @@ crash> mount | grep ffff8df33b6a5800
 
 根据以下在虚拟机中验证可知，在导出vmcore之前，环境已经执行过`umount -l`。
 
-## 20251202 vmcore分析
+# 20251202 vmcore分析
 
 [详细的crash输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251202.md)。
 
@@ -35,7 +31,7 @@ crash> struct inode.i_sb 0xffff9d9eeca42da0
 
 在挂载信息中找不到这个超级块地址:
 ```sh
-crash> mount | grep 0xffff9dae81c1d000
+crash> mount | grep ffff9dae81c1d000
 ```
 
 根据以下在虚拟机中验证可知，在导出vmcore之前，环境已经执行过`umount -l`。
