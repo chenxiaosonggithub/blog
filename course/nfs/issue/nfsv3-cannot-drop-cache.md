@@ -123,6 +123,11 @@ cat something_else_again > /mnt/file &
 
 # 代码分析 {#code-analysis}
 
+其他相关的分析请查看以两个链接:
+
+- [4.19 nfs_updatepage()空指针解引用问题](https://chenxiaosong.com/course/nfs/issue/4.19-null-ptr-deref-in-nfs_updatepage.html)
+- [4.19 nfs_wb_page() soft lockup的问题](https://chenxiaosong.com/course/nfs/issue/4.19-nfs-soft-lockup-in-nfs_wb_page.html)
+
 page设置private的地方:
 ```c
 nfs_inode_add_request
@@ -134,11 +139,55 @@ page清除private的地方:
 nfs_write_error_remove_page
   // 在这里打印出inode地址
   req->wb_context->dentry->d_inode
-  // 合入 6fbda89b257f NFS: Replace custom error reporting mechanism with generic one
-  // 合入 06c9fdf3b9f1 NFS: On fatal writeback errors, we need to call nfs_inode_remove_request()
-  // 才会执行以下函数
-  nfs_inode_remove_request
-    ClearPagePrivate(head->wb_page);
+  // 出问题的代码合入补丁 22876f540bdf NFS: Don't call generic_error_remove_page() while holding locks
+  // 以下函数不会调用
+  generic_error_remove_page
+    truncate_inode_page
+      truncate_cleanup_page
+        do_invalidatepage
+          nfs_invalidate_page
+            nfs_wb_page_cancel
+              nfs_inode_remove_request
+                // 由于没调用generic_error_remove_page()
+                // 所以不会执行到这里，也不会清除private标记
+                ClearPagePrivate(head->wb_page);
+```
+
+调用`nfs_write_error_remove_page()`的地方:
+```c
+// done
+nfs_async_write_error
+
+// todo
+nfs_page_async_flush // 这个在软锁问题那里分析过，也有可能有些流程会不触发软锁
+```
+
+调用`nfs_async_write_error()`的地方:
+```c
+// done
+nfs_async_write_reschedule_io
+
+// done
+.error_cleanup
+```
+
+调用`nfs_async_write_reschedule_io()`的地方:
+```c
+// done，pnfs不涉及
+ff_layout_reset_write
+  .reschedule_io
+```
+
+调用`.error_cleanup`的地方:
+```c
+// todo
+nfs_pageio_cleanup_request
+
+// todo
+nfs_pageio_error_cleanup
+
+// todo
+nfs_pageio_resend
 ```
 
 # 补丁
