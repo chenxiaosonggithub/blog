@@ -114,6 +114,33 @@ systemctl restart smbd.service # debian
 systemctl restart smb.service # fedora
 ```
 
+# Linux client environment
+
+Use `smbclient` to connect to SMB server:
+```sh
+# smbclient //${server_ip}/share -U USERNAME%PASSWORD
+smbclient //192.168.53.210/TEST -U root%1
+```
+
+Query change notifications of root directory.
+```sh
+smb: \> notify /
+smb: \> notify \
+```
+
+Query change notifications of `dir/`:
+```sh
+smb: \> notify dir
+smb: \> notify /dir
+smb: \> notify ./dir
+```
+
+Or you can enter `dir/`, and then query change notifications:
+```sh
+smb: \> cd dir
+smb: \dir\> notify /
+```
+
 # Windows environment {#win-env}
 
 `10.42.20.210` is the IP address of the SMB server.
