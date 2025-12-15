@@ -26,6 +26,12 @@ crash> kmem ffffc7b0a71abc40
 ffffc7b0a71abc40 19c6af1000 ffff8db67005d210     3773  2 17ffffc000102a error,uptodate,lru,private
 ```
 
+文件的大小为`613G`:
+```sh
+crash> struct inode.i_size 0xffff8dc8f6cb4380
+  i_size = 658510457197,
+```
+
 # 20251202 vmcore分析
 
 [详细的crash输出请点击这里查看](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/nfs/nfsv3-cannot-drop-cache/nfsv3-cannot-drop-cache-vmcore-20251202.md)。
@@ -48,6 +54,12 @@ crash> mount | grep ffff9dae81c1d000
 crash> kmem fffffae836418f40
       PAGE         PHYSICAL      MAPPING       INDEX CNT FLAGS
 fffffae836418f40 ad9063d000 ffff9d9eeca42f10  54e470e  2 197ffffc000102a error,uptodate,lru,private
+```
+
+文件的大小为`613G`:
+```sh
+crash> struct inode.i_size 0xffff9d9eeca42da0
+  i_size = 658367030190,
 ```
 
 # 构造复现 {#reproduce}
