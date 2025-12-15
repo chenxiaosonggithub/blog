@@ -114,7 +114,7 @@ systemctl restart smbd.service # debian
 systemctl restart smb.service # fedora
 ```
 
-# Linux client environment
+# Linux client environment {#linux-client-env}
 
 Use `smbclient` to connect to SMB server:
 ```sh
@@ -141,7 +141,7 @@ smb: \> cd dir
 smb: \dir\> notify /
 ```
 
-# Windows environment {#win-env}
+# Windows client environment {#win-client-env}
 
 `10.42.20.210` is the IP address of the SMB server.
 
