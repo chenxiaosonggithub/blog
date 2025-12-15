@@ -146,6 +146,7 @@ net use * /delete
 Windows "File Explorer" enter root directory of smb server:
 
   - client request `20:17:17.201 Notify Request No.123 [Response in: 271]`
+  - server respond `20:17:17.202 Notify Response, Error: STATUS_PENDING No.124 [Response to: 123 270]`
 
 Windows "File Explorer" enter `dir/`:
 
