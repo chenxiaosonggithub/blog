@@ -1,0 +1,39 @@
+From 70f63aca5f6f8ac05242593421a7647e2c59ed67 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Mon, 15 Dec 2025 16:06:09 +0800
+Subject: [PATCH] smb: include mydebug.h
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/client/cifs_debug.h | 2 ++
+ fs/smb/server/glob.h       | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/fs/smb/client/cifs_debug.h b/fs/smb/client/cifs_debug.h
+index e0035ff42dba..2c97bbd9c30a 100644
+--- a/fs/smb/client/cifs_debug.h
++++ b/fs/smb/client/cifs_debug.h
+@@ -8,6 +8,8 @@
+ #ifndef _H_CIFS_DEBUG
+ #define _H_CIFS_DEBUG
+ 
++#include <mydebug.h>
++
+ #ifdef pr_fmt
+ #undef pr_fmt
+ #endif
+diff --git a/fs/smb/server/glob.h b/fs/smb/server/glob.h
+index 4ea187af2348..344b069cfbbd 100644
+--- a/fs/smb/server/glob.h
++++ b/fs/smb/server/glob.h
+@@ -7,6 +7,7 @@
+ #ifndef __KSMBD_GLOB_H
+ #define __KSMBD_GLOB_H
+ 
++#include <mydebug.h>
+ #include <linux/ctype.h>
+ 
+ #include "unicode.h"
+-- 
+2.43.0
+
