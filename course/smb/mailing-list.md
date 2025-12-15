@@ -22,15 +22,24 @@
 [ksmbd-for-next-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next-next),
 [ksmbd-for-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next)
 
-获取supporter、reviewer、maintainer、open list、moderated list的邮箱:
+邮件需要发送和抄送的人:
 ```sh
-./scripts/get_maintainer.pl fs/smb/server/
-./scripts/get_maintainer.pl fs/smb/client/
+Steve French <sfrench@samba.org>
+Steve French <smfrench@gmail.com>
+Namjae Jeon <linkinjeon@kernel.org>
+Namjae Jeon <linkinjeon@samba.org>
+Paulo Alcantara <pc@manguebit.org> (DFS, global name space)
+Ronnie Sahlberg <ronniesahlberg@gmail.com> (directory leases, sparse files)
+Shyam Prasad N <sprasad@microsoft.com> (multichannel)
+Tom Talpey <tom@talpey.com> (RDMA, smbdirect)
+Bharath SM <bharathsm@microsoft.com> (deferred close, directory leases)
+Sergey Senozhatsky <senozhatsky@chromium.org>
+linux-cifs@vger.kernel.org
 ```
 
 发送补丁:
 ```sh
-git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com --cc=linux-cifs@vger.kernel.org,linux-kernel@vger.kernel.org 00* # samba-technical@lists.samba.org要订阅才能发送成功
+git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org --cc=linux-cifs@vger.kernel.org 00*
 ```
 
 # smb server补丁统计
