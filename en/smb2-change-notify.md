@@ -166,6 +166,22 @@ It is unrelated to Samba or cifs.ko.
 git clone https://github.com/sahlberg/libsmb2.git
 ```
 
+## ioctl
+
+Please refer to the following two patches:
+```sh
+d26c2ddd3356 cifs: add SMB3 change notification support
+e3e9463414f6 smb3: improve SMB3 change notification support
+```
+
+Build and run [`new-inotify-ioctl-test.c`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/new-inotify-ioctl-test.c)
+([LKML](https://lore.kernel.org/linux-cifs/CAH2r5msHiZWzP5hdtPgb+wV3DL3J31RtgQRLQeuhCa_ULt3PfA@mail.gmail.com/)):
+```sh
+gcc -o new-inotify-ioctl-test new-inotify-ioctl-test.c
+./new-inotify-ioctl-test /mnt
+./new-inotify-ioctl-test /mnt/dir
+```
+
 # Windows client environment {#win-client-env}
 
 `10.42.20.210` is the IP address of the SMB server.
