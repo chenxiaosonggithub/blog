@@ -116,6 +116,10 @@ systemctl restart smb.service # fedora
 
 # Linux client environment {#linux-client-env}
 
+Please refer to [Questions about SMB2 CHANGE_NOTIFY](https://lore.kernel.org/linux-cifs/a6c17d48-ca81-4318-966e-67fe7df9dda3@linux.dev/).
+
+## `smbclient` {#smbclient}
+
 Use `smbclient` to connect to SMB server:
 ```sh
 # smbclient //${server_ip}/share -U USERNAME%PASSWORD
@@ -139,6 +143,27 @@ Or you can enter `dir/`, and then query change notifications:
 ```sh
 smb: \> cd dir
 smb: \dir\> notify /
+```
+
+## `smbinfo` {#smbinfo}
+
+It is part of [cifs-utils](https://git.samba.org/?p=cifs-utils.git;a=summary).
+
+```sh
+dnf install libtalloc-devel -y
+git clone https://git.samba.org/cifs-utils.git
+autoreconf -i
+./configure
+make -j`nproc`
+# make install
+```
+
+## libsmb2 {#libsmb2}
+
+It is unrelated to Samba or cifs.ko.
+
+```sh
+git clone https://github.com/sahlberg/libsmb2.git
 ```
 
 # Windows client environment {#win-client-env}
