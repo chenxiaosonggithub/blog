@@ -9,7 +9,7 @@
 - [鸟哥的Linux私房菜 繁体 - 伺服器架設篇目錄 - RockyLinux 9 (開發中)](https://linux.vbird.org/linux_server/rocky9/)
 - [Samba - opening windows to a wider world](https://www.samba.org/)
 - [samba官方仓库](https://git.samba.org/?p=samba.git;a=summary)或[samba gitlab仓库](https://gitlab.com/samba-team/samba)
-- [cifs-utils仓库](https://git.samba.org/?p=cifs-utils.git;a=summary)
+- [cifs-utils仓库](https://git.samba.org/?p=cifs-utils.git;a=summary): `https://git.samba.org/cifs-utils.git`
 - [kernel Documentation: `admin-guide/cifs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/cifs)
 - [kernel Documentation: `filesystems/smb`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/smb)
 
