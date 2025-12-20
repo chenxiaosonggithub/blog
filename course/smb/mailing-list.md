@@ -24,9 +24,9 @@
 
 邮件需要发送和抄送的人:
 ```sh
+Steve French <smfrench@gmail.com> # 常用
 Steve French <sfrench@samba.org>
-Steve French <smfrench@gmail.com>
-Namjae Jeon <linkinjeon@kernel.org>
+Namjae Jeon <linkinjeon@kernel.org> # 常用
 Namjae Jeon <linkinjeon@samba.org>
 Paulo Alcantara <pc@manguebit.org> (DFS, global name space)
 Ronnie Sahlberg <ronniesahlberg@gmail.com> (directory leases, sparse files)
@@ -39,7 +39,14 @@ linux-cifs@vger.kernel.org
 
 发送补丁:
 ```sh
-git send-email --to=sfrench@samba.org,smfrench@gmail.com,linkinjeon@kernel.org,linkinjeon@samba.org,pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org --cc=linux-cifs@vger.kernel.org 00*
+git send-email --to=\
+sfrench@samba.org,smfrench@gmail.com,\
+linkinjeon@kernel.org,linkinjeon@samba.org,\
+pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
+dhowells@redhat.com \
+--cc=\
+linux-cifs@vger.kernel.org \
+00*
 ```
 
 # smb server补丁统计
