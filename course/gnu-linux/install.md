@@ -269,6 +269,22 @@ qemu-system-x86_64 \
 
 可以在arm芯片的mac电脑中用vmware fusion安装arm64的ubuntu。
 
+# ubuntu通过命令行操作wifi {#ubuntu-cmd-wifi}
+
+```sh
+nmcli device wifi list          # 列出所有可用 Wi-Fi 网络
+nmcli dev status                # 查看设备状态
+nmcli connection show --active  # 查看所有活动连接
+nmcli -f ALL dev wifi list      # 显示完整信息（包括BSSID）
+sudo nmcli dev wifi show-password # 显示当前连接密码（需root）
+sudo nmcli dev disconnect wlo2  # 断开指定网卡（替换 wlo2 为你的网卡名）
+nmcli con down "HUAWEI-NET"     # 通过连接名称断开
+nmcli radio wifi off           # 关闭 Wi-Fi 硬件
+sudo nmcli dev connect wlo2    # 连接
+nmcli dev wifi connect "HUAWEI-NET" ifname wlo2 # 连接开放网络（无密码）
+nmcli dev wifi connect "HUAWEI-NET" password "your_password" ifname wlo2 # 连接加密网络（WPA/WPA2）
+```
+
 # 我的常用软件
 
 这是我的开发环境上的一些配置，方便自己的查阅
