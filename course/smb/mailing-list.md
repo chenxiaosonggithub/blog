@@ -40,8 +40,8 @@ linux-cifs@vger.kernel.org
 发送补丁:
 ```sh
 git send-email --to=\
-sfrench@samba.org,smfrench@gmail.com,\
-linkinjeon@kernel.org,linkinjeon@samba.org,\
+smfrench@gmail.com,\
+linkinjeon@kernel.org,\
 pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
 dhowells@redhat.com \
 --cc=\
