@@ -13,6 +13,8 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 ## 2025年
 
+- [[RFC PATCH cifs-utils v2 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20251221152216.363567-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH v4 0/2] smb/server: fix minimum PDU size](https://lore.kernel.org/linux-cifs/20251220132551.351932-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH v2 0/7] smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20251211143228.172470-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 00/30] smb: improve search speed of SMB1 maperror](https://lore.kernel.org/linux-cifs/20251208062100.3268777-1-chenxiaosong.chenxiaosong@linux.dev/)
