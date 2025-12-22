@@ -13,6 +13,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 ## 2025年
 
+- [[PATCH v4 0/2] smb/server: fix minimum PDU size](https://lore.kernel.org/linux-cifs/20251220132551.351932-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH v2 0/7] smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20251211143228.172470-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 00/30] smb: improve search speed of SMB1 maperror](https://lore.kernel.org/linux-cifs/20251208062100.3268777-1-chenxiaosong.chenxiaosong@linux.dev/)
 
@@ -22,6 +23,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
   - [smb: rename to STATUS_SMB_NO_PREAUTH_INTEGRITY_HASH_OVERLAP](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=523ecd976632523006c1b442e0eba4fe3c4f7e0c)
   - [smb/client: remove unused elements from smb2_error_map_table array](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bf80d1517dc847eb7b4d8b3c14bfe6ed48fa27ae)
   - [smb/client: reduce loop count in map_smb2_to_linux_error() by half](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6c1eb31ecb97c07b4a880d59b3a83665359def36)
+  - [smb/server: rename include guard in smb_common.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=01ab0d1640e3)
 
 - [[PATCH v9 0/1] smb: move duplicate definitions to common header file](https://lore.kernel.org/linux-cifs/20251117112838.473051-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4a2a49f7df48147529158a092edfde1597d12f3)
