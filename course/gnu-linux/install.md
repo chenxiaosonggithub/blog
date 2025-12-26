@@ -285,11 +285,9 @@ nmcli dev wifi connect "HUAWEI-NET" ifname wlo2 # 连接开放网络（无密码
 nmcli dev wifi connect "HUAWEI-NET" password "your_password" ifname wlo2 # 连接加密网络（WPA/WPA2）
 ```
 
-# 我的常用软件
+## ubuntu常用软件
 
 这是我的开发环境上的一些配置，方便自己的查阅
-
-## ubuntu
 
 我平时工作用的是ubuntu桌面系统。
 
@@ -320,15 +318,14 @@ sudo apt list --installed | grep wkhtmltox
 sudo apt purge wkhtmltox -y
 ```
 
+# 其他系统的一些笔记
+
 ## fedora
 
 安装软件:
 ```sh
-sudo dnf group install development-tools -y # fedora41不能用groupinstall，必须要两个单词group install
 strings /lib64/libc.so.6 | grep ^GLIBC_ # 查看支持的glibc版本
 ```
-
-# 其他系统的一些笔记
 
 ## centos
 
@@ -339,7 +336,6 @@ centos的开发软件生态比ubuntu还是稍微差一些，尤其是桌面系�
 sudo dnf groupinstall "development tools" -y # 编译常用软件
 sudo dnf install qemu-kvm virt-manager libvirt -y # 虚拟机相关软件
 sudo systemctl restart libvirtd # 需要重启libvirtd，否则虚拟机有些功能无法使用
-sudo dnf install ncurses-devel -y # 内核编译所需
 
 # centos9需要通过源码安装bridge-utils，https://wiki.linuxfoundation.org/networking/bridge
 git clone -b main git://git.kernel.org/pub/scm/network/bridge/bridge-utils.git
