@@ -45,6 +45,8 @@ vim /boot/grub/grub.cfg
 
 ## 安装Ubuntu发行版
 
+### ubuntu
+
 Linux发行版很多，我们选择一个使用人数相对较多的[Ubuntu发行版](https://ubuntu.com/)。[x86_64的ubuntu22.04](https://releases.ubuntu.com/22.04/)，[arm64的ubuntu22.04](http://cdimage.ubuntu.com/jammy/daily-live/current/)下载。[x86_64的ubuntu20.04](https://releases.ubuntu.com/20.04/)，[arm64的ubuntu20.04](https://ftpmirror.your.org/pub/ubuntu/cdimage/focal/daily-live/current/)
 
 安装内核编译和测试所需软件:
@@ -81,6 +83,13 @@ dnf install -y asciidoc audit-libs-devel binutils-devel elfutils-devel java-deve
 dnf install -y java-1.8.0-*-devel # 4.19内核
 dnf install -y dwarves # 麒麟服务器v10无法安装，要在公司内网下载rpm安装
 # rpm -i dwarves-1.25-1.ky10.x86_64.rpm  dwarves-debuginfo-1.25-1.ky10.x86_64.rpm  dwarves-debugsource-1.25-1.ky10.x86_64.rpm  libdwarves1-1.25-1.ky10.x86_64.rpm  libdwarves1-devel-1.25-1.ky10.x86_64.rpm # --force
+```
+
+### fedora
+
+```sh
+sudo dnf group install development-tools -y # 不能用groupinstall，必须要两个单词group install
+sudo dnf -y install ncurses-devel clang llvm flex bison bc kmod pahole lld ccache openssl-devel openssl
 ```
 
 <!-- TODO: 源码安装crash, emacs -->
