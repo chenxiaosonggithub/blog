@@ -22,12 +22,16 @@ struct copychunk_ioctl_req {
 	struct srv_copychunk Chunks[] __counted_by_le(ChunkCount);
 } __packed;
 
+struct copychunk_ioctl_req *cc_req;
+
 static int __init debug_init(void)
 {
-	int rc;
+	int rc = 0;
 	u32 chunk_count;
 	size_t size;
-	struct copychunk_ioctl_req *cc_req;
+	struct srv_copychunk *chunk;
+	// struct srv_copychunk chunks_stack[4];
+	// struct srv_copychunk chunk_stack;
 
 	printk("sizeof(srv_copychunk):%zu, sizeof(copychunk_ioctl_req):%zu\n",
 	       sizeof(struct srv_copychunk), sizeof(struct copychunk_ioctl_req));
@@ -41,12 +45,19 @@ static int __init debug_init(void)
 		goto out;
 	}
 
+	chunk = &cc_req->Chunks[1];
+	chunk = &cc_req->Chunks[6];
+
+	// memset(chunks_stack, 0, sizeof(chunks_stack));
+	// chunk_stack = chunks_stack[5];
+
 out:
 	return rc;
 }
 
 static void __exit debug_exit(void)
 {
+	kfree(cc_req);
 }
 
 module_init(debug_init)
