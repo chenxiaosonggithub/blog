@@ -25,15 +25,25 @@
 邮件需要发送和抄送的人:
 ```sh
 Steve French <smfrench@gmail.com> # 常用
-Steve French <sfrench@samba.org>
 Namjae Jeon <linkinjeon@kernel.org> # 常用
+Steve French <sfrench@samba.org>
 Namjae Jeon <linkinjeon@samba.org>
 Paulo Alcantara <pc@manguebit.org> (DFS, global name space)
 Ronnie Sahlberg <ronniesahlberg@gmail.com> (directory leases, sparse files)
 Shyam Prasad N <sprasad@microsoft.com> (multichannel)
-Tom Talpey <tom@talpey.com> (RDMA, smbdirect)
 Bharath SM <bharathsm@microsoft.com> (deferred close, directory leases)
-Sergey Senozhatsky <senozhatsky@chromium.org>
+Tom Talpey <tom@talpey.com> (RDMA, smbdirect) # server reviewer
+Sergey Senozhatsky <senozhatsky@chromium.org> # server reviewer
+# 这哥们是以下8个模块的maintainer，简直是劳模
+# AFS FILESYSTEM: fs/afs/
+# ASYMMETRIC KEYS: crypto/asymmetric_keys/
+# CACHEFILES: FS-CACHE BACKEND FOR CACHING ON MOUNTED FILESYSTEMS: fs/cachefiles/
+# CERTIFICATE HANDLING: certs/
+# FILESYSTEMS [NETFS LIBRARY]: fs/netfs/
+# KEYS/KEYRINGS: security/keys/
+# LINUX KERNEL MEMORY CONSISTENCY MODEL (LKMM): tools/memory-model/
+# RXRPC SOCKETS (AF_RXRPC): net/rxrpc/
+David Howells <dhowells@redhat.com>
 linux-cifs@vger.kernel.org
 ```
 
