@@ -160,6 +160,7 @@ getsebool -a | grep samba
 setsebool -P samba_enable_home_dirs=1
 # 选项: password=密码，iocharset=本机编码（如big5、utf8、cp950），codepage=远程主机编码
 # 指定挂载后文件的所有者: uid=1000,gid=1000，当前用户的id用 id $USER 查看
+# 建议用username而不是user
 mount -t cifs -o username=root,vers=1.0 //localhost/TEST /mnt
 mount -t cifs -o username=root,vers=2.0 //localhost/TEST /mnt
 mount -t cifs -o username=root,vers=2.1 //localhost/TEST /mnt

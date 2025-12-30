@@ -108,6 +108,7 @@ sudo systemctl start ksmbd.service # 会自动加载ksmbd.ko
 journalctl -u ksmbd -b # 查看服务的日志
 journalctl -u ksmbd -b --no-pager > log.txt # 查看服务的日志，重定向到文件
 # rm -rf /var/log/journal/* # 日志太多可以清空
-sudo mount -o user=root //127.0.0.1/TEST /mnt
+# 建议用username而不是user
+sudo mount -o username=root,password=1 //127.0.0.1/TEST /mnt
 ```
 
