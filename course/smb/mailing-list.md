@@ -1,19 +1,19 @@
 我熟悉的内核模块，除了nfs就是smb了。nfs client是我相对比较熟悉的模块，但nfs client maintainer很不友好，nfs server maintainer友好但我对nfs server不是太熟悉。smb server近两年贡献的人数不是很多，又是近几年才进内核的模块，所以是相对比较适合我投入社区的。
 
-- [邮件列表](https://lore.kernel.org/linux-cifs/)
-- [patchwork](https://patchwork.kernel.org/project/cifs-client/list/)
+- [SMB 邮件列表](https://lore.kernel.org/linux-cifs/)
+- [SMB patchwork](https://patchwork.kernel.org/project/cifs-client/list/)
 
 # 社区
 
 - smb client maintainer: Steve French <sfrench@samba.org>，友好
-  - 所在时区比中国时间晚10小时，中国早上9点时他晚上7点
+  - 所在时区UTC-6，中国早上9点时他晚上7点
 <!--
-我早上20251209-0910发的补丁，他回复时显示的是20251208-7:11 PM，比中国时间晚10小时
+我早上20251209-0910发的补丁，他回复时显示的是20251208-7:11 PM
 -->
 - smb server maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好
-  - 在韩国，所在时区比中国时间早1小时，中国早上9点时他早上10点
+  - 在韩国，所在时区UTC+9，中国早上9点时他早上10点
 <!--
-我20251204-1258发的补丁（他收到时可能是1300），他回复时显示的是20251204-1400，比中国时间早1小时
+我20251204-1258发的补丁（他收到时可能是1300），他回复时显示的是20251204-1400
 -->
 - [smb client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary): `https://git.samba.org/sfrench/cifs-2.6.git`,
 [for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)
@@ -43,7 +43,7 @@ Sergey Senozhatsky <senozhatsky@chromium.org> # server reviewer
 # KEYS/KEYRINGS: security/keys/
 # LINUX KERNEL MEMORY CONSISTENCY MODEL (LKMM): tools/memory-model/
 # RXRPC SOCKETS (AF_RXRPC): net/rxrpc/
-David Howells <dhowells@redhat.com>
+David Howells <dhowells@redhat.com> # 时区UTC0
 linux-cifs@vger.kernel.org
 ```
 
