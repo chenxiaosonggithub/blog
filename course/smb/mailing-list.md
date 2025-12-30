@@ -139,7 +139,3 @@ git log --follow --format='%aN <%aE>' fs/cifsd/ | sort | uniq -c | sort -nr
       2 kernel test robot <lkp@intel.com>
 ```
 
-# 社区其他人的补丁
-
-请查看[社区补丁](https://chenxiaosong.com/course/smb/patch/other-patch.html)
-
