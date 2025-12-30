@@ -59,83 +59,45 @@ linux-cifs@vger.kernel.org \
 00*
 ```
 
-# smb server补丁统计
+# smb补丁统计
 
-smb client很早进入内核，就不统计了。这里统计一下2021.03.16进入内核的smb server的补丁贡献者，列出贡献超过一个补丁的贡献者。
-
-现在（2025.11.03）的目录`fs/smb/server`统计:
+现在（2025.12.30）的目录`fs/smb/`统计:
 ```sh
 # 还要显示邮件可以用 --format='%aN <%aE>'
 # --follow 对目录其实没啥卵用，但还是习惯的写了
-git log --follow --format='%aN <%aE>' fs/smb/server/ | sort | uniq -c | sort -nr
-    173 Namjae Jeon <linkinjeon@kernel.org>
-     90 Stefan Metzmacher <metze@samba.org>
-     10 NeilBrown <neil@brown.name>
-      9 Thorsten Blum <thorsten.blum@linux.dev>
-      8 Marios Makassikis <mmakassikis@freebox.fr>
-      7 ChenXiaoSong <chenxiaosong@kylinos.cn>   # 这是我
-      7 Al Viro <viro@zeniv.linux.org.uk>  
-      6 Jeff Layton <jlayton@kernel.org>
-      5 Norbert Szetei <norbert@doyensec.com>
-      5 Christian Brauner <brauner@kernel.org>
-      4 Steve French <stfrench@microsoft.com>
-      4 Sean Heelan <seanheelan@gmail.com>     
-      3 ZhangGuoDong <zhangguodong@kylinos.cn>
-      3 Yang Li <yang.lee@linux.alibaba.com>   
-      3 Hobin Woo <hobin.woo@samsung.com>      
-      3 Gustavo A. R. Silva <gustavoars@kernel.org>
-      3 Dr. David Alan Gilbert <linux@treblig.org>
-      2 Randy Dunlap <rdunlap@infradead.org>
-      2 Lu Hongfei <luhongfei@vivo.com>
-      2 Kuan-Ting Chen <h3xrabbit@gmail.com>
-      2 Jordy Zomer <jordyzomer@google.com>
-      2 Fedor Pchelkin <pchelkin@ispras.ru>
-      2 Eric Biggers <ebiggers@google.com>
-      2 Dan Carpenter <dan.carpenter@linaro.org>
-      2 Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+git log --follow --format='%aN <%aE>' fs/smb/ | sort | uniq -c | sort -nr | less
+    244 Stefan Metzmacher <metze@samba.org>
+    183 Namjae Jeon <linkinjeon@kernel.org>
+    182 Paulo Alcantara <pc@manguebit.org>
+    106 David Howells <dhowells@redhat.com>
+    104 Steve French <stfrench@microsoft.com>
+     90 Pali Rohár <pali@kernel.org>
+     69 Shyam Prasad N <sprasad@microsoft.com>
+     53 ChenXiaoSong <chenxiaosong@kylinos.cn>
+     26 Bharath SM <bharathsm@microsoft.com>
+     19 Henrique Carvalho <henrique.carvalho@suse.com>
+     17 NeilBrown <neil@brown.name>
+     16 Jeff Layton <jlayton@kernel.org>
+     16 Enzo Matsumiya <ematsumiya@suse.de>
+     15 Al Viro <viro@zeniv.linux.org.uk>
+     13 ZhangGuoDong <zhangguodong@kylinos.cn>
+     12 Thorsten Blum <thorsten.blum@linux.dev>
+     12 Eric Biggers <ebiggers@kernel.org>
+     11 Markus Elfring <elfring@users.sourceforge.net>
+     10 Wang Zhaolong <wangzhaolong@huaweicloud.com>
 ```
 
 `checkout`到`38c8a9a52082 smb: move client and server files to common directory fs/smb`（2023.05.21）之前的记录:
 ```sh
-git checkout cb8b02fd6343228966324528adf920bfb8b8e681
-git log --follow --format='%aN <%aE>' fs/ksmbd/ | sort | uniq -c | sort -nr
-    107 Namjae Jeon <linkinjeon@kernel.org>
-     46 Hyunchul Lee <hyc.lee@gmail.com>
-     42 Namjae Jeon <namjae.jeon@samsung.com>
-     24 Christian Brauner <brauner@kernel.org>
-     13 Marios Makassikis <mmakassikis@freebox.fr>
-     10 Steve French <stfrench@microsoft.com>
-      6 Dan Carpenter <error27@gmail.com>
-      5 Yang Li <yang.lee@linux.alibaba.com>
-      5 Ronnie Sahlberg <lsahlber@redhat.com>
-      4 Ralph Boehme <slow@samba.org>
-      4 Dawei Li <set_pte_at@outlook.com>
-      4 David Disseldorp <ddiss@suse.de>
-      4 Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-      4 Atte Heikkilä <atteh.mailbox@gmail.com>
-      4 Al Viro <viro@zeniv.linux.org.uk>
-      3 Jeff Layton <jlayton@kernel.org>
-      3 Gustavo A. R. Silva <gustavoars@kernel.org>
-      3 Colin Ian King <colin.i.king@gmail.com>
-      3 Chih-Yen Chang <cc85nod@gmail.com>
-      2 Tom Talpey <tom@talpey.com>
-      2 Kees Cook <keescook@chromium.org>
-      2 Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-      2 Amir Goldstein <amir73il@gmail.com>
-      1 ChenXiaoSong <chenxiaosong2@huawei.com> # 这是我
+git checkout cb8b02fd6343228966324528adf920bfb8b8e681 # fs/ksmbd/
+git log --date=short --format="%cd %h %s %an <%ae>" fs/ksmbd/
+# 2021-06-28 1a93084b9a89 ksmbd: move fs/cifsd to fs/ksmbd Namjae Jeon <namjae.jeon@samsung.com>
 ```
 
 再`checkout`到`1a93084b9a89 ksmbd: move fs/cifsd to fs/ksmbd`（2021.06.24）之前的记录:
 ```sh
-git checkout 131bac1ece2e16201674b2f29b64d2044c826b56
-git log --follow --format='%aN <%aE>' fs/cifsd/ | sort | uniq -c | sort -nr
-     91 Namjae Jeon <namjae.jeon@samsung.com>
-     13 Hyunchul Lee <hyc.lee@gmail.com>
-      9 Marios Makassikis <mmakassikis@freebox.fr>
-      5 Dan Carpenter <dan.carpenter@oracle.com>
-      3 Yang Yingliang <yangyingliang@huawei.com>
-      3 Colin Ian King <colin.king@canonical.com>
-      2 Muhammad Usama Anjum <musamaanjum@gmail.com>
-      2 kernel test robot <lkp@intel.com>
+git checkout 131bac1ece2e16201674b2f29b64d2044c826b56 # fs/cifsd/
+git log --date=short --format="%cd %h %s %an <%ae>"  fs/cifsd/
+# 2021-05-10 0626e6641f6b cifsd: add server handler for central processing and tranport layers Namjae Jeon <namjae.jeon@samsung.com>
 ```
 
