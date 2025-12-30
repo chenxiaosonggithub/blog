@@ -147,6 +147,7 @@ comm_array=(
 		1 1 course/smb/refactor.md ~ "smb代码重构"
 		1 1 course/smb/other.md ~ "smb未分类的内容"
 		1 1 course/smb/mailing-list.md ~ "smb社区贡献"
+		1 1 course/smb/contribution.md ~ "陈孝松SMB贡献"
 		# 1 1 course/smb/patch.md ~ "smb补丁分析"
 			# 其他人的补丁
 			1 1 course/smb/patch/cifs-Fix-in-error-types-returned-for-out-of-credit-s.md ~
