@@ -87,14 +87,14 @@ git log --follow --format='%aN <%aE>' fs/smb/ | sort | uniq -c | sort -nr | less
      10 Wang Zhaolong <wangzhaolong@huaweicloud.com>
 ```
 
-`checkout`到`38c8a9a52082 smb: move client and server files to common directory fs/smb`（2023.05.21）之前的记录:
+`checkout`到`38c8a9a52082 smb: move client and server files to common directory fs/smb`（2023-05-24）之前的记录:
 ```sh
 git checkout cb8b02fd6343228966324528adf920bfb8b8e681 # fs/ksmbd/
 git log --date=short --format="%cd %h %s %an <%ae>" fs/ksmbd/
 # 2021-06-28 1a93084b9a89 ksmbd: move fs/cifsd to fs/ksmbd Namjae Jeon <namjae.jeon@samsung.com>
 ```
 
-再`checkout`到`1a93084b9a89 ksmbd: move fs/cifsd to fs/ksmbd`（2021.06.24）之前的记录:
+再`checkout`到`1a93084b9a89 ksmbd: move fs/cifsd to fs/ksmbd`（2021-06-28）之前的记录:
 ```sh
 git checkout 131bac1ece2e16201674b2f29b64d2044c826b56 # fs/cifsd/
 git log --date=short --format="%cd %h %s %an <%ae>"  fs/cifsd/
