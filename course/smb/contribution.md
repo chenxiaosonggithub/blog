@@ -1,7 +1,7 @@
 [点击查看kernel.org网站SMB内核邮件列表我和社区的沟通](https://lore.kernel.org/linux-cifs/?q=chenxiaosong)
 
-[点击查看kernel.org网站上我的Linux内核上游仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈，可以直接查看下面列出的补丁链接）
-<!-- 主线: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong -->
+[点击查看kernel.org网站上我的Linux内核上游仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈，可以直接查看下面列出的补丁链接）
+<!-- next: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong -->
 
 SMB社区是我见过的最友好的社区，几个maintainer都很友好，贡献SMB真的很爽。
 
