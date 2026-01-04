@@ -280,6 +280,7 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 # ksmbd代码分析
 
+异步等待和唤醒:
 ```c
 smb2_lock
   setup_async_work(..., smb2_remove_blocked_lock, ...)
@@ -306,6 +307,22 @@ ksmbd_conn_handler_loop // default_conn_ops.process_fn
               __process_request
               ksmbd_conn_try_dequeue_request
                 list_del_init(&work->request_entry) // 从async_requests链表中删除
+```
+
+文件名处理:
+```c
+smb2_query_info
+  smb2_get_info_filesystem
+    struct smb2_query_info_rsp // MS-SMB2 2.2.38
+    info = (FILE_SYSTEM_ATTRIBUTE_INFO *)rsp->Buffer;
+  smb2_get_info_file
+    smb2_get_ea
+      ptr = (char *)rsp->Buffer
+      eainfo = (struct smb2_ea_info *)ptr;
+
+__handle_ksmbd_work
+  smb2_allocate_rsp_buf // conn->ops->allocate_rsp_buf
+    .max_trans_size = SMB3_DEFAULT_TRANS_SIZE,
 ```
 
 # fanotify
