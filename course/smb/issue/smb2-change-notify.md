@@ -280,6 +280,34 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 # ksmbd代码分析
 
+```c
+smb2_lock
+  setup_async_work(..., smb2_remove_blocked_lock, ...)
+    work->cancel_fn = fn
+  smb2_send_interim_resp(work, STATUS_PENDING);
+  ksmbd_vfs_posix_lock_wait
+
+smb2_cancel
+  iter->state = KSMBD_WORK_CANCELLED
+  smb2_remove_blocked_lock // iter->cancel_fn
+    locks_delete_block
+      __locks_delete_block
+        __locks_wake_up_blocks
+          locks_wake_up_waiter
+            wake_up(&flc->flc_wait)
+
+ksmbd_conn_handler_loop // default_conn_ops.process_fn
+  ksmbd_server_process_request
+    queue_ksmbd_work
+      ksmbd_alloc_work_struct
+        ksmbd_queue_work
+          handle_ksmbd_work // queue_work(ksmbd_wq,
+            __handle_ksmbd_work
+              __process_request
+              ksmbd_conn_try_dequeue_request
+                list_del_init(&work->request_entry) // 从async_requests链表中删除
+```
+
 # fanotify
 
 详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#fanotify)。
