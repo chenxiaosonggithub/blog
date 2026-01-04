@@ -278,7 +278,7 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#samba-code)。
 
-# ksmbd代码分析
+# smb server内核代码分析
 
 异步等待和唤醒:
 ```c
@@ -323,6 +323,20 @@ smb2_query_info
 __handle_ksmbd_work
   smb2_allocate_rsp_buf // conn->ops->allocate_rsp_buf
     .max_trans_size = SMB3_DEFAULT_TRANS_SIZE,
+```
+
+# smb client内核代码分析
+
+```c
+ioctl
+  cifs_ioctl
+    smb3_notify
+      SMB2_change_notify
+      SMB2_close
+        __SMB2_close
+          smb2_handle_cancelled_close
+            __smb2_handle_cancelled_cmd
+              smb2_cancelled_close_fid // INIT_WORK(&cancelled->work,
 ```
 
 # fanotify
