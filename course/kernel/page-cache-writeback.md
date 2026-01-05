@@ -8,7 +8,7 @@
             /   \
            / Reg \ 寄存器(Register)
           /-------\
-         /L1 Cache \ 又分成: 数据缓存（Instruction Cache）和 指令缓存（Data Cache）
+         /L1 Cache \ 又分成: 数据缓存（Data Cache）和 指令缓存（Instruction Cache）
         /-----------\
        /  L2 Cache   \
       /---------------\
