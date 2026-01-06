@@ -285,7 +285,7 @@ nmcli dev wifi connect "HUAWEI-NET" ifname wlo2 # 连接开放网络（无密码
 nmcli dev wifi connect "HUAWEI-NET" password "your_password" ifname wlo2 # 连接加密网络（WPA/WPA2）
 ```
 
-## ubuntu常用软件
+# ubuntu常用软件
 
 这是我的开发环境上的一些配置，方便自己的查阅
 
