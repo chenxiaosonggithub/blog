@@ -331,12 +331,40 @@ __handle_ksmbd_work
 ioctl
   cifs_ioctl
     smb3_notify
+      SMB2_open(xid, &oparms, ...)
+        SMB2_open_init
+          smb2_plain_req_init(SMB2_CREATE,
       SMB2_change_notify
+        SMB2_notify_init
+          smb2_plain_req_init(SMB2_CHANGE_NOTIFY,
+        cifs_send_recv
+          compound_send_recv
+            smb2_setup_request // .setup_request
+              smb2_seq_num_into_buf
+                smb2_seq_num_into_buf(server, shdr);
+      SMB2_cancel
+        cifs_send_recv
+          compound_send_recv
+            smb_send_rqst
+              __smb_send_rqst
+                rc = -ERESTARTSYS
+                if (fatal_signal_pending(current)) { // 进程将要退出
+                goto out
+                return -ERESTARTSYS
       SMB2_close
         __SMB2_close
+          rc = cifs_send_recv // -ERESTARTSYS
           smb2_handle_cancelled_close
             __smb2_handle_cancelled_cmd
               smb2_cancelled_close_fid // INIT_WORK(&cancelled->work,
+
+kthread
+  cifs_demultiplex_thread
+    cifs_handle_standard
+      smb2_is_status_pending
+
+revert_current_mid
+revert_current_mid_from_hdr
 ```
 
 # fanotify
