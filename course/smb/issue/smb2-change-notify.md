@@ -307,6 +307,7 @@ ksmbd_conn_handler_loop // default_conn_ops.process_fn
               __process_request
               ksmbd_conn_try_dequeue_request
                 list_del_init(&work->request_entry) // 从async_requests链表中删除
+                release_async_work
 ```
 
 文件名处理:
@@ -357,6 +358,7 @@ ioctl
           smb2_handle_cancelled_close
             __smb2_handle_cancelled_cmd
               smb2_cancelled_close_fid // INIT_WORK(&cancelled->work,
+                SMB2_close(0, tcon, // 在工作队列中再次尝试
 
 kthread
   cifs_demultiplex_thread
