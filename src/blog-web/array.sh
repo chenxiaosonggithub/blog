@@ -261,6 +261,7 @@ comm_array=(
 		1 1 src/translation/nfs/man-nfsidmap.md ~ "nfs idmap相关man手册"
 		1 1 src/translation/smb/libsmb2-readme.rst ~ "libsmb2 README"
 		# smb
+		1 1 src/translation/smb/ms-doc.md ~ "SMB MS文档翻译"
 		1 1 src/translation/smb/ksmbd-kernel-doc.md ~ "KSMBD kernel doc"
 		1 1 src/translation/smb/ksmbd-tools-readme.md ~ "ksmbd-tools README"
 		1 1 src/translation/smb/kernel-doc-cifs-introduction.rst ~ "kernel doc: admin-guide/cifs/introduction.rst"

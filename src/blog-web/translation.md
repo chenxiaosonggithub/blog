@@ -60,6 +60,8 @@ pdftk part1.pdf part2.pdf cat output merged.pdf # 合并
 
 # smb
 
+[SMB MS文档翻译](https://chenxiaosong.com/src/translation/smb/ms-doc.html)
+
 [KSMBD kernel doc](https://chenxiaosong.com/src/translation/smb/ksmbd-kernel-doc.html)
 
 [ksmbd-tools README](https://chenxiaosong.com/src/translation/smb/ksmbd-tools-readme.html)
