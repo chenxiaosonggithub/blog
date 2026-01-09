@@ -56,7 +56,8 @@ pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,b
 dhowells@redhat.com \
 --cc=\
 linux-cifs@vger.kernel.org \
-00*
+00* \
+# --in-reply-to=xxx --no-thread --suppress-cc=all
 ```
 
 # smb补丁统计
