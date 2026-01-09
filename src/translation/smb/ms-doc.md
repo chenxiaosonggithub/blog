@@ -4,7 +4,7 @@
 
 - [MS-SMB2](https://learn.microsoft.com/pdf?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fopenspecs%2Fwindows_protocols%2Fms-smb2%2Ftoc.json)
 
-## MS-SMB2 2.2.1 SMB2 Packet Header
+## 2.2.1 SMB2 Packet Header
 
 SMB2 数据包头（也称 SMB2 Header） 是所有 SMB2 协议请求和响应的头部。
 该头部有两种变体：
@@ -17,7 +17,7 @@ SMB2 数据包头（也称 SMB2 Header） 是所有 SMB2 协议请求和响应�
 
 如果 Flags 中未设置 SMB2_FLAGS_ASYNC_COMMAND 位，则使用 SMB2 Packet Header - SYNC（见 2.2.1.2 节）。
 
-## MS-SMB2 2.2.13 SMB2 CREATE Request
+## 2.2.13 SMB2 CREATE Request
 
 SMB2 CREATE 请求数据包由客户端发送，用于请求创建文件或访问文件。
 如果目标是命名管道或打印机，服务器 必须 创建一个新文件。
@@ -46,7 +46,7 @@ struct smb2_create_req {
 } __packed;
 ```
 
-## MS-SMB2 2.2.35 SMB2 CHANGE_NOTIFY Request
+## 2.2.35 SMB2 CHANGE_NOTIFY Request
 
 SMB2 CHANGE_NOTIFY 请求数据包由客户端发送，用于请求获取目录的变更通知。
 该请求由一个 SMB2 头（参见 2.2.1 节）以及紧随其后的该请求结构组成。
@@ -92,7 +92,7 @@ FILE_NOTIFY_CHANGE_STREAM_SIZE  // 如果命名数据流的大小发生变化，
 FILE_NOTIFY_CHANGE_STREAM_WRITE // 如果命名数据流被修改，客户端会收到通知。
 ```
 
-## MS-SMB2 2.2.14.1 SMB2_FILEID
+## 2.2.14.1 SMB2_FILEID
 
 SMB2 FILEID 用来表示对一个文件的打开（操作）。
 
@@ -108,7 +108,7 @@ struct {
 } fid; // 用于监控变化的目录的 SMB2_FILEID 标识符
 ```
 
-## MS-SMB2 2.2.36 SMB2 CHANGE_NOTIFY Response
+## 2.2.36 SMB2 CHANGE_NOTIFY Response
 
 SMB2 CHANGE_NOTIFY 响应数据包由服务器发送，用于传输客户端 SMB2 CHANGE_NOTIFY 请求（见 2.2.35 节）的结果。
 该响应由一个 SMB2 头（参见 2.2.1 节）以及紧随其后的响应结构组成。
@@ -155,11 +155,35 @@ SMB2 CANCEL 请求其余字段 必须 按照 第 2.2.30 节 中规定的默认�
 
 不会向调用方返回任何状态信息。
 
+## 3.3.5.16 Receiving an SMB2 CANCEL Request {#smb2-3.3.5.16}
+
+当服务器接收到一个 SMB2 头部的 Command 字段等于 SMB2 CANCEL 的请求时，消息处理流程如下：
+
+SMB2 CANCEL 请求不包含必须检查的序列号。因此，服务器 不得 按照第 3.3.5.2.3 节中规定的方式处理该接收到的数据包。
+
+如果取消请求的 SMB2 头部中的 Flags 字段设置了 SMB2_FLAGS_SIGNED 位，服务器 必须 按照第 3.3.5.2.9 节的规定验证该会话。
+
+如果取消请求的 SMB2 头部中的 Flags 字段设置了 SMB2_FLAGS_ASYNC_COMMAND 位，服务器 应该<400> 在 Connection.AsyncCommandList 中查找一个请求，使得
+Request.AsyncId 与传入的取消请求中的 AsyncId 相匹配。
+
+如果 SMB2_FLAGS_ASYNC_COMMAND 未设置，则服务器 必须 在 Connection.RequestList 中查找一个请求，使得
+Request.MessageId 与传入的取消请求中的 MessageId 相匹配。
+
+如果未找到对应的请求，服务器 必须 停止对此取消请求的处理，且不发送任何响应。
+
+如果找到了对应的请求，服务器 应该<401> 尝试取消该请求（以下简称为 目标请求）。
+
+如果目标请求被成功取消，服务器 必须 通过发送一个 ERROR 响应包（如第 2.2.2 节所规定），使目标请求失败，并且将 SMB2 头部（第 2.2.1 节）的 Status 字段设置为 STATUS_CANCELLED。
+
+如果目标请求未能成功取消，则 必须继续处理目标请求，并且 不对取消请求发送任何响应。
+
+取消请求表明客户端 必须获得目标请求的响应，无论该请求最终是否成功。服务器 必须 按照上述步骤 加速处理 取消请求。
+
 # MS-FSCC
 
 - [MS-FSCC](https://learn.microsoft.com/pdf?url=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fopenspecs%2Fwindows_protocols%2Fms-fscc%2Ftoc.json)
 
-## MS-FSCC 2.7.1 FILE_NOTIFY_INFORMATION
+## 2.7.1 FILE_NOTIFY_INFORMATION
 
 FILE_NOTIFY_INFORMATION 结构体包含客户端被通知的更改信息。该结构体由以下内容组成。
 
