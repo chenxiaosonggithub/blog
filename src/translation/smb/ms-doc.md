@@ -155,6 +155,61 @@ SMB2 CANCEL 请求其余字段 必须 按照 第 2.2.30 节 中规定的默认�
 
 不会向调用方返回任何状态信息。
 
+## 3.3.4.2 Sending an Interim Response for an Asynchronous Operation
+
+服务器 可以<239> 为接收到的任意请求选择发送一个 中间响应（interim response）。
+对于任何 可能无限期阻塞 的请求，服务器 应该<240> 发送一个中间响应。
+
+如果某个操作需要进行异步处理，但服务器资源受限，服务器 可以<241> 选择以
+STATUS_INSUFFICIENT_RESOURCES 失败该操作。
+
+中间响应用于向客户端表明：请求已被接收，完整响应将在稍后发送。
+服务器 不应该 对中间响应进行签名。
+
+为了为某个请求发送中间响应，服务器 必须 为其生成一个 异步标识符（asynchronous identifier），并且 Request.AsyncId 字段 必须 设置为该异步标识符。
+
+- 标识符 必须 是一个 8 字节 的值；
+- 在指定的 SMB2 传输连接上，所有尚未完成的异步请求中，该标识符 必须唯一；
+- 在该请求的最终响应发送之前，该标识符 必须保持有效；
+- 在最终响应发送之前，该标识符 不得被复用；
+- 标识符 必须为非零值。
+
+服务器 必须 将该请求插入到 Connection.AsyncCommandList 中。
+
+服务器 必须 为该请求构造一个响应数据包。该响应的 SMB2 头部 必须与请求中的 SMB2 头部 完全相同，但需进行如下修改：
+
+- 服务器 必须 将 SMB2 头部中的 Status 字段设置为 STATUS_PENDING。
+- 如果该响应 不是复合响应（compounded response），则 NextCommand 字段 必须 设置为 0；
+否则，NextCommand 字段 必须 按照第 3.3.4.1.3 节中的规定进行设置。
+- 服务器 必须 在 SMB2 头部的 Flags 字段中设置 SMB2_FLAGS_SERVER_TO_REDIR 位。
+- 服务器 必须 在 SMB2 头部的 Flags 字段中设置 SMB2_FLAGS_ASYNC_COMMAND 位。
+- 服务器 必须 将 SMB2 头部中的 AsyncId 字段设置为先前生成的异步标识符的值。
+- 服务器 必须 将 CreditResponse 字段设置为服务器选择授予该请求的信用数（credits），如第 3.3.1.2 节所规定。
+
+服务器 必须 在 SMB2 头部之后附加一个 SMB2 ERROR Response（如第 2.2.2 节所规定），其 ByteCount 为 0。
+该响应 必须 发送给客户端。
+
+## 3.3.4.3 Sending a Success Response
+
+当服务器对客户端发送的任意命令返回 成功（success） 时，响应消息 必须 按照本节中的规定进行构造。
+
+服务器 必须 构造成功响应的 SMB2 头部，使其与对应请求的 SMB2 头部 一致，但需要进行以下修改：
+
+- SMB2 头部中的 Status 字段 必须 设置为所提供的状态码。
+- NextCommand 字段 必须 设置为 0。
+如果该响应随后按照第 3.3.4.1.3 节的规定与其他响应组合成一个 复合响应（compounded response），则该值将会发生变化。
+- 服务器 必须 在 SMB2 头部的 Flags 字段中设置 SMB2_FLAGS_SERVER_TO_REDIR 位。
+- 如果 Request.AsyncId 为非零值，则服务器 必须：
+将 AsyncId 字段设置为该值；
+在 Flags 字段中设置 SMB2_FLAGS_ASYNC_COMMAND 位；
+并将 CreditResponse 字段设置为 0。
+- 否则（即 Request.AsyncId 为 0），服务器 必须 将 CreditResponse 字段设置为服务器选择授予该请求的信用数（credits），如第 3.3.1.2 节所规定。
+
+对 SMB2 头部的任何其他附加修改 必须 按照具体命令的要求分别进行。
+
+位于 SMB2 头部之后的信息是 命令特定的，并且如第 3.3.5 节中所规定。
+该响应 必须 发送给客户端，且该请求 必须 从 Connection.RequestList 中移除并释放。
+
 ## 3.3.5.16 Receiving an SMB2 CANCEL Request {#smb2-3.3.5.16}
 
 当服务器接收到一个 SMB2 头部的 Command 字段等于 SMB2 CANCEL 的请求时，消息处理流程如下：
