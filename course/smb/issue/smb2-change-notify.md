@@ -81,6 +81,16 @@ echo something > /tmp/s_test/file # 在server端执行
 
 请查看[《SMB MS文档翻译》](https://chenxiaosong.com/src/translation/smb/ms-doc.html)。
 
+- MS-SMB2 2.2.1 SMB2 Packet Header
+- MS-SMB2 2.2.1.1 SMB2 Packet Header - ASYNC
+- MS-SMB2 2.2.1.2 SMB2 Packet Header - SYNC
+- MS-SMB2 3.3.4.2 Sending an Interim Response for an Asynchronous Operation
+- MS-SMB2 3.3.4.3 Sending a Success Response
+- MS-SMB2 3.3.4.4 Sending an Error Response
+- MS-SMB2 3.2.5.1.5 Handling Asynchronous Responses
+- MS-SMB2 3.2.4.24 Application Requests Canceling an Operation
+- MS-SMB2 3.3.5.16 Receiving an SMB2 CANCEL Request
+
 # tcpdump抓包分析
 
 在虚拟机中使用以下命令抓包:
