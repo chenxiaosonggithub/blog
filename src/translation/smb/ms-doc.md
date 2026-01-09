@@ -128,6 +128,32 @@ struct smb2_change_notify_rsp {
   __u8    Buffer[];
 } __packed;
 ```
+## 3.2.4.24 Application Requests Canceling an Operation {#smb2-3.2.4.24}
+
+应用程序提供要取消的操作的 CancelId。
+
+客户端 必须（MUST） 枚举 ConnectionTable 中的所有连接，并在
+Connection.OutstandingRequests 中查找其 Request.CancelId 与应用程序提供的
+CancelId 相匹配的请求。如果找到匹配项，客户端需要执行以下操作：
+
+客户端按照 第 2.2.30 节 中定义的语法初始化一个 SMB2 CANCEL 请求。SMB2 头部按如下方式初始化：
+
+- Command 字段 必须（MUST） 设置为 SMB2 CANCEL。
+- MessageId 字段 应该（SHOULD）<179> 设置为此前用于被取消请求的标识符。由于复用了相同的 MessageId，取消请求不得（MUST NOT）消耗序列号。
+- 如果 Request.AsyncId 非空，表示该命令此前已经返回过一个中间响应（interim response），则：
+客户端将 AsyncId 设置为 Request.AsyncId；
+并在 Flags 字段中将 SMB2_FLAGS_ASYNC_COMMAND 置为 TRUE。
+
+SessionId 字段 必须（MUST） 设置为此前用于被取消请求的会话标识符。
+
+如果由 SessionId 标识的会话中 Session.SigningRequired 等于 TRUE，
+客户端必须在 Flags 字段中将 SMB2_FLAGS_SIGNED 置为 TRUE。
+
+SMB2 CANCEL 请求其余字段 必须 按照 第 2.2.30 节 中规定的默认值进行初始化。
+
+该请求 必须（MUST） 发送到服务器。
+
+不会向调用方返回任何状态信息。
 
 # MS-FSCC
 
