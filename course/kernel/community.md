@@ -34,11 +34,11 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站:
 
 # openEuler社区 {#openeuler}
 
-[openEuler托管在gitee上](https://gitee.com/openeuler/kernel)，贡献openEuler要通过提交Pull Requests。
+[openEuler托管在atomgit上](https://atomgit.com/openeuler/kernel)（[以前是gitee](https://gitee.com/openeuler/kernel)），贡献openEuler要通过提交Pull Requests。
 
 CLA 协议是开源贡献协议，用于规范贡献者的权利及义务。贡献者在贡献openEuler社区前，需要[签署CLA](https://clasign.osinfra.cn/sign/gitee_openeuler-1611298811283968340)，[签署流程](https://www.openeuler.org/zh/blog/2022-11-25-cla/CLA%E7%AD%BE%E7%BD%B2%E6%B5%81%E7%A8%8B.html)。如果你是以公司邮箱贡献，且公司已经签了CLA，你应该选择“法人贡献者登记”；如果你是以个人邮箱贡献，选择“签署个人CLA”。注意仓库下`.git/config`或`~/.gitconfig`中的邮箱配置要求必须是签署了CLA的邮箱，用`git log --pretty=fuller`可以查看commit的邮箱。
 
-[openEuler内核补丁提交规范](https://gitee.com/openeuler/community/blob/master/sig/Kernel/%E8%A1%A5%E4%B8%81%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83.md)
+[openEuler内核补丁提交规范](https://atomgit.com/openeuler/community/blob/master/sig/Kernel/%E8%A1%A5%E4%B8%81%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83.md)
 （比较老的文档[Kernel SIG | openEuler Kernel 补丁合入规范](https://my.oschina.net/openeuler/blog/5949607)），
 可以在上游[主线仓库](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git)或
 [stable仓库](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git)路径下用
@@ -47,7 +47,7 @@ CLA 协议是开源贡献协议，用于规范贡献者的权利及义务。贡�
 
 注意openEuler门禁会检查修改前后的kabi变化，如果想自己本地检查，可以对比修改前后的`vmlinux.symvers`和`Module.symvers`。
 
-openEuler的LTS有kabi白名单，使用脚本[`check-kabi`](https://gitee.com/src-openeuler/kernel/blob/openEuler-24.03-LTS-SP2/check-kabi)（注意不能使用[openeuler/kernel仓库的脚本](https://gitee.com/openeuler/kernel/blob/OLK-6.6/scripts/check-kabi)）对比[`Module.kabi_x86_64`](https://gitee.com/src-openeuler/kernel/blob/openEuler-24.03-LTS-SP2/Module.kabi_x86_64)或[`Module.kabi_aarch64`](https://gitee.com/src-openeuler/kernel/blob/openEuler-24.03-LTS-SP2/Module.kabi_aarch64):
+openEuler的LTS有kabi白名单，使用脚本[`check-kabi`](https://atomgit.com/src-openeuler/kernel/blob/openEuler-24.03-LTS-SP2/check-kabi)（注意不能使用[openeuler/kernel仓库的脚本](https://atomgit.com/openeuler/kernel/blob/OLK-6.6/scripts/check-kabi)）对比[`Module.kabi_x86_64`](https://atomgit.com/src-openeuler/kernel/blob/openEuler-24.03-LTS-SP2/Module.kabi_x86_64)或[`Module.kabi_aarch64`](https://atomgit.com/src-openeuler/kernel/blob/openEuler-24.03-LTS-SP2/Module.kabi_aarch64):
 ```sh
 ../src-openeuler-kernel/check-kabi -k ../src-openeuler-kernel/Module.kabi_x86_64 -s kabi-build/Module.symvers
 ```
