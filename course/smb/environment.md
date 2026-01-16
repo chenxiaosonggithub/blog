@@ -95,6 +95,8 @@ export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
 make -j`nproc` bin/smbd && rm -rf /usr/local/samba/sbin/smbd; cp bin/smbd /usr/local/samba/sbin/smbd
 ```
 
+注意`NT_STATUS_WAIT_0`等宏定义是在编译过程中用脚本`source4/scripting/bin/gen_ntstatus.py`自动生成的，生成的文件是`bin/default/include/public/core/ntstatus_gen.h`和`bin/default/libcli/util/ntstatus_gen.h`。
+
 更新`/usr/lib/systemd/system/smb.service`，具体位置可以用`systemctl status smb`查看:
 ```sh
 [Unit]
