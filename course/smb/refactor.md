@@ -17,6 +17,10 @@
 
 ## 重复定义
 
+### `smb1pdu.h`
+
+- FILE_BASIC_INFO, smb2_file_basic_info
+
 ### `smb2pdu.h`
 
 ### `cifspdu.h`:
