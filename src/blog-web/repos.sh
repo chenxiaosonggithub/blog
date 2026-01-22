@@ -5,5 +5,6 @@ repos_array=(
 	1 myfs
 	0 private-blog
 	0 private-tmp
+	0 daily-task
 )
 
