@@ -16,20 +16,20 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 - [[PATCH v4 0/2] smb/server: fix minimum PDU size](https://lore.kernel.org/linux-cifs/20251220132551.351932-1-chenxiaosong.chenxiaosong@linux.dev/)
 
 - [[PATCH v2 0/7] smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20251211143228.172470-1-chenxiaosong.chenxiaosong@linux.dev/)
-  - [2e0d224d8988 smb/server: add comment to FileSystemName of FileFsAttributeInformation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2e0d224d8988)
-  - [ab0347e67dac smb/client: remove DeviceType Flags and Device Characteristics definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ab0347e67dac)
-  - [08c2a7d2bae9 smb: move file_notify_information to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=08c2a7d2bae9)
-  - [6539e18517b6 smb: move SMB2 Notify Action Flags into common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6539e18517b6)
-  - [9ec7629b430a smb: move notify completion filter flags into common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9ec7629b430a)
-  - [bcdd6cfaf2ec smb: add documentation references for smb2 change notify definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bcdd6cfaf2ec)
+  - [smb/server: add comment to FileSystemName of FileFsAttributeInformation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2e0d224d8988)
+  - [smb/client: remove DeviceType Flags and Device Characteristics definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ab0347e67dac)
+  - [smb: move file_notify_information to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=08c2a7d2bae9)
+  - [smb: move SMB2 Notify Action Flags into common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6539e18517b6)
+  - [smb: move notify completion filter flags into common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9ec7629b430a)
+  - [smb: add documentation references for smb2 change notify definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bcdd6cfaf2ec)
 
 - [[PATCH 00/30] smb: improve search speed of SMB1 maperror](https://lore.kernel.org/linux-cifs/20251208062100.3268777-1-chenxiaosong.chenxiaosong@linux.dev/)
-  - [a71a4aab4834 smb/client: add parentheses to NT error code definitions containing bitwise OR operator](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a71a4aab4834)
-  - [a9adafd40165 smb/client: add 4 NT error code definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a9adafd40165)
-  - [98def4eb0244 smb/server: remove unused nterr.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=98def4eb0244)
-  - [9f99caa8950a smb/client: fix NT_STATUS_UNABLE_TO_FREE_VM value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9f99caa8950a)
-  - [b2b50fca34da smb/client: fix NT_STATUS_DEVICE_DOOR_OPEN value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b2b50fca34da)
-  - [a1237c203f17 smb/client: fix NT_STATUS_NO_DATA_DETECTED value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a1237c203f17)
+  - [smb/client: add parentheses to NT error code definitions containing bitwise OR operator](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a71a4aab4834)
+  - [smb/client: add 4 NT error code definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a9adafd40165)
+  - [smb/server: remove unused nterr.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=98def4eb0244)
+  - [smb/client: fix NT_STATUS_UNABLE_TO_FREE_VM value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9f99caa8950a)
+  - [smb/client: fix NT_STATUS_DEVICE_DOOR_OPEN value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b2b50fca34da)
+  - [smb/client: fix NT_STATUS_NO_DATA_DETECTED value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a1237c203f17)
 
 - [[PATCH v6 0/5] smb: improve search speed of SMB2 maperror](https://lore.kernel.org/linux-cifs/20251225021035.656639-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [smb/client: update some SMB2 status strings](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d8f52650b24d9018dfb65d2c60e17636b077e63e)
@@ -46,7 +46,7 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
   - [smb: do some cleanups](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=95e8c1bfa56ebbc243779ee23782b30744da02f6)
   - [smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=464b913993a14b539e978db10c755bb202ab14ed)
   - [smb: move some duplicate struct definitions to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d7edd3892d97e6746e30f36f4f13f887ec4d80ed)
-  - [mb: move list of FileSystemAttributes to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=84d8d4cf8873b4a9da0d76e9ba9d94ec88311cfd)
+  - [smb: move list of FileSystemAttributes to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=84d8d4cf8873b4a9da0d76e9ba9d94ec88311cfd)
   - [smb: move SMB_NEGOTIATE_REQ to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d8ac9879182a1e1f3b97d166f5ba5e2f1b3e8535)
   - [smb: move some duplicate definitions to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1172d8598499a006d172bb24bebaa3fdc99064a8)
   - [smb: move create_durable_rsp_v2 to common/smb2pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=96721fd292264d712b7b9a51752ab87de5035db4)
@@ -102,3 +102,4 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 - [cifs: fix missing unlock in cifs_file_copychunk_range()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=502487847743018c93d75b401eac2ea4c4973123)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221119045159.1400244-1-chenxiaosong2@huawei.com/)）
 - [cifs: fix use-after-free on the link name](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=542228db2f28fdf775b301f2843e1fe486e7c797)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221104074441.634677-1-chenxiaosong2@huawei.com/)）
 - [cifs: return the more nuanced writeback error on close()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2b058acecf56f6b8fac781911a683219b9ca3b7b)（[邮件列表](https://lore.kernel.org/all/20220518145649.2487377-1-chenxiaosong2@huawei.com/)）
+
