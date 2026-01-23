@@ -34,6 +34,12 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 - [ddfa68d415c7 mtd: rawnand: remove misguided comment of nand_get_device()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ddfa68d415c749390e6a89f760b5edfa2774ad7b)
 - [1b513f613731 ntfs: fix BUG_ON in ntfs_lookup_inode_by_name()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1b513f613731e2afc05550e8070d79fac80c661e)（[邮件列表](https://lore.kernel.org/all/20220809064730.2316892-1-chenxiaosong2@huawei.com/)）
 - [001c179c4e26 xfs: fix NULL pointer dereference in xfs_getbmap()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=001c179c4e26d04db8c9f5e3fef9558b58356be6)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/xfs-fix-NULL-pointer-dereference-in-xfs_getbmap.html)）
+<!--
+只是为了让 check-contribution.sh 脚本不查找这几个补丁
+[63095f4f3af5 ntfs: check overflow when iterating ATTR_RECORDs](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=63095f4f3af5)
+[36a4d82dddbb ntfs: fix out-of-bounds read in ntfs_attr_find()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=36a4d82dddbb)
+[d85a1bec8e8d ntfs: fix use-after-free in ntfs_attr_find()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d85a1bec8e8d)
+-->
 - [CVE-2023-26607](https://nvd.nist.gov/vuln/detail/CVE-2023-26607): [38c9c22a85ae ntfs: fix use-after-free in ntfs_ucsncmp()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=38c9c22a85aeed28d0831f230136e9cf6fa2ed44)（[邮件列表](https://lore.kernel.org/all/20220709064511.3304299-1-chenxiaosong2@huawei.com/)）
 - [064109db53ec NFS: remove redundant code in nfs_file_write()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=064109db53ecc5d88621d02f36da9f33ca0d64bd)
 - [e6005436f6cc NFS: Don't report ENOSPC write errors twice](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e6005436f6cc9ed13288f936903f0151e5543485)（这个补丁是maintainer剽窃我的，[我的补丁请查看这里](https://chenxiaosong.com/course/kernel/my-patch/nfs-handle-writeback-errors-incorrectly.html)）
