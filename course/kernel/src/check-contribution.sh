@@ -35,7 +35,7 @@ add_commit_id() {
 	sed -i "s|\[$subject\]|[$full_commit]|g" $smb_contrib_file
 }
 
-git log --format="%h %s" --grep=chenxiaosong | while IFS= read -r full_commit; do
+git log --format="%h %s" --grep=chenxiaosong origin/master | while IFS= read -r full_commit; do
 	# delete_commit_id $full_commit
 	# add_commit_id $full_commit
 	find_missing "$full_commit"
