@@ -11,12 +11,20 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 
 # 2025年
 
-- [[RFC PATCH cifs-utils v2 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20251221152216.363567-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH 00/17] smb/client: update SMB1 maperror](https://lore.kernel.org/linux-cifs/20260121114912.2138032-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH 0/7] smb/client: update SMB1 maperror, part 2](https://lore.kernel.org/linux-cifs/20260122052402.2209206-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH cifs-utils v3 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20260107043109.1456095-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
+
+- [[PATCH] smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://lore.kernel.org/linux-cifs/20251229174943.49814-1-henrique.carvalho@suse.com/)
+  - 复现测试: [fa2fd0b10f66 smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fa2fd0b10f66)
 
 - [[PATCH v2 0/1] smb/server: fix some refcount leaks](https://lore.kernel.org/linux-cifs/20251229031518.1027240-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [f416c556997a smb/server: fix refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f416c556997a)
   - [3296c3012a9d smb/server: fix refcount leak in parse_durable_handle_context()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3296c3012a9d)
+
+- [[PATCH] smb/server: call ksmbd_session_rpc_close() on error path in create_smb2_pipe()](https://lore.kernel.org/linux-cifs/20251228145101.1010774-1-chenxiaosong.chenxiaosong@linux.dev/)
+  - [7c28f8eef5ac smb/server: call ksmbd_session_rpc_close() on error path in create_smb2_pipe()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7c28f8eef5ac)
 
 - [[PATCH v4 0/2] smb/server: fix minimum PDU size](https://lore.kernel.org/linux-cifs/20251220132551.351932-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [4c7d8eb9a79a smb/server: fix minimum SMB2 PDU size](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4c7d8eb9a79a)
