@@ -11,8 +11,8 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 
 # 2025年
 
-- [[PATCH 00/17] smb/client: update SMB1 maperror](https://lore.kernel.org/linux-cifs/20260121114912.2138032-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 0/7] smb/client: update SMB1 maperror, part 2](https://lore.kernel.org/linux-cifs/20260122052402.2209206-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH 00/17] smb/client: update SMB1 maperror](https://lore.kernel.org/linux-cifs/20260121114912.2138032-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils v3 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20260107043109.1456095-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 
