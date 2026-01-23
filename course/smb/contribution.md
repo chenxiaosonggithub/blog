@@ -13,9 +13,19 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 
 - [[RFC PATCH cifs-utils v2 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20251221152216.363567-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
+
+- [[PATCH v2 0/1] smb/server: fix some refcount leaks](https://lore.kernel.org/linux-cifs/20251229031518.1027240-1-chenxiaosong.chenxiaosong@linux.dev/)
+  - [f416c556997a smb/server: fix refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f416c556997a)
+  - [3296c3012a9d smb/server: fix refcount leak in parse_durable_handle_context()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3296c3012a9d)
+
 - [[PATCH v4 0/2] smb/server: fix minimum PDU size](https://lore.kernel.org/linux-cifs/20251220132551.351932-1-chenxiaosong.chenxiaosong@linux.dev/)
+  - [4c7d8eb9a79a smb/server: fix minimum SMB2 PDU size](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4c7d8eb9a79a)
+  - [3b9c30eb8f5a smb/server: fix minimum SMB1 PDU size](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3b9c30eb8f5a)
 
 - [[PATCH v2 0/7] smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20251211143228.172470-1-chenxiaosong.chenxiaosong@linux.dev/)
+  - [94d5b8dbc5d9 smb: move some SMB1 definitions into common/smb1pdu.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=94d5b8dbc5d9)
+  - [2b6abb893e71 smb: move File Attributes definitions into common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2b6abb893e71)
+  - [c97503321ed3 smb: update struct duplicate_extents_to_file_ex](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c97503321ed3)
   - [2e0d224d8988 smb/server: add comment to FileSystemName of FileFsAttributeInformation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2e0d224d8988)
   - [ab0347e67dac smb/client: remove DeviceType Flags and Device Characteristics definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ab0347e67dac)
   - [08c2a7d2bae9 smb: move file_notify_information to common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=08c2a7d2bae9)
@@ -31,7 +41,7 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
   - [b2b50fca34da smb/client: fix NT_STATUS_DEVICE_DOOR_OPEN value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b2b50fca34da)
   - [a1237c203f17 smb/client: fix NT_STATUS_NO_DATA_DETECTED value](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a1237c203f17)
 
-- [[PATCH v6 0/5] smb: improve search speed of SMB2 maperror](https://lore.kernel.org/linux-cifs/20251225021035.656639-1-chenxiaosong.chenxiaosong@linux.dev/)
+- [[PATCH v9 0/1] smb: improve search speed of SMB2 maperror](https://lore.kernel.org/linux-cifs/20260118091313.1988168-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [d8f52650b24d smb/client: update some SMB2 status strings](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d8f52650b24d9018dfb65d2c60e17636b077e63e)
   - [d159702c9492 smb/client: add two elements to smb2_error_map_table array](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d159702c9492de46cc1b39b3d83fd0c8a6bdb829)
   - [523ecd976632 smb: rename to STATUS_SMB_NO_PREAUTH_INTEGRITY_HASH_OVERLAP](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=523ecd976632523006c1b442e0eba4fe3c4f7e0c)
