@@ -105,11 +105,11 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 # 2023年
 
 - [[PATCH] ksmbd: fix possible refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/20230302135804.2583061-1-chenxiaosong2@huawei.com/)
-  - [CVE-2023-53061](https://nvd.nist.gov/vuln/detail/CVE-2023-53061): [ksmbd: fix possible refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2624b445544ffc1472ccabfb6ec867c199d4c95c)
+  - [CVE-2023-53061](https://nvd.nist.gov/vuln/detail/CVE-2023-53061): [2624b445544f ksmbd: fix possible refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2624b445544ffc1472ccabfb6ec867c199d4c95c)
 
 # 2022年
 
-- [cifs: fix missing unlock in cifs_file_copychunk_range()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=502487847743018c93d75b401eac2ea4c4973123)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221119045159.1400244-1-chenxiaosong2@huawei.com/)）
-- [cifs: fix use-after-free on the link name](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=542228db2f28fdf775b301f2843e1fe486e7c797)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221104074441.634677-1-chenxiaosong2@huawei.com/)）
-- [cifs: return the more nuanced writeback error on close()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2b058acecf56f6b8fac781911a683219b9ca3b7b)（[邮件列表](https://lore.kernel.org/all/20220518145649.2487377-1-chenxiaosong2@huawei.com/)）
+- [502487847743 cifs: fix missing unlock in cifs_file_copychunk_range()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=502487847743018c93d75b401eac2ea4c4973123)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221119045159.1400244-1-chenxiaosong2@huawei.com/)）
+- [542228db2f28 cifs: fix use-after-free on the link name](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=542228db2f28fdf775b301f2843e1fe486e7c797)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221104074441.634677-1-chenxiaosong2@huawei.com/)）
+- [2b058acecf56 cifs: return the more nuanced writeback error on close()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2b058acecf56f6b8fac781911a683219b9ca3b7b)（[邮件列表](https://lore.kernel.org/all/20220518145649.2487377-1-chenxiaosong2@huawei.com/)）
 
