@@ -1,17 +1,25 @@
-kernel_contrib_file=$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../contribution.md
-smb_contrib_file=$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../../smb/contribution.md
-# echo $kernel_contrib_file $smb_contrib_file
+. ~/.top-path
+blog_path=${MY_CODE_TOP_PATH}/blog
+
+kernel_contrib_file=${blog_path}/course/kernel/contribution.md
+smb_contrib_file=${blog_path}/course/smb/contribution.md
+smb_review_file=${blog_path}/en/smb-review.md
+# echo $kernel_contrib_file $smb_contrib_file $smb_review_file
 
 find_missing() {
 	local full_commit=$1
 	local subject=$(echo "$full_commit" | cut -d' ' -f2-)
 	local commit_id=$(echo "$full_commit" | cut -d' ' -f1)
 	# echo $commit_id $subject
-	if grep -Fq "$subject" "$kernel_contrib_file"; then
+	if grep -Fq "$full_commit" "$kernel_contrib_file"; then
 		# echo "[FOUND] $subject"
 		return
 	fi
-	if grep -Fq "$subject" "$smb_contrib_file"; then
+	if grep -Fq "$full_commit" "$smb_contrib_file"; then
+		# echo "[FOUND] $subject"
+		return
+	fi
+	if grep -Fq "$subject" "$smb_review_file"; then
 		# echo "[FOUND] $subject"
 		return
 	fi
@@ -36,8 +44,8 @@ add_commit_id() {
 }
 
 git log --format="%h %s" --grep=chenxiaosong origin/master | while IFS= read -r full_commit; do
-	# delete_commit_id $full_commit
-	# add_commit_id $full_commit
+	# delete_commit_id "$full_commit"
+	# add_commit_id "$full_commit"
 	find_missing "$full_commit"
 done
 
