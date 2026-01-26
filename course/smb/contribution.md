@@ -9,6 +9,10 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 
 下面按时间顺序列出所有的补丁，最新的补丁放在前面。
 
+# 我review的补丁
+
+[点击这里查看我review过的补丁](https://chenxiaosong.com/en/smb-review.html)。
+
 # 2025年
 
 - [[PATCH 0/7] smb/client: update SMB1 maperror, part 2](https://lore.kernel.org/linux-cifs/20260122052402.2209206-1-chenxiaosong.chenxiaosong@linux.dev/)
