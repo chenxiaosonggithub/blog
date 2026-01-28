@@ -1,0 +1,73 @@
+From d7bfac886937a7d93a669ea4fb61da6056fd132a Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Date: Wed, 28 Jan 2026 19:00:25 +0800
+Subject: [PATCH] xfstests add cifs/103
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+---
+ tests/cifs/103     | 43 +++++++++++++++++++++++++++++++++++++++++++
+ tests/cifs/103.out |  2 ++
+ 2 files changed, 45 insertions(+)
+ create mode 100755 tests/cifs/103
+ create mode 100644 tests/cifs/103.out
+
+diff --git a/tests/cifs/103 b/tests/cifs/103
+new file mode 100755
+index 00000000..6c8e9630
+--- /dev/null
++++ b/tests/cifs/103
+@@ -0,0 +1,43 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++# Copyright (C) 2014 SUSE Linux Products GmbH. All Rights Reserved.
++#
++# FS QA Test No. cifs/103
++#
++# Check for 97adda8b3ab703de8e4c8d27646ddd54fe22879c
++#       Fix bug which the return value by asynchronous read is error
++#
++. ./common/preamble
++_begin_fstest auto quick
++
++seq=`basename $0`
++seqres=$RESULT_DIR/$seq
++echo "QA output created by $seq"
++
++here=`pwd`
++tmp=/tmp/$$
++status=1	# failure is the default!
++
++_cleanup()
++{
++	rm -rf $TEST_DIR/$$
++}
++
++trap "_cleanup ; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++. ./common/rc
++. ./common/filter
++
++# real QA test starts here
++# _supported_fs cifs
++_require_test
++
++# create a test file
++dd if=/dev/zero of=$TEST_DIR/$$ bs=512 count=1000 oflag=direct >/dev/null 2>&1
++sync
++
++/data/xfstests-dev/src/pread-errno $TEST_DIR/$$
++
++status=0
++exit
+diff --git a/tests/cifs/103.out b/tests/cifs/103.out
+new file mode 100644
+index 00000000..51b737ed
+--- /dev/null
++++ b/tests/cifs/103.out
+@@ -0,0 +1,2 @@
++QA output created by 103
++pread -1 bytes
+-- 
+2.49.0
+
