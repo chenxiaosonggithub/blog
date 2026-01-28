@@ -1,0 +1,132 @@
+From 8f203a5581424e6b61ffa10cc3b8e79bcc610173 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Date: Wed, 28 Jan 2026 22:44:51 +0800
+Subject: [PATCH] xfstests add git/0003
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+---
+ tests/git/0003     | 43 +++++++++++++++++++++++++++++++++++++++++++
+ tests/git/0003.out | 29 +++++++++++++++++++++++++++++
+ tests/git/Makefile | 24 ++++++++++++++++++++++++
+ 3 files changed, 96 insertions(+)
+ create mode 100755 tests/git/0003
+ create mode 100644 tests/git/0003.out
+ create mode 100644 tests/git/Makefile
+
+diff --git a/tests/git/0003 b/tests/git/0003
+new file mode 100755
+index 00000000..8b853550
+--- /dev/null
++++ b/tests/git/0003
+@@ -0,0 +1,43 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++# Copyright (C) 2014 SUSE Linux Products GmbH. All Rights Reserved.
++#
++# FS QA Test No. git/0003 attributes
++#
++# Sanity test  for git 
++#
++. ./common/preamble
++_begin_fstest auto quick
++
++seq=`basename $0`
++seqres=$RESULT_DIR/$seq
++echo "QA output created by git $seq"
++
++here=`pwd`
++tmp=/tmp/$$
++status=1	# failure is the default!
++
++_cleanup()
++{
++	rm -f $tmp.*
++	rm -rf $TEST_DIR/multiuserdir
++}
++
++trap "_cleanup ; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++. ./common/rc
++. ./common/filter
++
++# real QA test starts here
++# _supported_fs cifs
++_require_test
++
++mkdir -p $TEST_DIR/$$ || _fail "failed to create test dir"
++
++# Verify root can create and list the test file
++cd /hostdata/git-2.23.0/t
++t0003-attributes.sh -i --root=$TEST_DIR/$$
++
++status=0
++exit
+diff --git a/tests/git/0003.out b/tests/git/0003.out
+new file mode 100644
+index 00000000..116d145d
+--- /dev/null
++++ b/tests/git/0003.out
+@@ -0,0 +1,29 @@
++QA output created by git 0003
++ok 1 - open-quoted pathname
++ok 2 - setup
++ok 3 - command line checks
++ok 4 - attribute test
++ok 5 - attribute matching is case sensitive when core.ignorecase=0
++ok 6 - attribute matching is case insensitive when core.ignorecase=1
++ok 7 - additional case insensitivity tests
++ok 8 - unnormalized paths
++ok 9 - relative paths
++ok 10 - prefixes are not confused with leading directories
++ok 11 - core.attributesfile
++ok 12 - attribute test: read paths from stdin
++ok 13 - attribute test: --all option
++ok 14 - attribute test: --cached option
++ok 15 - root subdir attribute test
++ok 16 - negative patterns
++ok 17 - patterns starting with exclamation
++ok 18 - "**" test
++ok 19 - "**" with no slashes test
++ok 20 - using --git-dir and --work-tree
++ok 21 - setup bare
++ok 22 - bare repository: check that .gitattribute is ignored
++ok 23 - bare repository: check that --cached honors index
++ok 24 - bare repository: test info/attributes
++ok 25 - binary macro expanded by -a
++ok 26 - query binary macro directly
++# passed all 26 test(s)
++1..26
+diff --git a/tests/git/Makefile b/tests/git/Makefile
+new file mode 100644
+index 00000000..0b89a01d
+--- /dev/null
++++ b/tests/git/Makefile
+@@ -0,0 +1,24 @@
++#
++# Copyright (c) 2003-2005 Silicon Graphics, Inc.  All Rights Reserved.
++#
++
++TOPDIR = ../..
++include $(TOPDIR)/include/builddefs
++include $(TOPDIR)/include/buildgrouplist
++
++CIFS_DIR = cifs
++TARGET_DIR = $(PKG_LIB_DIR)/$(TESTS_DIR)/$(CIFS_DIR)
++DIRT = group.list
++
++default: $(DIRT)
++
++include $(BUILDRULES)
++
++install: default
++	$(INSTALL) -m 755 -d $(TARGET_DIR)
++	$(INSTALL) -m 755 $(TESTS) $(TARGET_DIR)
++	$(INSTALL) -m 644 group.list $(TARGET_DIR)
++	$(INSTALL) -m 644 $(OUTFILES) $(TARGET_DIR)
++
++# Nothing.
++install-dev install-lib:
+-- 
+2.49.0
+
