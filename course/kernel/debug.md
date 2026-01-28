@@ -77,12 +77,11 @@ tar xvf linux-6.8.5.tar.xz
 
 内核编译时打开[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)中的配置。虚拟机中执行脚本
 <!-- public begin -->
-[`mod-cfg.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
+[`parse-cmdline.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
 <!-- public end -->
 <!-- private begin -->
-`src/mod-cfg.sh`
+`src/parse-cmdline.sh`
 <!-- private end -->
-（直接运行`bash mod-cfg.sh`可以查看使用帮助）挂载和链接模块目录
 
 # `ftrace`
 

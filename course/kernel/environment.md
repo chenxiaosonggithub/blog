@@ -740,8 +740,6 @@ systemctl restart qemu-guest-agent
 
 当启用了9p文件系统，就可以把宿主机的modules目录（当然也可以是其他任何目录）共享给虚拟机，
 具体参考[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)。虚拟机中执行脚本
-[`mod-cfg.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/mod-cfg.sh)
-（直接运行`bash mod-cfg.sh`可以查看使用帮助）挂载和链接模块目录。也可以用
 [`parse-cmdline.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
 解析`/proc/cmdline`中的参数。
 
