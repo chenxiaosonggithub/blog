@@ -1,7 +1,5 @@
 mod_cfg() {
-	local build_dir=x86_64-build
 	local mnt_point=/tmp/9p # 内核仓库的上一级目录
-	local knl_base_dir=${mnt_point}/$1 # 修改成内核代码目录
 	if findmnt ${mnt_point} >/dev/null; then
 		echo "${mnt_point} is mounted"
 		return
@@ -10,13 +8,13 @@ mod_cfg() {
 	mkdir /lib/modules -p
 	mount -t 9p -o trans=virtio 9p $mnt_point
 	local knl_vers=$(uname -r)
-	local target=${knl_base_dir}/${build_dir}/mod/lib/modules/${knl_vers}
+	local target=${mnt_point}/mod/lib/modules/${knl_vers}
 	local link_name=/lib/modules/${knl_vers}
 	rm ${link_name} -rf
 	ln -s ${target} ${link_name}
 	# 重新链接build目录
 	rm /lib/modules/${knl_vers}/build
-	ln -s ${knl_base_dir}/${build_dir}/ /lib/modules/${knl_vers}/build
+	ln -s ${mnt_point}/ /lib/modules/${knl_vers}/build
 	echo "/lib/modules/${knl_vers}/build is ready"
 }
 
