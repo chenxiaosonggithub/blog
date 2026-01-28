@@ -1,6 +1,16 @@
 smb_username=root
 smb_password=1
 
+mk_mnt_dir()
+{
+	sudo mkdir -p /tmp/test
+	sudo mkdir -p /tmp/test2
+	sudo mkdir -p /tmp/test3
+	sudo mkdir -m 777 -p /tmp/s_test
+	sudo mkdir -m 777 -p /tmp/s_test2
+	sudo mkdir -m 777 -p /tmp/s_test3
+}
+
 start_ksmbd()
 {
 	local script_path="$(realpath "${BASH_SOURCE[0]}")"
@@ -10,22 +20,17 @@ start_ksmbd()
 	sudo systemctl stop smb
 	sudo systemctl stop smbd
 
-	sudo mkdir -p /mnt/1
-	sudo mkdir -p /mnt/2
-	sudo mkdir -m 777 -p /mnt/test1
-	sudo mkdir -m 777 -p /mnt/test2
-	sudo mkdir -m 777 -p /mnt/test3
-	sudo umount /mnt/1
-	sudo umount /mnt/2
-	sudo umount /mnt/test1
-	sudo umount /mnt/test2
-	sudo umount /mnt/test3
+	sudo umount /tmp/test
+	sudo umount /tmp/test2
+	sudo umount /tmp/s_test
+	sudo umount /tmp/s_test2
+	sudo umount /tmp/s_test3
 	sudo mkfs.ext4 -F /dev/sda
 	sudo mkfs.ext4 -F /dev/sdb
 	sudo mkfs.ext4 -F /dev/sdc
-	sudo mount /dev/sda /mnt/test1
-	sudo mount /dev/sdb /mnt/test2
-	sudo mount /dev/sdc /mnt/test3
+	sudo mount /dev/sda /tmp/s_test
+	sudo mount /dev/sdb /tmp/s_test2
+	sudo mount /dev/sdc /tmp/s_test3
 
 	cp ${script_dir}/ksmbd.conf /usr/local/etc/ksmbd/ksmbd.conf
 	ksmbd.adduser --delete root # delete user
@@ -33,19 +38,4 @@ start_ksmbd()
 	sudo systemctl start ksmbd
 }
 
-read_server_ip()
-{
-	local script_path="$(realpath "${BASH_SOURCE[0]}")"
-	local script_dir="$(dirname "${script_path}")"
-	local smb_server_ip_file=${script_dir}/smb-server-ip.conf
-
-	if [[ ! -f "${smb_server_ip_file}" ]]; then
-		echo "Please create ${smb_server_ip_file}"
-		return 1
-	fi
-
-	# read the ip from config file
-	echo $(sed -n '/^[[:space:]]*$/!{p;q}' ${smb_server_ip_file})
-	return 0
-}
 

@@ -1,6 +1,7 @@
 The following are the SMB patches I have reviewed.
 
 - [Re: Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/f063be7f-7d09-4f07-9a44-7c8f1484de25@linux.dev/)
+- [Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
 - [Re: [PATCH 25/37] cifs: SMB1 split: Split SMB1 protocol defs into smb1pdu.h](https://lore.kernel.org/linux-cifs/b3895f58-2c70-441b-8975-77c121ee2950@linux.dev/)
 - [Re: generic/013 failure to Samba](https://lore.kernel.org/linux-cifs/2feaf0ac-172d-431c-805c-7b3440f1ebd5@linux.dev/)
 - [Re: generic/013 failure to Samba](https://lore.kernel.org/linux-cifs/141824e7-50ab-4072-b611-5db5fa01bb86@linux.dev/)
