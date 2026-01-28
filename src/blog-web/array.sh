@@ -308,4 +308,5 @@ comm_array=(
 	1 2 tmp/gnu-linux/smb/patch/README.md en/smb-patch.html "SMB Patches to Be Reviewed"
 	1 2 en/smb-map-error.md ~ "SMB Map Error"
 	1 2 en/smb-review.md ~ "SMB patches reviewed by ChenXiaoSong"
+	1 2 tmp/gnu-linux/smb/test/buildbot.md en/smb-buildbot.html "SMB buildbot test"
 )
