@@ -1,5 +1,11 @@
 [Please refer to `namjaejeon/ksmbd/.github/workflows/c-cpp.yml`](https://github.com/namjaejeon/ksmbd/blob/master/.github/workflows/c-cpp.yml).
 
+# kernel configs
+
+Please refer to [syzbot Linux kernel configs](https://github.com/google/syzkaller/blob/master/docs/linux/kernel_configs.md).
+
+You can directly use [`test-x86_64-config`](https://github.com/chenxiaosonggithub/tmp/blob/master/gnu-linux/kernel-config/test-x86_64-config).
+
 # smb development environment
 
 Install smb client tool software:
