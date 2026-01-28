@@ -1,5 +1,6 @@
 The following are the SMB patches I have reviewed.
 
+- [xfstests failed test cases](https://lore.kernel.org/linux-cifs/bcd3d847-c38f-4c88-af07-3da09dad476b@linux.dev/)
 - [Re: Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/f063be7f-7d09-4f07-9a44-7c8f1484de25@linux.dev/)
 - [Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
 - [Re: [PATCH 25/37] cifs: SMB1 split: Split SMB1 protocol defs into smb1pdu.h](https://lore.kernel.org/linux-cifs/b3895f58-2c70-441b-8975-77c121ee2950@linux.dev/)
