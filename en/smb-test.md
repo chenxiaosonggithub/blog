@@ -17,18 +17,12 @@ dnf install cifs-utils -y
 
 Create some necessary directories:
 ```sh
-sudo mkdir -p ~/smb-test/
-sudo mkdir -p /mnt/1
-sudo mkdir -p /mnt/2
-sudo mkdir -m 777 -p /mnt/test1
-sudo mkdir -m 777 -p /mnt/test2
-sudo mkdir -m 777 -p /mnt/test3
-sudo mkfs.ext4 -F /dev/sda
-sudo mkfs.ext4 -F /dev/sdb
-sudo mkfs.ext4 -F /dev/sdc
-sudo mount /dev/sda /mnt/test1
-sudo mount /dev/sdb /mnt/test2
-sudo mount /dev/sdc /mnt/test3
+sudo mkdir -p /tmp/test
+sudo mkdir -p /tmp/test2
+sudo mkdir -p /tmp/test3
+sudo mkdir -m 777 -p /tmp/s_test
+sudo mkdir -m 777 -p /tmp/s_test2
+sudo mkdir -m 777 -p /tmp/s_test3
 ```
 
 Create KSMBD config file [`~/smb-test/ksmbd.conf`](https://github.com/namjaejeon/cifsd-test-result/blob/master/testsuites/smb.conf):
@@ -40,21 +34,21 @@ Create KSMBD config file [`~/smb-test/ksmbd.conf`](https://github.com/namjaejeon
 	smb2 leases = yes
 	durable handles = yes
 
-[cifsd-test1]
+[test]
 	comment = content server share1
-	path = /mnt/test1
+	path = /tmp/s_test
 	writeable = yes
 	vfs objects = acl_xattr
 
-[cifsd-test2]
+[test2]
 	comment = content server share2
-	path = /mnt/test2
+	path = /tmp/s_test2
 	writeable = yes
 	vfs objects = acl_xattr
 
-[cifsd-test3]
+[test3]
 	comment = content server share3
-	path = /mnt/test3
+	path = /tmp/s_test3
 	writeable = yes
 	vfs objects = acl_xattr streams_xattr
 ```
