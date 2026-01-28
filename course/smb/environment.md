@@ -137,6 +137,21 @@ systemctl daemon-reload
 systemctl restart smb.service
 ```
 
+# Windows导出目录
+
+参考[how to mount from linux to windows 11](https://learn.microsoft.com/en-us/answers/questions/4376417/how-to-mount-from-linux-to-windows-11)。
+
+`设置 -> 网络与Internet -> 高级网络设置`，打开公用网络的`网络发现`和`xxx共享`（也可以尝试把几个网络都打开）。
+
+在文件夹上点击鼠标右键，`属性 -> 共享 -> 共享(S)...`，这时`所有者`权限已经默认添加，也可以尝试再添加`Everyone`。
+
+注意如果Windows11是以微软账户邮箱登录，则用户名是邮箱或`C:\Users`目录下的用户名缩写，密码是微软账户邮箱的密码（不是PIN码）。
+
+Linux挂载命令:
+```sh
+mount -t cifs -o username=chenx,password=微软账户邮箱密码,uid=$(id -u),gid=$(id -g) //192.168.122.106/win-test /mnt/
+```
+
 # smb客户端环境
 
 ## Linux客户端
@@ -160,6 +175,10 @@ nmblookup -S netbios_name
 ```sh
 getsebool -a | grep samba
 setsebool -P samba_enable_home_dirs=1
+
+# 挂载Windows导出的目录
+mount -t cifs -o username=chenx,password=微软账户邮箱密码,uid=$(id -u),gid=$(id -g) //192.168.122.106/win-test /mnt/
+
 # 选项: password=密码，iocharset=本机编码（如big5、utf8、cp950），codepage=远程主机编码
 # 指定挂载后文件的所有者: uid=1000,gid=1000，当前用户的id用 id $USER 查看
 # 建议用username而不是user
