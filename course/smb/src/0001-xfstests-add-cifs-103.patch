@@ -1,22 +1,94 @@
-From d7bfac886937a7d93a669ea4fb61da6056fd132a Mon Sep 17 00:00:00 2001
+From ddca8a67cf7e254b683b9bc14f1faa79c6eb8ae4 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 Date: Wed, 28 Jan 2026 19:00:25 +0800
 Subject: [PATCH] xfstests add cifs/103
 
 Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 ---
- tests/cifs/103     | 43 +++++++++++++++++++++++++++++++++++++++++++
+ .gitignore         |  1 +
+ src/Makefile       |  2 +-
+ src/pread-errno.c  | 37 +++++++++++++++++++++++++++++++++++++
+ tests/cifs/103     | 40 ++++++++++++++++++++++++++++++++++++++++
  tests/cifs/103.out |  2 ++
- 2 files changed, 45 insertions(+)
+ 5 files changed, 81 insertions(+), 1 deletion(-)
+ create mode 100644 src/pread-errno.c
  create mode 100755 tests/cifs/103
  create mode 100644 tests/cifs/103.out
 
+diff --git a/.gitignore b/.gitignore
+index 82c57f41..ff985ef0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -212,6 +212,7 @@ tags
+ /src/dio-writeback-race
+ /src/unlink-fsync
+ /src/file_attr
++/src/pread-errno
+ 
+ # Symlinked files
+ /tests/generic/035.out
+diff --git a/src/Makefile b/src/Makefile
+index d0a4106e..e7292d3c 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -36,7 +36,7 @@ LINUX_TARGETS = xfsctl bstat t_mtab getdevicesize preallo_rw_pattern_reader \
+ 	fscrypt-crypt-util bulkstat_null_ocount splice-test chprojid_fail \
+ 	detached_mounts_propagation ext4_resize t_readdir_3 splice2pipe \
+ 	uuid_ioctl t_snapshot_deleted_subvolume fiemap-fault min_dio_alignment \
+-	rw_hint
++	rw_hint pread-errno
+ 
+ EXTRA_EXECS = dmerror fill2attr fill2fs fill2fs_check scaleread.sh \
+ 	      btrfs_crc32c_forged_name.py popdir.pl popattr.py \
+diff --git a/src/pread-errno.c b/src/pread-errno.c
+new file mode 100644
+index 00000000..f1e0aab4
+--- /dev/null
++++ b/src/pread-errno.c
+@@ -0,0 +1,37 @@
++#include<stdio.h>
++#include<stdlib.h>
++#include<unistd.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#define __USE_GNU 1
++#include <fcntl.h>
++int main(int argc, char *argv[])
++{
++	int fd;
++	ssize_t len;
++	int ret;
++	int size = 512;
++	char *file=argv[1];
++
++	unsigned char *buf2;
++	ret = posix_memalign((void **)&buf2, 512, size);
++	if (ret) {
++		printf("malloc err!\n");
++		return 0;
++	}
++
++	fd = open(file, O_RDWR | O_DIRECT);
++	if(fd == -1) {
++		printf("open %s error!\n", file);
++		free(buf2);
++		return 0;
++	}
++
++	len = pread(fd, buf2, 504, 511992);
++	printf("pread %zd bytes\n", len);
++	free(buf2);
++	close(fd);
++	return 0;
++}
++
++
 diff --git a/tests/cifs/103 b/tests/cifs/103
 new file mode 100755
-index 00000000..6c8e9630
+index 00000000..764dd52f
 --- /dev/null
 +++ b/tests/cifs/103
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,40 @@
 +#!/bin/bash
 +# SPDX-License-Identifier: GPL-2.0
 +# Copyright (C) 2014 SUSE Linux Products GmbH. All Rights Reserved.
@@ -29,10 +101,7 @@ index 00000000..6c8e9630
 +. ./common/preamble
 +_begin_fstest auto quick
 +
-+seq=`basename $0`
-+seqres=$RESULT_DIR/$seq
-+echo "QA output created by $seq"
-+
++script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 +here=`pwd`
 +tmp=/tmp/$$
 +status=1	# failure is the default!
@@ -56,7 +125,7 @@ index 00000000..6c8e9630
 +dd if=/dev/zero of=$TEST_DIR/$$ bs=512 count=1000 oflag=direct >/dev/null 2>&1
 +sync
 +
-+/data/xfstests-dev/src/pread-errno $TEST_DIR/$$
++$script_dir/../../src/pread-errno $TEST_DIR/$$
 +
 +status=0
 +exit
