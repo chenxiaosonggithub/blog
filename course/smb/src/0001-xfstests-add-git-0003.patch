@@ -1,24 +1,24 @@
-From 8f203a5581424e6b61ffa10cc3b8e79bcc610173 Mon Sep 17 00:00:00 2001
+From bfea5c90125d3b7e7dca0b5f8898b3800798e2d3 Mon Sep 17 00:00:00 2001
 From: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 Date: Wed, 28 Jan 2026 22:44:51 +0800
 Subject: [PATCH] xfstests add git/0003
 
 Signed-off-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
 ---
- tests/git/0003     | 43 +++++++++++++++++++++++++++++++++++++++++++
+ tests/git/0003     | 45 +++++++++++++++++++++++++++++++++++++++++++++
  tests/git/0003.out | 29 +++++++++++++++++++++++++++++
  tests/git/Makefile | 24 ++++++++++++++++++++++++
- 3 files changed, 96 insertions(+)
+ 3 files changed, 98 insertions(+)
  create mode 100755 tests/git/0003
  create mode 100644 tests/git/0003.out
  create mode 100644 tests/git/Makefile
 
 diff --git a/tests/git/0003 b/tests/git/0003
 new file mode 100755
-index 00000000..8b853550
+index 00000000..bf47948e
 --- /dev/null
 +++ b/tests/git/0003
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,45 @@
 +#!/bin/bash
 +# SPDX-License-Identifier: GPL-2.0
 +# Copyright (C) 2014 SUSE Linux Products GmbH. All Rights Reserved.
@@ -30,10 +30,7 @@ index 00000000..8b853550
 +. ./common/preamble
 +_begin_fstest auto quick
 +
-+seq=`basename $0`
-+seqres=$RESULT_DIR/$seq
-+echo "QA output created by git $seq"
-+
++script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 +here=`pwd`
 +tmp=/tmp/$$
 +status=1	# failure is the default!
@@ -57,18 +54,23 @@ index 00000000..8b853550
 +mkdir -p $TEST_DIR/$$ || _fail "failed to create test dir"
 +
 +# Verify root can create and list the test file
-+cd /hostdata/git-2.23.0/t
++# cd $script_dir/../../../git/
++# git checkout v2.23.0
++# make configure -j`nproc`
++# ./configure --prefix=$(pwd)/install
++# make all doc -j`nproc`
++cd $script_dir/../../../git/t
 +t0003-attributes.sh -i --root=$TEST_DIR/$$
 +
 +status=0
 +exit
 diff --git a/tests/git/0003.out b/tests/git/0003.out
 new file mode 100644
-index 00000000..116d145d
+index 00000000..fd29d13d
 --- /dev/null
 +++ b/tests/git/0003.out
 @@ -0,0 +1,29 @@
-+QA output created by git 0003
++QA output created by 0003
 +ok 1 - open-quoted pathname
 +ok 2 - setup
 +ok 3 - command line checks
@@ -99,7 +101,7 @@ index 00000000..116d145d
 +1..26
 diff --git a/tests/git/Makefile b/tests/git/Makefile
 new file mode 100644
-index 00000000..0b89a01d
+index 00000000..556785b4
 --- /dev/null
 +++ b/tests/git/Makefile
 @@ -0,0 +1,24 @@
@@ -111,8 +113,8 @@ index 00000000..0b89a01d
 +include $(TOPDIR)/include/builddefs
 +include $(TOPDIR)/include/buildgrouplist
 +
-+CIFS_DIR = cifs
-+TARGET_DIR = $(PKG_LIB_DIR)/$(TESTS_DIR)/$(CIFS_DIR)
++GIT_DIR = git
++TARGET_DIR = $(PKG_LIB_DIR)/$(TESTS_DIR)/$(GIT_DIR)
 +DIRT = group.list
 +
 +default: $(DIRT)
