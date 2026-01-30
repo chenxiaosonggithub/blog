@@ -10,7 +10,10 @@
 在BIOS的“easy mode”中把“X.M.P. Disabled”改为“X.M.P.-DDR4-3600 18-22-22-42-64-1.35V”。
 然后点击右下角的“Advanced Mode(F2)”进入“Advanced Mode”，“Tweaker -> Advanced CPU Settings -> SVM Mode”改为 “Enabled”开启硬件虚拟化配置。
 
-另外再记录一下联想台式机进bios是按F1键。
+另外再记录一下我用过的机器的快捷键:
+
+- 联想台式机进bios是按F1键
+- 长城N80F3进bios设置界面按Del，进启动项目录按F10
 
 ## 双系统grub设置
 
@@ -54,10 +57,10 @@ sudo pm-suspend # 挂起
 ```sh
 sudo apt-get install wakeonlan -y
 # 验证过了换成其他ip（10.42.20.225）都可以，但最好是正确的ip
-sudo arp -s 10.42.20.210 b4:2e:99:a8:55:9e # ARP缓存过期会导致无法唤醒
+sudo arp -s 10.42.20.210 b4:2e:99:a8:55:9e # 防止ARP缓存过期导致无法唤醒
 sudo wakeonlan -i 10.42.20.210 b4:2e:99:a8:55:9e # 唤醒
-sudo arp -d 10.42.20.210 # 如果清除ARP缓存后无法唤醒
-arp | grep 210 # 这时就看不到ARP缓存
+# sudo arp -d 10.42.20.210 # 如果清除ARP缓存后无法唤醒
+# arp | grep 210 # 这时就看不到ARP缓存
 ```
 
 # virt-manager安装虚拟机 {#virt-manager}
