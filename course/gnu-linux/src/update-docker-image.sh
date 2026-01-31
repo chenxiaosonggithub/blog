@@ -1,5 +1,5 @@
-docker_name=workspace-ubuntu2404
-image_name=workspace-ubuntu:24.04
+docker_name=workspace-fedora
+image_name=workspace-fedora:latest
 if [ -f "${docker_name}.tar" ]; then
     echo "请将${docker_name}.tar重命名再运行此脚本"
     exit 1
