@@ -4,6 +4,8 @@
 
 # 安装docker
 
+## ubuntu
+
 参考[Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 
 ubuntu环境安装docker步骤如下:
@@ -16,6 +18,15 @@ curl -fsSL https://repo.huaweicloud.com/docker-ce/linux/ubuntu/gpg | sudo gpg --
 echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://repo.huaweicloud.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update -y
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+```
+
+## fedora
+
+参考[Install Docker Engine on Fedora](https://docs.docker.com/engine/install/fedora/)
+
+```sh
+sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 # 配置docker权限
