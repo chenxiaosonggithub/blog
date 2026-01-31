@@ -29,17 +29,22 @@ cp_config_file()
 	bash cp-to-home.sh
 }
 
-fedora_physical()
+common_setup()
 {
-	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
 	cp_config_file
 	clone_all_repos
 }
 
+fedora_physical()
+{
+	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
+	common_setup
+}
+
 ubuntu_physical()
 {
-	cp_config_file
-	clone_all_repos
+	# todo: apt install
+	common_setup
 }
 
 case "$distribution-$machine" in
