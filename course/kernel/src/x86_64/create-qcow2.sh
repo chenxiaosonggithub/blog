@@ -1,5 +1,6 @@
-array=(1 2 3 4)
+array=(1 2)
 image_type=`basename $(pwd)`
+qcow2_file=$(ls *.qcow2)
 dst_path=$(pwd)/../../vm/
 
 for element in ${array[@]}
@@ -10,7 +11,7 @@ do
 		exit 1
 	fi
 	rm ${dst_path}/${element}.${image_type}/image.qcow2 -rf
-	qemu-img create -F qcow2 -b $(pwd)/${image_type}.qcow2 -f qcow2 ${dst_path}${element}.${image_type}/image.qcow2
+	qemu-img create -F qcow2 -b $(pwd)/${qcow2_file} -f qcow2 ${dst_path}${element}.${image_type}/image.qcow2
 	if [ $? -ne 0 ]
 	then
 		exit 1
@@ -20,7 +21,7 @@ do
 	format_num=$(printf "%02d\n" ${element})
 	gdb_port=`expr 5550 + $element`
 	sed -i "s/00:11:22:33:44:55/00:11:22:33:44:${format_num}/g" ${dst_path}/${element}.${image_type}/start.sh
-	sed -i "s/${image_type}.qcow2/image.qcow2/g" ${dst_path}/${element}.${image_type}/start.sh
+	sed -i "s/${qcow2_file}/image.qcow2/g" ${dst_path}/${element}.${image_type}/start.sh
 	echo "-drive file=1,if=none,format=raw,cache=writeback,file.locking=off,id=dd_1 \\" >> ${dst_path}/${element}.${image_type}/start.sh
 	echo "-device scsi-hd,drive=dd_1,id=disk_1,logical_block_size=4096,physical_block_size=4096 \\" >> ${dst_path}/${element}.${image_type}/start.sh
 	echo "-drive file=2,if=none,format=raw,cache=writeback,file.locking=off,id=dd_2 \\" >> ${dst_path}/${element}.${image_type}/start.sh
