@@ -70,7 +70,14 @@ fedora_physical()
 	sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo systemctl enable --now docker
 	cfg_docker
-	echo "现在可以执行 docker pull fedora:latest"
+	echo "现在可以执行:
+	echo "	docker pull fedora:latest"
+	echo "	docker tag fedora:latest raw-fedora:latest"
+	echo "	docker tag fedora:latest workspace-fedora:latest"
+	echo "	docker rmi fedora:latest (或 docker image rm fedora:latest)"
+	echo "启动和更新镜像请查看以下两个脚本:"
+	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
+	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
 	common_setup
 	tip_fedora_perm
