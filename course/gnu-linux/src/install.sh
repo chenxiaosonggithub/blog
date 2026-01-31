@@ -70,7 +70,7 @@ fedora_physical()
 	sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo systemctl enable --now docker
 	cfg_docker
-	echo "现在可以执行:
+	echo "现在可以执行:"
 	echo "	docker pull fedora:latest"
 	echo "	docker tag fedora:latest raw-fedora:latest"
 	echo "	docker tag fedora:latest workspace-fedora:latest"
@@ -89,9 +89,23 @@ ubuntu_physical()
 	common_setup
 }
 
+fedora_docker()
+{
+	sudo dnf group install development-tools -y
+	sudo dnf -y install ncurses-devel clang llvm flex bison bc kmod pahole lld ccache openssl-devel openssl
+	sudo dnf -y install vim emacs global tmux wget
+	cd $code_path
+	wget https://ftp.gnu.org/pub/gnu/global/global-6.6.14.tar.gz
+	tar xvf global-6.6.14.tar.gz
+	rm global-6.6.14.tar.gz -rf
+}
+
 case "$distribution-$machine" in
 fedora-physical)
 	fedora_physical
+	;;
+fedora-docker)
+	fedora_docker
 	;;
 ubuntu-physical)
 	ubuntu_physical
