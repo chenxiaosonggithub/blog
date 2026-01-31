@@ -28,24 +28,24 @@
 (global-set-key [?\C-x ?h] 'help-command) ;; overrides mark-whole-buffer
 
 
-;; cp /home/sonvhi/chenxiaosong/code/cscope/contrib/xcscope/cscope-indexer /home/sonvhi/chenxiaosong/sw/cscope/bin/
+;; cp /home/chenxiaosong/code/cscope/contrib/xcscope/cscope-indexer /home/chenxiaosong/sw/cscope/bin/
 ;; 更改cscope快捷键，修改cscope/contrib/xcscope.el
-(add-to-list 'load-path "/home/sonvhi/chenxiaosong/code/cscope/contrib/xcscope")
-(setq cscope-do-not-update-database t) ;; 不自动更新
-(require 'xcscope)
+;; (add-to-list 'load-path "/home/chenxiaosong/code/cscope/contrib/xcscope")
+;; (setq cscope-do-not-update-database t) ;; 不自动更新
+;; (require 'xcscope)
 
 ;; 打开空白文件时，找不到 cscope 快捷键
-(global-set-key (kbd "C-c s =") 'cscope-find-assignments-to-this-symbol) ;; vim: cs find a
-(global-set-key (kbd "C-c s c") 'cscope-find-functions-calling-this-function) ;; vim: cs find c
-(global-set-key (kbd "C-c s C") 'cscope-find-called-functions) ;; vim: cs find d
-(global-set-key (kbd "C-c s e") 'cscope-find-egrep-pattern) ;; vim: cs find e
-(global-set-key (kbd "C-c s f") 'cscope-find-this-file) ;; vim: cs find f
-(global-set-key (kbd "C-c s g") 'cscope-find-global-definition) ;; vim: cs find g
-(global-set-key (kbd "C-c s i") 'cscope-find-files-including-file) ;; vim: cs find i
-(global-set-key (kbd "C-c s s") 'cscope-find-this-symbol);; vim: cs find s
-(global-set-key (kbd "C-c s t") 'cscope-find-this-text-string) ;; vim: cs find t
-(global-set-key (kbd "C-c s u") 'cscope-pop-mark)
-(global-set-key (kbd "C-c s j") 'cscope-select-entry-other-window)
+;; (global-set-key (kbd "C-c s =") 'cscope-find-assignments-to-this-symbol) ;; vim: cs find a
+;; (global-set-key (kbd "C-c s c") 'cscope-find-functions-calling-this-function) ;; vim: cs find c
+;; (global-set-key (kbd "C-c s C") 'cscope-find-called-functions) ;; vim: cs find d
+;; (global-set-key (kbd "C-c s e") 'cscope-find-egrep-pattern) ;; vim: cs find e
+;; (global-set-key (kbd "C-c s f") 'cscope-find-this-file) ;; vim: cs find f
+;; (global-set-key (kbd "C-c s g") 'cscope-find-global-definition) ;; vim: cs find g
+;; (global-set-key (kbd "C-c s i") 'cscope-find-files-including-file) ;; vim: cs find i
+;; (global-set-key (kbd "C-c s s") 'cscope-find-this-symbol);; vim: cs find s
+;; (global-set-key (kbd "C-c s t") 'cscope-find-this-text-string) ;; vim: cs find t
+;; (global-set-key (kbd "C-c s u") 'cscope-pop-mark)
+;; (global-set-key (kbd "C-c s j") 'cscope-select-entry-other-window)
 
 ;; gtags
 ;; sudo apt install global -y
@@ -58,6 +58,7 @@
 (global-set-key (kbd "C-c g a") 'gtags-find-with-grep)
 (global-set-key (kbd "C-c g o") 'gtags-select-tag-other-window)
 
+;; vim
 (global-set-key (kbd "C-c e t") 'evil-mode) ;; toggle
 (global-set-key (kbd "C-c e z c") 'evil-close-fold)
 (global-set-key (kbd "C-c e z m") 'evil-close-folds)
@@ -82,5 +83,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(add-to-list 'load-path "/home/sonvhi/chenxiaosong/code/global")
+;; https://www.gnu.org/software/global/download.html
+;; https://ftp.gnu.org/pub/gnu/global/
+;; https://github.com/harai/gnu-global
+(add-to-list 'load-path "/home/chenxiaosong/code/global-6.6.14")
 (require 'gtags)
