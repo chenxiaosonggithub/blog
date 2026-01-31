@@ -111,12 +111,21 @@ fedora_docker()
 	cp $code_path/tmp/gnu-linux/kernel/etc-qemu-ifup /etc/qemu-ifup
 }
 
+fedora_vm()
+{
+	# fedora 启动的时候等待: A start job is running for /dev/zram0，解决办法: 删除 zram 的配置文件
+	mv /usr/lib/systemd/zram-generator.conf /usr/lib/systemd/zram-generator.conf.bak
+}
+
 case "$distribution-$machine" in
 fedora-physical)
 	fedora_physical
 	;;
 fedora-docker)
 	fedora_docker
+	;;
+fedora-vm)
+	fedora_vm
 	;;
 ubuntu-physical)
 	ubuntu_physical
