@@ -10,7 +10,7 @@ Linux下一切皆文件，所有的配置选项也都是文件。
 
 把我的[个人笔记仓库](https://gitee.com/chenxiaosonggitee/blog)clone到本地，
 进入到目录[`config-file`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/gnu-linux/src/config-file)，
-执行脚本[`cp-to.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/config-file/cp-to.sh)
+执行脚本[`cp-to-home.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/gnu-linux/src/config-file/cp-to-home.sh)
 复制配置文件到家目录下。
 
 # `.bash_profile`
