@@ -35,9 +35,18 @@ fedora_physical()
 	clone_all_repos
 }
 
+ubuntu_physical()
+{
+	cp_config_file
+	clone_all_repos
+}
+
 case "$distribution-$machine" in
 fedora-physical)
 	fedora_physical
+	;;
+ubuntu-physical)
+	ubuntu_physical
 	;;
 *)
 	echo "Invalid argument: $distribution $machine"
