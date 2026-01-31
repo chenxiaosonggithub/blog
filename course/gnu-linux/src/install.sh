@@ -5,7 +5,8 @@ fi
 distribution=$1
 machine=$2
 
-code_path=/home/chenxiaosong/code/
+top_path=/home/chenxiaosong
+code_path=$top_path/code/
 . ${code_path}/blog/src/blog-web/repos.sh
 . ${code_path}/private-blog/script/repos.sh
 
@@ -93,11 +94,21 @@ fedora_docker()
 {
 	sudo dnf group install development-tools -y
 	sudo dnf -y install ncurses-devel clang llvm flex bison bc kmod pahole lld ccache openssl-devel openssl
+	sudo dnf -y bridge-utils iptables dnsmasq net-tools
 	sudo dnf -y install vim emacs global tmux wget
+	sudo dnf install @virtualization -y
+
 	cd $code_path
 	wget https://ftp.gnu.org/pub/gnu/global/global-6.6.14.tar.gz
 	tar xvf global-6.6.14.tar.gz
 	rm global-6.6.14.tar.gz -rf
+
+	mkdir -p $top_path/qemu-kernel/bash-image/fedora
+	mkdir -p $top_path/qemu-kernel/vm/1.fedora
+	mkdir -p $top_path/qemu-kernel/vm/2.fedora
+	cp $code_path/blog/course/kernel/src/x86_64/update-base.sh $top_path/qemu-kernel/bash-image/fedora
+	cp $code_path/blog/course/kernel/src/x86_64/create-qcow2.sh $top_path/qemu-kernel/bash-image/fedora
+	cp $code_path/tmp/gnu-linux/kernel/etc-qemu-ifup /etc/qemu-ifup
 }
 
 case "$distribution-$machine" in
