@@ -6,7 +6,8 @@ distribution=$1
 machine=$2
 
 code_path=/home/chenxiaosong/code/
-. $code_path/blog/src/blog-web/repos.sh
+. ${code_path}/blog/src/blog-web/repos.sh
+. ${code_path}/private-blog/script/repos.sh
 
 clone_all_repos()
 {
