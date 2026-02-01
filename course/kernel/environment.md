@@ -630,6 +630,19 @@ sudo apt-get install -y git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev
 sudo apt-get install -y git-email libaio-dev libbluetooth-dev libcapstone-dev libbrlapi-dev libbz2-dev libcap-ng-dev libcurl4-gnutls-dev libgtk-3-dev libibverbs-dev libjpeg8-dev libncurses5-dev libnuma-dev librbd-dev librdmacm-dev libsasl2-dev libsdl2-dev libseccomp-dev libsnappy-dev libssh-dev libvde-dev libvdeplug-dev libvte-2.91-dev libxen-dev liblzo2-dev valgrind xfslibs-dev libnfs-dev libiscsi-dev
 ```
 
+fedora编译所需软件:
+```sh
+yum install git glib2-devel libfdt-devel pixman-devel zlib-devel bzip2 ninja-build python3 python3-tomli -y
+# 下面是推荐安装的软件
+sudo yum install -y libaio-devel libcap-ng-devel libiscsi-devel capstone-devel \
+                 gtk3-devel vte291-devel ncurses-devel \
+                 libseccomp-devel nettle-devel libattr-devel libjpeg-devel \
+                 brlapi-devel libgcrypt-devel lzo-devel snappy-devel \
+                 librdmacm-devel libibverbs-devel cyrus-sasl-devel libpng-devel \
+                 libuuid-devel pulseaudio-libs-devel curl-devel libssh-devel \
+                 systemtap-sdt-devel libusbx-devel # libsdl2-devel
+```
+
 <!-- public begin -->
 CentOS发行版安装编译qemu所需的软件:
 ```sh
@@ -659,12 +672,13 @@ make
 ```sh
 git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
-git submodule init
-git submodule update --recursive
+# git submodule init
+# git submodule update --recursive
 mkdir build
 cd build/
-../configure --enable-kvm --enable-virtfs --prefix=/home/sonvhi/chenxiaosong/sw/qemu/
+../configure --enable-kvm --enable-virtfs --prefix=/home/chenxiaosong/sw/qemu/
 make -j`nproc`
+make install -j`nproc`
 ```
 
 ## qemu配置 {#qemu-config}
