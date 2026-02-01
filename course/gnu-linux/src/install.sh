@@ -61,6 +61,17 @@ cfg_docker()
 	sudo systemctl restart docker
 }
 
+cfg_qemu()
+{
+	mkdir -p $top_path/qemu-kernel/bash-image/fedora
+	mkdir -p $top_path/qemu-kernel/vm/1.fedora
+	mkdir -p $top_path/qemu-kernel/vm/2.fedora
+	cp $code_path/blog/course/kernel/src/x86_64/update-base.sh $top_path/qemu-kernel/bash-image/fedora
+	cp $code_path/blog/course/kernel/src/x86_64/create-qcow2.sh $top_path/qemu-kernel/bash-image/fedora
+	cp $code_path/tmp/gnu-linux/kernel/etc-qemu-ifup /etc/qemu-ifup
+	sudo chmod 755 /etc/qemu-ifup
+}
+
 fedora_physical()
 {
 	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
@@ -88,6 +99,15 @@ ubuntu_physical()
 {
 	# todo: apt install
 	common_setup
+
+	echo "现在可以执行:"
+	echo "	docker pull ubuntu:24.04"
+	echo "	docker tag ubuntu:24.04 raw-ubuntu:24.04"
+	echo "	docker tag ubuntu:24.04 workspace-ubuntu:24.04"
+	echo "	docker rmi ubuntu:24.04 (或 docker image rm ubuntu:24.04)"
+	echo "启动和更新镜像请参考以下两个脚本(需要修改docker_name和image_name):"
+	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
+	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 }
 
 fedora_docker()
@@ -103,20 +123,65 @@ fedora_docker()
 	tar xvf global-6.6.14.tar.gz
 	rm global-6.6.14.tar.gz -rf
 
-	mkdir -p $top_path/qemu-kernel/bash-image/fedora
-	mkdir -p $top_path/qemu-kernel/vm/1.fedora
-	mkdir -p $top_path/qemu-kernel/vm/2.fedora
-	cp $code_path/blog/course/kernel/src/x86_64/update-base.sh $top_path/qemu-kernel/bash-image/fedora
-	cp $code_path/blog/course/kernel/src/x86_64/create-qcow2.sh $top_path/qemu-kernel/bash-image/fedora
-	cp $code_path/tmp/gnu-linux/kernel/etc-qemu-ifup /etc/qemu-ifup
-	sudo chmod 755 /etc/qemu-ifup
+	cfg_qemu
+}
+
+ubuntu_docker()
+{
+	apt-get update -y
+	apt install -y sudo
+	sudo apt install -y vim git build-essential qemu-system flex bison bc kmod pahole libelf-dev libssl-dev libncurses-dev zstd
+
+	apt install -y language-pack-zh-hans fonts-wqy-zenhei fonts-wqy-microhei
+	echo "export LANG=zh_CN.UTF-8" >> ~/.bashrc
+	echo "export LANGUAGE=zh_CN:zh" >> ~/.bashrc
+	echo "export LC_ALL=zh_CN.UTF-8" >> ~/.bashrc
+
+	apt install -y net-tools iputils-ping openssh-client openssh-server
+	# todo
+	echo "修改 /etc/ssh/sshd_config # PermitRootLogin prohibit-password 改为 PermitRootLogin yes"
+	service ssh restart # docker 中不能使用 systemctl 启动 ssh
+
+	apt install bash-completion -y # 为了解决docker 中git不会自动补全
+	echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
+
+	apt install bridge-utils iptables dnsmasq net-tools -y
+	cfg_qemu
+
+	source ~/.bashrc
 }
 
 fedora_vm()
 {
-	sudo dnf install -y git
 	# fedora 启动的时候等待: A start job is running for /dev/zram0，解决办法: 删除 zram 的配置文件
 	mv /usr/lib/systemd/zram-generator.conf /usr/lib/systemd/zram-generator.conf.bak
+
+	sudo dnf install -y git samba cifs-utils
+	sudo dnf group install development-tools -y
+	sudo yum install -y acl attr automake bc dbench dump e2fsprogs fio gawk gcc \
+		gdbm-devel git indent kernel-devel libacl-devel libaio-devel \
+		libcap-devel libtool liburing-devel libuuid-devel lvm2 make psmisc \
+		python3 quota sed sqlite udftools  xfsprogs
+	sudo yum -y install btrfs-progs exfatprogs f2fs-tools ocfs2-tools xfsdump xfsprogs-devel
+
+	mkdir -p /home/chenxiaosong/code
+	cd /home/chenxiaosong/code
+	git clone https://gitee.com/chenxiaosonggitee/blog.git
+	cd /home/chenxiaosong/code
+	git clone https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git
+	cd /home/chenxiaosong/code/blog/course/gnu-linux/src/config-file
+	bash cp-to-home.sh
+	cd /home/chenxiaosong/code/blog/course/kernel/src/script
+	command cp parse-cmdline.sh ~
+
+	# samba
+	command cp /home/chenxiaosong/code/blog/course/smb/src/test/smb.conf /etc/samba/
+	command cp /home/chenxiaosong/code/blog/course/smb/src/samba-svr-setup.sh ~
+	bash ~/samba-svr-setup.sh
+	printf "1\n1\n" | pdbedit -a -u root # -a: 新增，这里的用户名必须是系统用户名（在/etc/passwd中有）
+
+	# ksmbd
+	command cp /home/chenxiaosong/code/blog/course/smb/src/ksmbd-svr-setup.sh ~
 }
 
 case "$distribution-$machine" in
@@ -131,6 +196,9 @@ fedora-vm)
 	;;
 ubuntu-physical)
 	ubuntu_physical
+	;;
+ubuntu-docker)
+	ubuntu_docker
 	;;
 *)
 	echo "Invalid argument: $distribution $machine"
