@@ -117,6 +117,7 @@ fedora_docker()
 	sudo dnf -y install bridge-utils iptables dnsmasq net-tools
 	sudo dnf -y install vim emacs global tmux wget ps ping
 	sudo dnf install @virtualization -y
+	sudo dnf install -y nginx pandoc jq httpd-tools
 
 	cd $code_path
 	wget https://ftp.gnu.org/pub/gnu/global/global-6.6.14.tar.gz
