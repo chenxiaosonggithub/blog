@@ -94,8 +94,8 @@ fedora_docker()
 {
 	sudo dnf group install development-tools -y
 	sudo dnf -y install ncurses-devel clang llvm flex bison bc kmod pahole lld ccache openssl-devel openssl
-	sudo dnf -y bridge-utils iptables dnsmasq net-tools
-	sudo dnf -y install vim emacs global tmux wget
+	sudo dnf -y install bridge-utils iptables dnsmasq net-tools
+	sudo dnf -y install vim emacs global tmux wget ps ping
 	sudo dnf install @virtualization -y
 
 	cd $code_path
@@ -109,10 +109,12 @@ fedora_docker()
 	cp $code_path/blog/course/kernel/src/x86_64/update-base.sh $top_path/qemu-kernel/bash-image/fedora
 	cp $code_path/blog/course/kernel/src/x86_64/create-qcow2.sh $top_path/qemu-kernel/bash-image/fedora
 	cp $code_path/tmp/gnu-linux/kernel/etc-qemu-ifup /etc/qemu-ifup
+	sudo chmod 755 /etc/qemu-ifup
 }
 
 fedora_vm()
 {
+	sudo dnf install -y git
 	# fedora 启动的时候等待: A start job is running for /dev/zram0，解决办法: 删除 zram 的配置文件
 	mv /usr/lib/systemd/zram-generator.conf /usr/lib/systemd/zram-generator.conf.bak
 }
