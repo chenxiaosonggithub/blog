@@ -125,6 +125,7 @@ ubuntu_physical()
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
 	cp /home/chenxiaosong/code/tmp/gnu-linux/ubuntu-install/* ~ # 10.42.20.206
+	install_code_server
 }
 
 fedora_docker()
@@ -136,13 +137,15 @@ fedora_docker()
 	sudo dnf install @virtualization -y
 	sudo dnf install -y nginx pandoc jq httpd-tools
 
-	cd $code_path
-	wget https://ftp.gnu.org/pub/gnu/global/global-6.6.14.tar.gz
-	tar xvf global-6.6.14.tar.gz
-	rm global-6.6.14.tar.gz -rf
+	if [ ! -d "$code_path/global-6.6.14" ]; then
+		cd $code_path
+		wget https://ftp.gnu.org/pub/gnu/global/global-6.6.14.tar.gz
+		tar xvf global-6.6.14.tar.gz
+		rm global-6.6.14.tar.gz -rf
+	fi
 
 	cfg_qemu
-	install_code_server
+	cp_config_file
 }
 
 ubuntu_docker()
@@ -165,6 +168,7 @@ ubuntu_docker()
 
 	apt install bridge-utils iptables dnsmasq net-tools -y
 	cfg_qemu
+	cp_config_file
 
 	source ~/.bashrc
 }
