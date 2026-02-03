@@ -41,11 +41,18 @@ tip_fedora_perm()
 	echo
 }
 
-common_setup()
+physical_common()
 {
 	cp_config_file
 	clone_all_repos
 	sudo chmod 700 /bin/systemctl
+}
+
+docker_common()
+{
+	cp /home/chenxiaosong/code/blog/course/kernel/src/build.sh /home/chenxiaosong/code/
+	echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
+	source ~/.bashrc
 }
 
 cfg_docker()
@@ -85,7 +92,7 @@ fedora_physical()
 {
 	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
 
-	common_setup
+	physical_common
 
 	# 安装docker, 需要国外的网络
 	export  http_proxy=http://10.42.20.206:7890
@@ -112,7 +119,7 @@ fedora_physical()
 ubuntu_physical()
 {
 	# todo: apt install
-	common_setup
+	physical_common
 
 	cfg_docker
 	echo "现在可以执行:"
@@ -136,6 +143,7 @@ fedora_docker()
 	sudo dnf -y install vim emacs global tmux wget ps ping
 	sudo dnf install @virtualization -y
 	sudo dnf install -y nginx pandoc jq httpd-tools
+	sudo dnf install bash-completion -y
 
 	if [ ! -d "$code_path/global-6.6.14" ]; then
 		cd $code_path
@@ -146,6 +154,7 @@ fedora_docker()
 
 	cfg_qemu
 	cp_config_file
+	docker_common
 }
 
 ubuntu_docker()
@@ -153,6 +162,7 @@ ubuntu_docker()
 	apt-get update -y
 	apt install -y sudo
 	sudo apt install -y vim git build-essential qemu-system flex bison bc kmod pahole libelf-dev libssl-dev libncurses-dev zstd
+	apt install bash-completion -y # 为了解决docker 中git不会自动补全
 
 	apt install -y language-pack-zh-hans fonts-wqy-zenhei fonts-wqy-microhei
 	echo "export LANG=zh_CN.UTF-8" >> ~/.bashrc
@@ -163,14 +173,11 @@ ubuntu_docker()
 	sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
 	service ssh restart # docker 中不能使用 systemctl 启动 ssh
 
-	apt install bash-completion -y # 为了解决docker 中git不会自动补全
-	echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
-
 	apt install bridge-utils iptables dnsmasq net-tools -y
 	cfg_qemu
 	cp_config_file
 
-	source ~/.bashrc
+	docker_common
 }
 
 fedora_vm()
