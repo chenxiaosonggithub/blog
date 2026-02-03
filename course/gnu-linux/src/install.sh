@@ -72,9 +72,21 @@ cfg_qemu()
 	sudo chmod 755 /etc/qemu-ifup
 }
 
+install_code_server()
+{
+	curl -fsSL https://code-server.dev/install.sh | sh
+	sudo systemctl enable --now code-server@$USER
+	echo "请修改 ${HOME}/.config/code-server/config.yaml, 当不需要密码时修改成auth: none"
+	echo "然后再执行 sudo systemctl restart code-server@$USER"
+	echo "浏览器输入http://localhost:8888（8888是config.yaml配置文件中配置的端口）"
+}
+
 fedora_physical()
 {
 	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
+
+	common_setup
+
 	# 安装docker, 需要国外的网络
 	export  http_proxy=http://10.42.20.206:7890
 	export https_proxy=http://10.42.20.206:7890
@@ -91,11 +103,10 @@ fedora_physical()
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
-	common_setup
-
 	cp /home/chenxiaosong/code/tmp/gnu-linux/fedora-install/* ~ # 10.42.20.210
 
 	tip_fedora_perm
+	install_code_server
 }
 
 ubuntu_physical()
@@ -103,8 +114,7 @@ ubuntu_physical()
 	# todo: apt install
 	common_setup
 
-	cp /home/chenxiaosong/code/tmp/gnu-linux/ubuntu-install/* ~ # 10.42.20.206
-
+	cfg_docker
 	echo "现在可以执行:"
 	echo "	docker pull ubuntu:24.04"
 	echo "	docker tag ubuntu:24.04 raw-ubuntu:24.04"
@@ -113,6 +123,8 @@ ubuntu_physical()
 	echo "启动和更新镜像请参考以下两个脚本(需要修改docker_name和image_name):"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
+
+	cp /home/chenxiaosong/code/tmp/gnu-linux/ubuntu-install/* ~ # 10.42.20.206
 }
 
 fedora_docker()
@@ -130,6 +142,7 @@ fedora_docker()
 	rm global-6.6.14.tar.gz -rf
 
 	cfg_qemu
+	install_code_server
 }
 
 ubuntu_docker()
