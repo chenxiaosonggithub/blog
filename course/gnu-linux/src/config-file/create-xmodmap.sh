@@ -1,6 +1,9 @@
+! 2026.02.03 长城笔记本n80f3
+
 xmodmap -pke > origin_xmodmap.txt
 
 cat <<EOF >> origin_xmodmap.txt
+
 clear shift  
 clear lock   
 clear control
@@ -21,7 +24,7 @@ clear mod5
 ! mod4        Super_L (0x85),  Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
 ! mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
 
-add shift       = Shift_L  Shift_R
+add shift       = Shift_L Shift_R
 add lock        = Caps_Lock
 add control     = Control_L Control_R
 add mod1        = Alt_L Alt_R Meta_L
