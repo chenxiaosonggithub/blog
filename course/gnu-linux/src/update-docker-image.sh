@@ -22,3 +22,4 @@ echo -e "\n导入镜像${image_name}..."
 cat ${docker_name}.tar | docker import - ${image_name} # 导入镜像
 echo -e "\n请确认镜像${image_name}是否导入成功:"
 docker image ls # 查看镜像是否导入成功
+mv ${docker_name}.tar ${docker_name}.tar-$(date +"%Y%m%d-%H%M%S")
