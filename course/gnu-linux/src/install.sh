@@ -92,6 +92,9 @@ fedora_physical()
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
 	common_setup
+
+	cp /home/chenxiaosong/code/tmp/gnu-linux/fedora-install/* ~ # 10.42.20.210
+
 	tip_fedora_perm
 }
 
@@ -99,6 +102,8 @@ ubuntu_physical()
 {
 	# todo: apt install
 	common_setup
+
+	cp /home/chenxiaosong/code/tmp/gnu-linux/ubuntu-install/* ~ # 10.42.20.206
 
 	echo "现在可以执行:"
 	echo "	docker pull ubuntu:24.04"
@@ -139,8 +144,7 @@ ubuntu_docker()
 	echo "export LC_ALL=zh_CN.UTF-8" >> ~/.bashrc
 
 	apt install -y net-tools iputils-ping openssh-client openssh-server
-	# todo
-	echo "修改 /etc/ssh/sshd_config # PermitRootLogin prohibit-password 改为 PermitRootLogin yes"
+	sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
 	service ssh restart # docker 中不能使用 systemctl 启动 ssh
 
 	apt install bash-completion -y # 为了解决docker 中git不会自动补全
