@@ -1,5 +1,3 @@
-! 2021.08.21 xps13 9305
-
 keycode   8 =
 keycode   9 = Escape NoSymbol Escape
 keycode  10 = 1 exclam 1 exclam
@@ -248,7 +246,6 @@ keycode 252 =
 keycode 253 =
 keycode 254 = XF86WWAN NoSymbol XF86WWAN
 keycode 255 = XF86RFKill NoSymbol XF86RFKill
-
 clear shift  
 clear lock   
 clear control
@@ -258,6 +255,8 @@ clear mod3
 clear mod4   
 clear mod5   
 
+! xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
+ 
 ! shift       Shift_L (0x32),  Shift_R (0x3e)
 ! lock        Caps_Lock (0x42)
 ! control     Control_L (0x25),  Control_R (0x69)
@@ -267,7 +266,6 @@ clear mod5
 ! mod4        Super_L (0x85),  Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
 ! mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
 
-! xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
 add shift       = Shift_L  Shift_R
 add lock        = Caps_Lock
 add control     = Control_L Control_R
@@ -276,5 +274,4 @@ add mod2        = Num_Lock
 ! add mod3      
 add mod4        = Super_L Super_R Super_L Hyper_L
 add mod5        = ISO_Level3_Shift Mode_switch
-
 

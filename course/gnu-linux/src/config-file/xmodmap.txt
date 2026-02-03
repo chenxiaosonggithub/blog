@@ -13,18 +13,14 @@ clear mod5
 keycode 203 =
 ! Super_L to Mode_switch
 keycode 133 = Mode_switch
-! Control_L to Super_L
-keycode  37 = Super_L NoSymbol Super_L
-! Control_R to Mode_switch
-keycode  105 = Mode_switch
-! apostrophe to Control_R
+! Control_L to Caps_Lock
+keycode  37 = Caps_Lock
+! Memu to Mode_switch
+keycode 135 = Mode_switch
+! apostrophe(') to Control_R
 keycode 48 = Control_R
 ! Caps_Lock to Control_L
 keycode 66 = Control_L
-! Alt_R to Insert
-! keycode 108 = Alt_R Alt_R Insert Insert
-! Fn+Delete to Caps_Lock
-keycode 119 = NoSymbol NoSymbol Caps_Lock Caps_Lock
 
 ! add shift       = Shift_L  Shift_R
 add lock        = Caps_Lock
