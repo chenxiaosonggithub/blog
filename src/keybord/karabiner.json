@@ -750,8 +750,7 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": [
-                    ],
+                    "simple_modifications": [],
                     "treat_as_built_in_keyboard": false
                 },
                 {
@@ -965,7 +964,9 @@
                     },
                     "to": [
                         {
-                            "key_code": "vk_none"
+                            "software_function": {
+                                "iokit_power_management_sleep_system": {}
+                            }
                         }
                     ]
                 },
