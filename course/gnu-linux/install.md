@@ -51,8 +51,8 @@ sudo ethtool enp67s0 | grep Wake-on
   # Wake-on: g # d为关闭g为开启
 sudo ethtool -s enp67s0 wol g # d为关闭g为开启
 sudo apt-get install pm-utils -y # pm-suspend
-sudo pm-suspend # 挂起
-sudo systemctl suspend # fedora
+sudo pm-suspend # ubuntu休眠
+sudo systemctl suspend # fedora休眠
 ```
 
 客户端:
