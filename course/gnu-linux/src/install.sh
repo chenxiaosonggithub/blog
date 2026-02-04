@@ -123,7 +123,7 @@ fedora_physical()
 ubuntu_physical()
 {
 	sudo apt-get update -y
-	sudo apt install -y openssh-server net-tools git virt-manager vim tmux
+	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils
 
 	physical_common
 
