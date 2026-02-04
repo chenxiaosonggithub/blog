@@ -13,6 +13,8 @@ ESP分区(UEFI System partition)用于采用了UEFI BIOS的电脑系统，用来
 
 virt-manager中安装win11，默认分辨率太低，还要在windows中安装[Windows SPICE Guest Tools](https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe)，[参考这个网页](https://www.spice-space.org/download.html)。
 
+[查看微软账号中的设备中查看BitLocker 恢复密钥](https://account.microsoft.com/devices?lang=zh-CN#main-content-landing-react)。
+
 # wsl
 
 应用商店中安装wsl（不需要翻墙），打开`Turn Windows features on or off` 中的wsl
