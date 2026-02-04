@@ -77,6 +77,12 @@ cfg_qemu()
 	sudo chmod 755 /etc/qemu-ifup
 }
 
+cfg_proxy()
+{
+	export  http_proxy=http://10.42.20.206:7890
+	export https_proxy=http://10.42.20.206:7890
+}
+
 install_code_server()
 {
 	curl -fsSL https://code-server.dev/install.sh | sh
@@ -94,8 +100,7 @@ fedora_physical()
 	physical_common
 
 	# 安装docker, 需要国外的网络
-	export  http_proxy=http://10.42.20.206:7890
-	export https_proxy=http://10.42.20.206:7890
+	cfg_proxy
 	sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
 	sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	sudo systemctl enable --now docker
@@ -117,9 +122,26 @@ fedora_physical()
 
 ubuntu_physical()
 {
-	# todo: apt install
+	sudo apt-get update -y
+	sudo apt install -y openssh-server net-tools git virt-manager 
+
 	physical_common
 
+	cfg_proxy
+	sudo apt update -y
+	sudo apt install ca-certificates curl -y
+	sudo install -m 0755 -d /etc/apt/keyrings
+	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc # 可以要尝试多次
+	sudo chmod a+r /etc/apt/keyrings/docker.asc
+	sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+	sudo apt update -y
+	sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y # 最新版本
 	cfg_docker
 	echo "现在可以执行:"
 	echo "	docker pull ubuntu:24.04"
