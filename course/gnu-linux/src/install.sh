@@ -35,9 +35,7 @@ tip_fedora_perm()
 	echo
 	echo "virt-manager可能要先在fedora本机上操作，如果远程在ubuntu上操作可能有权限问题"
 	echo "如果安装了virt-manager请修改 /etc/group"
-	echo "	qemu:x:107:chenxiaosong (增加)"
 	echo "	libvirt:x:988:chenxiaosong (增加)"
-	echo "	kvm:x:36:qemu (这个不用改)"
 	echo
 }
 
