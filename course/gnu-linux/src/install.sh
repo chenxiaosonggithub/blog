@@ -114,7 +114,7 @@ fedora_physical()
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
-	cp /home/chenxiaosong/code/tmp/gnu-linux/fedora-install/* ~ # 10.42.20.210
+	# cp /home/chenxiaosong/code/tmp/gnu-linux/aorus-install/* ~ # 10.42.20.210
 
 	tip_fedora_perm
 	install_code_server
@@ -123,7 +123,7 @@ fedora_physical()
 ubuntu_physical()
 {
 	sudo apt-get update -y
-	sudo apt install -y openssh-server net-tools git virt-manager 
+	sudo apt install -y openssh-server net-tools git virt-manager vim tmux
 
 	physical_common
 
@@ -152,7 +152,9 @@ EOF
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
-	cp /home/chenxiaosong/code/tmp/gnu-linux/ubuntu-install/* ~ # 10.42.20.206
+	echo "执行以下脚本复制脚本:"
+	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/tianyi-install/* ~ # 10.42.20.206"
+	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/aorus-install/* ~ # 10.42.20.210"
 	install_code_server
 }
 
