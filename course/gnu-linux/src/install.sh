@@ -91,6 +91,7 @@ install_code_server()
 fedora_physical()
 {
 	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
+	sudo systemctl restart sshd
 
 	physical_common
 
