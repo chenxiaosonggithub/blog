@@ -50,6 +50,7 @@ physical_common()
 	echo "执行以下脚本复制脚本:"
 	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/tianyi/* ~ # 10.42.20.206"
 	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/aorus/* ~ # 10.42.20.210"
+	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/chown-blog.sh ~"
 }
 
 docker_common()
@@ -65,10 +66,10 @@ cfg_docker()
 	sudo usermod -aG docker $USER
 	sudo mkdir /etc/systemd/system/docker.service.d/
 	sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf <<-'EOF'
-	[Service]
-	 Environment="HTTP_PROXY=http://10.42.20.206:7890/"
-	Environment="HTTPS_PROXY=http://10.42.20.206:7890/"
-	EOF
+[Service]
+ Environment="HTTP_PROXY=http://10.42.20.206:7890/"
+Environment="HTTPS_PROXY=http://10.42.20.206:7890/"
+EOF
 	sudo systemctl daemon-reload
 	sudo systemctl restart docker
 }
