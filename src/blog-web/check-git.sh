@@ -203,6 +203,7 @@ check_git() {
 
 . ${code_path}/blog/src/blog-web/repos.sh
 . ${code_path}/private-blog/script/repos.sh
+bash ${code_path}/tmp/gnu-linux/install/chown-blog.sh
 element_count="${#repos_array[@]}" # 总个数
 count_per_line=2
 for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
