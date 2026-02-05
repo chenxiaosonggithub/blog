@@ -29,6 +29,7 @@ Linux下安装VMware时需要注意的是`/tmp`目录的挂载不能在`/etc/fst
 <!-- public end -->
 - [Virtual Machine Manager](https://virt-manager.org/)。这个虚拟机软件只用在Linux平台上，如果你物理机上安装的操作系统是Linux，那么使用这个软件运行虚拟机就比较合适。比如在Ubuntu上使用命令`sudo apt-get install qemu qemu-kvm virt-manager qemu-system -y`安装（需要重启才能以非root用户启动）。请参考[《安装GNU/Linux发行版》](https://chenxiaosong.com/course/gnu-linux/install.html#virt-manager)。
 - [UTM](https://mac.getutm.app/)。只针对苹果电脑系统，从[github](https://docs.getutm.app/installation/macos/)下载安装包。建议在配置比较高（尤其是内存）的苹果电脑上使用，如果配置比较低可能会遇到一些问题。从[github](https://docs.getutm.app/installation/macos/)上下载安装包。导入虚拟机时，选择"创建一个新虚拟机" -> "虚拟化" -> "其他" -> 打勾"Skip ISO boot"，"Storage"选择小一点的容量（如`1G`），创建虚拟机后打开配置，"VirtIO驱动器" -> "删除"，然后再"新建" -> "导入"，可以选择`vmdk`或`qcow2`等格式，会统一转换成`qcow2`格式，保存后生效。安装后的虚拟机文件在`~/Library/Containers/com.utmapp.UTM/Data/Documents`目录下，默认Finder中不显示这个目录，可以在家目录下打开`Show View Options -> Show Library Folder`。需要注意一下，网络如果选择`共享网络`会出现不稳定断网的情况，建议选择`桥接（高级）`，选择`桥接`时如果宿主机的网络切换了（如连了另一个wifi）虚拟机中的网络也要断开重连一下。如果出现虚拟机网络经常断开的情况，可以尝试宿主机换一个稳定的网络。
+另外UTM中的虚拟机可能休眠（至少对某些发行版），因为休眠后就醒不来了。
 
 配置虚拟机时，Windows系统cpu核数查看方法: 任务管理器->性能->CPU，苹果电脑cpu核数查看方法: `sysctl hw.ncpu`或`sysctl -n machdep.cpu.core_count`，Linux系统cpu核数查看方法`lscpu`。
 
