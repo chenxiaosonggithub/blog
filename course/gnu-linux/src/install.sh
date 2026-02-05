@@ -44,6 +44,12 @@ physical_common()
 	cp_config_file
 	clone_all_repos
 	sudo chmod 700 /bin/systemctl
+	echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
+	source ~/.bashrc
+
+	echo "执行以下脚本复制脚本:"
+	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/tianyi/* ~ # 10.42.20.206"
+	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/aorus/* ~ # 10.42.20.210"
 }
 
 docker_common()
@@ -51,6 +57,7 @@ docker_common()
 	cp /home/chenxiaosong/code/blog/course/kernel/src/build.sh /home/chenxiaosong/code/
 	echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
 	source ~/.bashrc
+	cp /home/chenxiaosong/code/tmp/gnu-linux/install/emacs.d/ ~/.emacs.d -rf
 }
 
 cfg_docker()
@@ -114,7 +121,7 @@ fedora_physical()
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
-	# cp /home/chenxiaosong/code/tmp/gnu-linux/aorus-install/* ~ # 10.42.20.210
+	# cp /home/chenxiaosong/code/tmp/gnu-linux/install/aorus/* ~ # 10.42.20.210
 
 	tip_fedora_perm
 	install_code_server
@@ -124,6 +131,8 @@ ubuntu_physical()
 {
 	sudo apt-get update -y
 	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils
+	sudo apt install -y nginx pandoc jq apache2-utils
+	sudo apt install bash-completion -y
 
 	physical_common
 
@@ -131,7 +140,7 @@ ubuntu_physical()
 	sudo apt update -y
 	sudo apt install ca-certificates curl -y
 	sudo install -m 0755 -d /etc/apt/keyrings
-	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc # 可以要尝试多次
+	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc # 可能要尝试多次
 	sudo chmod a+r /etc/apt/keyrings/docker.asc
 	sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
 Types: deb
@@ -152,9 +161,6 @@ EOF
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
-	echo "执行以下脚本复制脚本:"
-	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/tianyi-install/* ~ # 10.42.20.206"
-	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/aorus-install/* ~ # 10.42.20.210"
 	install_code_server
 }
 
@@ -186,6 +192,7 @@ ubuntu_docker()
 	apt install -y sudo
 	sudo apt install -y vim git build-essential qemu-system flex bison bc kmod pahole libelf-dev libssl-dev libncurses-dev zstd
 	apt install bash-completion -y # 为了解决docker 中git不会自动补全
+	sudo apt install -y nginx pandoc jq apache2-utils
 
 	apt install -y language-pack-zh-hans fonts-wqy-zenhei fonts-wqy-microhei
 	echo "export LANG=zh_CN.UTF-8" >> ~/.bashrc
