@@ -87,13 +87,40 @@ sudo apt install -y virtiofsd # 解决报错: 无法完成安装：'operation fa
 - "内存" -> 勾选"Enable shared memory"
 - "添加硬件" -> "文件系统"
   - "驱动程序: virtiofs"
-  - "源路径: /home/sonvhi/chenxiaosong/"
+  - "源路径: /home/chenxiaosong/"
   - "目标路径: virtiofs（也可以取其他名字）"
 
 然后启动虚拟机，输入挂载命令:
-
 ```sh
-sudo mount -t virtiofs virtiofs chenxiaosong/ # 其中第二个virtiofs是目标路径
+sudo mount -t virtiofs virtiofs ~/virtiofs # 其中第二个virtiofs是目标路径
+```
+
+导出家目录权限好像有问题，可以使用9p。
+
+## virtio-9p共享目录
+
+物理机中设置家目录的权限:
+```sh
+getfacl /home/chenxiaosong/
+  # echo "  user:libvirt-qemu:--x"
+	# echo "  group::r-x"
+	# echo "  mask::r-x"
+sudo setfacl -x u:libvirt-qemu /home/chenxiaosong # 删除user:libvirt-qemu:--x
+sudo setfacl -m u:libvirt-qemu:x /home/chenxiaosong # 重新生成user:libvirt-qemu:--x
+sudo setfacl -m m:rwx /home/chenxiaosong # mask::rwx
+sudo setfacl -m g::rwx /home/chenxiaosong # group::rwx
+```
+
+先关闭虚拟机并进入虚拟机设置:
+
+- "添加硬件" -> "文件系统"
+  - "驱动程序: virtio-9p"
+  - "源路径: /home/chenxiaosong/"
+  - "目标路径: virtio-9p（也可以取其他名字）"
+
+然后启动虚拟机，输入挂载命令:
+```sh
+sudo mount -t virtio-9p virtio-9p ~/virtio-9p # 其中第二个virtio-9p是目标路径
 ```
 
 ## `virt-manager`安装`aarch64`系统
