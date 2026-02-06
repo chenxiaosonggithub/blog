@@ -41,6 +41,12 @@ sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 sudo systemctl enable --now docker
 ```
 
+## macOS
+
+参考[Install Docker Desktop on Mac](https://docs.docker.com/desktop/setup/install/mac-install/)。
+
+代理设置: Settings > Resources > Proxies
+
 # 配置docker权限
 
 查看是否有`docker`组:
