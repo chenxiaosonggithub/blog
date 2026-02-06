@@ -138,7 +138,7 @@ fedora_physical()
 ubuntu_physical()
 {
 	sudo apt-get update -y
-	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils samba
+	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils samba virtiofsd
 	sudo apt install -y nginx pandoc jq apache2-utils
 	sudo apt install bash-completion -y
 
