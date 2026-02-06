@@ -30,12 +30,13 @@ cp_config_file()
 	bash cp-to-home.sh
 }
 
-tip_fedora_perm()
+tip_perm()
 {
 	echo
-	echo "virt-manager可能要先在fedora本机上操作，如果远程在ubuntu上操作可能有权限问题"
-	echo "如果安装了virt-manager请修改 /etc/group"
+	echo "fedora如果安装了virt-manager请修改 /etc/group"
 	echo "	libvirt:x:988:chenxiaosong (增加)"
+	echo "ubuntu virt-manager如果在远程操作可能有权限问题，但可通过以下方式解决:
+	echo "  sudo chown libvirt-qemu:kvm image.qcow2 （在本地环境操作virt-manager会直接修改）"
 	echo
 }
 
@@ -124,7 +125,7 @@ fedora_physical()
 
 	# cp /home/chenxiaosong/code/tmp/gnu-linux/install/aorus/* ~ # 10.42.20.210
 
-	tip_fedora_perm
+	tip_perm
 	install_code_server
 }
 
@@ -162,6 +163,7 @@ EOF
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/start-docker.sh"
 	echo "	/home/chenxiaosong/code/blog/course/gnu-linux/src/update-docker-image.sh"
 
+	tip_perm
 	install_code_server
 }
 
