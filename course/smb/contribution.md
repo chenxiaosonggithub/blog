@@ -20,6 +20,10 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 - [[PATCH cifs-utils v3 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20260107043109.1456095-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 
+- [[PATCH v3 0/1] smb/client: fix memory leaks](https://lore.kernel.org/linux-cifs/20260202094906.1933479-1-chenxiaosong.chenxiaosong@linux.dev/)
+  - [67b3da8d3051 smb/client: fix memory leak in SendReceive()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b3da8d3051)
+  - [e3a43633023e smb/client: fix memory leak in smb2_open_file()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e3a43633023e)
+
 - [[PATCH] smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://lore.kernel.org/linux-cifs/20251229174943.49814-1-henrique.carvalho@suse.com/)
   - 复现测试: [fa2fd0b10f66 smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fa2fd0b10f66)
 
