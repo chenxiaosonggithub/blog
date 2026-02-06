@@ -77,6 +77,11 @@ group = "libvirt"
 
 ## virtiofs共享目录
 
+物理机安装:
+```sh
+sudo apt install -y virtiofsd # 解决报错: 无法完成安装：'operation failed: Unable to find a satisfying virtiofsd'
+```
+
 先关闭虚拟机并进入虚拟机设置:
 
 - "内存" -> 勾选"Enable shared memory"
