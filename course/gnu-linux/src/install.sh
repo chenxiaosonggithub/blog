@@ -171,6 +171,23 @@ EOF
 
 	tip_perm
 	install_code_server
+
+	echo
+	echo "virt-manager中以9p挂载家目录，设置权限:"
+	echo "getfacl /home/chenxiaosong
+# file: ../chenxiaosong
+# owner: chenxiaosong
+# group: chenxiaosong
+user::rwx
+user:libvirt-qemu:--x
+group::r-x
+mask::r-x
+other::---"
+	echo "sudo setfacl -x u:libvirt-qemu /home/chenxiaosong # 删除user:libvirt-qemu:--x"
+	echo "# sudo setfacl -m u:libvirt-qemu:x /home/chenxiaosong # 重新生成user:libvirt-qemu:--x"
+	echo "sudo setfacl -m m:rwx /home/chenxiaosong # mask::rwx"
+	echo "sudo setfacl -m g::rwx /home/chenxiaosong # group::rwx
+	echo
 }
 
 fedora_docker()
