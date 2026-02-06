@@ -36,7 +36,7 @@ tip_perm()
 	echo "fedora如果安装了virt-manager请修改 /etc/group"
 	echo "	libvirt:x:988:chenxiaosong (增加)"
 	echo "ubuntu virt-manager如果在远程操作可能有权限问题，但可通过以下方式解决:"
-	echo "  sudo chown libvirt-qemu:kvm image.qcow2 （在本地环境操作virt-manager会直接修改）"
+	echo "  sudo chown libvirt-qemu:kvm image.qcow2 # 在本地环境操作virt-manager会直接修改"
 	echo
 }
 
