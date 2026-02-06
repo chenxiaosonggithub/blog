@@ -1,5 +1,8 @@
 The following are the SMB patches I have reviewed, listed with the most recent first.
 
+- [Re: [PATCH] smb: client: fix potential UAF and double free it smb2_open_file()](https://lore.kernel.org/linux-cifs/bfa4a0be-8429-4ea1-8bd6-691c3a47ff00@linux.dev/)
+- [Re: [PATCH] smb: client: fix potential UAF and double free it smb2_open_file()](https://lore.kernel.org/linux-cifs/cbedb833-0cf9-467e-8751-e975b965c467@linux.dev/)
+- [Re: xfstests failed test cases](https://lore.kernel.org/linux-cifs/9751f02d-d1df-4265-a7d6-b19761b21834@linux.dev/)
 - [Re: xfstests failed test cases](https://lore.kernel.org/linux-cifs/f1b9cd58-8a61-4fa7-a7e9-198c2c468c59@linux.dev/)
 - [xfstests failed test cases](https://lore.kernel.org/linux-cifs/bcd3d847-c38f-4c88-af07-3da09dad476b@linux.dev/)
 - [Re: Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/f063be7f-7d09-4f07-9a44-7c8f1484de25@linux.dev/)
