@@ -52,6 +52,12 @@ physical_common()
 	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/tianyi/* ~ # 10.42.20.206"
 	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/aorus/* ~ # 10.42.20.210"
 	echo "  cp /home/chenxiaosong/code/tmp/gnu-linux/install/chown-blog.sh ~"
+
+	sudo cp /home/chenxiaosong/code/tmp/gnu-linux/install/smb.conf /etc/samba/
+	echo "samba新增用户: sudo pdbedit -a -u $USER"
+	echo "samba重启服务:"
+	echo "  sudo systemctl restart smbd # ubuntu"
+	echo "  sudo systemctl restart smb # fedora"
 }
 
 docker_common()
@@ -103,7 +109,7 @@ install_code_server()
 
 fedora_physical()
 {
-	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git
+	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git samba
 	sudo systemctl restart sshd
 
 	physical_common
@@ -132,7 +138,7 @@ fedora_physical()
 ubuntu_physical()
 {
 	sudo apt-get update -y
-	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils
+	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils samba
 	sudo apt install -y nginx pandoc jq apache2-utils
 	sudo apt install bash-completion -y
 
