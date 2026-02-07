@@ -183,10 +183,12 @@ user:libvirt-qemu:--x
 group::r-x
 mask::r-x
 other::---"
-	echo "sudo setfacl -x u:libvirt-qemu /home/chenxiaosong # 删除user:libvirt-qemu:--x"
+	echo "# sudo setfacl -x u:libvirt-qemu /home/chenxiaosong # 删除user:libvirt-qemu:--x"
+	echo "sudo setfacl -m u:libvirt-qemu:rwx /home/chenxiaosong # user:libvirt-qemu:rwx"
 	echo "# sudo setfacl -m u:libvirt-qemu:x /home/chenxiaosong # 重新生成user:libvirt-qemu:--x"
 	echo "sudo setfacl -m m:rwx /home/chenxiaosong # mask::rwx"
-	echo "sudo setfacl -m g::rwx /home/chenxiaosong # group::rwx
+	echo "sudo setfacl -m g::rwx /home/chenxiaosong # group::rwx"
+	echo "# sudo setfacl -m o::rwx /home/chenxiaosong # 这个不能设置，否则不能免密登录"
 	echo
 }
 
