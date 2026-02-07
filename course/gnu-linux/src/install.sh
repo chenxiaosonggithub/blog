@@ -163,6 +163,8 @@ ubuntu_physical()
 	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils samba virtiofsd cifs-utils
 	sudo apt install -y nginx pandoc jq apache2-utils
 	sudo apt install bash-completion -y
+	sudo systemctl enable ssh
+	sudo systemctl restart ssh
 
 	physical_common
 
