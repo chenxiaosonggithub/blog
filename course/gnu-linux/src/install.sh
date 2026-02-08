@@ -160,7 +160,7 @@ fedora_physical()
 ubuntu_physical()
 {
 	sudo apt-get update -y
-	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils samba virtiofsd cifs-utils
+	sudo apt install -y openssh-server net-tools git virt-manager vim tmux pm-utils samba virtiofsd cifs-utils wakeonlan vim-gtk3
 	sudo apt install -y nginx pandoc jq apache2-utils
 	sudo apt install bash-completion -y
 	sudo systemctl enable ssh
