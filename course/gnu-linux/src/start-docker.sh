@@ -1,8 +1,7 @@
-. ~/.top-path
 docker_name=workspace-fedora
 image_name=workspace-fedora:latest
-host_dir1=${MY_TOP_PATH}
-container_dir1=${MY_TOP_PATH}
+host_dir1=$HOME
+container_dir1=/home/chenxiaosong
 host_dir2=xxxx
 container_dir2=xxxx
 
