@@ -92,7 +92,8 @@ sudo apt install -y virtiofsd # 解决报错: 无法完成安装：'operation fa
 
 然后启动虚拟机，输入挂载命令:
 ```sh
-sudo mount -t virtiofs virtiofs ~/virtiofs # 其中第二个virtiofs是目标路径
+# 注意5.4内核dst_path和挂载点目录名不能一样
+sudo mount -t virtiofs dst_path /mnt
 ```
 
 导出家目录权限好像有问题，可以使用9p。
