@@ -284,6 +284,8 @@ comm_array=(
 		1 1 src/translation/qemu/qemu-networking-nat.md ~ "QEMU Documentation/Networking/NAT"
 		# systemtap
 		1 1 src/translation/systemtap/systemtap-readme.md ~ "systemtap README"
+		# wireshark
+		1 1 tmp/gnu-linux/translation/wireshark/wireshark-INSTALL.md ~ "wireshark INSTALL"
 	# 书法
 	1 1 tmp/calligraphy/calligraphy.md calligraphy/calligraphy.html "书法: 左手练字"
 	1 1 tmp/calligraphy/zhaomengfu/daodejing.md calligraphy/zhaomengfu/daodejing.html "道德经繁体"

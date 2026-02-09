@@ -106,3 +106,7 @@ pdftk part1.pdf part2.pdf cat output merged.pdf # 合并
 
 [systemtap README](https://chenxiaosong.com/src/translation/systemtap/systemtap-readme.html)
 
+# wireshark
+
+[wireshark INSTALL](https://chenxiaosong.com/src/tmp/gnu-linux/translation/wireshark/wireshark-INSTALL.html)
+
