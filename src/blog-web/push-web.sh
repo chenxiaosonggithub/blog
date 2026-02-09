@@ -18,6 +18,7 @@ if [[ ! -d "${github_io_repo}" ]]; then
 	is_new_repo=true
 fi
 
+sudo chown -R $USER:$USER ${github_io_repo}
 bash ${code_path}/blog/src/blog-web/create-html.sh false this-arg-is-useless ${github_io_repo}
 cp ${code_path}/blog/src/blog-web/github-io-404.html ${github_io_repo}/404.html
 cp ${code_path}/blog/src/blog-web/github-io-README.md ${github_io_repo}/README.md
@@ -28,7 +29,6 @@ ls_array=( # index.html有内容的路径，需要生成ls.html
 )
 comm_generate_index "${github_io_repo}" "" "${github_io_repo}" ls_array[@]
 
-sudo chown -R $USER:$USER ${github_io_repo}
 cd ${github_io_repo}
 if [[ "${is_new_repo}" == true ]]; then
 	rm .git -rf
