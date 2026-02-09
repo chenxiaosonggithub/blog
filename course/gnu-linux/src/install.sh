@@ -64,8 +64,9 @@ docker_common()
 {
 	cp /home/chenxiaosong/code/blog/course/kernel/src/build.sh /home/chenxiaosong/code/
 	echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
-	source ~/.bashrc
 	cp /home/chenxiaosong/code/tmp/gnu-linux/install/emacs.d/ ~/.emacs.d -rf
+	echo 'PS1="${PS1//\\w\\$/\\W\\$}"' >> ~/.bashrc # shell界面路径名只显示最后一个路径名分量
+	source ~/.bashrc
 }
 
 cfg_docker()
