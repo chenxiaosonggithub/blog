@@ -23,5 +23,5 @@ cat ${docker_name}.tar | docker import - ${image_name} # 导入镜像
 echo -e "\n请确认镜像${image_name}是否导入成功:"
 docker image ls # 查看镜像是否导入成功
 echo -e "\n查看image的创建时间:"
-docker inspect workspace-ubuntu:24.04 | grep Created
+docker inspect ${image_name} | grep Created
 mv ${docker_name}.tar ${docker_name}.tar-$(uname -s)-$(uname -m)-$(date +"%Y%m%d-%H%M%S")
