@@ -229,6 +229,7 @@ kylinos_physical()
 
 	sudo apt-get update -y
 	sudo apt install -y git virt-manager samba nginx pandoc jq apache2-utils thunderbird
+	sudo apt install -y libvirt-daemon-system # 解决virt-manager报错: The libvirtd service does not appear to be installed
 	echo "指纹驱动下载: https://www.greatwall.com.cn/%e6%9c%8d%e5%8a%a1%e4%b8%8e%e6%8a%80%e6%9c%af/service-html-2"
 	echo "人脸驱动要在'生物识别'开关附近点击3个点打开'高级设置', 然后打开驱动"
 
