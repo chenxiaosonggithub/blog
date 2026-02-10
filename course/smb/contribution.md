@@ -1,19 +1,17 @@
-[点击查看kernel.org网站SMB内核邮件列表我和社区的沟通](https://lore.kernel.org/linux-cifs/?q=chenxiaosong)
+It is really enjoyable and exciting to contribute to SMB.
 
-[点击查看kernel.org网站上我的Linux内核上游仓库提交记录](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（加载需要一丢丢时间哈，可以直接查看下面列出的补丁链接）
+[Click here to see my emails on the SMB mailing list](https://lore.kernel.org/linux-cifs/?q=chenxiaosong)
+
+[Click here to see my upstream Linux kernel commit history on kernel.org](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（The page may take a moment to load, you can directly check the patch links listed below）
 <!-- next: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong -->
 
-SMB社区是我见过的最友好的社区，几个maintainer都很友好，贡献SMB真的很爽。
+# SMB patches I have reviewed
 
-SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞披露，Common Vulnerabilities and Exposures）。
+[Click here to see SMB patches reviewed by ChenXiaoSong](https://chenxiaosong.com/en/smb-review.html).
 
-下面按时间顺序列出所有的补丁，最新的补丁放在前面。
+# SMB patches I have contributed
 
-# 我review的补丁
-
-[点击这里查看我review过的补丁](https://chenxiaosong.com/en/smb-review.html)。
-
-# 2025年
+## 2025
 
 - [[PATCH 0/7] smb/client: update SMB1 maperror, part 2](https://lore.kernel.org/linux-cifs/20260122052402.2209206-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH 00/17] smb/client: update SMB1 maperror](https://lore.kernel.org/linux-cifs/20260121114912.2138032-1-chenxiaosong.chenxiaosong@linux.dev/)
@@ -24,8 +22,10 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
   - [67b3da8d3051 smb/client: fix memory leak in SendReceive()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b3da8d3051)
   - [e3a43633023e smb/client: fix memory leak in smb2_open_file()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e3a43633023e)
 
+<!--
 - [[PATCH] smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://lore.kernel.org/linux-cifs/20251229174943.49814-1-henrique.carvalho@suse.com/)
-  - 复现测试: [fa2fd0b10f66 smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fa2fd0b10f66)
+  - reproduce and test: [fa2fd0b10f66 smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fa2fd0b10f66)
+-->
 
 - [[PATCH v2 0/1] smb/server: fix some refcount leaks](https://lore.kernel.org/linux-cifs/20251229031518.1027240-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [f416c556997a smb/server: fix refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f416c556997a)
@@ -99,7 +99,7 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
   - [d1a30b9ddc3d smb/server: fix return value of smb2_notify()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d1a30b9ddc3d4c0e38666bd166d51863cb39f1c4)
   - [c5b462e35373 smb/server: fix return value of smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c5b462e35373a68a5a7954f5e00383998cc7fe92)
 
-# 2024年
+## 2024
 
 - [[PATCH v2 00/12] smb: fix some bugs, move duplicate definitions to common header file, and some small cleanups](https://lore.kernel.org/linux-cifs/20240822082101.391272-1-chenxiaosong@chenxiaosong.com/)
   - [e2fcd3fa0351 smb: add comment to STATUS_MCA_OCCURED](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e2fcd3fa0351ea2133d1238fcc6a9f140c52d36f)
@@ -118,12 +118,12 @@ SMB是我主要从事的方向，修复多个**内核社区CVE**（通用漏洞�
 - [[PATCH] ksmbd: remove duplicate SMB2 Oplock levels definitions](https://lore.kernel.org/linux-cifs/20240619161753.385508-1-chenxiaosong@chenxiaosong.com/)
   - [ac5399d48616 ksmbd: remove duplicate SMB2 Oplock levels definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ac5399d48616644cb6ddfe39f8babe807d5f5cbd)
 
-# 2023年
+## 2023
 
 - [[PATCH] ksmbd: fix possible refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/20230302135804.2583061-1-chenxiaosong2@huawei.com/)
   - [CVE-2023-53061](https://nvd.nist.gov/vuln/detail/CVE-2023-53061): [2624b445544f ksmbd: fix possible refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2624b445544ffc1472ccabfb6ec867c199d4c95c)
 
-# 2022年
+## 2022
 
 - [502487847743 cifs: fix missing unlock in cifs_file_copychunk_range()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=502487847743018c93d75b401eac2ea4c4973123)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221119045159.1400244-1-chenxiaosong2@huawei.com/)）
 - [542228db2f28 cifs: fix use-after-free on the link name](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=542228db2f28fdf775b301f2843e1fe486e7c797)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221104074441.634677-1-chenxiaosong2@huawei.com/)）
