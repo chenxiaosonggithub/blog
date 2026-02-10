@@ -129,6 +129,26 @@ install_code_server()
 	echo "浏览器输入http://localhost:8888（8888是config.yaml配置文件中配置的端口）"
 }
 
+kylinos_v10_install_wireshark()
+{
+	export https_proxy=http://localhost:7890
+	export http_proxy=http://localhost:7890
+	sudo install -m 0755 -d /etc/apt/keyrings
+	# https://launchpad.net/~wireshark-dev/+archive/ubuntu/stable
+	# https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=index&search=0xA2E402B85A4B70CD78D8A3D9D875551314ECA0F0
+	sudo curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa2e402b85a4b70cd78d8a3d9d875551314eca0f0" -o /etc/apt/keyrings/wireshark.asc
+	sudo chmod a+r /etc/apt/keyrings/wireshark.asc
+	sudo tee -a /etc/apt/sources.list <<'EOF'
+deb [signed-by=/etc/apt/keyrings/wireshark.asc] https://ppa.launchpadcontent.net/wireshark-dev/stable/ubuntu focal main 
+deb-src [signed-by=/etc/apt/keyrings/wireshark.asc] https://ppa.launchpadcontent.net/wireshark-dev/stable/ubuntu focal main
+EOF
+
+	# 图形界面可能会出现弹框阻止，不要在另一台机器上远程安装，要在本机图形界面安装
+	sudo apt-get update -y
+	sudo apt search wireshark
+	sudo apt install -y wireshark
+}
+
 fedora_physical()
 {
 	sudo dnf install -y ibus*wubi* openssh-server vim virt-manager git samba
@@ -201,12 +221,21 @@ EOF
 
 kylinos_physical()
 {
+	echo "禁用kysec: 把`grub.cfg`新生成的启动项里的`security=kysec`改成`security= `（注意后面有空格）"
+	echo "  sudo cp /boot/grub/grub.cfg /boot/grub/grub.cfg.bak # x86_64"
+	echo "  sudo cp /boot/efi/boot/grub/grub.cfg /boot/efi/boot/grub/grub.cfg.bak # arm64"
+	echo "  vim /boot/grub/grub.cfg # x86"
+	echo "  vim /boot/efi/boot/grub/grub.cfg # arm64"
+
 	sudo apt-get update -y
 	sudo apt install -y git virt-manager samba
+	sudo apt install -y nginx pandoc jq apache2-utils thunderbird
 	echo "指纹驱动下载: https://www.greatwall.com.cn/%e6%9c%8d%e5%8a%a1%e4%b8%8e%e6%8a%80%e6%9c%af/service-html-2"
 	echo "人脸驱动要在'生物识别'开关附近点击3个点打开'高级设置', 然后打开驱动"
 
 	physical_common
+	install_code_server
+	kylinos_v10_install_wireshark
 }
 
 fedora_docker()

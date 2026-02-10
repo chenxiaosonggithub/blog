@@ -1,6 +1,6 @@
 # wireshark
 
-## ppa
+## 麒麟桌面v10 ppa安装
 
 ```sh
 sudo install -m 0755 -d /etc/apt/keyrings
