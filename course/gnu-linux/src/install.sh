@@ -1,5 +1,5 @@
 if [ $# -ne 2 ]; then
-	echo "用法: $0 <fedora/ubuntu> <physical/docker/vm>"
+	echo "用法: $0 <fedora/ubuntu/kylinos> <physical/docker/vm>"
 	exit 1
 fi
 distribution=$1
@@ -199,6 +199,16 @@ EOF
 	# cfg_9p
 }
 
+kylinos_physical()
+{
+	sudo apt-get update -y
+	sudo apt install -y git virt-manager samba
+	echo "指纹驱动下载: https://www.greatwall.com.cn/%e6%9c%8d%e5%8a%a1%e4%b8%8e%e6%8a%80%e6%9c%af/service-html-2"
+	echo "人脸驱动要在'生物识别'开关附近点击3个点打开'高级设置', 然后打开驱动"
+
+	physical_common
+}
+
 fedora_docker()
 {
 	sudo dnf group install development-tools -y
@@ -293,6 +303,9 @@ ubuntu-physical)
 	;;
 ubuntu-docker)
 	ubuntu_docker
+	;;
+kylinos-physical)
+	kylinos_physical
 	;;
 *)
 	echo "Invalid argument: $distribution $machine"
