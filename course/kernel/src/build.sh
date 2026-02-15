@@ -88,19 +88,19 @@ sleep 2
 
 case "$part" in
 all)
-	olddefconfig && bzImage && modules && modules_install
+	time olddefconfig && bzImage && modules && modules_install
 	;;
 menuconfig)
-	menuconfig
+	time menuconfig
 	;;
 modules)
-	modules
+	time modules
 	;;
 modules_install)
-	modules && modules_install
+	time modules && modules_install
 	;;
 bzImage)
-	bzImage
+	time bzImage
 	;;
 *)
 	echo "Invalid part argument"
