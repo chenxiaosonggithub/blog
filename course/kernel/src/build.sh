@@ -1,3 +1,6 @@
+OTHER_OPT=""
+# OTHER_OPT="W=1"
+
 if [ $# -ne 4 ]; then
 	echo "用法: $0 <gcc/llvm> <lld/no-lld> <test/no-test> <all/menuconfig/modules/modules_install/bzImage>"
 	exit 1
@@ -59,27 +62,27 @@ show_args() {
 }
 
 olddefconfig() {
-	make $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR olddefconfig -j`nproc`
+	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR olddefconfig -j`nproc`
 	return $?
 }
 
 menuconfig() {
-	make $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR menuconfig -j`nproc`
+	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR menuconfig -j`nproc`
 	return $?
 }
 
 bzImage() {
-	make $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR bzImage -j`nproc`
+	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR bzImage -j`nproc`
 	return $?
 }
 
 modules() {
-	make $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR modules -j`nproc`
+	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR modules -j`nproc`
 	return $?
 }
 
 modules_install() {
-	make $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR modules_install INSTALL_MOD_PATH=mod -j`nproc`
+	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR modules_install INSTALL_MOD_PATH=mod -j`nproc`
 	return $?
 }
 
@@ -88,19 +91,33 @@ sleep 2
 
 case "$part" in
 all)
-	olddefconfig && bzImage && modules && modules_install
+	time {
+		olddefconfig && \
+		bzImage && \
+		modules && \
+		modules_install
+	}
 	;;
 menuconfig)
-	menuconfig
+	time {
+		menuconfig
+	}
 	;;
 modules)
-	modules
+	time {
+		modules
+	}
 	;;
 modules_install)
-	modules && modules_install
+	time {
+		modules && \
+		modules_install
+	}
 	;;
 bzImage)
-	bzImage
+	time {
+		bzImage
+	}
 	;;
 *)
 	echo "Invalid part argument"
