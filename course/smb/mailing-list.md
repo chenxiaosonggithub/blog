@@ -59,6 +59,16 @@ linux-cifs@vger.kernel.org \
 00* \
 # --in-reply-to=xxx --no-thread --suppress-cc=all
 ```
+<!--
+git send-email --to=\
+smfrench@gmail.com,\
+linkinjeon@kernel.org,\
+pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
+dhowells@redhat.com,chenxiaosong@kylinos.cn,chenxiaosong.chenxiaosong@linux.dev \
+--cc=\
+linux-cifs@vger.kernel.org \
+00*
+-->
 
 # smb补丁统计
 
