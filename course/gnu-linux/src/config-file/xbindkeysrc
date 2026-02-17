@@ -1,0 +1,17 @@
+# sudo apt install -y xbindkeys xdotool
+
+# 向上滚动
+# "xdotool click 4"
+  # m:0x18 + c:30
+  # Alt+Mod2 + u
+
+# 向下滚动
+# "xdotool click 5"
+  # m:0x18 + c:40
+  # Alt+Mod2 + d
+
+# xbindkeys # 启动
+# xbindkeys -k # 查看按键
+# ps aux | grep xbindkeys
+# pkill xbindkeys
+# killall xbindkeys
