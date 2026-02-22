@@ -2,17 +2,6 @@
 
 [点击这里查看配套的教学视频](https://chenxiaosong.com/course/smb/video.html)。
 
-参考网站:
-
-- [鸟哥的Linux私房菜 简体 - "SAMBA服务器"章节](http://cn.linux.vbird.org/linux_server/#part3)
-- [鸟哥的Linux私房菜 繁体 - "SAMBA伺服器"](https://linux.vbird.org/linux_server/centos6/0370samba.php)
-- [鸟哥的Linux私房菜 繁体 - 伺服器架設篇目錄 - RockyLinux 9 (開發中)](https://linux.vbird.org/linux_server/rocky9/)
-- [Samba - opening windows to a wider world](https://www.samba.org/)
-- [samba官方仓库](https://git.samba.org/?p=samba.git;a=summary)或[samba gitlab仓库](https://gitlab.com/samba-team/samba)
-- [cifs-utils仓库](https://git.samba.org/?p=cifs-utils.git;a=summary): `https://git.samba.org/cifs-utils.git`
-- [kernel Documentation: `admin-guide/cifs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/cifs)
-- [kernel Documentation: `filesystems/smb`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/smb)
-
 点击下面的标题跳转。
 
 # [我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)

@@ -21,6 +21,8 @@
 [github仓库（现在好像不更新了）](https://github.com/namjaejeon/ksmbd),
 [ksmbd-for-next-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next-next),
 [ksmbd-for-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next)
+- [samba官方仓库](https://git.samba.org/?p=samba.git;a=summary): `https://git.samba.org/samba.git`，或[samba gitlab仓库](https://gitlab.com/samba-team/samba)
+- [cifs-utils仓库](https://git.samba.org/?p=cifs-utils.git;a=summary): `https://git.samba.org/cifs-utils.git`
 
 邮件需要发送和抄送的人:
 ```sh

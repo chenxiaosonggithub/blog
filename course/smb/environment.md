@@ -1,3 +1,12 @@
+# 参考网站
+
+- [鸟哥的Linux私房菜 简体 - "SAMBA服务器"章节](http://cn.linux.vbird.org/linux_server/#part3)
+- [鸟哥的Linux私房菜 繁体 - "SAMBA伺服器"](https://linux.vbird.org/linux_server/centos6/0370samba.php)
+- [鸟哥的Linux私房菜 繁体 - 伺服器架設篇目錄 - RockyLinux 9 (開發中)](https://linux.vbird.org/linux_server/rocky9/)
+- [Samba - opening windows to a wider world](https://www.samba.org/)
+- [kernel Documentation: `admin-guide/cifs`](https://github.com/torvalds/linux/tree/master/Documentation/admin-guide/cifs)
+- [kernel Documentation: `filesystems/smb`](https://github.com/torvalds/linux/tree/master/Documentation/filesystems/smb)
+
 # 内核态server搭建
 
 请查看[smb server (ksmbd)](https://chenxiaosong.com/course/smb/ksmbd.html#environment)。
