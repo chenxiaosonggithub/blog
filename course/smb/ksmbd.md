@@ -44,8 +44,8 @@ git clone https://github.com/cifsd-team/ksmbd-tools.git
 cd ksmbd-tools
 ./autogen.sh
 ./configure --with-rundir=/run # --prefix=/usr/local/sbin --sysconfdir=/usr/local/etc
-make
-sudo make install 
+make -j`nproc`
+sudo make install -j`nproc`
 ```
 
 可更改[`ksmbd-tools/tools/tools.c`](https://github.com/cifsd-team/ksmbd-tools/blob/master/tools/tools.c)文件里的日志等级:
