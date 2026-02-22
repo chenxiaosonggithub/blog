@@ -6,7 +6,6 @@
 
 The following are the SMB patches I have reviewed, listed with the most recent first.
 
-- [Re: [PATCH v3 0/5] smb: move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/5481d68d-9864-457c-9589-3bfd4cb6a54d@chenxiaosong.com/)
 - [Re: [PATCH v3 4/5] smb: introduce struct create_posix_ctxt_rsp](https://lore.kernel.org/linux-cifs/c9d1c233-facd-4387-bed2-b2c1dbc88cbe@linux.dev/)
 - [Re: [PATCH] smb: client: fix potential UAF and double free it smb2_open_file()](https://lore.kernel.org/linux-cifs/bfa4a0be-8429-4ea1-8bd6-691c3a47ff00@linux.dev/)
 - [Re: [PATCH] smb: client: fix potential UAF and double free it smb2_open_file()](https://lore.kernel.org/linux-cifs/cbedb833-0cf9-467e-8751-e975b965c467@linux.dev/)
