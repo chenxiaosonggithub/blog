@@ -1,5 +1,5 @@
-OTHER_OPT=""
-# OTHER_OPT="W=1"
+# OTHER_OPT=""
+OTHER_OPT="W=1 C=1 CHECK=/home/chenxiaosong/code/sparse/sparse"
 
 if [ $# -ne 4 ]; then
 	echo "用法: $0 <gcc/llvm> <lld/no-lld> <test/no-test> <all/menuconfig/modules/modules_install/bzImage>"
@@ -57,6 +57,7 @@ show_args() {
 	echo "COMPILER_OPT: $COMPILER_OPT"
 	echo "LINKER_OPT: $LINKER_OPT"
 	echo "BUILD_DIR: $BUILD_DIR"
+	echo "OTHER_OPT: $OTHER_OPT"
 	echo "build part: $part"
 	echo
 }
