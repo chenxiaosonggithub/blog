@@ -5,9 +5,9 @@
 	editor = vim
 	quotepath = false
 [sendemail]
-        from = chenxiaosong.chenxiaosong@linux.dev
+        from = chenxiaosong@chenxiaosong.com
         smtpserver = smtp.migadu.com
-        smtpuser = chenxiaosong.chenxiaosong@linux.dev
+        smtpuser = chenxiaosong@chenxiaosong.com
         smtpencryption = ssl
         smtppass = 此处填写密码
         smtpserverport = 465
