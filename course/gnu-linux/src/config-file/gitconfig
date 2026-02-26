@@ -1,13 +1,13 @@
 [user]
-	email = chenxiaosong@chenxiaosong.com
+	email = chenxiaosong.com@chenxiaosong.com
 	name = ChenXiaoSong
 [core]
 	editor = vim
 	quotepath = false
 [sendemail]
-        from = chenxiaosong@chenxiaosong.com
+        from = chenxiaosong.com@chenxiaosong.com
         smtpserver = smtp.migadu.com
-        smtpuser = chenxiaosong@chenxiaosong.com
+        smtpuser = chenxiaosong.com@chenxiaosong.com
         smtpencryption = ssl
         smtppass = 此处填写密码
         smtpserverport = 465
