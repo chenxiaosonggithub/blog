@@ -150,14 +150,14 @@ vim 0000-cover-letter.patch
 
 发送邮件到`helpdesk@kernel.org`:
 ```sh
-Subject: chenxiaosong.chenxiaosong@linux.dev account request
+Subject: chenxiaosong.com@linux.dev account request
 
-Full name: [ChenXiaoSong ChenXiaoSong]
+Full name: [ChenXiaoSong Com]
 Canonical address: [chenxiaosong@kylinos.cn]
 
 Reasons for needing this account:
 
-Emails sent from the address I’m currently using are often not received by others, which greatly affects my communication with the community.
+Emails sent from the address I'm currently using are often not received by others, which greatly affects my communication with the community.
 
 My Linux kernel contributions:
 https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong
