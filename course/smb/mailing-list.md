@@ -63,10 +63,16 @@ linux-cifs@vger.kernel.org \
 ```
 <!--
 git send-email --to=\
+smfrench@gmail.com,linkinjeon@kernel.org,chenxiaosong@chenxiaosong.com \
+--cc=\
+linux-cifs@vger.kernel.org \
+00*
+
+git send-email --to=\
 smfrench@gmail.com,\
 linkinjeon@kernel.org,\
 pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
-dhowells@redhat.com,chenxiaosong@kylinos.cn,chenxiaosong.chenxiaosong@linux.dev \
+dhowells@redhat.com,chenxiaosong@kylinos.cn,chenxiaosong@chenxiaosong.com \
 --cc=\
 linux-cifs@vger.kernel.org \
 00*
