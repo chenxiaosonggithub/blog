@@ -219,3 +219,27 @@ kthread
                       ext2_file_open
 ```
 
+# smb2_open
+
+```c
+smb2_open
+  if (dh_info.reconnected == true) {
+  smb2_check_durable_oplock
+    opinfo_get(fp) // inc refcount
+  ksmbd_reopen_durable_fd
+    __open_id(&work->sess->file_table, fp,
+      idr_alloc_cyclic(ft->idr, fp, ...)
+      __open_id_set(fp, id, type);
+  fp = dh_info.fp // If fp != NULL, we still need to call ksmbd_fd_put() when an error occurs.
+  ksmbd_put_durable_fd
+    __ksmbd_close_fd
+      __ksmbd_remove_fd
+  // If it goes beyond the scope of `if (dh_info.reconnected == true)`, we need to call `ksmbd_put_durable_fd()` to dec refcount
+  } // end of `if (dh_info.reconnected == true)`
+  ksmbd_fd_put
+    __put_fd_final
+      __ksmbd_close_fd
+        __ksmbd_remove_fd
+          idr_remove(ft->idr, fp->volatile_id);
+```
+
