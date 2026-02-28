@@ -230,6 +230,10 @@ smb2_open
     __open_id(&work->sess->file_table, fp,
       idr_alloc_cyclic(ft->idr, fp, ...)
       __open_id_set(fp, id, type);
+  ksmbd_override_fsids // fail
+  ksmbd_put_durable_fd
+    __ksmbd_close_fd
+      __ksmbd_remove_fd
   fp = dh_info.fp // If fp != NULL, we still need to call ksmbd_fd_put() when an error occurs.
   ksmbd_put_durable_fd
     __ksmbd_close_fd
