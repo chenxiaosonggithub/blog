@@ -9,7 +9,7 @@ ESP分区(UEFI System partition)用于采用了UEFI BIOS的电脑系统，用来
 
 如果电脑采用了UEFI系统，或当前磁盘将来可能会用在UEFI系统上启动系统，则应建立ESP分区。
 
-远程登录工具可以使用`MobaXterm`。
+远程登录工具可以使用[MobaXterm](https://mobaxterm.mobatek.net/download-home-edition.html)。
 
 virt-manager中安装win11，默认分辨率太低，还要在windows中安装[Windows SPICE Guest Tools](https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe)，[参考这个网页](https://www.spice-space.org/download.html)。
 
