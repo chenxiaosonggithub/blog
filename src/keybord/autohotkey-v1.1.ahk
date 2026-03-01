@@ -9,8 +9,9 @@ RAlt::LAlt ; MobaXterm不能使用RAlt
 
 LWin::return
 RControl::return
+PrintScreen::return
 
-#If, GetKeyState("LWin", "P") or GetKeyState("RControl", "P")
+#If, GetKeyState("LWin", "P") or GetKeyState("RControl", "P") or GetKeyState("PrintScreen", "P")
 Backspace::Delete
 j::Enter
 n::Down
