@@ -1,7 +1,11 @@
 # 安装系统
 
 - [win11镜像下载](https://www.microsoft.com/zh-cn/software-download/windows11)（国内网络会更快）
-- [老毛桃U盘PE重装教程](https://www.laomaotao.net/help/2020/0806/8620.html)
+- [win10镜像下载](https://www.microsoft.com/zh-cn/software-download/windows10ISO)
+- [UltraISO制作启动u盘](https://www.ultraiso.net/xiazai.html)
+<!--
+- [老毛桃U盘PE重装教程](https://www.laomaotao.net/help/2020/0806/8620.html)（不建议用，会安装一些乱七八糟的软件）
+-->
 
 MSR分区(微软保留分区)是GPT磁盘上用于保留空间以供备用的分区。例如在将磁盘转换为动态磁盘时会使用这些空间。
 
