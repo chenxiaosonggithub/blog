@@ -15,11 +15,3 @@
 	helper = store
 [color]
 	ui = auto
-[safe]
-	directory = /home/chenxiaosong/code/blog
-	directory = /home/chenxiaosong/code/tmp
-	directory = /home/chenxiaosong/code/myfs
-	directory = /home/chenxiaosong/code/private-blog
-	directory = /home/chenxiaosong/code/private-tmp
-	directory = /home/chenxiaosong/code/smb-kernel
-	directory = /home/chenxiaosong/code/linux
