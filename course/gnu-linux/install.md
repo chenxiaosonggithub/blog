@@ -12,8 +12,8 @@
 
 另外再记录一下我用过的机器的快捷键:
 
-- 技嘉Aorus主板按DEL进设置界面，按F12进启动项目录，按END进Q-FLASH
-- 联想台式机按F1键进bios是
+- 技嘉Aorus主板按DEL进bios设置界面\Q-FLASH，按F12进启动项目录，按END进Q-FLASH
+- 联想台式机按F1键进bios
 - 长城N80F3按Del进bios设置界面，按F10进启动项目录
 
 ## 双系统grub设置
