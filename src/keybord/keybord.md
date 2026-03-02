@@ -18,7 +18,7 @@ xmodmap是Linux桌面系统用于更改键位分布的软件，具体查看[《G
 
 我使用的配置文件: [karabiner.json](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/keybord/karabiner.json)，放到macOS的`~/.config/karabiner/karabiner.json`路径下。
 
-# windows autohotkey
+# windows autohotkey {#win}
 
 windows上更改键位可以使用[autohotkey](https://www.autohotkey.com/)，有两个版本:
 
