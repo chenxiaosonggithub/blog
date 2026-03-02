@@ -122,7 +122,7 @@ Linux内核加餐:
 
 [Windows系统](https://chenxiaosong.com/src/windows/windows.html)
 
-[键盘配置](https://chenxiaosong.com/src/keybord/keybord.html)
+[键盘配置](https://chenxiaosong.com/src/keyboard/keyboard.html)
 
 <!--
 不能删除，以下视频里用到:

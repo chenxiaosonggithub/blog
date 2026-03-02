@@ -226,7 +226,7 @@ comm_array=(
 	# 其他
 	1 1 src/windows/windows.md ~ "Windows系统"
 	1 1 src/wubi/wubi.md ~ "五笔输入法"
-	1 1 src/keybord/keybord.md ~ "键盘配置"
+	1 1 src/keyboard/keyboard.md ~ "键盘配置"
 	1 1 src/free-software/free-software.md ~ "自由软件介绍"
 	1 1 src/lorawan/stm32-linux.md ~ "STM32 Linux开发环境"
 	1 1 src/lorawan/lorawan.md ~ "LoRaWAN"
