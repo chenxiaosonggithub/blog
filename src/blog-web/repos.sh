@@ -3,8 +3,9 @@ repos_array=(
 	1 blog
 	1 tmp
 	1 myfs
+	0 daily-task
 	0 private-blog
 	0 private-tmp
-	0 daily-task
+	0 todo-private-blog
 )
 
