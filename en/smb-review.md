@@ -6,6 +6,8 @@
 
 The following are the SMB patches I have reviewed, listed with the most recent first.
 
+- [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/90fdfba1-e0be-4656-87fc-1921d233da37@chenxiaosong.com/)
+- [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/739c9e8d-238a-4f2d-938c-ed0ab9706098@chenxiaosong.com/)
 - [Re: [PATCH v3 4/5] smb: introduce struct create_posix_ctxt_rsp](https://lore.kernel.org/linux-cifs/c9d1c233-facd-4387-bed2-b2c1dbc88cbe@linux.dev/)
 - [Re: [PATCH] smb: client: fix potential UAF and double free it smb2_open_file()](https://lore.kernel.org/linux-cifs/bfa4a0be-8429-4ea1-8bd6-691c3a47ff00@linux.dev/)
 - [Re: [PATCH] smb: client: fix potential UAF and double free it smb2_open_file()](https://lore.kernel.org/linux-cifs/cbedb833-0cf9-467e-8751-e975b965c467@linux.dev/)
