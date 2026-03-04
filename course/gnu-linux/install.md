@@ -460,6 +460,14 @@ sudo dnf remove docker-runc -y
 sudo dnf install docker-engine -y
 ```
 
+麒麟桌面v11维护模式，需要重启后生效:
+```sh
+sudo mm-cli -o # 进入运维模式
+sudo mm-cli -c -a # 退出运维模式并保存
+sudo mm-cli -c -n # 退出运维模式不保存
+sudo mm-cli -s # 查看当前模式状态
+```
+
 ## arcolinux
 
 [ArcoLinux](https://arcolinux.com/)是[Arch Linux](https://archlinux.org/)的衍生发行版。
