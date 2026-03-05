@@ -219,10 +219,13 @@ thunderbird有个快捷键`k`，会忽略话题，不小心按下后邮件就会
 
 ## git-email代理
 
+fedora环境:
 ```sh
 sudo dnf install proxychains-ng -y
-sudo apt install proxychains4 -y
+# sudo apt install proxychains4 -y
 
+# fedora的配置文件是/etc/proxychains.conf
+# ubuntu的配置文件是/etc/proxychains4.conf
 sudo sed -i "s/^socks4/# socks4/g" /etc/proxychains.conf
 echo "http 10.42.20.206 7890" >> /etc/proxychains.conf
 proxychains4 git send-email ...
