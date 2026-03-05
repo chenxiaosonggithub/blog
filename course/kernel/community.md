@@ -144,15 +144,15 @@ git format-patch --subject-prefix="PATCH resend,v2" -3 commit号 --cover-letter
 vim 0000-cover-letter.patch
 ```
 
-## `@linux.dev`邮箱申请
+## `@linux.dev`邮箱申请（我没申请）
 
 - 参考[linux.dev mailbox hosting](https://korg.docs.kernel.org/linuxdev.html)
 
-发送邮件到`helpdesk@kernel.org`:
+发送邮件到`helpdesk@kernel.org`（我没申请，只是做个示例）:
 ```sh
-Subject: chenxiaosong.com@linux.dev account request
+Subject: chen.xiaosong@linux.dev account request
 
-Full name: [ChenXiaoSong Com]
+Full name: [Chen XiaoSong]
 Canonical address: [chenxiaosong@kylinos.cn]
 
 Reasons for needing this account:
@@ -168,8 +168,19 @@ https://lore.kernel.org/all/?q=chenxiaosong
 
 ## 邮箱配置
 
+- gmail配置
+  - thunderbird配置:
+    - thunderbird配置代理，请看下一节
+    - 收件: imap.gmail.com, 端口: 993, 连接安全性: SSL/TLS, 验证方式: OAuth2
+    - 发件: smtp.gmail.com, 端口: 587, 连接安全性: STARTTLS, 验证方式: OAuth2
+  - git-email:
+    - [开启 2-Step Verification（两步验证）](https://myaccount.google.com/security)
+    - [创建密码](https://myaccount.google.com/apppasswords), 记住这个密码（只显示一次），注意复制密码后要去掉空格
+
 - 163邮箱配置: 默认情况下，163邮箱只能在网页和网易邮箱大师登录。如果要用git通过163邮箱发送邮件则需要对163邮箱进行配置。在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除）。
+
 - foxmail邮箱（qq邮箱）配置: 在[pc端网页](https://mail.qq.com/)登录foxmail邮箱，点击"Settings -> Third-party Services -> IMAP/SMTP", 点击"Generate Authorization Code"生成在`.gitconfig`和[thunderbird](https://www.thunderbird.net)中登录的密码。
+
 - 腾讯企业邮箱配置:
   - 登录[腾讯企业邮箱](https://exmail.qq.com/login)个人账号（不是管理员），点击左上角“设置”
   - 收发信设置 > 勾选"开启IMAP/SMTP服务" > 勾选"开启POP/SMTP服务"
@@ -178,6 +189,11 @@ https://lore.kernel.org/all/?q=chenxiaosong
   - 发件服务器: 主机名: smtp.exmail.qq.com，端口: 465，连接安全性: SSL/TLS
 
 ## thunderbird邮件客户端
+
+代理配置:
+  - Settings > General > Network & Disk Space > Connection Settings...
+  - Manual proxy configuration > HTTP Proxy: localhost（注意前面没有`http://`） Port: 1234
+  - 勾选 Also use this proxy for HTTPS
 
 最新版本的[thunderbird](https://www.thunderbird.net/)默认使用html格式发送和显示，需要更改配置，参考[Plain text e-mail - Thunderbird](http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Send_plain_text_messages)。
 
