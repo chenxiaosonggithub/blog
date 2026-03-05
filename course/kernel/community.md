@@ -175,7 +175,7 @@ https://lore.kernel.org/all/?q=chenxiaosong
     - 发件: smtp.gmail.com, 端口: 587, 连接安全性: STARTTLS, 验证方式: OAuth2
   - git-email:
     - [开启 2-Step Verification（两步验证）](https://myaccount.google.com/security)
-    - [创建密码](https://myaccount.google.com/apppasswords), 记住这个密码（只显示一次），注意复制密码后要去掉空格
+    - [创建應用程式密碼](https://myaccount.google.com/apppasswords), 记住这个密码（只显示一次），注意复制密码后要去掉空格
 
 - 163邮箱配置: 默认情况下，163邮箱只能在网页和网易邮箱大师登录。如果要用git通过163邮箱发送邮件则需要对163邮箱进行配置。在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除）。
 
@@ -192,7 +192,7 @@ https://lore.kernel.org/all/?q=chenxiaosong
 
 代理配置:
   - Settings > General > Network & Disk Space > Connection Settings...
-  - Manual proxy configuration > HTTP Proxy: localhost（注意前面没有`http://`） Port: 1234
+  - Manual proxy configuration > HTTP Proxy: localhost（注意前面没有`http://`） Port: 7890
   - 勾选 Also use this proxy for HTTPS
 
 最新版本的[thunderbird](https://www.thunderbird.net/)默认使用html格式发送和显示，需要更改配置，参考[Plain text e-mail - Thunderbird](http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Send_plain_text_messages)。
@@ -217,6 +217,17 @@ thunderbird有个快捷键`k`，会忽略话题，不小心按下后邮件就会
 - 点击 "Message Format"，选择 "Plain Text"
 - 点击 "Composition defaults" 设置签名
 
+## git-email代理
+
+```sh
+sudo dnf install proxychains-ng -y
+sudo apt install proxychains4 -y
+
+sudo sed -i "s/^socks4/# socks4/g" /etc/proxychains.conf
+echo "http 10.42.20.206 7890" >> /etc/proxychains.conf
+proxychains4 git send-email ...
+```
+
 ## git发送邮件
 
 安装软件:
@@ -224,12 +235,24 @@ thunderbird有个快捷键`k`，会忽略话题，不小心按下后邮件就会
 sudo apt install git-email -y
 ```
 
-`@linux.dev`邮箱`~/.gitconfig`:
+gmail邮箱配置`~/.gitconfig`:
 ```sh
 [sendemail]
-        from = chenxiaosong.chenxiaosong@linux.dev
+        from = chenxiaosong.com@gmail.com
+        smtpserver = smtp.gmail.com
+        smtpuser = chenxiaosong.com@gmail.com
+        smtpencryption = tls
+        smtppass = 此处填写應用程式密碼，不是gmail登录密码
+        smtpserverport = 587
+```
+
+
+`@linux.dev`邮箱（我的邮箱`chenxiaosong@chenxiaosong.com`服务器和`@linux.dev`一样是migadu）`~/.gitconfig`:
+```sh
+[sendemail]
+        from = chenxiaosong@chenxiaosong.com
         smtpserver = smtp.migadu.com
-        smtpuser = chenxiaosong.chenxiaosong@linux.dev
+        smtpuser = chenxiaosong@chenxiaosong.com
         smtpencryption = ssl
         smtppass = 此处填写密码
         smtpserverport = 465
