@@ -5,13 +5,7 @@ It is really enjoyable and exciting to contribute to SMB.
 [Click here to see my upstream Linux kernel commit history on kernel.org](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（The page may take a moment to load, you can directly check the patch links listed below）
 <!-- next: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong -->
 
-# SMB patches I have reviewed
-
-[Click here to see SMB patches reviewed by ChenXiaoSong](https://chenxiaosong.com/en/smb-review.html).
-
-# SMB patches I have contributed
-
-## 2025
+# 2026
 
 - [[PATCH cifs-utils v3 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20260107043109.1456095-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
@@ -89,6 +83,8 @@ TODO:
 - [[PATCH v3 0/1] smb/client: fix memory leaks](https://lore.kernel.org/linux-cifs/20260202094906.1933479-1-chenxiaosong.chenxiaosong@linux.dev/)
   - [67b3da8d3051 smb/client: fix memory leak in SendReceive()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b3da8d3051)
   - [e3a43633023e smb/client: fix memory leak in smb2_open_file()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e3a43633023e)
+
+# 2025
 
 - Review: [fa2fd0b10f66 smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fa2fd0b10f66) (Author: Henrique Carvalho <henrique.carvalho@suse.com>)
   - Review: [Re: generic/013 failure to Samba](https://lore.kernel.org/linux-cifs/2feaf0ac-172d-431c-805c-7b3440f1ebd5@linux.dev/)
@@ -174,7 +170,7 @@ TODO:
   - [d1a30b9ddc3d smb/server: fix return value of smb2_notify()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d1a30b9ddc3d4c0e38666bd166d51863cb39f1c4)
   - [c5b462e35373 smb/server: fix return value of smb2_read()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c5b462e35373a68a5a7954f5e00383998cc7fe92)
 
-## 2024
+# 2024
 
 - [[PATCH v2 00/12] smb: fix some bugs, move duplicate definitions to common header file, and some small cleanups](https://lore.kernel.org/linux-cifs/20240822082101.391272-1-chenxiaosong@chenxiaosong.com/)
   - [e2fcd3fa0351 smb: add comment to STATUS_MCA_OCCURED](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e2fcd3fa0351ea2133d1238fcc6a9f140c52d36f)
@@ -193,12 +189,12 @@ TODO:
 - [[PATCH] ksmbd: remove duplicate SMB2 Oplock levels definitions](https://lore.kernel.org/linux-cifs/20240619161753.385508-1-chenxiaosong@chenxiaosong.com/)
   - [ac5399d48616 ksmbd: remove duplicate SMB2 Oplock levels definitions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ac5399d48616644cb6ddfe39f8babe807d5f5cbd)
 
-## 2023
+# 2023
 
 - [[PATCH] ksmbd: fix possible refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/20230302135804.2583061-1-chenxiaosong2@huawei.com/)
   - [CVE-2023-53061](https://nvd.nist.gov/vuln/detail/CVE-2023-53061): [2624b445544f ksmbd: fix possible refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2624b445544ffc1472ccabfb6ec867c199d4c95c)
 
-## 2022
+# 2022
 
 - [502487847743 cifs: fix missing unlock in cifs_file_copychunk_range()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=502487847743018c93d75b401eac2ea4c4973123)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221119045159.1400244-1-chenxiaosong2@huawei.com/)）
 - [542228db2f28 cifs: fix use-after-free on the link name](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=542228db2f28fdf775b301f2843e1fe486e7c797)（[邮件列表](https://patchwork.kernel.org/project/cifs-client/patch/20221104074441.634677-1-chenxiaosong2@huawei.com/)）
