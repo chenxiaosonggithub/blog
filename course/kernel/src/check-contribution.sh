@@ -2,7 +2,7 @@
 blog_path=${MY_CODE_TOP_PATH}/blog
 
 kernel_contrib_file=${blog_path}/course/kernel/contribution.md
-smb_contrib_file=${blog_path}/course/smb/contribution.md
+smb_contrib_file=${blog_path}/en/smb-contribution.md
 smb_review_file=${blog_path}/en/smb-review.md
 # echo $kernel_contrib_file $smb_contrib_file $smb_review_file
 

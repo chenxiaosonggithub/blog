@@ -1,9 +1,12 @@
 It is really enjoyable and exciting to contribute to SMB.
 
-[Click here to see my emails on the SMB mailing list](https://lore.kernel.org/linux-cifs/?q=chenxiaosong)
+[Click here to see my emails on the SMB mailing list](https://lore.kernel.org/linux-cifs/?q=chenxiaosong).
 
-[Click here to see my upstream Linux kernel commit history on kernel.org](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)（The page may take a moment to load, you can directly check the patch links listed below）
+[Click here to see my upstream Linux kernel commit history on kernel.org](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=chenxiaosong)
+（The page may take a moment to load, you can directly check the patch links listed below）
 <!-- next: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong -->
+
+[Click here to see my other kernel module patches](https://chenxiaosong.com/course/kernel/contribution.html).
 
 # 2026
 

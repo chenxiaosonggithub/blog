@@ -1,6 +1,6 @@
 # SMB patches I have contributed
 
-[Click here to see SMB patches contributed by ChenXiaoSong](https://chenxiaosong.com/course/smb/contribution.html).
+[Click here to see SMB patches contributed by ChenXiaoSong](https://chenxiaosong.com/en/smb-contribution.html).
 
 # SMB patches I have reviewed
 
