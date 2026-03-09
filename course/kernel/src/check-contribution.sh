@@ -19,10 +19,10 @@ find_missing() {
 		# echo "[FOUND] $subject"
 		return
 	fi
-	if grep -Fq "$subject" "$smb_review_file"; then
-		# echo "[FOUND] $subject"
-		return
-	fi
+	# if grep -Fq "$subject" "$smb_review_file"; then
+	# 	# echo "[FOUND] $subject"
+	# 	return
+	# fi
 
 	echo "[MISSING] - [$full_commit](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=$commit_id)"
 }
