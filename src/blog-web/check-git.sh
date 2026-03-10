@@ -27,11 +27,8 @@ comm_push_github_repo() {
 	fi
 
 	local url=git@github.com:chenxiaosonggithub/${repo}.git
-	git remote get-url github | grep ${url}
-	if [ $? -ne 0 ]; then
-		git remote add github ${url}
-		git fetch github
-	fi
+	git remote add github ${url}
+	git fetch github
 
 	local gitee_commit=$(git rev-parse gitee/master)
 	local github_commit=$(git rev-parse github/master)
@@ -132,8 +129,9 @@ comm_check_repo() {
 	fi
 
 	# 删除所有remote
-	# xargs -n 1：逐个传递
-	git remote | xargs -n 1 git remote remove
+	# xargs -n 1: 逐个传递
+	# -r (--no-run-if-empty): 当没有输入时 不执行命令。
+	git remote | xargs -r -n 1 git remote remove
 
 	git remote add gitee git@gitee.com:chenxiaosonggitee/${repo}.git
 	git fetch gitee
