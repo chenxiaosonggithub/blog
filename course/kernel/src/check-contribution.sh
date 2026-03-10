@@ -2,7 +2,7 @@
 blog_path=${MY_CODE_TOP_PATH}/blog
 
 kernel_contrib_file=${blog_path}/course/kernel/contribution.md
-smb_contrib_file=${blog_path}/course/smb/contribution.md
+smb_contrib_file=${blog_path}/en/smb-contribution.md
 smb_review_file=${blog_path}/en/smb-review.md
 # echo $kernel_contrib_file $smb_contrib_file $smb_review_file
 
@@ -19,10 +19,10 @@ find_missing() {
 		# echo "[FOUND] $subject"
 		return
 	fi
-	if grep -Fq "$subject" "$smb_review_file"; then
-		# echo "[FOUND] $subject"
-		return
-	fi
+	# if grep -Fq "$subject" "$smb_review_file"; then
+	# 	# echo "[FOUND] $subject"
+	# 	return
+	# fi
 
 	echo "[MISSING] - [$full_commit](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=$commit_id)"
 }

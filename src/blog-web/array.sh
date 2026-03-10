@@ -147,7 +147,6 @@ comm_array=(
 		1 1 course/smb/refactor.md ~ "smb代码重构"
 		1 1 course/smb/other.md ~ "smb未分类的内容"
 		1 1 course/smb/mailing-list.md ~ "smb社区贡献"
-		1 1 course/smb/contribution.md ~ "陈孝松SMB贡献"
 		# 1 1 course/smb/patch.md ~ "smb补丁分析"
 			# 其他人的补丁
 			1 1 course/smb/patch/cifs-Fix-in-error-types-returned-for-out-of-credit-s.md ~
@@ -310,5 +309,6 @@ comm_array=(
 	1 2 tmp/gnu-linux/smb/patch/README.md en/smb-patch.html "SMB Patches to Be Reviewed"
 	1 2 en/smb-map-error.md ~ "SMB Map Error"
 	1 2 en/smb-review.md ~ "SMB patches reviewed by ChenXiaoSong"
+	1 2 en/smb-contribution.md ~ "SMB patches contributed by ChenXiaoSong"
 	1 2 tmp/gnu-linux/smb/test/buildbot/buildbot.md en/smb-buildbot.html "SMB Buildbot Test Cases"
 )

@@ -13,7 +13,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 ## SMB贡献 {#mainline-smb}
 
-[点击这里查看我的SMB贡献](https://chenxiaosong.com/course/smb/contribution.html)。
+[点击这里查看我的SMB贡献](https://chenxiaosong.com/en/smb-contribution.html)。
 
 我的内核补丁大部分都是SMB方向的。
 
