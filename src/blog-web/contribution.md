@@ -1,5 +1,9 @@
 这里列出我所有的自由软件项目贡献。
 
+# SMB贡献 {#smb}
+
+[点击这里查看我的SMB贡献](https://chenxiaosong.com/en/smb-contribution.html)。
+
 # Linux内核贡献 {#linux-kernel}
 
 [点击这里查看我的Linux内核贡献](https://chenxiaosong.com/course/kernel/contribution.html)。
