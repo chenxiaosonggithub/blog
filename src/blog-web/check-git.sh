@@ -17,6 +17,7 @@ not_sync_repos=()
 gitee_ok_repos=()
 github_not_push_repos=()
 github_ok_repos=()
+other_branch_repos=()
 
 # return 0: push成功 或 已经是最新不用push
 # return 非0: push失败
@@ -171,6 +172,12 @@ comm_check_repo() {
 			fi
 		fi
 	fi
+
+	local branches=$(git branch --format='%(refname:short)')
+
+	if [ "$branches" != "master" ]; then
+		other_branch_repos+=(${repo})
+	fi
 }
 
 comm_print_array() {
@@ -191,6 +198,7 @@ print_result() {
 	comm_print_array not_clean_repos "$(comm_red_color)" "未提交的仓库:"
 	comm_print_array not_sync_repos "$(comm_red_color)" "未push/pull的仓库:"
 	comm_print_array github_not_push_repos "$(comm_red_color)" "github未push的仓库:"
+	comm_print_array other_branch_repos "$(comm_red_color)" "还有其他分支的仓库:"
 }
 
 check_git() {
