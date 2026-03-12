@@ -95,6 +95,28 @@ openEuler的LTS有kabi白名单，使用脚本[`check-kabi`](https://atomgit.com
 
 # 贡献Linux内核社区
 
+## 订阅邮件列表
+
+打开以下两个网站，然后点击需要订阅的模块那一行的`sub`链接:
+
+- [先查这个网站](https://subspace.kernel.org/vger.kernel.org.html)
+- [如果找不到再查这个网站](https://subspace.kernel.org/lists.linux.dev.html)
+
+
+比如我订阅linux-cifs模块，会向<linux-cifs+subscribe@vger.kernel.org>发送一封邮件，主题和正文可为空。过一会儿就会收到一封回复邮件，按照指示操作即可。
+
+<!--
+Your message to <majordomo@vger.kernel.org> was not processed, because
+Majordomo is no longer used at vger.kernel.org after migration to the new
+platform.
+
+To subscribe or unsubscribe to lists, please visit
+https://subspace.kernel.org/vger.kernel.org.html
+and use the "sub/unsub" links next to the list you want.
+
+For other information and help about this list, send a message to <linux-cifs+help@vger.kernel.org>.
+-->
+
 ## 准备补丁
 
 你可以通过[bugzilla](https://bugzilla.kernel.org/)或[syzbot](https://syzkaller.appspot.com/upstream)发现内核bug，也可以通过阅读内核代码发现bug或进行重构。
