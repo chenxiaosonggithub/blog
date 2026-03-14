@@ -177,6 +177,11 @@ https://lore.kernel.org/all/?q=chenxiaosong
     - [开启 2-Step Verification（两步验证）](https://myaccount.google.com/security)
     - [创建應用程式密碼](https://myaccount.google.com/apppasswords), 记住这个密码（只显示一次），注意复制密码后要去掉空格
 
+- outlook配置
+  - [登录outlook网页](https://outlook.live.com/mail/0/)
+  - 设置 > 邮件 > 转发和IMAP > 再登录一次 > POP和IMAP > 允许设备和应用使用IMAP
+  - 参考[Outlook.com 的 POP、IMAP 和 SMTP 设置](https://support.microsoft.com/zh-cn/office/outlook-com-%E7%9A%84-pop-imap-%E5%92%8C-smtp-%E8%AE%BE%E7%BD%AE-d088b986-291d-42b8-9564-9c414e2aa040)
+
 - 163邮箱配置: 默认情况下，163邮箱只能在网页和网易邮箱大师登录。如果要用git通过163邮箱发送邮件则需要对163邮箱进行配置。在[pc端网页](mail.163.com)登录163邮箱，点击“设置 --> POP3/SMTP/IMAP”，开启SMTP服务，会弹出授权密码窗口，记下这个授权密码（也可以在下方新增授权密码或删除）。
 
 - foxmail邮箱（qq邮箱）配置: 在[pc端网页](https://mail.qq.com/)登录foxmail邮箱，点击"Settings -> Third-party Services -> IMAP/SMTP", 点击"Generate Authorization Code"生成在`.gitconfig`和[thunderbird](https://www.thunderbird.net)中登录的密码。
