@@ -1,5 +1,5 @@
-# OTHER_OPT=""
-OTHER_OPT="W=1 C=1 CHECK=/home/chenxiaosong/code/sparse/sparse"
+OTHER_OPT=""
+# OTHER_OPT="W=1 C=1 CHECK=/home/chenxiaosong/code/sparse/sparse"
 
 if [ $# -ne 4 ]; then
 	echo "用法: $0 <gcc/llvm> <lld/no-lld> <test/no-test> <all/menuconfig/modules/modules_install/bzImage>"
@@ -62,28 +62,35 @@ show_args() {
 	echo
 }
 
+make_cmd="make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR -j`nproc`"
+
 olddefconfig() {
-	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR olddefconfig -j`nproc`
+	$make_cmd olddefconfig
 	return $?
 }
 
 menuconfig() {
-	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR menuconfig -j`nproc`
+	$make_cmd menuconfig
 	return $?
 }
 
 bzImage() {
-	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR bzImage -j`nproc`
+	$make_cmd bzImage
 	return $?
 }
 
 modules() {
-	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR modules -j`nproc`
+	$make_cmd modules
 	return $?
 }
 
 modules_install() {
-	make $OTHER_OPT $COMPILER_OPT $LINKER_OPT O=$BUILD_DIR modules_install INSTALL_MOD_PATH=mod -j`nproc`
+	$make_cmd modules_install INSTALL_MOD_PATH=mod
+	return $?
+}
+
+clean() {
+	$make_cmd clean
 	return $?
 }
 
@@ -105,6 +112,7 @@ menuconfig)
 	}
 	;;
 modules)
+	echo "$make_cmd"
 	time {
 		modules
 	}
