@@ -14,18 +14,18 @@ It is really enjoyable and exciting to contribute to SMB.
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 - Review: [Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
 
+- Review: [40e75e42f49c smb: client: fix open handle lookup in cifs_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=40e75e42f49c) (Author: Paulo Alcantara <pc@manguebit.org>)
+
+- Review: [88d37abb366b smb/client: only export symbol for 'smb2maperror-test' module](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=88d37abb366b) (Author: Ye Bin <yebin10@huawei.com>)
 
 - Review: [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/e2763a4a-48ad-4fb5-8f40-4b78882fbc0e@chenxiaosong.com/)
 - Review: [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/634dbb0b-9a5d-4f3d-ab5f-f4dc75e3527e@chenxiaosong.com/)
 - Review: [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/87181afa-553a-475c-8f08-3c292ba30ffb@chenxiaosong.com/)
 
-<!--
-TODO:
-[[PATCH] smb/server: Fix another refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/20260227055421.1777793-1-linux@roeck-us.net/)
--->
-- Review: [Re: [PATCH] smb/server: Fix another refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/32c1704c-7c9e-4dbe-b852-0fff0124ddc4@chenxiaosong.com/)
-- Review: [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/739c9e8d-238a-4f2d-938c-ed0ab9706098@chenxiaosong.com/)
-- Review: [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/90fdfba1-e0be-4656-87fc-1921d233da37@chenxiaosong.com/)
+- Review: [c15e7c62feb3 smb/server: Fix another refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c15e7c62feb3) (Author: Guenter Roeck <linux@roeck-us.net>)
+  - Review: [Re: [PATCH] smb/server: Fix another refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/32c1704c-7c9e-4dbe-b852-0fff0124ddc4@chenxiaosong.com/)
+  - Review: [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/739c9e8d-238a-4f2d-938c-ed0ab9706098@chenxiaosong.com/)
+  - Review: [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/90fdfba1-e0be-4656-87fc-1921d233da37@chenxiaosong.com/)
 
 <!--
 TODO:
