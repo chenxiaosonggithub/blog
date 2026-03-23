@@ -128,6 +128,11 @@ bzImage)
 		bzImage
 	}
 	;;
+clean)
+	time {
+		clean
+	}
+	;;
 *)
 	echo "Invalid part argument"
 	exit
