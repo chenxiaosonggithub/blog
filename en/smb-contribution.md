@@ -14,6 +14,9 @@ It is really enjoyable and exciting to contribute to SMB.
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 - Review: [Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
 
+- Review: [40e75e42f49c smb: client: fix open handle lookup in cifs_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=40e75e42f49c) (Author: Paulo Alcantara <pc@manguebit.org>)
+
+- Review: [88d37abb366b smb/client: only export symbol for 'smb2maperror-test' module](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=88d37abb366b) (Author: Ye Bin <yebin10@huawei.com>)
 
 - Review: [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/e2763a4a-48ad-4fb5-8f40-4b78882fbc0e@chenxiaosong.com/)
 - Review: [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/634dbb0b-9a5d-4f3d-ab5f-f4dc75e3527e@chenxiaosong.com/)
