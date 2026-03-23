@@ -24,7 +24,12 @@ TODO:
 - [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/e2763a4a-48ad-4fb5-8f40-4b78882fbc0e@chenxiaosong.com/)
 - [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/634dbb0b-9a5d-4f3d-ab5f-f4dc75e3527e@chenxiaosong.com/)
 - [Re: [PATCH v4 5/5] smb: introduce struct file_posix_info](https://lore.kernel.org/linux-cifs/87181afa-553a-475c-8f08-3c292ba30ffb@chenxiaosong.com/)
-- [Re: [PATCH] smb/server: Fix another refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/32c1704c-7c9e-4dbe-b852-0fff0124ddc4@chenxiaosong.com/)
+
+- Review: [c15e7c62feb3 smb/server: Fix another refcount leak in smb2_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c15e7c62feb3) (Author: Guenter Roeck <linux@roeck-us.net>)
+  - Review: [Re: [PATCH] smb/server: Fix another refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/32c1704c-7c9e-4dbe-b852-0fff0124ddc4@chenxiaosong.com/)
+  - Review: [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/739c9e8d-238a-4f2d-938c-ed0ab9706098@chenxiaosong.com/)
+  - Review: [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/90fdfba1-e0be-4656-87fc-1921d233da37@chenxiaosong.com/)
+
 - [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/739c9e8d-238a-4f2d-938c-ed0ab9706098@chenxiaosong.com/)
 - [Re: [PATCH v2 1/1] smb/server: fix refcount leak in smb2_open()](https://lore.kernel.org/linux-cifs/90fdfba1-e0be-4656-87fc-1921d233da37@chenxiaosong.com/)
 - [Re: [PATCH v3 4/5] smb: introduce struct create_posix_ctxt_rsp](https://lore.kernel.org/linux-cifs/c9d1c233-facd-4387-bed2-b2c1dbc88cbe@linux.dev/)
@@ -44,7 +49,8 @@ TODO:
   - Review: [Re: generic/013 failure to Samba](https://lore.kernel.org/linux-cifs/2feaf0ac-172d-431c-805c-7b3440f1ebd5@linux.dev/)
   - Review: [Re: generic/013 failure to Samba](https://lore.kernel.org/linux-cifs/141824e7-50ab-4072-b611-5db5fa01bb86@linux.dev/)
 
-- [Re: [PATCH] cifs: Fix memory and information leak in smb3_reconfigure()](https://lore.kernel.org/linux-cifs/39ca2ff6-c363-47d7-9d4f-fd6f137afc09@linux.dev/)
+- Review: [cb6d5aa9c0f1 cifs: Fix memory and information leak in smb3_reconfigure()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cb6d5aa9c0f1) (Author: Zilin Guan <zilin@seu.edu.cn>)
+
 - [Re: [PATCH] ksmbd: Fix to handle removal of rfc1002 header from smb_hdr](https://lore.kernel.org/linux-cifs/cb002f72-3e2a-4d23-b08d-f6d987a29661@linux.dev/)
 - [Re: [PATCH 2/2] cifs: Autogenerate SMB2 error mapping table](https://lore.kernel.org/linux-cifs/8f3290fe-d74c-4cd6-86f4-017c52e1872e@linux.dev/)
 - [Re: [PATCH 1/2] cifs: Label SMB2 statuses with errors](https://lore.kernel.org/linux-cifs/ff731375-b565-49f0-985b-7cb9022206d6@linux.dev/)

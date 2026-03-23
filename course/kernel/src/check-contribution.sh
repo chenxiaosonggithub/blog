@@ -18,7 +18,7 @@ find_smb_review_missing() {
 		return
 	fi
 
-	if grep -Fq "$subject" "$smb_review_file"; then
+	if grep -Fq "$full_commit" "$smb_review_file"; then
 		return
 	fi
 
