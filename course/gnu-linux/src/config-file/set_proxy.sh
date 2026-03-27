@@ -1,4 +1,4 @@
-proxy_ip=10.42.20.206
+proxy_ip=172.21.20.206
 if [[ $1 == 1 ]]; then
 	echo "set proxy"
 	export  http_proxy=http://$proxy_ip:7890
