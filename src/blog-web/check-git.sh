@@ -24,17 +24,12 @@ other_branch_repos=()
 comm_push_github_repo() {
 	local repo=$1
 	if [[ "${is_sync_github}" == false ]]; then
-		return 1
+		return 0
 	fi
 
 	local url=git@github.com:chenxiaosonggithub/${repo}.git
 	git remote add github ${url}
-
-	local gitee_commit=$(git rev-parse gitee/master)
-	local github_commit=$(git rev-parse github/master)
-	if [ "${gitee_commit}" != "${github_commit}" ]; then
-		timeout 15 git push github master -f
-	fi
+	timeout 15 git push github master -f
 	return $?
 }
 
