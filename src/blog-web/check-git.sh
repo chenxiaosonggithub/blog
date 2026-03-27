@@ -29,7 +29,6 @@ comm_push_github_repo() {
 
 	local url=git@github.com:chenxiaosonggithub/${repo}.git
 	git remote add github ${url}
-	git fetch github
 
 	local gitee_commit=$(git rev-parse gitee/master)
 	local github_commit=$(git rev-parse github/master)
