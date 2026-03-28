@@ -1,5 +1,9 @@
-email_account=<你的邮箱账号>
-password=<你的密码>
+email_account=
+password=
+if [ -z $email_account ] && [ -z $password ]; then
+	echo "请在common.sh中填写cpolar账号和密码"
+	exit 1
+fi
 tunnel_name=kylin # 隧道名称
 ssh_user=chenxiaosong # ssh用户名
 
@@ -29,8 +33,6 @@ fi
 
 address=$(echo "$tunnel" | cut -d: -f1)
 port=$(echo "$tunnel" | cut -d: -f2)
-ssh_cmd="ssh -p $port $ssh_user@$address"
 
-echo "$ssh_cmd"
-$ssh_cmd
+# ssh -p $port $ssh_user@$address
 
