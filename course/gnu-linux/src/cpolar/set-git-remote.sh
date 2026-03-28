@@ -4,7 +4,8 @@ if [ $# -ne 1 ]; then
 fi
 repo=$1
 
-. /home/chenxiaosong/code/blog/course/gnu-linux/src/cpolar/common.sh
+script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+. $script_dir/common.sh
 
 cd ~/code/$repo
 git remote remove cpolar

@@ -3,5 +3,6 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-. /home/chenxiaosong/code/blog/course/gnu-linux/src/cpolar/common.sh
+script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+. $script_dir/common.sh
 scp -P $port $ssh_user@$address:/home/chenxiaosong/forVM/$1 .
