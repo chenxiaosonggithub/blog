@@ -1,7 +1,8 @@
-email_account=
-password=
-if [ -z $email_account ] && [ -z $password ]; then
-	echo "请在common.sh中填写cpolar账号和密码"
+script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+. $script_dir/account.txt
+
+if [ -z $email ] && [ -z $password ]; then
+	echo "请在account.txt中填写cpolar邮箱账号(email)和密码(password)"
 	exit 1
 fi
 tunnel_name=kylin # 隧道名称
@@ -14,7 +15,7 @@ csrf_token=$(curl -s 'https://dashboard.cpolar.com/login' | sed -n 's/.*name="cs
 
 curl 'https://dashboard.cpolar.com/login' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  --data-urlencode "login=$email_account" \
+  --data-urlencode "login=$email" \
   --data-urlencode "password=$password" \
   --data-urlencode "csrf_token=$csrf_token" \
   -c cookies-$now_time.txt
