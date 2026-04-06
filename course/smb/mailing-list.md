@@ -1,8 +1,9 @@
 我熟悉的内核模块，除了nfs就是smb了。nfs client是我相对比较熟悉的模块，但nfs client maintainer很不友好，nfs server maintainer友好但我对nfs server不是太熟悉。smb server近两年贡献的人数不是很多，又是近几年才进内核的模块，所以是相对比较适合我投入社区的。
 
 - [SMB邮件列表](https://lore.kernel.org/linux-cifs/)
-- [netfs邮件列表](https://lore.kernel.org/netfs/)
 - [SMB patchwork](https://patchwork.kernel.org/project/cifs-client/list/)
+- [SMB AI review](https://sashiko.dev/#/?list=org.kernel.vger.linux-cifs)
+- [netfs邮件列表](https://lore.kernel.org/netfs/)
 
 # 社区
 
