@@ -1,3 +1,6 @@
+. ~/.top-path
+tmp_path=${MY_CODE_TOP_PATH}/tmp
+
 # 每一行代表:
 #	是否生成目录
 #	是否添加签名: 0 - 不添加签名，1 - 添加中文签名，2 - 添加英文签名
@@ -313,3 +316,10 @@ comm_array=(
 	1 2 tmp/gnu-linux/smb/test/buildbot/buildbot.md en/smb-buildbot.html "SMB Buildbot Test Cases"
 	1 2 tmp/gnu-linux/smb/test/smb1maperror/smb1maperror.md en/smb1maperror-test.html "SMB1 Map Error Test Cases"
 )
+
+. ${tmp_path}/src/array.sh
+for element in ${comm_tmp_array[@]}
+do
+        comm_array+=(${element})
+done
+
