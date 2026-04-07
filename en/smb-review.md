@@ -6,6 +6,19 @@
 
 The following are the SMB patches I have reviewed, listed with the most recent first.
 
+- Review: [34420cb92dbb smb/client: ensure smb2_mapping_table rebuild on cmd changes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=34420cb92dbb) (Author: Huiwen He <hehuiwen@kylinos.cn>)
+
+- Review: [309b44ed6844 ksmbd: fix memory leaks and NULL deref in smb2_lock()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=309b44ed6844) (Author: Werner Kasselman <werner@verivus.com>)
+  - Review: [Re: [PATCH] ksmbd: fix memory leaks and NULL deref in smb2_lock()](https://lore.kernel.org/linux-cifs/308acd9f-58d9-4519-aaa6-be96f140177d@chenxiaosong.com/)
+  - Review: [Re: [PATCH] ksmbd: fix memory leaks and NULL deref in smb2_lock()](https://lore.kernel.org/linux-cifs/9192ff4b-770a-411b-af5d-ab06d20248f8@chenxiaosong.com/)
+  - Review: [Re: [PATCH v2] ksmbd: fix memory leaks and NULL deref in smb2_lock()](https://lore.kernel.org/linux-cifs/02e11b2c-a472-46ac-95a4-ffe7013c3133@chenxiaosong.com/)
+
+- Review: [48623ec358c1 ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=48623ec358c1) (Author: Werner Kasselman <werner@verivus.com>)
+  - Review: [Re: [PATCH] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()](https://lore.kernel.org/linux-cifs/6b98c261-b17b-45a8-ab09-efdb0d658f4e@chenxiaosong.com/)
+  - Review: [Re: [PATCH] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()](https://lore.kernel.org/linux-cifs/1e0882ea-4e59-4b70-b1ae-90fde86c252b@chenxiaosong.com/)
+  - Review: [Re: [PATCH v3] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()](https://lore.kernel.org/linux-cifs/435dda9f-93f5-41db-9d21-70371d31857b@chenxiaosong.com/)
+  - Review: [Re: [PATCH] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()](https://lore.kernel.org/linux-cifs/7ecf9af4-096a-45f5-9d00-fc7ae750e7db@chenxiaosong.com/)
+
 - Review: [40e75e42f49c smb: client: fix open handle lookup in cifs_open()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=40e75e42f49c) (Author: Paulo Alcantara <pc@manguebit.org>)
 
 - Review: [88d37abb366b smb/client: only export symbol for 'smb2maperror-test' module](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=88d37abb366b) (Author: Ye Bin <yebin10@huawei.com>)
