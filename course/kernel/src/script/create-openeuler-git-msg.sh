@@ -30,6 +30,8 @@ echo "${inclusion} inclusion"
 echo "from ${inclusion}-${version}"
 echo "commit ${full_commit_id}"
 echo "category: bugfix"
+echo "category: performance"
+echo "category: cleanup"
 echo "bugzilla: "
 echo "CVE: NA"
 echo
