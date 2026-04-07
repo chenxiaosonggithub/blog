@@ -14,8 +14,6 @@ It is really enjoyable and exciting to contribute to SMB.
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 - Review: [Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
 
-- Report: [519b76ac0b31 ext4: fix mballoc-test.c is not compiled when EXT4_KUNIT_TESTS=M](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=519b76ac0b31) (Author: Ye Bin <yebin10@huawei.com>)
-
 - Review: [34420cb92dbb smb/client: ensure smb2_mapping_table rebuild on cmd changes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=34420cb92dbb) (Author: Huiwen He <hehuiwen@kylinos.cn>)
 
 - Review: [309b44ed6844 ksmbd: fix memory leaks and NULL deref in smb2_lock()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=309b44ed6844) (Author: Werner Kasselman <werner@verivus.com>)

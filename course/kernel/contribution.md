@@ -19,6 +19,7 @@ Linux内核是我现在的工作，更是我的兴趣和信仰（自由软件）
 
 ## 内核其他模块贡献 {#mainline-others}
 
+- Report: [519b76ac0b31 ext4: fix mballoc-test.c is not compiled when EXT4_KUNIT_TESTS=M](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=519b76ac0b31) (Author: Ye Bin <yebin10@huawei.com>)
 - [52e89100754b NFSv4, NFSD: move enum nfs_cb_opnum4 to include/linux/nfs4.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=52e89100754b2e888cb63bf2d19e65d809497cd6)（[邮件列表](https://lore.kernel.org/all/tencent_03EDD0CAFBF93A9667CFCA1B68EDB4C4A109@qq.com/)）
 - [b4e4f6690165 NFSv4.x: Fail client initialisation if state manager thread can't run](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b4e4f66901658fae0614dea5bf91062a5387eda7)（这个补丁是maintainer剽窃我的，[我的补丁请查看这里](https://lore.kernel.org/linux-nfs/20221112073055.1024799-1-chenxiaosong2@huawei.com/)）
 - [d564d2c4c244 NFSv4: check FMODE_EXEC from open context mode in nfs4_opendata_access()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d564d2c4c2445cb0972453933dc87c2dcaac8597)（[查看分析](https://chenxiaosong.com/course/kernel/my-patch/CVE-2022-24448.html)）
