@@ -314,7 +314,7 @@ comm_array=(
 	1 2 en/smb-review.md ~ "SMB patches reviewed by ChenXiaoSong"
 	1 2 en/smb-contribution.md ~ "SMB patches contributed by ChenXiaoSong"
 	1 2 tmp/gnu-linux/smb/test/buildbot/buildbot.md en/smb-buildbot.html "SMB Buildbot Test Cases"
-	1 2 tmp/gnu-linux/smb/test/smb1maperror/smb1maperror.md en/smb1maperror-test.html "SMB1 Map Error Test Cases"
+	1 2 tmp/gnu-linux/smb/test/smbmaperror/smb1maperror.md en/smb1maperror-test.html "SMB1 Map Error Test Cases"
 )
 
 . ${tmp_path}/src/array.sh
