@@ -1,18 +1,22 @@
 . ~/.top-path
-kernel_version=linux
+kernel_version=smb-kernel
+build_dir=arm64-build
 
+build_path=${MY_CODE_TOP_PATH}/$kernel_version/${build_dir}
 read stty_rows stty_cols < <(stty size)
+
+qcow2_file=$(ls *.qcow2)
 qemu-system-aarch64 \
 -smp 8 \
 -m 4096 \
 -machine virt \
 -cpu cortex-a72 \
--kernel ${MY_CODE_TOP_PATH}/$kernel_version/aarch64-build/arch/arm64/boot/Image \
---virtfs local,id=kmod_dev,path=${MY_CODE_TOP_PATH},security_model=none,mount_tag=9p \
+-kernel ${build_path}/arch/arm64/boot/Image \
+--virtfs local,id=kmod_dev,path=${build_path},security_model=none,mount_tag=9p \
 -device virtio-scsi-pci \
 -net nic,model=virtio,macaddr=00:11:22:33:44:55 \
 -net tap \
--drive file=aarch64-bullseye.qcow2,if=none,cache=none,id=root,format=qcow2,file.locking=off \
+-drive file=$qcow2_file,if=none,cache=none,id=root,format=qcow2,file.locking=off \
 -device virtio-blk,drive=root,id=d_root \
--append "nokaslr console=ttyAMA0 root=/dev/vda rw kmemleak=on kernel_version=${kernel_version} stty_rows=${stty_rows} stty_cols=${stty_cols}" \
+-append "nokaslr console=ttyAMA0 root=/dev/vda2 rw kmemleak=on kernel_version=${kernel_version} stty_rows=${stty_rows} stty_cols=${stty_cols}" \
 -nographic \
