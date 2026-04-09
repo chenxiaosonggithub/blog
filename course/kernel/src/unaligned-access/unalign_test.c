@@ -11,7 +11,7 @@ static int __init unalign_test_init(void)
 {
 	struct test_struct data = { 0x101, 0, 0 };
 	u8 *ptr = (u8 *)&data;
-	int unaligned_data = *(__le32 *)(ptr);
+	int unaligned_data = *(__le32 *)(ptr + 1);
 	printk("unaligned_data:%d\n", unaligned_data);
 	return 0;
 }
