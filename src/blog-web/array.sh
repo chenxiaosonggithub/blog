@@ -1,5 +1,4 @@
 . ~/.top-path
-tmp_path=${MY_CODE_TOP_PATH}/tmp
 
 # 每一行代表:
 #	是否生成目录
@@ -316,9 +315,6 @@ comm_array=(
 	1 2 tmp/gnu-linux/smb/test/smbmaperror/smb1maperror.md en/smb1maperror-test.html "SMB1 Map Error Test Cases"
 )
 
-. ${tmp_path}/src/array.sh
-for element in ${comm_tmp_array[@]}
-do
-        comm_array+=(${element})
-done
+. ${MY_CODE_TOP_PATH}/tmp/src/array.sh
+. ${MY_CODE_TOP_PATH}/daily-task/src/array.sh
 
