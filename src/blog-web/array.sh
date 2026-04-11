@@ -234,7 +234,6 @@ comm_array=(
 	1 1 src/lorawan/lorawan.md ~ "LoRaWAN"
 	1 1 src/health/tooth-clean.md ~ "牙齿护理"
 	1 1 src/game/black-myth-wukong.md ~ "黑神话：悟空"
-	1 1 src/IELTS/IELTS.md ~ "雅思备考笔记"
 	1 1 src/recipe/recipe.md ~ "菜谱"
 	# 翻译
 	1 1 src/blog-web/translation.md ~ "翻译"

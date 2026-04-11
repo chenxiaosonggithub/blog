@@ -146,8 +146,6 @@ Linux内核加餐:
 [我每天坚持做的事](https://gitee.com/chenxiaosonggitee/daily-task/blob/master/README.md)
 -->
 
-[雅思备考笔记](https://chenxiaosong.com/src/IELTS/IELTS.html)
-
 [菜谱](https://chenxiaosong.com/src/recipe/recipe.html)
 
 # 翻译
