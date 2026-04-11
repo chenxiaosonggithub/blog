@@ -23,11 +23,16 @@ my_init() {
 	rm -rf ${tmp_html_path}
 	mkdir -p ${tmp_html_path}
 	rm -rf $(comm_tmp_src_path)
+
 	mkdir -p $(comm_tmp_src_path)
-	mkdir -p $(comm_tmp_src_path)/tmp
 	cp -rf ${src_path}/* $(comm_tmp_src_path)
+
+	mkdir -p $(comm_tmp_src_path)/tmp
 	cp -rf ${src_path}/../tmp/* $(comm_tmp_src_path)/tmp/
+
+	mkdir -p $(comm_tmp_src_path)/daily-task
 	cp -rf ${src_path}/../daily-task/* $(comm_tmp_src_path)/daily-task/
+
 	bash ${src_path}/course/course.sh
 	comm_rm_private $(comm_tmp_src_path)
 }
