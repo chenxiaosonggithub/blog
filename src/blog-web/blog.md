@@ -142,7 +142,9 @@ Linux内核加餐:
 
 [书法: 左手练字](https://chenxiaosong.com/calligraphy/calligraphy.html)
 
+<!--
 [我每天坚持做的事](https://gitee.com/chenxiaosonggitee/daily-task/blob/master/README.md)
+-->
 
 [菜谱](https://chenxiaosong.com/src/recipe/recipe.html)
 
