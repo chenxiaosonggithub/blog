@@ -14,17 +14,18 @@
 -->
 - smb server maintainer: Namjae Jeon <linkinjeon@kernel.org>，友好
   - 在韩国，所在时区UTC+9，中国早上9点时他早上10点
+- SMBDIRECT: Stefan Metzmacher <metze@samba.org>, Tom Talpey <tom@talpey.com>
 <!--
 我20251204-1258发的补丁（他收到时可能是1300），他回复时显示的是20251204-1400
 -->
 - [smb client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary): `https://git.samba.org/sfrench/cifs-2.6.git`,
-[for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)
+[for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)，[github仓库(https://github.com/smfrench/smb3-kernel)]
 - [smb server maintainer的仓库](https://git.samba.org/?p=ksmbd.git;a=summary): `https://git.samba.org/ksmbd.git`,
 [github仓库（现在好像不更新了）](https://github.com/namjaejeon/ksmbd),
 [ksmbd-for-next-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next-next),
 [ksmbd-for-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next)
 - [samba官方仓库](https://git.samba.org/?p=samba.git;a=summary): `https://git.samba.org/samba.git`，或[samba gitlab仓库](https://gitlab.com/samba-team/samba)
-- [cifs-utils仓库](https://git.samba.org/?p=cifs-utils.git;a=summary): `https://git.samba.org/cifs-utils.git`
+- [cifs-utils仓库](https://git.samba.org/?p=cifs-utils.git;a=summary): `https://git.samba.org/cifs-utils.git`，[github仓库](https://github.com/smfrench/smb3-utils)
 
 邮件需要发送和抄送的人:
 ```sh
