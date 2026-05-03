@@ -12,7 +12,35 @@ It is really enjoyable and exciting to contribute to SMB.
 
 - [[PATCH cifs-utils v3 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20260107043109.1456095-1-chenxiaosong.chenxiaosong@linux.dev/)
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
-- Review: [Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
+- Review: [[PATCH cifs-utils] Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
+
+- Review: [235e32320a47 ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=235e32320a47)
+
+- [[PATCH v5 0/7] smb: fix some bugs, move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20260303151317.136332-1-zhang.guodong@linux.dev/)
+  - Review: [95e1d378ce30 smb: move filesystem_vol_info into common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=95e1d378ce30)
+  - Review: [31884d4bc981 smb: move file_basic_info into common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=31884d4bc981)
+  - Review: [a5e581093b1d smb: move some definitions from common/smb2pdu.h into common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a5e581093b1d)
+
+- Review: [bc1a64d23641 smb: client: add missing MODULE_DESCRIPTION() to smb1maperror_test](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bc1a64d23641)
+
+- Review: [59ea368431dd smb/client: move smb2maperror declarations to smb2proto.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=59ea368431dd)
+
+- [[PATCH v3 00/13] smb: improve search speed of SMB1 maperror](https://lore.kernel.org/linux-cifs/20260402141839.461257-1-huiwen.he@linux.dev/)
+  - Review: [85274a3bd40f smb/client: introduce KUnit tests to check DOS/SRV err mapping search](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=85274a3bd40f)
+  - Review: [8c028dd086ad smb/client: check if SMB1 DOS/SRV error mapping arrays are sorted](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8c028dd086ad)
+  - Review: [95e6b7340957 smb/client: use binary search for SMB1 DOS/SRV error mapping](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=95e6b7340957)
+  - Review: [58ac796bb3c0 smb/client: autogenerate SMB1 DOS/SRV to POSIX error mapping](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58ac796bb3c0)
+  - Review: [cd4e653a2f75 smb/client: annotate smberr.h with POSIX error codes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cd4e653a2f75)
+  - Review: [669c3eedaefa smb/client: move ERRnetlogonNotStarted to DOS error class](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=669c3eedaefa)
+  - Review: [e3ac6352a84d smb/client: introduce KUnit test to check ntstatus_to_dos_map search](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e3ac6352a84d)
+  - Review: [010ad1e895db smb/client: check if ntstatus_to_dos_map is sorted](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=010ad1e895db)
+  - Review: [3c6c23ed9424 smb/client: use binary search for NT status to DOS mapping](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3c6c23ed9424)
+  - Review: [772d5920c3d4 smb/client: refactor ntstatus_to_dos() to return mapping entry](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=772d5920c3d4)
+  - Review: [c825f6b7432a smb/client: replace nt_errs with ntstatus_to_dos_map](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c825f6b7432a)
+  - Review: [415c5b8c9a41 smb/client: autogenerate SMB1 NT status to DOS error mapping](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=415c5b8c9a41)
+  - Review: [378f75b7d6ea smb/client: annotate nterr.h with DOS error codes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=378f75b7d6ea)
+
+- Review: [53cf44fa7271 smb/client: avoid null-ptr-deref when tests fail in test_cmp_map()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=53cf44fa7271)
 
 - Review: [34420cb92dbb smb/client: ensure smb2_mapping_table rebuild on cmd changes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=34420cb92dbb) (Author: Huiwen He <hehuiwen@kylinos.cn>)
 
