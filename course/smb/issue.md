@@ -3,4 +3,7 @@
 - [源码编译的samba通过systemd启动超时的问题](https://chenxiaosong.com/course/smb/issue/samba-systemd-start-timeout.html)
 - [smb2 change notify特性开发](https://chenxiaosong.com/course/smb/issue/smb2-change-notify.html)
 - [Test FILE_SYSTEM_ATTRIBUTE_INFO](https://chenxiaosong.com/en/FILE_SYSTEM_ATTRIBUTE_INFO.html)
+- [SMB1 Map Error Test Cases](https://chenxiaosong.com/en/smb1maperror-test.html)
+- [SMB Buildbot Test Cases](https://chenxiaosong.com/en/smb-buildbot.html)
+- [SMB Map Error](https://chenxiaosong.com/en/smb-map-error.html)
 
