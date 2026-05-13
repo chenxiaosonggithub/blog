@@ -19,7 +19,7 @@
 我20251204-1258发的补丁（他收到时可能是1300），他回复时显示的是20251204-1400
 -->
 - [smb client maintainer的仓库](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=summary): `https://git.samba.org/sfrench/cifs-2.6.git`,
-[for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)，[github仓库(https://github.com/smfrench/smb3-kernel)]
+[for-next分支](https://git.samba.org/sfrench/?p=sfrench/cifs-2.6.git;a=log;h=refs/heads/for-next)，[github仓库](https://github.com/smfrench/smb3-kernel)
 - [smb server maintainer的仓库](https://git.samba.org/?p=ksmbd.git;a=summary): `https://git.samba.org/ksmbd.git`,
 [github仓库（现在好像不更新了）](https://github.com/namjaejeon/ksmbd),
 [ksmbd-for-next-next分支](https://git.samba.org/?p=ksmbd.git;a=log;h=refs/heads/ksmbd-for-next-next),
