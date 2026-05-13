@@ -73,7 +73,7 @@ On Fedora, Install all necessary packages from standard repository:
 sudo yum install -y acl attr automake bc dbench dump e2fsprogs fio gawk gcc \
         gdbm-devel git indent kernel-devel libacl-devel libaio-devel \
         libcap-devel libtool liburing-devel libuuid-devel lvm2 make psmisc \
-        python3 quota sed sqlite udftools  xfsprogs
+        python3 quota sed sqlite udftools  xfsprogs xfsprogs-devel
 ```
 
 Build xfstests-dev:
