@@ -14,6 +14,10 @@ It is really enjoyable and exciting to contribute to SMB.
 - [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
 - Review: [[PATCH cifs-utils] Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
 
+- [[PATCH v4 0/1] smb/client: fix out-of-bounds read](https://lore.kernel.org/linux-cifs/20260506034908.3874700-1-zisenye@stu.xidian.edu.cn/)
+  - Review: [8d09328dfda0 smb/client: fix out-of-bounds read in smb2_compound_op()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8d09328dfda0)
+  - Review: [d62b8d236fab smb/client: fix out-of-bounds read in symlink_data()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d62b8d236fab)
+
 - Review: [235e32320a47 ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=235e32320a47)
 
 - [[PATCH v5 0/7] smb: fix some bugs, move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20260303151317.136332-1-zhang.guodong@linux.dev/)

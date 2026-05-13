@@ -6,6 +6,15 @@
 
 The following are the SMB patches I have reviewed, listed with the most recent first.
 
+- [[PATCH v4 0/1] smb/client: fix out-of-bounds read](https://lore.kernel.org/linux-cifs/20260506034908.3874700-1-zisenye@stu.xidian.edu.cn/)
+  - Review: [8d09328dfda0 smb/client: fix out-of-bounds read in smb2_compound_op()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8d09328dfda0)
+  - Review: [d62b8d236fab smb/client: fix out-of-bounds read in symlink_data()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d62b8d236fab)
+
+- [Re: [RFC PATCH 17/17] netfs: Combine prepare and issue ops and grab the buffers on request](https://lore.kernel.org/linux-cifs/2d8ce118-2f7a-4b7f-8786-4581b29cb74e@chenxiaosong.com/)
+- [Re: [RFC PATCH 17/17] netfs: Combine prepare and issue ops and grab the buffers on request](https://lore.kernel.org/linux-cifs/a1949f85-2e92-429e-83eb-91a7691b9a9b@chenxiaosong.com/)
+  - [Re: [RFC PATCH 17/17] netfs: Combine prepare and issue ops and grab the buffers on request](https://lore.kernel.org/linux-cifs/3677111.1774338827@warthog.procyon.org.uk/)
+- [Re: [PATCH 25/26] netfs: Limit the the minimum trigger for progress reporting](https://lore.kernel.org/linux-cifs/fb437a64-efa3-4284-90b3-dfff336d533b@chenxiaosong.com/)
+
 - Review: [235e32320a47 ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=235e32320a47)
 
 - [[PATCH v5 0/7] smb: fix some bugs, move duplicate definitions into common header file, part 2](https://lore.kernel.org/linux-cifs/20260303151317.136332-1-zhang.guodong@linux.dev/)
