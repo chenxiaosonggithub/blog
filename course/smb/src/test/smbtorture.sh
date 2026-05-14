@@ -1,6 +1,3 @@
-# https://gitlab.com/samba-team/devel/samba.git
-# https://git.samba.org/samba.git
-smbtorture_path=/home/chenxiaosong/code/samba/
 script_path="$(realpath "${BASH_SOURCE[0]}")"
 script_dir="$(dirname "${script_path}")"
 . ${script_dir}/common.sh
@@ -21,9 +18,8 @@ do_test()
 {
 	local test_item=$1
 	local date_time=`date +"%F %T"`
-	cd ${smbtorture_path}
 	echo "starting run smbtorture $test_item at $date_time" >> ${result_log_file}  2>&1
-	./bin/smbtorture //${smb_server_ip}/test3/ -U${smb_username}%${smb_password} ${test_item} >> ${result_log_file}  2>&1
+	smbtorture //${smb_server_ip}/test3/ -U${smb_username}%${smb_password} ${test_item} >> ${result_log_file}  2>&1
 	result=$?
 	if [[ ${result} == 0 ]]; then
 		echo "${test_item} success" >> ${result_file}
