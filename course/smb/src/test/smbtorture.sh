@@ -1,13 +1,16 @@
-smbtorture_path=/root/code/samba-smbtorture/
+# https://gitlab.com/samba-team/devel/samba.git
+# https://git.samba.org/samba.git
+smbtorture_path=/home/chenxiaosong/code/samba/
 script_path="$(realpath "${BASH_SOURCE[0]}")"
 script_dir="$(dirname "${script_path}")"
 . ${script_dir}/common.sh
 
-if [ $# -ne 1 ]; then
-	echo "Usage: bash $0 <ip>"
+if [ $# -ne 2 ]; then
+	echo "Usage: bash $0 <smb_server_ip> <server: samba/ksmbd/windows>"
 	exit 1
 fi
 smb_server_ip=$1
+server_type=$2
 
 result_file=${script_dir}/"smbtorture-result.txt"
 result_log_file=${script_dir}/"smbtorture-result-log.txt"
@@ -31,8 +34,21 @@ do_test()
 	echo "finished run smbtorture $test_item at $date_time" >> ${result_log_file}  2>&1
 }
 
-mk_mnt_dir
-start_ksmbd
+case "${server_type}" in
+"samba")
+	start_samba
+	;;
+"ksmbd")
+	start_ksmbd
+	;;
+"windows")
+	:
+	;;
+*)
+	echo "wrong server type"
+	exit
+	;;
+esac
 
 # smb2 connect test
 do_test smb2.connect
