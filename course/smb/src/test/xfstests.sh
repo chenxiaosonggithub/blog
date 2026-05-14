@@ -1,13 +1,14 @@
-xfstests_path=/root/code/xfstests-dev/
+xfstests_path=/home/chenxiaosong/code/xfstests-dev/
 script_path="$(realpath "${BASH_SOURCE[0]}")"
 script_dir="$(dirname "${script_path}")"
 . ${script_dir}/common.sh
 
-if [ $# -ne 1 ]; then
-	echo "Usage: bash $0 <ip>"
+if [ $# -ne 2 ]; then
+	echo "Usage: bash $0 <smb_server_ip> <server: samba/ksmbd/windows>"
 	exit 1
 fi
 smb_server_ip=$1
+server_type=$2
 
 result_file=${script_dir}/"xfstests-result.txt"
 result_log_file=${script_dir}/"xfstests-result-log.txt"
@@ -31,8 +32,22 @@ do_test()
 	echo "finished run fstests $test_item at $date_time" >> ${result_log_file}  2>&1
 }
 
-mk_mnt_dir
-start_ksmbd
+case "${server_type}" in
+"samba")
+	start_samba
+	;;
+"ksmbd")
+	start_ksmbd
+	;;
+"windows")
+	:
+	;;
+*)
+	echo "wrong server type"
+	exit
+	;;
+esac
+
 echo "smb_server_ip=${smb_server_ip}" > ${xfstests_path}/local.config
 echo "smb_username=${smb_username}" >> ${xfstests_path}/local.config
 echo "smb_password=${smb_password}" >> ${xfstests_path}/local.config
