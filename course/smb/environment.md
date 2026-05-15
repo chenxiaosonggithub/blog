@@ -106,29 +106,10 @@ make -j`nproc` bin/smbd && rm -rf /usr/local/samba/sbin/smbd; cp bin/smbd /usr/l
 
 注意`NT_STATUS_WAIT_0`等宏定义是在编译过程中用脚本`source4/scripting/bin/gen_ntstatus.py`自动生成的，生成的文件是`bin/default/include/public/core/ntstatus_gen.h`和`bin/default/libcli/util/ntstatus_gen.h`。
 
-更新`/usr/lib/systemd/system/smb.service`，具体位置可以用`systemctl status smb`查看:
+复制`/usr/lib/systemd/system/smb.service`（具体位置可以用`systemctl status smb`查看）:
 ```sh
-[Unit]
-Description=Samba SMB Daemon
-Documentation=man:smbd(8) man:samba(7) man:smb.conf(5)
-Wants=network-online.target
-After=network.target network-online.target nmb.service winbind.service
-
-[Service]
-Type=notify
-PIDFile=/run/smbd.pid
-LimitNOFILE=16384
-EnvironmentFile=-/etc/sysconfig/samba
-ExecStart=/usr/local/samba/sbin/smbd --foreground --no-process-group $SMBDOPTIONS
-ExecReload=/bin/kill -HUP $MAINPID
-LimitCORE=infinity
-Environment=KRB5CCNAME=FILE:/run/samba/krb5cc_samba
-
-[Install]
-WantedBy=multi-user.target
+cp ./bin/default/packaging/systemd/smb.service /usr/lib/systemd/system/smb.service
 ```
-
-不能直接复制`./packaging/systemd/smb.service.in`，现在要设置环境变量的值了。
 
 创建配置文件:
 ```sh
