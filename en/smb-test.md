@@ -109,7 +109,7 @@ cd samba/bootstrap/generated-dists/fedora41/ # You can replace fedora41 with you
 ./bootstrap.sh # It may take some time to install the dependencies
 cd ../../../
 ./configure --disable-cups --disable-iprint --without-ad-dc --without-ads --without-ldap --without-pam --with-shared-modules='!vfs_snapper'
-make -j$((`nproc`+1)) bin/smbtorture
+make -j$((`nproc`+1)) bin/smbtorture && rm -rf /usr/local/samba/bin/smbtorture; cp bin/smbtorture /usr/local/samba/bin/smbtorture
 ```
 
 We can use [`smbtorture.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/test/smbtorture.sh) to test.
