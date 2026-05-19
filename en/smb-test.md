@@ -100,7 +100,7 @@ export SCRATCH_DEV=//${smb_server_ip}/cifsd-test2
 export SCRATCH_MNT=/mnt/2
 ```
 
-We can use [`xfstests.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/test/xfstests.sh) to test.
+We can use [`xfstests.sh`](https://github.com/chenxiaosonggithub/tmp/blob/master/gnu-linux/smb/test/src/xfstests.sh) to test.
 
 # smbtorture {#smbtorture}
 
@@ -114,5 +114,5 @@ cd ../../../
 make -j$((`nproc`+1)) bin/smbtorture && rm -rf /usr/local/samba/bin/smbtorture; cp bin/smbtorture /usr/local/samba/bin/smbtorture
 ```
 
-We can use [`smbtorture.sh`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/test/smbtorture.sh) to test.
+We can use [`smbtorture.sh`](https://github.com/chenxiaosonggithub/tmp/blob/master/gnu-linux/smb/test/src/smbtorture.sh) to test.
 
