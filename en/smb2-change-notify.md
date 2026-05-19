@@ -30,7 +30,7 @@ Then create config file `/usr/local/etc/ksmbd/ksmbd.conf`:
         writeable = yes
         public = yes
 
-[TEST]
+[test]
         comment = test dir
         ; Note: there should not be a space after the path.
         path = /tmp/s_test
@@ -88,7 +88,7 @@ WantedBy=multi-user.target
 
 Create config file `/usr/local/samba/etc/smb.conf`:
 ```sh
-[TEST]
+[test]
     comment = test dir
     path = /tmp/s_test
     public = yes
@@ -123,7 +123,7 @@ Please refer to [Questions about SMB2 CHANGE_NOTIFY](https://lore.kernel.org/lin
 Use `smbclient` to connect to SMB server:
 ```sh
 # smbclient //${server_ip}/share -U USERNAME%PASSWORD
-smbclient //192.168.53.210/TEST -U root%1
+smbclient //192.168.53.210/test -U root%1
 ```
 
 Query change notifications of root directory.
