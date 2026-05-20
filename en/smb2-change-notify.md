@@ -65,26 +65,9 @@ make -j`nproc` bin/smbd && rm -rf /usr/local/samba/sbin/smbd; cp bin/smbd /usr/l
 make -j`nproc` bin/smbclient && rm -rf /usr/local/samba/bin/smbclient; cp bin/smbclient /usr/local/samba/bin/smbclient
 ```
 
-Create or update `/usr/lib/systemd/system/smb.service`:
+Copy `smb.service`:
 ```sh
-[Unit]
-Description=Samba SMB Daemon
-Documentation=man:smbd(8) man:samba(7) man:smb.conf(5)
-Wants=network-online.target
-After=network.target network-online.target nmb.service winbind.service
-
-[Service]
-Type=notify
-PIDFile=/run/smbd.pid
-LimitNOFILE=16384
-EnvironmentFile=-/etc/sysconfig/samba
-ExecStart=/usr/local/samba/sbin/smbd --foreground --no-process-group $SMBDOPTIONS
-ExecReload=/bin/kill -HUP $MAINPID
-LimitCORE=infinity
-Environment=KRB5CCNAME=FILE:/run/samba/krb5cc_samba
-
-[Install]
-WantedBy=multi-user.target
+cp ./bin/default/packaging/systemd/smb.service /usr/lib/systemd/system/smb.service
 ```
 
 Create config file `/usr/local/samba/etc/smb.conf`:
