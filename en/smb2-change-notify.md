@@ -59,9 +59,10 @@ make install -j`nproc`
 export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
 ```
 
-When you only want to build and install `smbd`:
+When you only want to build and install `smbd` and `smbclient`:
 ```sh
 make -j`nproc` bin/smbd && rm -rf /usr/local/samba/sbin/smbd; cp bin/smbd /usr/local/samba/sbin/smbd
+make -j`nproc` bin/smbclient && rm -rf /usr/local/samba/bin/smbclient; cp bin/smbclient /usr/local/samba/bin/smbclient
 ```
 
 Create or update `/usr/lib/systemd/system/smb.service`:
