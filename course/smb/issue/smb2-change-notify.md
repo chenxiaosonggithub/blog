@@ -60,9 +60,11 @@ LSF/MM summit? https://lwn.net/Articles/896055/
 
 smb server在虚拟机中，要让外部的windows系统能访问到，需要[内网穿透](https://chenxiaosong.com/course/gnu-linux/ssh-reverse.html):
 ```sh
-# 其中10.42.20.210是windows能访问到的地址，且这个系统上的445端口不能被占用（就是没有启动smb server）
-# 192.168.53.209是虚拟机的ip，注意换成localhost用默认走ipv6
-ssh -R 10.42.20.210:445:192.168.53.209:445 root@10.42.20.210
+# 172.21.20.210是windows能访问到的地址，且这个系统上的445端口不能被占用（就是没有启动smb server），执行以下命令
+sudo sed -i "s/#GatewayPorts no/GatewayPorts yes/" /etc/ssh/sshd_config
+sudo systemctl restart sshd
+# 192.168.53.210是虚拟机的ip，注意换成localhost用默认走ipv6，执行以下命令
+ssh -R 172.21.20.210:445:192.168.53.210:445 root@172.21.20.210 # 注意这里登录root用户，因为445端口需要root权限
 ```
 
 使用内网穿透，Windows好像要先连接samba所在的服务器，然后再切为ksmbd所在的服务器，这时才能挂载上ksmbd，但不确定，需要针对性再调试一下。
