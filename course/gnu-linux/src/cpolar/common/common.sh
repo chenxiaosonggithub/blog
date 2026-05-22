@@ -1,6 +1,8 @@
 common_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-mkdir -p $common_dir/../cache/
-. $common_dir/../cache/account.txt
+cache_dir=$common_dir/../cache/
+cache_file=$cache_dir/${tunnel_name}-cache.txt
+mkdir -p $cache_dir
+. $cache_dir/account.txt
 
 if [ -z "$email" ] && [ -z "$password" ]; then
 	echo "请在account.txt中填写cpolar邮箱账号(email)和密码(password)"
@@ -10,7 +12,9 @@ ssh_user=chenxiaosong # ssh用户名
 
 is_cache_valid()
 {
-	. $common_dir/../cache/${tunnel_name}-cache.txt
+	if [[ -f "$cache_file" ]]; then
+		. $cache_file
+	fi
 	if [ -n "$address" ] && [ -n "$port" ]; then
 		ssh -p $port -o ConnectTimeout=5 -q $ssh_user@$address exit
 		if [ $? == 0 ]; then
@@ -51,8 +55,8 @@ login_and_parse()
 	address=$(echo "$tunnel" | cut -d: -f1)
 	port=$(echo "$tunnel" | cut -d: -f2)
 
-	echo "address=$address" > $common_dir/../cache/${tunnel_name}-cache.txt
-	echo "port=$port"      >> $common_dir/../cache/${tunnel_name}-cache.txt
+	echo "address=$address" > $cache_file
+	echo "port=$port"      >> $cache_file
 }
 
 if ! is_cache_valid; then
