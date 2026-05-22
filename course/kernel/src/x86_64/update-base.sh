@@ -7,7 +7,6 @@ build_dir=x86_64-build
 # build_dir=test-build
 
 build_path=${MY_CODE_TOP_PATH}/$kernel_version/${build_dir}
-read stty_rows stty_cols < <(stty size)
 
 qcow2_file=$(ls *.qcow2)
 qemu-system-x86_64 \
@@ -19,7 +18,7 @@ qemu-system-x86_64 \
 -virtfs local,id=kmod_dev,path=${build_path},mount_tag=9p,security_model=none \
 -vga none \
 -nographic \
--append "nokaslr console=ttyS0 root=/dev/vda2 rw kmemleak=on kernel_version=${kernel_version} stty_rows=${stty_rows} stty_cols=${stty_cols}" \
+-append "nokaslr console=ttyS0 root=/dev/vda2 rw kmemleak=on kernel_version=${kernel_version}" \
 -device virtio-scsi-pci \
 -drive file=$qcow2_file,if=none,format=qcow2,cache=writeback,file.locking=off,id=root \
 -device virtio-blk,drive=root,id=d_root \
