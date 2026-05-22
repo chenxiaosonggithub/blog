@@ -1,5 +1,5 @@
-common_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-cache_dir=$common_dir/../cache/
+script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+cache_dir=$script_dir/cache/
 cache_file=$cache_dir/cache-${tunnel_name}.txt
 mkdir -p $cache_dir
 . $cache_dir/account.txt
@@ -59,9 +59,14 @@ login_and_parse()
 	echo "port=$port"      >> $cache_file
 }
 
+do_ssh()
+{
+	ssh_cmd="ssh -p $port $ssh_user@$address"
+	echo "$ssh_cmd"
+	$ssh_cmd
+}
+
 if ! is_cache_valid; then
 	login_and_parse
 fi
-
-# ssh -p $port $ssh_user@$address
 

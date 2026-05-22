@@ -6,7 +6,7 @@ from_or_to=$1
 
 tunnel_name=tianyi # 隧道名称
 script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-. $script_dir/common/common.sh
+. $script_dir/common.sh
 
 case $from_or_to in
 from)
