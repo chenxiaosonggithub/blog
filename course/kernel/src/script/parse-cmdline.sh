@@ -18,21 +18,6 @@ mod_cfg() {
 	echo "/lib/modules/${knl_vers}/build is ready"
 }
 
-is_serial_console() {
-	local tty_dev=$(tty)
-	echo "tty: ${tty_dev}"
-
-	case "$tty_dev" in
-	/dev/ttyS* | /dev/ttyAMA*)
-		echo "serial console"
-		return 0
-		;;
-	esac
-
-	echo "not serial console"
-	return 1
-}
-
 for param in $(cat /proc/cmdline); do
 	case $param in
 	kernel_version=*)
@@ -40,25 +25,6 @@ for param in $(cat /proc/cmdline); do
 		echo "kernel_version=${kernel_version}"
 		mod_cfg ${kernel_version}
 		;;
-	stty_rows=*)
-		if ! is_serial_console; then
-			echo "do not set stty rows"
-			continue
-		fi
-		stty_rows=${param#*=}
-		echo "stty_rows=${stty_rows}"
-		stty rows ${stty_rows}
-		echo "stty rows ${stty_rows}"
-		;;
-	stty_cols=*)
-		if ! is_serial_console; then
-			echo "do not set stty cols"
-			continue
-		fi
-		stty_cols=${param#*=}
-		echo "stty_cols=${stty_cols}"
-		stty cols ${stty_cols}
-		echo "stty cols ${stty_cols}"
-		;;
 	esac
 done
+
