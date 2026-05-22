@@ -1,6 +1,6 @@
 common_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 cache_dir=$common_dir/../cache/
-cache_file=$cache_dir/${tunnel_name}-cache.txt
+cache_file=$cache_dir/cache-${tunnel_name}.txt
 mkdir -p $cache_dir
 . $cache_dir/account.txt
 
