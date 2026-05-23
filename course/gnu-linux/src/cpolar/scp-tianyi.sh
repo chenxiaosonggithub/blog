@@ -10,8 +10,8 @@ script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 case $from_or_to in
 from)
-	scp -P $port $ssh_user@$address:/home/chenxiaosong/forVM/$2 .
+	scp -r -P $port $ssh_user@$address:/home/chenxiaosong/forVM/$2 .
 	;;
 to)
-	scp -P $port $2 $ssh_user@$address:/home/chenxiaosong/forVM/
+	scp -r -P $port $2 $ssh_user@$address:/home/chenxiaosong/forVM/
 esac
