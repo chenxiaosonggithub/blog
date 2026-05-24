@@ -1,3 +1,9 @@
+# 用法:
+#   1. 定义 tunnel_name 变量，填写网站上的隧道名称
+#   2. 调用 do_ssh
+#   3. 执行 bash common.sh
+
+# tunnel_name=<填写网站上的隧道名称>
 script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 cache_dir=$script_dir/cache/
 cache_file=$cache_dir/cache-${tunnel_name}.txt
@@ -70,3 +76,4 @@ if ! is_cache_valid; then
 	login_and_parse
 fi
 
+# do_ssh # 定义 tunnel_name 变量后，取消注释就可以远程登录
