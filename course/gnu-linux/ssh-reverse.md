@@ -221,10 +221,27 @@ done
 
 # 远程桌面
 
-远程桌面软件:
+## 向日葵
 
-- [向日葵](https://sunlogin.oray.com/download?categ=personal)，有[命令行版本](https://service.oray.com/question/11017.html)（要付费，还不如自己买个服务器，当然更推荐用花生壳）
-- [ToDesk](https://www.todesk.com/download.html)
+- [向日葵个人版本](https://sunlogin.oray.com/download?categ=personal)不能在ubuntu上安装
+- [企业版可以在ubuntu安装](https://sunlogin.oray.com/download?categ=ent)，开机启动会比较慢，刚开机要过一会儿才能连接
+- [命令行版本](https://service.oray.com/question/11017.html)要付费，还不如自己买个服务器，当然更推荐用花生壳）
+- [Linux企业主被控重要依赖安装指引](https://service.oray.com/question/36500.html)
+
+ubuntu24.04的企业控制端需要安装以下软件（企业客户端不需要）:
+```sh
+# 下载链接: http://archive.ubuntu.com/ubuntu/pool/universe/g/gconf/
+sudo apt install ./gconf2-common_3.2.6-7ubuntu2_all.deb -y
+sudo apt install ./libgconf-2-4_3.2.6-7ubuntu2_amd64.deb -y
+```
+
+## todesk
+
+[ToDesk](https://www.todesk.com/download.html)在ubuntu24.04上会卡在100%进度，要做以下修改:
+```sh
+sudo sed -i "s/#WaylandEnable=false/WaylandEnable=false/g" /etc/gdm3/custom.conf
+sudo reboot
+```
 
 # 家里远程桌面到公司ubuntu24.04 {#remote-desktop}
 
