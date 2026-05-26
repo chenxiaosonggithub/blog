@@ -260,6 +260,10 @@ tevent_common_invoke_fd_handler
     smbd_smb2_io_handler
       smbd_smb2_advance_incoming
         smbd_smb2_request_dispatch
+
+inotify_map_mask_to_filter
+
+inotify_mapping
 -->
 
 When samba receive `Create Request`:
