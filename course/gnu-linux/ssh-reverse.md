@@ -230,6 +230,7 @@ done
 
 ubuntu24.04的企业控制端需要安装以下软件（企业客户端不需要）:
 ```sh
+sudo apt-get install libappindicator3-1 -y
 # 下载链接: http://archive.ubuntu.com/ubuntu/pool/universe/g/gconf/
 sudo apt install ./gconf2-common_3.2.6-7ubuntu2_all.deb -y
 sudo apt install ./libgconf-2-4_3.2.6-7ubuntu2_amd64.deb -y
