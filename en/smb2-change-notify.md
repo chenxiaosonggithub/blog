@@ -264,6 +264,13 @@ tevent_common_invoke_fd_handler
 inotify_map_mask_to_filter
 
 inotify_mapping
+
+notifyd_rec_change
+  if (log->num_recs >= 100) // 大于100条就立刻广播
+
+notifyd_broadcast_reclog_send
+  // 1秒定时器
+  tevent_wakeup_send(..., timeval_current_ofs_msec(1000))
 -->
 
 When samba receive `Create Request`:
