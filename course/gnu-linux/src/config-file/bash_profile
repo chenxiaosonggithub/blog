@@ -29,4 +29,7 @@ PS1="${PS1//\\w\\$/\\W\\$}"
 # 虚拟机设置
 resize
 bash /home/chenxiaosong/code/blog/course/kernel/src/script/parse-cmdline.sh
+# windows下powershell git bash vim中文乱码, windows下还要加入/etc/bash.bashrc
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
