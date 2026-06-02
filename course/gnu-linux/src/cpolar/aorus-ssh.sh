@@ -7,5 +7,6 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-do_ssh ". eth-aorus.sh $1; exec bash -l"
+# do_ssh ". eth-aorus.sh $1; exec bash -l"
+do_ssh ". eth-aorus.sh $1"
 
