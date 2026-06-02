@@ -271,6 +271,9 @@ notifyd_rec_change
 notifyd_broadcast_reclog_send
   // 1秒定时器
   tevent_wakeup_send(..., timeval_current_ofs_msec(1000))
+
+smbd_smb2_request_pending_timer
+  async_id = message_id; /* keep it simple for now... */
 -->
 
 When samba receive `Create Request`:
