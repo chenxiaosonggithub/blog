@@ -67,9 +67,9 @@ login_and_parse()
 
 do_ssh()
 {
-	ssh_cmd="ssh -p $port $ssh_user@$address"
+	ssh_cmd="ssh -t -p $port $ssh_user@$address"
 	echo "$ssh_cmd"
-	$ssh_cmd
+	$ssh_cmd $@
 }
 
 if ! is_cache_valid; then
