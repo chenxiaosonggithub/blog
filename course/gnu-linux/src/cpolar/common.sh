@@ -22,7 +22,7 @@ is_cache_valid()
 		. $cache_file
 	fi
 	if [ -n "$address" ] && [ -n "$port" ]; then
-		ssh -p $port -o ConnectTimeout=5 -q $ssh_user@$address exit
+		ssh -p $port -o ConnectTimeout=3 -q $ssh_user@$address exit
 		if [ $? == 0 ]; then
 			echo "缓存的端口和地址可用"
 			return 0
