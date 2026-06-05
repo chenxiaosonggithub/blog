@@ -2,7 +2,8 @@ mkfs.ext4 -b 4096 -F /dev/sda
 mkfs.ext4 -b 4096 -F /dev/sdb
 
 mkdir /tmp/s_test
-mkdir /tmp/s_scratch
+mkdir /tmp/s_test2
+mkdir /tmp/s_test3
 
 mount -t ext4 /dev/sda /tmp/s_test
 mount -t ext4 /dev/sdb /tmp/s_scratch
