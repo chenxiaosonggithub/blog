@@ -1,7 +1,7 @@
 `smb.conf`:
 ```sh
 [test]
-    vfs objects = btrfs acl_xattr
+    vfs objects = btrfs
 ```
 
 
