@@ -63,6 +63,7 @@ dhowells@redhat.com,metze@samba.org \
 linux-cifs@vger.kernel.org \
 00* \
 # --in-reply-to=xxx --no-thread --suppress-cc=all
+# samba-technical@lists.samba.org
 ```
 <!--
 git send-email --to=\
