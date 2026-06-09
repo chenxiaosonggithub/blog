@@ -5,13 +5,19 @@
 
 # tunnel_name=<填写网站上的隧道名称>
 script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-cache_dir=$script_dir/cache/
-cache_file=$cache_dir/cache-${tunnel_name}.txt
-mkdir -p $cache_dir
-. $cache_dir/account.txt
+tmp_dir=$script_dir/tmp
+cache_file=$tmp_dir/cache-${tunnel_name}.txt
+account_file=$tmp_dir/account.txt
+
+mkdir -p $tmp_dir
+if [[ -f "$account_file" ]]; then
+	. $account_file
+fi
 
 if [ -z "$email" ] && [ -z "$password" ]; then
-	echo "请在account.txt中填写cpolar邮箱账号(email)和密码(password)"
+	echo "请在${tmp_dir}/account.txt中填写cpolar邮箱账号(email)和密码(password)"
+	echo "email="       >  $account_file
+	echo "password="    >> $account_file
 	exit 1
 fi
 ssh_user=chenxiaosong # ssh用户名
