@@ -60,6 +60,13 @@ smb2_query_info
     get_file_compression_info
     case FILE_ALL_INFORMATION
     get_file_all_info
+
+ioctl
+  do_vfs_ioctl
+    ioctl_getflags
+      cifs_fileattr_get // inode->i_op->fileattr_get
+  vfs_ioctl
+    cifs_ioctl // filp->f_op->unlocked_ioctl
 ```
 
 ## cifs-utils
@@ -79,11 +86,4 @@ cmd_fileallinfo
 cmd_filestandardinfo
   QueryInfoStruct(info_type=0x1, file_info_class=5, // FILE_STANDARD_INFORMATION
 ```
-
-<!--
-todo:
-- smb2_file_standard_info, FILE_STANDARD_INFO
-- smb2_file_all_info, FILE_ALL_INFO
-
--->
 
