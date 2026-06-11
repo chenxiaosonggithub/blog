@@ -10,9 +10,10 @@ script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 case $from_or_to in
 from)
+	echo "复制到$script_dir/from/"
 	mkdir -p $script_dir/from
-	scp -r -P $port $ssh_user@$address:/home/chenxiaosong/forVM/$2 $script_dir/from
+	scp -r -P $port $ssh_user@$address:/home/chenxiaosong/forVM/"$2" $script_dir/from
 	;;
 to)
-	scp -r -P $port $2 $ssh_user@$address:/home/chenxiaosong/forVM/
+	scp -r -P $port "$2" $ssh_user@$address:/home/chenxiaosong/forVM/
 esac
