@@ -121,6 +121,7 @@ comm_check_repo() {
 		git status -s
 		not_clean_repos+=(${repo})
 		is_repo_clean=false
+		return
 	fi
 
 	# 删除所有remote
