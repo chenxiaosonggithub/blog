@@ -5,7 +5,7 @@
 	editor = vim
 	quotepath = false
 [sendemail]
-        from = chenxiaosong@chenxiaosong.com
+        from = ChenXiaoSong <chenxiaosong@chenxiaosong.com>
         smtpserver = smtp.migadu.com
         smtpuser = chenxiaosong@chenxiaosong.com
         smtpencryption = ssl
