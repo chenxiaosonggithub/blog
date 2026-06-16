@@ -160,6 +160,7 @@ messaging_dispatch_classic
       inotify_watch
         inotify_map
           inotify_mapping
+        mask |= (IN_MASK_ADD | IN_ONLYDIR); // todo
         talloc_set_destructor(w, watch_destructor);
 
 tevent_common_invoke_fd_handler
