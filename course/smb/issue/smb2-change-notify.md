@@ -110,6 +110,85 @@ samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/co
 
 详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#samba-code)。
 
+入口:
+```c
+main
+  smbd_parent_loop
+    _tevent_loop_wait
+      std_event_loop_wait
+        tevent_common_loop_wait
+          _tevent_loop_once
+            std_event_loop_once
+              epoll_event_loop_once
+                epoll_event_loop
+                  tevent_common_invoke_fd_handler
+                    smbd_accept_connection
+                      smbd_process
+                        _tevent_loop_wait
+                          std_event_loop_wait
+                            tevent_common_loop_wait
+                              _tevent_loop_once
+                                std_event_loop_once
+                                  epoll_event_loop_once
+                                    epoll_event_loop
+                                      tevent_common_invoke_fd_handler
+                                        messaging_dgm_read_handler
+
+tevent_common_invoke_fd_handler
+  messaging_dgm_read_handler
+    messaging_dgm_recv
+      msg_dgm_ref_recv
+        messaging_recv_cb
+          messaging_dispatch_rec
+            messaging_dispatch_classic
+
+
+tevent_common_invoke_fd_handler
+  smbd_smb2_connection_handler
+    smbd_smb2_io_handler
+      smbd_smb2_advance_incoming
+        smbd_smb2_request_dispatch
+
+```
+
+```c
+NT_TRANSACT_NOTIFY_CHANGE // SMB1
+
+tevent_common_invoke_fd_handler
+  inotify_handler
+
+inotify_dispatch
+  // 过滤无关事件
+  if ((e->mask & (IN_ATTRIB|IN_MODIFY|IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO)) == 0)
+  // rename from
+  if (e->mask & IN_MOVED_FROM)
+  save_moved_from // 只缓存，不触发回调
+    tevent_add_timer // 100ms
+  // rename to
+  if (e->mask & IN_MOVED_TO)
+  handle_local_rename(w, e);  // 生成 OLD_NAME + NEW_NAME
+  // 只有to
+  else if (e->mask & IN_MOVED_TO) {
+	ne.action = NOTIFY_ACTION_ADDED;
+  inotify_map_mask_to_filter
+  if (filter_match(w, e))
+  notifyd_sys_callback // w->callback
+
+inotify_watch
+  inotify_map
+    inotify_mapping
+
+notifyd_rec_change
+  if (log->num_recs >= 100) // 大于100条就立刻广播
+
+notifyd_broadcast_reclog_send
+  // 1秒定时器
+  tevent_wakeup_send(..., timeval_current_ofs_msec(1000))
+
+smbd_smb2_request_pending_timer
+  async_id = message_id; /* keep it simple for now... */
+```
+
 # smb server内核代码分析
 
 异步等待和唤醒:

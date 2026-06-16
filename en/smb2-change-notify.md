@@ -223,59 +223,6 @@ you can refer to the changes in the patch [`0001-dump-stack-of-smbd_parent_loop.
 
 The logs can be found in `/usr/local/samba/var/log.smbd`.
 
-<!--
-main
-  smbd_parent_loop
-    _tevent_loop_wait
-      std_event_loop_wait
-        tevent_common_loop_wait
-          _tevent_loop_once
-            std_event_loop_once
-              epoll_event_loop_once
-                epoll_event_loop
-                  tevent_common_invoke_fd_handler
-                    smbd_accept_connection
-                      smbd_process
-                        _tevent_loop_wait
-                          std_event_loop_wait
-                            tevent_common_loop_wait
-                              _tevent_loop_once
-                                std_event_loop_once
-                                  epoll_event_loop_once
-                                    epoll_event_loop
-                                      tevent_common_invoke_fd_handler
-                                        messaging_dgm_read_handler
-
-tevent_common_invoke_fd_handler
-  messaging_dgm_read_handler
-    messaging_dgm_recv
-      msg_dgm_ref_recv
-        messaging_recv_cb
-          messaging_dispatch_rec
-            messaging_dispatch_classic
-
-
-tevent_common_invoke_fd_handler
-  smbd_smb2_connection_handler
-    smbd_smb2_io_handler
-      smbd_smb2_advance_incoming
-        smbd_smb2_request_dispatch
-
-inotify_map_mask_to_filter
-
-inotify_mapping
-
-notifyd_rec_change
-  if (log->num_recs >= 100) // 大于100条就立刻广播
-
-notifyd_broadcast_reclog_send
-  // 1秒定时器
-  tevent_wakeup_send(..., timeval_current_ofs_msec(1000))
-
-smbd_smb2_request_pending_timer
-  async_id = message_id; /* keep it simple for now... */
--->
-
 When samba receive `Create Request`:
 ```c
 smbd_smb2_request_dispatch
