@@ -154,29 +154,51 @@ tevent_common_invoke_fd_handler
 ```c
 NT_TRANSACT_NOTIFY_CHANGE // SMB1
 
+messaging_dispatch_classic
+  notifyd_rec_change
+    notifyd_apply_rec_change
+      inotify_watch
+        inotify_map
+          inotify_mapping
+        talloc_set_destructor(w, watch_destructor);
+
 tevent_common_invoke_fd_handler
   inotify_handler
+    inotify_dispatch
+      // 过滤无关事件
+      if ((e->mask & (IN_ATTRIB|IN_MODIFY|IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO)) == 0)
+      // rename from
+      if (e->mask & IN_MOVED_FROM)
+      save_moved_from // 只缓存，不触发回调
+        tevent_add_timer // 100ms
+      // rename to
+      if (e->mask & IN_MOVED_TO)
+      handle_local_rename(w, e);  // 生成 OLD_NAME + NEW_NAME
+      // 只有to
+      else if (e->mask & IN_MOVED_TO) {
+      ne.action = NOTIFY_ACTION_ADDED;
+      inotify_map_mask_to_filter
+      if (filter_match(w, e))
+      notifyd_sys_callback // w->callback
 
-inotify_dispatch
-  // 过滤无关事件
-  if ((e->mask & (IN_ATTRIB|IN_MODIFY|IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO)) == 0)
-  // rename from
-  if (e->mask & IN_MOVED_FROM)
-  save_moved_from // 只缓存，不触发回调
-    tevent_add_timer // 100ms
-  // rename to
-  if (e->mask & IN_MOVED_TO)
-  handle_local_rename(w, e);  // 生成 OLD_NAME + NEW_NAME
-  // 只有to
-  else if (e->mask & IN_MOVED_TO) {
-	ne.action = NOTIFY_ACTION_ADDED;
-  inotify_map_mask_to_filter
-  if (filter_match(w, e))
-  notifyd_sys_callback // w->callback
+smbd_smb2_request_process_close
+  smbd_smb2_close_send
+    smbd_smb2_close
+      close_file_smb
+        fsp_unbind_smb
+          notify_remove
+            messaging_send_iov // 通知notifyd注销
 
-inotify_watch
-  inotify_map
-    inotify_mapping
+// 从 notify_remove 通知过来
+messaging_dispatch_classic
+  notifyd_rec_change
+    notifyd_apply_rec_change
+      TALLOC_FREE
+        talloc_free
+          _talloc_free
+            _talloc_free_internal
+              _tc_free_internal
+                watch_destructor
 
 notifyd_rec_change
   if (log->num_recs >= 100) // 大于100条就立刻广播
