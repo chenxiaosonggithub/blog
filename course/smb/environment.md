@@ -185,6 +185,19 @@ mount -t cifs -o username=root,vers=3.0 //localhost/TEST /mnt
 
 错误日志请查看`/var/log/samba/log*`。
 
+### 源码安装cifs-utils
+
+```sh
+apt-get update -y
+apt install -y autoconf build-essential libtalloc-dev
+git clone https://git.samba.org/cifs-utils.git
+cd cifs-utils
+autoreconf -i
+./configure
+make -j`nproc`
+make -j`nproc` install
+```
+
 ## Windows和macOS客户端
 
 Windows系统下，在Windows资源管理器中输入 `\\192.168.122.1\TEST`就可访问Linux系统的文件。
