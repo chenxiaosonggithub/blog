@@ -201,6 +201,15 @@ messaging_dispatch_classic
               _tc_free_internal
                 watch_destructor
 
+change_notify_reply
+  notify_marshall_changes
+    data_blob_append
+      data_blob_realloc
+        blob->length = length
+  smbd_smb2_notify_reply(..., blob.length) // reply_fn
+    if (len == 0)
+    state->status = NT_STATUS_NOTIFY_ENUM_DIR
+
 notifyd_rec_change
   if (log->num_recs >= 100) // 大于100条就立刻广播
 
