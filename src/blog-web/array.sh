@@ -314,6 +314,7 @@ comm_array=(
 	1 2 tmp/gnu-linux/smb/test/buildbot/buildbot.md en/smb-buildbot.html "SMB Buildbot Test Cases"
 	1 2 tmp/gnu-linux/smb/test/smbmaperror/smb1maperror.md en/smb1maperror-test.html "SMB1 Map Error Test Cases"
 	1 2 tmp/gnu-linux/smb/test/buildbot/smb-xfstests-generic-004.md en/smb-xfstests-generic-004.html "SMB xfstests generic/004"
+	1 2 tmp/gnu-linux/netfs/netfs-uaf-in-netfs_unbuffered_write/netfs-uaf-in-netfs_unbuffered_write.md en/netfs-uaf-in-netfs_unbuffered_write.html "netfs UAF in netfs_unbuffered_write()"
 )
 
 . ${MY_CODE_TOP_PATH}/tmp/src/array.sh
