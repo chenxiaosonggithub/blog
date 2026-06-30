@@ -10,9 +10,35 @@ It is really enjoyable and exciting to contribute to SMB.
 
 # 2026
 
-- [[PATCH cifs-utils v3 0/1] smbinfo: add notify subcommand](https://lore.kernel.org/linux-cifs/20260107043109.1456095-1-chenxiaosong.chenxiaosong@linux.dev/)
-- [[PATCH cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://lore.kernel.org/linux-cifs/20251219041552.317198-1-chenxiaosong.chenxiaosong@linux.dev/)
-- Review: [[PATCH cifs-utils] Decimated subseconds in smbinfo filebasicinfo timestamp output](https://lore.kernel.org/linux-cifs/shU8wpo2oNyUu4RkVuN0VHmIES1SzKRN9in6AJDn4EKDDGwMkzl2ShJ8i-4AfFOSKDDnEhxZVGH_w8y9JxO683d_QQzMJOig7eOb0AmaFBs=@denisons.org/)
+- Review: [99cd0a6eeb6c smb/client: do not account EOF extension as allocation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=99cd0a6eeb6c)
+- Review: [2a4b3d2db5c6 smb/client: preserve errors from smb2_set_sparse()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2a4b3d2db5c6)
+- Review: [898d280f4e4d smb/client: name the default fallocate mode](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=898d280f4e4d)
+- Review: [954d196bebb2 ksmbd: validate NTLMv2 response before updating session key](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=954d196bebb2)
+
+- [37ee476071bc smb/server: fix debug log endianness in smb2_cancel()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=37ee476071bc)
+- [f4d556008fd4 smb/server: fix incorrect file size in get_file_compression_info()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f4d556008fd4)
+- [5560f971645c smb/server: get compression format in get_file_compression_info()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5560f971645c)
+- [7eeb7b6772f0 smb/server: implement FSCTL_SET_COMPRESSION ioctl handler](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7eeb7b6772f0)
+- [c91f4543ddec smb/server: implement FSCTL_GET_COMPRESSION ioctl handler](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c91f4543ddec)
+- [e48b687221f4 smb/server: get compression file attribute on open](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e48b687221f4)
+- [9d357903ec9b smb: move compression definitions into common/fscc.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9d357903ec9b)
+- [31c09ce67a81 smb: remove duplicate server/smbfsctl.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=31c09ce67a81)
+
+- Review: [3ecad5de621e smb/client: allow FS_IOC_SETFLAGS to clear compression](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3ecad5de621e)
+- Review: [5693347de107 smb/client: use writable handle for FS_IOC_SETFLAGS compression](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5693347de107)
+- Review: [7acbaa16b99e smb/client: always return a value for FS_IOC_GETFLAGS](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7acbaa16b99e)
+- Review: [af25ab681ea0 smb/client: update i_blocks after contiguous writes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=af25ab681ea0)
+
+- [4ec9c8e023c7 smb/server: promote S_DEL_ON_CLS to S_DEL_PENDING when close](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4ec9c8e023c7)
+
+- Review: [7d9a7f1f96cd smb/client: fix possible infinite loop and oob read in symlink_data()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7d9a7f1f96cd)
+
+- [[cifs-utils] smbinfo: parse action and filename from change notifications](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=15f1b3d9330805d4e294656dc5e406db1594dd6f)
+- [[cifs-utils] smbinfo: update notify subcommand](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=3487c54cd16b0b4ec3e70fe5264a1a381da9a7d2)
+- [[cifs-utils] smbinfo: add filecompressioninfo subcommand](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=7ba5d3072994050bfeba12819e1066e6aa1846b7)
+- [[cifs-utils] smbinfo: add notify subcommand](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=0aadf817c28aec20f6bae74b6f9164a3f04d009b)
+- [cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=44d6d9e36d0bb2a904d81271d61049726228a31f)
+- Review: [[cifs-utils] Decimated subseconds in smbinfo filebasicinfo timestamp output](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=95306082341687d24cd0b4727c4339ababfb5fe2)
 
 - [[PATCH v4 0/1] smb/client: fix out-of-bounds read](https://lore.kernel.org/linux-cifs/20260506034908.3874700-1-zisenye@stu.xidian.edu.cn/)
   - Review: [8d09328dfda0 smb/client: fix out-of-bounds read in smb2_compound_op()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8d09328dfda0)
