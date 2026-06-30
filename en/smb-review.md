@@ -16,7 +16,7 @@ The following are the SMB patches I have reviewed, listed with the most recent f
 - Review: [7acbaa16b99e smb/client: always return a value for FS_IOC_GETFLAGS](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7acbaa16b99e)
 - Review: [af25ab681ea0 smb/client: update i_blocks after contiguous writes](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=af25ab681ea0)
 
-Review: [7d9a7f1f96cd smb/client: fix possible infinite loop and oob read in symlink_data()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7d9a7f1f96cd)
+- Review: [7d9a7f1f96cd smb/client: fix possible infinite loop and oob read in symlink_data()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7d9a7f1f96cd)
 
 - [[PATCH v4 0/1] smb/client: fix out-of-bounds read](https://lore.kernel.org/linux-cifs/20260506034908.3874700-1-zisenye@stu.xidian.edu.cn/)
   - Review: [8d09328dfda0 smb/client: fix out-of-bounds read in smb2_compound_op()](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8d09328dfda0)
