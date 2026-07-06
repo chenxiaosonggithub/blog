@@ -86,7 +86,7 @@ sudo firewall-cmd --list-services # 查看已添加的service
 sudo systemctl restart smb.service		#（重启samba服务）
 ```
 
-## 源码安装samba（用户态smb server） {#build-samba-from-source}
+## 源码安装samba {#build-samba-from-source}
 
 [参考文档: Build Samba from Source](https://wiki.samba.org/index.php/Build_Samba_from_Source)。
 
@@ -127,7 +127,7 @@ systemctl daemon-reload
 systemctl restart smb.service
 ```
 
-# Windows导出目录
+# Windows server
 
 参考[how to mount from linux to windows 11](https://learn.microsoft.com/en-us/answers/questions/4376417/how-to-mount-from-linux-to-windows-11)。
 
@@ -142,9 +142,7 @@ Linux挂载命令:
 mount -t cifs -o username=chenx,password=微软账户邮箱密码,uid=$(id -u),gid=$(id -g) //192.168.122.106/win-test /mnt/
 ```
 
-# smb客户端环境
-
-## Linux客户端
+# Linux client
 
 安装所需工具:
 ```sh
@@ -185,7 +183,7 @@ mount -t cifs -o username=root,vers=3.0 //localhost/TEST /mnt
 
 错误日志请查看`/var/log/samba/log*`。
 
-### 源码安装cifs-utils
+## 源码安装cifs-utils
 
 ```sh
 apt-get update -y
@@ -198,7 +196,7 @@ make -j`nproc`
 make -j`nproc` install
 ```
 
-## Windows和macOS客户端
+# Windows client和macOS client
 
 Windows系统下，在Windows资源管理器中输入 `\\192.168.122.1\TEST`就可访问Linux系统的文件。
 
