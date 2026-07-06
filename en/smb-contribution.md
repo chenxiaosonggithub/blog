@@ -37,7 +37,7 @@ It is really enjoyable and exciting to contribute to SMB.
 - [[cifs-utils] smbinfo: update notify subcommand](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=3487c54cd16b0b4ec3e70fe5264a1a381da9a7d2)
 - [[cifs-utils] smbinfo: add filecompressioninfo subcommand](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=7ba5d3072994050bfeba12819e1066e6aa1846b7)
 - [[cifs-utils] smbinfo: add notify subcommand](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=0aadf817c28aec20f6bae74b6f9164a3f04d009b)
-- [cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=44d6d9e36d0bb2a904d81271d61049726228a31f)
+- [[cifs-utils] cifs.upcall: fix calloc() argument order in main()](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=44d6d9e36d0bb2a904d81271d61049726228a31f)
 - Review: [[cifs-utils] Decimated subseconds in smbinfo filebasicinfo timestamp output](https://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=95306082341687d24cd0b4727c4339ababfb5fe2)
 
 - [[PATCH v4 0/1] smb/client: fix out-of-bounds read](https://lore.kernel.org/linux-cifs/20260506034908.3874700-1-zisenye@stu.xidian.edu.cn/)
