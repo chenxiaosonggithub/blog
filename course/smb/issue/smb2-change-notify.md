@@ -4,53 +4,7 @@
 
 请看[github上的issue](https://github.com/namjaejeon/ksmbd/issues/495#issuecomment-3473472265)。
 
-与maintainer Steve French的其他沟通内容:
-```
-I am also very interested in the work to improve the VFS to allow
-filesystems, especially cifs.ko (client) to support change notify
-(without having to use the ioctl or smb client specific tool, smbinfo
-etc).  It will be very useful.
-翻译:
-我也对改进 VFS 的工作非常感兴趣，
-这样文件系统（尤其是客户端的 cifs.ko）就能支持 change notify（更改通知） 功能，
-而无需使用 ioctl 或特定于 SMB 客户端的工具（如 smbinfo 等）。
-这将会非常有用。
-
-There are MANY exciting features for both client
-and server that would be broadly helpful, and of course as you spot
-new ioctls or VFS syscall flags there is always the opportunity to
-make small extensions to SMB3.1.1 Linux Extensions to make
-Linux-->Linux exceptional over SMB3.1.1.
-翻译:
-对于客户端和服务器来说，都有许多令人兴奋的新功能，
-这些功能将会带来广泛的帮助。
-当然，当你发现新的 ioctl 或 VFS 系统调用标志时，
-总是有机会对 SMB3.1.1 Linux 扩展 进行一些小的改进，
-从而让 Linux --> Linux 通过 SMB3.1.1 的交互更加出色。
-
-there are relatively simple things like improving the
-compression support, adding support for SMB3.1.1 over QUIC, adding
-support for some additional fsctls, adding support for faster GCM
-signing, etc that are well documented
-翻译:
-有一些相对简单的改进方向，例如：
-改进压缩支持、
-为 SMB3.1.1 添加基于 QUIC 的支持、
-增加对更多 FSCTL 的支持、
-以及支持更快速的 GCM 签名 等等，
-这些都有相当完善的文档说明。
-
-And Metze could probably help with the minor changes needed to support
-SMB3.1.1 over QUIC.
-翻译: 而 Metze 可能可以协助完成支持 SMB3.1.1 over QUIC 所需的一些小改动。
-
-Would be awesome to fix inotify in the vfs layer to work with network fs (since cifs.ko already supports change notify)
-翻译: 如果能在 VFS 层修复 inotify，使其支持网络文件系统就太好了（因为 cifs.ko 已经支持 change notify）。
-
-Have you seen this article from my presentation a few years ago at
-LSF/MM summit? https://lwn.net/Articles/896055/
-翻译: 你有没有看到我几年前在 LSF/MM 峰会上演讲时写的这篇文章？ https://lwn.net/Articles/896055/
-```
+[与maintainer Steve French的其他沟通内容](https://chenxiaosong.com/course/smb/todo.html#change-notify)
 
 # 复现步骤
 
