@@ -173,6 +173,14 @@ notifyd_broadcast_reclog_send
 
 smbd_smb2_request_pending_timer
   async_id = message_id; /* keep it simple for now... */
+
+smbd_smb2_request_pending_queue
+  if (req->current_idx > 1) // compound 前面已经有完成的响应
+  smb2_send_async_interim_response // 发出前缀
+    nreq->out.vector_count -= SMBD_SMB2_NUM_IOV_PER_REQ; // 丢掉最后一个 async 请求的响应槽
+    SIVAL(outhdr, SMB2_HDR_NEXT_COMMAND, 0); // 把前一个 response 的 NextCommand 改成 0
+  req->current_idx = 1; memmove // 把原请求的 in/out vectors 前缀移除
+  smbd_smb2_request_pending_timer
 ```
 
 # smb server内核代码分析
