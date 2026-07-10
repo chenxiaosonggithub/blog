@@ -160,3 +160,8 @@ May not be too hard. Adding a call out to inotify to register with the underlyin
 Are any additional debug features for notify eg tracepoints and/or debug pseudo files that would help?
 翻译: 对于 notify，还有没有什么额外的调试功能会有帮助？例如增加 tracepoint，或者提供一些用于调试的伪文件（debugfs 等）？
 ```
+
+# Sashiko review的遗留问题
+
+- [[PATCH v5 0/4] smb/client: fix incorrect nlink returned by fstat()](https://sashiko.dev/#/patchset/20260709025703.3715326-1-chenxiaosong%40chenxiaosong.com)
+
