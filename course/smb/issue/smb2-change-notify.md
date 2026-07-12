@@ -62,8 +62,6 @@ tcpdump --interface=any -w smb-server.pcap
 
 samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)。
 
-详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#samba-code)。
-
 入口:
 ```c
 main
@@ -372,8 +370,3 @@ kthread
 revert_current_mid
 revert_current_mid_from_hdr
 ```
-
-# fanotify
-
-详细的分析过程请查看英文网页[《SMB2 CHANGE_NOTIFY feature》](https://chenxiaosong.com/en/smb2-change-notify.html#fanotify)。
-
