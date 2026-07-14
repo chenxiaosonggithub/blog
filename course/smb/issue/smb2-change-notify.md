@@ -62,6 +62,15 @@ tcpdump --interface=any -w smb-server.pcap
 
 samba的调试方法请查看[《smb调试方法》](https://chenxiaosong.com/course/smb/debug.html#samba-print)。
 
+Some code (e.g., the definition of `NT_STATUS_PENDING`) is generated during compilation. To see the full code, the project must be compiled first.
+
+You can use macros like `DBG_ERR()`, ..., `DBG_DEBUG()`, etc., to print debug information.
+
+Use `log_stack_trace()` to print the function stack. If you get a compilation error indicating that `log_stack_trace()` cannot be found,
+you can refer to the changes in the patch [`0001-dump-stack-of-smbd_parent_loop.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/0001-dump-stack-of-smbd_parent_loop.patch).
+
+The logs can be found in `/usr/local/samba/var/log.smbd`.
+
 入口:
 ```c
 main
@@ -180,17 +189,6 @@ smbd_smb2_request_pending_queue
   req->current_idx = 1; memmove // 把原请求的 in/out vectors 前缀移除
   smbd_smb2_request_pending_timer
 ```
-
-# samba code analysis {#samba-code}
-
-Some code (e.g., the definition of `NT_STATUS_PENDING`) is generated during compilation. To see the full code, the project must be compiled first.
-
-You can use macros like `DBG_ERR()`, ..., `DBG_DEBUG()`, etc., to print debug information.
-
-Use `log_stack_trace()` to print the function stack. If you get a compilation error indicating that `log_stack_trace()` cannot be found,
-you can refer to the changes in the patch [`0001-dump-stack-of-smbd_parent_loop.patch`](https://github.com/chenxiaosonggithub/blog/blob/master/course/smb/src/0001-dump-stack-of-smbd_parent_loop.patch).
-
-The logs can be found in `/usr/local/samba/var/log.smbd`.
 
 When samba receive `Create Request`:
 ```c
