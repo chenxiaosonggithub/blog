@@ -125,6 +125,12 @@ messaging_dispatch_classic
           inotify_mapping
         mask |= (IN_MASK_ADD | IN_ONLYDIR); // todo
         talloc_set_destructor(w, watch_destructor);
+
+smbd_smb2_notify_send
+  change_notify_create
+    notify_add
+      messaging_send_iov
+  change_notify_add_request
 ```
 
 ## 处理事件
