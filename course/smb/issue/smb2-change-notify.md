@@ -71,7 +71,8 @@ you can refer to the changes in the patch [`0001-dump-stack-of-smbd_parent_loop.
 
 The logs can be found in `/usr/local/samba/var/log.smbd`.
 
-入口:
+## 入口
+
 ```c
 main
   smbd_parent_loop
@@ -109,8 +110,9 @@ tevent_common_invoke_fd_handler
     smbd_smb2_io_handler
       smbd_smb2_advance_incoming
         smbd_smb2_request_dispatch
-
 ```
+
+## 监听
 
 ```c
 NT_TRANSACT_NOTIFY_CHANGE // SMB1
@@ -123,7 +125,11 @@ messaging_dispatch_classic
           inotify_mapping
         mask |= (IN_MASK_ADD | IN_ONLYDIR); // todo
         talloc_set_destructor(w, watch_destructor);
+```
 
+## 处理事件
+
+```c
 tevent_common_invoke_fd_handler
   inotify_handler
     inotify_dispatch
@@ -142,25 +148,6 @@ tevent_common_invoke_fd_handler
       inotify_map_mask_to_filter
       if (filter_match(w, e))
       notifyd_sys_callback // w->callback
-
-smbd_smb2_request_process_close
-  smbd_smb2_close_send
-    smbd_smb2_close
-      close_file_smb
-        fsp_unbind_smb
-          notify_remove
-            messaging_send_iov // 通知notifyd注销
-
-// 从 notify_remove 通知过来
-messaging_dispatch_classic
-  notifyd_rec_change
-    notifyd_apply_rec_change
-      TALLOC_FREE
-        talloc_free
-          _talloc_free
-            _talloc_free_internal
-              _tc_free_internal
-                watch_destructor
 
 change_notify_reply
   notify_marshall_changes
@@ -189,6 +176,31 @@ smbd_smb2_request_pending_queue
   req->current_idx = 1; memmove // 把原请求的 in/out vectors 前缀移除
   smbd_smb2_request_pending_timer
 ```
+
+## 取消监听
+
+```c
+smbd_smb2_request_process_close
+  smbd_smb2_close_send
+    smbd_smb2_close
+      close_file_smb
+        fsp_unbind_smb
+          notify_remove
+            messaging_send_iov // 通知notifyd注销
+
+// 从 notify_remove 通知过来
+messaging_dispatch_classic
+  notifyd_rec_change
+    notifyd_apply_rec_change
+      TALLOC_FREE
+        talloc_free
+          _talloc_free
+            _talloc_free_internal
+              _tc_free_internal
+                watch_destructor
+```
+
+## 其他
 
 When samba receive `Create Request`:
 ```c
