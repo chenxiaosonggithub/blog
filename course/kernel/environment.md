@@ -77,6 +77,8 @@ mv /usr/bin/aarch64-linux-gnu-gcc /usr/bin/aarch64-linux-gnu-gcc.bak # 原来的
 ln -s /usr/bin/aarch64-linux-gnu-gcc-9 /usr/bin/aarch64-linux-gnu-gcc # 指向特定版本
 ```
 
+### openeuler
+
 openeuler编译rpm包所需软件:
 ```sh
 dnf install git rsync rpm-build -y
