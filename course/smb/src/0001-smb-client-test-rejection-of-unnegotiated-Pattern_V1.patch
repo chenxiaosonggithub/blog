@@ -1,0 +1,182 @@
+From ccd9513376539d6685af7c9b7f7a07a4ea976a61 Mon Sep 17 00:00:00 2001
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Date: Sat, 1 Aug 2026 08:55:53 +0000
+Subject: [PATCH] smb/client: test rejection of unnegotiated Pattern_V1
+
+Pattern_V1 is valid in a chained compression transform only when it was
+advertised during negotiation. The server now rejects such payloads, but
+the client has no way to exercise that path.
+
+Advertise chained compression with LZ77 only while deliberately allowing
+compressed WRITE requests to contain Pattern_V1 payloads. Split
+smb_compress() into chained and unchained helpers so the chained path can
+gather the complete, already signed SMB2 message and build the transform.
+
+This provides a negative test for the server-side unnegotiated Pattern_V1
+rejection path.
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+---
+ fs/smb/client/compress.c | 94 +++++++++++++++++++++++++++++++++++++---
+ fs/smb/client/smb2pdu.c  | 19 ++++----
+ 2 files changed, 98 insertions(+), 15 deletions(-)
+
+diff --git a/fs/smb/client/compress.c b/fs/smb/client/compress.c
+index 8f0860970741..21973327f67e 100644
+--- a/fs/smb/client/compress.c
++++ b/fs/smb/client/compress.c
+@@ -14,6 +14,7 @@
+  */
+ #include <linux/slab.h>
+ #include <linux/kernel.h>
++#include <linux/overflow.h>
+ #include <linux/uio.h>
+ #include <linux/sort.h>
+ 
+@@ -305,19 +306,15 @@ bool should_compress(const struct cifs_tcon *tcon, const struct smb_rqst *rq)
+ 	return (shdr->Command == SMB2_READ);
+ }
+ 
+-int smb_compress(struct TCP_Server_Info *server, struct smb_rqst *rq, compress_send_fn send_fn)
++static int smb_compress_unchained(struct TCP_Server_Info *server,
++				  struct smb_rqst *rq,
++				  compress_send_fn send_fn)
+ {
+ 	struct iov_iter iter;
+ 	u32 slen, dlen;
+ 	void *src, *dst = NULL;
+ 	int ret;
+ 
+-	if (!server || !rq || !rq->rq_iov || !rq->rq_iov->iov_base)
+-		return -EINVAL;
+-
+-	if (rq->rq_iov->iov_len != sizeof(struct smb2_write_req))
+-		return -EINVAL;
+-
+ 	slen = iov_iter_count(&rq->rq_iter);
+ 	src = kvzalloc(slen, GFP_KERNEL);
+ 	if (!src) {
+@@ -370,3 +367,86 @@ int smb_compress(struct TCP_Server_Info *server, struct smb_rqst *rq, compress_s
+ 
+ 	return ret;
+ }
++
++static int smb_compress_chained(struct TCP_Server_Info *server,
++				struct smb_rqst *rq,
++				compress_send_fn send_fn)
++{
++	const u32 max_overhead = sizeof(struct smb2_compression_hdr) +
++		3 * sizeof(struct smb2_compression_payload_hdr) +
++		2 * sizeof(struct smb2_compression_pattern_v1);
++	struct smb_rqst comp_rq = { .rq_nvec = 1 };
++	size_t hdr_len = rq->rq_iov[0].iov_len;
++	size_t data_len = iov_iter_count(&rq->rq_iter);
++	struct iov_iter iter = rq->rq_iter;
++	struct kvec iov;
++	size_t total_len;
++	u32 slen, dlen;
++	void *src, *dst = NULL;
++	int ret;
++
++	if (check_add_overflow(hdr_len, data_len, &total_len) ||
++	    total_len > U32_MAX)
++		return -EOVERFLOW;
++
++	slen = total_len;
++	src = kvzalloc(slen, GFP_KERNEL);
++	if (!src)
++		return -ENOMEM;
++
++	/* Chained compression covers the complete, already signed SMB2 message. */
++	memcpy(src, rq->rq_iov[0].iov_base, hdr_len);
++	if (!copy_from_iter_full((u8 *)src + hdr_len, data_len, &iter)) {
++		ret = smb_EIO(smb_eio_trace_compress_copy);
++		goto out;
++	}
++
++	if (check_add_overflow(smb_lz77_compressed_alloc_size(slen),
++			       max_overhead, &dlen)) {
++		ret = -EOVERFLOW;
++		goto out;
++	}
++
++	dst = kvzalloc(dlen, GFP_KERNEL);
++	if (!dst) {
++		ret = -ENOMEM;
++		goto out;
++	}
++
++	/*
++	 * Negative test: generate Pattern_V1 without negotiating it so the peer
++	 * exercises its allow_pattern == false rejection path.
++	 */
++	ret = smb_compression_compress_chained(server->compression.alg, true,
++					       src, slen, dst, &dlen);
++	if (ret == -EMSGSIZE || (!ret && dlen >= slen)) {
++		ret = send_fn(server, 1, rq);
++		goto out;
++	}
++	if (ret)
++		goto out;
++
++	iov.iov_base = dst;
++	iov.iov_len = dlen;
++	comp_rq.rq_iov = &iov;
++	ret = send_fn(server, 1, &comp_rq);
++out:
++	kvfree(dst);
++	kvfree(src);
++	return ret;
++}
++
++int smb_compress(struct TCP_Server_Info *server, struct smb_rqst *rq,
++		 compress_send_fn send_fn)
++{
++	if (!server || !rq || !rq->rq_iov || !rq->rq_iov->iov_base)
++		return -EINVAL;
++
++	if (rq->rq_iov->iov_len != sizeof(struct smb2_write_req))
++		return -EINVAL;
++
++	if (server->compression.chained)
++		return smb_compress_chained(server, rq, send_fn);
++
++	return smb_compress_unchained(server, rq, send_fn);
++}
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 4ce165e40657..b0e43cb81206 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -634,18 +634,21 @@ build_compression_ctxt(struct smb2_compression_capabilities_context *pneg_ctxt)
+ {
+ 	pneg_ctxt->ContextType = SMB2_COMPRESSION_CAPABILITIES;
+ 	pneg_ctxt->DataLength =
+-		cpu_to_le16(sizeof(struct smb2_compression_capabilities_context)
+-			  - sizeof(struct smb2_neg_context));
++		cpu_to_le16(offsetof(struct smb2_compression_capabilities_context,
++				     CompressionAlgorithms[1]) -
++			    sizeof(struct smb2_neg_context));
++	pneg_ctxt->Reserved = cpu_to_le32(0);
+ 	/*
+-	 * Pattern_V1 is useful only as part of a chained transform. LZ77 remains
+-	 * the preferred general-purpose algorithm selected by this client.
++	 * Deliberately omit Pattern_V1 so the server rejects the Pattern_V1
++	 * payload generated by the negative-test WRITE compression path.
+ 	 */
+-	pneg_ctxt->CompressionAlgorithmCount = cpu_to_le16(4);
++	pneg_ctxt->CompressionAlgorithmCount = cpu_to_le16(1);
++	pneg_ctxt->Padding = cpu_to_le16(0);
+ 	pneg_ctxt->Flags = SMB2_COMPRESSION_CAPABILITIES_FLAG_CHAINED;
+ 	pneg_ctxt->CompressionAlgorithms[0] = SMB3_COMPRESS_LZ77;
+-	pneg_ctxt->CompressionAlgorithms[1] = SMB3_COMPRESS_LZ77_HUFF;
+-	pneg_ctxt->CompressionAlgorithms[2] = SMB3_COMPRESS_LZNT1;
+-	pneg_ctxt->CompressionAlgorithms[3] = SMB3_COMPRESS_PATTERN;
++	pneg_ctxt->CompressionAlgorithms[1] = 0;
++	pneg_ctxt->CompressionAlgorithms[2] = 0;
++	pneg_ctxt->CompressionAlgorithms[3] = 0;
+ }
+ 
+ static unsigned int
+-- 
+2.54.0
+
