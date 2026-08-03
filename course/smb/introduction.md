@@ -27,10 +27,11 @@ smb的协议文档有以下几个版本:
 # 其他协议
 
 - [[MS-FSCC]: File System Control Codes](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc)
+- [[MS-FSA]: File System Algorithms](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fsa)
 - [[MS-ERREF]: Windows Error Codes](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref)
 - [[MS-SMBD]: SMB2 Remote Direct Memory Access (RDMA) Transport Protocol](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-smbd)
-- [SMB3 POSIX Extensions Specification的gitlab仓库](https://gitlab.com/samba-team/smb3-posix-spec)（gitlab比samba.org上的更新: [`https://git.samba.org/slow/smb3_posix_spec.git`](https://git.samba.org/?p=slow/smb3_posix_spec.git;a=shortlog)），以下是我自己编译的html和pdf:
-  - smb3_posix_extensions: [html](https://chenxiaosong.com/tmp/gnu-linux/smb/smb3-posix-spec/smb3_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/gnu-linux/smb/smb3-posix-spec/smb3_posix_extensions.pdf)
-  - fsa_posix_extensions: [html](https://chenxiaosong.com/tmp/gnu-linux/smb/smb3-posix-spec/fsa_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/gnu-linux/smb/smb3-posix-spec/fsa_posix_extensions.pdf)
-  - fscc_posix_extensions: [html](https://chenxiaosong.com/tmp/gnu-linux/smb/smb3-posix-spec/fscc_posix_extensions.html), [pdf](https://gitee.com/chenxiaosonggitee/tmp/raw/master/gnu-linux/smb/smb3-posix-spec/fscc_posix_extensions.pdf)
+- [The SMB3 POSIX Extension Specification](https://smb3posix.org/)（[gitlab仓库](https://gitlab.com/smb3-posix-extensions/smb3-posix-extensions)（gitlab比samba.org上的更新: [`https://git.samba.org/slow/smb3_posix_spec.git`](https://git.samba.org/?p=slow/smb3_posix_spec.git;a=shortlog)）
+  - [[POSIX-SMB2] SMB3 POSIX Extensions](https://smb3posix.org/spec/latest/smb3_posix_extensions.html)
+  - [[POSIX-FSA] POSIX Extensions to MS-FSA](https://smb3posix.org/spec/latest/fsa_posix_extensions.html)
+  - [[POSIX-FSCC] POSIX Extensions to MS-FSCC](https://smb3posix.org/spec/latest/fscc_posix_extensions.html)
 
