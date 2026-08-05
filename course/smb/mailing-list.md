@@ -58,7 +58,7 @@ git send-email --to=\
 smfrench@gmail.com,\
 linkinjeon@kernel.org,\
 pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
-dhowells@redhat.com,metze@samba.org \
+dhowells@redhat.com,metze@samba.org,slow@samba.org \
 --cc=\
 linux-cifs@vger.kernel.org \
 00* \
