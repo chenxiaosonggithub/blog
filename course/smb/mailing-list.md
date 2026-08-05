@@ -62,6 +62,15 @@ dhowells@redhat.com,metze@samba.org,slow@samba.org \
 --cc=\
 linux-cifs@vger.kernel.org \
 00* \
+
+git send-email --to=\
+smfrench@gmail.com,\
+linkinjeon@kernel.org,\
+pc@manguebit.org,tom@talpey.com,senozhatsky@chromium.org,\
+slow@samba.org \
+--cc=\
+linux-cifs@vger.kernel.org \
+00*
 # --in-reply-to=xxx --no-thread --suppress-cc=all
 # samba-technical@lists.samba.org
 ```
