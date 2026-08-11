@@ -4,7 +4,7 @@ case "$1" in
 1)
 	session="tianyi"
 	bash $script_dir/tianyi-ssh.sh "
-	export LC_ALL=en_US.UTF-8; \
+	export LC_ALL=zh_CN.UTF-8; \
 	if tmux has-session -t $session 2>/dev/null; then \
 		tmux att -t $session; \
 	else \
