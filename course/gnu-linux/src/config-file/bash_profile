@@ -27,9 +27,9 @@ source /usr/share/bash-completion/completions/git # docker中要先安装 apt in
 # 只显示最后一个路径名分量
 PS1="${PS1//\\w\\$/\\W\\$}"
 # 虚拟机设置
-resize
-bash /home/chenxiaosong/code/blog/course/kernel/src/script/parse-cmdline.sh
+# resize
+# bash /home/chenxiaosong/code/blog/course/kernel/src/script/parse-cmdline.sh
 # windows下powershell git bash vim中文乱码, windows下还要加入/etc/bash.bashrc
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+# export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
 
