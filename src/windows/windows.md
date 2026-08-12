@@ -1,6 +1,7 @@
 # 安装系统
 
-- [win11镜像下载](https://www.microsoft.com/zh-cn/software-download/windows11)（国内网络会更快）
+- [中文win11镜像下载](https://www.microsoft.com/zh-cn/software-download/windows11)（国内网络会更快）
+- [英文win11镜像下载](https://www.microsoft.com/en-gb/software-download/windows11)
 - [win10镜像下载](https://www.microsoft.com/zh-cn/software-download/windows10ISO)
 - [UltraISO制作启动u盘](https://www.ultraiso.net/xiazai.html)
 <!--
