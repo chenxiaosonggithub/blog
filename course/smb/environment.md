@@ -201,3 +201,37 @@ make -j`nproc` install
 Windows系统下，在Windows资源管理器中输入 `\\192.168.122.1\TEST`就可访问Linux系统的文件。
 
 macOS系统下，在Finder中按快捷键`cmd+k`，跳出Connect to Server窗口，输入`smb://192.168.122.1/TEST`就可访问Linux系统的文件。
+
+# kerberos
+
+- vm1: 192.168.53.211  kdc.ksmbd.test      MIT Kerberos KDC
+- vm2: 192.168.53.210  server.ksmbd.test   ksmbd server
+- vm3: 192.168.53.209  client.ksmbd.test   smbtorture client
+
+```sh
+sudo hostnamectl set-hostname kdc.ksmbd.test
+sudo hostnamectl set-hostname server.ksmbd.test
+sudo hostnamectl set-hostname client.ksmbd.test
+
+# 3台都修改 vim /etc/hosts，加入以下内容
+192.168.53.211 kdc.ksmbd.test kdc
+192.168.53.210 server.ksmbd.test server
+192.168.53.209 client.ksmbd.test client
+
+getent hosts kdc.ksmbd.test
+getent hosts server.ksmbd.test
+getent hosts client.ksmbd.test
+hostname -f
+
+sudo dnf install -y chrony
+sudo systemctl enable --now chronyd
+chronyc tracking
+timedatectl status
+```
+
+在kdc执行:
+```sh
+sudo dnf install -y krb5-server krb5-workstation
+
+```
+
