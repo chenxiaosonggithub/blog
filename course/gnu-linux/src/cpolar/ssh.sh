@@ -27,6 +27,9 @@ case "$1" in
 6)
 	bash $script_dir/aorus-ssh.sh qemu02
 	;;
+7)
+	bash $script_dir/aorus-ssh.sh qemu03
+	;;
 *)
 	echo "用法: bash $0 <1~5>"
 	;;
