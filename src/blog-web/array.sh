@@ -159,6 +159,7 @@ comm_array=(
 			1 1 course/smb/issue/cifs-newfstatat-ENOTSUPP.md ~ "cifs newfstatat()系统调用报错ENOTSUPP"
 			1 1 course/smb/issue/samba-systemd-start-timeout.md ~ "源码编译的samba通过systemd启动超时的问题"
 			1 1 course/smb/issue/smb2-change-notify.md ~ "smb2 change notify特性开发"
+			1 1 course/smb/issue/BUG_ON-in-ksmbd_destroy_file_table.md ~ "ksmbd_destroy_file_table()发生BUG_ON的问题"
 	0 1 course/algorithm/algorithm.md ~ "算法"
 		1 1 course/algorithm/video.md ~ "算法课程配套视频"
 		1 1 course/algorithm/book.md ~ "算法书籍推荐"
