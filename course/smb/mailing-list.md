@@ -49,55 +49,41 @@ Sergey Senozhatsky <senozhatsky@chromium.org> # server reviewer
 # LINUX KERNEL MEMORY CONSISTENCY MODEL (LKMM): tools/memory-model/
 # RXRPC SOCKETS (AF_RXRPC): net/rxrpc/
 David Howells <dhowells@redhat.com> # 时区UTC0
+Stefan Metzmacher <metze@samba.org> # (RDMA, smbdirect)
+Ralph Boehme <slow@samba.org> # samba
 linux-cifs@vger.kernel.org
 ```
 
 发送补丁:
 ```sh
+# kernel client
 git send-email --to=\
-smfrench@gmail.com,\
-linkinjeon@kernel.org,\
-pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
-dhowells@redhat.com,metze@samba.org,slow@samba.org \
+linkinjeon@kernel.org,pc@manguebit.org,\
+ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,\
+metze@samba.org \
 --cc=\
 linux-cifs@vger.kernel.org \
 00* \
 
+# kernel server
 git send-email --to=\
-smfrench@gmail.com,\
 linkinjeon@kernel.org,\
-pc@manguebit.org,tom@talpey.com,senozhatsky@chromium.org,\
-slow@samba.org \
+tom@talpey.com,senozhatsky@chromium.org,chenxiaosong@chenxiaosong.com \
 --cc=\
 linux-cifs@vger.kernel.org \
 00*
 # --in-reply-to=xxx --no-thread --suppress-cc=all
 # samba-technical@lists.samba.org
 
+# userspace
 git send-email --to=\
-linkinjeon@kernel.org,\
-smfrench@gmail.com,\
-tom@talpey.com,senozhatsky@chromium.org \
+linkinjeon@kernel.org,pc@manguebit.org,\
+ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
+metze@samba.org,slow@samba.org \
 --cc=\
 linux-cifs@vger.kernel.org \
 00*
 ```
-<!--
-git send-email --to=\
-smfrench@gmail.com,linkinjeon@kernel.org,chenxiaosong@chenxiaosong.com \
---cc=\
-linux-cifs@vger.kernel.org \
-00*
-
-git send-email --to=\
-smfrench@gmail.com,\
-linkinjeon@kernel.org,\
-pc@manguebit.org,ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
-dhowells@redhat.com,metze@samba.org,chenxiaosong@kylinos.cn,chenxiaosong@chenxiaosong.com \
---cc=\
-linux-cifs@vger.kernel.org \
-00*
--->
 
 # smb补丁统计
 
@@ -106,25 +92,6 @@ linux-cifs@vger.kernel.org \
 # 还要显示邮件可以用 --format='%aN <%aE>'
 # --follow 对目录其实没啥卵用，但还是习惯的写了
 git log --follow --format='%aN <%aE>' fs/smb/ | sort | uniq -c | sort -nr | less
-    244 Stefan Metzmacher <metze@samba.org>
-    183 Namjae Jeon <linkinjeon@kernel.org>
-    182 Paulo Alcantara <pc@manguebit.org>
-    106 David Howells <dhowells@redhat.com>
-    104 Steve French <stfrench@microsoft.com>
-     90 Pali Rohár <pali@kernel.org>
-     69 Shyam Prasad N <sprasad@microsoft.com>
-     53 ChenXiaoSong <chenxiaosong@kylinos.cn>
-     26 Bharath SM <bharathsm@microsoft.com>
-     19 Henrique Carvalho <henrique.carvalho@suse.com>
-     17 NeilBrown <neil@brown.name>
-     16 Jeff Layton <jlayton@kernel.org>
-     16 Enzo Matsumiya <ematsumiya@suse.de>
-     15 Al Viro <viro@zeniv.linux.org.uk>
-     13 ZhangGuoDong <zhangguodong@kylinos.cn>
-     12 Thorsten Blum <thorsten.blum@linux.dev>
-     12 Eric Biggers <ebiggers@kernel.org>
-     11 Markus Elfring <elfring@users.sourceforge.net>
-     10 Wang Zhaolong <wangzhaolong@huaweicloud.com>
 ```
 
 `checkout`到`38c8a9a52082 smb: move client and server files to common directory fs/smb`（2023-05-24）之前的记录:
