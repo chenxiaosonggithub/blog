@@ -204,34 +204,206 @@ macOS系统下，在Finder中按快捷键`cmd+k`，跳出Connect to Server窗口
 
 # kerberos
 
-- vm1: 192.168.53.211  kdc.ksmbd.test      MIT Kerberos KDC
-- vm2: 192.168.53.210  server.ksmbd.test   ksmbd server
-- vm3: 192.168.53.209  client.ksmbd.test   smbtorture client
+- smbtorture client: 192.168.53.209  client.test
+- KSMBD server:      192.168.53.210  ksmbd.test
+- Kerberos KDC:      192.168.53.211  kdc.test
 
+## 三台机器配置
+
+`/etc/hosts`:
 ```sh
-sudo hostnamectl set-hostname kdc.ksmbd.test
-sudo hostnamectl set-hostname server.ksmbd.test
-sudo hostnamectl set-hostname client.ksmbd.test
+192.168.53.209    client.test
+192.168.53.210    ksmbd.test
+192.168.53.211    kdc.test
+```
 
-# 3台都修改 vim /etc/hosts，加入以下内容
-192.168.53.211 kdc.ksmbd.test kdc
-192.168.53.210 server.ksmbd.test server
-192.168.53.209 client.ksmbd.test client
+分别设置主机名:
+```sh
+sudo hostnamectl set-hostname client.test
+sudo hostnamectl set-hostname ksmbd.test
+sudo hostnamectl set-hostname kdc.test
+```
 
-getent hosts kdc.ksmbd.test
-getent hosts server.ksmbd.test
-getent hosts client.ksmbd.test
-hostname -f
+三台机器都确认解析:
+```sh
+getent hosts client.test
+getent hosts ksmbd.test
+getent hosts kdc.test
+```
 
-sudo dnf install -y chrony
-sudo systemctl enable --now chronyd
+三台机器统一配置`/etc/krb5.conf`:
+```sh
+[libdefaults]
+    default_realm = KSMBD.TEST
+    dns_lookup_realm = false
+    dns_lookup_kdc = false
+    rdns = false
+
+[realms]
+    KSMBD.TEST = {
+        kdc = kdc.test
+        admin_server = kdc.test
+    }
+
+[domain_realm]
+    .test = KSMBD.TEST
+    kdc.test = KSMBD.TEST
+    ksmbd.test = KSMBD.TEST
+    client.test = KSMBD.TEST
+```
+
+三台机器同步时间:
+```sh
+dnf install -y chrony
+systemctl enable --now chronyd
+
+date
 chronyc tracking
-timedatectl status
 ```
 
-在kdc执行:
+## KDC 服务器配置
+
+安装 KDC:
 ```sh
-sudo dnf install -y krb5-server krb5-workstation
+dnf install -y \
+    krb5-server \
+    krb5-workstation \
+    krb5-libs
 
+kdb5_util create -s -r KSMBD.TEST # 密码: 123
+
+systemctl enable --now krb5kdc
+systemctl status krb5kdc
+
+firewall-cmd --permanent --add-port=88/tcp
+firewall-cmd --permanent --add-port=88/udp
+firewall-cmd --reload
 ```
 
+创建 Kerberos 用户:
+```sh
+kadmin.local
+kadmin.local:  addprinc chenxiaosong@KSMBD.TEST # 密码: 123
+kadmin.local:  getprinc chenxiaosong@KSMBD.TEST
+```
+
+创建 SMB Service Principal:
+```sh
+kadmin.local:  addprinc -randkey cifs/ksmbd.test@KSMBD.TEST
+kadmin.local:  getprinc cifs/ksmbd.test@KSMBD.TEST # ksmbd.test 是真正提供 SMB 服务的 192.168.53.210
+```
+
+生成 ksmbd keytab:
+```sh
+mkdir -p /root/ksmbd-keytab
+kadmin.local:  ktadd -norandkey -k /root/ksmbd-keytab/ksmbd.keytab cifs/ksmbd.test@KSMBD.TEST
+klist -kte /root/ksmbd-keytab/ksmbd.keytab
+```
+
+将 keytab 复制到 ksmbd 服务端:
+```sh
+scp /root/ksmbd-keytab/ksmbd.keytab root@ksmbd.test:/tmp/ksmbd.keytab
+```
+
+## ksmbd 服务端配置
+
+安装 keytab:
+```sh
+mkdir -p /etc/ksmbd
+
+mv /tmp/ksmbd.keytab \
+   /etc/ksmbd/ksmbd.keytab
+
+chown root:root /etc/ksmbd/ksmbd.keytab
+chmod 600 /etc/ksmbd/ksmbd.keytab
+
+klist -kte /etc/ksmbd/ksmbd.keytab # 必须存在: cifs/ksmbd.test@KSMBD.TEST
+```
+
+在 ksmbd 服务端独立验证 keytab:
+```
+kdestroy
+kinit -V \
+    -k \
+    -t /etc/ksmbd/ksmbd.keytab \
+    cifs/ksmbd.test@KSMBD.TEST # 正常应看到: Authenticated to Kerberos v5
+klist
+kdestroy
+```
+
+配置 Linux 用户:
+```sh
+id chenxiaosong
+useradd -M -s /sbin/nologin chenxiaosong
+id chenxiaosong
+```
+
+配置 ksmbd 用户:
+```sh
+cat /usr/local/etc/ksmbd/ksmbdpwd.db
+/usr/local/sbin/ksmbd.adduser --add chenxiaosong # 密码: 123
+```
+
+配置 `/usr/local/etc/ksmbd/ksmbd.conf`:
+```sh
+[global]
+    workgroup = KSMBD
+
+    kerberos support = yes
+    kerberos keytab file = /etc/ksmbd/ksmbd.keytab
+    kerberos service name = cifs/ksmbd.test@KSMBD.TEST
+
+    server signing = auto
+    smb3 encryption = auto
+
+[test3]
+    path = /tmp/s_test
+    read only = no
+```
+
+## 客户端配置及测试
+
+安装 Kerberos 客户端工具:
+```sh
+dnf install -y krb5-workstation krb5-libs
+nc -vz kdc.test 88
+nc -vz ksmbd.test 445
+```
+
+客户端独立验证 Kerberos:
+```sh
+kdestroy
+kinit chenxiaosong@KSMBD.TEST # 密码: 123
+klist -e # 应看到: krbtgt/KSMBD.TEST@KSMBD.TEST
+kvno cifs/ksmbd.test@KSMBD.TEST # 请求 SMB Service Ticket, 正常类似: cifs/ksmbd.test@KSMBD.TEST: kvno = 1
+klist -e # 应该同时存在: krbtgt/KSMBD.TEST@KSMBD.TEST 和 cifs/ksmbd.test@KSMBD.TEST
+```
+
+检查 KVNO 是否一致:
+```sh
+# 客户端:
+kvno cifs/ksmbd.test@KSMBD.TEST
+# 服务端:
+klist -kte /etc/ksmbd/ksmbd.keytab
+# KDC 中 Service Principal 的 KVNO = ksmbd Server keytab 中的 KVNO, 如果不一致，需要从 KDC 重新导出正确 keytab
+```
+
+先测试普通 Kerberos SMB:
+```sh
+smbclient \
+    //ksmbd.test/test3 \
+    -U'chenxiaosong@KSMBD.TEST%123' \
+    --use-kerberos=required \
+    -c 'ls'
+```
+
+```sh
+smbtorture \
+    //ksmbd.test/test3 \
+    -U'chenxiaosong@KSMBD.TEST%123' \
+    --use-kerberos=required \
+    smb2.session.expire2s
+#   smb2.session.expire2e
+#   smb2.session.expire1s
+#   smb2.session.expire1e
+```
