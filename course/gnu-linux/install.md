@@ -76,7 +76,7 @@ group = "libvirt"
 
 注意麒麟桌面系统v10的virt-manager图形显示协议要用vnc。
 
-## virtiofs共享目录
+## virtiofs共享目录 {#virtiofs}
 
 物理机安装:
 ```sh
