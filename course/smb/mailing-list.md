@@ -81,7 +81,7 @@ linkinjeon@kernel.org,pc@manguebit.org,\
 ronniesahlberg@gmail.com,sprasad@microsoft.com,tom@talpey.com,bharathsm@microsoft.com,senozhatsky@chromium.org,\
 metze@samba.org,slow@samba.org \
 --cc=\
-linux-cifs@vger.kernel.org \
+linux-cifs@vger.kernel.org,samba-technical@lists.samba.org \
 00*
 ```
 
