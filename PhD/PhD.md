@@ -99,6 +99,11 @@ SMB 3.1.1 支持许多高级安全特性。
 另外，实现一个至少只读的 SMB3.1.1 ACL 到 POSIX ACL 的模拟视图也可能很有趣。
 ```
 
+# vpn
+
+- [aTrust 使用手册](https://xxzx.xidian.edu.cn/info/1225/4333.htm)
+- [下载客户端](https://atrust.xidian.edu.cn)
+
 # 选课
 
 - [选课网站](https://yjsxk.xidian.edu.cn/yjsxkapp/sys/xsxkapp/index.html)
