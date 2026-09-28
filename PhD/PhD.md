@@ -2,6 +2,7 @@
 - [我的博导张志为老师](https://faculty.xidian.edu.cn/zwzhang/zh_CN/index.htm)
 - [2025中国最好学科排名（网络空间安全）](https://www.shanghairanking.cn/rankings/bcsr/2025/0839)
 - [2025中国大学专业排名(网络空间安全)](https://www.shanghairanking.cn/rankings/bcmr/2025/080911TK)
+- [统一身份认证](https://ids.xidian.edu.cn/authserver/login)
 
 # smb特性
 
