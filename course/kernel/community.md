@@ -36,7 +36,8 @@ Linux内核社区主要以邮件交流为主，以下是一些常用的网站:
 
 - [openEuler Kernel SIG 运作章程.md](https://gitcode.com/openeuler/kernel-docs/blob/master/openEuler%20Kernel%20SIG%20%E8%BF%90%E4%BD%9C%E7%AB%A0%E7%A8%8B.md)
 - [Kernel SIG 双周例会申报](https://etherpad.openeuler.org/p/Kernel-meetings)
-- [hulk_robot_test/openEuler/conf/committers.json](https://atomgit.com/hulk-robot/hulk_robot_test/blob/master/openEuler/conf/committers.json)
+- [openEuler kernel Committer List](https://atomgit.com/openeuler/community/blob/master/sig/Kernel/committers.md), 
+[hulk_robot_test/openEuler/conf/committers.json](https://atomgit.com/hulk-robot/hulk_robot_test/blob/master/openEuler/conf/committers.json)
 
 [openEuler托管在atomgit上](https://atomgit.com/openeuler/kernel)（[以前是gitee](https://gitee.com/openeuler/kernel)），贡献openEuler要通过提交Pull Requests。
 
