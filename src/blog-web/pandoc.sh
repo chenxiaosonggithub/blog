@@ -17,9 +17,8 @@ do_pandoc() {
 	if [[ ${src_file} == *.rst ]]; then
 		from_format="--from rst" # rst格式
 	fi
-	local mermaid_file=${src_path}/src/blog-web/mermaid.html
 	local pandoc_options="$(comm_get_pandoc_options) --toc"
-	pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_options} --include-after-body=${mermaid_file}
+	pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_options}
 }
 
 do_pandoc $1 $2 $3
