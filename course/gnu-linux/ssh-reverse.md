@@ -253,7 +253,7 @@ sudo reboot
 
 [网易UU远程](https://uuyc.163.com/)是2024年12月10日由“GameViewer远程”更名而来。
 
-# 家里远程桌面到公司ubuntu24.04 {#remote-desktop}
+# 家里远程桌面到公司ubuntu24.04
 
 ubuntu24.04没有vnc协议，只有rdp协议，位置是`设置 -> 系统 -> 桌面共享`，注意物理机上需要连接显示器才能远程桌面控制。
 命令行控制rdp:
