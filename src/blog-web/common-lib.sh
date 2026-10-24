@@ -39,7 +39,8 @@ comm_get_pandoc_options() {
 	# --standalone: 此选项指示 pandoc 生成一个完全独立的输出文件，包括文档标题、样式表和其他元数据，使输出文件成为一个完整的文档。
 	# --metadata encoding=gbk: 这个选项允许您添加元数据。在这种情况下，您将 encoding 设置为 gbk，指定输出 HTML 文档的字符编码为 GBK。这对于确保生成的文档以正确的字符编码进行保存非常重要。
 	# --toc: 这个选项指示 pandoc 生成一个包含文档目录（Table of Contents，目录）的 HTML 输出。TOC 将包括文档中的章节和子章节的链接，以帮助读者导航文档。
-	local options="--to html --standalone --metadata encoding=gbk --number-sections --css https://chenxiaosong.com/stylesheet.css" --include-after-body=${mermaid_file}
+	# 显式指定 MathJax 地址，避免某些发行版默认使用网页无法访问的 /usr/share 路径。
+	local options="--to html --standalone --mathjax=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js --metadata encoding=gbk --number-sections --css https://chenxiaosong.com/stylesheet.css --include-after-body=${mermaid_file}"
 	echo "${options}"
 }
 
