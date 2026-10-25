@@ -4,6 +4,14 @@
 - [2025中国大学专业排名(网络空间安全)](https://www.shanghairanking.cn/rankings/bcmr/2025/080911TK)
 - [统一身份认证](https://ids.xidian.edu.cn/authserver/login)
 - [校医院](https://xyy.xidian.edu.cn), [医保及体检管理系统](http://ybtjxt.xidian.edu.cn)
+- [aTrust 使用手册](https://xxzx.xidian.edu.cn/info/1225/4333.htm)
+- [下载客户端](https://atrust.xidian.edu.cn): [windows下载链接](https://atrust.xidian.edu.cn/resource/client/windows/aTrustInstaller.exe?upgradeType=gray)
+- 学在西电
+  - [WIN 版](https://x.ananas.chaoxing.com/win/xidian_ia32_4.4.5_202208211129.exe),
+  - [MAC 版](https://x.ananas.chaoxing.com/mac/xidian_x64_4.4.5_202208211129.dmg),
+  - [网页](https://learning.xidian.edu.cn/portal): [个人空间 > 录直播应用，观看录播需要登录aTrust](https://i.mooc.chaoxing.com/space/index?t=1789821850958)
+- [西电智课平台](https://i.chaoxing.com/base)
+- [西电研究生院官网](https://gr.xidian.edu.cn/)—[研究生在线学习平台](https://xidianyjs.yuketang.cn/)，[网上在线课程的开课通知](https://gr.xidian.edu.cn/info/1073/20794.htm)
 
 # smb特性
 
@@ -101,17 +109,8 @@ SMB 3.1.1 支持许多高级安全特性。
 另外，实现一个至少只读的 SMB3.1.1 ACL 到 POSIX ACL 的模拟视图也可能很有趣。
 ```
 
-# vpn
-
-- [aTrust 使用手册](https://xxzx.xidian.edu.cn/info/1225/4333.htm)
-- [下载客户端](https://atrust.xidian.edu.cn): [下载链接](https://atrust.xidian.edu.cn/resource/client/windows/aTrustInstaller.exe?upgradeType=gray)
-
 # 选课
 
-- 学在西电
-  - [WIN 版](https://x.ananas.chaoxing.com/win/xidian_ia32_4.4.5_202208211129.exe),
-  - [MAC 版](https://x.ananas.chaoxing.com/mac/xidian_x64_4.4.5_202208211129.dmg),
-  - [网页](https://learning.xidian.edu.cn/portal): [个人空间 > 录直播应用，观看录播需要登录aTrust](https://i.mooc.chaoxing.com/space/index?t=1789821850958)
 - [选课网站](https://yjsxk.xidian.edu.cn/yjsxkapp/sys/xsxkapp/index.html)
 - [一张图看懂该怎么选课](https://res.xidian.edu.cn/products/yjs/xsxkapp/images/index/ydt.jpg)
 - 咨询方式:
