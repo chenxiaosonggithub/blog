@@ -2,7 +2,7 @@
 
 首先我得先列一下自己的头衔，就是下面几个：
 
-- [Linux内核上游社区KSMBD模块的Reviewer](https://chenxiaosong.com/picture/self-introduction/ksmbd-reviewer.jpg)
+- [Linux内核上游社区KSMBD模块的Reviewer](https://chenxiaosong.com/picture/self-introduction/ksmbd-reviewer.png)
 - [openEuler社区NFS、SMB、NETFS三个模块的Committer](https://chenxiaosong.com/picture/self-introduction/openeuler-committer.png)
 - 西安电子科技大学在读在职博士（2026年9月入学）
 
