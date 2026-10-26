@@ -1,5 +1,11 @@
 # 查一下户口
 
+首先我得先列一下自己的头衔，就是下面几个：
+
+- [Linux内核上游社区KSMBD模块的Reviewer](https://chenxiaosong.com/picture/self-introduction/ksmbd-reviewer.jpg)
+- [openEuler社区NFS、SMB、NETFS三个模块的Committer](https://chenxiaosong.com/picture/self-introduction/openeuler-committer.png)
+- 西安电子科技大学在读在职博士（2026年9月入学）
+
 这里就不直接贴照片了哈，毕竟咱也不是靠脸吃饭的，而是靠嘴吃饭。。。没见过我的朋友可以
 [**点击这里跳转后查看我的照片**](https://gitee.com/chenxiaosonggitee/tmp/blob/master/picture/self-introduction/陈孝松照片.md)。
 
