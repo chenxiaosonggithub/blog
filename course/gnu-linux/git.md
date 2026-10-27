@@ -83,7 +83,6 @@ chown $(whoami):$(id -gn) ~/.ssh/config
 git cherry-pick <commit1>..<commitN> # 不包含commit1
 ```
 
-<!-- public begin -->
 如果多个commit中包含有Merge的commit，直接cherry-pick多个会报错`error: 提交 xxxx 是一个合并提交但未提供 -m 选项`，可以把`git log --oneline`的输出放到文件`commits.txt`中，把Merge相关的commit删除，并删除掉每行的后面的commit信息，每行只保留commit号，然后用以下脚本`cherry-pick`（各位朋友如果有什么更好的方法请一定要联系告诉我）:
 ```sh
 # tac 从最后一行开始 cherry-pick
@@ -98,7 +97,6 @@ tac commits.txt | while IFS= read -r commit; do
 done
 echo "全部合并成功"
 ```
-<!-- public end -->
 
 `git cherry-pick`或`git am`合补丁时如果有冲突，在解决完冲突后，在`commit`信息中在`Conflicts:`后列出冲突文件，如:
 ```sh

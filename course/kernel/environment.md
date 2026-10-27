@@ -1,9 +1,7 @@
 下面介绍Linux内核编译环境和测试环境的搭建过程，当然我也为各位朋友准备好了已经安装好的虚拟机镜像，只需下载运行即可。
 
 
-<!-- public begin -->
 [点击这里从百度网盘下载对应平台的虚拟机镜像](https://chenxiaosong.com/baidunetdisk)，
-<!-- public end -->
 `x86_64`（也就是你平时用来安装windows系统的电脑，或者2020年前的苹果电脑）选择`ubuntu-x64_64.zip`，`arm64`（2020年末之后的苹果电脑）选择`ubuntu-aarch64.zip`。虚拟机运行后，登录界面的密码是`1`。
 
 # 安装Linux发行版
@@ -17,16 +15,12 @@
 ## 虚拟机软件
 
 接下来介绍几个常用的虚拟机软件。Windows系统推荐使用VirtualBox，arm64苹果系统推荐使用UTM。
-<!-- public begin -->
 如果你在看VMware虚拟机相关的视频，[请转为查看这个视频](https://www.bilibili.com/video/BV1Ss421T7KY/);
-<!-- public end -->
 
 - [VirtualBox](https://www.virtualbox.org/)。首先在[VirtualBox下载界面](https://www.virtualbox.org/wiki/Downloads)下载对应平台的安装包，比如如果要在Windows系统下安装VirtualBox，点击**Windows hosts**下载安装包。VirtualBox的安装过程很简单，只需根据安装提示操作即可。VirtualBox安装完成后，下载**VirtualBox 7.0.14 Oracle VM VirtualBox Extension Pack**安装插件（`管理 -> 工具 -> 扩展包管理器`），启动虚拟机后，`设备 -> 安装增强功能` 会挂载一个iso文件，把整个文件夹复制出来，执行`./autorun.sh`脚本，就能使用增强功能了，如自动调整屏幕大小和屏幕分辨率选项增加等。[arm芯片的版本](https://isapplesiliconready.com/app/Virtualbox)好像只有[7.0.8版本](https://download.virtualbox.org/virtualbox/7.0.8/)才有。
   - 报错`VirtualBox can't operate in VMX root mode.(VERR_VMX_IN_VMX_ROOT_MODE).`: 执行`sudo modprobe -r kvm_intel`（`sudo lsmod | grep kvm`查找）重新开启虚拟机既可。
 - [VMware](https://www.vmware.com/)。[下载点击这篇文章](https://blogs.vmware.com/teamfusion/2024/05/fusion-pro-now-available-free-for-personal-use.html)，注册登录账号，下载时的信息填写类似`Address 1: 1ONE, City: SACRAMENTO, Postal code: 942030001, Country/Territory: United States, State or province: California`。安装过程很简单，只需根据提示操作即可。
-<!-- public begin -->
 Linux下安装VMware时需要注意的是`/tmp`目录的挂载不能在`/etc/fstab`文件中指定`noexec`，还需要安装gcc较新的版本（如`VMware-Workstation-Full-17.5.1-23298084.x86_64.bundle`在ubuntu2204下安装时要安装gcc12，默认安装的是gcc11）。桥接配置在`Edit -> Virtual Network Editor`。
-<!-- public end -->
 - [Virtual Machine Manager](https://virt-manager.org/)。这个虚拟机软件只用在Linux平台上，如果你物理机上安装的操作系统是Linux，那么使用这个软件运行虚拟机就比较合适。比如在Ubuntu上使用命令`sudo apt-get install qemu qemu-kvm virt-manager qemu-system -y`安装（需要重启才能以非root用户启动）。请参考[《安装GNU/Linux发行版》](https://chenxiaosong.com/course/gnu-linux/install.html#virt-manager)。
 - [UTM](https://mac.getutm.app/)。只针对苹果电脑系统，从[github](https://docs.getutm.app/installation/macos/)下载安装包。建议在配置比较高（尤其是内存）的苹果电脑上使用，如果配置比较低可能会遇到一些问题。从[github](https://docs.getutm.app/installation/macos/)上下载安装包。导入虚拟机时，选择"创建一个新虚拟机" -> "虚拟化" -> "其他" -> 打勾"Skip ISO boot"，"Storage"选择小一点的容量（如`1G`），创建虚拟机后打开配置，"VirtIO驱动器" -> "删除"，然后再"新建" -> "导入"，可以选择`vmdk`或`qcow2`等格式，会统一转换成`qcow2`格式，保存后生效。安装后的虚拟机文件在`~/Library/Containers/com.utmapp.UTM/Data/Documents`目录下，默认Finder中不显示这个目录，可以在家目录下打开`Show View Options -> Show Library Folder`。需要注意一下，网络如果选择`共享网络`会出现不稳定断网的情况，建议选择`桥接（高级）`，选择`桥接`时如果宿主机的网络切换了（如连了另一个wifi）虚拟机中的网络也要断开重连一下。如果出现虚拟机网络经常断开的情况，可以尝试宿主机换一个稳定的网络。
 另外UTM中的虚拟机可能休眠（至少对某些发行版），因为休眠后就醒不来了。
@@ -97,7 +91,6 @@ sudo dnf -y install ncurses-devel clang llvm flex bison bc kmod pahole lld ccach
 
 <!-- TODO: 源码安装crash, emacs -->
 
-<!-- public begin -->
 ## docker环境 {#docker-env}
 
 除了在vmware虚拟机中搭建开发环境（性能损失很多），还可以在docker中搭建开发环境，docker的性能损失可以忽略不计。
@@ -142,7 +135,6 @@ ip link set dev ens2 up
 ```
 
 手动配置ip没法访问外网，暂时还不知道要怎么弄，如果有知道的朋友可以指导我一下。
-<!-- public end -->
 
 # 代码管理和编辑工具
 
@@ -163,9 +155,7 @@ ip link set dev ens2 up
 curl -fsSL https://code-server.dev/install.sh | sh
 ```
 
-<!-- public begin -->
 [安装过程中输出的提示信息](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/kernel/code-server-install-log.txt)。
-<!-- public end -->
 
 或者下载[对应系统的安装包](https://github.com/coder/code-server/releases)。
 
@@ -205,25 +195,19 @@ npm i vsce -g
 vsce package # 生成.vsix文件成功
 ```
 
-<!-- public begin -->
 常用插件:
-<!-- public end -->
 
 - C语言（尤其是内核代码）推荐使用插件[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)。使用命令`sudo apt install global -y`安装gtags插件，Linux内核代码使用命令`make gtags`生成索引文件。
 
-<!-- public begin -->
 - C++语言推荐使用插件[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)或[clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)。浏览C/C++代码时，建议这两个插件和[C/C++ GNU Global](https://marketplace.visualstudio.com/items?itemName=jaycetyle.vscode-gnu-global)选一个，不要安装多个。
 
 - Vue.js推荐使用插件[Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)、[Vue Peek](https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek)、[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)、[Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)、[VueHelper](https://marketplace.visualstudio.com/items?itemName=oysun.vuehelper)
 
 - markdown插件[Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
-<!-- public end -->
 
-<!-- public begin -->
 ## Woboq CodeBrowser
 
 https://github.com/KDAB/codebrowser
-<!-- public end -->
 
 ## git管理代码
 
@@ -245,9 +229,7 @@ git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linu
 ## 编译步骤
 
 建议新建一个`build`目录，把所有的编译输出存放在这个目录下，注意
-<!-- public begin -->
 [`.config`](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/kernel-config/x86_64-config)
-<!-- public end -->
 文件复制到`build/.config`。`.config`配置文件至少要打开以下配置（建议通过`make O=build menuconfig`命令修改）:
 ```sh
 CONFIG_EXT4_FS
@@ -267,12 +249,10 @@ CONFIG_BLK_DEV_NVME
 
 如果想减少编译时间，可以尝试关闭`CONFIG_DEBUG_KERNEL`。
 
-<!-- public begin -->
 ```sh
 rm build -rf && mkdir build
 cp ../tmp/gnu-linux/kernel-config/x86_64-config build/.config
 ```
-<!-- public end -->
 
 可以使用`make help | less`查看帮助，常用编译和安装命令如下:
 ```sh
@@ -298,7 +278,6 @@ make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- O=build Image
 ```
 
 也可以在一个仓库下编译多个体系结构，如:
-<!-- public begin -->
 ```sh
 rm x86_64-build -rf && mkdir x86_64-build
 cp ../tmp/gnu-linux/kernel-config/x86_64-config x86_64-build/.config
@@ -306,7 +285,6 @@ cp ../tmp/gnu-linux/kernel-config/x86_64-config x86_64-build/.config
 rm aarch64-build -rf && mkdir aarch64-build
 cp ../tmp/gnu-linux/kernel-config/aarch64-config aarch64-build/.config
 ```
-<!-- public end -->
 ```sh
 make O=x86_64-build menuconfig
 make O=x86_64-build bzImage -j`nproc`
@@ -456,13 +434,9 @@ make O=build SPHINXOPTS=-v htmldocs -j`nproc` # -v 获得更详细的输出。
 如果你要更方便的使用一些调试的功能，就要加一些额外的补丁。
 
 - 降低编译优化等级，默认的内核编译优化等级太高，用GDB调试时不太方便，有些函数语句被优化了，无法打断点，这时就要降低编译优化等级。做好的虚拟机中已经打上了降低编译优化等级的补丁。
-<!-- public begin -->
 比如`x86_64`架构下可以在[`x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/x86_64)目录下选择对应版本的补丁，更多详细的内容请查看GDB调试相关的章节。
-<!-- public end -->
 - `dump_stack()`输出的栈全是问号的解决办法。如果你使用`dump_stack()`输出的栈全是问号，可以 revert 补丁 `f1d9a2abff66 x86/unwind/orc: Don't skip the first frame for inactive tasks`。主线已经有补丁做了 revert: `230db82413c0 x86/unwind/orc: Fix unreliable stack dump with gcov`。
-<!-- public begin -->
 - 肯定还有一些其他有用的补丁，后面再补充哈。
-<!-- public end -->
 
 ## 发行版替换内核
 
@@ -521,21 +495,13 @@ QEMU: quick emulation，高速度、跨平台的开源模拟器，能模拟x86�
 ## 制作测试用的qcow2镜像的脚本
 
 测试编译好的内核我们不直接用发行版的iso镜像安装的系统，而是使用脚本生成比较小的镜像（不含有图形界面）。
-<!-- public begin -->
 进入目录[`kernel`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel)，
-<!-- public end -->
 选择相应的cpu架构，如
-<!-- public begin -->
 [`x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/x86_64)
-<!-- public end -->
 目录。执行
-<!-- public begin -->
 [`create-raw.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/x86_64/create-raw.sh)
-<!-- public end -->
 生成raw格式的镜像，这个脚本会调用到
-<!-- public begin -->
 [`create-debian.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/create-debian.sh)
-<!-- public end -->
 ，是从[syzkaller的脚本](https://github.com/google/syzkaller/blob/master/tools/create-image.sh)经过修改而来。
 
 注意riscv64架构的镜像，可以直接下载[ubuntu2204](https://ubuntu.com/download/risc-v)（选择[QEMU emulator]），[使用文档](https://wiki.ubuntu.com/RISC-V/QEMU?_gl=1*5kle2i*_gcl_au*MTE0MzIzMjgyMi4xNzE3NTA4NjU1&_ga=2.54580847.51388592.1718933588-66008337.1718933588)。
@@ -547,17 +513,11 @@ qemu-img convert -p -f raw -O qcow2 image.raw image.qcow2
 ```
 
 再执行脚本
-<!-- public begin -->
 [`link-scripts.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/link-scripts.sh)
-<!-- public end -->
 把脚本链接到相应的目录，执行
-<!-- public begin -->
 [`update-base.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/x86_64/update-base.sh)
-<!-- public end -->
 启动虚拟机更新镜像（如再安装一些额外的软件），镜像更新完后关闭虚拟机，再执行
-<!-- public begin -->
 [`create-qcow2.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/x86_64/create-qcow2.sh)
-<!-- public end -->
 生成指向基础镜像的qcow2镜像。
 
 ## 通过iso安装发行版
@@ -625,7 +585,6 @@ sudo yum install -y libaio-devel libcap-ng-devel libiscsi-devel capstone-devel \
                  systemtap-sdt-devel libusbx-devel # libsdl2-devel
 ```
 
-<!-- public begin -->
 CentOS发行版安装编译qemu所需的软件:
 ```sh
 sudo dnf install glib2-devel -y
@@ -648,7 +607,6 @@ git clone https://github.com/ninja-build/ninja.git && cd ninja
 git clone git://git.kernel.org/pub/scm/devel/sparse/sparse.git
 make
 ```
-<!-- public end -->
 
 再下载编译qemu:
 ```sh
@@ -700,9 +658,7 @@ virsh net-start default
 ## qemu运行qcow2镜像
 
 制作好的Ubuntu虚拟机镜像
-<!-- public begin -->
 （从百度网盘中下载的）
-<!-- public end -->
 中的`${HOME}/qemu-kernel/start.sh`脚本中每个选项的可选值可以使用以下命令查看:
 ```sh
 qemu-system-aarch64 -cpu ?
@@ -746,7 +702,6 @@ PasswordAuthentication yes
 PermitEmptyPasswords yes
 ```
 
-<!-- public begin -->
 曾经使用过fedora发行版，这里记录一下fedora的一些笔记。进入fedora虚拟机后:
 ```sh
 vim /etc/fstab # 删除 /boot/efi 一行
@@ -757,7 +712,6 @@ sudo dnf update vim-common vim-minimal -y
 ```
 
 注意fedora中账号密码输完后要用`ctrl+j`，不要用回车。
-<!-- public end -->
 
 ## 多个网卡 {#qemu-multi-nic}
 
@@ -778,11 +732,9 @@ systemctl restart networking
 
 # 使用GDB调试内核代码 {#gdb}
 
-<!-- public begin -->
 我刚开始是做用户态开发的，习惯了利用gdb调试来理解那些写得不好的用户态代码，尤其是公司内部一些不开源的比狗屎还难看的用户态代码（当然其中也包括我自己写的狗屎一样的代码）。
 
 转方向做了Linux内核开发后，也尝试用qemu+gdb来调试内核代码。
-<!-- public end -->
 
 要特别说明的是，内核的大部分代码是很优美的，并不需要太依赖qemu+gdb这一调试手段，更建议通过阅读代码来理解。但某些写得不好的内核模块如果利用qemu+gdb将能使我们更快的熟悉代码。
 
@@ -807,19 +759,13 @@ CONFIG_RANDOMIZE_BASE = n # 关闭地址随机化
 ```
 
 可以使用
-<!-- public begin -->
 我常用的[x86_64的内核配置文件](https://gitee.com/chenxiaosonggitee/tmp/blob/master/gnu-linux/kernel-config/x86_64-config)。
-<!-- public end -->
 配置文件。
 
 
-<!-- public begin -->
 gcc的编译选项`O1`优化等级不需要修改就可以编译通过。`O0`优化等级无法编译（尝试`CONFIG_JUMP_LABEL=n`还是不行），要修改汇编代码，有兴趣的朋友可以和我一直尝试。
-<!-- public end -->
 `Og`优化等级经过修改可以编译通过，`x86_64`合入目录
-<!-- public begin -->
 [`course/kernel/src/x86_64`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/x86_64)
-<!-- public end -->
 对应版本的补丁。建议使用`Og`优化等级编译，既能满足gdb调试需求，也能尽量少的修改代码。
 
 另外，也建议把需要调试的函数的`inline`关键字去掉。
@@ -835,9 +781,7 @@ qemu启动虚拟机时，要添加以下几个选项:
 ```
 
 完整的启动命令查看制作好的Ubuntu虚拟机镜像
-<!-- public begin -->
 （从百度网盘中下载的）
-<!-- public end -->
 中的`${HOME}/qemu-kernel/start.sh`脚本。
 
 ## GDB命令

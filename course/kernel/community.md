@@ -17,9 +17,7 @@ v6.17     2025-09-28
 
 # 内核社区
 
-<!-- public begin -->
 说到Linux内核，很多人可能会认为只有Linus这样的神才懂。但事实是任何人都能参与，比如我这样能力差的也参与到Linux内核社区了。可能很多人早就想贡献Linux内核了，但就是不知道怎么开始。
-<!-- public end -->
 
 Linux内核有一个官方网站[The Linux Kernel Archives](https://kernel.org/)，在这个网站上可以获取Linux内核源码以及[其他相关源码](https://git.kernel.org/)。
 
@@ -126,17 +124,13 @@ For other information and help about this list, send a message to <linux-cifs+he
 ## 准备补丁
 
 你可以通过[bugzilla](https://bugzilla.kernel.org/)或[syzbot](https://syzkaller.appspot.com/upstream)发现内核bug，也可以通过阅读内核代码发现bug或进行重构。
-<!-- public begin -->
 或者可以用[`calc-func-lines.sh`脚本](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/script/calc-func-lines.sh)
-<!-- public end -->
 找到长函数（不容易阅读）进行重构。
 
 如果是多个人一起开发的补丁，需要加上`Co-developed-by: `，顺序是先`Co-developed-by: `第二作者，然后`Signed-off-by: `第二作者，最后`Signed-off-by: `第一作者。
 
 可以参考内核仓库中的补丁
-<!-- public begin -->
 ，比如[我提交的补丁](https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/?qt=grep&q=chenxiaosong)
-<!-- public end -->
 。修改代码时要参考[Linux内核代码风格](https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html#cn-codingstyle)。
 
 脚本[`checkpatch.pl`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/checkpatch.pl)中建议，

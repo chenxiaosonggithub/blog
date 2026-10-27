@@ -1,7 +1,5 @@
 一般的Linux书籍都是先讲解进程和内存相关的知识，但我想先讲解文件系统。
-<!-- public begin -->
 第一，因为我就是做文件系统的，更擅长这一块，其他模块的内容我还要再去好好看看书，毕竟不能误人子弟嘛；第二，是
-<!-- public end -->
 因为文件系统模块更接近于用户态，是相对比较好理解的内容（当然想深入还是要下大功夫的），由文件系统入手比较适合初学者。
 
 # 什么是文件系统
@@ -839,9 +837,7 @@ struct ucounts {
 ### `inode`的`i_nlink`
 
 调试补丁为
-<!-- public begin -->
 [`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-vfs.patch)
-<!-- public end -->
 ，看其中的`debug_inode_nlink()`函数。
 
 在ext2文件系统下测试:
@@ -886,9 +882,7 @@ mkdir // 系统调用
 ### `super_block`的`s_mounts`
 
 调试补丁为
-<!-- public begin -->
 [`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-vfs.patch)
-<!-- public end -->
 ，看其中的`debug_sb_mounts()`函数。
 
 每个挂载路径下有3个`struct mount`，分别是一次调用`vfs_create_mount()`和两次调用`clone_mnt()`创建的:
@@ -913,9 +907,7 @@ mount
 ### 通过`inode`得到完整路径
 
 调试补丁为
-<!-- public begin -->
 [`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-vfs.patch)
-<!-- public end -->
 ，看其中的`debug_get_full_path()`函数。
 
 # ext2文件系统
@@ -1582,7 +1574,6 @@ ext4本身不处理日志，而是利用日志块设备（journal block device, 
 - 原子操作处理: 一次高级修改对应的日志记录，修改文件系统的每个系统调用都引起一次单独的原子操作处理。
 - 事务: 包括几个原子操作处理。
 
-<!-- public begin -->
 # procfs
 
 全称process data filesystem, 翻译为进程数据文件系统，一般挂载到`/proc`目录，也可以挂载到其他目录。
@@ -1602,10 +1593,8 @@ proc文件系统中的信息太多，一般不再增加新项。
 
 # sysfs
 
-<!-- public end -->
 <!-- ing end -->
 
-<!-- public begin -->
 # minix文件系统
 
 ## 使用
@@ -1757,5 +1746,4 @@ openat
 
 暂时只对最后一个路径名作hash映射，后续再补充支持对中间路径名进行hash映射，补丁为[`0001-minix-support-long-file-name.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-minix-support-long-file-name.patch)。
 
-<!-- public end -->
 

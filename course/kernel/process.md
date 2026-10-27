@@ -38,9 +38,7 @@ struct pcpu_hot {
 ## 进程描述符
 
 用结构体`struct task_struct`来描述进程，这个结构体很大，请查看 
-<!-- public begin -->
 [`src/task_struct.c`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/task_struct.c)
-<!-- public end -->
 。
 
 其中`__state`可以是以下值，通过`set_current_state(state_value)`来设置:
@@ -135,13 +133,9 @@ waitpid
 ## 调试
 
 内核打上
-<!-- public begin -->
 [`0001-debug-task_struct.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-task_struct.patch)
-<!-- public end -->
 补丁，编译运行
-<!-- public begin -->
 [`fork.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/fork.c)
-<!-- public end -->
 :
 ```sh
 mkfs.ext2 -F image
@@ -279,13 +273,9 @@ int kthread_stop(struct task_struct *k)
 ## 调试
 
 内核打上
-<!-- public begin -->
 [`0001-debug-task_struct.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-task_struct.patch)
-<!-- public end -->
 补丁，编译运行
-<!-- public begin -->
 [`pthread.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/pthread.c)
-<!-- public end -->
 :
 ```sh
 mkfs.ext2 -F image
@@ -332,9 +322,7 @@ SYSCALL_DEFINE1(nice, int, increment)
 ```
 
 示例文件
-<!-- public begin -->
 [`nice.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/nice.c)
-<!-- public end -->
 。两个进程并行运行，各自增加自己的计数器。父进程使用默认nice值，子进程nice值可选。
 
 `gcc nice.c -o nice` 编译文件。
@@ -535,10 +523,8 @@ pick_next_task_fair
 
 # EEVDF调度器
 
-<!-- public begin -->
 - 补丁集: [`sched: EEVDF and latency-nice and/or slice-attr`](https://chenxiaosong.com/course/kernel/patch/sched-EEVDF-and-latency-nice-and-or-slice-attr.html)。
 - 文档[EEVDF Scheduler](https://chenxiaosong.com/src/translation/kernel/sched-eevdf.html)翻译。
-<!-- public end -->
 
 CFS已经在v6.6被EEVDF (Earliest Eligible Virtual Deadline First，最早可用虚拟截止时间优先) 调度器取代，每个进程有一个虚拟截止时间，代表应该运行完成的时间，EEVDF调度器优先选择虚拟截止时间最早的进程运行，虚拟截止时间取决于进程优先级和已经获得的cpu时间，可以保证延迟敏感的进程及时得到cpu时间。和CFS一样，时间片根据进程的优先级和已使用的 CPU 时间进行综合动态调整。
 
@@ -626,9 +612,7 @@ Brain Fuck Scheduler, 脑残调度器，由澳洲麻醉师康恩·科里瓦斯�
 
 ## Extensible Scheduler Class
 
-<!-- public begin -->
 - 文档[Extensible Scheduler Class](https://chenxiaosong.com/src/translation/kernel/sched-ext.html)翻译
-<!-- public end -->
 
 代码位于内核仓库的`tools/sched_ext/`目录下。
 

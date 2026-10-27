@@ -76,9 +76,7 @@ tar xvf linux-6.8.5.tar.xz
 ## qemu
 
 内核编译时打开[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)中的配置。虚拟机中执行脚本
-<!-- public begin -->
 [`parse-cmdline.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
-<!-- public end -->
 
 # `ftrace`
 
@@ -200,18 +198,14 @@ cd events/ext2/ext2_dio_read_begin
 ls # enable  filter  format  hist  id  trigger
 ```
 
-<!-- public begin -->
 ## `trace-cmd` 和`kernelshark`
-<!-- public end -->
 
 ```sh
 sudo apt install trace-cmd -y
 ```
-<!-- public begin -->
 ```sh
 sudo apt install kernelshark -y # 图形界面
 ```
-<!-- public end -->
 
 使用按照`reset -> record -> stop -> report`:
 ```sh
@@ -219,11 +213,9 @@ trace-cmd record -h # 查看帮助
 trace-cmd record -e 'ext2_dio_read_begin' # 输出文件 trace.dat
 trace-cmd report trace.dat # 字符界面解析数据
 ```
-<!-- public begin -->
 ```sh
 kernelshark trace.dat #  图形化查看数据
 ```
-<!-- public end -->
 
 ## `trace_marker`
 
@@ -280,9 +272,7 @@ cat trace_pipe
 ## 插入`kprobe`模块 {#kprobe-module}
 
 参考
-<!-- public begin -->
 [kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/kprobe)
-<!-- public end -->
 里的例子。
 
 # 打印
@@ -894,9 +884,7 @@ crash> dis -l ext2_readdir
 
 参考:
 
-<!-- public begin -->
 - [systemtap README翻译](https://chenxiaosong.com/src/translation/systemtap/systemtap-readme.html)
-<!-- public end -->
 - [Systemtap tutorial](https://sourceware.org/systemtap/)
 - [systemtap源码](https://sourceware.org/git/?p=systemtap.git;a=tree)
 - [源码中的例子](https://sourceware.org/git/?p=systemtap.git;a=tree;f=testsuite/systemtap.examples;h=816fa8005086a2fcec91a82883aec4956a1ae96c;hb=HEAD)
@@ -979,11 +967,9 @@ echo 1234567 > /mnt/file
 cat /mnt/file
 ```
 
-<!-- public begin -->
 # bpftrace
 
 请查看[《BPF》](https://chenxiaosong.com/course/kernel/bpf.html)。
-<!-- public end -->
 
 
 <!-- ing begin -->

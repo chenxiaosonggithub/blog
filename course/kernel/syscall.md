@@ -66,9 +66,7 @@ x86-64        rdi   rsi   rdx   r10   r8    r9    -
 ## 接口
 
 内核打上补丁
-<!-- public begin -->
 [`src/0001-add-new-syscall-openat_test.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-add-new-syscall-openat_test.patch)
-<!-- public end -->
 ，用户态程序如下:
 ```c
 #include <stdio.h>
