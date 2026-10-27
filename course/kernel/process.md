@@ -41,9 +41,6 @@ struct pcpu_hot {
 <!-- public begin -->
 [`src/task_struct.c`](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/task_struct.c)
 <!-- public end -->
-<!-- private begin -->
-`task_struct.c`
-<!-- private end -->
 。
 
 其中`__state`可以是以下值，通过`set_current_state(state_value)`来设置:
@@ -141,16 +138,10 @@ waitpid
 <!-- public begin -->
 [`0001-debug-task_struct.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-task_struct.patch)
 <!-- public end -->
-<!-- private begin -->
-`src/0001-debug-task_struct.patch`
-<!-- private end -->
 补丁，编译运行
 <!-- public begin -->
 [`fork.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/fork.c)
 <!-- public end -->
-<!-- private begin -->
-`src/fork.c`
-<!-- private end -->
 :
 ```sh
 mkfs.ext2 -F image
@@ -291,16 +282,10 @@ int kthread_stop(struct task_struct *k)
 <!-- public begin -->
 [`0001-debug-task_struct.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-task_struct.patch)
 <!-- public end -->
-<!-- private begin -->
-`src/0001-debug-task_struct.patch`
-<!-- private end -->
 补丁，编译运行
 <!-- public begin -->
 [`pthread.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/pthread.c)
 <!-- public end -->
-<!-- private begin -->
-`src/pthread.c`
-<!-- private end -->
 :
 ```sh
 mkfs.ext2 -F image
@@ -350,9 +335,6 @@ SYSCALL_DEFINE1(nice, int, increment)
 <!-- public begin -->
 [`nice.c`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/nice.c)
 <!-- public end -->
-<!-- private begin -->
-`src/nice.c`
-<!-- private end -->
 。两个进程并行运行，各自增加自己的计数器。父进程使用默认nice值，子进程nice值可选。
 
 `gcc nice.c -o nice` 编译文件。
@@ -560,26 +542,6 @@ pick_next_task_fair
 
 CFS已经在v6.6被EEVDF (Earliest Eligible Virtual Deadline First，最早可用虚拟截止时间优先) 调度器取代，每个进程有一个虚拟截止时间，代表应该运行完成的时间，EEVDF调度器优先选择虚拟截止时间最早的进程运行，虚拟截止时间取决于进程优先级和已经获得的cpu时间，可以保证延迟敏感的进程及时得到cpu时间。和CFS一样，时间片根据进程的优先级和已使用的 CPU 时间进行综合动态调整。
 
-<!-- private begin -->
-补丁集[`[PATCH 00/15] sched: EEVDF and latency-nice and/or slice-attr`](https://lore.kernel.org/all/20230531115839.089944915@infradead.org/)，合入了邮件中`1~10`的补丁。
-
-`Documentation/scheduler/sched-eevdf.rst`文档（v6.6还未合入）翻译如下:
-
-> "最早可用虚拟截止时间优先" (EEVDF) 首次在1995年的一篇科学出版物中被提出 [1]。Linux内核在版本6.6中开始向EEVDF过渡（作为2024年的一个新选项），放弃了早期的完全公平调度器 (CFS)，转而采用了由Peter Zijlstra在2023年提出的EEVDF版本 [2-4]。更多关于CFS的信息可以在 Documentation/scheduler/sched-design-CFS.rst 中找到。
-
-> 与CFS类似，EEVDF旨在为所有具有相同优先级的可运行任务均等分配CPU时间。为此，它为每个任务分配一个虚拟运行时间，从而创建一个“滞后”值，该值可用于确定任务是否已获得其公平的CPU时间份额。这样，具有正滞后的任务被欠CPU时间，而负滞后意味着任务已超出其份额。EEVDF选择滞后大于或等于零的任务，并为每个任务计算一个虚拟截止时间 (VD)，然后选择具有最早VD的任务作为下一个执行的任务。值得注意的是，这允许具有较短时间片的延迟敏感任务优先处理，从而有助于提高它们的响应能力。
-
-> 关于如何管理滞后，尤其是对休眠任务的管理，目前仍在讨论中；但在撰写本文时，EEVDF基于虚拟运行时间 (VRT) 使用了一种“衰减”机制。这防止了任务通过短暂休眠来重置其负滞后的系统漏洞: 当任务休眠时，它仍保留在运行队列中，但标记为“延迟出队”，允许其滞后值随虚拟运行时间 (VRT)衰减。因此，长时间休眠的任务最终会重置其滞后值。最后，如果任务的VD较早，它们可以抢占其他任务，任务也可以使用新的 sched_setattr() 系统调用请求特定的时间片，这进一步促进了延迟敏感应用程序的工作。
-
-> [1] https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=805acf7726282721504c8f00575d91ebfd750564
-
-> [2] https://lore.kernel.org/lkml/a79014e6-ea83-b316-1e12-2ae056bda6fa@linux.vnet.ibm.com/
-
-> [3] https://lwn.net/Articles/969062/
-
-> [4] https://lwn.net/Articles/925371/
-
-<!-- private end -->
 
 挑选下一个任务的流程如下:
 ```c
@@ -667,9 +629,6 @@ Brain Fuck Scheduler, 脑残调度器，由澳洲麻醉师康恩·科里瓦斯�
 <!-- public begin -->
 - 文档[Extensible Scheduler Class](https://chenxiaosong.com/src/translation/kernel/sched-ext.html)翻译
 <!-- public end -->
-<!-- private begin -->
-- [Extensible Scheduler Class](https://www.kernel.org/doc/html/next/scheduler/sched-ext.html)文档
-<!-- private end -->
 
 代码位于内核仓库的`tools/sched_ext/`目录下。
 

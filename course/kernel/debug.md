@@ -79,9 +79,6 @@ tar xvf linux-6.8.5.tar.xz
 <!-- public begin -->
 [`parse-cmdline.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/script/parse-cmdline.sh)
 <!-- public end -->
-<!-- private begin -->
-`src/parse-cmdline.sh`
-<!-- private end -->
 
 # `ftrace`
 
@@ -206,9 +203,6 @@ ls # enable  filter  format  hist  id  trigger
 <!-- public begin -->
 ## `trace-cmd` 和`kernelshark`
 <!-- public end -->
-<!-- private begin -->
-## `trace-cmd`
-<!-- private end -->
 
 ```sh
 sudo apt install trace-cmd -y
@@ -289,9 +283,6 @@ cat trace_pipe
 <!-- public begin -->
 [kprobes](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/kprobe)
 <!-- public end -->
-<!-- private begin -->
-`src/kprobe`
-<!-- private end -->
 里的例子。
 
 # 打印
@@ -994,113 +985,6 @@ cat /mnt/file
 请查看[《BPF》](https://chenxiaosong.com/course/kernel/bpf.html)。
 <!-- public end -->
 
-<!-- private begin -->
-# bpftrace
-
-[bpftrace源码](https://github.com/bpftrace/bpftrace)。
-
-## 安装
-
-编译Linux内核时要打开以下配置:
-```sh
-CONFIG_BPF=y
-CONFIG_BPF_SYSCALL=y
-CONFIG_BPF_JIT=y
-CONFIG_HAVE_EBPF_JIT=y
-CONFIG_BPF_EVENTS=y
-CONFIG_FTRACE_SYSCALLS=y
-CONFIG_FUNCTION_TRACER=y
-CONFIG_HAVE_DYNAMIC_FTRACE=y
-CONFIG_DYNAMIC_FTRACE=y
-CONFIG_HAVE_KPROBES=y
-CONFIG_KPROBES=y
-CONFIG_KPROBE_EVENTS=y
-CONFIG_ARCH_SUPPORTS_UPROBES=y
-CONFIG_UPROBES=y
-CONFIG_UPROBE_EVENTS=y
-CONFIG_DEBUG_FS=y
-```
-
-参考[`INSTALL.md`](https://github.com/bpftrace/bpftrace/blob/master/INSTALL.md)
-
-可以使用包管理器安装:
-```sh
-sudo apt-get update -y && sudo apt install bpftrace -y
-sudo dnf install bpftrace -y
-```
-
-或者使用源码安装。
-
-fedora环境，参考[`Dockerfile.fedora`](https://github.com/bpftrace/bpftrace/blob/master/docker/Dockerfile.fedora):
-```sh
-sudo dnf install -y \
-        asciidoctor \
-        bison \
-        binutils-devel \
-        bcc-devel \
-        cereal-devel \
-        clang-devel \
-        cmake \
-        elfutils-devel \
-        elfutils-libelf-devel \
-        elfutils-libs \
-        flex \
-        gcc \
-        gcc-c++ \
-        libpcap-devel \
-        libbpf-devel \
-        llvm-devel \
-        make \
-        systemtap-sdt-devel \
-        zlib-devel
-```
-
-debian环境，参考[`Dockerfile.debian`](https://github.com/bpftrace/bpftrace/blob/master/docker/Dockerfile.debian)，注意debian版本不能太老，版本太老（如bullseye）有些默认安装的软件可能不支持编译。
-
-编译:
-```sh
-git clone https://github.com/bpftrace/bpftrace
-cd bpftrace
-# mkdir build; cd build; cmake -DCMAKE_BUILD_TYPE=DEBUG .. # 《bpf之巅》书上的命令
-mkdir build; cd build; cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=/usr/local ..
-make -j$(nproc) # 内存要大一点，否则会发生oom
-```
-
-测试和安装:
-```sh
-./src/bpftrace -e 'kprobe:do_nanosleep { printf("sleep by %s\n", comm); }' # 输出 "sleep by crond" 之类的
-sudo make install -j`nproc` # 二进制安装到 /usr/local/bin/，工具安装/usr/local/share/bpftrace/tools/
-```
-
-## 例子
-
-`test.bt`:
-```sh
-kprobe:ext2_read_folio
-{
-        @start[tid] = nsecs;
-        printf("kprobe\n");
-        print(kstack());
-}
-
-kretprobe:ext2_read_folio
-{
-        $us = (nsecs - @start[tid]) / 100;
-        printf("kretprobe, duration %d\n", $us);
-        delete(@start[tid]);
-        print(kstack());
-}
-```
-
-```sh
-bpftrace test.bt &
-mkfs.ext2 -F image
-mount image /mnt
-echo something > /mnt/file
-echo 3 > /proc/sys/vm/drop_caches
-cat /mnt/file
-```
-<!-- private end -->
 
 <!-- ing begin -->
 # `perf`

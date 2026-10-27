@@ -272,16 +272,12 @@ comm_rm_comment_lines() {
 	local md_path=$1
 	comm_rm_line '<!-- public begin -->' "${md_path}"
 	comm_rm_line '<!-- public end -->' "${md_path}"
-	comm_rm_line '<!-- private begin -->' "${md_path}"
-	comm_rm_line '<!-- private end -->' "${md_path}"
 }
 
 comm_rm_comments() {
 	local md_path=$1
 	local is_public=$2
 
-	local begin_str='<!-- private begin -->'
-	local end_str='<!-- private end -->'
 	if [[ ${is_public} == true ]]; then
 		begin_str='<!-- public begin -->'
 		end_str='<!-- public end -->'
@@ -289,11 +285,6 @@ comm_rm_comments() {
 	comm_rm_mid_lines "${begin_str}" "${end_str}" "${md_path}"
 	comm_rm_comment_lines "${md_path}"
 	comm_rm_other_comments ${md_path}
-}
-
-comm_rm_private() {
-	local md_path=$1
-	comm_rm_comments "${md_path}" false
 }
 
 comm_rm_public() {

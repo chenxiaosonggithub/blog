@@ -842,9 +842,6 @@ struct ucounts {
 <!-- public begin -->
 [`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-vfs.patch)
 <!-- public end -->
-<!-- private begin -->
-`src/0001-debug-vfs.patch`
-<!-- private end -->
 ，看其中的`debug_inode_nlink()`函数。
 
 在ext2文件系统下测试:
@@ -892,9 +889,6 @@ mkdir // 系统调用
 <!-- public begin -->
 [`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-vfs.patch)
 <!-- public end -->
-<!-- private begin -->
-`src/0001-debug-vfs.patch`
-<!-- private end -->
 ，看其中的`debug_sb_mounts()`函数。
 
 每个挂载路径下有3个`struct mount`，分别是一次调用`vfs_create_mount()`和两次调用`clone_mnt()`创建的:
@@ -922,9 +916,6 @@ mount
 <!-- public begin -->
 [`0001-debug-vfs.patch`](https://gitee.com/chenxiaosonggitee/blog/blob/master/course/kernel/src/0001-debug-vfs.patch)
 <!-- public end -->
-<!-- private begin -->
-`src/0001-debug-vfs.patch`
-<!-- private end -->
 ，看其中的`debug_get_full_path()`函数。
 
 # ext2文件系统

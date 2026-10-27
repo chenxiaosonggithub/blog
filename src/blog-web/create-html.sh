@@ -34,7 +34,6 @@ my_init() {
 	cp -rf ${src_path}/../daily-task/* $(comm_tmp_src_path)/daily-task/
 
 	bash ${src_path}/course/course.sh
-	comm_rm_private $(comm_tmp_src_path)
 }
 
 my_exit() {

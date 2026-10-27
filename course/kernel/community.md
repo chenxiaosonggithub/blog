@@ -129,9 +129,6 @@ For other information and help about this list, send a message to <linux-cifs+he
 <!-- public begin -->
 或者可以用[`calc-func-lines.sh`脚本](https://gitee.com/chenxiaosonggitee/blog/tree/master/course/kernel/src/script/calc-func-lines.sh)
 <!-- public end -->
-<!-- private begin -->
-或者可以用`src/script/calc-func-lines.sh`脚本
-<!-- private end -->
 找到长函数（不容易阅读）进行重构。
 
 如果是多个人一起开发的补丁，需要加上`Co-developed-by: `，顺序是先`Co-developed-by: `第二作者，然后`Signed-off-by: `第二作者，最后`Signed-off-by: `第一作者。
