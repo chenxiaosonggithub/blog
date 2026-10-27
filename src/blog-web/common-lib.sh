@@ -257,12 +257,6 @@ comm_rm_line() {
 comm_rm_other_comments() {
 	local md_path=$1
 
-	# 正在写的内容就先不放上去
-	local begin_str='<!-- ing begin -->'
-	local end_str='<!-- ing end -->'
-	comm_rm_mid_lines "${begin_str}" "${end_str}" ${md_path}
-	comm_rm_line "${begin_str}" "${md_path}"
-	comm_rm_line "${end_str}" "${md_path}"
 	# 把注释全部删除
 	find ${md_path} -type f -exec perl -i -pe 's/<!--.*?-->//g' {} + # 只能在同一行内，必须放在前面
 	find ${md_path} -type f -exec sed -i '/<!--/,/-->/d' {} + # 只能按行为单位删除

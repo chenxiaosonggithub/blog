@@ -242,7 +242,6 @@ Noop只做了合并的操作，适用于“寻址”代价小或没有代价的�
 
 请查看[《drbd支持mptcp》](https://chenxiaosong.com/course/mptcp/issue/drbd-mptcp.html)。
 
-<!-- ing begin -->
 # mq-deadline
 
 [参考文档](https://github.com/torvalds/linux/blob/master/Documentation/block/deadline-iosched.rst)
@@ -257,5 +256,4 @@ https://github.com/torvalds/linux/blob/master/Documentation/block/bfq-iosched.rs
 
 https://github.com/torvalds/linux/blob/master/Documentation/block/kyber-iosched.rst
 
-<!-- ing end -->
 

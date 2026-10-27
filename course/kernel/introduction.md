@@ -135,7 +135,6 @@ POSIX标准的目的是为了在各种Unix操作系统上定位API（应用程�
 - [Rocky Linux](https://rockylinux.org/): CentOS的创始人在CentOS终止后创建的，继续CentOS的目标。首个正式版本8.4在2021年6月21日发布。
 - [openEuler](https://www.openeuler.org/zh/): 2019 年12月31日社区成立，版本发布周期和Ubuntu一样，只是换成了每年的3月和6月。参与度最高的有华为、麒麟软件等公司。
 
-<!-- ing begin -->
 # Linux内核的就业
 
 找工作时，我们会看招聘岗位的要求。其实，在学习时，我们也可以看招聘岗位要求，针对一些公司招聘要求去学习相应的知识点。
@@ -171,4 +170,3 @@ POSIX标准的目的是为了在各种Unix操作系统上定位API（应用程�
 - 熟悉Linux系统性能调做及Linux服务管理
 - 熟悉嵌入式设备Linux内核适配（体系结构适配）
 - 熟悉Linux驱动开发流程和驱动框架
-<!-- ing end -->

@@ -1539,7 +1539,6 @@ Directories:              2
 8. 定义文件系统类型`ext2_fs_type`。
 9. 模块加载卸载方法，`init_ext2_fs`和`exit_ext2_fs`。
 
-<!-- ing begin -->
 # ext4文件系统
 
 ## jbd2
@@ -1593,7 +1592,6 @@ proc文件系统中的信息太多，一般不再增加新项。
 
 # sysfs
 
-<!-- ing end -->
 
 # minix文件系统
 

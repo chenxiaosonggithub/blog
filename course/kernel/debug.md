@@ -972,7 +972,6 @@ cat /mnt/file
 请查看[《BPF》](https://chenxiaosong.com/course/kernel/bpf.html)。
 
 
-<!-- ing begin -->
 # `perf`
 
 ## 编译
@@ -1013,4 +1012,3 @@ make -j`nproc`
 
 `strace -o strace.out -f -v -s 4096 bash -c 'echo something > /mnt/file'`
 
-<!-- ing end -->
