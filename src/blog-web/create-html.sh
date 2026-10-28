@@ -32,8 +32,6 @@ my_init() {
 
 	mkdir -p $(comm_tmp_src_path)/daily-task
 	cp -rf ${src_path}/../daily-task/* $(comm_tmp_src_path)/daily-task/
-
-	bash ${src_path}/course/course.sh
 }
 
 my_exit() {
@@ -106,6 +104,7 @@ comm_create_sign ${src_path}/src/blog-web/sign.md ${sign_html}
 comm_create_sign ${src_path}/src/blog-web/en-sign.md ${en_sign_html}
 update_lan_sign
 comm_create_html comm_array[@] $(comm_tmp_src_path) ${tmp_html_path} ${sign_html} ${is_replace_ip} ${other_ip}
+bash ${src_path}/course/course.sh "${tmp_html_path}" "${is_replace_ip}" "${other_ip}"
 copy_to_github_io
 do_change_perm
 my_exit

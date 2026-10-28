@@ -4,81 +4,60 @@ MY_ECHO_DEBUG=0
 src_path=${MY_CODE_TOP_PATH}/blog
 
 . ${src_path}/src/blog-web/common-lib.sh
+. ${src_path}/src/blog-web/array.sh
 
-# add_common array[@] ${common_file}
+if [ $# -lt 1 ]; then
+	echo "用法: bash $0 <html目录> [是否替换IP] [局域网IP]"
+	exit 1
+fi
+html_path=$1
+is_replace_ip=${2:-false}
+other_ip=$3
+
+# 使用生成配置中的输出路径，兼容自定义HTML文件名。
 add_common() {
-	local except_array=("${!1}") # 使用间接引用来接收数组
-	local array=("${!2}") # 使用间接引用来接收数组
-	local target_path=$3
+	local ifile=$3
+	local ofile=$4
+	local course=$8
+	local common_html=$9
 
-	local common_file=${target_path}/common.md
+	case "${ifile}" in
+		course/${course}/${course}.md|\
+		course/${course}/video.md|\
+		course/${course}/common.md)
+			return
+			;;
+		course/${course}/*.md) ;;
+		*) return ;;
+	esac
 
-	local element_count="${#array[@]}" # 总个数
-	local count_per_line=1
-	for ((index=0; index<${element_count}; index=$((index + ${count_per_line}))))
-	do
-		local ifile=${array[${index}]}
-
-		if [[ ${ifile} == ${common_file} ]]; then
-			continue
-		fi
-
-		local src_file=${src_path}/${ifile}
-		local dst_file=$(comm_tmp_src_path)/${ifile}
-		local dst_dir="$(dirname "${dst_file}")" # 所在的文件夹
-		if [ ! -d "${dst_dir}" ]; then
-			mkdir -p "${dst_dir}" # 文件夹不存在就创建
-		fi
-		comm_echo "src_file:${src_file}, dst_file:${dst_file}"
-
-		comm_is_in_array except_array[@] ${ifile}
-		if [[ $? == 0 ]]; then
-			comm_echo "${ifile} do not add common"
-			cp "${src_file}" "${dst_file}" # 只复制
-			continue
-		fi
-
-		cp ${common_file} ${dst_file}
-		cat ${src_file} >> ${dst_file}
-	done
+	local dst_file=${html_path}/${ofile}
+	if [ ! -f "${dst_file}" ]; then
+		return
+	fi
+	comm_echo "add ${common_html} to ${dst_file}"
+	sed -i -e '/<\/nav>/r '"${common_html}" "${dst_file}"
 }
 
-scan_md() {
-	local -n array_ref=$1
-	local target_path=$2
-	local mid_path=$3
-
-	target_path="${target_path%/}/" # 确保目录末尾有 /
-	# 使用 find 命令查找所有 .md 文件并将结果存储到 array 数组中
-	while IFS= read -r md_file; do
-		md_file="${md_file/$target_path}" # 干掉前缀
-		md_file=$(comm_normalize_path "${mid_path}/${md_file}")
-		comm_echo "${md_file}"
-		# 追加到数组中
-		array+=("${md_file}")
-	done < <(find "${target_path}" -type f -name "*.md")
-}
-
-create_full_course_md() {
+create_full_course_html() {
 	local course=$1
+	local common_md=${src_path}/course/${course}/common.md
+	local common_html=${html_path}/course/${course}/common.html
 
-	local mid_path="course/${course}/"
-	local target_path=${src_path}/${mid_path}
-	local except_array=(
-		course/${course}/${course}.md
-		course/${course}/video.md
-	)
-	local array=()
-	scan_md array "${target_path}" "${mid_path}"
-	add_common except_array[@] array[@] "${target_path}"
+	mkdir -p "$(dirname "${common_html}")"
+	# 与签名一样，由Markdown生成HTML后只保留正文片段。
+	comm_create_sign "${common_md}" "${common_html}"
+	if [[ ${is_replace_ip} == true ]]; then
+		comm_file_replace_ip "${common_html}" "${other_ip}"
+	fi
+	comm_iterate_array add_common comm_array[@] "${src_path}" "${course}" "${common_html}"
 }
 
-create_full_course_md "kernel"
-create_full_course_md "nfs"
-create_full_course_md "smb"
-create_full_course_md "algorithm"
-create_full_course_md "godot"
-create_full_course_md "gnu-linux"
-create_full_course_md "harmony"
-create_full_course_md "mptcp"
-
+create_full_course_html "kernel"
+create_full_course_html "nfs"
+create_full_course_html "smb"
+create_full_course_html "algorithm"
+create_full_course_html "godot"
+create_full_course_html "gnu-linux"
+create_full_course_html "harmony"
+create_full_course_html "mptcp"
