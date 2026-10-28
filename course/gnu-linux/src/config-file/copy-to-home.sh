@@ -2,7 +2,7 @@ dst_dir=$1
 . /home/chenxiaosong/code/blog/src/blog-web/repos.sh
 . /home/chenxiaosong/code/private-blog/script/repos.sh
 
-array=(gitconfig set_proxy.sh origin_xmodmap.txt xmodmap.txt vimrc emacs bash_profile tmux.conf top-path)
+array=(gitconfig set_proxy.sh origin_xmodmap.txt xmodmap.txt vimrc emacs bash_profile tmux.conf)
 
 if [ -z "$dst_dir" ]
 then
