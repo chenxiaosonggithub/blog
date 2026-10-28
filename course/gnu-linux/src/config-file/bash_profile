@@ -1,4 +1,4 @@
-export MY_TOP_PATH=/home/sonvhi/chenxiaosong/
+export MY_TOP_PATH=/home/chenxiaosong/
 export MY_CODE_TOP_PATH=${MY_TOP_PATH}/code/
 
 # Get the aliases and functions
