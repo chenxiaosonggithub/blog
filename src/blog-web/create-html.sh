@@ -21,23 +21,12 @@ my_init() {
 	mkdir -p ${html_path}
 	rm -rf ${tmp_html_path}
 	mkdir -p ${tmp_html_path}
-	rm -rf $(comm_tmp_src_path)
-
-	mkdir -p $(comm_tmp_src_path)
-	cp -rf ${src_path}/* $(comm_tmp_src_path)
-
-	mkdir -p $(comm_tmp_src_path)/tmp
-	cp -rf ${src_path}/../tmp/* $(comm_tmp_src_path)/tmp/
-
-	mkdir -p $(comm_tmp_src_path)/daily-task
-	cp -rf ${src_path}/../daily-task/* $(comm_tmp_src_path)/daily-task/
 }
 
 my_exit() {
 	rm ${html_path}/* -rf # 如果是git仓库，不删除.git
 	mv ${tmp_html_path}/* ${html_path}
 	rm ${tmp_html_path} -rf
-	rm -rf $(comm_tmp_src_path)
 }
 
 copy_files() {
@@ -51,7 +40,7 @@ copy_files() {
 		is_dst_dir=$3
 	fi
 
-	local src_full_path=$(comm_tmp_src_path)/${src_path}
+	local src_full_path=${src_path}/${src_path}
 	local dst_full_path=${tmp_html_path}/${dst_path}
 	local dst_dir_path=$(dirname "${dst_full_path}") # 上一线目录
 	if [[ "${is_dst_dir}" == true ]]; then
@@ -64,11 +53,11 @@ copy_files() {
 
 copy_to_github_io() {
 	# css样式
-	cp $(comm_tmp_src_path)/src/blog-web/stylesheet.css ${tmp_html_path}/
+	cp ${src_path}/src/blog-web/stylesheet.css ${tmp_html_path}/
 	# 图片
-	cp $(comm_tmp_src_path)/tmp/picture/ ${tmp_html_path}/picture -rf
+	cp ${src_path}/tmp/picture/ ${tmp_html_path}/picture -rf
 	# godot
-	cp $(comm_tmp_src_path)/tmp/gnu-linux/godot/ ${tmp_html_path}/ -rf
+	cp ${src_path}/tmp/gnu-linux/godot/ ${tmp_html_path}/ -rf
 	# txt
 	copy_files tmp/gnu-linux/btrfs/btrfs-forced-readonly-log.txt
 	# smb3-posix-spec
@@ -102,7 +91,7 @@ my_init
 comm_create_sign ${src_path}/src/blog-web/sign.md ${sign_html}
 comm_create_sign ${src_path}/src/blog-web/en-sign.md ${en_sign_html}
 update_lan_sign
-comm_create_html comm_array[@] $(comm_tmp_src_path) ${tmp_html_path} ${sign_html} ${is_replace_ip} ${other_ip}
+comm_create_html comm_array[@] ${src_path} ${tmp_html_path} ${sign_html} ${is_replace_ip} ${other_ip}
 bash ${src_path}/course/course.sh "${tmp_html_path}" "${is_replace_ip}" "${other_ip}"
 copy_to_github_io
 do_change_perm

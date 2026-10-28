@@ -1,7 +1,3 @@
-comm_tmp_src_path() {
-	echo "/tmp/blog-src-tmp"
-}
-
 comm_green_color() {
 	echo '\033[0;32m'
 }
