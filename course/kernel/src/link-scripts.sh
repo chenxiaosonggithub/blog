@@ -1,4 +1,3 @@
-. ~/.top-path
 base_image_path=${MY_TOP_PATH}/qemu-kernel/base-image
 
 arch_array=(	x86_64		aarch64	)

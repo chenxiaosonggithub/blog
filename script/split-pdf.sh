@@ -1,4 +1,3 @@
-. ~/.top-path
 . ${MY_CODE_TOP_PATH}/blog/src/blog-web/common-lib.sh
 
 # 检查参数

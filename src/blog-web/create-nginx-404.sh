@@ -1,4 +1,3 @@
-. ~/.top-path
 code_path=${MY_CODE_TOP_PATH}
 
 other_ip=$1

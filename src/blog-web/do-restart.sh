@@ -1,4 +1,3 @@
-. ~/.top-path
 
 if [ $# -ne 3 ]; then
 	echo "Usage: $0 \${is_replace_ip} \${other_ip} \${is_restart}"

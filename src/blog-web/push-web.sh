@@ -1,4 +1,3 @@
-. ~/.top-path
 code_path=${MY_CODE_TOP_PATH}
 user_name=chenxiaosonggithub
 github_io_repo=${code_path}/${user_name}.github.io/

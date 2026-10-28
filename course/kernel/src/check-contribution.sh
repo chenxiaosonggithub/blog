@@ -1,4 +1,3 @@
-. ~/.top-path
 blog_path=${MY_CODE_TOP_PATH}/blog
 
 kernel_contrib_file=${blog_path}/course/kernel/contribution.md

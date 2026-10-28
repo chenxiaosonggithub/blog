@@ -1,4 +1,3 @@
-. ~/.top-path
 code_path=${MY_CODE_TOP_PATH}
 MY_ECHO_DEBUG=0
 

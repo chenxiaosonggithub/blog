@@ -1,4 +1,3 @@
-. ~/.top-path
 kernel_version=smb-kernel
 build_dir=arm64-build
 

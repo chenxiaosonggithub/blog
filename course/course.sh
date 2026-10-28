@@ -1,4 +1,3 @@
-. ~/.top-path
 MY_ECHO_DEBUG=0
 
 src_path=${MY_CODE_TOP_PATH}/blog
