@@ -20,14 +20,14 @@ copy_config() {
 	fi
 }
 
-restart_private() {
+deploy_private() {
 	# 部署在局域网
 	if [ ${is_replace_ip} = true ]; then
 		bash ${code_root}/private-blog/script/create-html.sh
 	fi
 }
 
-restart_all() {
+deploy_all() {
 	echo "recreate html, restart service"
 	copy_config
 	bash ${code_root}/blog/src/blog-web/create-html.sh
@@ -36,9 +36,9 @@ restart_all() {
 		"en"
 	)
 	comm_generate_index "${html_path}" ls_array[@]
-	restart_private
+	deploy_private
 	iptables -F # 根据情况决定是否要清空防火墙规则
 	service nginx restart # 重启nginx服务，docker中不支持systemd
 }
 
-restart_all
+deploy_all
