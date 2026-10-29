@@ -439,6 +439,44 @@ comm_is_in_array() {
 	return 1
 }
 
+# 调用前加载 repos_array，并设置 code_path。
+__comm_for_each_repo_entry() (
+	local callback=$1
+	local repo=$2
+	local repo_path="${code_path}/${repo}"
+
+	if [ ! -d "${repo_path}" ]; then
+		return
+	fi
+	cd "${repo_path}" || return
+	echo -e "$(comm_green_color)" "\n${repo}:" "$(comm_no_color)"
+
+	# 子 shell 内启用隐藏文件匹配，不影响调用者的目录和 shell 选项。
+	shopt -s dotglob nullglob
+	local entry
+	for entry in *; do
+		if [[ "${entry}" == .git ]]; then
+			continue
+		fi
+		"${callback}" "${entry}"
+	done
+)
+
+comm_for_each_repo_entry() {
+	local callback=$1
+	local target_repo=${2:-}
+	if [[ -n "${target_repo}" ]]; then
+		__comm_for_each_repo_entry "${callback}" "${target_repo}"
+		return
+	fi
+
+	# repos_array 每两项分别是推送开关和仓库名。
+	local index
+	for ((index=1; index<${#repos_array[@]}; index+=2)); do
+		__comm_for_each_repo_entry "${callback}" "${repos_array[${index}]}"
+	done
+}
+
 comm_normalize_path() {
 	local path="$1"
 	# 删除连续的斜杠

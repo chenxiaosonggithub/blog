@@ -3,7 +3,6 @@ MY_ECHO_DEBUG=0
 
 # 导入其他脚本
 . "${code_path}/blog/src/blog-web/common-lib.sh"
-. "${code_path}/blog/script/common-lib.sh"
 
 # 检查参数
 if [ $# -lt 2 ]; then
@@ -35,5 +34,5 @@ sed_entry() {
 . "${code_path}/blog/src/blog-web/repos.sh"
 . "${code_path}/private-blog/script/repos.sh"
 
-script_for_each_repo_entry sed_entry "${target_repo}"
+comm_for_each_repo_entry sed_entry "${target_repo}"
 
