@@ -69,17 +69,24 @@ copy_to_github_io() {
 
 # 局域网签名
 update_lan_sign() {
-	local sign_file=${tmp_html_path}/sign.html
-	# 局域网的处理
-	if [[ ${is_replace_ip} == true ]]; then
-		comm_file_replace_ip ${sign_file} ${other_ip}
-		# 内网主页
-		sed -i 's/主页/内网主页/g' ${sign_file}
-		# 在<ul>之后插入公网主页
-		sed -i -e '/<ul>/a<li><a href="https://chenxiaosong.com/">公网主页: chenxiaosong.com</a></li>' ${sign_file}
-		# 私有仓库的脚本更改签名
-		bash ${blog_src_root}/../private-blog/script/update-sign.sh ${sign_file}
+	if [[ ${is_replace_ip} != true ]]; then
+		return
 	fi
+
+	local sign_file public_home
+	for sign_file in "${sign_html}" "${en_sign_html}"; do
+		comm_file_replace_ip "${sign_file}" "${other_ip}"
+		if [[ "${sign_file}" == "${en_sign_html}" ]]; then
+			sed -i 's/Homepage/LAN Homepage/g' "${sign_file}"
+			public_home='<li><a href="https://chenxiaosong.com/en/">Public Homepage: chenxiaosong.com/en</a></li>'
+		else
+			sed -i 's/主页/内网主页/g' "${sign_file}"
+			public_home='<li><a href="https://chenxiaosong.com/">公网主页: chenxiaosong.com</a></li>'
+		fi
+		# 先替换原链接，再插入公网入口，保留公网地址。
+		sed -i -e "/<ul>/a${public_home}" "${sign_file}"
+	done
+	bash "${blog_src_root}/../private-blog/script/update-sign.sh" "${sign_html}"
 }
 
 do_change_perm() {
