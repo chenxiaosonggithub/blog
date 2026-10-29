@@ -26,7 +26,7 @@ ls_array=( # index.html有内容的路径，需要生成ls.html
 	""
 	"en"
 )
-comm_generate_index "${github_io_repo}" "" "${github_io_repo}" ls_array[@]
+comm_generate_index "${github_io_repo}" ls_array[@]
 
 cd ${github_io_repo}
 if [[ "${is_new_repo}" == true ]]; then

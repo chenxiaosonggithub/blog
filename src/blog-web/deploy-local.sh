@@ -39,7 +39,7 @@ restart_all() {
 		""
 		"en"
 	)
-	comm_generate_index "${html_path}" "" "${html_path}" ls_array[@]
+	comm_generate_index "${html_path}" ls_array[@]
 	restart_private
 	iptables -F # 根据情况决定是否要清空防火墙规则
 	service nginx restart # 重启nginx服务，docker中不支持systemd

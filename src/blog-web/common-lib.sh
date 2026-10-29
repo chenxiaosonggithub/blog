@@ -304,29 +304,27 @@ comm_sub_header_sharp() {
 	comm_add_or_sub_header ${input_file} ${output_file} false
 }
 
-# 递归生成index.html，最顶层目录生成ls.html
-comm_generate_index() {
+# 为当前目录及其子目录生成列表页
+__comm_generate_index() {
 	local dir="$1"
-	local parent_dir="$2"
-	local start_dir="$3"
-	local ls_array=("${!4}") # 使用间接引用来接收数组，调用的地方 comm_generate_index ... ls_array[@]
+	local root_dir="$2"
+	local ls_array=("${!3}")
 
-	local title=${dir/$start_dir/} # 干掉前缀，得到: /course/nfs
+	local title=${dir#"${root_dir}"} # 去掉根目录前缀，得到: /course/nfs
 	local relative_path=${title#/} # 得到: course/nfs
 	title="${title:-top}" # 如果为空则赋值: top
 	local html_name="index.html"
 
-	local element_count="${#ls_array[@]}" # 总个数
-	local count_per_line=1
-	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
-		local ls_path=${ls_array[${index}]}
+	local ls_path
+	for ls_path in "${ls_array[@]}"; do
 		if [[ "${relative_path}" == "${ls_path}" ]]; then
 			html_name="ls.html"
 			break
 		fi
 	done
-	# 生成 index.html 文件
+	# 生成当前目录的列表页
 	local index_file="${dir}/${html_name}"
+	local entry entry_name subdir
 	{
 		# 输出文件头
 		echo "<html>"
@@ -336,25 +334,25 @@ comm_generate_index() {
 		echo "<h1>Index of ${title}</h1><hr><pre>"
 
 		# 输出父目录链接（如果有的话）
-		if [ -n "${parent_dir}" ]; then
+		if [ "${dir}" != "${root_dir}" ]; then
 			echo "<a href=\"../\">../</a>"
 		fi
 
 		# 遍历目录中的内容，输出每个文件或目录的链接
 		# 先遍历目录
 		for entry in "${dir}"/*; do
-			local entry_name=$(basename "$entry")
 			if [[ ! -d "$entry" ]]; then
 				continue
 			fi
+			entry_name=${entry##*/}
 			echo "<a href=\"${entry_name}/\">${entry_name}/</a>"
 		done
 		# 再遍历文件
 		for entry in "${dir}"/*; do
-			local entry_name=$(basename "$entry")
 			if [[ ! -f "$entry" ]]; then
 				continue
 			fi
+			entry_name=${entry##*/}
 			if [ "${entry_name}" = "${html_name}" ]; then
 				# 自己还显示个啥呢
 				continue
@@ -367,12 +365,25 @@ comm_generate_index() {
 		echo "</html>"
 	} > "${index_file}"
 
-	# 递归生成子目录的 index.html
+	# 递归生成子目录的列表页
 	for subdir in "${dir}"/*; do
 		if [ -d "${subdir}" ]; then
-			comm_generate_index "${subdir}" "${dir}" "${start_dir}" ls_array[@]
+			__comm_generate_index "${subdir}" "${root_dir}" ls_array[@]
 		fi
 	done
+}
+
+# 用法：comm_generate_index 根目录 [ls_array[@]]
+# 数组中的相对目录生成 ls.html（"" 表示根目录），其余目录生成 index.html。
+comm_generate_index() {
+	local root_dir="$1"
+	if [ -n "${2:-}" ]; then
+		local ls_array=("${!2}")
+	else
+		local ls_array=()
+	fi
+
+	__comm_generate_index "${root_dir}" "${root_dir}" ls_array[@]
 }
 
 comm_get_title_filename() {
