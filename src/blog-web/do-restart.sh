@@ -10,6 +10,9 @@ is_restart=$3
 
 code_root=${MY_CODE_TOP_PATH} # 替换成你的仓库路径
 config_file=/etc/nginx/sites-enabled/default
+html_path=/var/www/html
+
+. "${code_root}/blog/src/blog-web/common-lib.sh"
 
 copy_config() {
 	rm ${config_file}
@@ -35,6 +38,11 @@ restart_all() {
 	echo "recreate html, restart service"
 	copy_config
 	bash ${code_root}/blog/src/blog-web/create-html.sh ${is_replace_ip} ${other_ip}
+	ls_array=( # index.html有内容的路径，需要生成ls.html
+		""
+		"en"
+	)
+	comm_generate_index "${html_path}" "" "${html_path}" ls_array[@]
 	restart_private
 	iptables -F # 根据情况决定是否要清空防火墙规则
 	service nginx restart # 重启nginx服务，docker中不支持systemd
