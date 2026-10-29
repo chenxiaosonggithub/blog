@@ -1,9 +1,9 @@
 MY_ECHO_DEBUG=0
 
-src_path=${MY_CODE_TOP_PATH}/blog
+blog_src_root=${MY_CODE_TOP_PATH}/blog
 
-. ${src_path}/src/blog-web/common-lib.sh
-. ${src_path}/src/blog-web/array.sh
+. ${blog_src_root}/src/blog-web/common-lib.sh
+. ${blog_src_root}/src/blog-web/array.sh
 
 if [ $# -lt 1 ]; then
 	echo "用法: bash $0 <html目录> [是否替换IP] [局域网IP]"
@@ -40,7 +40,7 @@ add_common() {
 
 create_full_course_html() {
 	local course=$1
-	local common_md=${src_path}/course/${course}/common.md
+	local common_md=${blog_src_root}/course/${course}/common.md
 	local common_html=${html_path}/course/${course}/common.html
 
 	mkdir -p "$(dirname "${common_html}")"
@@ -49,7 +49,7 @@ create_full_course_html() {
 	if [[ ${is_replace_ip} == true ]]; then
 		comm_file_replace_ip "${common_html}" "${other_ip}"
 	fi
-	comm_iterate_array add_common comm_array[@] "${src_path}" "${course}" "${common_html}"
+	comm_iterate_array add_common comm_array[@] "${blog_src_root}" "${course}" "${common_html}"
 }
 
 create_full_course_html "kernel"

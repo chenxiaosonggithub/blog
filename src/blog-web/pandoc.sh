@@ -1,6 +1,6 @@
-src_path=${MY_CODE_TOP_PATH}/blog # 替换为你的仓库路径
+blog_src_root=${MY_CODE_TOP_PATH}/blog # 替换为你的仓库路径
 # 导入其他脚本
-. ${src_path}/src/blog-web/common-lib.sh
+. ${blog_src_root}/src/blog-web/common-lib.sh
 
 # 检查参数
 if [ $# -ne 3 ]; then
