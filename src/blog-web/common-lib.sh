@@ -56,24 +56,21 @@ comm_file_replace_ip() {
 	local dst_file=$1
 	local other_ip=$2
 
-	sed -i 's/chenxiaosong.com/'${other_ip}'/g' "${dst_file}"
-	# 局域网用http，不用https
-	sed -i 's/https:\/\/'${other_ip}'/http:\/\/'${other_ip}'/g' "${dst_file}"
-	# 邮箱替换回来
-	sed -i 's/@'${other_ip}'/@chenxiaosong.com/g' "${dst_file}"
+	# 替换域名、改用HTTP，再恢复邮箱域名。
+	sed -i \
+		-e "s/chenxiaosong.com/${other_ip}/g" \
+		-e "s|https://${other_ip}|http://${other_ip}|g" \
+		-e "s/@${other_ip}/@chenxiaosong.com/g" "${dst_file}"
 }
 
 comm_str_replace_ip() {
 	local str=$1
 	local other_ip=$2
 
-	str=$(echo "${str}" | sed 's/chenxiaosong.com/'${other_ip}'/')
-	# 局域网用http，不用https
-	str=$(echo "${str}" | sed 's/https:\/\/'${other_ip}'/http:\/\/'${other_ip}'/')
-	# 邮箱替换回来
-	str=$(echo "${str}" | sed 's/@'${other_ip}'/@chenxiaosong.com/')
-
-	echo "${str}"
+	printf '%s\n' "${str}" | sed \
+		-e "s/chenxiaosong.com/${other_ip}/" \
+		-e "s|https://${other_ip}|http://${other_ip}|" \
+		-e "s/@${other_ip}/@chenxiaosong.com/"
 }
 
 comm_create_html_body() {
@@ -106,28 +103,26 @@ comm_iterate_array() {
 	local src_path=$3
 	shift 3 # "$@"移除前面的参数
 
-	local element_count="${#array[@]}" # 总个数
+	local index
 	local count_per_line=5
-	for ((index=0; index<${element_count}; index=$((index + ${count_per_line})))); do
-		local is_toc=${array[${index}]}
-		local is_sign=${array[${index}+1]}
-		local ifile=${array[${index}+2]}
-		local ofile_or_ipathprefix=${array[${index}+3]}
-		local html_title=${array[${index}+4]}
+	for ((index=0; index<${#array[@]}; index+=count_per_line)); do
+		local is_toc=${array[index]}
+		local is_sign=${array[index+1]}
+		local ifile=${array[index+2]}
+		local ofile_or_ipathprefix=${array[index+3]}
+		local html_title=${array[index+4]}
 
 		local src_file=${src_path}/${ifile} # 源路径拼接
 		local ofile=${ofile_or_ipathprefix}
 
-		local ipath_prefix
 		if [[ ${ofile_or_ipathprefix} == ~ ]]; then
 			ofile="${ifile%.*}.html" # 使用参数扩展去除文件名的后缀，再加.html
 		elif [ -d "${ofile_or_ipathprefix}" ]; then # ofile_or_ipathprefix是目录绝对路径, 代表源文件路径前缀
-			ipath_prefix=${ofile_or_ipathprefix}
-			src_file=${ipath_prefix}/${ifile}
+			src_file=${ofile_or_ipathprefix}/${ifile}
 			ofile="${ifile%.*}.html" # 使用参数扩展去除文件名的后缀，再加.html
 		fi
 
-		${function} \
+		"${function}" \
 			"${is_toc}"	\
 			"${is_sign}"	\
 			"${ifile}"	\
@@ -140,49 +135,43 @@ comm_iterate_array() {
 }
 
 __comm_create_html() {
+	# 前7项由comm_iterate_array提供，后4项是本批次的生成配置。
 	local is_toc=$1
-	shift; local is_sign=$1
-	shift; local ifile=$1
-	shift; local ofile=$1
-	shift; local html_title=$1
-	shift; local src_file=$1
-	shift; local src_path=$1
-
-	shift; local tmp_html_path=$1
-	shift; local sign_html=$1
-	shift; local is_replace_ip=$1
-	shift; local other_ip=$1
+	local is_sign=$2
+	local ofile=$4
+	local html_title=$5
+	local src_file=$6
+	local tmp_html_path=$8
+	local sign_html=$9
+	local is_replace_ip=${10}
+	local other_ip=${11}
 
 	local dst_file=${tmp_html_path}/${ofile} # 拼接生成html文件名
 	local dst_dir="$(dirname "${dst_file}")" # html文件所在的文件夹
 	if [ ! -d "${dst_dir}" ]; then
 		mkdir -p "${dst_dir}" # 文件夹不存在就创建
 	fi
-	local from_format="--from markdown"
+	local from_format=markdown
 	if [[ ${src_file} == *.rst ]]; then
-		from_format="--from rst" # rst格式
+		from_format=rst
 	fi
 	local pandoc_options=$(comm_get_pandoc_options)
 	if [[ ${is_toc} == 1 ]]; then
 		pandoc_options="${pandoc_options} --toc"
 	fi
 	echo "create ${ofile}"
-	pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_options}
+	pandoc "${src_file}" -o "${dst_file}" --metadata title="${html_title}" --from "${from_format}" ${pandoc_options}
 	# 局域网的处理
 	if [[ ${is_replace_ip} == true ]]; then
-		comm_file_replace_ip ${dst_file} ${other_ip}
+		comm_file_replace_ip "${dst_file}" "${other_ip}"
 	fi
 	# 在'<header'之后插入整个签名文件
-	if [[ ${is_sign} == 1 ]]; then
-		sed -i -e '/<header/r '${sign_html} ${dst_file}
-	elif [[ ${is_sign} == 2 ]]; then
-		local en_sign_html=${tmp_html_path}/en-sign.html
-		sed -i -e '/<header/r '${en_sign_html} ${dst_file}
-	fi
-
-	# cd ${src_path}
-	# git log -1 --format=%ad --date=iso ${ifile}
-	# cd -
+	case "${is_sign}" in
+		1) ;;
+		2) sign_html=${tmp_html_path}/en-sign.html ;;
+		*) return 0 ;;
+	esac
+	sed -i -e "/<header/r ${sign_html}" "${dst_file}"
 }
 
 # 先调用 comm_create_params；最后一个可选参数用于覆盖当前批次的IP替换开关。
@@ -266,10 +255,9 @@ comm_add_or_sub_header() {
 	local output_file=$2
 	local is_add=$3 # true有增加，false为减少
 
-	rm ${output_file}
-
 	local is_code=false
-	while IFS= read -r line; do
+	local line
+	while IFS= read -r line || [[ -n "${line}" ]]; do
 		if [[ $line == '```'* ]]; then
 			if [[ $is_code == true ]]; then
 				is_code=false
@@ -283,28 +271,23 @@ comm_add_or_sub_header() {
 				continue # 如果减少的是一级标题，则删除这一行
 			fi
 			if [[ $is_add == true ]]; then
-				echo "#$line" >> ${output_file}
+				line="#${line}"
 			else
-				echo ${line:1} >> ${output_file}
+				line=${line:1}
 			fi
-		else
-			echo "$line" >> ${output_file}
 		fi
-	done < "$input_file"
+		printf '%s\n' "${line}"
+	done < "${input_file}" > "${output_file}"
 }
 
 # 将标题增加一级
 comm_add_header_sharp() {
-	input_file=$1
-	output_file=$2
-	comm_add_or_sub_header ${input_file} ${output_file} true
+	comm_add_or_sub_header "$1" "$2" true
 }
 
 # 将标题减少一级
 comm_sub_header_sharp() {
-	input_file=$1
-	output_file=$2
-	comm_add_or_sub_header ${input_file} ${output_file} false
+	comm_add_or_sub_header "$1" "$2" false
 }
 
 # 为当前目录及其子目录生成列表页
@@ -397,26 +380,18 @@ comm_get_title_filename() {
 	local dir_path=$(dirname "${dst_file}")
 	# 提取文件的扩展名
 	local extension="${dst_file##*.}" # 最后一个点号后面的部分
-	# 除下划线外，所有标点和空格替换为减号
-	# html_title=$(echo "${html_title}" | sed 's/_/underscore/g' | sed 's/[[:punct:][:space:]]/-/g' | sed 's/underscore/_/g')
-	# 替换/
-	html_title=$(echo "${html_title}" | sed 's|/|-|g')
+	# 标题中的路径分隔符不能作为文件名的一部分。
+	html_title=${html_title//\//-}
 
-	echo "${dir_path}/${html_title}.${extension}"
+	printf '%s\n' "${dir_path}/${html_title}.${extension}"
 }
 
 __comm_create_title_name_src() {
 	comm_create_full_src "$@"
 
-	local is_toc=$1
-	shift; local is_sign=$1
-	shift; local ifile=$1
-	shift; local ofile=$1
-	shift; local html_title=$1
-	shift; local src_file=$1
-	shift; local src_path=$1
-
-	shift; local dst_path=$1
+	local ifile=$3
+	local html_title=$5
+	local dst_path=$8
 
 	local dst_file=${dst_path}/${ifile} # 输出文件
 	local title_filename=$(comm_get_title_filename "${dst_file}" "${html_title}")
@@ -424,17 +399,13 @@ __comm_create_title_name_src() {
 }
 
 comm_create_full_src() {
-	local is_toc=$1
-	shift; local is_sign=$1
-	shift; local ifile=$1
-	shift; local ofile=$1
-	shift; local html_title=$1
-	shift; local src_file=$1
-	shift; local src_path=$1
-
-	shift; local dst_path=$1
-	shift; local blog_url=$1
-	shift; local sign_md_file=$1
+	local ifile=$3
+	local ofile=$4
+	local src_file=$6
+	local src_path=$7
+	local dst_path=$8
+	local blog_url=$9
+	local sign_md_file=${10}
 
 	local dst_file=${dst_path}/${ifile} # 输出文件
 	local dst_dir="$(dirname "${dst_file}")" # 输出文件所在的文件夹
@@ -442,23 +413,23 @@ comm_create_full_src() {
 		mkdir -p "${dst_dir}" # 文件夹不存在就创建
 	fi
 
-	cd ${src_path}
-	echo '<!--' >> ${dst_file}
-	git log --oneline ${ifile} | head -n 1 >> ${dst_file}
-	echo '--> ' >> ${dst_file}
-	echo >> ${dst_file}
-
-	echo '[建议点击这里查看个人主页上的最新原文]('${blog_url}'/'${ofile}')' >> ${dst_file}
-	echo >> ${dst_file}
-	cat ${sign_md_file} >> ${dst_file}
-	echo >> ${dst_file}
-	cat ${src_file} >> ${dst_file}
+	{
+		echo '<!--'
+		git -C "${src_path}" log -1 --oneline -- "${ifile}"
+		echo '--> '
+		echo
+		printf '[建议点击这里查看个人主页上的最新原文](%s/%s)\n\n' "${blog_url}" "${ofile}"
+		cat "${sign_md_file}"
+		echo
+		cat "${src_file}"
+	} >> "${dst_file}"
 }
 
 # 0: 已存在数组中，1: 不存在数组中
 comm_is_in_array() {
 	local array=("${!1}")
 	local target_item=$2
+	local item
 
 	for item in "${array[@]}"; do
 		if [[ "$item" == "${target_item}" ]]; then
