@@ -1,12 +1,12 @@
+# 运行命令不断检查 while true; do bash deploy-local.sh; sleep 90; done
+. /home/chenxiaosong/.bash_profile
+blog_src_root=${MY_CODE_TOP_PATH}/blog # 替换为你的仓库路径
+. ${blog_src_root}/src/blog-web/common-lib.sh
 
-if [ $# -ne 3 ]; then
-	echo "Usage: $0 \${is_replace_ip} \${other_ip} \${is_restart}"
-	exit 1
-fi
+is_replace_ip=true # 是否要替换ip
+other_ip="${1:-$(comm_defaut_local_ip)}" # 内网要替换的ip
 
-is_replace_ip=$1
-other_ip=$2 # 内网要替换的ip
-is_restart=$3
+comm_create_params "${is_replace_ip}" "${other_ip}"
 
 code_root=${MY_CODE_TOP_PATH} # 替换成你的仓库路径
 config_file=/etc/nginx/sites-enabled/default
@@ -32,9 +32,6 @@ restart_private() {
 }
 
 restart_all() {
-	if [ ${is_restart} = false ]; then
-		return
-	fi
 	echo "recreate html, restart service"
 	copy_config
 	bash ${code_root}/blog/src/blog-web/create-html.sh ${is_replace_ip} ${other_ip}

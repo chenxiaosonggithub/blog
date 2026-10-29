@@ -80,9 +80,9 @@ export MY_TOP_PATH=/your/top/path
 export MY_CODE_TOP_PATH=${MY_TOP_PATH}/code/
 ```
 
-[`restart.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/restart.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务:
+[`deploy-local.sh`](https://gitee.com/chenxiaosonggitee/blog/blob/master/src/blog-web/deploy-local.sh)脚本用于更新git仓库，重新生成html文件，以及重启nginx服务:
 ```sh
-bash src/blog-web/restart.sh
+bash src/blog-web/deploy-local.sh
 ```
 
 ## 转pdf
