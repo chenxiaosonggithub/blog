@@ -330,7 +330,8 @@ comm_generate_index() {
 	{
 		# 输出文件头
 		echo "<html>"
-		echo "<head><title>Index of ${title}</title></head>"
+		echo '<head><meta charset="utf-8">'
+		echo "<title>Index of ${title}</title></head>"
 		echo "<body>"
 		echo "<h1>Index of ${title}</h1><hr><pre>"
 
