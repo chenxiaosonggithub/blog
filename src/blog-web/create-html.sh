@@ -88,8 +88,8 @@ do_change_perm() {
 }
 
 my_init
-comm_create_sign ${blog_src_root}/src/blog-web/sign.md ${sign_html}
-comm_create_sign ${blog_src_root}/src/blog-web/en-sign.md ${en_sign_html}
+comm_create_html_body ${blog_src_root}/src/blog-web/sign.md ${sign_html}
+comm_create_html_body ${blog_src_root}/src/blog-web/en-sign.md ${en_sign_html}
 update_lan_sign
 comm_create_html comm_array[@] ${blog_src_root} ${tmp_html_path} ${sign_html} ${is_replace_ip} ${other_ip}
 bash ${blog_src_root}/course/course.sh "${tmp_html_path}" "${is_replace_ip}" "${other_ip}"

@@ -45,7 +45,7 @@ create_full_course_html() {
 
 	mkdir -p "$(dirname "${common_html}")"
 	# 与签名一样，由Markdown生成HTML后只保留正文片段。
-	comm_create_sign "${common_md}" "${common_html}"
+	comm_create_html_body "${common_md}" "${common_html}"
 	if [[ ${is_replace_ip} == true ]]; then
 		comm_file_replace_ip "${common_html}" "${other_ip}"
 	fi

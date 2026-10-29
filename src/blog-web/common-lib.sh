@@ -76,15 +76,15 @@ comm_str_replace_ip() {
 	echo "${str}"
 }
 
-comm_create_sign() {
+comm_create_html_body() {
 	local src_file=$1
 	local dst_file=$2
 
-	local html_title="签名"
+	local html_title="标题不重要"
 	local pandoc_options=$(comm_get_pandoc_options)
 	local from_format="--from markdown"
 	pandoc ${src_file} -o ${dst_file} --metadata title="${html_title}" ${from_format} ${pandoc_options}
-	# 先去除sign.html文件中其他内容
+	# 先去除sign.html文件中其他内容，注意header在body中
 	sed -i '/<\/header>/,/<\/body>/!d' ${dst_file} # 只保留</header>到</body>的内容
 	sed -i '1d;$d' ${dst_file} # 删除第一行和最后一行
 }
