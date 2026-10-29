@@ -5,13 +5,20 @@ blog_src_root=${MY_CODE_TOP_PATH}/blog
 . ${blog_src_root}/src/blog-web/common-lib.sh
 . ${blog_src_root}/src/blog-web/array.sh
 
-if [ $# -lt 1 ]; then
-	echo "用法: bash $0 <html目录> [是否替换IP] [局域网IP]"
-	exit 1
+if [ $# -ge 1 ]; then
+	# 保留单独处理指定目录的用法。
+	html_path=$1
+	is_replace_ip=${2:-false}
+	other_ip=${3:-$(comm_defaut_local_ip)}
+else
+	# 构建子进程共用配置，单独运行时创建默认配置。
+	if [ -z "${COMM_PARAMS_FILE:-}" ]; then
+		comm_create_params || exit 1
+	fi
+	html_path=$(comm_get_param tmp_html_path) || exit 1
+	is_replace_ip=$(comm_get_param is_replace_ip) || exit 1
+	other_ip=$(comm_get_param ip_addr) || exit 1
 fi
-html_path=$1
-is_replace_ip=${2:-false}
-other_ip=$3
 
 # 使用生成配置中的输出路径，兼容自定义HTML文件名。
 add_common() {

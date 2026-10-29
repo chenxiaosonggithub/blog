@@ -185,13 +185,16 @@ __comm_create_html() {
 	# cd -
 }
 
+# 先调用 comm_create_params；最后一个可选参数用于覆盖当前批次的IP替换开关。
 comm_create_html() {
 	local array=("${!1}") # 使用间接引用来接收数组，调用的地方 comm_create_html array[@] ...
-	shift; local src_path=$1
-	shift; local tmp_html_path=$1
-	shift; local sign_html=$1
-	shift; local is_replace_ip=$1
-	shift; local other_ip=$1
+	local src_path=$2
+	local tmp_html_path=$3
+	local sign_html=$4
+	# 默认使用整次构建的配置，也允许当前这批内容覆盖替换开关。
+	local is_replace_ip other_ip
+	is_replace_ip="${5:-$(comm_get_param is_replace_ip)}" || return 1
+	other_ip=$(comm_get_param ip_addr) || return 1
 
 	comm_iterate_array __comm_create_html array[@] "${src_path}" \
 		"${tmp_html_path}"	\
@@ -477,7 +480,11 @@ comm_normalize_path() {
 }
 
 comm_tmp_params_file() {
-	echo "/tmp/blog-params.json"
+	if [ -z "${COMM_PARAMS_FILE:-}" ]; then
+		echo "请先调用 comm_create_params 初始化生成配置" >&2
+		return 1
+	fi
+	printf '%s\n' "${COMM_PARAMS_FILE}"
 }
 
 comm_defaut_local_ip() {
@@ -485,27 +492,60 @@ comm_defaut_local_ip() {
 }
 
 comm_delete_params() {
-	echo "捕获到 Ctrl+C 信号或脚本正常退出，删除配置文件$(comm_tmp_params_file)"
-	rm -rf "$(comm_tmp_params_file)"
-	exit 0
+	local status=$?
+	# 子进程共用配置，但只有创建它的进程负责清理。
+	if [ "${COMM_PARAMS_OWNER_PID:-}" = "${BASHPID}" ]; then
+		echo "删除配置文件${COMM_PARAMS_FILE}"
+		rm -f -- "${COMM_PARAMS_FILE}"
+	fi
+	return "${status}"
 }
 
+# 用法：comm_create_params [是否替换IP] [IP地址] [HTML输出目录]
+# 显式指定输出目录时不修改文件权限；其余路径由这里统一派生。
 comm_create_params() {
 	local is_replace_ip="${1:-false}" # 是否要替换ip
 	local ip_addr="${2:-$(comm_defaut_local_ip)}" # 内网要替换的ip
+	local html_path="${3:-/var/www/html}"
+	local tmp_html_path=/tmp/blog-html-tmp # 先在临时目录生成，完成后再移入输出目录
+	local is_change_perm=true
+	if [ $# -ge 3 ]; then
+		is_change_perm=false
+	fi
 
-	echo "创建配置文件$(comm_tmp_params_file)"
-	echo "	{\
-			\"is_replace_ip\": \"${is_replace_ip}\", \
-			\"ip_addr\": \"${ip_addr}\" \
-		}" | jq '.' > "$(comm_tmp_params_file)"
-	# trap comm_delete_params SIGINT
-	trap comm_delete_params EXIT # ctrl+c也会被捕获，所以不需要捕获SIGINT
+	local params_file
+	params_file=$(mktemp /tmp/blog-params.XXXXXX.json) || return 1
+	if ! jq -n \
+		--arg is_replace_ip "${is_replace_ip}" \
+		--arg ip_addr "${ip_addr}" \
+		--arg html_path "${html_path}" \
+		--arg tmp_html_path "${tmp_html_path}" \
+		--arg is_change_perm "${is_change_perm}" \
+		'{is_replace_ip: $is_replace_ip, ip_addr: $ip_addr,
+		  html_path: $html_path, tmp_html_path: $tmp_html_path,
+		  sign_html: ($tmp_html_path + "/sign.html"),
+		  en_sign_html: ($tmp_html_path + "/en-sign.html"),
+		  is_change_perm: $is_change_perm}' > "${params_file}"; then
+		rm -f -- "${params_file}"
+		return 1
+	fi
+	# 同一进程重新初始化时，替换自己创建的旧配置。
+	if [ "${COMM_PARAMS_OWNER_PID:-}" = "${BASHPID}" ]; then
+		rm -f -- "${COMM_PARAMS_FILE}"
+	fi
+	export COMM_PARAMS_FILE="${params_file}"
+	COMM_PARAMS_OWNER_PID=${BASHPID}
+	echo "创建配置文件${COMM_PARAMS_FILE}"
+	trap comm_delete_params EXIT
 }
 
 comm_get_param() {
-	local key=$1
-	cat "$(comm_tmp_params_file)" | jq ".${key}"
+	local key="$1"
+	local params_file
+	params_file=$(comm_tmp_params_file) || return 1
+	jq -er --arg key "${key}" \
+		'if has($key) then .[$key] else error("缺少配置项: \($key)") end' \
+		"${params_file}"
 }
 
 # 在第一个匹配的行后面插入文件内容

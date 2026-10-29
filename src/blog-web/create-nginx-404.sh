@@ -1,9 +1,17 @@
 code_path=${MY_CODE_TOP_PATH}
 
-other_ip=$1
-
 # 导入其他脚本
 . ${code_path}/blog/src/blog-web/common-lib.sh
+
+if [ $# -ge 1 ]; then
+	other_ip=$1
+else
+	# 构建时读取共享配置，也允许单独运行并使用默认IP。
+	if [ -z "${COMM_PARAMS_FILE:-}" ]; then
+		comm_create_params || exit 1
+	fi
+	other_ip=$(comm_get_param ip_addr) || exit 1
+fi
 
 input_file=${code_path}/blog/src/blog-web/github-io-404.html
 origin_file=${code_path}/blog/src/blog-web/nginx-config

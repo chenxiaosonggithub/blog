@@ -3,20 +3,16 @@
 blog_src_root=${MY_CODE_TOP_PATH}/blog # 替换为你的仓库路径
 . ${blog_src_root}/src/blog-web/common-lib.sh
 
-is_replace_ip=true # 是否要替换ip
-other_ip="${1:-$(comm_defaut_local_ip)}" # 内网要替换的ip
-
-comm_create_params "${is_replace_ip}" "${other_ip}"
+comm_create_params true "${1:-$(comm_defaut_local_ip)}" || exit 1
+is_replace_ip=$(comm_get_param is_replace_ip) || exit 1
+html_path=$(comm_get_param html_path) || exit 1
 
 code_root=${MY_CODE_TOP_PATH} # 替换成你的仓库路径
 config_file=/etc/nginx/sites-enabled/default
-html_path=/var/www/html
-
-. "${code_root}/blog/src/blog-web/common-lib.sh"
 
 copy_config() {
 	rm ${config_file}
-	bash ${code_root}/blog/src/blog-web/create-nginx-404.sh "${other_ip}"
+	bash ${code_root}/blog/src/blog-web/create-nginx-404.sh
 	mv ${code_root}/blog/src/blog-web/nginx-config.full ${config_file}
 	if [ ${is_replace_ip} = true ]; then
 		# 局域网删除ssl相关配置
@@ -27,14 +23,14 @@ copy_config() {
 restart_private() {
 	# 部署在局域网
 	if [ ${is_replace_ip} = true ]; then
-		bash ${code_root}/private-blog/script/create-html.sh ${other_ip}
+		bash ${code_root}/private-blog/script/create-html.sh
 	fi
 }
 
 restart_all() {
 	echo "recreate html, restart service"
 	copy_config
-	bash ${code_root}/blog/src/blog-web/create-html.sh ${is_replace_ip} ${other_ip}
+	bash ${code_root}/blog/src/blog-web/create-html.sh
 	ls_array=( # index.html有内容的路径，需要生成ls.html
 		""
 		"en"
