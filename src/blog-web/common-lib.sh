@@ -473,7 +473,7 @@ comm_defaut_local_ip() {
 }
 
 comm_delete_params() {
-	echo "捕获到 Ctrl+C 信号或脚本正常退出！"
+	echo "捕获到 Ctrl+C 信号或脚本正常退出，删除配置文件$(comm_tmp_params_file)"
 	rm -rf "$(comm_tmp_params_file)"
 	exit 0
 }
@@ -482,6 +482,7 @@ comm_create_params() {
 	local is_replace_ip="${1:-false}" # 是否要替换ip
 	local ip_addr="${2:-$(comm_defaut_local_ip)}" # 内网要替换的ip
 
+	echo "创建配置文件$(comm_tmp_params_file)"
 	echo "	{\
 			\"is_replace_ip\": \"${is_replace_ip}\", \
 			\"ip_addr\": \"${ip_addr}\" \
