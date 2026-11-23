@@ -2,7 +2,8 @@ dst_dir=$1
 . /home/chenxiaosong/code/blog/src/blog-web/repos.sh
 . /home/chenxiaosong/code/private-blog/script/repos.sh
 
-array=(gitconfig set_proxy.sh origin_xmodmap.txt xmodmap.txt vimrc emacs bash_profile tmux.conf)
+cp_array=(gitconfig set_proxy.sh origin_xmodmap.txt xmodmap.txt vimrc emacs bash_profile tmux.conf)
+ln_array=(/home/chenxiaosong/code/private-blog/agents/)
 
 if [ -z "$dst_dir" ]
 then
@@ -29,21 +30,42 @@ update_gitconfig()
 	done
 }
 
+deploy_file()
+{
+	local element="$1"
+	shift
+	local base_path=$(basename "$element")
+	local src="$element"
+	local dst=$dst_dir/.$base_path
+
+	if [[ "$element" != /* ]]; then
+		src=$PWD/$element
+	fi
+
+	echo "$src"
+	echo "$dst"
+	rm "$dst"
+	"$@" "$src" "$dst"
+}
+
 do_copy()
 {
-	for element in ${array[@]}
+	for element in "${cp_array[@]}"
 	do
-		local src=$PWD/$element
-		local dst=$dst_dir/.$element
-
-		echo $src
-		echo $dst
-		rm $dst
-		cp $src $dst
+		deploy_file "$element" cp
 	done
 
 	update_gitconfig
 }
 
+do_link()
+{
+	for element in "${ln_array[@]}"
+	do
+		deploy_file "$element" ln -s
+	done
+}
+
 do_copy
+do_link
 
